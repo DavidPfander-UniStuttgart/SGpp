@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <mutex>  // NOLINT(build/c++11)
+#include <mutex>
 #include "sgpp/base/exception/operation_exception.hpp"
 #include "sgpp/globaldef.hpp"
 
@@ -17,6 +17,7 @@ class QueueLoadBalancerMutex {
   bool isInitialized;
   size_t start;
   size_t end;
+  size_t blockSize;
   size_t range;
   size_t currentStart;
   std::mutex nextSegmentMutex;
@@ -24,19 +25,20 @@ class QueueLoadBalancerMutex {
  public:
   // end is assumed to be padded for blocksize! might return segements that end
   // after end
-  QueueLoadBalancerMutex() : isInitialized(false), start(0), end(0), range(0), currentStart(0) {}
+  QueueLoadBalancerMutex()
+      : isInitialized(false), start(0), end(0), blockSize(0), range(0), currentStart(0) {}
 
-  void initialize(const size_t start, const size_t end) {
+  void initialize(const size_t start, const size_t end, const size_t blockSize) {
     this->start = start;
     this->end = end;
+    this->blockSize = blockSize;
     this->range = end - start;
     this->currentStart = start;
     this->isInitialized = true;
   }
 
   // is thread-safe
-  bool getNextSegment(const size_t scheduleSize, const size_t blockSize, size_t &segmentStart,
-                      size_t &segmentEnd) {
+  bool getNextSegment(const size_t scheduleSize, size_t &segmentStart, size_t &segmentEnd) {
     if (!this->isInitialized) {
       throw base::operation_exception("QueueLoadBalancer: queue load balancer not initialized!");
     } else if (blockSize == 0) {
