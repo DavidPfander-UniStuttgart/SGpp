@@ -123,6 +123,8 @@ vars.Add("OCL_INCLUDE_PATH", "Set path to the OpenCL header files (parent direct
 vars.Add("OCL_LIBRARY_PATH", "Set path to the OpenCL library")
 vars.Add("BOOST_INCLUDE_PATH", "Set path to the Boost header files", "/usr/include")
 vars.Add("BOOST_LIBRARY_PATH", "Set path to the Boost library", None)
+vars.Add("AUTOTUNETMP_INCLUDE_PATH", "Set path to the AutoTuneTMP header files", "")
+vars.Add("CPPJIT_INCLUDE_PATH", "Set path to the CPPJIT header files", "")
 vars.Add("HPX_DEBUG_LIBRARY_PATH", "Sets the path to the HPX debug libraries", None)
 vars.Add("HPX_RELEASE_LIBRARY_PATH", "Sets the path to the HPX release libraries", None)
 vars.Add("HPX_SHARED_INCLUDE_PATH", "Sets the path to the HPX shared headers", None)

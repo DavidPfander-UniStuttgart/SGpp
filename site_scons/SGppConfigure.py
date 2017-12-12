@@ -200,6 +200,9 @@ def checkOpenCL(config):
   config.env.AppendUnique(CPPPATH=[config.env["BOOST_INCLUDE_PATH"]])
   config.env.AppendUnique(LIBPATH=[config.env["BOOST_LIBRARY_PATH"]])
 
+  config.env.AppendUnique(CPPPATH=[config.env["AUTOTUNETMP_INCLUDE_PATH"]])
+  config.env.AppendUnique(CPPPATH=[config.env["CPPJIT_INCLUDE_PATH"]])
+
   if config.env["USE_OCL"]:
     if "OCL_INCLUDE_PATH" in config.env["ENV"]:
       config.env.AppendUnique(CPPPATH=[config.env["ENV"]["OCL_INCLUDE_PATH"]])
