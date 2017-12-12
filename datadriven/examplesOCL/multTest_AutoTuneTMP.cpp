@@ -16,6 +16,8 @@
 #include "sgpp/globaldef.hpp"
 #include "autotune/autotune.hpp"
 
+AUTOTUNE_DECLARE_DEFINE_KERNEL(int(int), add_one)
+
 void doAllRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::base::Grid& grid,
                       sgpp::base::GridGenerator& gridGen, sgpp::base::DataVector& alpha) {
   std::random_device rd;

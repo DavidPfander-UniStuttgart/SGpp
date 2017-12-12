@@ -202,6 +202,7 @@ def checkOpenCL(config):
 
   config.env.AppendUnique(CPPPATH=[config.env["AUTOTUNETMP_INCLUDE_PATH"]])
   config.env.AppendUnique(CPPPATH=[config.env["CPPJIT_INCLUDE_PATH"]])
+  config.env.AppendUnique(LIBS="dl")
 
   if config.env["USE_OCL"]:
     if "OCL_INCLUDE_PATH" in config.env["ENV"]:
