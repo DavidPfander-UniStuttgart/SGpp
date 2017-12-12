@@ -15,6 +15,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <memory>
 
 namespace sgpp {
 namespace base {

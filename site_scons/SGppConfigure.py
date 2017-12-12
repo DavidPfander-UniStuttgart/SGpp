@@ -96,7 +96,7 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
   # detour compiler output
   config.env["PRINT_CMD_LINE_FUNC"] = Helper.printCommand
 
-  checkCpp11(config)
+  checkCpp17(config)
   if "doxygen" in SCons.Script.BUILD_TARGETS:
     checkDoxygen(config)
     checkDot(config)
@@ -159,20 +159,20 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
   print "Configuration done."
   print
 
-def checkCpp11(config):
+def checkCpp17(config):
   # check C++11 support
-  if not config.env['USE_HPX']:
-    if not config.CheckFlag("-std=c++11"):
-      Helper.printErrorAndExit("The compiler doesn't seem to support the C++11 standard. Abort!")
-      Exit(1)
+  # if not config.env['USE_HPX']:
+  if not config.CheckFlag("-std=c++17"):
+    Helper.printErrorAndExit("The compiler doesn't seem to support the C++17 standard. Abort!")
+    Exit(1)
 
-    config.env.AppendUnique(CPPFLAGS="-std=c++11")
-  else:
-    if not config.CheckFlag("-std=c++14"):
-      Helper.printErrorAndExit("HPX requires a compiler that supports the C++14 standard. Abort!")
-      Exit(1)
+  config.env.AppendUnique(CPPFLAGS="-std=c++17")
+  # else:
+  #   if not config.CheckFlag("-std=c++14"):
+  #     Helper.printErrorAndExit("HPX requires a compiler that supports the C++14 standard. Abort!")
+  #     Exit(1)
 
-    config.env.AppendUnique(CPPFLAGS="-std=c++14")
+  #   config.env.AppendUnique(CPPFLAGS="-std=c++14")
 
 def checkDoxygen(config):
   # check whether Doxygen installed

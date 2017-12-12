@@ -18,6 +18,7 @@
 #include <sgpp/datadriven/tools/ARFFTools.hpp>
 
 #include <string>
+#include <memory>
 
 namespace sgpp {
 

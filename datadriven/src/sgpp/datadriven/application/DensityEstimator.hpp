@@ -12,6 +12,7 @@
 #include <sgpp/globaldef.hpp>
 
 #include <iostream>
+#include <memory>
 
 namespace sgpp {
 namespace datadriven {

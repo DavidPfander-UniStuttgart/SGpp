@@ -7,6 +7,7 @@
 #define TYPESSOLVER_HPP
 
 #include <sgpp/globaldef.hpp>
+#include <cstddef>
 
 namespace sgpp {
 namespace solver {

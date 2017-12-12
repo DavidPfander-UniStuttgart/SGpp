@@ -14,6 +14,7 @@
 #include <sgpp/datadriven/datamining/modules/dataSource/FileSampleProvider.hpp>
 
 #include <string>
+#include <memory>
 
 namespace sgpp {
 namespace datadriven {
