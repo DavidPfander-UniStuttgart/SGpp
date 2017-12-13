@@ -9,6 +9,7 @@
 #include <sgpp/globaldef.hpp>
 
 #include <deque>
+#include <cstddef>
 
 namespace sgpp {
 namespace datadriven {

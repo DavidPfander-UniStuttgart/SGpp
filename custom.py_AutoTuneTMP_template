@@ -18,5 +18,5 @@ COMPILE_BOOST_TESTS=False
 USE_OCL=True
 BOOST_INCLUDE_PATH="/home/pfandedd/git/AutoTuneTMP/boost_install/include"
 BOOST_LIBRARY_PATH="/home/pfandedd/git/AutoTuneTMP/boost_install/lib"
-AUTOTUNETMP_INCLUDE_PATH="/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install"
-CPPJIT_INCLUDE_PATH="/home/pfandedd/git/AutoTuneTMP/cppjit/cppjit_install"
+AUTOTUNETMP_INCLUDE_PATH="/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install/include"
+CPPJIT_INCLUDE_PATH="/home/pfandedd/git/AutoTuneTMP/cppjit/cppjit_install/include"
