@@ -3,19 +3,19 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include <sstream>
 #include <iostream>
-#include <vector>
+#include <sstream>
 #include <string>
+#include <vector>
 
+#include "sgpp/base/exception/operation_exception.hpp"
 #include "sgpp/base/opencl/OCLPlatformWrapper.hpp"
 #include "sgpp/globaldef.hpp"
-#include "sgpp/base/exception/operation_exception.hpp"
 
 namespace sgpp {
 namespace base {
 
-OCLPlatformWrapper::OCLPlatformWrapper(cl_platform_id platformId, char(&platformName)[128],
+OCLPlatformWrapper::OCLPlatformWrapper(cl_platform_id platformId, char (&platformName)[128],
                                        const std::vector<cl_device_id> &deviceIds,
                                        const std::vector<std::string> &deviceNames)
     : platformId(platformId), deviceIds(deviceIds), deviceNames(deviceNames) {
@@ -99,16 +99,16 @@ OCLPlatformWrapper::~OCLPlatformWrapper() {
     err = clReleaseCommandQueue(this->commandQueues[i]);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Could not release command queue! Error Code: " << err << std::endl;
-      throw sgpp::base::operation_exception(errorString.str());
+      std::cerr << "OCL Error: Could not release command queue! Error Code: " << err << std::endl;
+      std::terminate();
     }
   }
 
   err = clReleaseContext(this->context);
   if (err != CL_SUCCESS) {
     std::stringstream errorString;
-    errorString << "OCL Error: Could not release context! Error Code: " << err << std::endl;
-    throw sgpp::base::operation_exception(errorString.str());
+    std::cerr << "OCL Error: Could not release context! Error Code: " << err << std::endl;
+    std::terminate();
   }
 }
 

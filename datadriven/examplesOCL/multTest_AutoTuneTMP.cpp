@@ -6,15 +6,17 @@
 #include <random>
 #include <string>
 
+#include "autotune/autotune.hpp"
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
+#include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/base/operation/BaseOpFactory.hpp"
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingOCLMultiPlatformAutoTuneTMP/OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
-#include "autotune/autotune.hpp"
 
 AUTOTUNE_DECLARE_DEFINE_KERNEL(int(int), add_one)
 
@@ -61,11 +63,12 @@ int main(int argc, char** argv) {
   adaptConfig.percent_ = 200.0;
   adaptConfig.threshold_ = 0.0;
 
-  sgpp::base::OCLOperationConfiguration parameters("platformFloat.cfg");
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      std::make_shared<sgpp::base::OCLOperationConfiguration>("platformFloat.cfg");
 
-  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-      sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
+  // sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+  //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+  //     sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
@@ -98,10 +101,17 @@ int main(int argc, char** argv) {
     alpha[i] = static_cast<double>(i) + 1.0;
   }
 
-  std::cout << "creating operation with unrefined grid" << std::endl;
-  std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+  // std::cout << "creating operation with unrefined grid" << std::endl;
+  // std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
+  //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
+  //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+
+  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
+      std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
+
+  sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
+      OperationMultiEvalStreamingOCLMultiPlatform<double>
+          eval(*grid, trainingData, manager, parameters);
 
   doAllRefinements(adaptConfig, *grid, gridGen, alpha);
 
@@ -112,16 +122,16 @@ int main(int argc, char** argv) {
   dataSizeVectorResult.setAll(0);
 
   std::cout << "preparing operation for refined grid" << std::endl;
-  eval->prepare();
+  eval.prepare();
 
   std::cout << "calculating result" << std::endl;
 
   for (size_t i = 0; i < 1; i++) {
     std::cout << "repeated mult: " << i << std::endl;
-    eval->mult(alpha, dataSizeVectorResult);
+    eval.mult(alpha, dataSizeVectorResult);
   }
 
-  std::cout << "duration: " << eval->getDuration() << std::endl;
+  std::cout << "duration: " << eval.getDuration() << std::endl;
 
   //    sgpp::base::DataVector alpha2(gridStorage.getSize());
   //    alpha2.setAll(0.0);
