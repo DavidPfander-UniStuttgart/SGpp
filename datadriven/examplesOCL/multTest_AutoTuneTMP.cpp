@@ -46,12 +46,12 @@ int main(int argc, char** argv) {
   //  std::string fileName = "debugging.arff";
   //  std::string fileName = "debugging.arff";
   //  std::string fileName = "friedman2_4d_300000.arff";
-  std::string fileName = "friedman1_10d_150000.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   //  std::string fileName = "friedman_10d.arff";
   //  std::string fileName = "DR5_train.arff";
   //  std::string fileName = "debugging_small.arff";
 
-  uint32_t level = 8;
+  uint32_t level = 5;
 
   sgpp::base::AdpativityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
   adaptConfig.threshold_ = 0.0;
 
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
-      std::make_shared<sgpp::base::OCLOperationConfiguration>("platformFloat.cfg");
+      std::make_shared<sgpp::base::OCLOperationConfiguration>("platformDouble.cfg");
 
   // sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
   //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
   size_t dim = dataset.getDimension();
   //    std::unique_ptr<sgpp::base::Grid> grid = sgpp::base::Grid::createLinearGrid(dim);
 
-  bool modLinear = true;
+  bool modLinear = false;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
   if (modLinear) {
     grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));
@@ -103,12 +103,12 @@ int main(int argc, char** argv) {
   //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
   //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
 
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
-      std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
+  // std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
+  //     std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
 
   sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
-      OperationMultiEvalStreamingOCLMultiPlatform<double>
-          eval(*grid, trainingData, manager, parameters);
+      OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP<double>
+          eval(*grid, trainingData, parameters);
 
   doAllRefinements(adaptConfig, *grid, gridGen, alpha);
 
@@ -146,6 +146,8 @@ int main(int argc, char** argv) {
 
   evalCompare->mult(alpha, dataSizeVectorResultCompare);
 
+  std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
+
   double mse = 0.0;
 
   double largestDifferenceMine = 0.0;
@@ -160,8 +162,8 @@ int main(int argc, char** argv) {
       largestDifferenceReference = dataSizeVectorResultCompare[i];
     }
 
-    //    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-    //              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
 
     mse += difference * difference;
   }

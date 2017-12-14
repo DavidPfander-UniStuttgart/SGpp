@@ -54,17 +54,17 @@ namespace StreamingOCLMultiPlatformAutoTuneTMP {
  * @see StreamingOCLMultiPlatform::KernelMultTranspose
  */
 template <typename T>
-class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultipleEval {
+class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::OperationMultipleEval {
  protected:
   size_t dims;
   double duration;
   bool verbose;
 
-  std::shared_ptr<base::OCLManagerMultiPlatform> manager;
+  // std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   std::shared_ptr<base::OCLOperationConfiguration> ocl_parameters_mult;
-  std::shared_ptr<sgpp::datadriven::StreamingOCLMultiPlatform::
-                      OperationMultiEvalStreamingOCLMultiPlatform<double>>
-      eval;
+  // std::shared_ptr<sgpp::datadriven::StreamingOCLMultiPlatform::
+  //                     OperationMultiEvalStreamingOCLMultiPlatform<double>>
+  //     eval;
 
   autotune::countable_set autotune_parameters_mult;
   //   std::unique_ptr<sgpp::base::OperationMultipleEval>
@@ -83,38 +83,53 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
    * @param manager The OpenCL manager that manages OpenCL internels for this kernel
    * @param parameters The configuration of the kernel leading to different compute kernels
    */
-  OperationMultiEvalStreamingOCLMultiPlatform(
+  OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP(
       base::Grid &grid, base::DataMatrix &dataset,
-      std::shared_ptr<base::OCLManagerMultiPlatform> manager,
+      // std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       std::shared_ptr<base::OCLOperationConfiguration> parameters)
-      : OperationMultipleEval(grid, dataset), duration(-1.0), manager(manager) {
+      : OperationMultipleEval(grid, dataset),
+        duration(-1.0)
+  // ,manager(manager)
+  {
     this->dims = dataset.getNcols();  // be aware of transpose!
     this->verbose = (*parameters)["VERBOSE"].getBool();
     this->ocl_parameters_mult = std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
         std::shared_ptr<base::OperationConfiguration>(parameters->clone()));
 
-    autotune::fixed_set_parameter p1("PAR_1", {"eins", "zwei", "drei"});
+    autotune::fixed_set_parameter p1("LOCAL_SIZE", {64, 128, 256});
+    autotune::fixed_set_parameter p2("KERNEL_USE_LOCAL_MEMORY", {true, false});
+    autotune::fixed_set_parameter p3("KERNEL_STORE_DATA", {"array"});
+    autotune::fixed_set_parameter p4("KERNEL_MAX_DIM_UNROLL", {0, 10});
+    autotune::fixed_set_parameter p5("KERNEL_DATA_BLOCK_SIZE", {0, 1, 2, 4});
+    // autotune::fixed_set_parameter p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {0, 1, 2, 4});
+    autotune::fixed_set_parameter p7("KERNEL_SCHEDULE_SIZE", {102400});
+    autotune::fixed_set_parameter p8("KERNEL_PREFETCH_SIZE", {32, 64, 128});
+    // autotune::fixed_set_parameter p9("KERNEL_TRANS_PREFETCH_SIZE", {32, 64, 128});
+
     autotune_parameters_mult.add_parameter(p1);
-    autotune::countable_continuous_parameter p2("PAR_2", 1.0, 1.0, 1.0, 5.0);
     autotune_parameters_mult.add_parameter(p2);
-
-    sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-        sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-        sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
-
-    std::shared_ptr<sgpp::base::OperationMultipleEval> eval_uncasted =
-        std::shared_ptr<sgpp::base::OperationMultipleEval>(
-            datadriven::createStreamingOCLMultiPlatformConfigured(grid, dataset, configuration));
-    eval = std::dynamic_pointer_cast<sgpp::datadriven::StreamingOCLMultiPlatform::
-                                         OperationMultiEvalStreamingOCLMultiPlatform<double>>(
-        eval_uncasted);
+    autotune_parameters_mult.add_parameter(p3);
+    autotune_parameters_mult.add_parameter(p4);
+    autotune_parameters_mult.add_parameter(p5);
+    // autotune_parameters_mult.add_parameter(p6);
+    autotune_parameters_mult.add_parameter(p7);
+    autotune_parameters_mult.add_parameter(p8);
+    // autotune_parameters_mult.add_parameter(p9);
 
     autotune::mult_with_tuning.set_kernel_functor(
         [this](base::DataVector &alpha, base::DataVector &result) {
-          // apply parameters to kernel
-          // TODO:
-          // run kernel
-          this->eval->mult(alpha, result);
+          // apply parameters to kernel by re-instantiating
+          // notice: of course, this is quite expensive
+          // TODO: improve this for more precise tuner runs
+          sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+              sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+              sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *(this->ocl_parameters_mult));
+
+          std::shared_ptr<sgpp::base::OperationMultipleEval> eval =
+              std::shared_ptr<sgpp::base::OperationMultipleEval>(
+                  datadriven::createStreamingOCLMultiPlatformConfigured(this->grid, this->dataset,
+                                                                        configuration));
+          eval->mult(alpha, result);
         });
 
     autotune::mult_with_tuning.set_create_parameter_file_functor(
@@ -127,13 +142,15 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
 
                 const std::string &kernelName =
                     sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName();
-                json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+                json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+                                             ? deviceNode["KERNELS"][kernelName]
+                                             : deviceNode["KERNELS"].addDictAttr(kernelName);
+                // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+                std::cout << "parameter name: " << p.first << " value: " << p.second << std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
               }
             }
           }
-          // in_kernel_parameter_1 = parameter_values["PAR_1"];
-          // in_kernel_parameter_2 = parameter_values["PAR_2"];
         });
     autotune::mult_with_tuning.set_verbose(true);
 
@@ -143,7 +160,7 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   /**
    * Destructor
    */
-  ~OperationMultiEvalStreamingOCLMultiPlatform() {}
+  ~OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP() {}
 
   /**
    * Performs the MultiEval operation \f$v:= B^T \alpha\f$.
@@ -152,7 +169,11 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
    * @param result A vector that contains the result in the order of the dataset
    */
   void mult(base::DataVector &alpha, base::DataVector &result) override {
-    eval->mult(alpha, result);
+    auto start = std::chrono::high_resolution_clock::now();
+    autotune::mult_with_tuning(alpha, result);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end - start;
+    duration = diff.count();
   }
 
   /**
@@ -164,7 +185,11 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
    * vector)
    */
   void multTranspose(base::DataVector &source, base::DataVector &result) override {
-    eval->multTranspose(source, result);
+    auto start = std::chrono::high_resolution_clock::now();
+    autotune::mult_transpose_with_tuning(source, result);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end - start;
+    duration = diff.count();
   }
 
   /**
@@ -177,12 +202,12 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
    * the
    * grid changes e.g., due to refinement.
    */
-  void prepare() override { eval->prepare(); }
+  void prepare() override {
+    // eval->prepare();
+  }
 
   void tune_mult(base::DataVector &alpha, base::DataVector &result) {
     autotune::tuners::bruteforce tuner(autotune::mult_with_tuning, autotune_parameters_mult);
-
-    tuner.setup_test([](double) -> bool { return true; });
     tuner.set_verbose(true);
 
     autotune::countable_set optimal_parameters = tuner.tune(alpha, result);

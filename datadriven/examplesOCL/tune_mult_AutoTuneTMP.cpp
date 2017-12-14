@@ -7,11 +7,13 @@
 #include <string>
 
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
+#include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/base/operation/BaseOpFactory.hpp"
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingOCLMultiPlatformAutoTuneTMP/OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 
@@ -58,11 +60,12 @@ int main(int argc, char** argv) {
   adaptConfig.percent_ = 200.0;
   adaptConfig.threshold_ = 0.0;
 
-  sgpp::base::OCLOperationConfiguration parameters("platformDouble.cfg");
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      std::make_shared<sgpp::base::OCLOperationConfiguration>("platformDouble.cfg");
 
-  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, parameters);
+  // sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+  //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+  //     sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
@@ -95,10 +98,17 @@ int main(int argc, char** argv) {
     alpha[i] = static_cast<double>(i) + 1.0;
   }
 
-  std::cout << "creating operation with unrefined grid" << std::endl;
-  std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+  // std::cout << "creating operation with unrefined grid" << std::endl;
+  // std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
+  //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
+  //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+
+  // std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
+  //     std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
+
+  sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
+      OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP<double>
+          eval(*grid, trainingData, parameters);
 
   doAllRefinements(adaptConfig, *grid, gridGen, alpha);
 
@@ -109,56 +119,60 @@ int main(int argc, char** argv) {
   dataSizeVectorResult.setAll(0);
 
   std::cout << "preparing operation for refined grid" << std::endl;
-  eval->prepare();
+  eval.prepare();
 
-  std::cout << "calculating result" << std::endl;
+  std::cout << "starting tuning" << std::endl;
 
-  for (size_t i = 0; i < 1; i++) {
-    std::cout << "repeated mult: " << i << std::endl;
-    eval->mult(alpha, dataSizeVectorResult);
-  }
+  eval.tune_mult(alpha, dataSizeVectorResult);
 
-  std::cout << "duration: " << eval->getDuration() << std::endl;
+  // for (size_t i = 0; i < 1; i++) {
+  //   std::cout << "repeated mult: " << i << std::endl;
+  //   eval.mult(alpha, dataSizeVectorResult);
+  // }
+
+  // std::cout << "duration: " << eval.getDuration() << std::endl;
 
   //    sgpp::base::DataVector alpha2(gridStorage.getSize());
   //    alpha2.setAll(0.0);
   //
   //    eval->multTranspose(dataSizeVectorResult, alpha2);
 
-  std::cout << "calculating comparison values..." << std::endl;
+  // std::cout << "calculating comparison values..." << std::endl;
 
-  std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
+  // std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
+  //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
+  //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
 
-  sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
-  dataSizeVectorResultCompare.setAll(0.0);
+  // sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
+  // dataSizeVectorResultCompare.setAll(0.0);
 
-  evalCompare->mult(alpha, dataSizeVectorResultCompare);
+  // evalCompare->mult(alpha, dataSizeVectorResultCompare);
 
-  double mse = 0.0;
+  // std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
 
-  double largestDifferenceMine = 0.0;
-  double largestDifferenceReference = 0.0;
-  double largestDifference = 0.0;
+  // double mse = 0.0;
 
-  for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
-    double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
-    if (difference > largestDifference) {
-      largestDifference = difference;
-      largestDifferenceMine = dataSizeVectorResult[i];
-      largestDifferenceReference = dataSizeVectorResultCompare[i];
-    }
+  // double largestDifferenceMine = 0.0;
+  // double largestDifferenceReference = 0.0;
+  // double largestDifference = 0.0;
 
-    //    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-    //              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+  // for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
+  //   double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
+  //   if (difference > largestDifference) {
+  //     largestDifference = difference;
+  //     largestDifferenceMine = dataSizeVectorResult[i];
+  //     largestDifferenceReference = dataSizeVectorResultCompare[i];
+  //   }
 
-    mse += difference * difference;
-  }
+  //   // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+  //   //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
 
-  std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
-            << " ref: " << largestDifferenceReference << std::endl;
+  //   mse += difference * difference;
+  // }
 
-  mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
-  std::cout << "mse: " << mse << std::endl;
+  // std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
+  //           << " ref: " << largestDifferenceReference << std::endl;
+
+  // mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
+  // std::cout << "mse: " << mse << std::endl;
 }
