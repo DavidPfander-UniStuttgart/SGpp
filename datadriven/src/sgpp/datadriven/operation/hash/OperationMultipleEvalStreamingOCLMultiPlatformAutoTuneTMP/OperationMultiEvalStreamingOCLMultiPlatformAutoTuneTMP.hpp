@@ -96,14 +96,14 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
     this->ocl_parameters_mult = std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
         std::shared_ptr<base::OperationConfiguration>(parameters->clone()));
 
-    autotune::fixed_set_parameter p1("LOCAL_SIZE", {64, 128, 256});
-    autotune::fixed_set_parameter p2("KERNEL_USE_LOCAL_MEMORY", {true, false});
-    autotune::fixed_set_parameter p3("KERNEL_STORE_DATA", {"array"});
-    autotune::fixed_set_parameter p4("KERNEL_MAX_DIM_UNROLL", {0, 10});
-    autotune::fixed_set_parameter p5("KERNEL_DATA_BLOCK_SIZE", {0, 1, 2, 4});
+    autotune::fixed_set_parameter<int64_t> p1("LOCAL_SIZE", {64, 128, 256});
+    autotune::fixed_set_parameter<bool> p2("KERNEL_USE_LOCAL_MEMORY", {true, false});
+    autotune::fixed_set_parameter<std::string> p3("KERNEL_STORE_DATA", {"array"});
+    autotune::fixed_set_parameter<int64_t> p4("KERNEL_MAX_DIM_UNROLL", {0, 10});
+    autotune::fixed_set_parameter<int64_t> p5("KERNEL_DATA_BLOCK_SIZE", {0, 1, 2, 4});
     // autotune::fixed_set_parameter p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {0, 1, 2, 4});
-    autotune::fixed_set_parameter p7("KERNEL_SCHEDULE_SIZE", {102400});
-    autotune::fixed_set_parameter p8("KERNEL_PREFETCH_SIZE", {32, 64, 128});
+    autotune::fixed_set_parameter<int64_t> p7("KERNEL_SCHEDULE_SIZE", {102400});
+    autotune::fixed_set_parameter<int64_t> p8("KERNEL_PREFETCH_SIZE", {32, 64, 128});
     // autotune::fixed_set_parameter p9("KERNEL_TRANS_PREFETCH_SIZE", {32, 64, 128});
 
     autotune_parameters_mult.add_parameter(p1);
