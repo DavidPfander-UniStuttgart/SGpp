@@ -42,14 +42,8 @@ int main(int argc, char** argv) {
    std::cout << "internal precision: " << parameters.get("INTERNAL_PRECISION")
    << std::endl;*/
 
-  //  std::string fileName = "friedman2_90000.arff";
-  //  std::string fileName = "debugging.arff";
-  //  std::string fileName = "debugging.arff";
-  //  std::string fileName = "friedman2_4d_300000.arff";
+  // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
   std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  //  std::string fileName = "friedman_10d.arff";
-  //  std::string fileName = "DR5_train.arff";
-  //  std::string fileName = "debugging_small.arff";
 
   uint32_t level = 5;
 

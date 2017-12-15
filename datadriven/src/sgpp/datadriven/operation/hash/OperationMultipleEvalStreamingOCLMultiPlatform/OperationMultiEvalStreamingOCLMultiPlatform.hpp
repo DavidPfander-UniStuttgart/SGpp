@@ -150,6 +150,7 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
       json::Node &kernelConfiguration =
           deviceConfiguration["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
+      std::cout << "adding new multKernels..." << std::endl;
       multKernels.emplace_back(devices[deviceIndex], dims, this->manager, kernelConfiguration,
                                queueLoadBalancerMult);
       multTransposeKernels.emplace_back(devices[deviceIndex], dims, this->manager,
@@ -402,7 +403,7 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
 
     gridSizeUnpadded = storage.getSize();
     gridSizePadded = storage.getSize() + padding;
-    
+
     level = std::vector<T>(gridSizePadded * dims);
     index = std::vector<T>(gridSizePadded * dims);
 
@@ -483,7 +484,7 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     size_t remainder = index % blockSize;
     if (remainder == 0) {
       return index;
-    }    
+    }
     return index - remainder;
   }
 };

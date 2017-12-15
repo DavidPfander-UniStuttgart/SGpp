@@ -4,13 +4,13 @@
 // sgpp.sparsegrids.org
 
 #include <iostream>
-#include <sstream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 
-#include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/exception/operation_exception.hpp"
+#include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 
 namespace sgpp {
 namespace base {
@@ -28,6 +28,12 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(bool verbose) {
   overallDeviceCount = 0;
 
   this->configure(*parameters, false);
+  if (overallDeviceCount == 0) {
+    std::stringstream errorString;
+    errorString << "OCL Error: either no devices available, or no devices match the configuration!"
+                << std::endl;
+    throw sgpp::base::operation_exception(errorString.str());
+  }
 }
 
 OCLManagerMultiPlatform::OCLManagerMultiPlatform(
@@ -56,6 +62,12 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(
   this->overallDeviceCount = 0;
 
   this->configure(*parameters, true);
+  if (overallDeviceCount == 0) {
+    std::stringstream errorString;
+    errorString << "OCL Error: either no devices available, or no devices match the configuration!"
+                << std::endl;
+    throw sgpp::base::operation_exception(errorString.str());
+  }
 }
 
 OCLManagerMultiPlatform::~OCLManagerMultiPlatform() {}
@@ -105,8 +117,7 @@ void OCLManagerMultiPlatform::buildKernel(
       buffer = buffer.substr(0, buffer.find('\0'));
 
       if (verbose) {
-        std::cout << "--- Build Log ---" << std::endl
-                  << buffer << std::endl;
+        std::cout << "--- Build Log ---" << std::endl << buffer << std::endl;
       }
 
       std::stringstream errorString;

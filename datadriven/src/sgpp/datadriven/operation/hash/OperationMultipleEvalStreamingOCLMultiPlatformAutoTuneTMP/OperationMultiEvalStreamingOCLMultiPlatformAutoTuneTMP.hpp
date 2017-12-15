@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <chrono>
 #include <mutex>  // NOLINT(build/c++11)
+#include <sstream>
 #include <vector>
 
 #include "sgpp/base/exception/operation_exception.hpp"
@@ -62,6 +63,7 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
 
   // std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   std::shared_ptr<base::OCLOperationConfiguration> ocl_parameters_mult;
+  std::shared_ptr<sgpp::base::OperationMultipleEval> eval_mult;
   // std::shared_ptr<sgpp::datadriven::StreamingOCLMultiPlatform::
   //                     OperationMultiEvalStreamingOCLMultiPlatform<double>>
   //     eval;
@@ -96,12 +98,14 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
     this->ocl_parameters_mult = std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
         std::shared_ptr<base::OperationConfiguration>(parameters->clone()));
 
+    autotune::mult_with_tuning.set_write_measurement("mult_bruteforce");
+
     autotune::fixed_set_parameter<int64_t> p1("LOCAL_SIZE", {64, 128, 256});
     autotune::fixed_set_parameter<bool> p2("KERNEL_USE_LOCAL_MEMORY", {true, false});
-    autotune::fixed_set_parameter<std::string> p3("KERNEL_STORE_DATA", {"array"});
-    autotune::fixed_set_parameter<int64_t> p4("KERNEL_MAX_DIM_UNROLL", {0, 10});
-    autotune::fixed_set_parameter<int64_t> p5("KERNEL_DATA_BLOCK_SIZE", {0, 1, 2, 4});
-    // autotune::fixed_set_parameter p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {0, 1, 2, 4});
+    autotune::fixed_set_parameter<std::string> p3("KERNEL_STORE_DATA", {"array"}, false);
+    autotune::fixed_set_parameter<int64_t> p4("KERNEL_MAX_DIM_UNROLL", {1, 10});
+    autotune::fixed_set_parameter<int64_t> p5("KERNEL_DATA_BLOCK_SIZE", {1, 2, 4});
+    // autotune::fixed_set_parameter p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {1, 2, 4});
     autotune::fixed_set_parameter<int64_t> p7("KERNEL_SCHEDULE_SIZE", {102400});
     autotune::fixed_set_parameter<int64_t> p8("KERNEL_PREFETCH_SIZE", {32, 64, 128});
     // autotune::fixed_set_parameter p9("KERNEL_TRANS_PREFETCH_SIZE", {32, 64, 128});
@@ -125,12 +129,14 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
               sgpp::datadriven::OperationMultipleEvalType::STREAMING,
               sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *(this->ocl_parameters_mult));
 
-          std::shared_ptr<sgpp::base::OperationMultipleEval> eval =
-              std::shared_ptr<sgpp::base::OperationMultipleEval>(
-                  datadriven::createStreamingOCLMultiPlatformConfigured(this->grid, this->dataset,
-                                                                        configuration));
-          eval->mult(alpha, result);
+          eval_mult = std::shared_ptr<sgpp::base::OperationMultipleEval>(
+              datadriven::createStreamingOCLMultiPlatformConfigured(this->grid, this->dataset,
+                                                                    configuration));
+          eval_mult->mult(alpha, result);
         });
+
+    autotune::mult_with_tuning.set_kernel_duration_functor(
+        [this]() { return this->eval_mult->getDuration(); });
 
     autotune::mult_with_tuning.set_create_parameter_file_functor(
         [this](autotune::parameter_value_set &parameter_values) {
@@ -148,9 +154,13 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
                 // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
                 std::cout << "parameter name: " << p.first << " value: " << p.second << std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
+                kernelNode.replaceTextAttr("VERBOSE", "true");
               }
             }
           }
+          std::stringstream ss;
+          this->ocl_parameters_mult->serialize(ss, 0);
+          std::cout << ss.str() << std::endl;
         });
     autotune::mult_with_tuning.set_verbose(true);
 

@@ -6,9 +6,9 @@
 #include <sgpp/base/tools/json/DictNode.hpp>
 
 #include <sgpp/base/tools/json/IDNode.hpp>
-#include <sgpp/base/tools/json/json_exception.hpp>
 #include <sgpp/base/tools/json/ListNode.hpp>
 #include <sgpp/base/tools/json/TextNode.hpp>
+#include <sgpp/base/tools/json/json_exception.hpp>
 
 #include <fstream>
 #include <string>
