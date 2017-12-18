@@ -72,22 +72,28 @@ int main(int argc, char** argv) {
   std::cout << "number of grid points: " << gridStorage.getSize() << std::endl;
   std::cout << "number of data points: " << dataset.getNumberInstances() << std::endl;
 
-  sgpp::base::DataVector alpha(gridStorage.getSize());
+  sgpp::base::DataVector dataSizeVector(dataset.getNumberInstances());
 
-  for (size_t i = 0; i < alpha.getSize(); i++) {
-    //    alpha[i] = dist(mt);
-    alpha[i] = static_cast<double>(i) + 1.0;
+  for (size_t i = 0; i < dataSizeVector.getSize(); i++) {
+    dataSizeVector[i] = static_cast<double>(i + 1);
   }
 
   sgpp::datadriven::OperationMultiEvalStreamingAutoTuneTMP eval(*grid, trainingData);
 
-  doAllRefinements(adaptConfig, *grid, gridGen, alpha);
+  sgpp::base::DataVector alphaRefine(gridStorage.getSize());
+
+  for (size_t i = 0; i < alphaRefine.getSize(); i++) {
+    //    alpha[i] = dist(mt);
+    alphaRefine[i] = static_cast<double>(i) + 1.0;
+  }
+
+  doAllRefinements(adaptConfig, *grid, gridGen, alphaRefine);
 
   std::cout << "number of grid points after refinement: " << gridStorage.getSize() << std::endl;
   std::cout << "grid set up" << std::endl;
 
-  sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
-  dataSizeVectorResult.setAll(0);
+  sgpp::base::DataVector alphaResult(gridStorage.getSize());
+  alphaResult.setAll(0);
 
   std::cout << "preparing operation for refined grid" << std::endl;
   eval.prepare();
@@ -96,15 +102,10 @@ int main(int argc, char** argv) {
 
   for (size_t i = 0; i < 1; i++) {
     std::cout << "repeated mult: " << i << std::endl;
-    eval.mult(alpha, dataSizeVectorResult);
+    eval.multTranspose(dataSizeVector, alphaResult);
   }
 
   std::cout << "duration: " << eval.getDuration() << std::endl;
-
-  //    sgpp::base::DataVector alpha2(gridStorage.getSize());
-  //    alpha2.setAll(0.0);
-  //
-  //    eval->multTranspose(dataSizeVectorResult, alpha2);
 
   std::cout << "calculating comparison values..." << std::endl;
 
@@ -112,12 +113,9 @@ int main(int argc, char** argv) {
       std::unique_ptr<sgpp::base::OperationMultipleEval>(
           sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
 
-  sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
-  dataSizeVectorResultCompare.setAll(0.0);
+  sgpp::base::DataVector alphaResultCompare(gridStorage.getSize());
 
-  evalCompare->mult(alpha, dataSizeVectorResultCompare);
-
-  std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
+  evalCompare->multTranspose(dataSizeVector, alphaResultCompare);
 
   double mse = 0.0;
 
@@ -125,16 +123,18 @@ int main(int argc, char** argv) {
   double largestDifferenceReference = 0.0;
   double largestDifference = 0.0;
 
-  for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
-    double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
+  for (size_t i = 0; i < alphaResultCompare.getSize(); i++) {
+    //    std::cout << "mine: " << alphaResult[i] << " ref: " <<
+    //    alphaResultCompare[i] << std::endl;
+    double difference = std::abs(alphaResult[i] - alphaResultCompare[i]);
     if (difference > largestDifference) {
       largestDifference = difference;
-      largestDifferenceMine = dataSizeVectorResult[i];
-      largestDifferenceReference = dataSizeVectorResultCompare[i];
+      largestDifferenceMine = alphaResult[i];
+      largestDifferenceReference = alphaResultCompare[i];
     }
 
-    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    //    std::cout << "difference: " << difference << " mine: " << alphaResult[i]
+    //              << " ref: " << alphaResultCompare[i] << std::endl;
 
     mse += difference * difference;
   }
@@ -142,6 +142,6 @@ int main(int argc, char** argv) {
   std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
             << " ref: " << largestDifferenceReference << std::endl;
 
-  mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
+  mse = mse / static_cast<double>(alphaResult.getSize());
   std::cout << "mse: " << mse << std::endl;
 }

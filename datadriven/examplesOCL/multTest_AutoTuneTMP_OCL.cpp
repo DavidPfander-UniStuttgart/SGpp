@@ -13,7 +13,7 @@
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
-#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingAutoTuneTMP/OperationMultiEvalStreamingAutoTuneTMP.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingOCLMultiPlatformAutoTuneTMP/OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 
@@ -37,8 +37,19 @@ void doAllRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::ba
 }
 
 int main(int argc, char** argv) {
-  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
+  /*    sgpp::base::OCLOperationConfiguration parameters;
+   parameters.readFromFile("StreamingOCL.cfg");
+   std::cout << "internal precision: " << parameters.get("INTERNAL_PRECISION")
+   << std::endl;*/
+
+  //  std::string fileName = "friedman2_90000.arff";
+  //  std::string fileName = "debugging.arff";
+  //  std::string fileName = "debugging.arff";
+  //  std::string fileName = "friedman2_4d_300000.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  //  std::string fileName = "friedman_10d.arff";
+  //  std::string fileName = "DR5_train.arff";
+  //  std::string fileName = "debugging_small.arff";
 
   uint32_t level = 5;
 
@@ -49,12 +60,20 @@ int main(int argc, char** argv) {
   adaptConfig.percent_ = 200.0;
   adaptConfig.threshold_ = 0.0;
 
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      std::make_shared<sgpp::base::OCLOperationConfiguration>("platformDouble.cfg");
+
+  // sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+  //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+  //     sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
+
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
 
   sgpp::base::DataMatrix& trainingData = dataset.getData();
 
   size_t dim = dataset.getDimension();
+  //    std::unique_ptr<sgpp::base::Grid> grid = sgpp::base::Grid::createLinearGrid(dim);
 
   bool modLinear = false;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
@@ -79,7 +98,17 @@ int main(int argc, char** argv) {
     alpha[i] = static_cast<double>(i) + 1.0;
   }
 
-  sgpp::datadriven::OperationMultiEvalStreamingAutoTuneTMP eval(*grid, trainingData);
+  // std::cout << "creating operation with unrefined grid" << std::endl;
+  // std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
+  //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
+  //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+
+  // std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
+  //     std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
+
+  sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
+      OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP<double>
+          eval(*grid, trainingData, parameters);
 
   doAllRefinements(adaptConfig, *grid, gridGen, alpha);
 
@@ -133,8 +162,8 @@ int main(int argc, char** argv) {
       largestDifferenceReference = dataSizeVectorResultCompare[i];
     }
 
-    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
 
     mse += difference * difference;
   }
