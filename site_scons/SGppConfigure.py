@@ -202,6 +202,7 @@ def checkOpenCL(config):
 
   config.env.AppendUnique(CPPPATH=[config.env["AUTOTUNETMP_INCLUDE_PATH"]])
   config.env.AppendUnique(CPPPATH=[config.env["CPPJIT_INCLUDE_PATH"]])
+  config.env.AppendUnique(CPPPATH=[config.env["VC_INCLUDE_PATH"]])
   config.env.AppendUnique(LIBS="dl")
 
   if config.env["USE_OCL"]:
@@ -263,7 +264,7 @@ def checkZlib(config):
         else:
             if not config.CheckLibWithHeader("z","zlib.h", language="C++",autoadd=0):
                 Helper.printErrorAndExit("The flag USE_ZLIB was set, but the necessary header 'zlib.h' or library was not found.")
-                
+
             config.env["CPPDEFINES"]["ZLIB"] = "1"
 
 def checkBoostTests(config):
@@ -404,9 +405,10 @@ def configureGNUCompiler(config):
   if not config.CheckCompiler():
     Helper.printErrorAndExit("Compiler found, but it is not working! (Hint: check flags)")
 
+  # disabled because of Vc: -Wconversion
   allWarnings = \
       "-Wall -Wextra \
-      -Wcast-qual -Wconversion -Wformat=2 \
+      -Wcast-qual  -Wformat=2 \
       -Wformat-nonliteral -Wformat-security -Winit-self  \
       -Wmissing-format-attribute \
       -Wmissing-include-dirs -Wpacked \
@@ -414,7 +416,8 @@ def configureGNUCompiler(config):
       -Wno-unused-parameter".split(" ")
 
   if not config.env['USE_HPX']:
-    allWarnings.append(['-Wswitch-enum', '-Wredundant-decls', '-pedantic', '-Wswitch-default'])
+    # disabled because of Vc: , '-Wswitch-default'
+    allWarnings.append(['-Wswitch-enum', '-Wredundant-decls', '-pedantic'])
   else:
     allWarnings.append(['-Wno-conversion', '-Wno-format-nonliteral'])
 
