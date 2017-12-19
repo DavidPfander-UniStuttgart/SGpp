@@ -133,8 +133,8 @@ int main(int argc, char** argv) {
       largestDifferenceReference = dataSizeVectorResultCompare[i];
     }
 
-    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
 
     mse += difference * difference;
   }

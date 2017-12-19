@@ -269,8 +269,8 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
   }
 
   void tune_mult(base::DataVector &alpha, base::DataVector &result) {
-    autotune::mult_with_tuning.set_write_measurement("mult_bruteforce");
     autotune::tuners::bruteforce tuner(autotune::mult_with_tuning, autotune_parameters_mult);
+    tuner.set_write_measurement("mult_bruteforce");
     tuner.set_verbose(true);
 
     autotune::countable_set optimal_parameters = tuner.tune(alpha, result);
@@ -278,9 +278,9 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
   }
 
   void tune_multTranspose(base::DataVector &alpha, base::DataVector &result) {
-    autotune::mult_transpose_with_tuning.set_write_measurement("multTranspose_bruteforce");
     autotune::tuners::bruteforce tuner(autotune::mult_with_tuning,
                                        autotune_parameters_multTranspose);
+    tuner.set_write_measurement("multTranspose_bruteforce");
     tuner.set_verbose(true);
 
     autotune::countable_set optimal_parameters = tuner.tune(alpha, result);

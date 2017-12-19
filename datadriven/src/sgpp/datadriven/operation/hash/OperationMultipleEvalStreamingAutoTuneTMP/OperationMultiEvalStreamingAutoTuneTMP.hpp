@@ -13,6 +13,9 @@
 
 #include <chrono>
 
+#include <Vc/Vc>
+using Vc::double_v;
+
 namespace sgpp {
 namespace datadriven {
 
@@ -38,6 +41,7 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
   ~OperationMultiEvalStreamingAutoTuneTMP() {}
 
   void mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) override {
+    this->prepare();
     auto start = std::chrono::high_resolution_clock::now();
 
     // std::cout << "dims: " << dims << std::endl;
@@ -45,54 +49,127 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     // std::cout << "grid_size: " << grid_size << std::endl;
 
     // #pragma omp parallel for
-    for (size_t i = 0; i < dataset_size; i++) {
-      result[i] = 0.0;
-      for (size_t j = 0; j < grid_size; j++) {
-        double evalNd = alpha[j];
+    // for (size_t i = 0; i < dataset_size; i++) {
+    //   result[i] = 0.0;
+    //   for (size_t j = 0; j < grid_size; j++) {
+    //     double evalNd = alpha[j];
+
+    //     for (size_t d = 0; d < dims; d++) {
+    //       // 2^l * x - i (level_list stores 2^l, not l)
+    //       double temp = level_list[d * grid_size + j] * dataset_SoA[d * dataset_size + i] -
+    //                     index_list[d * grid_size + j];
+    //       double eval1d = std::max<double>(1.0 - std::fabs(temp), 0.0);
+    //       evalNd *= eval1d;
+    //     }
+    //     result[i] += evalNd;
+    //   }
+    // }
+
+    std::cout << "I'm vectorized with size: " << double_v::size() << std::endl;
+
+    std::vector<double> result_padded(dataset_size);
+
+    const double_v one = 1.0;
+    const double_v zero = 0.0;
+
+#pragma omp parallel for
+    for (size_t i = 0; i < dataset_size; i += double_v::size()) {
+      double_v result_temp = 0.0;
+      for (size_t j = 0; j < alpha.size(); j++) {
+        double_v evalNd = alpha[j];
 
         for (size_t d = 0; d < dims; d++) {
           // 2^l * x - i (level_list stores 2^l, not l)
-          double temp = level_list[d * grid_size + j] * dataset_SoA[d * dataset_size + i] -
-                        index_list[d * grid_size + j];
-          double eval1d = std::max<double>(1.0 - std::fabs(temp), 0.0);
+          double_v level_dim = level_list[d * grid_size + j];
+          double_v index_dim = index_list[d * grid_size + j];
+          double_v data_dim =
+              double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
+          double_v temp = level_dim * data_dim - index_dim;
+          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);
           evalNd *= eval1d;
         }
-        result[i] += evalNd;
+        result_temp += evalNd;
       }
+      result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = diff.count();
+
+    for (size_t i = 0; i < result.size(); i++) {
+      result[i] = result_padded[i];
+    }
   }
 
   void multTranspose(sgpp::base::DataVector& source, sgpp::base::DataVector& result) override {
+    this->prepare();
+
     auto start = std::chrono::high_resolution_clock::now();
+    // // #pragma omp parallel for
+    // for (size_t i = 0; i < dataset_size; i++) {
+    //   for (size_t j = 0; j < grid_size; j++) {
+    //     double evalNd = source[i];
+
+    //     for (size_t d = 0; d < dims; d++) {
+    //       double temp = level_list[d * grid_size + j] * dataset_SoA[d * dataset_size + i] -
+    //                     index_list[d * grid_size + j];
+    //       double eval1d = std::max<double>(1.0 - fabs(temp), 0.0);
+    //       evalNd *= eval1d;
+    //     }
+
+    //     // #pragma omp atomic
+    //     result[j] += evalNd;
+    //   }
+    // }
+
+    std::vector<double> result_padded(grid_size);
+
+    const double_v one = 1.0;
+    const double_v zero = 0.0;
+
     // #pragma omp parallel for
-    for (size_t i = 0; i < dataset_size; i++) {
-      for (size_t j = 0; j < grid_size; j++) {
-        double evalNd = source[i];
+    for (size_t j = 0; j < grid_size; j += double_v::size()) {
+      double_v result_temp = 0.0;
+      for (size_t i = 0; i < source.size(); i++) {
+        double_v evalNd = source[i];
 
         for (size_t d = 0; d < dims; d++) {
-          double temp = level_list[d * grid_size + j] * dataset_SoA[d * dataset_size + i] -
-                        index_list[d * grid_size + j];
-          double eval1d = std::max<double>(1.0 - fabs(temp), 0.0);
+          // 2^l * x - i (level_list stores 2^l, not l)
+          double_v level_dim = double_v(&level_list[d * grid_size + j], Vc::flags::element_aligned);
+          double_v index_dim = double_v(&index_list[d * grid_size + j], Vc::flags::element_aligned);
+          double_v data_dim = dataset_SoA[d * dataset_size + i];
+          // double_v level_dim = level_list[d * grid_size + j];
+          // double_v index_dim = index_list[d * grid_size + j];
+          // double_v data_dim =
+          //     double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
+          double_v temp = level_dim * data_dim - index_dim;
+          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);
           evalNd *= eval1d;
         }
-
-        // #pragma omp atomic
-        result[j] += evalNd;
+        result_temp += evalNd;
       }
+      // #pragma omp atomic
+      result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
     }
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = diff.count();
+
+    for (size_t i = 0; i < result.size(); i++) {
+      result[i] = result_padded[i];
+    }
   }
 
   void prepare() override {
     // grid as SoA
     sgpp::base::GridStorage& storage = grid.getStorage();
     grid_size = storage.getSize();
+    grid_size +=
+        grid_size % double_v::size() == 0 ? 0 : double_v::size() - grid_size % double_v::size();
+    std::cout << "double_v::size(): " << double_v::size() << std::endl;
+    std::cout << "storage.size(): " << storage.getSize() << std::endl;
+    std::cout << "grid_size: " << grid_size << std::endl;
     level_list.resize(grid_size * dims);
     index_list.resize(grid_size * dims);
     for (size_t i = 0; i < storage.getSize(); i++) {
@@ -105,12 +182,31 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
         index_list[d * grid_size + i] = static_cast<double>(index);
       }
     }
+    // setup padding
+    base::HashGridPoint& last_point = storage[storage.getSize() - 1];
+    for (size_t i = storage.getSize(); i < grid_size; i++) {
+      for (size_t d = 0; d < dims; d++) {
+        base::GridPoint::level_type level;
+        base::GridPoint::index_type index;
+        last_point.get(d, level, index);
+        level_list[d * grid_size + i] = static_cast<double>(1 << level);
+        index_list[d * grid_size + i] = static_cast<double>(index);
+      }
+    }
+
     // data as SoA
     dataset_size = dataset.getNrows();
+    dataset_size += dataset_size % double_v::size() == 0 ? 0 : dataset_size % double_v::size();
     dataset_SoA.resize(dataset_size * dims);
-    for (size_t i = 0; i < dataset_size; i++) {
+    for (size_t i = 0; i < dataset.getNrows(); i++) {
       for (size_t d = 0; d < dims; d++) {
         dataset_SoA[d * dataset_size + i] = dataset[i * dims + d];
+      }
+    }
+    // setup padding
+    for (size_t i = dataset.getNrows(); i < dataset_size; i++) {
+      for (size_t d = 0; d < dims; d++) {
+        dataset_SoA[d * dataset_size + i] = dataset[(dataset.getNrows() - 1) * dims + d];
       }
     }
   }
