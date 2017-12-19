@@ -56,9 +56,11 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
         double_v evalNd = alpha[j];
 
         for (size_t d = 0; d < dims; d++) {
+          // TODO: non-SoA probably faster
           // 2^l * x - i (level_list stores 2^l, not l)
           double_v level_dim = level_list[d * grid_size + j];
           double_v index_dim = index_list[d * grid_size + j];
+
           double_v data_dim =
               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
           double_v temp = level_dim * data_dim - index_dim;
@@ -97,6 +99,7 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
           // 2^l * x - i (level_list stores 2^l, not l)
           double_v level_dim = double_v(&level_list[d * grid_size + j], Vc::flags::element_aligned);
           double_v index_dim = double_v(&index_list[d * grid_size + j], Vc::flags::element_aligned);
+          // TODO: non-SoA probably faster
           double_v data_dim = dataset_SoA[d * dataset_size + i];
           double_v temp = level_dim * data_dim - index_dim;
           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);
@@ -123,9 +126,6 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     grid_size = storage.getSize();
     grid_size +=
         grid_size % double_v::size() == 0 ? 0 : double_v::size() - grid_size % double_v::size();
-    std::cout << "double_v::size(): " << double_v::size() << std::endl;
-    std::cout << "storage.size(): " << storage.getSize() << std::endl;
-    std::cout << "grid_size: " << grid_size << std::endl;
     level_list.resize(grid_size * dims);
     index_list.resize(grid_size * dims);
     for (size_t i = 0; i < storage.getSize(); i++) {
