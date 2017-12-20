@@ -20,7 +20,7 @@ namespace sgpp {
 namespace datadriven {
 
 class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEval {
-  static constexpr size_t data_blocking = 8;
+  static constexpr size_t data_blocking = 7;  // SKL 8 significantly slower
 
  protected:
   size_t dims;
