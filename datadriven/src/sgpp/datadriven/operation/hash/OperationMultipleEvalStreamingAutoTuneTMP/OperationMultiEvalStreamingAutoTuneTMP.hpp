@@ -20,17 +20,22 @@ namespace sgpp {
 namespace datadriven {
 
 class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEval {
-  static constexpr size_t data_blocking = 10;
+  static constexpr size_t data_blocking = 8;
 
  protected:
   size_t dims;
 
-  std::vector<double> level_list;
-  std::vector<double> index_list;
-  size_t grid_size;
+  std::vector<double> level_list_SoA;  // padded
+  std::vector<double> index_list_SoA;  // padded
+  size_t grid_size;                    // padded
 
-  std::vector<double> dataset_SoA;
-  size_t dataset_size;
+  std::vector<double> level_list;  // not padded
+  std::vector<double> index_list;  // not padded
+
+  std::vector<double> dataset_SoA;  // padded
+  size_t dataset_size;              // padded
+
+  std::vector<double> dataset_non_SoA;  // not padded
 
   double duration;
   bool verbose;
@@ -61,9 +66,9 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
 //         for (size_t d = 0; d < dims; d++) {
 //           // TODO: non-SoA probably faster
-//           // 2^l * x - i (level_list stores 2^l, not l)
-//           double_v level_dim = level_list[d * grid_size + j];
-//           double_v index_dim = index_list[d * grid_size + j];
+//           // 2^l * x - i (level_list_SoA stores 2^l, not l)
+//           double_v level_dim = level_list_SoA[d * grid_size + j];
+//           double_v index_dim = index_list_SoA[d * grid_size + j];
 
 //           double_v data_dim =
 //               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
@@ -76,50 +81,57 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 //       result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
 //     }
 
-#pragma omp parallel for
+// parameters:
+// - data blocking (grid blocking)
+
+// approximate register use:
+// - data_blocking-many accumulators (-> should not be a problem)
+// - data_blocking-many temps for 1d eval (expensive)
+// - data_blocking-many temps for dd eval accumulator (expensive)
+// - 2 registers for level and index (could theoretically be streamed from l1)
+// - 2 registers for "one" and "zero" (could theoretically be streamed from l1)
+// = 2 * data_blocking + 2 (either the constants or (level and index) can be streamed)
+
+#pragma omp parallel for schedule(static)
     for (size_t i = 0; i < dataset_size; i += data_blocking * double_v::size()) {
-      // double_v result_temp = 0.0;
       std::array<double_v, data_blocking> result_temps;
       for (size_t k = 0; k < data_blocking; k++) {
         result_temps[k] = 0.0;
       }
       for (size_t j = 0; j < alpha.size(); j++) {
-        // double_v evalNd = alpha[j];
         std::array<double_v, data_blocking> evalNds;
         for (size_t k = 0; k < data_blocking; k++) {
           evalNds[k] = alpha[j];
         }
 
         for (size_t d = 0; d < dims; d++) {
-          // TODO: non-SoA probably faster
-          // 2^l * x - i (level_list stores 2^l, not l)
-          double_v level_dim = level_list[d * grid_size + j];
-          double_v index_dim = index_list[d * grid_size + j];
+          // non-SoA is faster (2 streams, instead of 2d streams)
+          // 2^l * x - i (level_list_SoA stores 2^l, not l)
+          double_v level_dim = level_list[j * dims + d];
+          double_v index_dim = index_list[j * dims + d];
 
-          // double_v data_dim =
-          //     double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
           std::array<double_v, data_blocking> data_dims;
-          for (size_t k = 0; k < data_blocking; k++) {
+          for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
             data_dims[k] = double_v(&dataset_SoA[d * dataset_size + i + (k * double_v::size())],
                                     Vc::flags::element_aligned);
           }
-          // double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-          // double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-          // evalNd *= eval1d;                                      // 1 FLOPS
-
-          for (size_t k = 0; k < data_blocking; k++) {
-            double_v temp = level_dim * data_dims[k] - index_dim;  // 2 FLOPS
-            double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-            evalNds[k] *= eval1d;                                  // 1 FLOPS
+          std::array<double_v, data_blocking> temps;          // no op
+          for (size_t k = 0; k < data_blocking; k++) {        // unrolled, no op
+            temps[k] = level_dim * data_dims[k] - index_dim;  // 2 FLOPS (1 FMA)
+          }
+          std::array<double_v, data_blocking> eval1ds;            // no op
+          for (size_t k = 0; k < data_blocking; k++) {            // unrolled, no op
+            eval1ds[k] = Vc::max(one - Vc::abs(temps[k]), zero);  // 3 FLOPS
+          }
+          for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
+            evalNds[k] *= eval1ds[k];                   // 1 FLOPS
           }
         }
-        // result_temp += evalNd;  // total: 7d + 1 FLOPS
-        for (size_t k = 0; k < data_blocking; k++) {
-          result_temps[k] += evalNds[k];  // total: 7d + 1 FLOPS
+        for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
+          result_temps[k] += evalNds[k];              // total: 7d + 1 FLOPS
         }
       }
-      // result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
-      for (size_t k = 0; k < data_blocking; k++) {
+      for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
         result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
                                  Vc::flags::element_aligned);
       }
@@ -153,10 +165,10 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 //         double_v evalNd = source[i];
 
 //         for (size_t d = 0; d < dims; d++) {
-//           // 2^l * x - i (level_list stores 2^l, not l)
-//           double_v level_dim = double_v(&level_list[d * grid_size + j],
+//           // 2^l * x - i (level_list_SoA stores 2^l, not l)
+//           double_v level_dim = double_v(&level_list_SoA[d * grid_size + j],
 //           Vc::flags::element_aligned);
-//           double_v index_dim = double_v(&index_list[d * grid_size + j],
+//           double_v index_dim = double_v(&index_list_SoA[d * grid_size + j],
 //           Vc::flags::element_aligned);
 //           // TODO: non-SoA probably faster
 //           double_v data_dim = dataset_SoA[d * dataset_size + i];
@@ -170,16 +182,18 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 //       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
 //     }
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
     for (size_t j = 0; j < grid_size; j += double_v::size()) {
       double_v result_temp = 0.0;
       for (size_t i = 0; i < source.size(); i++) {
         double_v evalNd = source[i];
 
         for (size_t d = 0; d < dims; d++) {
-          // 2^l * x - i (level_list stores 2^l, not l)
-          double_v level_dim = double_v(&level_list[d * grid_size + j], Vc::flags::element_aligned);
-          double_v index_dim = double_v(&index_list[d * grid_size + j], Vc::flags::element_aligned);
+          // 2^l * x - i (level_list_SoA stores 2^l, not l)
+          double_v level_dim =
+              double_v(&level_list_SoA[d * grid_size + j], Vc::flags::element_aligned);
+          double_v index_dim =
+              double_v(&index_list_SoA[d * grid_size + j], Vc::flags::element_aligned);
 
           // TODO: non-SoA probably faster
           double_v data_dim = dataset_SoA[d * dataset_size + i];
@@ -212,16 +226,16 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     grid_size = storage.getSize();
     grid_size +=
         grid_size % double_v::size() == 0 ? 0 : double_v::size() - grid_size % double_v::size();
-    level_list.resize(grid_size * dims);
-    index_list.resize(grid_size * dims);
+    level_list_SoA.resize(grid_size * dims);
+    index_list_SoA.resize(grid_size * dims);
     for (size_t i = 0; i < storage.getSize(); i++) {
       base::HashGridPoint& point = storage[i];
       for (size_t d = 0; d < dims; d++) {
         base::GridPoint::level_type level;
         base::GridPoint::index_type index;
         point.get(d, level, index);
-        level_list[d * grid_size + i] = static_cast<double>(1 << level);
-        index_list[d * grid_size + i] = static_cast<double>(index);
+        level_list_SoA[d * grid_size + i] = static_cast<double>(1 << level);
+        index_list_SoA[d * grid_size + i] = static_cast<double>(index);
       }
     }
     // setup padding
@@ -231,14 +245,30 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
         base::GridPoint::level_type level;
         base::GridPoint::index_type index;
         last_point.get(d, level, index);
-        level_list[d * grid_size + i] = static_cast<double>(1 << level);
-        index_list[d * grid_size + i] = static_cast<double>(index);
+        level_list_SoA[d * grid_size + i] = static_cast<double>(1 << level);
+        index_list_SoA[d * grid_size + i] = static_cast<double>(index);
+      }
+    }
+    // grid as non-SoA for testing
+    level_list.resize(storage.getSize() * dims);
+    index_list.resize(storage.getSize() * dims);
+    for (size_t i = 0; i < storage.getSize(); i++) {
+      base::HashGridPoint& point = storage[i];
+      for (size_t d = 0; d < dims; d++) {
+        base::GridPoint::level_type level;
+        base::GridPoint::index_type index;
+        point.get(d, level, index);
+        level_list[i * dims + d] = static_cast<double>(1 << level);
+        index_list[i * dims + d] = static_cast<double>(index);
       }
     }
 
     // data as SoA
     dataset_size = dataset.getNrows();
-    dataset_size += dataset_size % double_v::size() == 0 ? 0 : dataset_size % double_v::size();
+    dataset_size += dataset_size % (data_blocking * double_v::size()) == 0
+                        ? 0
+                        : (data_blocking * double_v::size()) -
+                              (dataset_size % (data_blocking * double_v::size()));
     dataset_SoA.resize(dataset_size * dims);
     for (size_t i = 0; i < dataset.getNrows(); i++) {
       for (size_t d = 0; d < dims; d++) {
@@ -249,6 +279,14 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     for (size_t i = dataset.getNrows(); i < dataset_size; i++) {
       for (size_t d = 0; d < dims; d++) {
         dataset_SoA[d * dataset_size + i] = dataset[(dataset.getNrows() - 1) * dims + d];
+      }
+    }
+
+    // data as non-SoA for testing
+    dataset_non_SoA.resize(dataset.getNrows() * dims);
+    for (size_t i = 0; i < dataset.getNrows(); i++) {
+      for (size_t d = 0; d < dims; d++) {
+        dataset_non_SoA[i * dims + d] = dataset[i * dims + d];
       }
     }
   }
