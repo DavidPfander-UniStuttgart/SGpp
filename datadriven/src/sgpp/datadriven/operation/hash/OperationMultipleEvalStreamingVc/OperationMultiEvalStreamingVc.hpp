@@ -31,11 +31,10 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
   size_t dataset_size;
 
   double duration;
-  bool verbose;
 
  public:
-  OperationMultiEvalStreamingAutoTuneTMP(base::Grid& grid, base::DataMatrix& dataset, bool verbose)
-      : OperationMultipleEval(grid, dataset), dims(grid.getDimension()), verbose(verbose) {
+  OperationMultiEvalStreamingAutoTuneTMP(base::Grid& grid, base::DataMatrix& dataset)
+      : OperationMultipleEval(grid, dataset), dims(grid.getDimension()) {
     this->prepare();
   }
 
@@ -43,10 +42,9 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
   void mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) override {
     this->prepare();
+    auto start = std::chrono::high_resolution_clock::now();
 
     std::vector<double> result_padded(dataset_size);
-
-    auto start = std::chrono::high_resolution_clock::now();
 
     const double_v one = 1.0;
     const double_v zero = 0.0;
@@ -65,20 +63,17 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
           double_v data_dim =
               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
-          double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-          evalNd *= eval1d;                                      // 1 FLOPS
+          double_v temp = level_dim * data_dim - index_dim;
+          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);
+          evalNd *= eval1d;
         }
-        result_temp += evalNd;  // total: 7d + 1 FLOPS
+        result_temp += evalNd;
       }
       result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = diff.count();
-    double total_flops = dataset_size * alpha.size() * (6 * dims + 1);
-    std::cout << "flop: " << total_flops << std::endl;
-    std::cout << "gflops: " << ((total_flops * 1E-9) / duration) << std::endl;
 
     for (size_t i = 0; i < result.size(); i++) {
       result[i] = result_padded[i];
@@ -88,9 +83,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
   void multTranspose(sgpp::base::DataVector& source, sgpp::base::DataVector& result) override {
     this->prepare();
 
-    std::vector<double> result_padded(grid_size);
-
     auto start = std::chrono::high_resolution_clock::now();
+    std::vector<double> result_padded(grid_size);
 
     const double_v one = 1.0;
     const double_v zero = 0.0;
@@ -107,11 +101,11 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
           double_v index_dim = double_v(&index_list[d * grid_size + j], Vc::flags::element_aligned);
           // TODO: non-SoA probably faster
           double_v data_dim = dataset_SoA[d * dataset_size + i];
-          double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-          evalNd *= eval1d;                                      // 1 FLOPS
+          double_v temp = level_dim * data_dim - index_dim;
+          double_v eval1d = Vc::max(one - Vc::abs(temp), zero);
+          evalNd *= eval1d;
         }
-        result_temp += evalNd;  // total: 6d + 1
+        result_temp += evalNd;
       }
       // #pragma omp atomic
       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
@@ -120,10 +114,6 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = diff.count();
-
-    double total_flops = grid_size * source.size() * (6 * dims + 1);
-    std::cout << "flop: " << total_flops << std::endl;
-    std::cout << "gflops: " << ((total_flops * 1E-9) / duration) << std::endl;
 
     for (size_t i = 0; i < result.size(); i++) {
       result[i] = result_padded[i];
