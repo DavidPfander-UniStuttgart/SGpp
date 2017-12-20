@@ -462,6 +462,8 @@ def configureGNUCompiler(config):
     config.env.AppendUnique(CPPFLAGS=["-mavx512f"])
     config.env.AppendUnique(CPPFLAGS=["-mavx512cd"])
     config.env.AppendUnique(CPPFLAGS=["-mfma"])
+  elif config.env["ARCH"] == "native":
+    config.env.AppendUnique(CPPFLAGS=["-march=native", "-mtune=native"])
   else:
     Helper.printErrorAndExit("You must specify a valid ARCH value for gnu.",
                              "Available configurations are: sse3, sse42, avx, fma4, avx2, avx512")
