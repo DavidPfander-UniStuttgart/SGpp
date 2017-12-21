@@ -149,6 +149,7 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
         result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
                                  Vc::flags::element_aligned);
       }
+      result_temps_arr.memstore(&result_padded[i], Vc::flags::element_aligned);
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
