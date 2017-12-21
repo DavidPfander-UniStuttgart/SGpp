@@ -16,8 +16,6 @@
 #include <Vc/Vc>
 using Vc::double_v;
 
-#include <opttmp/vectorization/vector_tiling.hpp>
-
 namespace sgpp {
 namespace datadriven {
 
@@ -96,14 +94,12 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
 #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < dataset_size; i += data_blocking * double_v::size()) {
-      opttmp::vectorization::vector_array<double_v, data_blocking> result_temps_arr(0.0);
       std::array<double_v, data_blocking> result_temps;
       for (size_t k = 0; k < data_blocking; k++) {
         result_temps[k] = 0.0;
       }
       for (size_t j = 0; j < alpha.size(); j++) {
         std::array<double_v, data_blocking> evalNds;
-        opttmp::vectorization::vector_array<double_v, data_blocking> evalNds_arr(alpha[j]);
         for (size_t k = 0; k < data_blocking; k++) {
           evalNds[k] = alpha[j];
         }
@@ -115,15 +111,11 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
           double_v index_dim = index_list[j * dims + d];
 
           std::array<double_v, data_blocking> data_dims;
-          opttmp::vectorization::vector_array<double_v, data_blocking> data_dims_arr(
-              &dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
           for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
             data_dims[k] = double_v(&dataset_SoA[d * dataset_size + i + (k * double_v::size())],
                                     Vc::flags::element_aligned);
           }
-          std::array<double_v, data_blocking> temps;  // no op
-          opttmp::vectorization::vector_array<double_v, data_blocking> temps_arr;
-          temps_arr = (data_dims_arr * level_dim) - index_dim;
+          std::array<double_v, data_blocking> temps;          // no op
           for (size_t k = 0; k < data_blocking; k++) {        // unrolled, no op
             temps[k] = level_dim * data_dims[k] - index_dim;  // 2 FLOPS (1 FMA)
           }
@@ -131,19 +123,13 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
           for (size_t k = 0; k < data_blocking; k++) {            // unrolled, no op
             eval1ds[k] = Vc::max(one - Vc::abs(temps[k]), zero);  // 3 FLOPS
           }
-          opttmp::vectorization::vector_array<double_v, data_blocking> eval1ds_arr;
-          eval1ds_arr =
-              opttmp::vectorization::max(-opttmp::vectorization::abs(temps_arr) + one, zero);
-
           for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
             evalNds[k] *= eval1ds[k];                   // 1 FLOPS
           }
-          evalNds_arr *= eval1ds_arr;
         }
         for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
           result_temps[k] += evalNds[k];              // total: 7d + 1 FLOPS
         }
-        result_temps_arr += evalNds_arr;
       }
       for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
         result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
