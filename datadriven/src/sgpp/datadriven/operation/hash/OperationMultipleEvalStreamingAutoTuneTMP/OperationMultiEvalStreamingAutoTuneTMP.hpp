@@ -16,6 +16,13 @@
 #include <Vc/Vc>
 using Vc::double_v;
 
+#include "autotune/autotune.hpp"
+
+AUTOTUNE_DECLARE_DEFINE_KERNEL(void(size_t, std::vector<double>, size_t, std::vector<double>,
+                                    std::vector<double>, sgpp::base::DataVector&,
+                                    std::vector<double>&),
+                               streaming_mult_kernel)
+
 // #include <opttmp/vectorization/vector_tiling.hpp>
 #include <opttmp/vectorization/register_tiling.hpp>
 using namespace opttmp::vectorization;  // dangerous!
@@ -43,7 +50,7 @@ namespace datadriven {
 // }
 
 class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEval {
-  static constexpr size_t data_blocking = 8;  // SKL 8 significantly slower, 6 optimal?
+  static constexpr size_t data_blocking = 5;  // SKL 8 significantly slower, 6 optimal?
 
  protected:
   size_t dims;
@@ -80,40 +87,6 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
     const double_v one = 1.0;
     const double_v zero = 0.0;
-
-    // #pragma omp parallel for
-    //     for (size_t i = 0; i < dataset_size; i += double_v::size()) {
-    //       double_v result_temp = 0.0;
-    //       for (size_t j = 0; j < alpha.size(); j++) {
-    //         double_v evalNd = alpha[j];
-
-    //         for (size_t d = 0; d < dims; d++) {
-    //           // TODO: non-SoA probably faster
-    //           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-    //           double_v level_dim = level_list_SoA[d * grid_size + j];
-    //           double_v index_dim = index_list_SoA[d * grid_size + j];
-
-    //           double_v data_dim =
-    //               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
-    //           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-    //           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-    //           evalNd *= eval1d;                                      // 1 FLOPS
-    //         }
-    //         result_temp += evalNd;  // total: 7d + 1 FLOPS
-    //       }
-    //       result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
-    //     }
-
-    // parameters:
-    // - data blocking (grid blocking)
-
-    // approximate register use:
-    // - data_blocking-many accumulators (-> should not be a problem)
-    // - data_blocking-many temps for 1d eval (expensive)
-    // - data_blocking-many temps for dd eval accumulator (expensive)
-    // - 2 registers for level and index (could theoretically be streamed from l1)
-    // - 2 registers for "one" and "zero" (could theoretically be streamed from l1)
-    // = 2 * data_blocking + 2 (either the constants or (level and index) can be streamed)
 
     std::cout << "double_v::size(): " << double_v::size() << std::endl;
 
