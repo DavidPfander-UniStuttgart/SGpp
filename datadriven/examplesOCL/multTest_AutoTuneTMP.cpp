@@ -37,10 +37,10 @@ void doAllRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::ba
 }
 
 int main(int argc, char** argv) {
-  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
 
-  uint32_t level = 5;
+  uint32_t level = 6;
 
   sgpp::base::AdpativityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -133,8 +133,8 @@ int main(int argc, char** argv) {
       largestDifferenceReference = dataSizeVectorResultCompare[i];
     }
 
-    std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-              << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
 
     mse += difference * difference;
   }

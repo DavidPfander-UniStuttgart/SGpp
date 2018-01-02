@@ -18,13 +18,32 @@ using Vc::double_v;
 
 // #include <opttmp/vectorization/vector_tiling.hpp>
 #include <opttmp/vectorization/register_tiling.hpp>
-using namespace opttmp::vectorization; // dangerous!
+using namespace opttmp::vectorization;  // dangerous!
 
 namespace sgpp {
 namespace datadriven {
 
+// template <typename left, typename right>
+// void compare_arrays(const left& l, const right& r, const std::string& where) {
+//   for (size_t i = 0; i < l.size(); i++) {
+//     for (size_t j = 0; j < double_v::size(); j++) {
+//       double l_scalar = l[i][j];
+//       double r_scalar = r[i][j];
+//       // std::cout << "l_scalar: " << l_scalar << std::endl;
+//       // std::cout << "r_scalar: " << r_scalar << std::endl;
+//       if (l_scalar != r_scalar) {
+//         // if (l_scalar != r[i][j]) {
+//         std::cout << where << ", error i=" << i << ",j=" << j << ", " << l[i] << " != " << r[i]
+//                   << std::endl;
+//         // break;
+//         std::terminate();
+//       }
+//     }
+//   }
+// }
+
 class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEval {
-  static constexpr size_t data_blocking = 7;  // SKL 8 significantly slower
+  static constexpr size_t data_blocking = 8;  // SKL 8 significantly slower, 6 optimal?
 
  protected:
   size_t dims;
@@ -62,96 +81,124 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     const double_v one = 1.0;
     const double_v zero = 0.0;
 
-// #pragma omp parallel for
-//     for (size_t i = 0; i < dataset_size; i += double_v::size()) {
-//       double_v result_temp = 0.0;
-//       for (size_t j = 0; j < alpha.size(); j++) {
-//         double_v evalNd = alpha[j];
+    // #pragma omp parallel for
+    //     for (size_t i = 0; i < dataset_size; i += double_v::size()) {
+    //       double_v result_temp = 0.0;
+    //       for (size_t j = 0; j < alpha.size(); j++) {
+    //         double_v evalNd = alpha[j];
 
-//         for (size_t d = 0; d < dims; d++) {
-//           // TODO: non-SoA probably faster
-//           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-//           double_v level_dim = level_list_SoA[d * grid_size + j];
-//           double_v index_dim = index_list_SoA[d * grid_size + j];
+    //         for (size_t d = 0; d < dims; d++) {
+    //           // TODO: non-SoA probably faster
+    //           // 2^l * x - i (level_list_SoA stores 2^l, not l)
+    //           double_v level_dim = level_list_SoA[d * grid_size + j];
+    //           double_v index_dim = index_list_SoA[d * grid_size + j];
 
-//           double_v data_dim =
-//               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
-//           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-//           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-//           evalNd *= eval1d;                                      // 1 FLOPS
-//         }
-//         result_temp += evalNd;  // total: 7d + 1 FLOPS
-//       }
-//       result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
-//     }
+    //           double_v data_dim =
+    //               double_v(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
+    //           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
+    //           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
+    //           evalNd *= eval1d;                                      // 1 FLOPS
+    //         }
+    //         result_temp += evalNd;  // total: 7d + 1 FLOPS
+    //       }
+    //       result_temp.memstore(&result_padded[i], Vc::flags::element_aligned);
+    //     }
 
-// parameters:
-// - data blocking (grid blocking)
+    // parameters:
+    // - data blocking (grid blocking)
 
-// approximate register use:
-// - data_blocking-many accumulators (-> should not be a problem)
-// - data_blocking-many temps for 1d eval (expensive)
-// - data_blocking-many temps for dd eval accumulator (expensive)
-// - 2 registers for level and index (could theoretically be streamed from l1)
-// - 2 registers for "one" and "zero" (could theoretically be streamed from l1)
-// = 2 * data_blocking + 2 (either the constants or (level and index) can be streamed)
+    // approximate register use:
+    // - data_blocking-many accumulators (-> should not be a problem)
+    // - data_blocking-many temps for 1d eval (expensive)
+    // - data_blocking-many temps for dd eval accumulator (expensive)
+    // - 2 registers for level and index (could theoretically be streamed from l1)
+    // - 2 registers for "one" and "zero" (could theoretically be streamed from l1)
+    // = 2 * data_blocking + 2 (either the constants or (level and index) can be streamed)
+
+    std::cout << "double_v::size(): " << double_v::size() << std::endl;
 
 #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < dataset_size; i += data_blocking * double_v::size()) {
       opttmp::vectorization::register_array<double_v, data_blocking> result_temps_arr(0.0);
-      std::array<double_v, data_blocking> result_temps;
-      for (size_t k = 0; k < data_blocking; k++) {
-        result_temps[k] = 0.0;
-      }
+
+      //////////////////////////////////////////////////////
+      // std::array<double_v, data_blocking> result_temps;
+      // for (size_t k = 0; k < data_blocking; k++) {
+      //   result_temps[k] = 0.0;  // scalar initialization
+      // }
+      //////////////////////////////////////////////////////
       for (size_t j = 0; j < alpha.size(); j++) {
-        std::array<double_v, data_blocking> evalNds;
         opttmp::vectorization::register_array<double_v, data_blocking> evalNds_arr(alpha[j]);
-        for (size_t k = 0; k < data_blocking; k++) {
-          evalNds[k] = alpha[j];
-        }
+        //////////////////////////////////////////////////////
+        // std::array<double_v, data_blocking> evalNds;
+        // for (size_t k = 0; k < data_blocking; k++) {
+        //   evalNds[k] = alpha[j];  // broadcast, every processes same grid point
+        // }
+        //////////////////////////////////////////////////////
+
+        // compare_arrays(evalNds_arr, evalNds, "alpha init");  // TODO: remove
 
         for (size_t d = 0; d < dims; d++) {
           // non-SoA is faster (2 streams, instead of 2d streams)
           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-          double_v level_dim = level_list[j * dims + d];
+          double_v level_dim = level_list[j * dims + d];  // broadcasts
           double_v index_dim = index_list[j * dims + d];
 
-          std::array<double_v, data_blocking> data_dims;
           opttmp::vectorization::register_array<double_v, data_blocking> data_dims_arr(
               &dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
-          for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
-            data_dims[k] = double_v(&dataset_SoA[d * dataset_size + i + (k * double_v::size())],
-                                    Vc::flags::element_aligned);
-          }
-          std::array<double_v, data_blocking> temps;  // no op
+          //////////////////////////////////////////////////////
+          // std::array<double_v, data_blocking> data_dims;
+          // for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
+          //   data_dims[k] = double_v(&dataset_SoA[d * dataset_size + i + (k * double_v::size())],
+          //                           Vc::flags::element_aligned);
+          // }
+          //////////////////////////////////////////////////////
+          // compare_arrays(data_dims_arr, data_dims, "data_dims");  // TODO: remove
+
+          // std::cout << "level_dim: " << level_dim << std::endl;
+          // std::cout << "index_dim: " << index_dim << std::endl;
           opttmp::vectorization::register_array<double_v, data_blocking> temps_arr;
           temps_arr = (data_dims_arr * level_dim) - index_dim;
-          for (size_t k = 0; k < data_blocking; k++) {        // unrolled, no op
-            temps[k] = level_dim * data_dims[k] - index_dim;  // 2 FLOPS (1 FMA)
-          }
-          std::array<double_v, data_blocking> eval1ds;            // no op
-          for (size_t k = 0; k < data_blocking; k++) {            // unrolled, no op
-            eval1ds[k] = Vc::max(one - Vc::abs(temps[k]), zero);  // 3 FLOPS
-          }
+          //////////////////////////////////////////////////////
+          // std::array<double_v, data_blocking> temps;          // no op
+          // for (size_t k = 0; k < data_blocking; k++) {        // unrolled, no op
+          //   temps[k] = level_dim * data_dims[k] - index_dim;  // 2 FLOPS (1 FMA)
+          // }
+          // compare_arrays(temps_arr, temps, "temps");              // TODO: remove
+          // std::array<double_v, data_blocking> eval1ds;            // no op
+          // for (size_t k = 0; k < data_blocking; k++) {            // unrolled, no op
+          //   eval1ds[k] = Vc::max(one - Vc::abs(temps[k]), zero);  // 3 FLOPS
+          // }
+          //////////////////////////////////////////////////////
           opttmp::vectorization::register_array<double_v, data_blocking> eval1ds_arr;
           eval1ds_arr =
               opttmp::vectorization::max(-opttmp::vectorization::abs(temps_arr) + one, zero);
+          // compare_arrays(eval1ds_arr, eval1ds, "eval1ds");  // TODO: remove
 
-          for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
-            evalNds[k] *= eval1ds[k];                   // 1 FLOPS
-          }
+          //////////////////////////////////////////////////////
+          // for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
+          //   evalNds[k] *= eval1ds[k];                   // 1 FLOPS
+          // }
+          //////////////////////////////////////////////////////
           evalNds_arr *= eval1ds_arr;
         }
-        for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
-          result_temps[k] += evalNds[k];              // total: 7d + 1 FLOPS
-        }
+        //////////////////////////////////////////////////////
+        // for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
+        //   result_temps[k] += evalNds[k];              // total: 7d + 1 FLOPS
+        // }
+        //////////////////////////////////////////////////////
         result_temps_arr += evalNds_arr;
       }
-      for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
-        result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
-                                 Vc::flags::element_aligned);
-      }
+
+      //////////////////////////////////////////////////////
+      // for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
+      //   result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
+      //                            Vc::flags::element_aligned);
+      // }
+      //////////////////////////////////////////////////////
       result_temps_arr.memstore(&result_padded[i], Vc::flags::element_aligned);
+
+      // compare_arrays(result_temps_arr, result_temps, "comparing result_temps*");
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
