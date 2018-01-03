@@ -18,15 +18,17 @@ extern "C" void streaming_mult_kernel(size_t dims, std::vector<double> &dataset_
                                       size_t dataset_size, std::vector<double> &level_list,
                                       std::vector<double> &index_list, std::vector<double> &alpha,
                                       std::vector<double> &result_padded) {
+  std::cout << "kernel_ptr: " << reinterpret_cast<void *>(streaming_mult_kernel) << std::endl;
+
   const double_v one = 1.0;
   const double_v zero = 0.0;
 
   std::cout << "KERNEL_OMP_THREADS: " << KERNEL_OMP_THREADS << std::endl;
   std::cout << "DATA_BLOCKING: " << DATA_BLOCKING << std::endl;
 
-#if KERNEL_OMP_THREADS == 100
-  fjdsiofs
-#endif
+// #if KERNEL_OMP_THREADS == 100
+//   fjdsiofs
+// #endif
 
 // omp_set_num_threads(KERNEL_OMP_THREADS);
 

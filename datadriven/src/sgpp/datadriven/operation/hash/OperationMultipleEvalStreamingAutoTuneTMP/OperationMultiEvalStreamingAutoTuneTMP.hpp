@@ -92,9 +92,9 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     builder->set_verbose(true);
     builder->set_include_paths(
-        "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
-        "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
-        "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+        "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
+        "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
+        "-I/home/winter/git/AutoTuneTMP/boost_install/include");
     builder->set_cpp_flags(
         "-Wall -Wextra -std=c++17 -march=native -mtune=native "
         "-O3 -g -ffast-math -fopenmp -fPIC");
@@ -138,16 +138,16 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
                                     result_padded);
 
-    // clear
+    // // clear
     // autotune::streaming_mult_kernel.clear();
-
     // autotune::streaming_mult_kernel.set_verbose(true);
+    // builder->invalidate();
     // builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     // builder->set_verbose(true);
     // builder->set_include_paths(
-    //     "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
-    //     "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
-    //     "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+    //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
+    //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
+    //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
     // builder->set_cpp_flags(
     //     "-Wall -Wextra -std=c++17 -march=native -mtune=native "
     //     "-O3 -g -ffast-math -fopenmp -fPIC");
