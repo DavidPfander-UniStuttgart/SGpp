@@ -37,8 +37,8 @@ void doAllRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::ba
 }
 
 int main(int argc, char** argv) {
-  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
+  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
 
   uint32_t level = 6;
 

@@ -16,6 +16,8 @@
 #include <Vc/Vc>
 using Vc::double_v;
 
+#include <omp.h>
+
 #include "autotune/autotune.hpp"
 #include "autotune/parameter.hpp"
 #include "autotune/tuners/bruteforce.hpp"
@@ -87,6 +89,99 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     std::vector<double> result_padded(dataset_size);
 
     autotune::streaming_mult_kernel.set_verbose(true);
+    auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
+    builder->set_verbose(true);
+    builder->set_include_paths(
+        "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+        "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+        "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+    builder->set_cpp_flags(
+        "-Wall -Wextra -std=c++17 -march=native -mtune=native "
+        "-O3 -g -ffast-math -fopenmp -fPIC");
+    builder->set_link_flags("-shared");
+    autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
+
+    autotune::countable_set parameters;
+    autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {6});
+    parameters.add_parameter(p1);
+
+    std::vector<size_t> thread_values{3, 100};
+    // size_t openmp_threads = omp_get_max_threads();
+    // std::vector<size_t> thread_values;
+    // thread_values.push_back(openmp_threads);
+    // for (size_t i = 0; i < 4; i++) {  // 4-way HT assumed max
+    //   if (openmp_threads % 2 == 0) {
+    //     openmp_threads /= 2;
+    //     thread_values.push_back(openmp_threads);
+    //   } else {
+    //     break;
+    //   }
+    // }
+    // TODO: handle NUMA with this parameter, too?
+    // std::cout << "KERNEL_OMP_THREADS: ";
+    // for (size_t i = 0; i < thread_values.size(); i++) {
+    //   if (i > 0) {
+    //     std::cout << ", ";
+    //   }
+    //   std::cout << thread_values[i];
+    // }
+    // std::cout << std::endl;
+    autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", thread_values);
+    parameters.add_parameter(p2);
+
+    // compile beforehand so that compilation is not part of the measured duration
+    autotune::streaming_mult_kernel.set_parameter_values(parameters);
+    autotune::streaming_mult_kernel.create_parameter_file();
+    autotune::streaming_mult_kernel.compile();
+
+    auto start = std::chrono::high_resolution_clock::now();
+    autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
+                                    result_padded);
+
+    // clear
+    // autotune::streaming_mult_kernel.clear();
+
+    // autotune::streaming_mult_kernel.set_verbose(true);
+    // builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
+    // builder->set_verbose(true);
+    // builder->set_include_paths(
+    //     "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+    //     "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+    //     "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+    // builder->set_cpp_flags(
+    //     "-Wall -Wextra -std=c++17 -march=native -mtune=native "
+    //     "-O3 -g -ffast-math -fopenmp -fPIC");
+    // builder->set_link_flags("-shared");
+    // autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
+
+    parameters[1]->next();
+
+    // compile beforehand so that compilation is not part of the measured duration
+    autotune::streaming_mult_kernel.set_parameter_values(parameters);
+    autotune::streaming_mult_kernel.create_parameter_file();
+    autotune::streaming_mult_kernel.compile();
+
+    autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
+                                    result_padded);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff = end - start;
+    duration = diff.count();
+    double total_flops = dataset_size * alpha.size() * (6 * dims + 1);
+    std::cout << "flop: " << total_flops << std::endl;
+    std::cout << "gflops: " << ((total_flops * 1E-9) / duration) << std::endl;
+
+    for (size_t i = 0; i < result.size(); i++) {
+      result[i] = result_padded[i];
+    }
+  }
+
+  void tune_mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) {
+    this->prepare();
+
+    std::vector<double> result_padded(dataset_size);
+
+    autotune::streaming_mult_kernel.set_verbose(true);
 
     auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     builder->set_verbose(true);
@@ -99,131 +194,57 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
         "-O3 -g -ffast-math -fopenmp -fPIC");
     builder->set_link_flags("-shared");
 
-    // auto builder = autotune::streaming_mult_kernel.get_builder();
-    // builder->set_verbose(true);
-
     autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
     autotune::countable_set parameters;
     autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {6});
     parameters.add_parameter(p1);
 
-    autotune::streaming_mult_kernel.set_parameter_values(parameters);
-
-    autotune::streaming_mult_kernel.create_parameter_file();
-
-    // compile beforehand so that compilation is not part of the measusred duration
-    autotune::streaming_mult_kernel.compile();
-
-    std::function<bool(int)> test_result = [](int) -> bool {
-      /* tests values generated by kernel */
-      return true;
-    };
-
-    auto start = std::chrono::high_resolution_clock::now();
-
-    autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
-                                    result_padded);
-
-    //     const double_v one = 1.0;
-    //     const double_v zero = 0.0;
-
-    //     std::cout << "double_v::size(): " << double_v::size() << std::endl;
-
-    // #pragma omp parallel for schedule(static)
-    //     for (size_t i = 0; i < dataset_size; i += data_blocking * double_v::size()) {
-    //       opttmp::vectorization::register_array<double_v, data_blocking> result_temps_arr(0.0);
-
-    //       //////////////////////////////////////////////////////
-    //       // std::array<double_v, data_blocking> result_temps;
-    //       // for (size_t k = 0; k < data_blocking; k++) {
-    //       //   result_temps[k] = 0.0;  // scalar initialization
-    //       // }
-    //       //////////////////////////////////////////////////////
-    //       for (size_t j = 0; j < alpha.size(); j++) {
-    //         opttmp::vectorization::register_array<double_v, data_blocking> evalNds_arr(alpha[j]);
-    //         //////////////////////////////////////////////////////
-    //         // std::array<double_v, data_blocking> evalNds;
-    //         // for (size_t k = 0; k < data_blocking; k++) {
-    //         //   evalNds[k] = alpha[j];  // broadcast, every processes same grid point
-    //         // }
-    //         //////////////////////////////////////////////////////
-
-    //         // compare_arrays(evalNds_arr, evalNds, "alpha init");  // TODO: remove
-
-    //         for (size_t d = 0; d < dims; d++) {
-    //           // non-SoA is faster (2 streams, instead of 2d streams)
-    //           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-    //           double_v level_dim = level_list[j * dims + d];  // broadcasts
-    //           double_v index_dim = index_list[j * dims + d];
-
-    //           opttmp::vectorization::register_array<double_v, data_blocking> data_dims_arr(
-    //               &dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
-    //           //////////////////////////////////////////////////////
-    //           // std::array<double_v, data_blocking> data_dims;
-    //           // for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
-    //           //   data_dims[k] = double_v(&dataset_SoA[d * dataset_size + i + (k *
-    //           double_v::size())],
-    //           //                           Vc::flags::element_aligned);
-    //           // }
-    //           //////////////////////////////////////////////////////
-    //           // compare_arrays(data_dims_arr, data_dims, "data_dims");  // TODO: remove
-
-    //           // std::cout << "level_dim: " << level_dim << std::endl;
-    //           // std::cout << "index_dim: " << index_dim << std::endl;
-    //           opttmp::vectorization::register_array<double_v, data_blocking> temps_arr;
-    //           temps_arr = (data_dims_arr * level_dim) - index_dim;
-    //           //////////////////////////////////////////////////////
-    //           // std::array<double_v, data_blocking> temps;          // no op
-    //           // for (size_t k = 0; k < data_blocking; k++) {        // unrolled, no op
-    //           //   temps[k] = level_dim * data_dims[k] - index_dim;  // 2 FLOPS (1 FMA)
-    //           // }
-    //           // compare_arrays(temps_arr, temps, "temps");              // TODO: remove
-    //           // std::array<double_v, data_blocking> eval1ds;            // no op
-    //           // for (size_t k = 0; k < data_blocking; k++) {            // unrolled, no op
-    //           //   eval1ds[k] = Vc::max(one - Vc::abs(temps[k]), zero);  // 3 FLOPS
-    //           // }
-    //           //////////////////////////////////////////////////////
-    //           opttmp::vectorization::register_array<double_v, data_blocking> eval1ds_arr;
-    //           eval1ds_arr =
-    //               opttmp::vectorization::max(-opttmp::vectorization::abs(temps_arr) + one, zero);
-    //           // compare_arrays(eval1ds_arr, eval1ds, "eval1ds");  // TODO: remove
-
-    //           //////////////////////////////////////////////////////
-    //           // for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
-    //           //   evalNds[k] *= eval1ds[k];                   // 1 FLOPS
-    //           // }
-    //           //////////////////////////////////////////////////////
-    //           evalNds_arr *= eval1ds_arr;
-    //         }
-    //         //////////////////////////////////////////////////////
-    //         // for (size_t k = 0; k < data_blocking; k++) {  // unrolled, no op
-    //         //   result_temps[k] += evalNds[k];              // total: 7d + 1 FLOPS
-    //         // }
-    //         //////////////////////////////////////////////////////
-    //         result_temps_arr += evalNds_arr;
-    //       }
-
-    //       //////////////////////////////////////////////////////
-    //       // for (size_t k = 0; k < data_blocking; k++) {  // additional integer work
-    //       //   result_temps[k].memstore(&result_padded[i + (k * double_v::size())],
-    //       //                            Vc::flags::element_aligned);
-    //       // }
-    //       //////////////////////////////////////////////////////
-    //       result_temps_arr.memstore(&result_padded[i], Vc::flags::element_aligned);
-
-    //       // compare_arrays(result_temps_arr, result_temps, "comparing result_temps*");
-    //     }
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff = end - start;
-    duration = diff.count();
-    double total_flops = dataset_size * alpha.size() * (6 * dims + 1);
-    std::cout << "flop: " << total_flops << std::endl;
-    std::cout << "gflops: " << ((total_flops * 1E-9) / duration) << std::endl;
-
-    for (size_t i = 0; i < result.size(); i++) {
-      result[i] = result_padded[i];
+    size_t openmp_threads = omp_get_max_threads();
+    std::vector<size_t> thread_values;
+    thread_values.push_back(openmp_threads);
+    for (size_t i = 0; i < 4; i++) {  // 4-way HT assumed max
+      if (openmp_threads % 2 == 0) {
+        openmp_threads /= 2;
+        thread_values.push_back(openmp_threads);
+      } else {
+        break;
+      }
     }
+    // TODO: handle NUMA with this parameter, too?
+    std::cout << "KERNEL_OMP_THREADS: ";
+    for (size_t i = 0; i < thread_values.size(); i++) {
+      if (i > 0) {
+        std::cout << ", ";
+      }
+      std::cout << thread_values[i];
+    }
+    std::cout << std::endl;
+    autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", thread_values);
+    parameters.add_parameter(p2);
+
+    // autotune::streaming_mult_kernel.set_parameter_values(parameters);
+
+    // autotune::streaming_mult_kernel.create_parameter_file();
+
+    // // compile beforehand so that compilation is not part of the measured duration
+    // autotune::streaming_mult_kernel.compile();
+
+    // std::function<bool(int)> test_result = [](int) -> bool {
+    //   /* tests values generated by kernel */
+    //   return true;
+    // };
+
+    autotune::tuners::bruteforce tuner(autotune::streaming_mult_kernel, parameters);
+    // tuner.setup_test(test_result);
+    tuner.set_verbose(true);
+    autotune::countable_set optimal_parameters =
+        tuner.tune(dims, dataset_SoA, dataset_size, level_list, index_list, alpha, result_padded);
+
+    // setup optimal parameters for next call to mult
+    autotune::streaming_mult_kernel.set_parameter_values(optimal_parameters);
+    autotune::streaming_mult_kernel.create_parameter_file();
+    autotune::streaming_mult_kernel.compile();
   }
 
   void multTranspose(sgpp::base::DataVector& source, sgpp::base::DataVector& result) override {
