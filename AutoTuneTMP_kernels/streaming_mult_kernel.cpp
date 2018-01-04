@@ -26,10 +26,6 @@ extern "C" void streaming_mult_kernel(size_t dims, std::vector<double> &dataset_
   std::cout << "KERNEL_OMP_THREADS: " << KERNEL_OMP_THREADS << std::endl;
   std::cout << "DATA_BLOCKING: " << DATA_BLOCKING << std::endl;
 
-// #if KERNEL_OMP_THREADS == 100
-//   fjdsiofs
-// #endif
-
 // omp_set_num_threads(KERNEL_OMP_THREADS);
 
 #pragma omp parallel for schedule(static) num_threads(KERNEL_OMP_THREADS)

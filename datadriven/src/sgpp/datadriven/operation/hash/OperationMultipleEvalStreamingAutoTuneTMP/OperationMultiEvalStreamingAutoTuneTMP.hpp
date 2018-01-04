@@ -92,19 +92,20 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     builder->set_verbose(true);
     builder->set_include_paths(
-        "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
-        "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
-        "-I/home/winter/git/AutoTuneTMP/boost_install/include");
+        "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+        "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+        "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
     builder->set_cpp_flags(
         "-Wall -Wextra -std=c++17 -march=native -mtune=native "
-        "-O3 -g -ffast-math -fopenmp -fPIC");
-    builder->set_link_flags("-shared");
+        "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique");
+    builder->set_link_flags("-shared -fno-gnu-unique");
     autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
     autotune::countable_set parameters;
     autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {6});
     parameters.add_parameter(p1);
 
+    
     std::vector<size_t> thread_values{3, 100};
     // size_t openmp_threads = omp_get_max_threads();
     // std::vector<size_t> thread_values;
@@ -131,8 +132,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
     // compile beforehand so that compilation is not part of the measured duration
     autotune::streaming_mult_kernel.set_parameter_values(parameters);
-    autotune::streaming_mult_kernel.create_parameter_file();
-    autotune::streaming_mult_kernel.compile();
+    // autotune::streaming_mult_kernel.create_parameter_file();
+    // autotune::streaming_mult_kernel.compile();
 
     auto start = std::chrono::high_resolution_clock::now();
     autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
@@ -145,9 +146,9 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     // builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     // builder->set_verbose(true);
     // builder->set_include_paths(
-    //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
-    //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
-    //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
+    //     "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+    //     "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+    //     "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
     // builder->set_cpp_flags(
     //     "-Wall -Wextra -std=c++17 -march=native -mtune=native "
     //     "-O3 -g -ffast-math -fopenmp -fPIC");
@@ -158,8 +159,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
     // compile beforehand so that compilation is not part of the measured duration
     autotune::streaming_mult_kernel.set_parameter_values(parameters);
-    autotune::streaming_mult_kernel.create_parameter_file();
-    autotune::streaming_mult_kernel.compile();
+    // autotune::streaming_mult_kernel.create_parameter_file();
+    // autotune::streaming_mult_kernel.compile();
 
     autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
                                     result_padded);
