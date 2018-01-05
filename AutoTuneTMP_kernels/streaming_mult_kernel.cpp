@@ -15,6 +15,8 @@ using reg_array = register_array<double_v, DATA_BLOCKING>;
 
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 
+#include <boost/align/aligned_allocator.hpp>
+
 // sgpp::base::Grid& grid, base::DataMatrix& dataset, sgpp::base::DataVector& alpha,
 // sgpp::base::DataVector& result
 
@@ -30,8 +32,8 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
   // grid as SoA
   sgpp::base::GridStorage& storage = grid.getStorage();
   // grid as non-SoA for testing
-  std::vector<double> level_list;
-  std::vector<double> index_list;
+  std::vector<double, boost::alignment::aligned_allocator<double, 32>> level_list;
+  std::vector<double, boost::alignment::aligned_allocator<double, 32>> index_list;
   level_list.resize(storage.getSize() * dims);
   index_list.resize(storage.getSize() * dims);
   for (size_t i = 0; i < storage.getSize(); i++) {
@@ -51,7 +53,7 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
                       ? 0
                       : (DATA_BLOCKING * double_v::size()) -
                             (dataset_size % (DATA_BLOCKING * double_v::size()));
-  std::vector<double> dataset_SoA;
+  std::vector<double, boost::alignment::aligned_allocator<double, 32>> dataset_SoA;
   dataset_SoA.resize(dataset_size * dims);
   for (size_t i = 0; i < dataset.getNrows(); i++) {
     for (size_t d = 0; d < dims; d++) {
@@ -65,7 +67,7 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
     }
   }
 
-  std::vector<double> result_padded(dataset_size);
+  std::vector<double, boost::alignment::aligned_allocator<double, 32>> result_padded(dataset_size);
   std::fill(result_padded.begin(), result_padded.begin(), 0.0);
 
 ////////////////////////////////////////
@@ -85,7 +87,7 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
         // double_v level_dim = level_list[j * dims + d];  // broadcasts
         // double_v index_dim = index_list[j * dims + d];
 
-        reg_array data_dims_arr(&dataset_SoA[d * dataset_size + i], Vc::flags::element_aligned);
+        reg_array data_dims_arr(&dataset_SoA[d * dataset_size + i], Vc::flags::vector_aligned);
 
         reg_array temps_arr;
         // converted to FMA through expression templates
@@ -103,7 +105,7 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
       result_temps_arr += evalNds_arr;
     }
 
-    result_temps_arr.memstore(&result_padded[i], Vc::flags::element_aligned);
+    result_temps_arr.memstore(&result_padded[i], Vc::flags::vector_aligned);
   }
 
   for (size_t i = 0; i < result.size(); i++) {
