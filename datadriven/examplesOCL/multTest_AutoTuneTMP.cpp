@@ -37,8 +37,8 @@ void doAllRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::ba
 }
 
 int main(int argc, char** argv) {
-  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
 
   uint32_t level = 6;
 
@@ -94,10 +94,12 @@ int main(int argc, char** argv) {
 
   std::cout << "calculating result" << std::endl;
 
+  // for (size_t repeat = 0; repeat < 5; repeat++) {
   for (size_t i = 0; i < 1; i++) {
     std::cout << "repeated mult: " << i << std::endl;
     eval.mult(alpha, dataSizeVectorResult);
   }
+  // }
 
   std::cout << "duration: " << eval.getDuration() << std::endl;
 
@@ -106,42 +108,93 @@ int main(int argc, char** argv) {
   //
   //    eval->multTranspose(dataSizeVectorResult, alpha2);
 
-  std::cout << "calculating comparison values..." << std::endl;
-
-  std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
-
   sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
   dataSizeVectorResultCompare.setAll(0.0);
 
-  evalCompare->mult(alpha, dataSizeVectorResultCompare);
+  {
+    std::cout << "calculating comparison values..." << std::endl;
 
-  std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
+    std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
+        std::unique_ptr<sgpp::base::OperationMultipleEval>(
+            sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
 
-  double mse = 0.0;
+    evalCompare->mult(alpha, dataSizeVectorResultCompare);
 
-  double largestDifferenceMine = 0.0;
-  double largestDifferenceReference = 0.0;
-  double largestDifference = 0.0;
+    std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
 
-  for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
-    double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
-    if (difference > largestDifference) {
-      largestDifference = difference;
-      largestDifferenceMine = dataSizeVectorResult[i];
-      largestDifferenceReference = dataSizeVectorResultCompare[i];
+    double mse = 0.0;
+    double largestDifferenceMine = 0.0;
+    double largestDifferenceReference = 0.0;
+    double largestDifference = 0.0;
+
+    for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
+      double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
+      if (difference > largestDifference) {
+        largestDifference = difference;
+        largestDifferenceMine = dataSizeVectorResult[i];
+        largestDifferenceReference = dataSizeVectorResultCompare[i];
+      }
+
+      // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+      //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+
+      mse += difference * difference;
     }
 
-    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+    std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
+              << " ref: " << largestDifferenceReference << std::endl;
 
-    mse += difference * difference;
+    mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
+    std::cout << "mse: " << mse << std::endl;
   }
 
-  std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
-            << " ref: " << largestDifferenceReference << std::endl;
+  {
+    sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+        sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+        sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT);
 
-  mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
-  std::cout << "mse: " << mse << std::endl;
+    std::cout << "doing performance comparison..." << std::endl;
+
+    std::unique_ptr<sgpp::base::OperationMultipleEval> evalPerf =
+        std::unique_ptr<sgpp::base::OperationMultipleEval>(
+            sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
+
+    sgpp::base::DataVector dataSizeVectorResultPerformance(dataset.getNumberInstances());
+    dataSizeVectorResultPerformance.setAll(0.0);
+
+    evalPerf->mult(alpha, dataSizeVectorResultPerformance);
+    double durationPerformance = evalPerf->getDuration();
+    double total_flops =
+        dataset.getNumberInstances() * alpha.size() * (6 * dataset.getDimension() + 1);
+    std::cout << "duration (perf. comp.): " << durationPerformance << std::endl;
+    std::cout << "flop (perf. comp.): " << total_flops << std::endl;
+    std::cout << "gflops (perf. comp.): " << ((total_flops * 1E-9) / durationPerformance)
+              << std::endl;
+
+    double mse = 0.0;
+    double largestDifferenceMine = 0.0;
+    double largestDifferenceReference = 0.0;
+    double largestDifference = 0.0;
+
+    for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
+      double difference =
+          std::abs(dataSizeVectorResultPerformance[i] - dataSizeVectorResultCompare[i]);
+      if (difference > largestDifference) {
+        largestDifference = difference;
+        largestDifferenceMine = dataSizeVectorResultPerformance[i];
+        largestDifferenceReference = dataSizeVectorResultCompare[i];
+      }
+
+      // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
+      //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
+
+      mse += difference * difference;
+    }
+
+    std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
+              << " ref: " << largestDifferenceReference << std::endl;
+
+    mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
+    std::cout << "mse: " << mse << std::endl;
+  }
 }

@@ -186,12 +186,12 @@ void OperationMultiEvalStreaming::multImpl(
           __m256d zero = _mm256_set1_pd(0.0);
 
           for (size_t d = 0; d < dims; d++) {
-            __m256d eval_0 = _mm256_load_pd(&(ptrData[(d * result_size) + i]));
-            __m256d eval_1 = _mm256_load_pd(&(ptrData[(d * result_size) + i + 4]));
-            __m256d eval_2 = _mm256_load_pd(&(ptrData[(d * result_size) + i + 8]));
-            __m256d eval_3 = _mm256_load_pd(&(ptrData[(d * result_size) + i + 12]));
-            __m256d eval_4 = _mm256_load_pd(&(ptrData[(d * result_size) + i + 16]));
-            __m256d eval_5 = _mm256_load_pd(&(ptrData[(d * result_size) + i + 20]));
+            __m256d eval_0 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i]));
+            __m256d eval_1 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i + 4]));
+            __m256d eval_2 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i + 8]));
+            __m256d eval_3 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i + 12]));
+            __m256d eval_4 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i + 16]));
+            __m256d eval_5 = _mm256_loadu_pd(&(ptrData[(d * result_size) + i + 20]));
 
             __m256d level = _mm256_broadcast_sd(&(ptrLevel[(j * dims) + d]));
             __m256d index = _mm256_broadcast_sd(&(ptrIndex[(j * dims) + d]));
@@ -248,12 +248,12 @@ void OperationMultiEvalStreaming::multImpl(
             support_5 = _mm256_mul_pd(support_5, eval_5);
           }
 
-          __m256d res_0 = _mm256_load_pd(&(ptrResult[i]));
-          __m256d res_1 = _mm256_load_pd(&(ptrResult[i + 4]));
-          __m256d res_2 = _mm256_load_pd(&(ptrResult[i + 8]));
-          __m256d res_3 = _mm256_load_pd(&(ptrResult[i + 12]));
-          __m256d res_4 = _mm256_load_pd(&(ptrResult[i + 16]));
-          __m256d res_5 = _mm256_load_pd(&(ptrResult[i + 20]));
+          __m256d res_0 = _mm256_loadu_pd(&(ptrResult[i]));
+          __m256d res_1 = _mm256_loadu_pd(&(ptrResult[i + 4]));
+          __m256d res_2 = _mm256_loadu_pd(&(ptrResult[i + 8]));
+          __m256d res_3 = _mm256_loadu_pd(&(ptrResult[i + 12]));
+          __m256d res_4 = _mm256_loadu_pd(&(ptrResult[i + 16]));
+          __m256d res_5 = _mm256_loadu_pd(&(ptrResult[i + 20]));
 
           res_0 = _mm256_add_pd(res_0, support_0);
           res_1 = _mm256_add_pd(res_1, support_1);
@@ -262,12 +262,12 @@ void OperationMultiEvalStreaming::multImpl(
           res_4 = _mm256_add_pd(res_4, support_4);
           res_5 = _mm256_add_pd(res_5, support_5);
 
-          _mm256_store_pd(&(ptrResult[i]), res_0);
-          _mm256_store_pd(&(ptrResult[i + 4]), res_1);
-          _mm256_store_pd(&(ptrResult[i + 8]), res_2);
-          _mm256_store_pd(&(ptrResult[i + 12]), res_3);
-          _mm256_store_pd(&(ptrResult[i + 16]), res_4);
-          _mm256_store_pd(&(ptrResult[i + 20]), res_5);
+          _mm256_storeu_pd(&(ptrResult[i]), res_0);
+          _mm256_storeu_pd(&(ptrResult[i + 4]), res_1);
+          _mm256_storeu_pd(&(ptrResult[i + 8]), res_2);
+          _mm256_storeu_pd(&(ptrResult[i + 12]), res_3);
+          _mm256_storeu_pd(&(ptrResult[i + 16]), res_4);
+          _mm256_storeu_pd(&(ptrResult[i + 20]), res_5);
         }
       }
     }
