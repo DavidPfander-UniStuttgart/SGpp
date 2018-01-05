@@ -94,19 +94,9 @@ int main(int argc, char** argv) {
 
   std::cout << "calculating result" << std::endl;
 
-  // for (size_t repeat = 0; repeat < 5; repeat++) {
-  for (size_t i = 0; i < 1; i++) {
-    std::cout << "repeated mult: " << i << std::endl;
-    eval.mult(alpha, dataSizeVectorResult);
-  }
-  // }
+  eval.mult(alpha, dataSizeVectorResult);
 
   std::cout << "duration: " << eval.getDuration() << std::endl;
-
-  //    sgpp::base::DataVector alpha2(gridStorage.getSize());
-  //    alpha2.setAll(0.0);
-  //
-  //    eval->multTranspose(dataSizeVectorResult, alpha2);
 
   sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
   dataSizeVectorResultCompare.setAll(0.0);

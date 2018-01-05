@@ -23,9 +23,13 @@ using Vc::double_v;
 #include "autotune/tuners/bruteforce.hpp"
 #include "autotune/tuners/countable_set.hpp"
 
-AUTOTUNE_DECLARE_DEFINE_KERNEL(void(size_t, std::vector<double>&, size_t, std::vector<double>&,
-                                    std::vector<double>&, std::vector<double>&,
-                                    std::vector<double>&),
+// AUTOTUNE_DECLARE_DEFINE_KERNEL(void(size_t, std::vector<double>&, size_t, std::vector<double>&,
+//                                     std::vector<double>&, std::vector<double>&,
+//                                     std::vector<double>&),
+//                                streaming_mult_kernel)
+
+AUTOTUNE_DECLARE_DEFINE_KERNEL(void(size_t, sgpp::base::Grid&, sgpp::base::DataMatrix&,
+                                    sgpp::base::DataVector&, sgpp::base::DataVector&),
                                streaming_mult_kernel)
 
 // #include <opttmp/vectorization/vector_tiling.hpp>
@@ -84,21 +88,20 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
   ~OperationMultiEvalStreamingAutoTuneTMP() {}
 
   void mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) override {
-    this->prepare();
-
-    std::vector<double> result_padded(dataset_size);
-    std::fill(result_padded.begin(), result_padded.begin(), 0.0);
+    // prepare is done by kernel
+    // this->prepare();
 
     if (!autotune::streaming_mult_kernel.is_compiled()) {
       autotune::streaming_mult_kernel.set_verbose(true);
       auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
       builder->set_verbose(true);
       builder->set_include_paths(
+          "-I/home/pfandedd/git/SGPP_debug/base/src "
           "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
           "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
           "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
       builder->set_cpp_flags(
-          "-Wall -Wextra -std=c++17 -march=native -mtune=native "
+          "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
           "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique -fopenmp");
       builder->set_link_flags("-shared -fno-gnu-unique -fopenmp");
       autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
@@ -107,28 +110,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
       autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {data_blocking});
       parameters.add_parameter(p1);
 
-      // std::vector<size_t> thread_values{3, 100};
       size_t openmp_threads = omp_get_max_threads();
-      std::vector<size_t> thread_values;
-      thread_values.push_back(openmp_threads);
-      for (size_t i = 0; i < 4; i++) {  // 4-way HT assumed max
-        if (openmp_threads % 2 == 0) {
-          openmp_threads /= 2;
-          thread_values.push_back(openmp_threads);
-        } else {
-          break;
-        }
-      }
-      // TODO: handle NUMA with this parameter, too?
-      std::cout << "KERNEL_OMP_THREADS: ";
-      for (size_t i = 0; i < thread_values.size(); i++) {
-        if (i > 0) {
-          std::cout << ", ";
-        }
-        std::cout << thread_values[i];
-      }
-      std::cout << std::endl;
-      autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", thread_values);
+      autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", {openmp_threads});
       parameters.add_parameter(p2);
 
       // compile beforehand so that compilation is not part of the measured duration
@@ -137,8 +120,7 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     }
 
     auto start = std::chrono::high_resolution_clock::now();
-    autotune::streaming_mult_kernel(dims, dataset_SoA, dataset_size, level_list, index_list, alpha,
-                                    result_padded);
+    autotune::streaming_mult_kernel(dims, grid, dataset, alpha, result);
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> diff = end - start;
@@ -146,40 +128,36 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     double total_flops = dataset_size * alpha.size() * (6 * dims + 1);
     std::cout << "flop: " << total_flops << std::endl;
     std::cout << "gflops: " << ((total_flops * 1E-9) / duration) << std::endl;
-
-    for (size_t i = 0; i < result.size(); i++) {
-      result[i] = result_padded[i];
-    }
   }
 
-  void tune_mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) {
+  void tune_mult(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result,
+                 const std::string& scenario_name) {
     this->prepare();
-
-    std::vector<double> result_padded(dataset_size);
 
     autotune::streaming_mult_kernel.set_verbose(true);
 
     auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     builder->set_verbose(true);
     builder->set_include_paths(
+        "-I/home/pfandedd/git/SGPP_debug/base/src "
         "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
         "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
         "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
     builder->set_cpp_flags(
-        "-Wall -Wextra -std=c++17 -march=native -mtune=native "
+        "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
         "-O3 -g -ffast-math -fopenmp -fPIC -fopenmp -fno-gnu-unique");
     builder->set_link_flags("-shared -fopenmp -fno-gnu-unique");
 
     autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
     autotune::countable_set parameters;
-    autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {6});
+    autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {5, 6, 7, 8});
     parameters.add_parameter(p1);
 
     size_t openmp_threads = omp_get_max_threads();
     std::vector<size_t> thread_values;
     thread_values.push_back(openmp_threads);
-    for (size_t i = 0; i < 4; i++) {  // 4-way HT assumed max
+    for (size_t i = 0; i < 3; i++) {  // 4-way HT assumed max
       if (openmp_threads % 2 == 0) {
         openmp_threads /= 2;
         thread_values.push_back(openmp_threads);
@@ -199,24 +177,10 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", thread_values);
     parameters.add_parameter(p2);
 
-    // autotune::streaming_mult_kernel.set_parameter_values(parameters);
-
-    // autotune::streaming_mult_kernel.create_parameter_file();
-
-    // // compile beforehand so that compilation is not part of the measured duration
-    // autotune::streaming_mult_kernel.compile();
-
-    // std::function<bool(int)> test_result = [](int) -> bool {
-    //   /* tests values generated by kernel */
-    //   return true;
-    // };
-
     autotune::tuners::bruteforce tuner(autotune::streaming_mult_kernel, parameters);
-    // tuner.setup_test(test_result);
     tuner.set_verbose(true);
-    autotune::countable_set optimal_parameters =
-        tuner.tune(dims, dataset_SoA, dataset_size, level_list, index_list, alpha, result_padded);
-
+    tuner.set_write_measurement(scenario_name);
+    autotune::countable_set optimal_parameters = tuner.tune(dims, grid, dataset, alpha, result);
     // setup optimal parameters for next call to mult
     autotune::streaming_mult_kernel.set_parameter_values(optimal_parameters);
     autotune::streaming_mult_kernel.create_parameter_file();
