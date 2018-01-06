@@ -92,18 +92,54 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     // this->prepare();
 
     if (!autotune::streaming_mult_kernel.is_compiled()) {
+      std::string sgpp_base_include;
+      std::string boost_include;
+      std::string autotunetmp_include;
+      std::string vc_include;
+      get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include, vc_include);
+      // {
+      //   const char* sgpp_base_include_env = std::getenv("SGPP_BASE_INCLUDE_DIR");
+      //   if (sgpp_base_include_env) {
+      //     sgpp_base_include =
+      //         std::string("-I") + std::string(sgpp_base_include_env) + std::string(" ");
+      //   } else {
+      //     throw;
+      //   }
+      //   const char* boost_include_env = std::getenv("BOOST_INCLUDE_DIR");
+      //   if (boost_include_env) {
+      //     boost_include = std::string("-I") + std::string(boost_include_env) + std::string(" ");
+      //   } else {
+      //     throw;
+      //   }
+      //   const char* autotunetmp_include_env = std::getenv("AUTOTUNETMP_INCLUDE_DIR");
+      //   if (autotunetmp_include_env) {
+      //     autotunetmp_include =
+      //         std::string("-I") + std::string(autotunetmp_include_env) + std::string(" ");
+      //   } else {
+      //     throw;
+      //   }
+      //   const char* vc_include_env = std::getenv("VC_INCLUDE_DIR");
+      //   if (vc_include_env) {
+      //     vc_include = std::string("-I") + std::string(vc_include_env) + std::string(" ");
+      //   } else {
+      //     throw;
+      //   }
+      // }
       autotune::streaming_mult_kernel.set_verbose(true);
       auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
       builder->set_verbose(true);
-      builder->set_include_paths(
-      //     "-I/home/pfandedd/git/SGPP_debug/base/src "
-      //     "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
-      //     "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
-      //     "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
-        "-I/home/winter/git/SGpp/base/src "
-        "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
-        "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
-        "-I/home/winter/git/AutoTuneTMP/boost_install/include");
+      builder->set_include_paths(sgpp_base_include + boost_include + autotunetmp_include +
+                                 vc_include);
+
+      // builder->set_include_paths(
+      //     //     "-I/home/pfandedd/git/SGPP_debug/base/src "
+      //     //     "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+      //     //     "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+      //     //     "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+      //     "-I/home/winter/git/SGpp/base/src "
+      //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
+      //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
+      //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
       builder->set_cpp_flags(
           "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
           "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique -fopenmp");
@@ -142,15 +178,21 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
     auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
     builder->set_verbose(true);
-    builder->set_include_paths(
-        // "-I/home/pfandedd/git/SGPP_debug/base/src "
-        // "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
-        // "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
-        // "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
-        "-I/home/winter/git/SGpp/base/src "
-        "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
-        "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
-        "-I/home/winter/git/AutoTuneTMP/boost_install/include");
+
+    std::string sgpp_base_include;
+    std::string boost_include;
+    std::string autotunetmp_include;
+    std::string vc_include;
+    get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include, vc_include);
+    // builder->set_include_paths(
+    //     // "-I/home/pfandedd/git/SGPP_debug/base/src "
+    //     // "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
+    //     // "-I/home/pfandedd/git/AutoTuneTMP/Vc_install/include "
+    //     // "-I/home/pfandedd/git/AutoTuneTMP/boost_install/include");
+    //     "-I/home/winter/git/SGpp/base/src "
+    //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
+    //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
+    //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
     builder->set_cpp_flags(
         "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
         "-O3 -g -ffast-math -fopenmp -fPIC -fopenmp -fno-gnu-unique");
@@ -339,6 +381,35 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
   }
 
   double getDuration() override { return duration; }
+
+  void get_includes_from_env(std::string& sgpp_base_include, std::string& boost_include,
+                             std::string& autotunetmp_include, std::string& vc_include) {
+    const char* sgpp_base_include_env = std::getenv("SGPP_BASE_INCLUDE_DIR");
+    if (sgpp_base_include_env) {
+      sgpp_base_include = std::string("-I") + std::string(sgpp_base_include_env) + std::string(" ");
+    } else {
+      throw;
+    }
+    const char* boost_include_env = std::getenv("BOOST_INCLUDE_DIR");
+    if (boost_include_env) {
+      boost_include = std::string("-I") + std::string(boost_include_env) + std::string(" ");
+    } else {
+      throw;
+    }
+    const char* autotunetmp_include_env = std::getenv("AUTOTUNETMP_INCLUDE_DIR");
+    if (autotunetmp_include_env) {
+      autotunetmp_include =
+          std::string("-I") + std::string(autotunetmp_include_env) + std::string(" ");
+    } else {
+      throw;
+    }
+    const char* vc_include_env = std::getenv("VC_INCLUDE_DIR");
+    if (vc_include_env) {
+      vc_include = std::string("-I") + std::string(vc_include_env) + std::string(" ");
+    } else {
+      throw;
+    }
+  }
 };
 
 }  // namespace datadriven
