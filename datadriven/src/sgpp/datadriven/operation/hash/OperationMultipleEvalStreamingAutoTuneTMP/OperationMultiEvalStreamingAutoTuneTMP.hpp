@@ -184,6 +184,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     std::string autotunetmp_include;
     std::string vc_include;
     get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include, vc_include);
+    builder->set_include_paths(sgpp_base_include + boost_include + autotunetmp_include +
+                               vc_include);
     // builder->set_include_paths(
     //     // "-I/home/pfandedd/git/SGPP_debug/base/src "
     //     // "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
