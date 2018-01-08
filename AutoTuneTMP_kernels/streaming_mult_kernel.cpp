@@ -1,11 +1,13 @@
 #include "parameters.hpp"
 
+#include <chrono>
 #include <cstddef>
 #include <vector>
 
 #include <Vc/Vc>
 using Vc::double_v;
 
+#include <opttmp/memory_layout/struct_of_array_data.hpp>
 #include <opttmp/vectorization/register_tiling.hpp>
 using namespace opttmp::vectorization;
 
@@ -29,7 +31,6 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
   // prepare data structures
   ////////////////////////////////////////
 
-  // grid as SoA
   sgpp::base::GridStorage& storage = grid.getStorage();
   // grid as non-SoA for testing
   std::vector<double, boost::alignment::aligned_allocator<double, 32>> level_list;
@@ -48,31 +49,41 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
   }
 
   // data as SoA
-  size_t dataset_size = dataset.getNrows();
-  dataset_size += dataset_size % (DATA_BLOCKING * double_v::size()) == 0
-                      ? 0
-                      : (DATA_BLOCKING * double_v::size()) -
-                            (dataset_size % (DATA_BLOCKING * double_v::size()));
-  std::vector<double, boost::alignment::aligned_allocator<double, 32>> dataset_SoA;
-  dataset_SoA.resize(dataset_size * dims);
-  for (size_t i = 0; i < dataset.getNrows(); i++) {
-    for (size_t d = 0; d < dims; d++) {
-      dataset_SoA[d * dataset_size + i] = dataset[i * dims + d];
-    }
-  }
-  // setup padding
-  for (size_t i = dataset.getNrows(); i < dataset_size; i++) {
-    for (size_t d = 0; d < dims; d++) {
-      dataset_SoA[d * dataset_size + i] = dataset[(dataset.getNrows() - 1) * dims + d];
-    }
-  }
+  size_t padding = dataset.getNrows() % (DATA_BLOCKING * double_v::size()) == 0
+                       ? 0
+                       : (DATA_BLOCKING * double_v::size()) -
+                             (dataset.getNrows() % (DATA_BLOCKING * double_v::size()));
+  size_t dataset_size = dataset.getNrows() + padding;
+  opttmp::memory_layout::struct_of_array_data<double_v, double, sgpp::base::DataMatrix> dataset_SoA(
+      dataset, dims, dataset.getNrows(), padding);
+
+  // size_t dataset_size = dataset.getNrows();
+  // dataset_size += dataset_size % (DATA_BLOCKING * double_v::size()) == 0
+  //                     ? 0
+  //                     : (DATA_BLOCKING * double_v::size()) -
+  //                           (dataset_size % (DATA_BLOCKING * double_v::size()));
+  // std::vector<double, boost::alignment::aligned_allocator<double, 32>> dataset_SoA;
+  // dataset_SoA.resize(dataset_size * dims);
+  // for (size_t i = 0; i < dataset.getNrows(); i++) {
+  //   for (size_t d = 0; d < dims; d++) {
+  //     dataset_SoA[d * dataset_size + i] = dataset[i * dims + d];
+  //   }
+  // }
+  // // setup padding
+  // for (size_t i = dataset.getNrows(); i < dataset_size; i++) {
+  //   for (size_t d = 0; d < dims; d++) {
+  //     dataset_SoA[d * dataset_size + i] = dataset[(dataset.getNrows() - 1) * dims + d];
+  //   }
+  // }
 
   std::vector<double, boost::alignment::aligned_allocator<double, 32>> result_padded(dataset_size);
   std::fill(result_padded.begin(), result_padded.begin(), 0.0);
 
-////////////////////////////////////////
-// end prepare data structures
-////////////////////////////////////////
+  ////////////////////////////////////////
+  // end prepare data structures
+  ////////////////////////////////////////
+
+  auto start = std::chrono::high_resolution_clock::now();
 
 #pragma omp parallel for num_threads(KERNEL_OMP_THREADS)
   for (size_t i = 0; i < dataset_size; i += DATA_BLOCKING * double_v::size()) {
@@ -87,7 +98,8 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
         // double_v level_dim = level_list[j * dims + d];  // broadcasts
         // double_v index_dim = index_list[j * dims + d];
 
-        reg_array data_dims_arr(&dataset_SoA[d * dataset_size + i], Vc::flags::vector_aligned);
+        // reg_array data_dims_arr(&dataset_SoA[d * dataset_size + i], Vc::flags::vector_aligned);
+        reg_array data_dims_arr(dataset_SoA.pointer(d, i), Vc::flags::vector_aligned);
 
         reg_array temps_arr;
         // converted to FMA through expression templates
@@ -111,6 +123,15 @@ extern "C" void streaming_mult_kernel(size_t dims, sgpp::base::Grid& grid,
   for (size_t i = 0; i < result.size(); i++) {
     result[i] = result_padded[i];
   }
+
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> diff = end - start;
+  double duration = diff.count();
+  double total_flops = dataset_size * alpha.size() * (6 * dims + 1);
+  std::cout << "duration (inner): " << duration << std::endl;
+  std::cout << "gflops (inner): " << ((total_flops * 1E-9) / duration) << std::endl;
+
+  // print flops
 }
 
 // extern "C" void streaming_mult_kernel(size_t dims, std::vector<double> &dataset_SoA,

@@ -203,13 +203,15 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
     autotune::countable_set parameters;
-    autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {5, 6, 7, 8});
+    // autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {5, 6, 7, 8});
+    autotune::countable_continuous_parameter p1("DATA_BLOCKING", 5.0, 1.0, 1.0, 15.0);
     parameters.add_parameter(p1);
 
     size_t openmp_threads = omp_get_max_threads();
     std::vector<size_t> thread_values;
     thread_values.push_back(openmp_threads);
-    for (size_t i = 0; i < 3; i++) {  // 4-way HT assumed max
+    for (size_t i = 0; i < 1; i++) {  // 4-way HT assumed max
+                                      // for (size_t i = 0; i < 3; i++) {  // 4-way HT assumed max
       if (openmp_threads % 2 == 0) {
         openmp_threads /= 2;
         thread_values.push_back(openmp_threads);
