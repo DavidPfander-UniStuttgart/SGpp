@@ -30,9 +30,9 @@ using Vc::double_v;
 //                                     std::vector<double>&),
 //                                streaming_mult_kernel)
 
-AUTOTUNE_DECLARE_DEFINE_KERNEL(sgpp::base::DataVector(sgpp::base::Grid&, sgpp::base::DataMatrix&,
-                                                      sgpp::base::DataVector&, double&),
-                               streaming_mult_kernel)
+AUTOTUNE_KERNEL(sgpp::base::DataVector(sgpp::base::Grid&, sgpp::base::DataMatrix&,
+                                       sgpp::base::DataVector&, double&),
+                streaming_mult_kernel, "AutoTuneTMP_kernels")
 
 // #include <opttmp/vectorization/vector_tiling.hpp>
 #include <opttmp/vectorization/register_tiling.hpp>
@@ -128,10 +128,9 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
       //   }
       // }
       autotune::streaming_mult_kernel.set_verbose(true);
-      auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
-      builder->set_verbose(true);
-      builder->set_include_paths(sgpp_base_include + boost_include + autotunetmp_include +
-                                 vc_include);
+      auto& builder = autotune::streaming_mult_kernel.get_builder<cppjit::builder::gcc>();
+      builder.set_include_paths(sgpp_base_include + boost_include + autotunetmp_include +
+                                vc_include);
 
       // builder->set_include_paths(
       //     //     "-I/home/pfandedd/git/SGPP_debug/base/src "
@@ -142,10 +141,10 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
       //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
       //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
       //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
-      builder->set_cpp_flags(
+      builder.set_cpp_flags(
           "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
           "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique -fopenmp");
-      builder->set_link_flags("-shared -fno-gnu-unique -fopenmp");
+      builder.set_link_flags("-shared -fno-gnu-unique -fopenmp");
       autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
       autotune::countable_set parameters;
@@ -184,16 +183,14 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
 
     autotune::streaming_mult_kernel.set_verbose(true);
 
-    auto builder = autotune::streaming_mult_kernel.get_builder_as<cppjit::builder::gcc>();
-    builder->set_verbose(true);
+    auto& builder = autotune::streaming_mult_kernel.get_builder<cppjit::builder::gcc>();
 
     std::string sgpp_base_include;
     std::string boost_include;
     std::string autotunetmp_include;
     std::string vc_include;
     get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include, vc_include);
-    builder->set_include_paths(sgpp_base_include + boost_include + autotunetmp_include +
-                               vc_include);
+    builder.set_include_paths(sgpp_base_include + boost_include + autotunetmp_include + vc_include);
     // builder->set_include_paths(
     //     // "-I/home/pfandedd/git/SGPP_debug/base/src "
     //     // "-I/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_install_debug/include "
@@ -203,10 +200,10 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     //     "-I/home/winter/git/AutoTuneTMP/build_Debug/AutoTuneTMP_install_debug/include "
     //     "-I/home/winter/git/AutoTuneTMP/Vc_install/include "
     //     "-I/home/winter/git/AutoTuneTMP/boost_install/include");
-    builder->set_cpp_flags(
+    builder.set_cpp_flags(
         "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
         "-O3 -g -ffast-math -fopenmp -fPIC -fopenmp -fno-gnu-unique");
-    builder->set_link_flags("-shared -fopenmp -fno-gnu-unique");
+    builder.set_link_flags("-shared -fopenmp -fno-gnu-unique");
 
     autotune::streaming_mult_kernel.set_source_dir("AutoTuneTMP_kernels/");
 
@@ -295,29 +292,29 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     const double_v one = 1.0;
     const double_v zero = 0.0;
 
-// #pragma omp parallel for
-//     for (size_t j = 0; j < grid_size; j += double_v::size()) {
-//       double_v result_temp = 0.0;
-//       for (size_t i = 0; i < source.size(); i++) {
-//         double_v evalNd = source[i];
+    // #pragma omp parallel for
+    //     for (size_t j = 0; j < grid_size; j += double_v::size()) {
+    //       double_v result_temp = 0.0;
+    //       for (size_t i = 0; i < source.size(); i++) {
+    //         double_v evalNd = source[i];
 
-//         for (size_t d = 0; d < dims; d++) {
-//           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-//           double_v level_dim = double_v(&level_list_SoA[d * grid_size + j],
-//           Vc::flags::element_aligned);
-//           double_v index_dim = double_v(&index_list_SoA[d * grid_size + j],
-//           Vc::flags::element_aligned);
-//           // TODO: non-SoA probably faster
-//           double_v data_dim = dataset_SoA[d * dataset_size + i];
-//           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-//           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-//           evalNd *= eval1d;                                      // 1 FLOPS
-//         }
-//         result_temp += evalNd;  // total: 6d + 1
-//       }
-//       // #pragma omp atomic
-//       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
-//     }
+    //         for (size_t d = 0; d < dims; d++) {
+    //           // 2^l * x - i (level_list_SoA stores 2^l, not l)
+    //           double_v level_dim = double_v(&level_list_SoA[d * grid_size + j],
+    //           Vc::flags::element_aligned);
+    //           double_v index_dim = double_v(&index_list_SoA[d * grid_size + j],
+    //           Vc::flags::element_aligned);
+    //           // TODO: non-SoA probably faster
+    //           double_v data_dim = dataset_SoA[d * dataset_size + i];
+    //           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
+    //           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
+    //           evalNd *= eval1d;                                      // 1 FLOPS
+    //         }
+    //         result_temp += evalNd;  // total: 6d + 1
+    //       }
+    //       // #pragma omp atomic
+    //       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
+    //     }
 
 #pragma omp parallel for schedule(static)
     for (size_t j = 0; j < grid_size; j += double_v::size()) {

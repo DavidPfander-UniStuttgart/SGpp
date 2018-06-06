@@ -97,16 +97,11 @@ extern "C" sgpp::base::DataVector streaming_mult_kernel(sgpp::base::Grid& grid,
       for (size_t d = 0; d < DIMS; d++) {
         // non-SoA is faster (2 streams, instead of 2d streams)
         // 2^l * x - i (level_list_SoA stores 2^l, not l)
-        // double_v level_dim = level_list[j * dims + d];  // broadcasts
-        // double_v index_dim = index_list[j * dims + d];
-
-        // reg_array data_dims_arr(&dataset_SoA[d * dataset_size + i], Vc::flags::vector_aligned);
         reg_array data_dims_arr(dataset_SoA.pointer(d, i), Vc::flags::vector_aligned);
 
         reg_array temps_arr;
         // converted to FMA through expression templates
         // (also mixes array and non-array type vector variables)
-        // temps_arr = (data_dims_arr * level_dim) - index_dim;  // 2 FLOP
         temps_arr = (data_dims_arr * double_v(level_list[j * DIMS + d])) -
                     double_v(index_list[j * DIMS + d]);  // 2 FLOP
 

@@ -27,11 +27,11 @@
 #include "autotune/tuners/bruteforce.hpp"
 #include "autotune/tuners/countable_set.hpp"
 
-AUTOTUNE_DECLARE_DEFINE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &, sgpp::base::DataVector &),
-                                           mult_with_tuning)
+AUTOTUNE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &, sgpp::base::DataVector &),
+                            mult_with_tuning)
 
-AUTOTUNE_DECLARE_DEFINE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &, sgpp::base::DataVector &),
-                                           mult_transpose_with_tuning)
+AUTOTUNE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &, sgpp::base::DataVector &),
+                            mult_transpose_with_tuning)
 
 namespace sgpp {
 namespace datadriven {
