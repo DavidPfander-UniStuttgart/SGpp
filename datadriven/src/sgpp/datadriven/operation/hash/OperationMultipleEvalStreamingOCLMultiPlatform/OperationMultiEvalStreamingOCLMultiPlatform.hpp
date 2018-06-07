@@ -9,7 +9,7 @@
 
 #include <algorithm>
 #include <chrono>
-#include <mutex>  // NOLINT(build/c++11)
+#include <mutex> // NOLINT(build/c++11)
 #include <vector>
 
 #include "Configuration.hpp"
@@ -28,25 +28,25 @@ namespace datadriven {
 namespace StreamingOCLMultiPlatform {
 
 /**
- * This class provides an operation for evaluating multiple grid points in the domain and doing
- * least squares data mining.
- * This algorithmic variant uses the streaming algorithm for evaluation.
- * It uses high performance OpenCL kernels and is well-suited for large irregular datasets and
- * grids.
- * This class manages one OpenCL kernel for each devices configured using the
+ * This class provides an operation for evaluating multiple grid points in the
+ * domain and doing least squares data mining. This algorithmic variant uses the
+ * streaming algorithm for evaluation. It uses high performance OpenCL kernels
+ * and is well-suited for large irregular datasets and grids. This class manages
+ * one OpenCL kernel for each devices configured using the
  * OCLOperationConfiguration.
- * When a operation is called it triggers the device work by using OpenMP and delegating the work to
- * instances of the kernels.
- * Furthermore, this class converts the received grid and dataset into a representation that is
- * suited for the streaming algorithm.
+ * When a operation is called it triggers the device work by using OpenMP and
+ * delegating the work to instances of the kernels. Furthermore, this class
+ * converts the received grid and dataset into a representation that is suited
+ * for the streaming algorithm.
  *
  * @see base::OperationMultipleEval
  * @see StreamingOCLMultiPlatform::KernelMult
  * @see StreamingOCLMultiPlatform::KernelMultTranspose
  */
 template <typename T>
-class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultipleEval {
- protected:
+class OperationMultiEvalStreamingOCLMultiPlatform
+    : public base::OperationMultipleEval {
+protected:
   size_t dims;
 
   base::DataMatrix preparedDataset;
@@ -83,7 +83,8 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   std::vector<std::shared_ptr<base::OCLDevice>> devices;
 
   std::vector<StreamingOCLMultiPlatform::KernelMult<T>> multKernels;
-  std::vector<StreamingOCLMultiPlatform::KernelMultTranspose<T>> multTransposeKernels;
+  std::vector<StreamingOCLMultiPlatform::KernelMultTranspose<T>>
+      multTransposeKernels;
 
   //  json::Node &configuration;
 
@@ -92,38 +93,47 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   size_t commonDatasetPadding;
   size_t commonGridPadding;
 
- public:
+public:
   /**
-   * Creates a new instance of the OperationMultiEvalStreamingOCLMultiPlatform class.
-   * This class should not be created directly, instead the datadriven operator factory should be
-   * used or at least the factory method.
+   * Creates a new instance of the OperationMultiEvalStreamingOCLMultiPlatform
+   * class. This class should not be created directly, instead the datadriven
+   * operator factory should be used or at least the factory method.
    *
    * @see createStreamingOCLMultiPlatformConfigured
    *
    * @param grid The grid to evaluate
    * @param dataset The datapoints to evaluate
-   * @param manager The OpenCL manager that manages OpenCL internels for this kernel
-   * @param parameters The configuration of the kernel leading to different compute kernels
+   * @param manager The OpenCL manager that manages OpenCL internels for this
+   * kernel
+   * @param parameters The configuration of the kernel leading to different
+   * compute kernels
    */
   OperationMultiEvalStreamingOCLMultiPlatform(
       base::Grid &grid, base::DataMatrix &dataset,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       std::shared_ptr<base::OCLOperationConfiguration> parameters)
-      : OperationMultipleEval(grid, dataset),
-        preparedDataset(dataset),
-        parameters(parameters),
-        myTimer(base::SGppStopwatch()),
-        duration(-1.0),
-        manager(manager),
-        devices(manager->getDevices()) {
-    this->dims = dataset.getNcols();  // be aware of transpose!
+      : OperationMultipleEval(grid, dataset), preparedDataset(dataset),
+        parameters(parameters), myTimer(base::SGppStopwatch()), duration(-1.0),
+        manager(manager), devices(manager->getDevices()) {
+    this->dims = dataset.getNcols(); // be aware of transpose!
+    if (this->dims == 0) {
+      std::cerr << "OperationMultiEvalStreamingOCLMultiPlatform: warning: 0d "
+                   "problem specified, likely an error!"
+                << std::endl;
+    }
+    if (dataset.getNrows() == 0) {
+      std::cerr << "OperationMultiEvalStreamingOCLMultiPlatform: dataset has "
+                   "no data points, likely an error!"
+                << std::endl;
+    }
     this->verbose = (*parameters)["VERBOSE"].getBool();
 
     this->commonDatasetPadding = calculateCommonDatasetPadding();
     this->commonGridPadding = calculateCommonGridPadding();
 
     queueLoadBalancerMult = std::make_shared<base::QueueLoadBalancerOpenMP>();
-    queueLoadBalancerMultTranspose = std::make_shared<base::QueueLoadBalancerOpenMP>();
+    queueLoadBalancerMultTranspose =
+        std::make_shared<base::QueueLoadBalancerOpenMP>();
 
     // initialized in padDataset
     datasetSizeUnpadded = 0;
@@ -134,13 +144,18 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     gridSizePadded = 0;
 
     this->padDataset(this->preparedDataset);
+    if (grid.getStorage().getSize() == 0) {
+      std::cerr << "OperationMultiEvalStreamingOCLMultiPlatform: grid has no "
+                   "grid points, likely an error!"
+                << std::endl;
+    }
     this->preparedDataset.transpose();
 
-    this->kernelDataset =
-        std::vector<T>(this->preparedDataset.getNrows() * this->preparedDataset.getNcols());
+    this->kernelDataset = std::vector<T>(this->preparedDataset.getNrows() *
+                                         this->preparedDataset.getNcols());
 
     for (size_t i = 0; i < this->preparedDataset.getSize(); i++) {
-      this->kernelDataset[i] = (T) this->preparedDataset[i];
+      this->kernelDataset[i] = (T)this->preparedDataset[i];
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
@@ -148,16 +163,19 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
       json::Node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration =
-          deviceConfiguration["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
+      json::Node &kernelConfiguration = deviceConfiguration
+          ["KERNELS"]
+          [StreamingOCLMultiPlatform::Configuration::getKernelName()];
       std::cout << "adding new multKernels..." << std::endl;
-      multKernels.emplace_back(devices[deviceIndex], dims, this->manager, kernelConfiguration,
-                               queueLoadBalancerMult);
-      multTransposeKernels.emplace_back(devices[deviceIndex], dims, this->manager,
-                                        kernelConfiguration, queueLoadBalancerMultTranspose);
+      multKernels.emplace_back(devices[deviceIndex], dims, this->manager,
+                               kernelConfiguration, queueLoadBalancerMult);
+      multTransposeKernels.emplace_back(devices[deviceIndex], dims,
+                                        this->manager, kernelConfiguration,
+                                        queueLoadBalancerMultTranspose);
     }
 
-    // create the kernel specific data structures and initialize gridSize and gridSizeExtra
+    // create the kernel specific data structures and initialize gridSize and
+    // gridSizeExtra
     this->prepare();
   }
 
@@ -176,17 +194,20 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     this->mult(alpha, result, 0, this->datasetSizePadded);
   }
 
-  void mult(base::DataVector &alpha, base::DataVector &result, size_t startIndexData,
-            size_t endIndexData) override {
+  void mult(base::DataVector &alpha, base::DataVector &result,
+            size_t startIndexData, size_t endIndexData) override {
     // ensure padding requirements are fulfilled by start and end index
-    size_t startIndexDataPadded = this->padIndexDown(startIndexData, commonDatasetPadding);
-    size_t endIndexDataPadded = this->padIndexUp(endIndexData, commonDatasetPadding);
+    size_t startIndexDataPadded =
+        this->padIndexDown(startIndexData, commonDatasetPadding);
+    size_t endIndexDataPadded =
+        this->padIndexUp(endIndexData, commonDatasetPadding);
 
     this->myTimer.start();
 
     if (startIndexData > endIndexData) {
       std::stringstream errorString;
-      errorString << "Error: cannot process negative data set input range" << std::endl;
+      errorString << "Error: cannot process negative data set input range"
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
 
@@ -197,7 +218,8 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     size_t datasetFrom = startIndexDataPadded;
     size_t datasetTo = endIndexDataPadded;
 
-    queueLoadBalancerMult->initialize(datasetFrom, datasetTo, commonDatasetPadding);
+    queueLoadBalancerMult->initialize(datasetFrom, datasetTo,
+                                      commonDatasetPadding);
 
     std::vector<T> alphaArray(this->gridSizePadded);
 
@@ -224,16 +246,19 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     {
       size_t threadId = omp_get_thread_num();
       try {
-        this->multKernels[threadId].mult(this->level, this->index, this->kernelDataset, alphaArray,
-                                         resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
+        this->multKernels[threadId].mult(
+            this->level, this->index, this->kernelDataset, alphaArray,
+            resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
       } catch (...) {
         // store the first exception thrown for rethrow
-        std::call_once(onceFlag,
-                       [&]() { exceptionPtr = std::current_exception(); });  // NOLINT(build/c++11)
+        std::call_once(onceFlag, [&]() {
+          exceptionPtr = std::current_exception();
+        }); // NOLINT(build/c++11)
       }
     }
 
     if (exceptionPtr) {
+      // std::cout << "exception was thrown!!!" << std::endl;
       std::rethrow_exception(exceptionPtr);
     }
 
@@ -260,27 +285,31 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
    * Performs the transposed MultiEval operation  \f$v':= B v\f$.
    *
    * @param source The vector \f$v\f$
-   * @param result The result of the matrix vector multiplication in the order of grid (of the alpha
-   * vector)
+   * @param result The result of the matrix vector multiplication in the order
+   * of grid (of the alpha vector)
    */
-  void multTranspose(base::DataVector &source, base::DataVector &result) override {
+  void multTranspose(base::DataVector &source,
+                     base::DataVector &result) override {
     this->multTranspose(source, result, 0, this->gridSizePadded);
   }
 
-  void multTranspose(base::DataVector &source, base::DataVector &result, size_t startIndexGrid,
-                     size_t endIndexGrid) override {
+  void multTranspose(base::DataVector &source, base::DataVector &result,
+                     size_t startIndexGrid, size_t endIndexGrid) override {
     this->myTimer.start();
 
     // ensure padding requirements are fulfilled by start and end index
-    size_t startIndexGridPadded = this->padIndexDown(startIndexGrid, commonGridPadding);
-    size_t endIndexGridPadded = this->padIndexUp(endIndexGrid, commonGridPadding);
+    size_t startIndexGridPadded =
+        this->padIndexDown(startIndexGrid, commonGridPadding);
+    size_t endIndexGridPadded =
+        this->padIndexUp(endIndexGrid, commonGridPadding);
     std::cout << "endIndexGrid: " << endIndexGrid << std::endl;
     std::cout << "commonGridPadding: " << commonGridPadding << std::endl;
     std::cout << "endIndexGridPadded: " << endIndexGridPadded << std::endl;
 
     if (startIndexGrid > endIndexGrid) {
       std::stringstream errorString;
-      errorString << "Error: cannot process negative grid input range" << std::endl;
+      errorString << "Error: cannot process negative grid input range"
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
 
@@ -291,7 +320,8 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
     size_t datasetFrom = 0;
     size_t datasetTo = this->datasetSizePadded;
 
-    queueLoadBalancerMultTranspose->initialize(gridFrom, gridTo, commonGridPadding);
+    queueLoadBalancerMultTranspose->initialize(gridFrom, gridTo,
+                                               commonGridPadding);
 
     std::vector<T> sourceArray(this->datasetSizePadded);
 
@@ -318,13 +348,14 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
       size_t threadId = omp_get_thread_num();
 
       try {
-        this->multTransposeKernels[threadId].multTranspose(this->level, this->index,
-                                                           this->kernelDataset, sourceArray,
-                                                           resultArray, datasetFrom, datasetTo);
+        this->multTransposeKernels[threadId].multTranspose(
+            this->level, this->index, this->kernelDataset, sourceArray,
+            resultArray, datasetFrom, datasetTo);
       } catch (...) {
         // store the first exception thrown for rethrow
-        std::call_once(onceFlag,
-                       [&]() { exceptionPtr = std::current_exception(); });  // NOLINT(build/c++11)
+        std::call_once(onceFlag, [&]() {
+          exceptionPtr = std::current_exception();
+        }); // NOLINT(build/c++11)
       }
     }
 
@@ -358,14 +389,15 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   double getDuration() override { return this->duration; }
 
   /**
-   * Creates the internal data structures used by the algorithm. Needs to be called every time the
-   * grid changes e.g., due to refinement.
+   * Creates the internal data structures used by the algorithm. Needs to be
+   * called every time the grid changes e.g., due to refinement.
    */
   void prepare() override { this->recalculateLevelAndIndex(); }
 
- private:
+private:
   /**
-   * Pads the dataset according to the requirement of the parameter configuration
+   * Pads the dataset according to the requirement of the parameter
+   * configuration
    * @param dataset The dataset to be padded
    */
   void padDataset(base::DataMatrix &dataset) {
@@ -387,9 +419,9 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   }
 
   /**
-   * Creates the internal grid data structure which consists of two lists, one for the level and one
-   * for the index values.
-   * Has to be recalculated via prepare whenever the grid is changed.
+   * Creates the internal grid data structure which consists of two lists, one
+   * for the level and one for the index values. Has to be recalculated via
+   * prepare whenever the grid is changed.
    */
   void recalculateLevelAndIndex() {
     base::GridStorage &storage = grid.getStorage();
@@ -428,8 +460,8 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   }
 
   /**
-   * Calculates the padding requirements of the dataset according to the configuration.
-   * Takes into account the configuration of individual devices.
+   * Calculates the padding requirements of the dataset according to the
+   * configuration. Takes into account the configuration of individual devices.
    */
   size_t calculateCommonDatasetPadding() {
     size_t commonPaddingRequiredment = 1;
@@ -438,20 +470,22 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
       json::Node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration =
-          deviceConfiguration["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
+      json::Node &kernelConfiguration = deviceConfiguration
+          ["KERNELS"]
+          [StreamingOCLMultiPlatform::Configuration::getKernelName()];
 
-      commonPaddingRequiredment = std::max(commonPaddingRequiredment,
-                                           kernelConfiguration["KERNEL_DATA_BLOCK_SIZE"].getUInt() *
-                                               kernelConfiguration["LOCAL_SIZE"].getUInt());
+      commonPaddingRequiredment =
+          std::max(commonPaddingRequiredment,
+                   kernelConfiguration["KERNEL_DATA_BLOCK_SIZE"].getUInt() *
+                       kernelConfiguration["LOCAL_SIZE"].getUInt());
     }
     return commonPaddingRequiredment;
   }
 
   /**
-   * Calculates the padding requirements of the internal grid data structure according to the
-   * configuration.
-   * Takes into account the configuration of individual devices.
+   * Calculates the padding requirements of the internal grid data structure
+   * according to the configuration. Takes into account the configuration of
+   * individual devices.
    */
   size_t calculateCommonGridPadding() {
     size_t commonPaddingRequirement = 1;
@@ -460,12 +494,14 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
       json::Node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration =
-          deviceConfiguration["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
+      json::Node &kernelConfiguration = deviceConfiguration
+          ["KERNELS"]
+          [StreamingOCLMultiPlatform::Configuration::getKernelName()];
 
       commonPaddingRequirement = std::max(
-          commonPaddingRequirement, kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt() *
-                                        kernelConfiguration["LOCAL_SIZE"].getUInt());
+          commonPaddingRequirement,
+          kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt() *
+              kernelConfiguration["LOCAL_SIZE"].getUInt());
     }
     return commonPaddingRequirement;
   }
@@ -489,6 +525,6 @@ class OperationMultiEvalStreamingOCLMultiPlatform : public base::OperationMultip
   }
 };
 
-}  // namespace StreamingOCLMultiPlatform
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace StreamingOCLMultiPlatform
+} // namespace datadriven
+} // namespace sgpp

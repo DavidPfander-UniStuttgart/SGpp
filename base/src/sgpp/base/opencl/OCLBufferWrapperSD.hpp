@@ -128,7 +128,7 @@ public:
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Could not allocate buffer! Error code: " << err
-                  << std::endl;
+                  << ", bytes requested: " << (sizeof(T) * elements) << std::endl;
       throw sgpp::base::operation_exception(errorString.str());
     }
 
