@@ -15,7 +15,7 @@
 
 // base class is not exported from the configuration
 %warnfilter(401) sgpp::datadriven::LearnerSGDEConfiguration;
-
+%warnfilter(401) sgpp::datadriven::SparseGridDensityEstimatorConfiguration;
 
 // The Good, i.e. without any modifications
 #ifdef SG_DATADRIVEN
@@ -24,13 +24,17 @@
 %include "datadriven/src/sgpp/datadriven/algorithm/DMSystemMatrix.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DensitySystemMatrix.hpp"
 %include "datadriven/src/sgpp/datadriven/tools/Dataset.hpp"
-%include "datadriven/src/sgpp/datadriven/application/RegularizationConfiguration.hpp"
+%include "datadriven/src/sgpp/datadriven/configuration/BatchConfiguration.hpp"
+%include "datadriven/src/sgpp/datadriven/configuration/CrossvalidationConfiguration.hpp"
+%include "datadriven/src/sgpp/datadriven/configuration/DensityEstimationConfiguration.hpp"
+%include "datadriven/src/sgpp/datadriven/configuration/RegularizationConfiguration.hpp"
+%include "datadriven/src/sgpp/datadriven/configuration/DatabaseConfiguration.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/ConvergenceMonitor.hpp"
 
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatDecompMatrixSolver.hpp"
-%include "datadriven/src/sgpp/datadriven/algorithm/DBMatDensityConfiguration.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatDMSChol.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatDMSDenseIChol.hpp"
+%include "datadriven/src/sgpp/datadriven/algorithm/DBMatDMSOrthoAdapt.hpp"
 %ignore *::operator=;
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOffline.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOfflineGE.hpp"
@@ -42,14 +46,18 @@
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOnlineDEFactory.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOfflineFactory.hpp"
 
+%include "datadriven/src/sgpp/datadriven/algorithm/DBMatDatabase.hpp"
+
 #ifdef USE_GSL
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatDMSBackSub.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatDMSEigen.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOfflineEigen.hpp"
 %ignore sgpp::datadriven::DBMatOfflineLU::DBMatOfflineLU(DBMatOfflineLU &&);
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOfflineLU.hpp"
+%include "datadriven/src/sgpp/datadriven/algorithm/DBMatOfflineOrthoAdapt.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOnlineDEEigen.hpp"
 %include "datadriven/src/sgpp/datadriven/algorithm/DBMatOnlineDELU.hpp"
+%include "datadriven/src/sgpp/datadriven/algorithm/DBMatOnlineDEOrthoAdapt.hpp"
 #endif /* USE_GSL */
 
 #ifdef __AVX__
@@ -63,7 +71,14 @@
 %include "datadriven/src/sgpp/datadriven/tools/TypesDatadriven.hpp"
 %include "datadriven/src/sgpp/datadriven/application/LearnerBase.hpp"
 %include "datadriven/src/sgpp/datadriven/application/DensityEstimator.hpp"
-%include "datadriven/src/sgpp/datadriven/application/GaussianKDE.hpp"
+
+%include "datadriven/src/sgpp/datadriven/application/KernelDensityEstimator.hpp"
+%newobject sgpp::datadriven::KernelDensityEstimator::margToDimX(size_t idim);
+%newobject sgpp::datadriven::KernelDensityEstimator::marginalize(size_t idim);
+%include "datadriven/src/sgpp/datadriven/application/SparseGridDensityEstimator.hpp"
+%newobject sgpp::datadriven::SparseGridDensityEstimator::margToDimX(size_t idim);
+%newobject sgpp::datadriven::SparseGridDensityEstimator::marginalize(size_t idim);
+
 %include "datadriven/src/sgpp/datadriven/application/LearnerSGDE.hpp"
 %include "datadriven/src/sgpp/datadriven/application/RegressionLearner.hpp"
 %include "datadriven/src/sgpp/datadriven/application/ClassificationLearner.hpp"
@@ -80,6 +95,17 @@
 %include "datadriven/src/sgpp/datadriven/functors/classification/GridPointBasedRefinementFunctor.hpp"
 %include "datadriven/src/sgpp/datadriven/functors/classification/ZeroCrossingRefinementFunctor.hpp"
 
+#ifdef USE_MPI
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/AuxiliaryStructures.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/MPITaskScheduler.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/RefinementHandler.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/LearnerSGDEOnOffParallel.hpp"
+//%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/MPIMethods.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/MPIRequestPool.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/NetworkMessageData.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/PendingMPIRequest.hpp"
+%include "datadriven/src/sgpp/datadriven/application/learnersgdeonoffparallel/RoundRobinScheduler.hpp"
+#endif
 
 %ignore *::operator=;
 
@@ -90,7 +116,13 @@
 #ifdef ZLIB
 %include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/GzipFileSampleDecorator.hpp"
 #endif /* ZLIB */
+%include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/RosenblattTransformationConfig.hpp"
+%include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/DataTransformationConfig.hpp"
 %include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/DataSourceConfig.hpp"
+%include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/DataTransformation.hpp"
+%ignore sgpp::datadriven::DataTransformation::DataTransformation(DataTransformation &&);
+%include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/DataTransformationTypeParser.hpp"
+%include "datadriven/src/sgpp/datadriven/datamining/modules/dataSource/RosenblattTransformation.hpp"
 
 %ignore sgpp::datadriven::DataSource::begin;
 %ignore sgpp::datadriven::DataSource::end;
@@ -116,7 +148,9 @@
 
 %include "datadriven/src/sgpp/datadriven/datamining/base/SparseGridMiner.hpp"
 
+%include "datadriven/src/sgpp/datadriven/datamining/configuration/DensityEstimationTypeParser.hpp"
 %include "datadriven/src/sgpp/datadriven/datamining/configuration/GridTypeParser.hpp"
+%include "datadriven/src/sgpp/datadriven/datamining/configuration/MatrixDecompositionTypeParser.hpp"
 %include "datadriven/src/sgpp/datadriven/datamining/configuration/RegularizationTypeParser.hpp"
 %include "datadriven/src/sgpp/datadriven/datamining/configuration/SLESolverTypeParser.hpp"
 
@@ -151,6 +185,13 @@
 
 %include "datadriven/src/sgpp/datadriven/operation/hash/simple/OperationDensityMarginalize.hpp"
 %include "datadriven/src/sgpp/datadriven/operation/hash/simple/OperationDensityMargTo1D.hpp"
+
+%ignore sgpp::datadriven::HashGridPointCompare::operator();
+%include "datadriven/src/sgpp/datadriven/operation/hash/simple/OperationMakePositiveCandidateSetAlgorithm.hpp"
+%include "datadriven/src/sgpp/datadriven/operation/hash/simple/OperationMakePositive.hpp"
+%include "datadriven/src/sgpp/datadriven/operation/hash/simple/OperationLimitFunctionValueRange.hpp"
+
+%include "datadriven/src/sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
 
 // --------------------------------------
 // renaming ambiguous function declarations for python

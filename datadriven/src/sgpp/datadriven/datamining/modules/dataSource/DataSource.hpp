@@ -13,6 +13,7 @@
 
 #include <sgpp/datadriven/datamining/modules/dataSource/DataSourceConfig.hpp>
 #include <sgpp/datadriven/datamining/modules/dataSource/DataSourceIterator.hpp>
+#include <sgpp/datadriven/datamining/modules/dataSource/DataTransformation.hpp>
 #include <sgpp/datadriven/datamining/modules/dataSource/SampleProvider.hpp>
 #include <sgpp/datadriven/tools/Dataset.hpp>
 
@@ -88,6 +89,11 @@ class DataSource {
    * pointer to sample provider that actually handles data aquisition.
    */
   std::unique_ptr<SampleProvider> sampleProvider;
+
+  /**
+   * pointer to DataTransformation to perform transformations on init.
+   */
+  DataTransformation* dataTransformation;
 };
 
 } /* namespace datadriven */
