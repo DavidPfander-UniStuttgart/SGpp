@@ -113,6 +113,7 @@ void OperationMultiEvalStreaming::multTranspose(sgpp::base::DataVector& source,
                                                 sgpp::base::DataVector& result) {
   this->myTimer_.start();
 
+  // TODO: this code assumes aligned memory through "AlignedMemory.cpp"
   size_t originalSize = source.getSize();
 
   source.resize(this->preparedDataset.getNcols());

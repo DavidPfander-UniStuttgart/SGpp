@@ -37,16 +37,15 @@ void multiply_and_test(sgpp::base::OCLOperationConfiguration *parameters,
   sgpp::base::DataVector result(gridsize);
   alpha.setAll(1.0);
   // Create operation
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity *mult_operation =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
-          grid, 2, manager, parameters, 0.001, 0, 0);
+  auto mult_operation = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+      grid, 2, manager, parameters, 0.001);
   // Execute multiplication
   mult_operation->mult(alpha, result);
   // Compare results with optimal results
   for (size_t i = 0; i < gridsize; ++i) {
     BOOST_CHECK_CLOSE(mult_optimal_result[i], result[i], 0.001);
   }
-  delete mult_operation;
 }
 
 BOOST_AUTO_TEST_SUITE(TestClusteringOpenCL)
@@ -66,12 +65,12 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   // Create OCL configuration
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
+  // parameters->serialize(std::cout, 0);
   sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(
       parameters.get());
 
   // Create OpenCL Manager
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager;
-  manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(false);
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
 
   // Create grid for test scenario
   sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
@@ -309,16 +308,15 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
       parameters.get());
 
   // Create OpenCL Manager
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager;
-  manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(false);
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
 
   // Create operation
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity *mult_operation =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
-          *grid, 2, manager, parameters.get(), 0.001, 0, 0);
+  auto mult_operation = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+      *grid, 2, manager, parameters.get(), 0.001);
 
   // Create solver
-  sgpp::solver::ConjugateGradients *solver = new sgpp::solver::ConjugateGradients(100, 0.001);
+  auto solver = std::make_unique<sgpp::solver::ConjugateGradients>(100, 0.001);
   sgpp::base::DataVector alpha(gridsize);
   alpha.setAll(1.0);
 
@@ -333,10 +331,6 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
   for (size_t i = 0; i < gridsize; ++i) {
     BOOST_CHECK_CLOSE(alpha_optimal_result[i], alpha[i], 1.0);
   }
-
-  // Cleanup
-  delete mult_operation;
-  delete solver;
 }
 
 BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
@@ -358,8 +352,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       parameters.get());
 
   // Create OpenCL Manager
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager;
-  manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(false);
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
 
   // Create grid for test scenario
   sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
@@ -373,9 +366,9 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
   sgpp::base::DataMatrix &dataset = data.getData();
 
   // Create operation
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity *operation_rhs =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
-          *grid, 2, manager, parameters.get(), 0.001, 0, 0);
+  auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+      *grid, 2, manager, parameters.get(), 0.001);
 
   std::cout << "Testing rhs kernel ..." << std::endl;
   sgpp::base::DataVector b(gridsize);
@@ -383,7 +376,6 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
   for (size_t i = 0; i < gridsize; ++i) {
     BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
   }
-  delete operation_rhs;
 }
 
 BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
@@ -405,8 +397,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       parameters.get());
 
   // Create OpenCL Manager
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager;
-  manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(false);
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
 
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
@@ -415,17 +406,15 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Create operation
   size_t k = 8;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL *operation_graph =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
-          dataset, 2, manager, parameters.get(), k, 0, 0);
+  auto operation_graph = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+      dataset, 2, manager, parameters.get(), k, 0, 0);
   // Test graph kernel
   std::vector<int> graph(dataset.getNrows() * k);
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
-  delete operation_graph;
-  operation_graph = NULL;
 
   std::cout << "Testing default knn graph kernel with select statements..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -437,17 +426,14 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("USE_SELECT", true);
     }
   }
-  operation_graph =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
-          dataset, 2, manager, parameters.get(), k, 0, 0);
+  operation_graph = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+      dataset, 2, manager, parameters.get(), k, 0, 0);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
-
-  delete operation_graph;
-  operation_graph = NULL;
 
   std::cout << "Testing default knn graph kernel with local memory..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -460,16 +446,14 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
     }
   }
-  operation_graph =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
-          dataset, 2, manager, parameters.get(), k, 0, 0);
+  operation_graph = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+      dataset, 2, manager, parameters.get(), k, 0, 0);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
-  delete operation_graph;
-  operation_graph = NULL;
 
   std::cout << "Testing default knn graph kernel with local memory and select statements..."
             << std::endl;
@@ -483,15 +467,14 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
     }
   }
-  operation_graph =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
-          dataset, 2, manager, parameters.get(), k, 0, 0);
+  operation_graph = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+      dataset, 2, manager, parameters.get(), k, 0, 0);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
-  delete operation_graph;
 }
 
 BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
@@ -548,8 +531,7 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
       parameters.get());
 
   // Create OpenCL Manager
-  std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager;
-  manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(false);
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
 
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
@@ -557,16 +539,15 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   sgpp::base::DataMatrix &dataset = data.getData();
 
   // Create operation
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL *operation_prune =
-      new sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>(
-          *grid, alpha, dataset, 2, manager, parameters.get(), 0.2, 8, 0, 0);
+  auto operation_prune = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
+      *grid, alpha, dataset, 2, manager, parameters.get(), 0.2, 8, 0, 0);
 
   std::cout << "Testing knn prune kernel ..." << std::endl;
   operation_prune->prune_graph(graph);
   for (size_t i = 0; i < gridsize; ++i) {
     BOOST_CHECK(graph[i] == graph_optimal_result[i]);
   }
-  delete operation_prune;
 }
 
 BOOST_AUTO_TEST_CASE(KNNClusterSearch) {

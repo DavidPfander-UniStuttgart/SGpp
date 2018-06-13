@@ -11,12 +11,15 @@
 #include <CL/cl.h>
 #include <string>
 
-#include "sgpp/globaldef.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
+#include "sgpp/globaldef.hpp"
 
 namespace sgpp {
 namespace base {
 
+/**
+  This class is outdated, "OCLManagerMultiPlatform" should be used instead.
+ */
 class OCLManager {
  public:
   std::shared_ptr<base::OCLOperationConfiguration> parameters;
@@ -30,8 +33,7 @@ class OCLManager {
   bool verbose;
 
  public:
-  explicit OCLManager(
-      std::shared_ptr<base::OCLOperationConfiguration> parameters);
+  explicit OCLManager(std::shared_ptr<base::OCLOperationConfiguration> parameters);
 
   ~OCLManager();
 
@@ -52,9 +54,8 @@ class OCLManager {
    * this array, one for each device (=> at least num_devices entries)
    * @return
    */
-  void buildKernel(const std::string& program_src, const char* kernel_name,
-                   cl_context context, size_t num_devices,
-                   cl_device_id* device_ids, cl_kernel* kernel);
+  void buildKernel(const std::string& program_src, const char* kernel_name, cl_context context,
+                   size_t num_devices, cl_device_id* device_ids, cl_kernel* kernel);
 };
 
 }  // namespace base

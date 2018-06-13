@@ -12,11 +12,11 @@
 
 int main(int argc, char** argv) {
   //  int maxLevel = 9;
-  int maxLevel = 12;
+  int maxLevel = 8;
 
   // std::string fileName = "debugging.arff";
   //  std::string fileName = "DR5_train_larger.arff";
-  std::string fileName = "friedman2_4d_1000000.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   //  std::string fileName = "friedman_4d_large.arff";
   //  std::string fileName = "friedman2_90000.arff";
   //  std::string fileName = "bigger.arff";
@@ -71,7 +71,8 @@ int main(int argc, char** argv) {
   // streaming ocl - 13
 
   //    sgpp::base::OCLOperationConfiguration parameters("tunedParameters.cfg");
-  sgpp::base::OCLOperationConfiguration parameters("vgpu2_whole.cfg");
+  // sgpp::base::OCLOperationConfiguration parameters("vgpu2_whole.cfg");
+    sgpp::base::OCLOperationConfiguration parameters("platformDouble.cfg");
 
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,

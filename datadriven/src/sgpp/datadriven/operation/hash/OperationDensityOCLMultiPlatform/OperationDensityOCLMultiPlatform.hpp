@@ -13,13 +13,13 @@
 #include <sgpp/base/tools/SGppStopwatch.hpp>
 #include <sgpp/globaldef.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <string>
 #include <vector>
-#include <algorithm>
 
-#include "KernelB.hpp"
-#include "KernelMult.hpp"
+#include "KernelDensityB.hpp"
+#include "KernelDensityMult.hpp"
 #include "OperationDensityOCL.hpp"
 
 namespace sgpp {
@@ -33,9 +33,9 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   size_t dims;
   size_t gridSize;
   /// OpenCL kernel which executes the matrix-vector density multiplications
-  sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityMult<T> *multKernel;
+  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityMult<T>> multKernel;
   /// OpenCL kernel which generates the right hand side vector of the density equation
-  sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityB<T> *bKernel;
+  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityB<T>> bKernel;
   /// Vector with all OpenCL devices
   std::vector<std::shared_ptr<base::OCLDevice>> devices;
   /// Verbosity
@@ -51,8 +51,9 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   /// Normal constructor
   OperationDensityOCLMultiPlatform(base::Grid &grid, size_t dimensions,
                                    std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda,
-                                   size_t platform_id, size_t device_id)
+                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda
+                                   // size_t platform_id, size_t device_id
+                                   )
       : OperationDensity(),
         dims(dimensions),
         gridSize(grid.getStorage().getSize()),
@@ -72,52 +73,83 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       }
     }
 
-    // look for the chosen platform and device and create kernel with it
-    size_t platformcounter = 0;
-    size_t devicecounter = 0;
-    cl_device_id old_device_id = devices[0]->deviceId;
-    cl_platform_id old_platform_id = devices[0]->platformId;
-    size_t counter = 0;
-    bool success = false;
-    for (auto device : devices) {
-      if (device->platformId != old_platform_id) {
-        platformcounter++;
-        old_platform_id = device->platformId;
-        devicecounter = 0;
-      }
-      if (device->deviceId != old_device_id) {
-        devicecounter++;
-        old_device_id = device->deviceId;
-      }
-      if (platformcounter == platform_id && devicecounter == device_id) {
-        json::Node &deviceNode =
-            (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-        json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
-        json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
-        bKernel =
-            new KernelDensityB<T>(devices[counter], dims, manager, secondKernelConfig, points);
-        multKernel = new KernelDensityMult<T>(devices[counter], dims, manager, firstKernelConfig,
-                                              points, lambda);
-        if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
-        success = true;
-        break;
-      }
-      counter++;
-    }
-    // Check whether a kernel was created or not
-    if (!success) {
+    if (devices.size() == 0) {
       std::stringstream errorString;
-      errorString << "OCL Error: Platform with index " << platform_id
-                  << " and the device with index " << device_id << std::endl
-                  << " not found! Please check your OpenCL installation!" << std::endl;
+      errorString << "OperationDensityOCLMultiPlatform: No devices to use specified. Check you "
+                     "OpenCL configuration file"
+                  << std::endl;
+      throw base::operation_exception(errorString.str());
+    } else if (devices.size() > 1) {
+      std::stringstream errorString;
+      errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
+                  << devices.size()
+                  << " devices. Use the \"count\" key in the configuration or remove sections "
+                     "of the configuration."
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
+    auto device = devices[0];
+    json::Node &deviceNode =
+        (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
+    json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    bKernel =
+        std::make_unique<KernelDensityB<T>>(device, dims, manager, secondKernelConfig, points);
+    multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
+                                                        points, lambda);
+    if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
+
+    // look for the chosen platform and device and create kernel with it
+    // size_t platformcounter = 0;
+    // size_t devicecounter = 0;
+    // cl_device_id old_device_id = devices[0]->deviceId;
+    // cl_platform_id old_platform_id = devices[0]->platformId;
+    // size_t counter = 0;
+    // bool success = false;
+    // for (auto device : devices) {
+    //   std::cout << "deviceName: " << device->deviceName << std::endl;
+    //   std::cout << "platformName: " << device->platformName << std::endl;
+    //   if (device->platformId != old_platform_id) {
+    //     platformcounter++;
+    //     old_platform_id = device->platformId;
+    //     devicecounter = 0;
+    //   }
+    //   if (device->deviceId != old_device_id) {
+    //     devicecounter++;
+    //     old_device_id = device->deviceId;
+    //   }
+    //   std::cout << "platformcounter:" << platformcounter << std::endl;
+    //   std::cout << "devicecounter:" << devicecounter << std::endl;
+    //   if (platformcounter == platform_id && devicecounter == device_id) {
+    //     json::Node &deviceNode =
+    //         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
+    //     json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    //     json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    //     bKernel = std::make_unique<KernelDensityB<T>>(devices[counter], dims, manager,
+    //                                                   secondKernelConfig, points);
+    //     multKernel = std::make_unique<KernelDensityMult<T>>(devices[counter], dims, manager,
+    //                                                         firstKernelConfig, points, lambda);
+    //     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
+    //     success = true;
+    //     break;
+    //   }
+    //   counter++;
+    // }
+    // // Check whether a kernel was created or not
+    // if (!success) {
+    //   std::stringstream errorString;
+    //   errorString << "OCL Error: Platform with index " << platform_id
+    //               << " and the device with index " << device_id << std::endl
+    //               << " not found! Please check your OpenCL installation!" << std::endl;
+    //   throw base::operation_exception(errorString.str());
+    // }
   }
   /// Constructor for mpi nodes - accepts grid als integer array
   OperationDensityOCLMultiPlatform(int *gridpoints, size_t gridsize, size_t dimensions,
                                    std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda,
-                                   size_t platform_id, size_t device_id)
+                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda
+                                   // , size_t platform_id, size_t device_id
+                                   )
       : OperationDensity(),
         dims(dimensions),
         gridSize(gridsize),
@@ -131,52 +163,79 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
         points.push_back(gridpoints[2 * dimensions * i + 2 * d + 1]);
       }
     }
-    // look for the chosen platform and device and create kernel with it
-    size_t platformcounter = 0;
-    size_t devicecounter = 0;
-    cl_device_id old_device_id = devices[0]->deviceId;
-    cl_platform_id old_platform_id = devices[0]->platformId;
-    size_t counter = 0;
-    bool success = false;
-    for (auto device : devices) {
-      if (device->platformId != old_platform_id) {
-        platformcounter++;
-        old_platform_id = device->platformId;
-        devicecounter = 0;
-      }
-      if (device->deviceId != old_device_id) {
-        devicecounter++;
-        old_device_id = device->deviceId;
-      }
-      if (platformcounter == platform_id && devicecounter == device_id) {
-        json::Node &deviceNode =
-            (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-        json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
-        json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
-        bKernel =
-            new KernelDensityB<T>(devices[counter], dims, manager, secondKernelConfig, points);
-        multKernel = new KernelDensityMult<T>(devices[counter], dims, manager, firstKernelConfig,
-                                              points, lambda);
-        if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
-        success = true;
-        break;
-      }
-      counter++;
-    }
-    // Check whether a kernel was created or not
-    if (!success) {
+
+    if (devices.size() == 0) {
       std::stringstream errorString;
-      errorString << "OCL Error: Platform with index " << platform_id
-                  << " and the device with index " << device_id << std::endl
-                  << " not found! Please check your OpenCL installation!" << std::endl;
+      errorString << "OperationDensityOCLMultiPlatform: No devices to use specified. Check you "
+                     "OpenCL configuration file"
+                  << std::endl;
+      throw base::operation_exception(errorString.str());
+    } else if (devices.size() > 1) {
+      std::stringstream errorString;
+      errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
+                  << devices.size()
+                  << " devices. Use the \"count\" key in the configuration or remove sections "
+                     "of the configuration."
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
+    auto device = devices[0];
+    json::Node &deviceNode =
+        (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
+    json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    bKernel =
+        std::make_unique<KernelDensityB<T>>(device, dims, manager, secondKernelConfig, points);
+    multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
+                                                        points, lambda);
+    if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
+
+    // // look for the chosen platform and device and create kernel with it
+    // size_t platformcounter = 0;
+    // size_t devicecounter = 0;
+    // cl_device_id old_device_id = devices[0]->deviceId;
+    // cl_platform_id old_platform_id = devices[0]->platformId;
+    // size_t counter = 0;
+    // bool success = false;
+    // for (auto device : devices) {
+    //   if (device->platformId != old_platform_id) {
+    //     platformcounter++;
+    //     old_platform_id = device->platformId;
+    //     devicecounter = 0;
+    //   }
+    //   if (device->deviceId != old_device_id) {
+    //     devicecounter++;
+    //     old_device_id = device->deviceId;
+    //   }
+    //   if (platformcounter == platform_id && devicecounter == device_id) {
+    //     json::Node &deviceNode =
+    //         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
+    //     json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    //     json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    //     bKernel = std::make_unique<KernelDensityB<T>>(devices[counter], dims, manager,
+    //                                                   secondKernelConfig, points);
+    //     multKernel = std::make_unique<KernelDensityMult<T>>(devices[counter], dims, manager,
+    //                                                         firstKernelConfig, points, lambda);
+    //     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
+    //     success = true;
+    //     break;
+    //   }
+    //   counter++;
+    // }
+    // // Check whether a kernel was created or not
+    // if (!success) {
+    //   std::stringstream errorString;
+    //   errorString << "OCL Error: Platform with index " << platform_id
+    //               << " and the device with index " << device_id << std::endl
+    //               << " not found! Please check your OpenCL installation!" << std::endl;
+    //   throw base::operation_exception(errorString.str());
+    // }
   }
 
-  ~OperationDensityOCLMultiPlatform() {
-    delete multKernel;
-    delete bKernel;
-  }
+  // ~OperationDensityOCLMultiPlatform() {
+  //   delete multKernel;
+  //   delete bKernel;
+  // }
 
   /// Use before calling partial_mult directly
   void initialize_alpha(double *alpha) override {

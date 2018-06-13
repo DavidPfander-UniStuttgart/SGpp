@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
   //  std::string fileName = "debugging.arff";
   //  std::string fileName = "friedman_4d.arff";
   //  std::string fileName = "friedman_10d.arff";
-  std::string fileName = "friedman1_10d_150000.arff";
+  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   //  std::string fileName = "DR5_train.arff";
   // std::string fileName = "debugging_small.arff";
 

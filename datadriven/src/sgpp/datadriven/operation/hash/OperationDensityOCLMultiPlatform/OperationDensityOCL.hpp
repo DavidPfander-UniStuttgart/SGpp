@@ -10,8 +10,8 @@
 #include <sgpp/base/exception/operation_exception.hpp>
 #include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <sgpp/base/opencl/OCLManager.hpp>
-#include "KernelMult.hpp"
-#include "KernelB.hpp"
+#include "KernelDensityMult.hpp"
+#include "KernelDensityB.hpp"
 
 namespace sgpp {
 namespace datadriven {

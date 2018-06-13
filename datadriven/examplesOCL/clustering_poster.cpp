@@ -25,6 +25,8 @@
 #include "sgpp/globaldef.hpp"
 #include "sgpp/solver/sle/ConjugateGradients.hpp"
 
+using namespace sgpp;
+
 int main(int argc, char **argv) {
   std::string datasetFileName;
   size_t eval_grid_level;
@@ -82,29 +84,31 @@ int main(int argc, char **argv) {
     std::cout << "lambda: " << lambda << std::endl;
   }
 
-  sgpp::datadriven::Dataset dataset = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
+  datadriven::Dataset dataset = datadriven::ARFFTools::readARFF(datasetFileName);
   size_t dimension = dataset.getDimension();
   std::cout << "dimension: " << dimension << std::endl;
-  sgpp::base::DataMatrix &trainingData = dataset.getData();
+  base::DataMatrix &trainingData = dataset.getData();
 
   // Create Grid
-  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(dimension);
-  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  base::Grid *grid = base::Grid::createLinearGrid(dimension);
+  base::GridGenerator &gridGen = grid->getGenerator();
   gridGen.regular(level);
   size_t gridsize = grid->getStorage().getSize();
   std::cout << "Grid created! Number of grid points:     " << gridsize << std::endl;
 
-  sgpp::base::DataVector alpha(gridsize);
-  sgpp::base::DataVector result(gridsize);
+  base::DataVector alpha(gridsize);
+  base::DataVector result(gridsize);
   alpha.setAll(1.0);
 
-  sgpp::solver::ConjugateGradients *solver = new sgpp::solver::ConjugateGradients(1000, 0.0001);
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity *operation_mult =
-      sgpp::datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
-                                                                "MyOCLConf.cfg");
+  // create solver
+  auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
+  // create density calculator
+  datadriven::DensityOCLMultiPlatform::OperationDensity *operation_mult =
+      datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
+                                                          "MyOCLConf.cfg");
 
   std::cout << "Creating rhs" << std::endl;
-  sgpp::base::DataVector b(gridsize);
+  base::DataVector b(gridsize);
   operation_mult->generateb(trainingData, b);
   // for (size_t i = 0; i < 300; i++) std::cout << b[i] << " ";
   // std::cout << std::endl;
@@ -121,7 +125,7 @@ int main(int argc, char **argv) {
   std::cout << "Creating evaluation grid" << std::endl;
   double h = 1.0 / std::pow(2.0, eval_grid_level);
   size_t dim_grid_points = 1 << eval_grid_level;
-  sgpp::base::DataMatrix evaluationPoints(dim_grid_points * dim_grid_points, 2);
+  base::DataMatrix evaluationPoints(dim_grid_points * dim_grid_points, 2);
   size_t linearIndex = 0;
   for (size_t i = 0; i < dim_grid_points; i++) {
     for (size_t j = 0; j < dim_grid_points; j++) {
@@ -133,16 +137,15 @@ int main(int argc, char **argv) {
     }
   }
 
-  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-      sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT);
+  datadriven::OperationMultipleEvalConfiguration configuration(
+      datadriven::OperationMultipleEvalType::STREAMING,
+      datadriven::OperationMultipleEvalSubType::DEFAULT);
 
   std::cout << "Creating multieval operation" << std::endl;
-  std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, evaluationPoints, configuration));
+  auto eval = std::unique_ptr<base::OperationMultipleEval>(
+      op_factory::createOperationMultipleEval(*grid, evaluationPoints, configuration));
 
-  sgpp::base::DataVector results(evaluationPoints.getNrows());
+  base::DataVector results(evaluationPoints.getNrows());
   std::cout << "Evaluating at evaluation grid points" << std::endl;
   eval->mult(alpha, results);
 
