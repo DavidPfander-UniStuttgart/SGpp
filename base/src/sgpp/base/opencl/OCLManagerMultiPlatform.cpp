@@ -15,7 +15,7 @@
 namespace sgpp {
 namespace base {
 
-OCLManagerMultiPlatform::OCLManagerMultiPlatform(bool verbose) {
+OCLManagerMultiPlatform::OCLManagerMultiPlatform() : verbose(false) {
   parameters = std::make_shared<OCLOperationConfiguration>();
   parameters->replaceIDAttr("VERBOSE", verbose);
   parameters->replaceIDAttr("OCL_MANAGER_VERBOSE", false);
@@ -24,7 +24,6 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(bool verbose) {
   parameters->replaceIDAttr("LOAD_BALANCING_VERBOSE", false);
   parameters->replaceTextAttr("INTERNAL_PRECISION", "double");
 
-  this->verbose = verbose;
   overallDeviceCount = 0;
 
   this->configure(*parameters, false);
@@ -331,15 +330,23 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
                           countLimitMap, useConfiguration);
   }
 
+  // for (auto elem : countLimitMap) {
+  //   std::cout << elem.first << " -> " << elem.second << std::endl;
+  // }
+
+  // std::map<std::string, size_t> checkCountLimitMap;
+  // for (auto &pair : countLimitMap) {
+  //   checkCountLimitMap[pair.first] = 0;
+  // }
+
+  // std::cout << "checkCountLimitMap:" << std::endl;
+  // for (auto elem : checkCountLimitMap) {
+  //   std::cout << elem.first << " -> " << elem.second << std::endl;
+  // }
+
   if (filteredDeviceIds.size() > 0) {
     platforms.emplace_back(platformId, platformName, filteredDeviceIds, filteredDeviceNames);
     OCLPlatformWrapper &platformWrapper = platforms[platforms.size() - 1];
-    //    OCLPlatformWrapper platformWrapper(platformId, platformName, filteredDeviceIds,
-    //                                       filteredDeviceNames);
-    //        platforms.emplace_back(platformId, platformName,
-    //        filteredDeviceIds, filteredDeviceNames);
-    //        OCLPlatformWrapper &platformWrapper = *(platforms.end() - 1);
-    //    platforms.push_back(platformWrapper);
 
     // create linear device list
     for (size_t deviceIndex = 0; deviceIndex < filteredDeviceIds.size(); deviceIndex++) {
@@ -375,11 +382,13 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
   // either the device has to be in the configuration or a new configuration is created and every
   // device is selected
   if (useConfiguration) {
+    std::cout << "USING CONFIGURATION" << std::endl;
     if (!devicesNode.contains(deviceName)) {
       return;
     }
   } else {
     if (!devicesNode.contains(deviceName)) {
+      std::cout << "CREATING NEW DEVICE NODE" << std::endl;
       json::Node &deviceNode = devicesNode.addDictAttr(deviceName);
       deviceNode.addDictAttr("KERNELS");
     }
@@ -402,8 +411,15 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
   }
 
   // limit the number of identical devices used, excludes a device selection
+  std::cout << "before check for COUNT" << std::endl;
+  for (std::string &s : devicesNode[deviceName].keys()) {
+    std::cout << "key: " << s << std::endl;
+  }
+
   if (devicesNode[deviceName].contains("COUNT")) {
+    std::cout << "Has \"COUNT\" key!" << std::endl;
     if (countLimitMap[deviceName] > devicesNode[deviceName]["COUNT"].getUInt()) {
+      std::cout << "deviceName: " << deviceName << " removed due to COUNT!" << std::endl;
       return;
     }
   }
@@ -431,5 +447,8 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
 std::vector<std::shared_ptr<OCLDevice>> &OCLManagerMultiPlatform::getDevices() {
   return this->devices;
 }
+
+void OCLManagerMultiPlatform::set_verbose(bool verbose) { this->verbose = verbose; }
+
 }  // namespace base
 }  // namespace sgpp

@@ -27,7 +27,7 @@
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 #include "test_datadrivenCommon.hpp"
-void multiply_and_test(sgpp::base::OCLOperationConfiguration *parameters,
+void multiply_and_test(std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters,
                        std::vector<double> &mult_optimal_result,
                        std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager,
                        sgpp::base::Grid &grid) {
@@ -66,8 +66,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
   // parameters->serialize(std::cout, 0);
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(
-      parameters.get());
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
 
   // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
@@ -78,7 +77,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   gridGen.regular(11);
 
   std::cout << "Testing default kernel configuration..." << std::endl;
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with preprocessed positions..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -90,7 +89,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", true);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with preprocessed positions and ignored flags..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -105,7 +104,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -119,7 +118,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with branchless mutliplication kernel..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -135,7 +134,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with branchless mutliplication kernel with fabs modifications..."
             << std::endl;
@@ -152,7 +151,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
   std::cout << "Testing with branchless mutliplication kernel with level cache..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
@@ -167,7 +166,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with branchless mutliplication kernel with implicit modifications..."
             << std::endl;
@@ -184,7 +183,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing with branchless mutliplication kernel with "
             << "all modifications..." << std::endl;
@@ -201,7 +200,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing default multiplcation kernel with fabs modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -217,7 +216,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing default multiplcation kernel with implicit modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -233,7 +232,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", false);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing default multiplcation kernel with level cache..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -249,7 +248,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
   std::cout << "Testing default multiplcation kernel with all modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -265,7 +264,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
     }
   }
-  multiply_and_test(parameters.get(), mult_optimal_result, manager, *grid);
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 }
 
 BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
@@ -304,8 +303,7 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
   // Create OCL configuration
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(
-      parameters.get());
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
 
   // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
@@ -313,7 +311,7 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
   // Create operation
   auto mult_operation = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-      *grid, 2, manager, parameters.get(), 0.001);
+      *grid, 2, manager, parameters, 0.001);
 
   // Create solver
   auto solver = std::make_unique<sgpp::solver::ConjugateGradients>(100, 0.001);
@@ -348,8 +346,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
   // Create OCL configuration
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(
-      parameters.get());
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
 
   // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
@@ -368,7 +365,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
   // Create operation
   auto operation_rhs = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-      *grid, 2, manager, parameters.get(), 0.001);
+      *grid, 2, manager, parameters, 0.001);
 
   std::cout << "Testing rhs kernel ..." << std::endl;
   sgpp::base::DataVector b(gridsize);
@@ -394,7 +391,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::load_default_parameters(
-      parameters.get());
+      parameters);
 
   // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
@@ -408,7 +405,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   size_t k = 8;
   auto operation_graph = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters.get(), k, 0, 0);
+      dataset, 2, manager, parameters, k);
   // Test graph kernel
   std::vector<int> graph(dataset.getNrows() * k);
   operation_graph->create_graph(graph);
@@ -428,7 +425,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   }
   operation_graph = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters.get(), k, 0, 0);
+      dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -448,7 +445,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   }
   operation_graph = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters.get(), k, 0, 0);
+      dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -469,7 +466,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   }
   operation_graph = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters.get(), k, 0, 0);
+      dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -528,7 +525,7 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
   sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL::load_default_parameters(
-      parameters.get());
+      parameters);
 
   // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
@@ -541,7 +538,7 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   // Create operation
   auto operation_prune = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
-      *grid, alpha, dataset, 2, manager, parameters.get(), 0.2, 8, 0, 0);
+      *grid, alpha, dataset, 2, manager, parameters, 0.2, 8);
 
   std::cout << "Testing knn prune kernel ..." << std::endl;
   operation_prune->prune_graph(graph);

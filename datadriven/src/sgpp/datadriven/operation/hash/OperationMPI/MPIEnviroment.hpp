@@ -2,16 +2,15 @@
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
-#ifndef MPIENVIROMENT_H
-#define MPIENVIROMENT_H
+#pragma once
 
 #include <mpi.h>
-#include <sgpp/base/tools/OperationConfiguration.hpp>
-#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <iostream>
-#include <string>
+#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
+#include <sgpp/base/tools/OperationConfiguration.hpp>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace sgpp {
@@ -55,11 +54,12 @@ class MPIEnviroment {
   static int get_node_rank(void);
   static int get_node_count(void);
 
-  static MPI_Comm& get_communicator(void) {return singleton_instance->communicator;}
-  static base::OperationConfiguration& get_configuration(void)
-  {return singleton_instance->configuration;}
-  static int get_sub_worker_count(void) {return singleton_instance->worker_count;}
-  static MPI_Comm& get_input_communicator(void) {return singleton_instance->input_communicator;}
+  static MPI_Comm &get_communicator(void) { return singleton_instance->communicator; }
+  static base::OperationConfiguration &get_configuration(void) {
+    return singleton_instance->configuration;
+  }
+  static int get_sub_worker_count(void) { return singleton_instance->worker_count; }
+  static MPI_Comm &get_input_communicator(void) { return singleton_instance->input_communicator; }
   static base::OperationConfiguration createMPIConfiguration(int packagesize_master,
                                                              int leutnant_nodes,
                                                              int packagesize_leutnants,
@@ -67,7 +67,8 @@ class MPIEnviroment {
   static base::OperationConfiguration createMPIConfiguration(int compute_nodes,
                                                              int opencl_devices_per_compute_node);
   /**
-   * Create MPI configuration file based on a number of compute nodes their OpenCL configuration file
+   * Create MPI configuration file based on a number of compute nodes their OpenCL configuration
+   * file
    *
    * Creates a MPI configuration with 3 Levels. One master node to control all other nodes, and
    * one leutenant node on every compute node which controls all MPI nodes for this compute
@@ -78,9 +79,8 @@ class MPIEnviroment {
    * @param node_opencl_configuration OpenCL configuration file
    * @return Finished MPI configuration
    */
-  static base::OperationConfiguration createMPIConfiguration(int compute_nodes,
-                                                             base::OCLOperationConfiguration
-                                                             node_opencl_configuration);
+  static base::OperationConfiguration createMPIConfiguration(
+      int compute_nodes, base::OCLOperationConfiguration node_opencl_configuration);
   ~MPIEnviroment();
 };
 
@@ -132,10 +132,14 @@ class SimpleQueue {
    * @return
    */
   SimpleQueue(size_t startindex, size_t workitem_count, size_t node_packagesize, MPI_Comm &comm,
-              int commsize, bool verbose = false, bool prefetching = false) :
-      startindex(startindex), packagesize(node_packagesize),
-      workitem_count(workitem_count), verbose(verbose), comm(comm),
-      commsize(commsize), prefetching(prefetching) {
+              int commsize, bool verbose = false, bool prefetching = false)
+      : startindex(startindex),
+        packagesize(node_packagesize),
+        workitem_count(workitem_count),
+        verbose(verbose),
+        comm(comm),
+        commsize(commsize),
+        prefetching(prefetching) {
     // Returnvector type
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
@@ -159,8 +163,7 @@ class SimpleQueue {
     } else if (packagesize > workitem_count / (commsize * 2)) {
       packagesize = static_cast<int>(workitem_count / (commsize * 2));
     }
-    if (packagesize % 128 != 0)
-       packagesize -= packagesize % 128;
+    if (packagesize % 128 != 0) packagesize -= packagesize % 128;
 
     packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
     startindices = new unsigned int[commsize];
@@ -169,9 +172,8 @@ class SimpleQueue {
     packageinfo[1] = static_cast<int>(packagesize);
 
     // Send first packages
-    if (verbose)
-      std::cout << "Sending size: " << packageinfo[1] << std::endl;
-    for (int dest = 1; dest < commsize + 1 ; dest++) {
+    if (verbose) std::cout << "Sending size: " << packageinfo[1] << std::endl;
+    for (int dest = 1; dest < commsize + 1; dest++) {
       packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
       MPI_Send(packageinfo, 2, MPI_INT, dest, 1, comm);
       startindices[dest - 1] = packageinfo[0];
@@ -184,7 +186,7 @@ class SimpleQueue {
         MPI_Send(packageinfo, 2, MPI_INT, 1, 1, comm);
       } else {
         // Send secondary packages
-        for (int dest = 1; dest < commsize + 1 ; dest++) {
+        for (int dest = 1; dest < commsize + 1; dest++) {
           packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
           MPI_Send(packageinfo, 2, MPI_INT, dest, 1, comm);
           secondary_indices[dest - 1] = packageinfo[0];
@@ -203,18 +205,17 @@ class SimpleQueue {
   size_t receive_result(int &startid, T *partial_result) {
     MPI_Status stat;
     int messagesize = 0;
-    if (received_packageindex < packagecount+1) {
+    if (received_packageindex < packagecount + 1) {
       MPI_Probe(MPI_ANY_SOURCE, 1, comm, &stat);
       MPI_Get_count(&stat, mpi_typ, &messagesize);
       if (verbose) {
-        std::cout << "Received work package [" << received_packageindex+1
-                  << " / " << packagecount << "] from node "<< stat.MPI_SOURCE
-                  << "! Messagesize: " << messagesize << std::endl;
+        std::cout << "Received work package [" << received_packageindex + 1 << " / " << packagecount
+                  << "] from node " << stat.MPI_SOURCE << "! Messagesize: " << messagesize
+                  << std::endl;
       }
       int source = stat.MPI_SOURCE;
-      startid = startindices[source-1];
-      MPI_Recv(partial_result, messagesize, mpi_typ, stat.MPI_SOURCE,
-               stat.MPI_TAG, comm, &stat);
+      startid = startindices[source - 1];
+      MPI_Recv(partial_result, messagesize, mpi_typ, stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
       received_packageindex++;
 
       // Send next package
@@ -242,8 +243,8 @@ class SimpleQueue {
           send_packageindex++;
           received_packageindex++;
           if (verbose)
-            std::cout << "Received work package [" << received_packageindex
-                      << " / " << packagecount << "] (empty package)" << std::endl;
+            std::cout << "Received work package [" << received_packageindex << " / " << packagecount
+                      << "] (empty package)" << std::endl;
         } else {
           MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
           if (prefetching) {
@@ -264,8 +265,8 @@ class SimpleQueue {
         }
       }
     } else {
-      std::cout << "Error - packagecount: " << packagecount << " Received:"
-                << received_packageindex << "\n";
+      std::cout << "Error - packagecount: " << packagecount << " Received:" << received_packageindex
+                << "\n";
       throw std::logic_error("Queue error! Received too many packages!");
     }
     return messagesize;
@@ -282,8 +283,8 @@ class SimpleQueue {
       return false;
   }
   virtual ~SimpleQueue() {
-    delete [] startindices;
-    delete [] secondary_indices;
+    delete[] startindices;
+    delete[] secondary_indices;
     std::cerr << "Queue deleted" << std::endl;
   }
 };
@@ -291,4 +292,3 @@ class SimpleQueue {
 }  // namespace clusteringmpi
 }  // namespace datadriven
 }  // namespace sgpp
-#endif /* MPIENVIROMENT_H */

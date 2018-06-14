@@ -5,12 +5,12 @@
 
 #pragma once
 
+#include <sgpp/base/exception/operation_exception.hpp>
 #include <sgpp/base/grid/GridStorage.hpp>
+#include <sgpp/base/opencl/OCLManager.hpp>
+#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <sgpp/base/operation/hash/OperationMultipleEval.hpp>
 #include <sgpp/base/tools/SGppStopwatch.hpp>
-#include <sgpp/base/exception/operation_exception.hpp>
-#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
-#include <sgpp/base/opencl/OCLManager.hpp>
 #include <vector>
 #include "KernelPruneGraph.hpp"
 
@@ -21,14 +21,12 @@ namespace DensityOCLMultiPlatform {
 /// Pure virtual base class for the graph pruning operation
 class OperationPruneGraphOCL {
  public:
-  OperationPruneGraphOCL()  {
-  }
-
+  OperationPruneGraphOCL() {}
 
   /// Deletes all nodes and edges within areas of low density which are in the given graph chunk
   virtual void prune_graph(std::vector<int> &graph, size_t startid = 0, size_t chunksize = 0) = 0;
   virtual ~OperationPruneGraphOCL(void) {}
-  static void load_default_parameters(base::OCLOperationConfiguration *parameters) {
+  static void load_default_parameters(std::shared_ptr<base::OCLOperationConfiguration> parameters) {
     if (parameters->contains("INTERNAL_PRECISION") == false) {
       std::cout << "Warning! No internal precision setting detected."
                 << " Using double precision from now on!" << std::endl;

@@ -49,9 +49,9 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
 
  public:
   /// Normal constructor
-  OperationDensityOCLMultiPlatform(base::Grid &grid, size_t dimensions,
-                                   std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda)
+  OperationDensityOCLMultiPlatform(
+      base::Grid &grid, size_t dimensions, std::shared_ptr<base::OCLManagerMultiPlatform> manager,
+      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T lambda)
       : OperationDensity(),
         dims(dimensions),
         gridSize(grid.getStorage().getSize()),
@@ -70,6 +70,9 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
         points.push_back(point.getLevel(d));
       }
     }
+    for (size_t i = 0; i < devices.size(); i++) {
+      std::cout << "device name: " << devices[i]->deviceName << std::endl;
+    }
 
     if (devices.size() == 0) {
       std::stringstream errorString;
@@ -81,7 +84,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       std::stringstream errorString;
       errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
                   << devices.size()
-                  << " devices. Use the \"count\" key in the configuration or remove sections "
+                  << " devices. Use the \"COUNT\" key in the configuration or remove sections "
                      "of the configuration."
                   << std::endl;
       throw base::operation_exception(errorString.str());
@@ -98,9 +101,10 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
   }
   /// Constructor for mpi nodes - accepts grid als integer array
-  OperationDensityOCLMultiPlatform(int *gridpoints, size_t gridsize, size_t dimensions,
-                                   std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                                   sgpp::base::OCLOperationConfiguration *parameters, T lambda)
+  OperationDensityOCLMultiPlatform(
+      int *gridpoints, size_t gridsize, size_t dimensions,
+      std::shared_ptr<base::OCLManagerMultiPlatform> manager,
+      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T lambda)
       : OperationDensity(),
         dims(dimensions),
         gridSize(gridsize),
@@ -125,7 +129,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       std::stringstream errorString;
       errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
                   << devices.size()
-                  << " devices. Use the \"count\" key in the configuration or remove sections "
+                  << " devices. Use the \"COUNT\" key in the configuration or remove sections "
                      "of the configuration."
                   << std::endl;
       throw base::operation_exception(errorString.str());

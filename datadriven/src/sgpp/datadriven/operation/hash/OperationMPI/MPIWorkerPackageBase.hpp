@@ -1,16 +1,14 @@
-
 // Copyright (C) 2008-today The SG++ project
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
-#ifndef OPERATIONPACKAGEBASEMPI_H
-#define OPERATIONPACKAGEBASEMPI_H
+#pragma once
 
 #include <mpi.h>
 
 #include <sgpp/datadriven/operation/hash/OperationDensityOCLMultiPlatform/OpFactory.hpp>
 #include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationMPI.hpp>
+#include <sgpp/datadriven/operation/hash/OperationMPI/MPIWorkerBase.hpp>
 
 #include <algorithm>
 #include <exception>
@@ -31,7 +29,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   MPI_Comm &sub_worker_comm;
   bool prefetching;
   bool redistribute;
-  base::OCLOperationConfiguration *parameters;
+  std::shared_ptr<base::OCLOperationConfiguration> parameters;
 
   MPI_Datatype mpi_typ;
   int secondary_workpackage[2];
@@ -85,7 +83,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
         redistribute(true),
-        parameters(NULL) {
+        parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
     } else if (std::is_same<T, float>::value) {
@@ -131,7 +129,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     // Send OCL configuration
     for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
       MPI_Send(serialized_conf, messagesize, MPI_CHAR, dest, 1, sub_worker_comm);
-    parameters = new base::OCLOperationConfiguration();
+    parameters = std::make_shared<base::OCLOperationConfiguration>();
     parameters->deserialize(serialized_conf);
     delete[] serialized_conf;
     std::cerr << "Received ocl config on" << MPIEnviroment::get_node_rank() << std::endl;
@@ -145,7 +143,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
         redistribute(true),
-        parameters(NULL) {
+        parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
     } else if (std::is_same<T, float>::value) {
@@ -179,8 +177,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       opencl_device = MPIEnviroment::get_configuration()["OPENCL_DEVICE"].getUInt();
 
     std::cerr << "Start sending ocl conf" << MPIEnviroment::get_node_rank() << std::endl;
-    base::OCLOperationConfiguration *parameters =
-        new base::OCLOperationConfiguration(ocl_conf_filename);
+    parameters = std::make_shared<base::OCLOperationConfiguration>(ocl_conf_filename);
     std::ostringstream sstream;
     parameters->serialize(sstream, 0);
     std::string serialized_conf = sstream.str();
@@ -289,4 +286,3 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
 }  // namespace clusteringmpi
 }  // namespace datadriven
 }  // namespace sgpp
-#endif /* OPERATIONPACKAGEBASEMPI_H */
