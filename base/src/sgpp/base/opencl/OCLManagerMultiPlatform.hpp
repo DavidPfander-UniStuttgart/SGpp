@@ -58,7 +58,7 @@ class OCLManagerMultiPlatform {
   cl_kernel buildKernel(const std::string &source, std::shared_ptr<OCLDevice> device,
                         json::Node &kernelConfiguration, const std::string &kernelName);
 
-  void configure(base::OCLOperationConfiguration &configuration, bool useConfiguration = false);
+  void configure(bool useConfiguration = false);
 
   void configurePlatform(cl_platform_id platformId, base::OCLOperationConfiguration &configuration,
                          bool useConfiguration);

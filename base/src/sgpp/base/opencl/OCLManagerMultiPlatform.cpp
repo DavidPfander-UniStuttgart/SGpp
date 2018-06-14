@@ -26,7 +26,7 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform() : verbose(false) {
 
   overallDeviceCount = 0;
 
-  this->configure(*parameters, false);
+  this->configure(false);
   if (overallDeviceCount == 0) {
     std::stringstream errorString;
     errorString << "OCL Error: either no devices available, or no devices match the configuration!"
@@ -60,7 +60,7 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(
   this->verbose = (*parameters)["VERBOSE"].getBool();
   this->overallDeviceCount = 0;
 
-  this->configure(*parameters, true);
+  this->configure(true);
   if (overallDeviceCount == 0) {
     std::stringstream errorString;
     errorString << "OCL Error: either no devices available, or no devices match the configuration!"
@@ -214,8 +214,7 @@ std::shared_ptr<base::OCLOperationConfiguration> OCLManagerMultiPlatform::getCon
   return this->parameters;
 }
 
-void OCLManagerMultiPlatform::configure(base::OCLOperationConfiguration &configuration,
-                                        bool useConfiguration) {
+void OCLManagerMultiPlatform::configure(bool useConfiguration) {
   cl_int err;
 
   // determine number of available OpenCL platforms
@@ -329,20 +328,6 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
     this->configureDevice(deviceId, devicesNode, filteredDeviceIds, filteredDeviceNames,
                           countLimitMap, useConfiguration);
   }
-
-  // for (auto elem : countLimitMap) {
-  //   std::cout << elem.first << " -> " << elem.second << std::endl;
-  // }
-
-  // std::map<std::string, size_t> checkCountLimitMap;
-  // for (auto &pair : countLimitMap) {
-  //   checkCountLimitMap[pair.first] = 0;
-  // }
-
-  // std::cout << "checkCountLimitMap:" << std::endl;
-  // for (auto elem : checkCountLimitMap) {
-  //   std::cout << elem.first << " -> " << elem.second << std::endl;
-  // }
 
   if (filteredDeviceIds.size() > 0) {
     platforms.emplace_back(platformId, platformName, filteredDeviceIds, filteredDeviceNames);

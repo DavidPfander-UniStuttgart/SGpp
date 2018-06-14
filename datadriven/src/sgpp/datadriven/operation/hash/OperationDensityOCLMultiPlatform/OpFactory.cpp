@@ -37,9 +37,7 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<base::OCLOperationConfiguration>(opencl_conf);
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
-  parameters->serialize(std::cout, 0);
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
-  parameters->serialize(std::cout, 0);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
     return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>(
