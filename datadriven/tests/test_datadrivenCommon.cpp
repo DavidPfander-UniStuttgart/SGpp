@@ -17,7 +17,9 @@
 
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
-// #include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLMaskMultiPlatform/OperationMultiEvalStreamingModOCLMaskMultiPlatform.hpp"
+// #include
+// "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLMaskMultiPlatform/OperationMultiEvalStreamingModOCLMaskMultiPlatform.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLFastMultiPlatform/OperationMultiEvalStreamingModOCLFastMultiPlatform.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "test_datadrivenCommon.hpp"
 
@@ -243,6 +245,17 @@ double compareToReference(sgpp::base::GridType gridType, const std::string& file
   //   casted->getParameters()->serialize(std::cout, 0);
   // }
 
+  // std::cout << "full configuration:" << std::endl;
+  // if ((*(configuration.getParameters()))["INTERNAL_PRECISION"].get().compare("double") == 0) {
+  //   auto casted = std::dynamic_pointer_cast<
+  //       sgpp::datadriven::OperationMultiEvalStreamingModOCLFastMultiPlatform<double>>(eval);
+  //   casted->getParameters()->serialize(std::cout, 0);
+  // } else {
+  //   auto casted = std::dynamic_pointer_cast<
+  //       sgpp::datadriven::OperationMultiEvalStreamingModOCLFastMultiPlatform<float>>(eval);
+  //   casted->getParameters()->serialize(std::cout, 0);
+  // }
+
   eval->prepare();
 
   doRandomRefinements(adaptConfig, *grid, gridGen, alpha);
@@ -330,6 +343,17 @@ double compareToReferenceTranspose(
   // } else {
   //   auto casted = std::dynamic_pointer_cast<
   //       sgpp::datadriven::OperationMultiEvalStreamingModOCLMaskMultiPlatform<float>>(eval);
+  //   casted->getParameters()->serialize(std::cout, 0);
+  // }
+
+  // std::cout << "full configuration:" << std::endl;
+  // if ((*(configuration.getParameters()))["INTERNAL_PRECISION"].get().compare("double") == 0) {
+  //   auto casted = std::dynamic_pointer_cast<
+  //       sgpp::datadriven::OperationMultiEvalStreamingModOCLFastMultiPlatform<double>>(eval);
+  //   casted->getParameters()->serialize(std::cout, 0);
+  // } else {
+  //   auto casted = std::dynamic_pointer_cast<
+  //       sgpp::datadriven::OperationMultiEvalStreamingModOCLFastMultiPlatform<float>>(eval);
   //   casted->getParameters()->serialize(std::cout, 0);
   // }
 
