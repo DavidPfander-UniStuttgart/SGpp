@@ -367,13 +367,11 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
   // either the device has to be in the configuration or a new configuration is created and every
   // device is selected
   if (useConfiguration) {
-    std::cout << "USING CONFIGURATION" << std::endl;
     if (!devicesNode.contains(deviceName)) {
       return;
     }
   } else {
     if (!devicesNode.contains(deviceName)) {
-      std::cout << "CREATING NEW DEVICE NODE" << std::endl;
       json::Node &deviceNode = devicesNode.addDictAttr(deviceName);
       deviceNode.addDictAttr("KERNELS");
     }
@@ -396,15 +394,8 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
   }
 
   // limit the number of identical devices used, excludes a device selection
-  std::cout << "before check for COUNT" << std::endl;
-  for (std::string &s : devicesNode[deviceName].keys()) {
-    std::cout << "key: " << s << std::endl;
-  }
-
   if (devicesNode[deviceName].contains("COUNT")) {
-    std::cout << "Has \"COUNT\" key!" << std::endl;
     if (countLimitMap[deviceName] > devicesNode[deviceName]["COUNT"].getUInt()) {
-      std::cout << "deviceName: " << deviceName << " removed due to COUNT!" << std::endl;
       return;
     }
   }
