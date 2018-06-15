@@ -78,6 +78,8 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
   this->calcStarting();
 
   if (verbose == true) {
+    std::cout << "delta_0: " << delta_0 << std::endl;
+    std::cout << "epsilonSquared: " << epsilonSquared << std::endl;
     std::cout << "Starting norm of residuum: " << (delta_0 / epsilonSquared) << std::endl;
     std::cout << "Target norm:               " << (delta_0) << std::endl;
   }

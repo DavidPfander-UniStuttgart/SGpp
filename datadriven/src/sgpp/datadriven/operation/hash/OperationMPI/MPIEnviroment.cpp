@@ -206,6 +206,7 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   worker_count = 0;
   if (conf.contains("SLAVES")) {
     for (std::string &slaveName : conf["SLAVES"].keys()) {
+      std::cout << "SLAVENAME: " << slaveName << std::endl;
       neighbor_list.push_back(slaveid);
       slaveid += count_slaves(conf["SLAVES"][slaveName]) + 1;
       worker_count++;
@@ -242,7 +243,7 @@ void MPIEnviroment::init_worker(int workerid, int source) {
     // Send init signal back
     int message[1];
     message[0] = 5;
-    MPI_Send(message, static_cast<int>(1), MPI_INT, source, 1, MPI_COMM_WORLD);
+    MPI_Send(message, 1, MPI_INT, source, 1, MPI_COMM_WORLD);
     std::cout << "Node " << rank << " initialized! Sending signal to " << neighbor_list[1]
               << std::endl;
     return;

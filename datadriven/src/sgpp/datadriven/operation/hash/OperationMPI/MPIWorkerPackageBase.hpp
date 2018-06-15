@@ -47,6 +47,9 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
                      (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
     }
+    std::cout << "packagesize: " << packagesize << std::endl;
+    std::cout << "packagesize_multiplier: " << packagesize_multiplier << std::endl;
+    std::cout << "sizeof(T): " << sizeof(T) << std::endl;
     T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);

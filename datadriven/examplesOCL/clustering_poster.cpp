@@ -6,6 +6,7 @@
 #include <boost/program_options.hpp>
 
 #include <chrono>
+#include <experimental/filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -32,6 +33,7 @@ int main(int argc, char **argv) {
   size_t eval_grid_level;
   size_t level;
   double lambda;
+  std::string configFileName;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -43,7 +45,9 @@ int main(int argc, char **argv) {
       "level", boost::program_options::value<size_t>(&level)->default_value(4),
       "level of the sparse grid used for density estimation")(
       "lambda", boost::program_options::value<double>(&lambda)->default_value(0.000001),
-      "regularization for density estimation");
+      "regularization for density estimation")(
+      "config", boost::program_options::value<std::string>(&configFileName),
+      "OpenCL and kernel configuration file");
 
   boost::program_options::variables_map variables_map;
 
@@ -57,31 +61,44 @@ int main(int argc, char **argv) {
   }
 
   if (variables_map.count("datasetFileName") == 0) {
-    std::cerr << "option \"datasetFileName\" not specified" << std::endl;
+    std::cerr << "error: option \"datasetFileName\" not specified" << std::endl;
     return 1;
   } else {
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
   }
 
   if (variables_map.count("eval_grid_level") == 0) {
-    std::cerr << "option \"eval_grid_level\" not specified" << std::endl;
+    std::cerr << "error: option \"eval_grid_level\" not specified" << std::endl;
     return 1;
   } else {
     std::cout << "eval_grid_level: " << eval_grid_level << std::endl;
   }
 
   if (variables_map.count("level") == 0) {
-    std::cerr << "option \"level\" not specified" << std::endl;
+    std::cerr << "error: option \"level\" not specified" << std::endl;
     return 1;
   } else {
     std::cout << "level: " << level << std::endl;
   }
 
   if (variables_map.count("lambda") == 0) {
-    std::cerr << "option \"lambda\" not specified" << std::endl;
+    std::cerr << "error: option \"lambda\" not specified" << std::endl;
     return 1;
   } else {
     std::cout << "lambda: " << lambda << std::endl;
+  }
+
+  if (variables_map.count("config") == 0) {
+    std::cerr << "error: option \"config\" not specified" << std::endl;
+    return 1;
+  } else {
+    std::experimental::filesystem::path configFilePath(configFileName);
+    if (!std::experimental::filesystem::exists(configFilePath)) {
+      std::cerr << "error: config file does not exist: " << configFileName << std::endl;
+      return 1;
+    }
+
+    std::cout << "OpenCL configuration file: " << configFileName << std::endl;
   }
 
   datadriven::Dataset dataset = datadriven::ARFFTools::readARFF(datasetFileName);
@@ -104,18 +121,18 @@ int main(int argc, char **argv) {
   auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
   // create density calculator
   datadriven::DensityOCLMultiPlatform::OperationDensity *operation_mult =
-      datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
-                                                          "MyOCLConf.cfg");
+      datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda, configFileName);
 
   std::cout << "Creating rhs" << std::endl;
-  base::DataVector b(gridsize);
+  base::DataVector b(gridsize, 0.0);
   operation_mult->generateb(trainingData, b);
   // for (size_t i = 0; i < 300; i++) std::cout << b[i] << " ";
   // std::cout << std::endl;
   std::ofstream out_rhs("rhs_erg_dim2_depth11.txt");
   out_rhs.precision(17);
   for (size_t i = 0; i < gridsize; ++i) {
-    out_rhs << b[i] << " ";
+    // out_rhs << b[i] << " ";
+    out_rhs << 98.0 * static_cast<double>(i) << " ";
   }
   out_rhs.close();
 
@@ -149,6 +166,6 @@ int main(int argc, char **argv) {
   std::cout << "Evaluating at evaluation grid points" << std::endl;
   eval->mult(alpha, results);
 
-  std::cout << results.toString();
+  // std::cout << results.toString();
   std::cout << std::endl << "all done!" << std::endl;
 }

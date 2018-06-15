@@ -2,7 +2,8 @@
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
-#pragma once
+#ifndef OPERATIONGRAPHBASEMPI_H
+#define OPERATIONGRAPHBASEMPI_H
 
 #include <mpi.h>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
@@ -27,11 +28,10 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
         dataset_size(static_cast<int>(data.getSize())),
         k(k),
         dimensions(static_cast<int>(data.getNcols())),
-        delete_dataset(true) {
+        delete_dataset(false) {
     std::cout << "Node " << MPIEnviroment::get_node_rank() << ": Received dataset (size "
               << dataset_size / dimensions << " datapoints) and graph parameters" << std::endl;
     send_dataset();
-    delete_dataset = false;
   }
   MPIWorkerGraphBase(sgpp::base::DataMatrix &data, int k)
       : MPIWorkerBase(),
@@ -39,11 +39,11 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
         dataset_size(static_cast<int>(data.getSize())),
         k(k),
         dimensions(static_cast<int>(data.getNcols())),
-        delete_dataset(true) {
+        delete_dataset(false) {
     send_dataset();
-    delete_dataset = false;
   }
-  explicit MPIWorkerGraphBase(std::string operationName) : MPIWorkerBase(operationName) {
+  explicit MPIWorkerGraphBase(std::string operationName)
+      : MPIWorkerBase(operationName), delete_dataset(true) {
     receive_dataset();
     send_dataset();
   }
@@ -91,3 +91,4 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
 }  // namespace clusteringmpi
 }  // namespace datadriven
 }  // namespace sgpp
+#endif /* OPERATIONGRAPHBASEMPI_H */

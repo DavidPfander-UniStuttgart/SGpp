@@ -157,13 +157,24 @@ class SimpleQueue {
     received_packageindex = 0;
 
     // Adapt packagesize
+    std::cout << "packagesize: " << packagesize << std::endl;
+    std::cout << "workitem_count: " << workitem_count << std::endl;
+    std::cout << "commsize: " << commsize << std::endl;
     if (packagesize > workitem_count) {
+      std::cout << "in > workitem_count" << std::endl;
       commsize = 1;
       packagesize = workitem_count;
     } else if (packagesize > workitem_count / (commsize * 2)) {
+      std::cout << "in if commsize" << std::endl;
       packagesize = static_cast<int>(workitem_count / (commsize * 2));
     }
     if (packagesize % 128 != 0) packagesize -= packagesize % 128;
+    if (packagesize == 0) {
+      // this can happen e.g. if workitem_count < 128
+      // TODO: why 128?
+      packagesize = 128;
+    }
+    std::cout << "packagesize after: " << packagesize << std::endl;
 
     packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
     startindices = new unsigned int[commsize];
