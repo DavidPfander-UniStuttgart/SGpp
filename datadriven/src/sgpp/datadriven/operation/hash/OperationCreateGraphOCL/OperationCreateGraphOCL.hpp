@@ -22,17 +22,24 @@ namespace DensityOCLMultiPlatform {
 /// Pure virtual base class for the k nearest neighbor opencl operation
 class OperationCreateGraphOCL {
  protected:
-  /// Recursive function for traversing the k nearest neighbor graph
+  /// Recursive depth-first function for traversing the k nearest neighbor graph
+  // parameters:
+  // index index of data point for which to calculate its cluster
+  // nodes the graph in a datasetsize * k format, k entries refer to the neighbors
+  // cluster number of clusters
+  // k size of the neighborhood
+  // clusterList size of the cluster belonging to a specific data points???
+  // overwrite ???
   static size_t find_neighbors(size_t index, std::vector<int> &nodes, size_t cluster, size_t k,
                                std::vector<size_t> &clusterList, bool overwrite = false) {
-    size_t currIndex;
     clusterList[index] = cluster;
     bool overwrite_enabled = overwrite;
     bool removed = true;
+    // iterates the neighbors of the current node, k entries
     for (size_t i = index * k; i < (index + 1) * k; i++) {
       if (nodes[i] == -2) continue;
       removed = false;
-      currIndex = nodes[i];
+      size_t currIndex = nodes[i];
       if (nodes[currIndex * k] != -1) {
         if (clusterList[currIndex] == 0 && !overwrite_enabled) {
           clusterList[currIndex] = cluster;
@@ -76,19 +83,27 @@ class OperationCreateGraphOCL {
   virtual void finalize_graph_creation(std::vector<int> &resultVector, int startid,
                                        int chunksize) = 0;
   /// Assign a clusterindex for each datapoint using the connected components of the graph
+  // graph has k * #datapoints entries
   static std::vector<size_t> find_clusters(std::vector<int> &graph, size_t k) {
     std::vector<size_t> clusters(graph.size() / k);
-    size_t clustercount = 0;
-    for (size_t node = 0; node < clusters.size(); node++) clusters[node] = 0;
+    size_t cluster_count = 0;
+    std::fill(clusters.begin(), clusters.end(), 0);
+    // for (size_t node = 0; node < clusters.size(); node++) {
+    //   clusters[node] = 0;
+    // }
+
+    // check the cluster to which each data point belongs, i iterates data points
     for (size_t i = 0; i < clusters.size(); i++) {
+      // check whether data point is has any neighbors
       if (clusters[i] == 0 && graph[i * k] != -1) {
-        clustercount++;
-        if (OperationCreateGraphOCL::find_neighbors(i, graph, clustercount, k, clusters) !=
-            clustercount)
-          clustercount--;
+        // assume this is a new cluster
+        cluster_count++;
+        if (OperationCreateGraphOCL::find_neighbors(i, graph, cluster_count, k, clusters) !=
+            cluster_count)
+          cluster_count--;
       }
     }
-    std::cout << "Found " << clustercount << " clusters!" << std::endl;
+    std::cout << "Found " << cluster_count << " clusters!" << std::endl;
     return clusters;
   }
 
