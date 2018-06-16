@@ -95,11 +95,7 @@ int main() {
   }
 
   OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected, node_cluster_map,
-                                                              clusters, 0);
-  for (size_t i = 0; i < node_count; i++) {
-    std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
-  }
-
+                                                              clusters, 2);
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
@@ -116,5 +112,11 @@ int main() {
       std::cout << m;
     }
     std::cout << std::endl;
+  }
+
+  std::vector<size_t> reference_cluster_map = OperationCreateGraphOCL::find_clusters(directed, k);
+
+  for (size_t i = 0; i < node_count; i++) {
+    std::cout << "n: " << i << " belongs to cluster: " << reference_cluster_map[i] << std::endl;
   }
 }
