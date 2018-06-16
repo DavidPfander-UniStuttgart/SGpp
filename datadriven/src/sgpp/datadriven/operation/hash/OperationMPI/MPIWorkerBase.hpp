@@ -2,11 +2,9 @@
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
-#ifndef OPERATIONMPI_H
-#define OPERATIONMPI_H
+#pragma once
+
 #include <mpi.h>
-
-
 #include <sgpp/base/tools/OperationConfiguration.hpp>
 
 #include <cstring>
@@ -46,9 +44,7 @@ class WorkerDummy : public MPIWorkerBase {
 
 class OperationDummy : protected WorkerDummy {
  public:
-  OperationDummy(void)
-      : WorkerDummy("OPDummy") {
-  }
+  OperationDummy(void) : WorkerDummy("OPDummy") {}
   void start_operation(void) {
     std::cout << "Press any key to start dummy operation " << std::endl;
     std::cin.get();
@@ -58,11 +54,6 @@ class OperationDummy : protected WorkerDummy {
   }
 };
 
-
-
-
-
 }  // namespace clusteringmpi
 }  // namespace datadriven
 }  // namespace sgpp
-#endif /* OPERATIONMPI_H */

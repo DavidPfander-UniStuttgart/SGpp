@@ -3,24 +3,19 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 #include <unistd.h>
-
+#include <chrono>
+#include <iostream>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
+#include <sgpp/base/grid/Grid.hpp>
 #include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationCreateGraphMPI.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationCreatePrunedGraphMPI.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationDensityMPI.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationMPI.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationRhsMPI.hpp>
 #include <sgpp/globaldef.hpp>
 #include <sgpp/solver/sle/ConjugateGradients.hpp>
-
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationGridBaseMPI.hpp>
-
-#include <iostream>
 #include <string>
 #include <vector>
-
+#include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityMultMPI.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 
 // arg 1: MPI Config File

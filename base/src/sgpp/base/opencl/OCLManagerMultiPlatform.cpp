@@ -15,7 +15,7 @@
 namespace sgpp {
 namespace base {
 
-OCLManagerMultiPlatform::OCLManagerMultiPlatform(bool verbose) {
+OCLManagerMultiPlatform::OCLManagerMultiPlatform() : verbose(false) {
   parameters = std::make_shared<OCLOperationConfiguration>();
   parameters->replaceIDAttr("VERBOSE", verbose);
   parameters->replaceIDAttr("OCL_MANAGER_VERBOSE", false);
@@ -24,10 +24,9 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(bool verbose) {
   parameters->replaceIDAttr("LOAD_BALANCING_VERBOSE", false);
   parameters->replaceTextAttr("INTERNAL_PRECISION", "double");
 
-  this->verbose = verbose;
   overallDeviceCount = 0;
 
-  this->configure(*parameters, false);
+  this->configure(false);
   if (overallDeviceCount == 0) {
     std::stringstream errorString;
     errorString << "OCL Error: either no devices available, or no devices match the configuration!"
@@ -61,7 +60,7 @@ OCLManagerMultiPlatform::OCLManagerMultiPlatform(
   this->verbose = (*parameters)["VERBOSE"].getBool();
   this->overallDeviceCount = 0;
 
-  this->configure(*parameters, true);
+  this->configure(true);
   if (overallDeviceCount == 0) {
     std::stringstream errorString;
     errorString << "OCL Error: either no devices available, or no devices match the configuration!"
@@ -215,8 +214,7 @@ std::shared_ptr<base::OCLOperationConfiguration> OCLManagerMultiPlatform::getCon
   return this->parameters;
 }
 
-void OCLManagerMultiPlatform::configure(base::OCLOperationConfiguration &configuration,
-                                        bool useConfiguration) {
+void OCLManagerMultiPlatform::configure(bool useConfiguration) {
   cl_int err;
 
   // determine number of available OpenCL platforms
@@ -334,12 +332,6 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
   if (filteredDeviceIds.size() > 0) {
     platforms.emplace_back(platformId, platformName, filteredDeviceIds, filteredDeviceNames);
     OCLPlatformWrapper &platformWrapper = platforms[platforms.size() - 1];
-    //    OCLPlatformWrapper platformWrapper(platformId, platformName, filteredDeviceIds,
-    //                                       filteredDeviceNames);
-    //        platforms.emplace_back(platformId, platformName,
-    //        filteredDeviceIds, filteredDeviceNames);
-    //        OCLPlatformWrapper &platformWrapper = *(platforms.end() - 1);
-    //    platforms.push_back(platformWrapper);
 
     // create linear device list
     for (size_t deviceIndex = 0; deviceIndex < filteredDeviceIds.size(); deviceIndex++) {
@@ -431,5 +423,8 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
 std::vector<std::shared_ptr<OCLDevice>> &OCLManagerMultiPlatform::getDevices() {
   return this->devices;
 }
+
+void OCLManagerMultiPlatform::set_verbose(bool verbose) { this->verbose = verbose; }
+
 }  // namespace base
 }  // namespace sgpp

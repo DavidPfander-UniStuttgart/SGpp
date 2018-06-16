@@ -2,14 +2,13 @@
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
-#ifndef OPERATIONDENSITYMPI_H
-#define OPERATIONDENSITYMPI_H
+#pragma once
 
 #include <mpi.h>
 
 #include <sgpp/datadriven/operation/hash/OperationDensityOCLMultiPlatform/OpFactory.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationGridBaseMPI.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/OperationPackageBaseMPI.hpp>
+#include "MPIWorkerGridBase.hpp"
+#include "MPIWorkerPackageBase.hpp"
 
 #include <exception>
 #include <sstream>
@@ -21,7 +20,7 @@ namespace clusteringmpi {
 class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<double> {
  protected:
   double lambda;
-  DensityOCLMultiPlatform::OperationDensity *op;
+  std::shared_ptr<DensityOCLMultiPlatform::OperationDensity> op;
   double *alpha;
   size_t oldgridsize;
 
@@ -58,9 +57,10 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
 
     // Create opencl operation
     if (opencl_node) {
-      op = createDensityOCLMultiPlatformConfigured(
-          gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
-          parameters, opencl_platform, opencl_device);
+      op = std::shared_ptr<DensityOCLMultiPlatform::OperationDensity>(
+          createDensityOCLMultiPlatformConfigured(
+              gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
+              parameters));  // TODO: , opencl_platform, opencl_device
     }
     if (verbose) {
       std::cout << "Created mpi opencl density operation on " << MPIEnviroment::get_node_rank()
@@ -89,11 +89,6 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
     if (verbose) {
       std::cout << "Density master node " << MPIEnviroment::get_node_rank() << std::endl;
-    }
-  }
-  virtual ~DensityWorker() {
-    if (opencl_node) {
-      delete op;
     }
   }
 
@@ -128,28 +123,6 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
   }
 };
 
-class OperationDensityMultMPI : public base::OperationMatrix, public DensityWorker {
- public:
-  OperationDensityMultMPI(base::Grid &grid, double lambda, std::string ocl_conf_filename)
-      : MPIWorkerBase("DensityMultiplicationWorker"),
-        DensityWorker(grid, lambda, ocl_conf_filename) {}
-  virtual ~OperationDensityMultMPI() {}
-  virtual void mult(base::DataVector &alpha, base::DataVector &result) {
-    start_sub_workers();
-    double *alpha_ptr = alpha.getPointer();
-    send_alpha(&alpha_ptr);
-    int datainfo[2];
-    datainfo[0] = 0;
-    datainfo[1] = static_cast<int>(result.getSize());
-    divide_workpackages(datainfo, result.getPointer());
-    int exitmessage[2] = {-2, -2};
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(exitmessage, 2, MPI_INT, dest, 1, sub_worker_comm);
-  }
-};
-
 }  // namespace clusteringmpi
 }  // namespace datadriven
 }  // namespace sgpp
-
-#endif /* OPERATIONDENSITYMPI_H */

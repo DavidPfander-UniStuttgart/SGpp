@@ -21,13 +21,14 @@
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/base/tools/ConfigurationParameters.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLMaskMultiPlatform/Configuration.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 #include "test_datadrivenCommon.hpp"
 
 using sgpp::datadriven::OperationMultipleEvalConfiguration;
-using sgpp::datadriven::OperationMultipleEvalType;
 using sgpp::datadriven::OperationMultipleEvalSubType;
+using sgpp::datadriven::OperationMultipleEvalType;
 
 namespace TestStreamingModOCLMaskMultiPlatformMultFixture {
 struct FilesNamesAndErrorFixture {
@@ -57,9 +58,11 @@ BOOST_AUTO_TEST_CASE(Simple) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(999));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -76,9 +79,11 @@ BOOST_AUTO_TEST_CASE(Local) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -95,10 +100,12 @@ BOOST_AUTO_TEST_CASE(Blocking) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -115,10 +122,12 @@ BOOST_AUTO_TEST_CASE(MultiDevice) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -135,10 +144,12 @@ BOOST_AUTO_TEST_CASE(MultiPlatform) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -155,9 +166,11 @@ BOOST_AUTO_TEST_CASE(SimpleSinglePrecision) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(999));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -174,9 +187,11 @@ BOOST_AUTO_TEST_CASE(LocalSinglePrecision) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -193,10 +208,12 @@ BOOST_AUTO_TEST_CASE(BlockingSinglePrecision) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -213,10 +230,12 @@ BOOST_AUTO_TEST_CASE(MultiDeviceSinglePrecision) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(
@@ -233,10 +252,12 @@ BOOST_AUTO_TEST_CASE(MultiPlatformSinglePrecision) {
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
   for (json::Node &deviceNode : deviceNodes) {
-    deviceNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    deviceNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-    deviceNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
-    deviceNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingModOCLMaskMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(2));
+    kernelNode.replaceIDAttr("KERNEL_STORE_DATA", "register");
   }
 
   OperationMultipleEvalConfiguration configuration(

@@ -114,6 +114,8 @@ void* operator new[](size_t size)
   return p;
 }
 
+#ifndef POSIX_MEMALIGN
+
 void operator delete(void* p) throw() { ALIGNED_FREE(p); }
 
 #if __cplusplus >= 201402L
@@ -124,6 +126,8 @@ void operator delete[](void* p) throw() { ALIGNED_FREE(p); }
 
 #if __cplusplus >= 201402L
 void operator delete[](void* p, size_t sz) throw() { ALIGNED_FREE(p); }
+#endif
+
 #endif
 
 #endif /* __MINGW64__ */

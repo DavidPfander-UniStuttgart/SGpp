@@ -36,7 +36,7 @@ class OperationDensity : public base::OperationMatrix {
   virtual void finalize_rhs_generation(sgpp::base::DataVector &b, size_t start_id,
                                        size_t chunksize) = 0;
   /// Generate the default parameters in die json configuration
-  static void load_default_parameters(std::shared_ptr<base::OCLOperationConfiguration> parameters) {
+  static void load_default_parameters(base::OCLOperationConfiguration *parameters) {
     if (parameters->contains("INTERNAL_PRECISION") == false) {
       std::cout << "Warning! No internal precision setting detected."
                 << " Using double precision from now on!" << std::endl;

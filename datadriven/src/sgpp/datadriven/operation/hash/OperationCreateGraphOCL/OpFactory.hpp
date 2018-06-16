@@ -14,19 +14,14 @@ namespace datadriven {
 
 /// Generates the k nearest neighbors graph creation using a specific opencl device and a datamatrix
 DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
-    base::DataMatrix &dataset, size_t k, size_t dimensions, std::string opencl_conf,
-    size_t platformid, size_t devicdeid);
+    base::DataMatrix &dataset, size_t k, size_t dimensions, std::string opencl_conf);
 /// Generates the k nearest neighbors graph creation using a specific opencl device and a double
 /// vector
 DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
-    double *dataset, size_t dataset_size, size_t k, size_t dimensions, std::string opencl_conf,
-    size_t platformid, size_t devicdeid);
+    double *dataset, size_t dataset_size, size_t k, size_t dimensions, std::string opencl_conf);
 DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
     double *dataset, size_t dataset_size, size_t k, size_t dimensions,
-    sgpp::base::OCLOperationConfiguration *parameters, size_t platformid, size_t deviceid);
-/// Generates the k nearest neighbors graph creation
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
-    base::DataMatrix &dataset, size_t k, size_t dimensions, std::string opencl_conf);
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters);
 }  // namespace datadriven
 }  // namespace sgpp
 

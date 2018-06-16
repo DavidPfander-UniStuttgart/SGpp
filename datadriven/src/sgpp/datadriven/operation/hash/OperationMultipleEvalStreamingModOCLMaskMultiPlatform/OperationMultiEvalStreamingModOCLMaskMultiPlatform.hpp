@@ -107,7 +107,7 @@ class OperationMultiEvalStreamingModOCLMaskMultiPlatform : public base::Operatio
         std::vector<T>(this->preparedDataset.getNrows() * this->preparedDataset.getNcols());
 
     for (size_t i = 0; i < this->preparedDataset.getSize(); i++) {
-      this->kernelDataset[i] = (T) this->preparedDataset[i];
+      this->kernelDataset[i] = (T)this->preparedDataset[i];
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
@@ -118,6 +118,10 @@ class OperationMultiEvalStreamingModOCLMaskMultiPlatform : public base::Operatio
       json::Node &kernelConfiguration =
           deviceConfiguration["KERNELS"]
                              [StreamingModOCLMaskMultiPlatform::Configuration::getKernelName()];
+
+      // std::cout << "kernel device configuration for: " << devices[deviceIndex]->deviceName
+      //           << std::endl;
+      // kernelConfiguration.serialize(std::cout, 0);
 
       multKernels.emplace_back(devices[deviceIndex], dims, this->manager, kernelConfiguration,
                                queueLoadBalancerMult);
@@ -298,6 +302,8 @@ class OperationMultiEvalStreamingModOCLMaskMultiPlatform : public base::Operatio
       this->multTransposeKernels[deviceIndex].resetKernel();
     }
   }
+
+  std::shared_ptr<base::OCLOperationConfiguration> getParameters() { return parameters; }
 
  private:
   void padDataset(sgpp::base::DataMatrix &dataset) {
