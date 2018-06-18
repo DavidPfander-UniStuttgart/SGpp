@@ -133,6 +133,7 @@ int main(int argc, char **argv) {
   size_t dimension = dataset.getDimension();
   std::cout << "dimension: " << dimension << std::endl;
   base::DataMatrix &trainingData = dataset.getData();
+  std::cout << "data points: " << trainingData.getNrows() << std::endl;
 
   // create grid
   base::Grid *grid = base::Grid::createLinearGrid(dimension);
@@ -168,7 +169,7 @@ int main(int argc, char **argv) {
   std::cout << "Solving density SLE" << std::endl;
   solver->solve(*operation_mult, alpha, b, false, true);
 
-  //TODO: remove this?
+  // TODO: remove this?
   // scale alphas to [0, 1] -> smaller function values, use?
   double max = alpha.max();
   double min = alpha.min();
@@ -206,7 +207,7 @@ int main(int argc, char **argv) {
       std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL>(
           sgpp::datadriven::createNearestNeighborGraphConfigured(trainingData, k, dimension,
                                                                  configFileName));
-  std::vector<int> graph(trainingData.getNrows() * k);
+  std::vector<int> graph(trainingData.getNrows() * k, -1);
   operation_graph->create_graph(graph);
 
   // std::ofstream out("graph_erg_dim2_depth11.txt");
@@ -233,7 +234,7 @@ int main(int argc, char **argv) {
   // }
   // out.close();
   std::cout << "Finding clusters..." << std::endl;
-  std::vector<size_t> cluster_assignments =
+  std::vector<int> cluster_assignments =
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, k);
   // out.open("cluster_erg.txt");
   // for (size_t datapoint : cluster_assignments) {

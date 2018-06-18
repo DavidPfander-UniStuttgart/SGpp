@@ -125,7 +125,8 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
   /// Creates part of the k nearest neighbor graph (or all of it with the default parameters)
   void create_graph(std::vector<int> &resultVector, int startid = 0, int chunksize = 0) {
     if (verbose)
-      std::cout << "Creating graph for " << dataVector.size() << " datapoints" << std::endl;
+      std::cout << "Creating graph for " << (dataVector.size() / dims) << " datapoints"
+                << std::endl;
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     try {

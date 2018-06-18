@@ -6,6 +6,7 @@
 #ifndef OPERATIONCREATEGRAPHOCL_H
 #define OPERATIONCREATEGRAPHOCL_H
 
+#include <omp.h>
 #include <cassert>
 #include <sgpp/base/exception/operation_exception.hpp>
 #include <sgpp/base/grid/GridStorage.hpp>
@@ -38,7 +39,7 @@ class OperationCreateGraphOCL {
     bool removed = true;
     // iterates the neighbors of the current node, k entries
     for (size_t i = index * k; i < (index + 1) * k; i++) {
-      if (nodes[i] == -2) continue;
+      if (nodes[i] == -2) continue;  // endes with -2 have been pruned!
       removed = false;
       size_t currIndex = nodes[i];       // current neighbor
       if (nodes[currIndex * k] != -1) {  // does it exist?
@@ -92,7 +93,7 @@ class OperationCreateGraphOCL {
                                        int chunksize) = 0;
   /// Assign a clusterindex for each datapoint using the connected components of the graph
   // graph has k * #datapoints entries
-  static std::vector<size_t> find_clusters(std::vector<int> &graph, size_t k) {
+  static std::vector<size_t> find_clusters_recursive(std::vector<int> &graph, size_t k) {
     std::vector<size_t> clusters(graph.size() / k);
     size_t cluster_count = 0;
     std::fill(clusters.begin(), clusters.end(), 0);
@@ -115,36 +116,69 @@ class OperationCreateGraphOCL {
     return clusters;
   }
 
-  using neighborhood_list_t = std::vector<std::vector<size_t>>;
+  using neighborhood_list_t = std::vector<std::vector<int>>;
 
   // directed format: index corresponds to node, k entries per index corresponding to connected
   // nodes (edges), -1 indicates empty
   static neighborhood_list_t make_undirected_graph(std::vector<int> directed, size_t k) {
     size_t node_count = directed.size() / k;
+    // neighborhood_list_t undirected(node_count, std::vector<int>());
     neighborhood_list_t undirected(node_count);
     // add directed edges
+    // #pragma omp parallel for
     for (size_t i = 0; i < node_count; i += 1) {
+      std::cout << "node i: " << i << " neighbors: ";
       for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
+        std::cout << directed[i * k + cur_k] << " ";
         if (directed[i * k + cur_k] == -1) {
-          break;
+          continue;
         }
+        if (directed[i * k + cur_k] == -2) {
+          // std::cout << "got a -2 for i: " << i << " cur_k: " << cur_k << std::endl;
+          continue;
+        }
+        // assert that the index is in range
+        assert(directed[i * k + cur_k] < static_cast<int>(node_count));
+        // if (directed[i * k + cur_k] > static_cast<int>(node_count)) {
+        //   std::cerr << "error: index too large! i: " << i
+        //             << " neighbor: " << directed[i * k + cur_k] << std::endl;
+        //   continue;
+        // }
         undirected[i].push_back(directed[i * k + cur_k]);
       }
+      std::cout << std::endl;
     }
+
+    for (size_t i = 0; i < node_count; i += 1) {
+      std::cout << "uni node i: " << i << " count: " << undirected[i].size() << " neighbors:";
+      for (int pointee : undirected[i]) {
+        std::cout << " " << pointee;
+      }
+      std::cout << std::endl;
+    }
+
     // add reversed edge direction (if not already there)
+    // std::vector<omp_lock_t> locks(node_count);
+    // #pragma omp parallel for
     for (size_t i = 0; i < node_count; i += 1) {
       // not self-modifying: graph is non-reflexive
-      for (size_t pointee : undirected[i]) {
+      // enumerate partners of i
+      // std::cout << "i: " << i << std::endl;
+      for (int pointee : undirected[i]) {
         bool found = false;
-        for (size_t candidate : undirected[pointee]) {
-          if (candidate == i) {
+        // std::cout << "pointee: " << pointee << std::endl;
+        // std::cout << "members: " << undirected[pointee].size() << std::endl;
+        for (int candidate : undirected[pointee]) {
+          if (candidate == static_cast<int>(i)) {
             found = true;
             break;
           }
         }
         if (!found) {
+          // omp_set_lock(&(locks[pointee]));
           // not in neighbor list -> add
           undirected[pointee].push_back(i);
+          // omp_unset_lock(&(locks[pointee]));
         }
       }
     }
@@ -153,7 +187,7 @@ class OperationCreateGraphOCL {
 
   static void get_clusters_from_undirected_graph(const neighborhood_list_t &undirected,
                                                  std::vector<int> &node_cluster_map,
-                                                 std::vector<std::vector<size_t>> &clusters,
+                                                 std::vector<std::vector<int>> &clusters,
                                                  size_t cluster_size_min = 0) {
     // not yet processd set to -1, solitary set to -2
     node_cluster_map.resize(undirected.size());
@@ -166,12 +200,12 @@ class OperationCreateGraphOCL {
         continue;
       }
       // not yet processed, part of a new cluster (or solitary)
-      std::vector<size_t> cluster;
+      std::vector<int> cluster;
       cluster.push_back(i);
       size_t cur_node_index = 0;
       node_cluster_map[i] = cluster_id;
       while (cur_node_index < cluster.size()) {
-        for (size_t neighbor_index : undirected[cluster[cur_node_index]]) {
+        for (int neighbor_index : undirected[cluster[cur_node_index]]) {
           if (node_cluster_map[neighbor_index] == -1) {
             // not yet processed, enqueue
             cluster.push_back(neighbor_index);
@@ -189,11 +223,23 @@ class OperationCreateGraphOCL {
         cluster_id += 1;
       } else {
         // rejected, nodes are solitary
-        for (size_t member_index : cluster) {
+        for (int member_index : cluster) {
           node_cluster_map[member_index] = -2;
         }
       }
     }
+  }
+
+  static std::vector<int> find_clusters(std::vector<int> &directed_graph, size_t k) {
+    std::vector<int> node_cluster_map;
+    std::vector<std::vector<int>> clusters;
+
+    OperationCreateGraphOCL::neighborhood_list_t undirected_graph =
+        OperationCreateGraphOCL::make_undirected_graph(directed_graph, k);
+
+    OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected_graph, node_cluster_map,
+                                                                clusters, 2);
+    return node_cluster_map;
   }
 
   virtual ~OperationCreateGraphOCL(void) {}

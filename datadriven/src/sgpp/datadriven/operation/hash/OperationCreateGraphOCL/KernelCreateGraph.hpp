@@ -103,7 +103,12 @@ class KernelCreateGraph {
 
     totalBlockSize = dataBlockingSize * localSize;
     unpadded_datasize = data.size();
-    for (size_t i = 0; i < (localSize - data.size() % localSize) * dims; i++) data.push_back(2.0);
+    size_t element_to_add = ((localSize - ((data.size() / dims) % localSize)) * dims);
+    std::cout << "unpadded_datasize: " << unpadded_datasize
+              << " adding elements: " << element_to_add << std::endl;
+    for (size_t i = 0; i < element_to_add; i++) {
+      data.push_back(2.0);
+    }
     deviceData.intializeTo(data, 1, 0, data.size());
   }
 
@@ -121,21 +126,22 @@ class KernelCreateGraph {
                 << ")" << std::endl;
       std::cout << "k: " << k << " Dims:" << dims << std::endl;
     }
-    size_t datasize = unpadded_datasize / dims;
+    // size_t datasize = unpadded_datasize / dims;
 
-    size_t globalworkrange[1];
-    if (chunksize == 0) {
-      globalworkrange[0] = unpadded_datasize / dims;
-    } else {
-      globalworkrange[0] = chunksize;
-    }
-    globalworkrange[0] = globalworkrange[0] + (localSize - globalworkrange[0] % localSize);
+    // size_t globalworkrange[1];
+    // if (chunksize == 0) {
+    //   globalworkrange[0] = unpadded_datasize / dims;
+    // } else {
+    //   globalworkrange[0] = chunksize;
+    // }
+    // globalworkrange[0] = globalworkrange[0] + (localSize - globalworkrange[0] % localSize);
+    size_t data_points = data.size() / dims;
 
     // Build kernel if not already done
     if (this->kernel == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
       std::string program_src = kernelSourceBuilder.generateSource(
-          dims, k, datasize,
+          dims, k, data_points,
           (unpadded_datasize / dims) + (localSize - (unpadded_datasize / dims) % localSize));
       if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
@@ -143,8 +149,7 @@ class KernelCreateGraph {
           manager->buildKernel(program_src, device, kernelConfiguration, "connectNeighbors");
     }
 
-    if (!deviceResultData.isInitialized())
-      deviceResultData.initializeBuffer(globalworkrange[0] * k);
+    if (!deviceResultData.isInitialized()) deviceResultData.initializeBuffer(data_points * k);
     clFinish(device->commandQueue);
     this->deviceTimingMult = 0.0;
 
@@ -170,10 +175,9 @@ class KernelCreateGraph {
 
     clTiming = nullptr;
 
-    if (verbose)
-      std::cout << "Starting the kernel for " << globalworkrange[0] << " items" << std::endl;
-    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, globalworkrange,
-                                 &localSize, 0, nullptr, &clTiming);
+    if (verbose) std::cout << "Starting the kernel for " << data_points << " items" << std::endl;
+    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, &data_points, &localSize,
+                                 0, nullptr, &clTiming);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to enqueue kernel command! Error code: " << err

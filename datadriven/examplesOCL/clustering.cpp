@@ -117,7 +117,7 @@ int main() {
   //   out << std::endl;
   // }
   // out.close();
-  std::vector<size_t> cluster_assignments =
+  std::vector<int> cluster_assignments =
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, k);
   out.open("cluster_erg.txt");
   for (size_t datapoint : cluster_assignments) {

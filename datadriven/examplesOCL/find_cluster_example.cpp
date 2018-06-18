@@ -34,17 +34,17 @@ int main() {
   }
 
   std::vector<int> node_cluster_map;
-  std::vector<std::vector<size_t>> clusters;
+  std::vector<std::vector<int>> clusters;
   OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected, node_cluster_map,
                                                               clusters, 0);
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
 
-  for (std::vector<size_t> &c : clusters) {
+  for (std::vector<int> &c : clusters) {
     std::cout << "member of cluster: ";
     bool first = true;
-    for (size_t m : c) {
+    for (int m : c) {
       if (first) {
         first = false;
       } else {
@@ -86,7 +86,7 @@ int main() {
   undirected = OperationCreateGraphOCL::make_undirected_graph(directed, k);
 
   for (size_t i = 0; i < node_count; i++) {
-    for (size_t neighbor : undirected[i]) {
+    for (int neighbor : undirected[i]) {
       std::cout << "n: " << i << " -> " << neighbor << std::endl;
     }
     if (undirected[i].size() == 0) {
@@ -100,10 +100,10 @@ int main() {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
 
-  for (std::vector<size_t> &c : clusters) {
+  for (std::vector<int> &c : clusters) {
     std::cout << "member of cluster: ";
     bool first = true;
-    for (size_t m : c) {
+    for (int m : c) {
       if (first) {
         first = false;
       } else {
@@ -114,7 +114,8 @@ int main() {
     std::cout << std::endl;
   }
 
-  std::vector<size_t> reference_cluster_map = OperationCreateGraphOCL::find_clusters(directed, k);
+  std::vector<size_t> reference_cluster_map =
+      OperationCreateGraphOCL::find_clusters_recursive(directed, k);
 
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << reference_cluster_map[i] << std::endl;

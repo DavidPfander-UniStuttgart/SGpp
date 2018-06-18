@@ -560,7 +560,7 @@ BOOST_AUTO_TEST_CASE(KNNClusterSearch) {
   }
   graph_in.close();
 
-  std::vector<size_t> optimal_cluster_assignement;
+  std::vector<int> optimal_cluster_assignement;
   std::ifstream assignement_in("datadriven/tests/data/clustering_test_data/cluster_erg.txt");
   if (assignement_in) {
     size_t value;
@@ -570,7 +570,7 @@ BOOST_AUTO_TEST_CASE(KNNClusterSearch) {
   }
   assignement_in.close();
 
-  std::vector<size_t> cluster_assignement =
+  std::vector<int> cluster_assignement =
       sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, 8);
   BOOST_CHECK(optimal_cluster_assignement.size() == cluster_assignement.size());
   if (optimal_cluster_assignement.size() == cluster_assignement.size()) {

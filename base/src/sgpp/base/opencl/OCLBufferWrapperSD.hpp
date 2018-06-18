@@ -15,8 +15,9 @@
 namespace sgpp {
 namespace base {
 
-template <typename T> class OCLBufferWrapperSD {
-private:
+template <typename T>
+class OCLBufferWrapperSD {
+ private:
   std::shared_ptr<OCLDevice> device;
   bool initialized;
   cl_mem buffer;
@@ -24,7 +25,7 @@ private:
   size_t elements;
   std::vector<T> hostData;
 
-public:
+ public:
   explicit OCLBufferWrapperSD(std::shared_ptr<base::OCLDevice> device)
       : device(device), initialized(false), buffer(nullptr), elements(0) {}
 
@@ -69,14 +70,12 @@ public:
     cl_int err;
 
     err = clEnqueueWriteBuffer(device->commandQueue, this->buffer, CL_TRUE, 0,
-                               sizeof(T) * this->elements, hostData.data(), 0,
-                               nullptr, nullptr);
+                               sizeof(T) * this->elements, hostData.data(), 0, nullptr, nullptr);
 
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString
-          << "OCL Error: Failed to enqueue write buffer command! Error code: "
-          << err << std::endl;
+      errorString << "OCL Error: Failed to enqueue write buffer command! Error code: " << err
+                  << std::endl;
       throw sgpp::base::operation_exception(errorString.str());
     }
   }
@@ -91,15 +90,13 @@ public:
     cl_int err;
 
     err = clEnqueueReadBuffer(device->commandQueue, this->buffer, CL_TRUE, 0,
-                              sizeof(T) * this->elements,
-                              static_cast<void *>(hostData.data()), 0, nullptr,
-                              nullptr);
+                              sizeof(T) * this->elements, static_cast<void *>(hostData.data()), 0,
+                              nullptr, nullptr);
 
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString
-          << "OCL Error: Failed to enqueue read buffer command! Error code: "
-          << err << std::endl;
+      errorString << "OCL Error: Failed to enqueue read buffer command! Error code: " << err
+                  << std::endl;
       throw sgpp::base::operation_exception(errorString.str());
     }
   }
@@ -121,8 +118,8 @@ public:
     //            CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR, sizeof(T) *
     //            elements, initialValues.data(), &err);
     //        } else {
-    this->buffer = clCreateBuffer(device->context, CL_MEM_READ_WRITE,
-                                  sizeof(T) * elements, nullptr, &err);
+    this->buffer =
+        clCreateBuffer(device->context, CL_MEM_READ_WRITE, sizeof(T) * elements, nullptr, &err);
     //        }
 
     if (err != CL_SUCCESS) {
@@ -154,8 +151,8 @@ public:
     this->elements = 0;
   }
 
-  void intializeTo(std::vector<T> &hostBuffer, size_t dim, size_t offsetStart,
-                   size_t offsetEnd, bool storeStructOfArrays = false) {
+  void intializeTo(std::vector<T> &hostBuffer, size_t dim, size_t offsetStart, size_t offsetEnd,
+                   bool storeStructOfArrays = false) {
     size_t range = offsetEnd - offsetStart;
     size_t totalElements = range * dim;
 
@@ -183,8 +180,7 @@ public:
       for (size_t d = 0; d < dim; d++) {
         size_t deviceDataIndex = 0;
         for (size_t i = offsetStart; i < offsetEnd; i++) {
-          deviceDataHost[d * range + deviceDataIndex] =
-              hostBuffer[d * dataPoints + i];
+          deviceDataHost[d * range + deviceDataIndex] = hostBuffer[d * dataPoints + i];
           deviceDataIndex += 1;
         }
       }
@@ -202,5 +198,5 @@ public:
     this->writeToBuffer();
   }
 };
-} // namespace base
-} // namespace sgpp
+}  // namespace base
+}  // namespace sgpp
