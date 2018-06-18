@@ -117,10 +117,12 @@ int main() {
   //   out << std::endl;
   // }
   // out.close();
-  std::vector<int> cluster_assignments =
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, k);
+  std::vector<int> node_cluster_map;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+      graph, k, node_cluster_map, clusters);
   out.open("cluster_erg.txt");
-  for (size_t datapoint : cluster_assignments) {
+  for (size_t datapoint : node_cluster_map) {
     out << datapoint << " ";
   }
   end = std::chrono::system_clock::now();

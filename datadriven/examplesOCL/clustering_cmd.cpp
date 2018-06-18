@@ -234,8 +234,12 @@ int main(int argc, char **argv) {
   // }
   // out.close();
   std::cout << "Finding clusters..." << std::endl;
-  std::vector<int> cluster_assignments =
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, k);
+  std::vector<int> node_cluster_map;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+      graph, k, node_cluster_map, clusters);
+
+  std::cout << "detected clusters: " << clusters.size() << std::endl;
   // out.open("cluster_erg.txt");
   // for (size_t datapoint : cluster_assignments) {
   //   out << datapoint << " ";

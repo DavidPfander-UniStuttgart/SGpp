@@ -570,12 +570,14 @@ BOOST_AUTO_TEST_CASE(KNNClusterSearch) {
   }
   assignement_in.close();
 
-  std::vector<int> cluster_assignement =
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(graph, 8);
-  BOOST_CHECK(optimal_cluster_assignement.size() == cluster_assignement.size());
-  if (optimal_cluster_assignement.size() == cluster_assignement.size()) {
-    for (size_t i = 0; i < cluster_assignement.size(); ++i) {
-      BOOST_CHECK(optimal_cluster_assignement[i] == cluster_assignement[i]);
+  std::vector<int> node_cluster_map;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+      graph, 8, node_cluster_map, clusters);
+  BOOST_CHECK(optimal_cluster_assignement.size() == node_cluster_map.size());
+  if (optimal_cluster_assignement.size() == node_cluster_map.size()) {
+    for (size_t i = 0; i < node_cluster_map.size(); ++i) {
+      BOOST_CHECK(optimal_cluster_assignement[i] == node_cluster_map[i]);
     }
   }
 }
