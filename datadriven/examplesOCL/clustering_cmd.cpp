@@ -37,13 +37,17 @@ int main(int argc, char **argv) {
   uint64_t k;
   double threshold;
 
+  bool do_output_graphs;
+  std::string scenario_name;
+
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
       "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
       "training data set as an arff file")(
-      "eval_grid_level", boost::program_options::value<size_t>(&eval_grid_level)->default_value(2),
-      "level for the evaluation of the sparse grid density function (for picture creation)")(
+      "density_eval_full_grid_level",
+      boost::program_options::value<size_t>(&eval_grid_level)->default_value(2),
+      "level for the evaluation of the sparse grid density function on printable full grid")(
       "level", boost::program_options::value<size_t>(&level)->default_value(4),
       "level of the sparse grid used for density estimation")(
       "lambda", boost::program_options::value<double>(&lambda)->default_value(0.000001),
@@ -53,7 +57,10 @@ int main(int argc, char **argv) {
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
       "threshold", boost::program_options::value<double>(&threshold)->default_value(0.0),
-      "threshold for sparse grid function for removing edges");
+      "threshold for sparse grid function for removing edges")(
+      "write_graphs",
+      boost::program_options::value<std::string>(&scenario_name)->default_value("clustering"),
+      "output the clustering steps into files");
 
   boost::program_options::variables_map variables_map;
 
@@ -78,12 +85,12 @@ int main(int argc, char **argv) {
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
   }
 
-  if (variables_map.count("eval_grid_level") == 0) {
-    std::cerr << "error: option \"eval_grid_level\" not specified" << std::endl;
-    return 1;
-  } else {
-    std::cout << "eval_grid_level: " << eval_grid_level << std::endl;
-  }
+  // if (variables_map.count("eval_grid_level") == 0) {
+  //   std::cerr << "error: option \"eval_grid_level\" not specified" << std::endl;
+  //   return 1;
+  // } else {
+  //   std::cout << "eval_grid_level: " << eval_grid_level << std::endl;
+  // }
 
   if (variables_map.count("level") == 0) {
     std::cerr << "error: option \"level\" not specified" << std::endl;
@@ -126,12 +133,23 @@ int main(int argc, char **argv) {
     std::cout << "threshold: " << threshold << std::endl;
   }
 
+  if (variables_map.count("write_graphs") == 1) {
+    do_output_graphs = true;
+    std::cout << "output scenario name: " << scenario_name << std::endl;
+  }
+
   // read dataset
   std::cout << "reading dataset...";
   datadriven::Dataset dataset = datadriven::ARFFTools::readARFF(datasetFileName);
   std::cout << "done" << std::endl;
   size_t dimension = dataset.getDimension();
   std::cout << "dimension: " << dimension << std::endl;
+
+  if (dimension != 2 && do_output_graphs) {
+    std::cerr << "error: write_graphs-option is only available for 2d problems" << std::endl;
+    return 1;
+  }
+
   base::DataMatrix &trainingData = dataset.getData();
   std::cout << "data points: " << trainingData.getNrows() << std::endl;
 
@@ -139,11 +157,11 @@ int main(int argc, char **argv) {
   base::Grid *grid = base::Grid::createLinearGrid(dimension);
   base::GridGenerator &gridGen = grid->getGenerator();
   gridGen.regular(level);
-  size_t gridsize = grid->getStorage().getSize();
-  std::cout << "Grid created! Number of grid points:     " << gridsize << std::endl;
+  size_t grid_size = grid->getStorage().getSize();
+  std::cout << "Grid created! Number of grid points: " << grid_size << std::endl;
 
-  base::DataVector alpha(gridsize);
-  base::DataVector result(gridsize);
+  base::DataVector alpha(grid_size);
+  base::DataVector result(grid_size);
   alpha.setAll(1.0);  // TODO: why 1.0?
 
   // create solver
@@ -155,16 +173,18 @@ int main(int argc, char **argv) {
                                                           configFileName));
 
   std::cout << "Calculating right-hand side" << std::endl;
-  base::DataVector b(gridsize, 0.0);
+  base::DataVector b(grid_size, 0.0);
   operation_mult->generateb(trainingData, b);
-  // for (size_t i = 0; i < 300; i++) std::cout << b[i] << " ";
-  // std::cout << std::endl;
-  // std::ofstream out_rhs("rhs_erg_dim2_depth11.txt");
-  // out_rhs.precision(17);
-  // for (size_t i = 0; i < gridsize; ++i) {
-  //   out_rhs << b[i] << " ";
+
+  // // output b
+  // if (do_output_graphs) {
+  //   std::ofstream out_rhs(scenario_name + std::string("_rhs.csv"));
+  //   out_rhs.precision(20);
+  //   for (size_t i = 0; i < grid_size; ++i) {
+  //     out_rhs << b[i] << " ";
+  //   }
+  //   out_rhs.close();
   // }
-  // out_rhs.close();
 
   std::cout << "Solving density SLE" << std::endl;
   solver->solve(*operation_mult, alpha, b, false, true);
@@ -173,34 +193,50 @@ int main(int argc, char **argv) {
   // scale alphas to [0, 1] -> smaller function values, use?
   double max = alpha.max();
   double min = alpha.min();
-  for (size_t i = 0; i < gridsize; i++) alpha[i] = alpha[i] * 1.0 / (max - min);
+  for (size_t i = 0; i < grid_size; i++) {
+    alpha[i] = alpha[i] * 1.0 / (max - min);
+  }
 
-  // std::cout << "Creating regular grid to evaluate sparse grid density function on" << std::endl;
-  // double h = 1.0 / std::pow(2.0, eval_grid_level);  // 2^-eval_grid_level
-  // size_t dim_grid_points = 1 << eval_grid_level;
-  // base::DataMatrix evaluationPoints(dim_grid_points * dim_grid_points, 2);
-  // size_t linearIndex = 0;
-  // for (size_t i = 0; i < dim_grid_points; i++) {
-  //   for (size_t j = 0; j < dim_grid_points; j++) {
-  //     double x = static_cast<double>(i) * h;
-  //     double y = static_cast<double>(j) * h;
-  //     evaluationPoints(linearIndex, 0) = x;
-  //     evaluationPoints(linearIndex, 1) = y;
-  //     linearIndex += 1;
-  //   }
-  // }
+  if (do_output_graphs) {
+    std::cout << "creating regular grid to evaluate sparse grid density function on..."
+              << std::endl;
+    double h = 1.0 / std::pow(2.0, eval_grid_level);  // 2^-eval_grid_level
+    size_t dim_grid_points = (1 << eval_grid_level) + 1;
+    base::DataMatrix evaluationPoints(dim_grid_points * dim_grid_points, 2);
+    size_t linearIndex = 0;
+    for (size_t i = 0; i < dim_grid_points; i++) {
+      for (size_t j = 0; j < dim_grid_points; j++) {
+        double x = static_cast<double>(i) * h;
+        double y = static_cast<double>(j) * h;
+        evaluationPoints(linearIndex, 0) = x;
+        evaluationPoints(linearIndex, 1) = y;
+        linearIndex += 1;
+      }
+    }
 
-  // datadriven::OperationMultipleEvalConfiguration configuration(
-  //     datadriven::OperationMultipleEvalType::STREAMING,
-  //     datadriven::OperationMultipleEvalSubType::DEFAULT);
+    datadriven::OperationMultipleEvalConfiguration configuration(
+        datadriven::OperationMultipleEvalType::STREAMING,
+        datadriven::OperationMultipleEvalSubType::DEFAULT);
 
-  // std::cout << "Creating multieval operation" << std::endl;
-  // auto eval = std::unique_ptr<base::OperationMultipleEval>(
-  //     op_factory::createOperationMultipleEval(*grid, evaluationPoints, configuration));
+    std::cout << "Creating multieval operation" << std::endl;
+    auto eval = std::unique_ptr<base::OperationMultipleEval>(
+        op_factory::createOperationMultipleEval(*grid, evaluationPoints, configuration));
 
-  // base::DataVector results(evaluationPoints.getNrows());
-  // std::cout << "Evaluating at evaluation grid points" << std::endl;
-  // eval->mult(alpha, results);
+    base::DataVector results(evaluationPoints.getNrows());
+    std::cout << "Evaluating at evaluation grid points" << std::endl;
+    eval->mult(alpha, results);
+
+    std::ofstream out_density(scenario_name + std::string("_density_eval.csv"));
+    out_density.precision(20);
+    for (size_t eval_index = 0; eval_index < evaluationPoints.getNrows(); eval_index += 1) {
+      for (size_t d = 0; d < dimension; d += 1) {
+        out_density << evaluationPoints[eval_index * dimension + d] << ", ";
+      }
+      out_density << results[eval_index];
+      out_density << std::endl;
+    }
+    out_density.close();
+  }
 
   std::cout << "Starting graph creation..." << std::endl;
   auto operation_graph =
@@ -210,20 +246,45 @@ int main(int argc, char **argv) {
   std::vector<int> graph(trainingData.getNrows() * k, -1);
   operation_graph->create_graph(graph);
 
-  // std::ofstream out("graph_erg_dim2_depth11.txt");
-  // for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-  //   for (size_t j = 0; j < k; ++j) {
-  //     out << graph[i * k + j] << " ";
-  //   }
-  //   out << std::endl;
-  // }
-  // out.close();
+  if (do_output_graphs) {
+    std::ofstream out_graph(scenario_name + "_graph.csv");
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      for (size_t j = 0; j < k; ++j) {
+        if (graph[i * k + j] == -1) {
+          continue;
+        }
+        if (j > 0) {
+          out_graph << ", ";
+        }
+        out_graph << graph[i * k + j];
+      }
+      out_graph << std::endl;
+    }
+    out_graph.close();
+  }
 
   std::cout << "Pruning graph..." << std::endl;
   sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL *operation_prune =
       sgpp::datadriven::pruneNearestNeighborGraphConfigured(*grid, dimension, alpha, trainingData,
                                                             threshold, k, configFileName);
   operation_prune->prune_graph(graph);
+
+  if (do_output_graphs) {
+    std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      for (size_t j = 0; j < k; ++j) {
+        if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
+          continue;
+        }
+        if (j > 0) {
+          out_graph << ", ";
+        }
+        out_graph << graph[i * k + j];
+      }
+      out_graph << std::endl;
+    }
+    out_graph.close();
+  }
 
   // out.open("graph_pruned_erg_dim2_depth11.txt");
   // for (size_t i = 0; i < trainingData.getNrows(); ++i) {
@@ -240,10 +301,14 @@ int main(int argc, char **argv) {
       graph, k, node_cluster_map, clusters);
 
   std::cout << "detected clusters: " << clusters.size() << std::endl;
-  // out.open("cluster_erg.txt");
-  // for (size_t datapoint : cluster_assignments) {
-  //   out << datapoint << " ";
-  // }
-  // std::cout << results.toString();
+
+  if (do_output_graphs) {
+    std::ofstream out_cluster_map(scenario_name + "_cluster_map.csv");
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      out_cluster_map << node_cluster_map[i] << std::endl;
+    }
+    out_cluster_map.close();
+  }
+
   std::cout << std::endl << "all done!" << std::endl;
 }
