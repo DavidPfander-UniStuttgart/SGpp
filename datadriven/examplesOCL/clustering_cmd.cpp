@@ -16,6 +16,8 @@
 #include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/base/grid/GridStorage.hpp"
 #include "sgpp/base/grid/generation/GridGenerator.hpp"
+#include "sgpp/base/grid/generation/functors/SurplusCoarseningFunctor.hpp"
+#include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
@@ -40,6 +42,11 @@ int main(int argc, char **argv) {
   bool do_output_graphs;
   std::string scenario_name;
 
+  size_t refinement_steps;
+  size_t refinement_points;
+  size_t coarsening_points;
+  double coarsening_threshold;
+
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
@@ -60,7 +67,19 @@ int main(int argc, char **argv) {
       "threshold for sparse grid function for removing edges")(
       "write_graphs",
       boost::program_options::value<std::string>(&scenario_name)->default_value("clustering"),
-      "output the clustering steps into files");
+      "output the clustering steps into files")(
+      "refinement_steps",
+      boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
+      "number of refinment steps for density estimation")(
+      "refinement_points",
+      boost::program_options::value<uint64_t>(&refinement_points)->default_value(0),
+      "number of points to refinement during density estimation")(
+      "coarsen_points",
+      boost::program_options::value<uint64_t>(&coarsening_points)->default_value(0),
+      "number of points to coarsen during density estimation")(
+      "coarsen_threshold",
+      boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
+      "for density estimation, only surpluses below threshold are coarsened");
 
   boost::program_options::variables_map variables_map;
 
@@ -138,6 +157,14 @@ int main(int argc, char **argv) {
     std::cout << "output scenario name: " << scenario_name << std::endl;
   }
 
+  // configure refinement
+  // sgpp::base::AdpativityConfiguration adaptConfig;
+  // adaptConfig.maxLevelType_ = false;
+  // adaptConfig.noPoints_ = 80;
+  // adaptConfig.numRefinements_ = 0;
+  // adaptConfig.percent_ = 200.0;
+  // adaptConfig.threshold_ = 0.0;
+
   // read dataset
   std::cout << "reading dataset...";
   datadriven::Dataset dataset = datadriven::ARFFTools::readARFF(datasetFileName);
@@ -154,51 +181,135 @@ int main(int argc, char **argv) {
   std::cout << "data points: " << trainingData.getNrows() << std::endl;
 
   // create grid
-  base::Grid *grid = base::Grid::createLinearGrid(dimension);
-  base::GridGenerator &gridGen = grid->getGenerator();
-  gridGen.regular(level);
-  size_t grid_size = grid->getStorage().getSize();
-  std::cout << "Grid created! Number of grid points: " << grid_size << std::endl;
-
-  base::DataVector alpha(grid_size);
-  base::DataVector result(grid_size);
-  alpha.setAll(1.0);  // TODO: why 1.0?
+  std::unique_ptr<base::Grid> grid(base::Grid::createLinearGrid(dimension));
+  base::GridGenerator &grid_generator = grid->getGenerator();
+  grid_generator.regular(level);
+  std::cout << "Initial grid created! Number of grid points: " << grid->getSize() << std::endl;
 
   // create solver
   auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
 
+  base::DataVector alpha(grid->getSize());
+  alpha.setAll(0.0);
+  base::DataVector b(grid->getSize(), 0.0);
+
   // create density calculator
-  auto operation_mult = std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>(
-      datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
-                                                          configFileName));
+  {
+    std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity> operation_mult(
+        datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
+                                                            configFileName));
 
-  std::cout << "Calculating right-hand side" << std::endl;
-  base::DataVector b(grid_size, 0.0);
-  operation_mult->generateb(trainingData, b);
+    std::cout << "Calculating right-hand side" << std::endl;
 
-  // // output b
-  // if (do_output_graphs) {
-  //   std::ofstream out_rhs(scenario_name + std::string("_rhs.csv"));
-  //   out_rhs.precision(20);
-  //   for (size_t i = 0; i < grid_size; ++i) {
-  //     out_rhs << b[i] << " ";
-  //   }
-  //   out_rhs.close();
-  // }
+    operation_mult->generateb(trainingData, b);
 
-  std::cout << "Solving density SLE" << std::endl;
-  solver->solve(*operation_mult, alpha, b, false, true);
+    std::cout << "Solving density SLE" << std::endl;
+    solver->solve(*operation_mult, alpha, b, false, true);
+  }
+
+  for (size_t i = 0; i < refinement_steps; i++) {
+    // // output b
+    // if (do_output_graphs) {
+    //   std::ofstream out_rhs(scenario_name + std::string("_rhs.csv"));
+    //   out_rhs.precision(20);
+    //   for (size_t i = 0; i < grid_size; ++i) {
+    //     out_rhs << b[i] << " ";
+    //   }
+    //   out_rhs.close();
+    // }
+
+    if (refinement_points > 0) {
+      sgpp::base::SurplusRefinementFunctor refine_func(alpha, refinement_points);
+      grid_generator.refine(refine_func);
+      size_t old_size = alpha.getSize();
+
+      // adjust alpha to refined grid
+      alpha.resize(grid->getSize());
+      for (size_t j = old_size; j < alpha.getSize(); j++) {
+        alpha[j] = 0.0;
+      }
+
+      // regenerate b with refined grid
+      b.resize(grid->getSize());
+      for (size_t j = old_size; j < alpha.getSize(); j++) {
+        b[j] = 0.0;
+      }
+
+      std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity> operation_mult(
+          datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
+                                                              configFileName));
+
+      operation_mult->generateb(trainingData, b);
+
+      std::cout << "Solving density SLE" << std::endl;
+      solver->solve(*operation_mult, alpha, b, false, true);
+
+      std::cout << "Grid points after refinement step: " << grid->getSize() << std::endl;
+    }
+
+    if (coarsening_points > 0) {
+      size_t grid_size_before_coarsen = grid->getSize();
+      sgpp::base::SurplusCoarseningFunctor coarsen_func(alpha, coarsening_points,
+                                                        coarsening_threshold);
+      grid_generator.coarsen(coarsen_func, alpha);
+
+      size_t grid_size_after_coarsen = grid->getSize();
+      std::cout << "coarsen: removed " << (grid_size_before_coarsen - grid_size_after_coarsen)
+                << " grid points" << std::endl;
+      // size_t old_size = alpha.getSize();
+
+      // adjust alpha to coarsen grid
+      alpha.resize(grid->getSize());
+      // for (size_t j = old_size; j < alpha.getSize(); j++) {
+      //   alpha[j] = 0.0;
+      // }
+
+      std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity> operation_mult(
+          datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
+                                                              configFileName));
+
+      // regenerate b with coarsen grid
+      b.resize(grid->getSize());
+      // for (size_t j = old_size; j < alpha.getSize(); j++) {
+      //   b[j] = 0.0;
+      // }
+
+      operation_mult->generateb(trainingData, b);
+
+      std::cout << "Solving density SLE" << std::endl;
+      solver->solve(*operation_mult, alpha, b, false, true);
+
+      std::cout << "Grid points after coarsening step: " << grid->getSize() << std::endl;
+    }
+  }
 
   // TODO: remove this?
   // scale alphas to [0, 1] -> smaller function values, use?
   double max = alpha.max();
   double min = alpha.min();
-  for (size_t i = 0; i < grid_size; i++) {
+  for (size_t i = 0; i < grid->getSize(); i++) {
+    std::cout << "alpha[" << i << "] = " << alpha[i] << std::endl;
     alpha[i] = alpha[i] * 1.0 / (max - min);
   }
 
   if (do_output_graphs) {
-    std::cout << "creating regular grid to evaluate sparse grid density function on..."
+    std::ofstream out_grid(scenario_name + "_grid.csv");
+    auto &storage = grid->getStorage();
+    for (size_t i = 0; i < grid->getSize(); i++) {
+      sgpp::base::HashGridPoint point = storage.getPoint(i);
+      for (size_t d = 0; d < dimension; d++) {
+        if (d > 0) {
+          out_grid << ", ";
+        }
+        out_grid << storage.getCoordinate(point, d);
+      }
+      out_grid << std::endl;
+    }
+    out_grid.close();
+  }
+
+  if (do_output_graphs) {
+    std::cout << "Creating regular grid to evaluate sparse grid density function on..."
               << std::endl;
     double h = 1.0 / std::pow(2.0, eval_grid_level);  // 2^-eval_grid_level
     size_t dim_grid_points = (1 << eval_grid_level) + 1;
@@ -219,7 +330,7 @@ int main(int argc, char **argv) {
         datadriven::OperationMultipleEvalSubType::DEFAULT);
 
     std::cout << "Creating multieval operation" << std::endl;
-    auto eval = std::unique_ptr<base::OperationMultipleEval>(
+    std::unique_ptr<base::OperationMultipleEval> eval(
         op_factory::createOperationMultipleEval(*grid, evaluationPoints, configuration));
 
     base::DataVector results(evaluationPoints.getNrows());
@@ -249,12 +360,15 @@ int main(int argc, char **argv) {
   if (do_output_graphs) {
     std::ofstream out_graph(scenario_name + "_graph.csv");
     for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      bool first = true;
       for (size_t j = 0; j < k; ++j) {
         if (graph[i * k + j] == -1) {
           continue;
         }
-        if (j > 0) {
+        if (!first) {
           out_graph << ", ";
+        } else {
+          first = false;
         }
         out_graph << graph[i * k + j];
       }
@@ -264,20 +378,24 @@ int main(int argc, char **argv) {
   }
 
   std::cout << "Pruning graph..." << std::endl;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL *operation_prune =
-      sgpp::datadriven::pruneNearestNeighborGraphConfigured(*grid, dimension, alpha, trainingData,
-                                                            threshold, k, configFileName);
+
+  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+      operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
+          *grid, dimension, alpha, trainingData, threshold, k, configFileName));
   operation_prune->prune_graph(graph);
 
   if (do_output_graphs) {
     std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
     for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      bool first = true;
       for (size_t j = 0; j < k; ++j) {
         if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
           continue;
         }
-        if (j > 0) {
+        if (!first) {
           out_graph << ", ";
+        } else {
+          first = false;
         }
         out_graph << graph[i * k + j];
       }
