@@ -129,16 +129,18 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
                 << std::endl;
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
-    try {
-      graph_kernel->begin_graph_creation(startid, chunksize);
-      graph_kernel->finalize_graph_creation(resultVector, startid, chunksize);
-    } catch (base::operation_exception &e) {
-      std::cerr << "Error! Could not create graph." << std::endl
-                << "Error Message: " << e.what() << std::endl;
-      return;
-    }
+    // try {
+    graph_kernel->begin_graph_creation(startid, chunksize);
+    graph_kernel->finalize_graph_creation(resultVector, startid, chunksize);
+    // } catch (base::operation_exception &e) {
+    //   std::cerr << "Error! Could not create graph." << std::endl
+    //             << "Error Message: " << e.what() << std::endl;
+    //   return;
+    // }
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
+    this->last_duration_create_graph = elapsed_seconds.count();
+    this->acc_duration_create_graph += this->last_duration_create_graph;
 
     if (verbose) std::cout << "duration create graph" << elapsed_seconds.count() << std::endl;
   }

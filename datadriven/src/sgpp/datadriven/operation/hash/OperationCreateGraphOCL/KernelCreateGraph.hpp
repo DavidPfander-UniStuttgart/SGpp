@@ -288,6 +288,10 @@ class KernelCreateGraph {
         if (kernelNode.contains("USE_SELECT") == false) {
           kernelNode.addIDAttr("USE_SELECT", false);
         }
+
+        if (kernelNode.contains("USE_APPROX") == false) {
+          kernelNode.addIDAttr("USE_APPROX", false);
+        }
       }
     }
   }

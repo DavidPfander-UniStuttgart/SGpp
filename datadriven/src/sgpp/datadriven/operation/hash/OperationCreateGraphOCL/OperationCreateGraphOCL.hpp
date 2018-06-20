@@ -24,6 +24,9 @@ namespace DensityOCLMultiPlatform {
 /// Pure virtual base class for the k nearest neighbor opencl operation
 class OperationCreateGraphOCL {
  protected:
+  double last_duration_create_graph;
+  double acc_duration_create_graph;
+
   /// Recursive depth-first function for traversing the k nearest neighbor graph
   // parameters:
   // index index of data point for which to calculate its cluster
@@ -259,6 +262,12 @@ class OperationCreateGraphOCL {
       throw base::operation_exception(errorString.str().c_str());
     }
   }
+
+  double getLastDuration() { return last_duration_create_graph; }
+
+  void resetAccDuration() { acc_duration_create_graph = 0.0; }
+
+  double getAccDuration() { return acc_duration_create_graph; }
 };
 
 }  // namespace DensityOCLMultiPlatform

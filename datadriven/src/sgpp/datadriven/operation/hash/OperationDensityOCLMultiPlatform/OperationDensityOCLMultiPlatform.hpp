@@ -20,7 +20,7 @@
 
 #include "KernelDensityB.hpp"
 #include "KernelDensityMult.hpp"
-#include "OperationDensityOCL.hpp"
+#include "OperationDensity.hpp"
 
 namespace sgpp {
 namespace datadriven {
@@ -195,14 +195,17 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
     this->multKernel->initialize_alpha_buffer(alphaVector);
     this->multKernel->start_mult(0, 0);
     this->multKernel->finish_mult(resultVector, 0, 0);
+    for (size_t i = 0; i < gridSize; i++) result[i] = resultVector[i];
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
+    this->last_duration_density = elapsed_seconds.count();
+    this->acc_duration_density += this->last_duration_density;
 
     if (verbose) {
       std::cout << "duration mult ocl: " << elapsed_seconds.count() << std::endl;
     }
-    for (size_t i = 0; i < gridSize; i++) result[i] = resultVector[i];
   }
+
   void initialize_dataset(base::DataMatrix &dataset) override {
     if (std::is_same<T, double>::value) {
       double *data_raw = dataset.getPointer();
@@ -245,12 +248,16 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
     bKernel->initialize_dataset(datasetVector);
     bKernel->start_rhs_generation(start_id, chunksize);
     bKernel->finalize_rhs_generation(bVector, start_id, chunksize);
+
+    for (size_t i = 0; i < b.getSize(); i++) {
+      b[i] = bVector[i];
+    }
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
-
-    for (size_t i = 0; i < b.getSize(); i++) b[i] = bVector[i];
+    this->last_duration_b = elapsed_seconds.count();
+    this->acc_duration_b += this->last_duration_b;
     if (verbose) {
-      std::cout << "duration rhs ocl: " << elapsed_seconds.count() << std::endl;
+      std::cout << "duration generate b ocl: " << elapsed_seconds.count() << std::endl;
     }
   }
 };

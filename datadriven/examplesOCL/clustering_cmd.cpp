@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
   uint64_t k;
   double threshold;
 
-  bool do_output_graphs;
+  bool do_output_graphs = false;
   std::string scenario_name;
 
   size_t refinement_steps;
@@ -65,8 +65,7 @@ int main(int argc, char **argv) {
       "specifies number of neighbors for kNN algorithm")(
       "threshold", boost::program_options::value<double>(&threshold)->default_value(0.0),
       "threshold for sparse grid function for removing edges")(
-      "write_graphs",
-      boost::program_options::value<std::string>(&scenario_name)->default_value("clustering"),
+      "write_graphs", boost::program_options::value<std::string>(&scenario_name),
       "output the clustering steps into files")(
       "refinement_steps",
       boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
@@ -187,6 +186,9 @@ int main(int argc, char **argv) {
   std::cout << "Initial grid created! Number of grid points: " << grid->getSize() << std::endl;
 
   // create solver
+  std::chrono::time_point<std::chrono::system_clock> density_timer_start;
+  std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
+  density_timer_start = std::chrono::system_clock::now();
   auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
 
   base::DataVector alpha(grid->getSize());
@@ -205,19 +207,19 @@ int main(int argc, char **argv) {
 
     std::cout << "Solving density SLE" << std::endl;
     solver->solve(*operation_mult, alpha, b, false, true);
+
+    std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
+    double acc_duration_density = operation_mult->getAccDurationDensityMult();
+    std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
+
+    double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
+                         (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+    std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+    double flops_density = ops_density / acc_duration_density;
+    std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
   }
 
   for (size_t i = 0; i < refinement_steps; i++) {
-    // // output b
-    // if (do_output_graphs) {
-    //   std::ofstream out_rhs(scenario_name + std::string("_rhs.csv"));
-    //   out_rhs.precision(20);
-    //   for (size_t i = 0; i < grid_size; ++i) {
-    //     out_rhs << b[i] << " ";
-    //   }
-    //   out_rhs.close();
-    // }
-
     if (refinement_points > 0) {
       sgpp::base::SurplusRefinementFunctor refine_func(alpha, refinement_points);
       grid_generator.refine(refine_func);
@@ -245,6 +247,15 @@ int main(int argc, char **argv) {
       solver->solve(*operation_mult, alpha, b, false, true);
 
       std::cout << "Grid points after refinement step: " << grid->getSize() << std::endl;
+
+      std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
+      double acc_duration_density = operation_mult->getAccDurationDensityMult();
+      std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
+      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
+                           (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+      std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+      double flops_density = ops_density / acc_duration_density;
+      std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
     }
 
     if (coarsening_points > 0) {
@@ -256,13 +267,9 @@ int main(int argc, char **argv) {
       size_t grid_size_after_coarsen = grid->getSize();
       std::cout << "coarsen: removed " << (grid_size_before_coarsen - grid_size_after_coarsen)
                 << " grid points" << std::endl;
-      // size_t old_size = alpha.getSize();
 
       // adjust alpha to coarsen grid
       alpha.resize(grid->getSize());
-      // for (size_t j = old_size; j < alpha.getSize(); j++) {
-      //   alpha[j] = 0.0;
-      // }
 
       std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity> operation_mult(
           datadriven::createDensityOCLMultiPlatformConfigured(*grid, dimension, lambda,
@@ -270,25 +277,34 @@ int main(int argc, char **argv) {
 
       // regenerate b with coarsen grid
       b.resize(grid->getSize());
-      // for (size_t j = old_size; j < alpha.getSize(); j++) {
-      //   b[j] = 0.0;
-      // }
 
+      // TODO: remove this?
       operation_mult->generateb(trainingData, b);
 
       std::cout << "Solving density SLE" << std::endl;
       solver->solve(*operation_mult, alpha, b, false, true);
 
       std::cout << "Grid points after coarsening step: " << grid->getSize() << std::endl;
+
+      std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
+      double acc_duration_density = operation_mult->getAccDurationDensityMult();
+      std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
+      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
+                           (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+      std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+      double flops_density = ops_density / acc_duration_density;
+      std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
     }
   }
 
-  // TODO: remove this?
+  density_timer_stop = std::chrono::system_clock::now();
+  std::chrono::duration<double> density_elapsed_seconds = density_timer_stop - density_timer_start;
+  std::cout << "density_duration_total: " << density_elapsed_seconds.count() << std::endl;
+
   // scale alphas to [0, 1] -> smaller function values, use?
   double max = alpha.max();
   double min = alpha.min();
   for (size_t i = 0; i < grid->getSize(); i++) {
-    std::cout << "alpha[" << i << "] = " << alpha[i] << std::endl;
     alpha[i] = alpha[i] * 1.0 / (max - min);
   }
 
@@ -349,59 +365,75 @@ int main(int argc, char **argv) {
     out_density.close();
   }
 
-  std::cout << "Starting graph creation..." << std::endl;
-  auto operation_graph =
-      std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL>(
-          sgpp::datadriven::createNearestNeighborGraphConfigured(trainingData, k, dimension,
-                                                                 configFileName));
   std::vector<int> graph(trainingData.getNrows() * k, -1);
-  operation_graph->create_graph(graph);
+  {
+    std::cout << "Starting graph creation..." << std::endl;
+    auto operation_graph =
+        std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL>(
+            sgpp::datadriven::createNearestNeighborGraphConfigured(trainingData, k, dimension,
+                                                                   configFileName));
 
-  if (do_output_graphs) {
-    std::ofstream out_graph(scenario_name + "_graph.csv");
-    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-      bool first = true;
-      for (size_t j = 0; j < k; ++j) {
-        if (graph[i * k + j] == -1) {
-          continue;
+    operation_graph->create_graph(graph);
+
+    double acc_duration_create_graph = operation_graph->getAccDuration();
+    std::cout << "acc_duration_create_graph: " << acc_duration_create_graph << std::endl;
+
+    double ops_create_graph = std::pow(static_cast<double>(trainingData.getNrows()), 2.0) * 4.0 *
+                              static_cast<double>(dimension) * 1E-9;
+    std::cout << "ops_create_graph: " << ops_create_graph << " GOps" << std::endl;
+    double flops_create_graph = ops_create_graph / acc_duration_create_graph;
+    std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
+
+    if (do_output_graphs) {
+      std::ofstream out_graph(scenario_name + "_graph.csv");
+      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+        bool first = true;
+        for (size_t j = 0; j < k; ++j) {
+          if (graph[i * k + j] == -1) {
+            continue;
+          }
+          if (!first) {
+            out_graph << ", ";
+          } else {
+            first = false;
+          }
+          out_graph << graph[i * k + j];
         }
-        if (!first) {
-          out_graph << ", ";
-        } else {
-          first = false;
-        }
-        out_graph << graph[i * k + j];
+        out_graph << std::endl;
       }
-      out_graph << std::endl;
+      out_graph.close();
     }
-    out_graph.close();
   }
 
-  std::cout << "Pruning graph..." << std::endl;
+  {
+    std::cout << "Pruning graph..." << std::endl;
 
-  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
-      operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
-          *grid, dimension, alpha, trainingData, threshold, k, configFileName));
-  operation_prune->prune_graph(graph);
+    std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+        operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
+            *grid, dimension, alpha, trainingData, threshold, k, configFileName));
+    operation_prune->prune_graph(graph);
 
-  if (do_output_graphs) {
-    std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
-    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-      bool first = true;
-      for (size_t j = 0; j < k; ++j) {
-        if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
-          continue;
+    std::cout << "acc_duration_prune_graph: " << operation_prune->getAccDuration() << std::endl;
+
+    if (do_output_graphs) {
+      std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
+      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+        bool first = true;
+        for (size_t j = 0; j < k; ++j) {
+          if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
+            continue;
+          }
+          if (!first) {
+            out_graph << ", ";
+          } else {
+            first = false;
+          }
+          out_graph << graph[i * k + j];
         }
-        if (!first) {
-          out_graph << ", ";
-        } else {
-          first = false;
-        }
-        out_graph << graph[i * k + j];
+        out_graph << std::endl;
       }
-      out_graph << std::endl;
+      out_graph.close();
     }
-    out_graph.close();
   }
 
   // out.open("graph_pruned_erg_dim2_depth11.txt");
@@ -412,20 +444,34 @@ int main(int argc, char **argv) {
   //   out << std::endl;
   // }
   // out.close();
-  std::cout << "Finding clusters..." << std::endl;
-  std::vector<int> node_cluster_map;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-      graph, k, node_cluster_map, clusters);
+  {
+    std::cout << "Finding clusters..." << std::endl;
+    std::vector<int> node_cluster_map;
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t
+        clusters;
 
-  std::cout << "detected clusters: " << clusters.size() << std::endl;
+    std::chrono::time_point<std::chrono::system_clock> find_cluster_timer_start;
+    std::chrono::time_point<std::chrono::system_clock> find_cluster_timer_stop;
+    find_cluster_timer_start = std::chrono::system_clock::now();
 
-  if (do_output_graphs) {
-    std::ofstream out_cluster_map(scenario_name + "_cluster_map.csv");
-    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-      out_cluster_map << node_cluster_map[i] << std::endl;
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+        graph, k, node_cluster_map, clusters);
+
+    find_cluster_timer_stop = std::chrono::system_clock::now();
+    std::chrono::duration<double> find_cluster_elapsed_seconds =
+        find_cluster_timer_stop - find_cluster_timer_start;
+    std::cout << "find_cluster_duration_total: " << find_cluster_elapsed_seconds.count()
+              << std::endl;
+
+    std::cout << "detected clusters: " << clusters.size() << std::endl;
+
+    if (do_output_graphs) {
+      std::ofstream out_cluster_map(scenario_name + "_cluster_map.csv");
+      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+        out_cluster_map << node_cluster_map[i] << std::endl;
+      }
+      out_cluster_map.close();
     }
-    out_cluster_map.close();
   }
 
   std::cout << std::endl << "all done!" << std::endl;

@@ -171,8 +171,12 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
     this->graph_kernel->prune_graph(graph, startid, chunksize);
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
+    this->last_duration_prune_graph = elapsed_seconds.count();
+    this->acc_duration_prune_graph += this->last_duration_prune_graph;
 
-    if (verbose) std::cout << "duration prune graph: " << elapsed_seconds.count() << std::endl;
+    if (verbose) {
+      std::cout << "duration prune graph: " << elapsed_seconds.count() << std::endl;
+    }
   }
 };
 

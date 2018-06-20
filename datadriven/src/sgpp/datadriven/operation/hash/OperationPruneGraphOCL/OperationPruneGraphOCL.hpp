@@ -20,6 +20,10 @@ namespace DensityOCLMultiPlatform {
 
 /// Pure virtual base class for the graph pruning operation
 class OperationPruneGraphOCL {
+ protected:
+  double last_duration_prune_graph;
+  double acc_duration_prune_graph;
+
  public:
   OperationPruneGraphOCL() {}
 
@@ -43,6 +47,12 @@ class OperationPruneGraphOCL {
       throw base::operation_exception(errorString.str().c_str());
     }
   }
+
+  double getLastDuration() { return last_duration_prune_graph; }
+
+  void resetAccDuration() { acc_duration_prune_graph = 0.0; }
+
+  double getAccDuration() { return acc_duration_prune_graph; }
 };
 
 }  // namespace DensityOCLMultiPlatform

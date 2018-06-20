@@ -19,8 +19,18 @@ namespace DensityOCLMultiPlatform {
 
 /// Base class for density multiplication operation
 class OperationDensity : public base::OperationMatrix {
+ protected:
+  double last_duration_b;
+  double last_duration_density;
+  double acc_duration_b;
+  double acc_duration_density;
+
  public:
-  OperationDensity() {}
+  OperationDensity()
+      : last_duration_b(-1.0),
+        last_duration_density(-1.0),
+        acc_duration_b(0.0),
+        acc_duration_density(0.0) {}
   /// Execute one matrix-vector multiplication with the density matrix
   virtual void mult(base::DataVector &alpha, base::DataVector &result) = 0;
   /// Use before calling partial_mult directly
@@ -35,8 +45,21 @@ class OperationDensity : public base::OperationMatrix {
   virtual void start_rhs_generation(size_t start_id, size_t chunksize) = 0;
   virtual void finalize_rhs_generation(sgpp::base::DataVector &b, size_t start_id,
                                        size_t chunksize) = 0;
+
+  double getLastDurationDensityMult() { return last_duration_density; }
+
+  double getLastDurationB() { return last_duration_b; }
+
+  void resetAccDurationDensityMult() { acc_duration_density = 0.0; }
+
+  void resetAccDurationB() { acc_duration_b = 0.0; }
+
+  double getAccDurationDensityMult() { return acc_duration_density; }
+
+  double getAccDurationB() { return acc_duration_b; }
+
   /// Generate the default parameters in die json configuration
-  static void load_default_parameters(base::OCLOperationConfiguration *parameters) {
+  static void load_default_parameters(std::shared_ptr<base::OCLOperationConfiguration> parameters) {
     if (parameters->contains("INTERNAL_PRECISION") == false) {
       std::cout << "Warning! No internal precision setting detected."
                 << " Using double precision from now on!" << std::endl;
