@@ -1,0 +1,26 @@
+#ProfileFileVersion=5.2
+#ProfilerVersion=5.2.6553
+#API=OpenCL
+#Application=/home/pfandedd/git/SGpp/datadriven/examplesOCL/clustering_cmd
+#ApplicationArgs=--datasetFileName datasets/friedman/friedman2_4d_500000.arff --config MyOCLConf.cfg --level 5 --lambda 2E-2 --k 5 --threshold 0.8 --density_eval_full_grid_level 8 --refinement_steps 0 --refinement_points 10 --coarsen_points 10 --coarsen_threshold 0.05
+#WorkingDirectory=.
+#Device Hawaii Platform Vendor=Advanced Micro Devices, Inc.
+#Device Hawaii Platform Name=AMD Accelerated Parallel Processing
+#Device Hawaii Platform Version=OpenCL 2.0 AMD-APP (2482.3)
+#Device Hawaii CLDriver Version=2482.3
+#Device Hawaii CLRuntime Version=OpenCL 1.2 AMD-APP (2482.3)
+#Device Hawaii NumberAppAddressBits=64
+#OS Version=Linux version 4.10.0-28-generic (buildd@lgw01-12) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 Build 4.10.0
+#DisplayName=
+#ListSeparator=;
+#ForceSinglePass=False
+Method; ExecutionOrder; ThreadID; CallIndex; GlobalWorkSize; WorkGroupSize; Time; LocalMemSize; VGPRs; SGPRs; ScratchRegs; Wavefronts; VALUInsts; SALUInsts; VFetchInsts; SFetchInsts; VWriteInsts; FlatVMemInsts; LDSInsts; FlatLDSInsts; GDSInsts; VALUUtilization; VALUBusy; SALUBusy; FetchSize; WriteSize; CacheHit; MemUnitBusy; MemUnitStalled; WriteUnitStalled; LDSBankConflict
+cscheme__k1_Hawaii1; 1; 1411; 36; {    769       1       1}; NULL;       498.86785; 0; 34; 14; 0;        13.00;  17125044.00;   2250008.00;   1250001.00;         5.00;    500002.00;   1750003.00;         0.00;         0.00;         0.00;        92.43;         2.02;         0.65;     15650.75;         6.03;        99.49;        13.28;         0.55;         0.00;         0.00
+multdensity__k2_Hawaii1; 2; 1411; 60; {    896       1       1}; {  128     1     1};         2.24148; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.73;         0.05;        86.56;         7.00;        85.95;         0.12;         0.00;         0.00;         0.01
+multdensity__k2_Hawaii1; 3; 1411; 75; {    896       1       1}; {  128     1     1};         1.14741; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.73;         0.05;        86.56;         7.00;        85.95;         0.11;         0.00;         0.00;         0.01
+multdensity__k2_Hawaii1; 4; 1411; 90; {    896       1       1}; {  128     1     1};         1.16385; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.73;         0.05;        86.56;         7.00;        86.34;         0.12;         0.00;         0.00;         0.01
+multdensity__k2_Hawaii1; 5; 1411; 105; {    896       1       1}; {  128     1     1};         1.16696; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.73;         0.05;        86.56;         7.00;        85.74;         0.17;         0.00;         0.00;         0.01
+multdensity__k2_Hawaii1; 6; 1411; 120; {    896       1       1}; {  128     1     1};         1.16459; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.72;         0.05;        86.56;         7.00;        85.95;         0.12;         0.00;         0.00;         0.01
+multdensity__k2_Hawaii1; 7; 1411; 135; {    896       1       1}; {  128     1     1};         1.16770; 11264; 85; 20; 0;        14.00;     61289.00;       412.00;        48.00;         4.00;         2.00;        50.00;      5873.00;         0.00;         0.00;       100.00;         3.73;         0.05;        86.56;         7.00;        85.95;         0.11;         0.00;         0.00;         0.01
+connectNeighbors__k3_Hawaii1; 8; 1411; 176; { 500096       1       1}; {  128     1     1};      9866.21970; 4096; 26; 16; 384;      7814.00;   8167904.00;   2016016.00;   1010553.00;         4.00;    109308.09;      7821.00;   1008006.00;         0.00;         0.00;        96.60;        39.80;        21.86; 2016715640.81;  39619560.12;         3.49;        49.06;         1.02;         0.02;         0.13
+removeEdges__k4_Hawaii1; 9; 1411; 217; { 500000       1       1}; NULL;      1095.18622; 0; 50; 26; 0;      7813.00;    243944.00;     38488.00;     20774.00;      2311.00;         7.00;     20781.00;         0.00;         0.00;         0.00;        99.99;         8.25;         3.08; 117977857.69;     36399.84;        44.88;        99.71;         0.04;         0.00;         0.00
