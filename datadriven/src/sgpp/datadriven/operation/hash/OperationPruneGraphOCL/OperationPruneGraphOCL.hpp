@@ -22,10 +22,9 @@ namespace DensityOCLMultiPlatform {
 class OperationPruneGraphOCL {
  protected:
   double last_duration_prune_graph;
-  double acc_duration_prune_graph;
 
  public:
-  OperationPruneGraphOCL() {}
+  OperationPruneGraphOCL() : last_duration_prune_graph(0.0) {}
 
   /// Deletes all nodes and edges within areas of low density which are in the given graph chunk
   virtual void prune_graph(std::vector<int> &graph, size_t startid = 0, size_t chunksize = 0) = 0;
@@ -50,9 +49,9 @@ class OperationPruneGraphOCL {
 
   double getLastDuration() { return last_duration_prune_graph; }
 
-  void resetAccDuration() { acc_duration_prune_graph = 0.0; }
+  void resetAccDuration() { last_duration_prune_graph = 0.0; }
 
-  double getAccDuration() { return acc_duration_prune_graph; }
+  double getAccDuration() { return last_duration_prune_graph; }
 };
 
 }  // namespace DensityOCLMultiPlatform
