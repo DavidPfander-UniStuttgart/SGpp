@@ -45,9 +45,9 @@ class KernelCreateGraph {
   /// OpenCL configuration containing the building flags
   json::Node &kernelConfiguration;
   size_t localSize;
-  size_t dataBlockingSize;
-  size_t scheduleSize;
-  size_t totalBlockSize;
+  // size_t dataBlockingSize;
+  // size_t scheduleSize;
+  // size_t totalBlockSize;
   /// Host side buffer for the dataset
   std::vector<T> &data;
   size_t unpadded_datasize;
@@ -72,20 +72,20 @@ class KernelCreateGraph {
         data(data) {
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
-        kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() < dims) {
-      std::stringstream errorString;
-      errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
-                  << "requires value of \"KERNEL_MAX_DIM_UNROLL\"";
-      errorString << " to be greater than the dimension of the data set, was set to"
-                  << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() << "(device: \""
-                  << device->deviceName << "\")" << std::endl;
-      throw base::operation_exception(errorString.str());
-    }
+    // if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
+    //     kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() < dims) {
+    //   std::stringstream errorString;
+    //   errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
+    //               << "requires value of \"KERNEL_MAX_DIM_UNROLL\"";
+    //   errorString << " to be greater than the dimension of the data set, was set to"
+    //               << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() << "(device: \""
+    //               << device->deviceName << "\")" << std::endl;
+    //   throw base::operation_exception(errorString.str());
+    // }
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
-    scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
+    // dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
+    // scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
 
     if (kernelConfiguration.contains("APPROX_REG_COUNT")) {
       size_t approxRegCount = kernelConfiguration["APPROX_REG_COUNT"].getUInt();
@@ -101,7 +101,7 @@ class KernelCreateGraph {
       }
     }
 
-    totalBlockSize = dataBlockingSize * localSize;
+    // totalBlockSize = dataBlockingSize * localSize;
     unpadded_datasize = data.size();
     size_t element_to_add = ((localSize - ((data.size() / dims) % localSize)) * dims);
     std::cout << "unpadded_datasize: " << unpadded_datasize
@@ -265,25 +265,25 @@ class KernelCreateGraph {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
-        if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-          kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        }
+        // if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
+        //   kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
+        // }
 
-        if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-          kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        }
+        // if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
+        //   kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+        // }
 
-        if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        }
+        // if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
+        // }
 
-        if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        }
+        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
+        // }
 
-        if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        }
+        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
+        // }
 
         if (kernelNode.contains("USE_SELECT") == false) {
           kernelNode.addIDAttr("USE_SELECT", false);
