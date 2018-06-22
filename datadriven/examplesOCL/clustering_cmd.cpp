@@ -387,10 +387,10 @@ int main(int argc, char **argv) {
     // for (size_t i = 0; i < graph.size() / k; i++)  {
     //   std::cout << " node: " << i << " neigh: ";
     //   for (size_t cur_k = 0; cur_k < k; cur_k+= 1) {
-    // 	if (cur_k > 0) {
-    // 	  std::cout << ", ";
-    // 	}
-    // 	std::cout << graph[i * k + cur_k];
+    //    if (cur_k > 0) {
+    //      std::cout << ", ";
+    //    }
+    //    std::cout << graph[i * k + cur_k];
     //   }
     //   std::cout << std::endl;
     // }
@@ -424,7 +424,19 @@ int main(int argc, char **argv) {
             *grid, dimension, alpha, trainingData, threshold, k, configFileName));
     operation_prune->prune_graph(graph);
 
-    std::cout << "acc_duration_prune_graph: " << operation_prune->getAccDuration() << std::endl;
+    double last_duration_prune_graph = operation_prune->getLastDuration();
+    std::cout << "last_duration_prune_graph: " << last_duration_prune_graph << std::endl;
+
+    // middlepoint between node and neighbor ops
+    double ops_prune_graph = static_cast<double>(trainingData.getNrows()) *
+                             static_cast<double>(grid->getSize()) * static_cast<double>(k) *
+                             (8.0 * static_cast<double>(dimension) + 2) * 1E-9;
+    ops_prune_graph += static_cast<double>(trainingData.getNrows()) *
+                       static_cast<double>(grid->getSize()) *
+                       (static_cast<double>(dimension) * 5 + 2) * 1E-9;
+    std::cout << "ops_prune_graph: " << ops_prune_graph << " GOps" << std::endl;
+    double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
+    std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;
 
     if (do_output_graphs) {
       std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
