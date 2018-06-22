@@ -5,8 +5,8 @@
 #pragma once
 
 #include <sgpp/base/exception/operation_exception.hpp>
-#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <sgpp/base/opencl/KernelSourceBuilderBase.hpp>
+#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -16,8 +16,8 @@ namespace datadriven {
 namespace DensityOCLMultiPlatform {
 
 /// OpenCL source builder for k nearest neighbors graph creation
-template<typename real_type>
-class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> {
+template <typename real_type>
+class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
   json::Node &kernelConfiguration;
@@ -27,9 +27,9 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
   size_t localWorkgroupSize;
   /// Using local memory?
   bool useLocalMemory;
-  size_t dataBlockSize;
-  size_t transGridBlockSize;
-  uint64_t maxDimUnroll;
+  // size_t dataBlockSize;
+  // size_t transGridBlockSize;
+  // uint64_t maxDimUnroll;
   /// Use select statements instead of if branches? Configuration parameter is USE_SELECT
   bool use_select;
   /// Create a approximation instead of an exact graph? Configuration parameter is USE_APPROX
@@ -40,9 +40,9 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
   /// Writes the source code for initialization of the k neighbor registers
   std::string init_k_registers(size_t k) {
     std::stringstream output;
-    output << this->indent[0] << "__private int k_reg["<< k << "];" << std::endl;
-    output << this->indent[0] << "__private " << this->floatType() << " k_dists["
-           << k << "];" << std::endl;
+    output << this->indent[0] << "__private int k_reg[" << k << "];" << std::endl;
+    output << this->indent[0] << "__private " << this->floatType() << " k_dists[" << k << "];"
+           << std::endl;
     output << this->indent[0] << "for (int i = 0; i < " << k << "; i++)" << std::endl;
     output << this->indent[1] << "k_dists[i] = 4.0;" << std::endl;
     /*for (size_t i = 0; i < k; i++) {
@@ -86,11 +86,11 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
   /// Writes the source code for copying the current datapoint to private memory
   std::string save_from_global_to_private(size_t dimensions) {
     std::stringstream output;
-    output << this->indent[0] << "__private " << this->floatType() << " datapoint["
-           << dimensions << "];" << std::endl;
+    output << this->indent[0] << "__private " << this->floatType() << " datapoint[" << dimensions
+           << "];" << std::endl;
     for (size_t i = 0; i < dimensions; i++) {
-      output << this->indent[1] << "datapoint[" << i << "] = data[global_index * "
-             << dimensions << " + " << i << "];" << std::endl;
+      output << this->indent[1] << "datapoint[" << i << "] = data[global_index * " << dimensions
+             << " + " << i << "];" << std::endl;
     }
     return output.str();
   }
@@ -98,16 +98,15 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
   std::string copy_k_registers_into_global(size_t k) {
     std::stringstream output;
     for (size_t i = 0; i < k; i++) {
-      output << this->indent[0] << "neighbors[chunk_index * "<< k
-             << " + " << i << "] = k_reg[" << i << "];" << std::endl;
+      output << this->indent[0] << "neighbors[chunk_index * " << k << " + " << i << "] = k_reg["
+             << i << "];" << std::endl;
     }
     return output.str();
   }
 
  public:
-  SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims) :
-      kernelConfiguration(kernelConfiguration), dims(dims), use_select(false),
-      use_approx(false) {
+  SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims)
+      : kernelConfiguration(kernelConfiguration), dims(dims), use_select(false), use_approx(false) {
     localWorkgroupSize = 128;
     if (kernelConfiguration.contains("LOCAL_SIZE"))
       localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
@@ -139,17 +138,16 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
     std::stringstream sourceStream;
 
     if (this->floatType().compare("double") == 0) {
-      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable"
-                   << std::endl << std::endl;
+      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl << std::endl;
     }
 
     sourceStream << "__kernel" << std::endl;
     sourceStream << "__attribute__((reqd_work_group_size(" << localWorkgroupSize << ", 1, 1)))"
                  << std::endl
                  << "void connectNeighbors(__global const " << this->floatType()
-                 << " *data, __global int *neighbors, const int startid)"
-                 << std::endl
+                 << " *data, __global int *neighbors, const int startid)" << std::endl
                  << "{" << std::endl
+
                  << this->indent[0] << "int global_index = startid + get_global_id(0);"
                  << this->indent[0] << "int local_id = get_local_id(0);"
                  << std::endl
@@ -163,8 +161,9 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                  << std::endl;
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
-                   << localWorkgroupSize * dimensions  << "];" << std::endl
+                   << localWorkgroupSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__private " << this->floatType() << " dist_reg["
+
                    << approxRegCount  << "];" << std::endl
                    << this->indent[0] << "__private int  index_reg["
                    << approxRegCount  << "];" << std::endl
@@ -176,11 +175,11 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                    <<  this->indent[0] << "for (int group = 0; group < "
                    << problemsize / localWorkgroupSize << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions
-                   << " ; j++) " << std::endl
+                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) "
+                   << std::endl
                    << this->indent[2] << "data_local[local_id * " << dimensions
                    << " + j] = data[group * " << localWorkgroupSize * dimensions
-                   << "  + local_id * " <<  dimensions << " + j];" << std::endl
+                   << "  + local_id * " << dimensions << " + j];" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       if (localWorkgroupSize == approxRegCount) {
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize
@@ -193,8 +192,8 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                      << "; i++, chunkindex++) {" << std::endl;
       }
       sourceStream << this->indent[2] << "dist = 0.0;" << std::endl
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions
-                   << " ; j++) {" << std::endl;
+                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << std::endl;
       if (localWorkgroupSize != approxRegCount) {
         sourceStream << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
                      << dimensions << " ])" << std::endl
@@ -209,8 +208,8 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
       } else {
         sourceStream << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
                      << dimensions << " ])" << std::endl
-                     << this->indent[3] << "* (datapoint[j] - data_local[j + i* "
-                     << dimensions << " ]);" << std::endl;
+                     << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                     << " ]);" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl
                      << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
                      << localWorkgroupSize << " != global_index) {" << std::endl
@@ -251,24 +250,25 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
     } else if (useLocalMemory) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
                    << localWorkgroupSize * dimensions << "];" << std::endl
-                   <<  this->indent[0] << "for (int group = 0; group < "
+                   << this->indent[0] << "for (int group = 0; group < "
                    << problemsize / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions
-                   << " ; j++) " << std::endl
+                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) "
+                   << std::endl
                    << this->indent[2] << "data_local[local_id * " << dimensions
                    << " + j] = data[group * " << localWorkgroupSize * dimensions
-                   << "  + local_id * " <<  dimensions << " + j];" << std::endl
+                   << "  + local_id * " << dimensions << " + j];" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize
-                   << "; i++) {" << std::endl
+                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << std::endl
                    << this->indent[2] << "dist = 0.0;" << std::endl
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions
-                   << " ; j++) {" << std::endl
-                   << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
-                   << dimensions << " ])" << std::endl
-                   << this->indent[3] << "* (datapoint[j] - data_local[j + i* "
-                   << dimensions << " ]);" << std::endl
+                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << std::endl
+                   << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+                   << " ])" << std::endl
+                   << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                   << " ]);" << std::endl
                    << this->indent[2] << "}" << std::endl
+
                    << this->indent[2] << "int min_index = 0;" << std::endl
                    << find_min_index(k, true)
                    << this->indent[2] << "if (dist < k_dists[min_index] && i + group * "
@@ -282,17 +282,17 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[0] << "}" << std::endl
                    << copy_k_registers_into_global(k);
     } else {
-      sourceStream << this->indent[0] << "for (int i = 0; i <    " << dataSize
-                   << "; i++) {" << std::endl
+      sourceStream << this->indent[0] << "for (int i = 0; i <    " << dataSize << "; i++) {"
+                   << std::endl
                    << this->indent[1] << "if (i != global_index) {" << std::endl
                    << "//get distance to current point" << std::endl
                    << this->indent[2] << "dist = 0.0;" << std::endl
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions
-                   << " ; j++) {" << std::endl
-                   << this->indent[3] << "dist += (datapoint[j] - data[j + i* "
-                   << dimensions << " ])" << std::endl
-                   << this->indent[3] << "* (datapoint[j] - data[j + i* "
-                   << dimensions << " ]);" << std::endl
+                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << std::endl
+                   << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+                   << " ])" << std::endl
+                   << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
+                   << std::endl
                    << this->indent[2] << "}" << std::endl
                    << this->indent[2] << "int min_index = 0;" << std::endl
                    << find_min_index(k, true)

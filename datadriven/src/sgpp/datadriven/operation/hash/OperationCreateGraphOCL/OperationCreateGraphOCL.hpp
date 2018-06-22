@@ -84,7 +84,7 @@ class OperationCreateGraphOCL {
   }
 
  public:
-  OperationCreateGraphOCL() {}
+  OperationCreateGraphOCL() : last_duration_create_graph(0.0), acc_duration_create_graph(0.0) {}
 
   /// Pure virtual function to create the k nearest neighbor graph for some datapoints of a dataset
   virtual void create_graph(std::vector<int> &resultVector, int startid = 0, int chunksize = 0) = 0;
