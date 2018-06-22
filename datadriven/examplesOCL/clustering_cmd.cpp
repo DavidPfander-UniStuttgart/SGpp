@@ -238,6 +238,8 @@ int main(int argc, char **argv) {
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
     std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
 
+    result_timings << last_duration_generate_b << "; " << flops_generate_b << "; ";
+
     std::cout << "Solving density SLE" << std::endl;
     solver->solve(*operation_mult, alpha, b, false, true);
 
@@ -249,6 +251,8 @@ int main(int argc, char **argv) {
     std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
     double flops_density = ops_density / acc_duration_density;
     std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
+
+    result_timings << acc_duration_density << "; " << flops_density << "; ";
   }
 
   for (size_t i = 0; i < refinement_steps; i++) {
@@ -416,6 +420,8 @@ int main(int argc, char **argv) {
     double flops_create_graph = ops_create_graph / acc_duration_create_graph;
     std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
 
+    result_timings << acc_duration_create_graph << "; " << flops_create_graph << "; ";
+
     // for (size_t i = 0; i < graph.size() / k; i++)  {
     //   std::cout << " node: " << i << " neigh: ";
     //   for (size_t cur_k = 0; cur_k < k; cur_k+= 1) {
@@ -470,6 +476,8 @@ int main(int argc, char **argv) {
     double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
     std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;
 
+    result_timings << last_duration_prune_graph << "; " << flops_prune_graph << "; ";
+
     if (do_output_graphs) {
       std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
@@ -521,5 +529,6 @@ int main(int argc, char **argv) {
     }
   }
 
+  result_timings << std::endl;
   std::cout << std::endl << "all done!" << std::endl;
 }
