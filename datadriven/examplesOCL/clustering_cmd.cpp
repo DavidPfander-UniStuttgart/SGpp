@@ -7,6 +7,7 @@
 
 #include <chrono>
 #include <experimental/filesystem>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -151,10 +152,33 @@ int main(int argc, char **argv) {
     std::cout << "threshold: " << threshold << std::endl;
   }
 
+  std::ofstream result_timings;
   if (variables_map.count("write_graphs") == 1) {
     do_output_graphs = true;
     std::cout << "output scenario name: " << scenario_name << std::endl;
+    std::string result_timings_file_name(scenario_name + "_result_timings.csv");
+    std::experimental::filesystem::path result_timings_path(result_timings_file_name);
+    if (std::experimental::filesystem::exists(result_timings_path)) {
+      result_timings.open(scenario_name + "_result_timings.csv", std::ios::out | std::ios::app);
+    } else {
+      result_timings.open(scenario_name + "_result_timings.csv", std::ios::out);
+      result_timings << "dataset; grid_level; lambda; threshold; k; config; refine_steps; "
+                        "refine_points; coarsen_points; coarsen_threshold; duration_generate_b; "
+                        "gflops_generate_b; duration_density_average; gflops_density_average; "
+                        "duration_create_graph; gflops_create_graph; duration_prune_graph; "
+                        "gflops_prune_graph"
+                     << std::endl;
+    }
+    result_timings << datasetFileName << "; " << level << "; " << lambda << "; " << threshold
+                   << "; " << k << "; " << configFileName << ";" << refinement_steps << "; "
+                   << refinement_points << "; " << coarsening_points << "; " << coarsening_threshold
+                   << "; ";
   }
+
+  //   size_t refinement_steps;
+  // size_t refinement_points;
+  // size_t coarsening_points;
+  // double coarsening_threshold;
 
   // configure refinement
   // sgpp::base::AdpativityConfiguration adaptConfig;
@@ -205,10 +229,18 @@ int main(int argc, char **argv) {
 
     operation_mult->generateb(trainingData, b);
 
+    double last_duration_generate_b = operation_mult->getLastDurationB();
+    std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
+    double ops_generate_b = static_cast<double>(grid->getSize()) *
+                            static_cast<double>(trainingData.getNrows()) *
+                            (10 * static_cast<double>(dimension) + 1);
+    std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+    double flops_generate_b = ops_generate_b / last_duration_generate_b;
+    std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
+
     std::cout << "Solving density SLE" << std::endl;
     solver->solve(*operation_mult, alpha, b, false, true);
 
-    std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
     double acc_duration_density = operation_mult->getAccDurationDensityMult();
     std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
 

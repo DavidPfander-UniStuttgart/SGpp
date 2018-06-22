@@ -94,6 +94,9 @@ void OCLManagerMultiPlatform::buildKernel(
       std::string optimizationFlags = "";
       if ((*parameters).contains("OPTIMIZATION_FLAGS")) {
         optimizationFlags = (*parameters)["OPTIMIZATION_FLAGS"].get();
+        if (verbose) {
+          std::cout << "building with optimization flags: " << optimizationFlags << std::endl;
+        }
       }
       build_opts = optimizationFlags;  // -O5  -cl-mad-enable -cl-denorms-are-zero
                                        // -cl-no-signed-zeros
@@ -164,6 +167,9 @@ cl_kernel OCLManagerMultiPlatform::buildKernel(const std::string &source,
     std::string optimizationFlags = "";
     if (kernelConfiguration.contains("OPTIMIZATION_FLAGS")) {
       optimizationFlags = kernelConfiguration["OPTIMIZATION_FLAGS"].get();
+    }
+    if (verbose) {
+      std::cout << "building with optimization flags: " << optimizationFlags << std::endl;
     }
     build_opts = optimizationFlags;  // -O5  -cl-mad-enable -cl-denorms-are-zero
     // -cl-no-signed-zeros -cl-unsafe-math-optimizations
