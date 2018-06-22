@@ -55,23 +55,23 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
     return output.str();
   }
   /// Writes the source code for finding the current maximum of all neighbors
-  std::string find_max_index(size_t k, bool unroll) {
+  std::string find_min_index(size_t k, bool unroll) {
     std::stringstream output;
     if (!unroll) {
       output << this->indent[2] << "for (int j = 1; j < "
              << k << "; j++) {" << std::endl
-             << this->indent[3] << "if (k_dists[maxindex] < k_dists[j])" << std::endl
-             << this->indent[4] << "maxindex = j;" << std::endl
+             << this->indent[3] << "if (k_dists[min_index] < k_dists[j])" << std::endl
+             << this->indent[4] << "min_index = j;" << std::endl
              << this->indent[2] << "}" << std::endl;
     } else {
       for (size_t i = 1; i < k; i++) {
         if (use_select) {
-          output << this->indent[2] << "maxindex = select(maxindex, " << i
-                 << ", k_dists[maxindex] < k_dists["
+          output << this->indent[2] << "min_index = select(min_index, " << i
+                 << ", k_dists[min_index] < k_dists["
                  << i << "]);" << std::endl;
         } else {
-          output << this->indent[2] << "if (k_dists[maxindex] < k_dists[" << i << "])" << std::endl;
-          output << this->indent[3] << "maxindex  = " << i << "; " << std::endl;
+          output << this->indent[2] << "if (k_dists[min_index] < k_dists[" << i << "])" << std::endl;
+          output << this->indent[3] << "min_index  = " << i << "; " << std::endl;
         }
       }
     }
@@ -150,13 +150,14 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                  << " *data, __global int *neighbors, const int startid)"
                  << std::endl
                  << "{" << std::endl
-                 << this->indent[0] << "__private int global_index = startid + get_global_id(0);"
-                 << this->indent[0] << "__private int local_id = get_local_id(0);"
+                 << this->indent[0] << "int global_index = startid + get_global_id(0);"
+                 << this->indent[0] << "int local_id = get_local_id(0);"
                  << std::endl
-                 << this->indent[0] << "__private int chunk_index = get_global_id(0);" << std::endl
-                 << this->indent[0] << "__private int maxindex = 0;" << std::endl;
-    if (!use_approx)
+                 << this->indent[0] << "int chunk_index = get_global_id(0);" << std::endl;
+                 // << this->indent[0] << "__private int maxindex = 0;" << std::endl;
+    if (!use_approx) {
       sourceStream << init_k_registers(k) << std::endl;
+    }
     sourceStream << save_from_global_to_private(dimensions)
                  << this->indent[0] << "__private " << this->floatType() << " dist = 0.0;"
                  << std::endl;
@@ -167,9 +168,11 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                    << approxRegCount  << "];" << std::endl
                    << this->indent[0] << "__private int  index_reg["
                    << approxRegCount  << "];" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
-                   << "; i++) " << std::endl
-                   << this->indent[1] << "dist_reg[i] = 4.0;" << std::endl
+                   << this->indent[0] << "for (int i = 0 ; i < " << approxRegCount
+                   << "; i++) {" << std::endl
+                   << this->indent[1] << "dist_reg[i] = " << dims << ".0" << this->constSuffix() <<";" << std::endl
+		   << this->indent[1] << "index_reg[i] = -1;" << std::endl
+	           << this->indent[0] << "}" << std::endl
                    <<  this->indent[0] << "for (int group = 0; group < "
                    << problemsize / localWorkgroupSize << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
@@ -198,7 +201,7 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                      << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
                      << dimensions << " ]);" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl
-                     << this->indent[2] << "if (dist < dist_reg[i] && chunkindex + group * "
+                     << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
                      << localWorkgroupSize << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group * " << localWorkgroupSize
@@ -209,34 +212,41 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                      << this->indent[3] << "* (datapoint[j] - data_local[j + i* "
                      << dimensions << " ]);" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl
-                     << this->indent[2] << "if (dist < dist_reg[i] && i + group * "
+                     << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
                      << localWorkgroupSize << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group;" << std::endl;
       }
       sourceStream << this->indent[2] << "}" << std::endl
                    << this->indent[1] << "}" << std::endl;
-      if (localWorkgroupSize != approxRegCount)
+      if (localWorkgroupSize != approxRegCount) {
         sourceStream << this->indent[1] << "}" << std::endl;
+      }
       sourceStream << this->indent[0] << "}" << std::endl
                    << this->indent[0] << "for (int neighbor = 0 ; neighbor < " << k
                    << "; neighbor++) {" << std::endl
-                   << this->indent[1] << "maxindex = 0;" << std::endl
+		   << this->indent[1] << "neighbors[chunk_index * " << k << " + neighbor] = -1;" << std::endl
+                   << this->indent[1] << "int min_index = 0;" << std::endl
                    << this->indent[1] << "for (int i = 1 ; i < " << approxRegCount
                    << "; i++) {" << std::endl
-                   << this->indent[2] << "if (dist_reg[i] < dist_reg[maxindex])" << std::endl
-                   << this->indent[3] << "maxindex = i;" << std::endl
+                   << this->indent[2] << "if (dist_reg[i] < dist_reg[min_index])" << std::endl
+                   << this->indent[3] << "min_index = i;" << std::endl
                    << this->indent[1] << "}" << std::endl;
 
       if (localWorkgroupSize == approxRegCount) {
-        sourceStream << this->indent[1] << "neighbors[chunk_index * "<< k
-                     << " + neighbor] = maxindex + index_reg[maxindex] * "
+	sourceStream << this->indent[1] << "if (dist_reg[min_index] < " << dims << ".0" << this->constSuffix() << ") {" << std::endl;
+        sourceStream << this->indent[2] << "neighbors[chunk_index * "<< k
+                     << " + neighbor] = min_index + index_reg[min_index] * "
                      << localWorkgroupSize << ";" << std::endl;
+	sourceStream << this->indent[1] << "}" << std::endl;
       } else {
-        sourceStream << this->indent[1] << "neighbors[chunk_index * "<< k
-                     << " + neighbor] = index_reg[maxindex];" << std::endl;
+	sourceStream << this->indent[1] << "if (dist_reg[min_index] < " << dims << ".0" << this->constSuffix() << ") {" << std::endl;
+        sourceStream << this->indent[2] << "neighbors[chunk_index * "<< k
+                     << " + neighbor] = index_reg[min_index];" << std::endl;
+	sourceStream << this->indent[1] << "}" << std::endl;
       }
-      sourceStream << this->indent[1] << "dist_reg[maxindex] = 4.0;" << std::endl;
+
+      sourceStream << this->indent[1] << "dist_reg[min_index] = " << dims << ".0" << this->constSuffix() << ";" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl;
     } else if (useLocalMemory) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
@@ -259,13 +269,13 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[3] << "* (datapoint[j] - data_local[j + i* "
                    << dimensions << " ]);" << std::endl
                    << this->indent[2] << "}" << std::endl
-                   << this->indent[2] << "maxindex = 0;" << std::endl
-                   << find_max_index(k, true)
-                   << this->indent[2] << "if (dist < k_dists[maxindex] && i + group * "
+                   << this->indent[2] << "int min_index = 0;" << std::endl
+                   << find_min_index(k, true)
+                   << this->indent[2] << "if (dist < k_dists[min_index] && i + group * "
                    << localWorkgroupSize << " != global_index) {" << std::endl
-                   << this->indent[3] << "k_reg[maxindex] = i + group * " << localWorkgroupSize
+                   << this->indent[3] << "k_reg[min_index] = i + group * " << localWorkgroupSize
                    << ";" << std::endl
-                   << this->indent[3] << "k_dists[maxindex] = dist;" << std::endl
+                   << this->indent[3] << "k_dists[min_index] = dist;" << std::endl
                    << this->indent[2] << "}" << std::endl
                    << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
@@ -284,11 +294,11 @@ class SourceBuilderCreateGraph: public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[3] << "* (datapoint[j] - data[j + i* "
                    << dimensions << " ]);" << std::endl
                    << this->indent[2] << "}" << std::endl
-                   << this->indent[2] << "int maxindex = 0;" << std::endl
-                   << find_max_index(k, true)
-                   << this->indent[2] << "if (dist < k_dists[maxindex]) {" << std::endl
-                   << this->indent[3] << "k_reg[maxindex] = i;" << std::endl
-                   << this->indent[3] << "k_dists[maxindex] = dist;" << std::endl
+                   << this->indent[2] << "int min_index = 0;" << std::endl
+                   << find_min_index(k, true)
+                   << this->indent[2] << "if (dist < k_dists[min_index]) {" << std::endl
+                   << this->indent[3] << "k_reg[min_index] = i;" << std::endl
+                   << this->indent[3] << "k_dists[min_index] = dist;" << std::endl
                    << this->indent[2] << "}" << std::endl
                    << this->indent[1] << "}" << std::endl
                    << this->indent[0] << "}" << std::endl

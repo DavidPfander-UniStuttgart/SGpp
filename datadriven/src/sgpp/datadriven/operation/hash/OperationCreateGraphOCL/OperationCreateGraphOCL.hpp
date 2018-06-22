@@ -139,6 +139,7 @@ class OperationCreateGraphOCL {
         }
         // assert that the index is in range
         assert(directed[i * k + cur_k] < static_cast<int>(node_count));
+	assert(directed[i * k + cur_k] >= 0);
         // if (directed[i * k + cur_k] > static_cast<int>(node_count)) {
         //   std::cerr << "error: index too large! i: " << i
         //             << " neighbor: " << directed[i * k + cur_k] << std::endl;

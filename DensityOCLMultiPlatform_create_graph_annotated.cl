@@ -51,6 +51,9 @@ __kernel __attribute__((reqd_work_group_size(128, 1, 1))) void connectNeighbors(
     maxindex = 0;
     for (int i = 1; i < 128; i++) {
       if (dist_reg[i] < dist_reg[maxindex]) maxindex = i;
+      if (dist_reg[i] > 4.0) {
+	printf("dist_reg[%i] = %lf", i, dist_reg[i]);
+      }
     }
     // mark the index of the new "nearest" neighbor
     neighbors[chunk_index * 5 + neighbor] = maxindex + index_reg[maxindex] * 128;

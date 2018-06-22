@@ -106,8 +106,10 @@ class KernelCreateGraph {
     size_t element_to_add = ((localSize - ((data.size() / dims) % localSize)) * dims);
     std::cout << "unpadded_datasize: " << unpadded_datasize
               << " adding elements: " << element_to_add << std::endl;
-    for (size_t i = 0; i < element_to_add; i++) {
-      data.push_back(2.0);
+    // max difference between valid elements (squared): dims
+    double padd_value = 3.0 * dims;
+    for (size_t i = 0; i < element_to_add; i++) {      
+      data.push_back(padd_value);
     }
     deviceData.intializeTo(data, 1, 0, data.size());
   }

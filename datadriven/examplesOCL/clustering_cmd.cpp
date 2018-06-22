@@ -384,6 +384,17 @@ int main(int argc, char **argv) {
     double flops_create_graph = ops_create_graph / acc_duration_create_graph;
     std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
 
+    // for (size_t i = 0; i < graph.size() / k; i++)  {
+    //   std::cout << " node: " << i << " neigh: ";
+    //   for (size_t cur_k = 0; cur_k < k; cur_k+= 1) {
+    // 	if (cur_k > 0) {
+    // 	  std::cout << ", ";
+    // 	}
+    // 	std::cout << graph[i * k + cur_k];
+    //   }
+    //   std::cout << std::endl;
+    // }
+
     if (do_output_graphs) {
       std::ofstream out_graph(scenario_name + "_graph.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
@@ -436,14 +447,6 @@ int main(int argc, char **argv) {
     }
   }
 
-  // out.open("graph_pruned_erg_dim2_depth11.txt");
-  // for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-  //   for (size_t j = 0; j < k; ++j) {
-  //     out << graph[i * k + j] << " ";
-  //   }
-  //   out << std::endl;
-  // }
-  // out.close();
   {
     std::cout << "Finding clusters..." << std::endl;
     std::vector<int> node_cluster_map;
