@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
                         "refine_points; coarsen_points; coarsen_threshold; duration_generate_b; "
                         "gflops_generate_b; duration_density_average; gflops_density_average; "
                         "duration_create_graph; gflops_create_graph; duration_prune_graph; "
-                        "gflops_prune_graph"
+                        "gflops_prune_graph; total_duration_without_disk;total_duration"
                      << std::endl;
     }
     result_timings << datasetFileName << "; " << level << "; " << lambda << "; " << threshold
@@ -190,10 +190,19 @@ int main(int argc, char **argv) {
   // adaptConfig.percent_ = 200.0;
   // adaptConfig.threshold_ = 0.0;
 
+  std::chrono::time_point<std::chrono::system_clock> total_timer_start =
+      std::chrono::system_clock::now();
+  ;
+
   // read dataset
   std::cout << "reading dataset...";
   datadriven::Dataset dataset = datadriven::ARFFTools::readARFF(datasetFileName);
   std::cout << "done" << std::endl;
+
+  std::chrono::time_point<std::chrono::system_clock> total_timer_start_without_disk =
+      std::chrono::system_clock::now();
+  ;
+
   size_t dimension = dataset.getDimension();
   std::cout << "dimension: " << dimension << std::endl;
 
@@ -248,10 +257,12 @@ int main(int argc, char **argv) {
     double acc_duration_density = operation_mult->getAccDurationDensityMult();
     std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
 
+    size_t iterations = solver->getNumberIterations();
+    double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+    std::cout << "act_it: " << act_it << std::endl;
     // TODO: CONTINUE!!! test solver iterations retrieved correctly
-    double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
-                         solver->getNumberIterations() *
-                         (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+    double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
+                         (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
     std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
     double flops_density = ops_density / acc_duration_density;
     std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -288,11 +299,15 @@ int main(int argc, char **argv) {
 
       std::cout << "Grid points after refinement step: " << grid->getSize() << std::endl;
 
+      size_t iterations = solver->getNumberIterations();
+      double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+      std::cout << "act_it: " << act_it << std::endl;
+
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
       double acc_duration_density = operation_mult->getAccDurationDensityMult();
       std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
-      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
-                           (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
+                           (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
       std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
       double flops_density = ops_density / acc_duration_density;
       std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -326,11 +341,15 @@ int main(int argc, char **argv) {
 
       std::cout << "Grid points after coarsening step: " << grid->getSize() << std::endl;
 
+      size_t iterations = solver->getNumberIterations();
+      double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+      std::cout << "act_it: " << act_it << std::endl;
+
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
       double acc_duration_density = operation_mult->getAccDurationDensityMult();
       std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
-      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
-                           (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
+                           (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
       std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
       double flops_density = ops_density / acc_duration_density;
       std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -393,7 +412,8 @@ int main(int argc, char **argv) {
     std::cout << "Evaluating at evaluation grid points" << std::endl;
     eval->mult(alpha, results);
 
-    std::ofstream out_density(std::string("results/") + scenario_name + std::string("_density_eval.csv"));
+    std::ofstream out_density(std::string("results/") + scenario_name +
+                              std::string("_density_eval.csv"));
     out_density.precision(20);
     for (size_t eval_index = 0; eval_index < evaluationPoints.getNrows(); eval_index += 1) {
       for (size_t d = 0; d < dimension; d += 1) {
@@ -533,6 +553,16 @@ int main(int argc, char **argv) {
     }
   }
 
-  result_timings << std::endl;
+  {
+    auto total_timer_stop = std::chrono::system_clock::now();
+    std::chrono::duration<double> total_elapsed_seconds = total_timer_stop - total_timer_start;
+    std::chrono::duration<double> total_duration_without_disk_elapsed_seconds =
+        total_timer_stop - total_timer_start_without_disk;
+    double total_duration = total_elapsed_seconds.count();
+    double total_duration_without_disk = total_duration_without_disk_elapsed_seconds.count();
+    std::cout << "total_duration_without_disk: " << total_duration_without_disk << std::endl;
+    std::cout << "total_duration: " << total_duration << std::endl;
+    result_timings << total_duration_without_disk << "; " << total_duration << std::endl;
+  }
   std::cout << std::endl << "all done!" << std::endl;
 }

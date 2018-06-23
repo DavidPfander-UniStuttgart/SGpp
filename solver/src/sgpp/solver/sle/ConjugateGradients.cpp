@@ -43,6 +43,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
   double delta_new = 0.0;
   double beta = 0.0;
   double a = 0.0;
+  size_t counted_mult_calls = 0;
 
   if (verbose == true) {
     std::cout << "All temp variables used in CG have been initialized" << std::endl;
@@ -51,6 +52,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
   if (reuse == true) {
     q.setAll(0.0);
     SystemMatrix.mult(q, temp);
+    counted_mult_calls += 1;
     r.sub(temp);
     delta_0 = r.dotProduct(r) * epsilonSquared;
     // delta_0 = r.dotProduct(r);
@@ -60,6 +62,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
 
   // calculate the starting residuum
   SystemMatrix.mult(alpha, temp);
+  counted_mult_calls += 1;
 
   r.sub(temp);
 
@@ -94,6 +97,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
 
     // q = A*d
     SystemMatrix.mult(d, q);
+    counted_mult_calls += 1;
 
     double dq = d.dotProduct(q);
 
@@ -111,6 +115,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
     if ((this->nIterations % 50) == 0 && this->nIterations > 0) {
       // r = b - A*x
       SystemMatrix.mult(alpha, temp);
+      counted_mult_calls += 1;
       r.copyFrom(b);
       r.sub(temp);
     } else {
@@ -147,6 +152,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
     std::cout << "Number of iterations: " << this->nIterations << " (max. " << this->nMaxIterations
               << ")" << std::endl;
     std::cout << "Final norm of residuum: " << delta_new << std::endl;
+    std::cout << "counted_mult_calls: " << counted_mult_calls << std::endl;
   }
 }
 
