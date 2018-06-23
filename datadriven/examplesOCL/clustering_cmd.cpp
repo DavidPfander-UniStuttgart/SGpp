@@ -159,9 +159,11 @@ int main(int argc, char **argv) {
     std::string result_timings_file_name(scenario_name + "_result_timings.csv");
     std::experimental::filesystem::path result_timings_path(result_timings_file_name);
     if (std::experimental::filesystem::exists(result_timings_path)) {
-      result_timings.open(scenario_name + "_result_timings.csv", std::ios::out | std::ios::app);
+      result_timings.open(std::string("results/") + scenario_name + "_result_timings.csv",
+                          std::ios::out | std::ios::app);
     } else {
-      result_timings.open(scenario_name + "_result_timings.csv", std::ios::out);
+      result_timings.open(std::string("results/") + scenario_name + "_result_timings.csv",
+                          std::ios::out);
       result_timings << "dataset; grid_level; lambda; threshold; k; config; refine_steps; "
                         "refine_points; coarsen_points; coarsen_threshold; duration_generate_b; "
                         "gflops_generate_b; duration_density_average; gflops_density_average; "
@@ -233,7 +235,7 @@ int main(int argc, char **argv) {
     std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
     double ops_generate_b = static_cast<double>(grid->getSize()) *
                             static_cast<double>(trainingData.getNrows()) *
-                            (10 * static_cast<double>(dimension) + 1);
+                            (10 * static_cast<double>(dimension) + 1) * 1E-9;
     std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
     std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
@@ -246,7 +248,9 @@ int main(int argc, char **argv) {
     double acc_duration_density = operation_mult->getAccDurationDensityMult();
     std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
 
+    // TODO: CONTINUE!!! test solver iterations retrieved correctly
     double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) *
+                         solver->getNumberIterations() *
                          (12.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
     std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
     double flops_density = ops_density / acc_duration_density;
@@ -345,7 +349,7 @@ int main(int argc, char **argv) {
   }
 
   if (do_output_graphs) {
-    std::ofstream out_grid(scenario_name + "_grid.csv");
+    std::ofstream out_grid(std::string("results/") + scenario_name + "_grid.csv");
     auto &storage = grid->getStorage();
     for (size_t i = 0; i < grid->getSize(); i++) {
       sgpp::base::HashGridPoint point = storage.getPoint(i);
@@ -389,7 +393,7 @@ int main(int argc, char **argv) {
     std::cout << "Evaluating at evaluation grid points" << std::endl;
     eval->mult(alpha, results);
 
-    std::ofstream out_density(scenario_name + std::string("_density_eval.csv"));
+    std::ofstream out_density(std::string("results/") + scenario_name + std::string("_density_eval.csv"));
     out_density.precision(20);
     for (size_t eval_index = 0; eval_index < evaluationPoints.getNrows(); eval_index += 1) {
       for (size_t d = 0; d < dimension; d += 1) {
@@ -434,7 +438,7 @@ int main(int argc, char **argv) {
     // }
 
     if (do_output_graphs) {
-      std::ofstream out_graph(scenario_name + "_graph.csv");
+      std::ofstream out_graph(std::string("results/") + scenario_name + "_graph.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         bool first = true;
         for (size_t j = 0; j < k; ++j) {
@@ -479,7 +483,7 @@ int main(int argc, char **argv) {
     result_timings << last_duration_prune_graph << "; " << flops_prune_graph << "; ";
 
     if (do_output_graphs) {
-      std::ofstream out_graph(scenario_name + "_graph_pruned.csv");
+      std::ofstream out_graph(std::string("results/") + scenario_name + "_graph_pruned.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         bool first = true;
         for (size_t j = 0; j < k; ++j) {
@@ -521,7 +525,7 @@ int main(int argc, char **argv) {
     std::cout << "detected clusters: " << clusters.size() << std::endl;
 
     if (do_output_graphs) {
-      std::ofstream out_cluster_map(scenario_name + "_cluster_map.csv");
+      std::ofstream out_cluster_map(std::string("results/") + scenario_name + "_cluster_map.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         out_cluster_map << node_cluster_map[i] << std::endl;
       }

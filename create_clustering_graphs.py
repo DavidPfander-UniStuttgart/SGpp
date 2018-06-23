@@ -32,7 +32,7 @@ X_dataset = [float(row[0]) for row in content]
 Y_dataset = [float(row[1]) for row in content]
 
 # read-in grid points
-f = open(args.scenario_name + "_grid.csv", 'r')
+f = open("results/" + args.scenario_name + "_grid.csv", 'r')
 reader = csv.reader(f)
 content = [] # [row for row in reader]
 for c in reader:
@@ -41,7 +41,7 @@ X_grid = [float(row[0]) for row in content]
 Y_grid = [float(row[1]) for row in content]
 
 # read-in full-grid-evaluated density function
-f = open(args.scenario_name + '_density_eval.csv', 'r')
+f = open("results/" + args.scenario_name + '_density_eval.csv', 'r')
 reader = csv.reader(f)
 content = [row for row in reader]
 
@@ -83,7 +83,7 @@ for r in range(eval_dim_grid_points):
 
 
 # read-in dataset
-f = open(args.scenario_name + "_graph.csv", 'r')
+f = open("results/" + args.scenario_name + "_graph.csv", 'r')
 reader = csv.reader(f)
 neighborhood_list = [[int(i) for i in row] for row in reader]
 # print(neighborhood_list)
@@ -98,7 +98,7 @@ for l_index in range(len(neighborhood_list)):
 graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['r'], linestyle='solid')
 
 # read-in pruned dataset
-f = open(args.scenario_name + "_graph_pruned.csv", 'r')
+f = open("results/" + args.scenario_name + "_graph_pruned.csv", 'r')
 reader = csv.reader(f)
 pruned_neighborhood_list = [[int(i) for i in row] for row in reader]
 # print(neighborhood_list)
@@ -143,6 +143,21 @@ if not args.dont_display_knn:
         ax.add_collection(graph_edges_collection)
 
 # plt.show()
-fig.savefig("graphs/" + args.scenario_name + "_density.png", dpi=300)
+if args.dont_display_knn:
+    if args.dont_display_grid:
+        fig.savefig("graphs/" + args.scenario_name + "_density.png", dpi=300)
+    else:
+        fig.savefig("graphs/" + args.scenario_name + "_density_with_grid.png", dpi=300)
+else:
+    if args.use_unpruned_graph:
+        if args.dont_display_grid:
+            fig.savefig("graphs/" + args.scenario_name + "_unpruned.png", dpi=300)
+        else:
+            fig.savefig("graphs/" + args.scenario_name + "_unpruned_with_grid.png", dpi=300)
+    else:
+        if args.dont_display_grid:
+            fig.savefig("graphs/" + args.scenario_name + "_pruned.png", dpi=300)
+        else:
+            fig.savefig("graphs/" + args.scenario_name + "_pruned_with_grid.png", dpi=300)
 
 plt.close()
