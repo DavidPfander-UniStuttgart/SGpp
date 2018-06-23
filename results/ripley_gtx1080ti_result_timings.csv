@@ -1,0 +1,2 @@
+dataset; grid_level; lambda; threshold; k; config; refine_steps; refine_points; coarsen_points; coarsen_threshold; duration_generate_b; gflops_generate_b; duration_density_average; gflops_density_average; duration_create_graph; gflops_create_graph; duration_prune_graph; gflops_prune_graph
+datasets/ripley/ripleyGarcke.train.arff; 4; 0.0001; 0.2; 5; config_ocl_float_gtx1080ti.cfg;0; 0; 0; 1000; 0.00172194; 0.149395; 0.00253728; 0.615087; 0.000823243; 0.607354; 0.000613913; 2.0353; 
