@@ -4,8 +4,8 @@
 // sgpp.sparsegrids.org
 #pragma once
 #include <sgpp/base/exception/operation_exception.hpp>
-#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <sgpp/base/opencl/KernelSourceBuilderBase.hpp>
+#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -15,8 +15,8 @@ namespace datadriven {
 namespace DensityOCLMultiPlatform {
 
 /// OpenCL source builder for density right hand side vector
-template<typename real_type>
-class SourceBuilderB: public base::KernelSourceBuilderBase<real_type> {
+template <typename real_type>
+class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
   json::Node &kernelConfiguration;
@@ -37,8 +37,8 @@ class SourceBuilderB: public base::KernelSourceBuilderBase<real_type> {
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
       output << "data_" << dataBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
-      output << "ptrData[(" << dataBlockSize << " * globalIdx) + (resultSize * " << dim
-             << ") + " << dataBlockingIndex << "]";
+      output << "ptrData[(" << dataBlockSize << " * globalIdx) + (resultSize * " << dim << ") + "
+             << dataBlockingIndex << "]";
     } else {
       std::string error("OCL Error: Illegal value for parameter \"KERNEL_STORE_DATA\"");
       throw new base::operation_exception(error.c_str());
@@ -47,10 +47,8 @@ class SourceBuilderB: public base::KernelSourceBuilderBase<real_type> {
   }
 
  public:
-  SourceBuilderB(json::Node &kernelConfiguration,
-                 size_t dims) :
-      kernelConfiguration(kernelConfiguration), dims(dims) {
-  }
+  SourceBuilderB(json::Node &kernelConfiguration, size_t dims)
+      : kernelConfiguration(kernelConfiguration), dims(dims) {}
 
   /// Generates the opencl source code for the density right hand side vector
   std::string generateSource(size_t dimensions, size_t datapoints) {
@@ -63,30 +61,25 @@ class SourceBuilderB: public base::KernelSourceBuilderBase<real_type> {
     std::stringstream sourceStream;
 
     if (this->floatType().compare("double") == 0) {
-      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl
-                   << std::endl;
+      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl << std::endl;
     }
 
     sourceStream << "void kernel cscheme(global const int* starting_points," << std::endl
-                 <<"global const " << this->floatType() << "* data_points,global "
+                 << "global const " << this->floatType() << "* data_points,global "
                  << this->floatType() << "* C, private int startid) {" << std::endl
                  << this->indent[0] << "C[get_global_id(0)]=0.0;" << std::endl
-                 << this->indent[0] << "private " << this->floatType() << " value=1;"
-                 << std::endl
-                 << this->indent[0] << "private " << this->floatType() << " wert=1.0;"
-                 << std::endl
+                 << this->indent[0] << "private " << this->floatType() << " value=1;" << std::endl
+                 << this->indent[0] << "private " << this->floatType() << " wert=1.0;" << std::endl
                  << this->indent[0] << "for(unsigned int ds=0;ds< " << datapoints << ";ds++)"
                  << std::endl
                  << this->indent[0] << "{" << std::endl
-                 << this->indent[1] << "value=1;"
-                 << std::endl
+                 << this->indent[1] << "value=1;" << std::endl
                  << this->indent[1] << "for(private int d=0;d< " << dimensions << ";d++)"
                  << std::endl
                  << this->indent[1] << "{" << std::endl
-                 << this->indent[2] <<"wert = (1 << starting_points[(startid + "
+                 << this->indent[2] << "wert = (1 << starting_points[(startid + "
                  << " get_global_id(0))*2* " << dimensions << "+2*d+1]);" << std::endl
-                 << this->indent[2] << "wert*=data_points[ds* " << dimensions << "+d];"
-                 << std::endl
+                 << this->indent[2] << "wert*=data_points[ds* " << dimensions << "+d];" << std::endl
                  << this->indent[2] << "wert-=starting_points[(startid + get_global_id(0))*2* "
                  << dimensions << "+2*d];" << std::endl
                  << this->indent[3] << "wert=fabs(wert);" << std::endl
@@ -95,14 +88,13 @@ class SourceBuilderB: public base::KernelSourceBuilderBase<real_type> {
                  << this->indent[3] << "wert=0;" << std::endl
                  << this->indent[2] << "value*=wert;" << std::endl
                  << this->indent[1] << "}" << std::endl
-                 << this->indent[1] << "C[get_global_id(0)]+=value;"
-                 << std::endl
+                 << this->indent[1] << "C[get_global_id(0)]+=value;" << std::endl
                  << this->indent[0] << "}" << std::endl
-                 << this->indent[1] << "C[get_global_id(0)]/=" << datapoints << ";"
-                 << std::endl
-                 <<"}" << std::endl;
+                 << this->indent[1] << "C[get_global_id(0)]/=" << datapoints << ";" << std::endl
+                 << "}" << std::endl;
     if (kernelConfiguration.contains("WRITE_SOURCE")) {
-      if (kernelConfiguration["WRITE_SOURCE"].getBool()) {
+      if (kernelConfiguration["WRITE_SOURCE"].getBool() &&
+          !kernelConfiguration["WRITE_SOURCE"].getBool()) {
         this->writeSource("DensityOCLMultiPlatform_rhs.cl", sourceStream.str());
       }
     }
