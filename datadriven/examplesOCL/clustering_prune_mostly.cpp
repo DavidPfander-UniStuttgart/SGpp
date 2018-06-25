@@ -32,13 +32,14 @@
 using namespace sgpp;
 
 int main(int argc, char **argv) {
-  std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train_small.arff";
+  // std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train_small.arff";
+  std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train.arff";
   // std::string datasetFileName = "datasets/friedman/friedman1_10d_150000.arff";
   // std::string datasetFileName = "datasets/friedman/friedman1_10d_small.arff";
-  size_t level = 3;
+  size_t level = 7;
   double lambda = 1E-2;
-  std::string configFileName = "config_ocl_float_i76700k_valgrind.cfg";
-  // std::string configFileName = "config_ocl_float_i76700k.cfg";
+  // std::string configFileName = "config_ocl_float_i76700k_valgrind.cfg";
+  std::string configFileName = "config_ocl_float_i76700k.cfg";
   uint64_t k = 6;
   double threshold = 1E-2;
 
@@ -78,9 +79,8 @@ int main(int argc, char **argv) {
 
     double last_duration_generate_b = operation_mult->getLastDurationB();
     std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
-    double ops_generate_b = static_cast<double>(grid->getSize()) *
-                            static_cast<double>(trainingData.getNrows()) *
-                            (6 * static_cast<double>(dimension) + 1) * 1E-9;
+    double ops_generate_b =
+        static_cast<double>(grid->getSize() * trainingData.getNrows() * (6 * dimension + 1)) * 1E-9;
     std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
     std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
@@ -92,11 +92,11 @@ int main(int argc, char **argv) {
     std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
 
     size_t iterations = solver->getNumberIterations();
-    double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+    uint64_t act_it = iterations + 1 + (iterations / 50);
     std::cout << "act_it: " << act_it << std::endl;
-    // TODO: CONTINUE!!! test solver iterations retrieved correctly
-    double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
-                         (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+    double ops_density = static_cast<double>(std::pow(grid->getSize(), 2) * act_it *
+                                             (14 * static_cast<double>(dimension) + 2)) *
+                         1E-9;
     std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
     double flops_density = ops_density / acc_duration_density;
     std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -122,8 +122,10 @@ int main(int argc, char **argv) {
     double acc_duration_create_graph = operation_graph->getAccDuration();
     std::cout << "acc_duration_create_graph: " << acc_duration_create_graph << std::endl;
 
-    double ops_create_graph = std::pow(static_cast<double>(trainingData.getNrows()), 2.0) * 4.0 *
-                              static_cast<double>(dimension) * 1E-9;
+    std::cout << "trainingData.getNrows(): " << trainingData.getNrows() << std::endl;
+    std::cout << "dimension: " << dimension << std::endl;
+    double ops_create_graph =
+        static_cast<double>(std::pow(trainingData.getNrows(), 2) * 4 * dimension) * 1E-9;
     std::cout << "ops_create_graph: " << ops_create_graph << " GOps" << std::endl;
     double flops_create_graph = ops_create_graph / acc_duration_create_graph;
     std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
@@ -141,15 +143,15 @@ int main(int argc, char **argv) {
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph << std::endl;
 
     // middlepoint between node and neighbor ops
-    double ops_prune_graph = static_cast<double>(trainingData.getNrows()) *
-                             static_cast<double>(grid->getSize()) * static_cast<double>(k + 1) *
-                             (6.0 * static_cast<double>(dimension) + 2) * 1E-9;
+    double ops_prune_graph =
+        static_cast<double>(trainingData.getNrows() * grid->getSize() * (k + 1)) *
+        (6.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
     std::cout << "ops_prune_graph: " << ops_prune_graph << " GOps" << std::endl;
     double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
     std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;
 
     std::ofstream pruned_graph_output("prune_graph_kernel.data");
-    for (size_t i = 0; i < graph.size() / dimension; i++) {
+    for (size_t i = 0; i < graph.size() / k; i++) {
       for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
         if (cur_k > 0) {
           pruned_graph_output << ", ";

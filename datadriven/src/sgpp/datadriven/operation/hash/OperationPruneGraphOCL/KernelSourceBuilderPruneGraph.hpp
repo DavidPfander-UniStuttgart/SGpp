@@ -191,7 +191,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "for (size_t d = 0; d < " << dimensions << "; d += 1) {"
                    << std::endl;
-      sourceStream << this->indent[2] << "if (global_index < " << data_size << ") {" << std::endl;
+      sourceStream << this->indent[2] << "if (global_index < " << data_size
+                   << " && neighbor_index >= 0) {" << std::endl;
       sourceStream << this->indent[3] << "float loc_dim = data[d + neighbor_index * " << dimensions
                    << "];" << std::endl;
       sourceStream << this->indent[3] << "eval_locations[cur_k * " << dimensions

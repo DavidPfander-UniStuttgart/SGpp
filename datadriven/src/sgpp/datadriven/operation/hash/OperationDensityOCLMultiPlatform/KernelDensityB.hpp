@@ -121,7 +121,7 @@ class KernelDensityB {
     if (this->kernelB == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
       std::string program_src = kernelSourceBuilder.generateSource(dims, dataSize, gridSize);
-      if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
+      // if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
       std::cout << std::flush;
       this->kernelB = manager->buildKernel(program_src, device, kernelConfiguration, "cscheme");
