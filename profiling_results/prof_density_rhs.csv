@@ -1,0 +1,18 @@
+#ProfileFileVersion=5.2
+#ProfilerVersion=5.2.6553
+#API=OpenCL
+#Application=/home/pfandedd/git/SGpp/datadriven/examplesOCL/density_rhs_only
+#ApplicationArgs=
+#WorkingDirectory=.
+#Device Hawaii Platform Vendor=Advanced Micro Devices, Inc.
+#Device Hawaii Platform Name=AMD Accelerated Parallel Processing
+#Device Hawaii Platform Version=OpenCL 2.0 AMD-APP (2482.3)
+#Device Hawaii CLDriver Version=2482.3
+#Device Hawaii CLRuntime Version=OpenCL 1.2 AMD-APP (2482.3)
+#Device Hawaii NumberAppAddressBits=64
+#OS Version=Linux version 4.10.0-28-generic (buildd@lgw01-12) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 Build 4.10.0
+#DisplayName=
+#ListSeparator=;
+#ForceSinglePass=False
+Method; ExecutionOrder; ThreadID; CallIndex; GlobalWorkSize; WorkGroupSize; Time; LocalMemSize; VGPRs; SGPRs; ScratchRegs; Wavefronts; VALUInsts; SALUInsts; VFetchInsts; SFetchInsts; VWriteInsts; FlatVMemInsts; LDSInsts; FlatLDSInsts; GDSInsts; VALUUtilization; VALUBusy; SALUBusy; FetchSize; WriteSize; CacheHit; MemUnitBusy; MemUnitStalled; WriteUnitStalled; LDSBankConflict
+cscheme__k1_Hawaii1; 1; 5500; 36; { 187904       1       1}; {  128     1     1};      2116.48815; 5120; 48; 16; 0;      2936.00;  12325327.01;   3739444.00;     14533.00;         5.00;         1.00;     14534.00;   1124442.00;         0.00;         0.00;        98.25;        82.32;        57.93;   3481599.38;      1468.00;        83.43;         1.37;         0.00;         0.00;         0.00
