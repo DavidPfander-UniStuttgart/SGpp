@@ -244,7 +244,7 @@ int main(int argc, char **argv) {
     std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
     double ops_generate_b = static_cast<double>(grid->getSize()) *
                             static_cast<double>(trainingData.getNrows()) *
-                            (10 * static_cast<double>(dimension) + 1) * 1E-9;
+                            (6 * static_cast<double>(dimension) + 1) * 1E-9;
     std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
     std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
