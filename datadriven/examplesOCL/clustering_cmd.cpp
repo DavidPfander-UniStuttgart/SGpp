@@ -491,11 +491,8 @@ int main(int argc, char **argv) {
 
     // middlepoint between node and neighbor ops
     double ops_prune_graph = static_cast<double>(trainingData.getNrows()) *
-                             static_cast<double>(grid->getSize()) * static_cast<double>(k) *
-                             (8.0 * static_cast<double>(dimension) + 2) * 1E-9;
-    ops_prune_graph += static_cast<double>(trainingData.getNrows()) *
-                       static_cast<double>(grid->getSize()) *
-                       (static_cast<double>(dimension) * 5 + 2) * 1E-9;
+                             static_cast<double>(grid->getSize()) * static_cast<double>(k + 1) *
+                             (6.0 * static_cast<double>(dimension) + 2) * 1E-9;
     std::cout << "ops_prune_graph: " << ops_prune_graph << " GOps" << std::endl;
     double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
     std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;
