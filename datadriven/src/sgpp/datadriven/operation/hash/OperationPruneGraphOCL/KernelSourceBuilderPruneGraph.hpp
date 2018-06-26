@@ -141,9 +141,9 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[0] << "}" << std::endl;
       sourceStream << "}" << std::endl;
     } else {
-      sourceStream << "float get_u(const float grenze, const int index, const int level_2) {"
+      sourceStream << "" << this->floatType() << " get_u(const " << this->floatType() << " grenze, const int index, const int level_2) {"
                    << std::endl;
-      sourceStream << this->indent[0] << "float ret = level_2;" << std::endl;
+      sourceStream << this->indent[0] << "" << this->floatType() << " ret = level_2;" << std::endl;
       sourceStream << this->indent[0] << "ret *= grenze;" << std::endl;
       sourceStream << this->indent[0] << "ret -= index;" << std::endl;
       sourceStream << this->indent[0] << "ret = fabs(ret);" << std::endl;
@@ -157,15 +157,15 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
           << ", 1, 1))) removeEdges(__global int *nodes, __global const int *starting_points,"
           << std::endl;
       sourceStream << this->indent[1]
-                   << "__global const float *data, __global const float *alphas, int startid) {"
+                   << "__global const " << this->floatType() << " *data, __global const " << this->floatType() << " *alphas, int startid) {"
                    << std::endl;
       sourceStream << this->indent[0] << "size_t global_index = startid + get_global_id(0);"
                    << std::endl
                    << std::endl;
 
-      sourceStream << this->indent[0] << "float eval_locations[(" << k << " + 1) * " << dimensions
+      sourceStream << this->indent[0] << "" << this->floatType() << " eval_locations[(" << k << " + 1) * " << dimensions
                    << "];  // (k + 1) * " << dimensions << "" << std::endl;
-      sourceStream << this->indent[0] << "float evals[" << k
+      sourceStream << this->indent[0] << "" << this->floatType() << " evals[" << k
                    << " + 1];                  // (k + 1)-many results" << std::endl;
       sourceStream << this->indent[0] << "for (int cur_eval = 0; cur_eval < " << k
                    << " + 1; cur_eval += 1) {" << std::endl;
@@ -198,7 +198,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << std::endl;
       sourceStream << this->indent[2] << "if (global_index < " << data_size
                    << " && neighbor_index >= 0) {" << std::endl;
-      sourceStream << this->indent[3] << "float loc_dim = data[d + neighbor_index * " << dimensions
+      sourceStream << this->indent[3] << "" << this->floatType() << " loc_dim = data[d + neighbor_index * " << dimensions
                    << "];" << std::endl;
       sourceStream << this->indent[3] << "eval_locations[cur_k * " << dimensions
                    << " + d] = loc_dim + 0.5 * (eval_locations[" << k << " * " << dimensions
@@ -210,11 +210,11 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl << std::endl;
 
-      sourceStream << this->indent[0] << "local float grid_indices[" << local_size << " * "
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_indices[" << local_size << " * "
                    << dimensions << "];   // local_size * " << dimensions << "" << std::endl;
-      sourceStream << this->indent[0] << "local float grid_levels_2[" << local_size << " * "
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_levels_2[" << local_size << " * "
                    << dimensions << "];  // local_size * " << dimensions << "" << std::endl;
-      sourceStream << this->indent[0] << "local float grid_alpha[" << local_size
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_alpha[" << local_size
                    << "]; // local_size" << std::endl
                    << std::endl;
 
@@ -232,11 +232,11 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[2] << "if (grid_index < " << gridSize << ") {" << std::endl;
       sourceStream << this->indent[3] << "grid_indices[get_local_id(0) * " << dimensions
                    << " + d] =" << std::endl;
-      sourceStream << this->indent[5] << "(float)starting_points[grid_index * 2 * " << dimensions
+      sourceStream << this->indent[5] << "(" << this->floatType() << ")starting_points[grid_index * 2 * " << dimensions
                    << " + 2 * d];" << std::endl;
       sourceStream << this->indent[3] << "grid_levels_2[get_local_id(0) * " << dimensions
                    << " + d] =" << std::endl;
-      sourceStream << this->indent[5] << "(float)(1 << starting_points[grid_index * 2 * "
+      sourceStream << this->indent[5] << "(" << this->floatType() << ")(1 << starting_points[grid_index * 2 * "
                    << dimensions << " + 2 * d + 1]);" << std::endl;
       sourceStream << this->indent[3] << "grid_alpha[get_local_id(0)] = alphas[grid_index];"
                    << std::endl;
@@ -254,7 +254,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[2] << "}" << std::endl;
       sourceStream << this->indent[2] << "for (int cur_eval = 0; cur_eval < " << k
                    << " + 1; cur_eval += 1) {" << std::endl;
-      sourceStream << this->indent[3] << "float eval_1d = 1.0" << this->constSuffix() << ";"
+      sourceStream << this->indent[3] << "" << this->floatType() << " eval_1d = 1.0" << this->constSuffix() << ";"
                    << std::endl;
       sourceStream << this->indent[3] << "for (int d = 0; d < " << dimensions << "; d += 1) {"
                    << std::endl;
