@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
         static_cast<double>(grid->getSize() * trainingData.getNrows() * (6 * dimension + 1)) * 1E-9;
     std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
-    std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
+    std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS" << std::endl;
 
     result_timings << last_duration_generate_b << "; " << flops_generate_b << "; ";
 
