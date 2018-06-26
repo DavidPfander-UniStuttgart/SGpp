@@ -257,7 +257,7 @@ int main(int argc, char **argv) {
     std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
 
     size_t iterations = solver->getNumberIterations();
-    double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+    size_t act_it = iterations + 1 + (iterations / 50);
     std::cout << "act_it: " << act_it << std::endl;
     double ops_density =
         static_cast<double>(std::pow(grid->getSize(), 2) * act_it * (14 * dimension + 2)) * 1E-9;
@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
       std::cout << "Grid points after refinement step: " << grid->getSize() << std::endl;
 
       size_t iterations = solver->getNumberIterations();
-      double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+      size_t act_it = iterations + 1 + (iterations / 50);
       std::cout << "act_it: " << act_it << std::endl;
 
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
@@ -358,7 +358,7 @@ int main(int argc, char **argv) {
       std::cout << "Grid points after coarsening step: " << grid->getSize() << std::endl;
 
       size_t iterations = solver->getNumberIterations();
-      double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
+      size_t act_it = iterations + 1 + (iterations / 50);
       std::cout << "act_it: " << act_it << std::endl;
 
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;

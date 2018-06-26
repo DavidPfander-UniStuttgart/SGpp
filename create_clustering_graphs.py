@@ -91,7 +91,7 @@ graph_edges = []
 for l_index in range(len(neighborhood_list)):
     # print(len(neighborhood_list[l_index]))
     for n_index in neighborhood_list[l_index]:
-        # print("from: " + str(l_index) + " -> " + str(n_index))
+        print("from: " + str(l_index) + " -> " + str(n_index))
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         graph_edges += [line]
@@ -125,8 +125,8 @@ fig = plt.figure()
 # ax = fig.add_subplot(111, projection='3d')
 ax = fig.add_subplot(111)
 
-ax.set_xlim(0.0, 1.0)
-ax.set_ylim(0.0, 1.0)
+# ax.set_xlim(0.0, 1.0)
+# ax.set_ylim(0.0, 1.0)
 
 if not args.dont_display_grid:
     ax.scatter(X_grid, Y_grid, c='y', zorder=3)
