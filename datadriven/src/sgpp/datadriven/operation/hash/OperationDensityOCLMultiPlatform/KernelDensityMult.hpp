@@ -231,7 +231,7 @@ class KernelDensityMult {
       if (verbose) std::cout << "generating kernel source" << std::endl;
       std::string program_src =
           kernelSourceBuilder.generateSource(dims, gridSize + (localSize - gridSize % localSize));
-      if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
+      // if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
       this->kernelMult =
           manager->buildKernel(program_src, device, kernelConfiguration, "multdensity");

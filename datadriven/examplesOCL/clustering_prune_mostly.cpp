@@ -34,9 +34,11 @@ using namespace sgpp;
 int main(int argc, char **argv) {
   // std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train_small.arff";
   std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train.arff";
+  // std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train_larger.arff";
+  // std::string datasetFileName = "datasets/DR5/DR5_nowarnings_less05_train_reducing.arff";
   // std::string datasetFileName = "datasets/friedman/friedman1_10d_150000.arff";
   // std::string datasetFileName = "datasets/friedman/friedman1_10d_small.arff";
-  size_t level = 7;
+  size_t level = 8;
   double lambda = 1E-2;
   // std::string configFileName = "config_ocl_float_i76700k_valgrind.cfg";
   std::string configFileName = "config_ocl_float_i76700k.cfg";
@@ -119,16 +121,25 @@ int main(int argc, char **argv) {
 
     operation_graph->create_graph(graph);
 
-    double acc_duration_create_graph = operation_graph->getAccDuration();
-    std::cout << "acc_duration_create_graph: " << acc_duration_create_graph << std::endl;
+    double last_duration_create_graph = operation_graph->getLastDuration();
+    std::cout << "last_duration_create_graph: " << last_duration_create_graph << std::endl;
 
-    std::cout << "trainingData.getNrows(): " << trainingData.getNrows() << std::endl;
-    std::cout << "dimension: " << dimension << std::endl;
     double ops_create_graph =
         static_cast<double>(std::pow(trainingData.getNrows(), 2) * 4 * dimension) * 1E-9;
     std::cout << "ops_create_graph: " << ops_create_graph << " GOps" << std::endl;
-    double flops_create_graph = ops_create_graph / acc_duration_create_graph;
+    double flops_create_graph = ops_create_graph / last_duration_create_graph;
     std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
+
+    // std::ofstream graph_unpruned_output("graph_unpruned_kernel.data");
+    // for (size_t i = 0; i < graph.size() / k; i++) {
+    //   for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
+    //     if (cur_k > 0) {
+    //       graph_unpruned_output << ", ";
+    //     }
+    //     graph_unpruned_output << graph[i * k + cur_k];
+    //   }
+    //   graph_unpruned_output << std::endl;
+    // }
   }
 
   {
@@ -143,9 +154,9 @@ int main(int argc, char **argv) {
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph << std::endl;
 
     // middlepoint between node and neighbor ops
-    double ops_prune_graph =
-        static_cast<double>(trainingData.getNrows() * grid->getSize() * (k + 1)) *
-        (6.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+    double ops_prune_graph = static_cast<double>(trainingData.getNrows() * grid->getSize() *
+                                                 (k + 1) * (6 * dimension + 2)) *
+                             1E-9;
     std::cout << "ops_prune_graph: " << ops_prune_graph << " GOps" << std::endl;
     double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
     std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;

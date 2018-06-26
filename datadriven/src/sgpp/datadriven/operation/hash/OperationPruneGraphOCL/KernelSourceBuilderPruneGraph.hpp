@@ -76,8 +76,9 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << " *alphas, int startid) {" << std::endl
                    << this->indent[0] << "size_t index = get_global_id(0);" << std::endl
                    << this->indent[0] << "size_t global_index = startid + get_global_id(0);"
-                   << std::endl
-                   << this->indent[0] << "__private " << this->floatType() << " endwert=0.0;"
+                   << std::endl;
+      sourceStream << this->indent[0] << "if (global_index < " << data_size << ") {" << std::endl;
+      sourceStream << this->indent[0] << "__private " << this->floatType() << " endwert=0.0;"
                    << std::endl
                    << this->indent[0] << "__private " << this->floatType() << " wert=1.0;"
                    << std::endl
@@ -85,8 +86,11 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "//Calculate density" << std::endl
                    << this->indent[1] << "endwert=0;" << std::endl
-                   << this->indent[1] << "int nachbar=nodes[index* " << k << " +i];" << std::endl
-                   << this->indent[1] << "for (int gridpoint=0;gridpoint< " << gridSize
+                   << this->indent[1] << "int nachbar=nodes[index* " << k << " +i];" << std::endl;
+      sourceStream << this->indent[1] << "if (nachbar < 0) {" << std::endl;
+      sourceStream << this->indent[2] << "continue;" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl;
+      sourceStream << this->indent[1] << "for (int gridpoint=0;gridpoint< " << gridSize
                    << " ;gridpoint++)" << std::endl
                    << this->indent[1] << "{" << std::endl
                    << this->indent[2] << "wert=1;" << std::endl
@@ -133,8 +137,9 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[1] << "{" << std::endl
                    << this->indent[2] << "nodes[ " << k << " *index + i] = -1;" << std::endl
                    << this->indent[1] << "}" << std::endl
-                   << this->indent[0] << "}" << std::endl
-                   << "}" << std::endl;
+                   << this->indent[0] << "}" << std::endl;
+      sourceStream << this->indent[0] << "}" << std::endl;
+      sourceStream << "}" << std::endl;
     } else {
       sourceStream << "float get_u(const float grenze, const int index, const int level_2) {"
                    << std::endl;

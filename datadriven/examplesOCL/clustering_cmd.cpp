@@ -242,9 +242,8 @@ int main(int argc, char **argv) {
 
     double last_duration_generate_b = operation_mult->getLastDurationB();
     std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
-    double ops_generate_b = static_cast<double>(grid->getSize()) *
-                            static_cast<double>(trainingData.getNrows()) *
-                            (6 * static_cast<double>(dimension) + 1) * 1E-9;
+    double ops_generate_b =
+        static_cast<double>(grid->getSize() * trainingData.getNrows() * (6 * dimension + 1)) * 1E-9;
     std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
     double flops_generate_b = ops_generate_b / last_duration_generate_b;
     std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
@@ -260,9 +259,8 @@ int main(int argc, char **argv) {
     size_t iterations = solver->getNumberIterations();
     double act_it = static_cast<double>(iterations + 1 + (iterations / 50));
     std::cout << "act_it: " << act_it << std::endl;
-    // TODO: CONTINUE!!! test solver iterations retrieved correctly
-    double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
-                         (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+    double ops_density =
+        static_cast<double>(std::pow(grid->getSize(), 2) * act_it * (14 * dimension + 2)) * 1E-9;
     std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
     double flops_density = ops_density / acc_duration_density;
     std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -294,6 +292,15 @@ int main(int argc, char **argv) {
 
       operation_mult->generateb(trainingData, b);
 
+      double last_duration_generate_b = operation_mult->getLastDurationB();
+      std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
+      double ops_generate_b =
+          static_cast<double>(grid->getSize() * trainingData.getNrows() * (6 * dimension + 1)) *
+          1E-9;
+      std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+      double flops_generate_b = ops_generate_b / last_duration_generate_b;
+      std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
+
       std::cout << "Solving density SLE" << std::endl;
       solver->solve(*operation_mult, alpha, b, false, true);
 
@@ -306,8 +313,8 @@ int main(int argc, char **argv) {
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
       double acc_duration_density = operation_mult->getAccDurationDensityMult();
       std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
-      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
-                           (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+      double ops_density =
+          static_cast<double>(std::pow(grid->getSize(), 2) * act_it * (14 * dimension + 2)) * 1E-9;
       std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
       double flops_density = ops_density / acc_duration_density;
       std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -336,6 +343,15 @@ int main(int argc, char **argv) {
       // TODO: remove this?
       operation_mult->generateb(trainingData, b);
 
+      double last_duration_generate_b = operation_mult->getLastDurationB();
+      std::cout << "last_duration_generate_b: " << last_duration_generate_b << std::endl;
+      double ops_generate_b =
+          static_cast<double>(grid->getSize() * trainingData.getNrows() * (6 * dimension + 1)) *
+          1E-9;
+      std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+      double flops_generate_b = ops_generate_b / last_duration_generate_b;
+      std::cout << "flops_generate_b: " << flops_generate_b << std::endl;
+
       std::cout << "Solving density SLE" << std::endl;
       solver->solve(*operation_mult, alpha, b, false, true);
 
@@ -348,8 +364,10 @@ int main(int argc, char **argv) {
       std::cout << "acc_duration_b: " << operation_mult->getAccDurationB() << std::endl;
       double acc_duration_density = operation_mult->getAccDurationDensityMult();
       std::cout << "acc_duration_density: " << acc_duration_density << std::endl;
-      double ops_density = std::pow(static_cast<double>(grid->getSize()), 2.0) * act_it *
-                           (14.0 * static_cast<double>(dimension) + 2.0) * 1E-9;
+
+      double ops_density =
+          static_cast<double>(std::pow(grid->getSize(), 2) * act_it * (14 * dimension + 2)) * 1E-9;
+
       std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
       double flops_density = ops_density / acc_duration_density;
       std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
@@ -438,8 +456,8 @@ int main(int argc, char **argv) {
     double acc_duration_create_graph = operation_graph->getAccDuration();
     std::cout << "acc_duration_create_graph: " << acc_duration_create_graph << std::endl;
 
-    double ops_create_graph = std::pow(static_cast<double>(trainingData.getNrows()), 2.0) * 4.0 *
-                              static_cast<double>(dimension) * 1E-9;
+    double ops_create_graph =
+        static_cast<double>(std::pow(trainingData.getNrows(), 2) * 4 * dimension) * 1E-9;
     std::cout << "ops_create_graph: " << ops_create_graph << " GOps" << std::endl;
     double flops_create_graph = ops_create_graph / acc_duration_create_graph;
     std::cout << "flops_create_graph: " << flops_create_graph << " GFLOPS" << std::endl;
@@ -490,9 +508,9 @@ int main(int argc, char **argv) {
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph << std::endl;
 
     // middlepoint between node and neighbor ops
-    double ops_prune_graph = static_cast<double>(trainingData.getNrows()) *
-                             static_cast<double>(grid->getSize()) * static_cast<double>(k + 1) *
-                             (6.0 * static_cast<double>(dimension) + 2) * 1E-9;
+    double ops_prune_graph = static_cast<double>(trainingData.getNrows() * grid->getSize() *
+                                                 (k + 1) * (6 * dimension + 2)) *
+                             1E-9;
     std::cout << "ops_prune_graph: " << ops_prune_graph << " GOps" << std::endl;
     double flops_prune_graph = ops_prune_graph / last_duration_prune_graph;
     std::cout << "flops_prune_graph: " << flops_prune_graph << " GFLOPS" << std::endl;

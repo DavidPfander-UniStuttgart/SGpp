@@ -50,7 +50,8 @@ class KernelCreateGraph {
   // size_t totalBlockSize;
   /// Host side buffer for the dataset
   std::vector<T> &data;
-  size_t unpadded_datasize;
+  size_t unpadded_data_size;
+  size_t padded_data_size;
   cl_event clTiming = nullptr;
 
  public:
@@ -88,13 +89,14 @@ class KernelCreateGraph {
       }
     }
 
-    unpadded_datasize = data.size() / dims;
-    size_t element_to_add = (localSize - ((data.size() / dims) % localSize)) * dims;
-    std::cout << "unpadded_datasize: " << unpadded_datasize
-              << " adding elements: " << (element_to_add / dims) << " (* dims)" << std::endl;
+    unpadded_data_size = data.size() / dims;
+    size_t element_to_add = localSize - (unpadded_data_size % localSize);
+    padded_data_size = unpadded_data_size + element_to_add;
+    std::cout << "unpadded_datasize: " << unpadded_data_size
+              << " adding elements: " << element_to_add << " (* dims)" << std::endl;
     // max difference between valid elements (squared): dims
     double padd_value = 3.0 * dims;
-    for (size_t i = 0; i < element_to_add; i++) {
+    for (size_t i = 0; i < element_to_add * dims; i++) {
       data.push_back(padd_value);
     }
     deviceData.intializeTo(data, 1, 0, data.size());
@@ -123,21 +125,22 @@ class KernelCreateGraph {
     //   globalworkrange[0] = chunksize;
     // }
     // globalworkrange[0] = globalworkrange[0] + (localSize - globalworkrange[0] % localSize);
-    size_t data_points = data.size() / dims;
+    // size_t data_points = data.size() / dims;
 
     // Build kernel if not already done
     if (this->kernel == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
       std::string program_src = kernelSourceBuilder.generateSource(
-          dims, k, data_points,
-          (unpadded_datasize / dims) + (localSize - (unpadded_datasize / dims) % localSize));
-      if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
+          dims, k, padded_data_size, padded_data_size
+          // (unpadded_datasize / dims) + (localSize - (unpadded_datasize / dims) % localSize)
+      );
+      // if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
       this->kernel =
           manager->buildKernel(program_src, device, kernelConfiguration, "connectNeighbors");
     }
 
-    if (!deviceResultData.isInitialized()) deviceResultData.initializeBuffer(data_points * k);
+    if (!deviceResultData.isInitialized()) deviceResultData.initializeBuffer(padded_data_size * k);
     clFinish(device->commandQueue);
     this->deviceTimingMult = 0.0;
 
@@ -163,9 +166,11 @@ class KernelCreateGraph {
 
     clTiming = nullptr;
 
-    if (verbose) std::cout << "Starting the kernel for " << data_points << " items" << std::endl;
-    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, &data_points, &localSize,
-                                 0, nullptr, &clTiming);
+    if (verbose) {
+      std::cout << "Starting the kernel for " << padded_data_size << " items" << std::endl;
+    }
+    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, &padded_data_size,
+                                 &localSize, 0, nullptr, &clTiming);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to enqueue kernel command! Error code: " << err
@@ -184,12 +189,17 @@ class KernelCreateGraph {
 
     size_t real_count;
     if (chunksize == 0) {
-      real_count = unpadded_datasize / dims;
+      // real_count = unpadded_data_size / dims;
+      real_count = unpadded_data_size;
     } else {
       real_count = chunksize;
     }
-    for (size_t i = 0; i < real_count * k; i++) result[i] = hostTemp[i];
-    if (verbose) std::cout << "Read data from opencl device" << std::endl;
+    for (size_t i = 0; i < real_count * k; i++) {
+      result[i] = hostTemp[i];
+    }
+    if (verbose) {
+      std::cout << "Read data from opencl device" << std::endl;
+    }
     // determine kernel execution time
     cl_ulong startTime = 0;
     cl_ulong endTime = 0;

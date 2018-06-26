@@ -97,8 +97,8 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "C[get_global_id(0)]+=value;" << std::endl
                    << this->indent[0] << "}" << std::endl
-                   << this->indent[1] << "C[get_global_id(0)]/=" << data_points << ";" << std::endl
-                   << "}" << std::endl;
+                   << this->indent[1] << "C[get_global_id(0)]/=" << data_points << ";" << std::endl;
+      sourceStream << "}" << std::endl;
     } else {
       // with local memory
       // int dims = 10;
