@@ -38,7 +38,8 @@ int main(int argc, char **argv) {
   size_t level = 9;
   double lambda = 1E-2;
   // std::string configFileName = "config_ocl_float_i76700k_valgrind.cfg";
-  std::string configFileName = "config_ocl_float_i76700k.cfg";
+  // std::string configFileName = "config_ocl_float_i76700k.cfg";
+  std::string configFileName = "config_ocl_double_w8100.cfg";
 
   // read dataset
   std::cout << "reading dataset...";
