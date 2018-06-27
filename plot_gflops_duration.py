@@ -49,6 +49,7 @@ for dim in range(2, 11, 2):
     pylab.legend(loc='upper left')
     # pylab.show()
     pylab.savefig("graphs/" + "duration_gaussian_c" + str(clusters) + "_dim" + str(dim) + ".png")
+    pylab.clf()
 
     # fig, ax = plt.figure()
     # ax.plot(columns[header_map['dataset_size']], header_map['avr_gflops_generate_b'], label='avr_gflops_generate_b')

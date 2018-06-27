@@ -6,12 +6,15 @@ import subprocess
 import re
 from itertools import chain
 
-if len(sys.argv) > 2 or len(sys.argv) < 2:
-    print("error: config not provided (or too many arguments)")
+if len(sys.argv) > 3 or len(sys.argv) < 3:
+    print("error: config or device not provided (or too many arguments)")
     exit()
 
 configFile = sys.argv[1]
 print("configFile: " + configFile)
+
+deviceName = sys.argv[1]
+print("deviceName: " + deviceName)
 
 # common dataset parameters
 clusters=3
@@ -24,7 +27,7 @@ print("clusters_distance: " + str(clusters_distance))
 # print("noise: " + )
 
 # common
-levels = {2: 8, 4: 8, 6: 7, 8: 7, 10: 6}
+levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
 print("levels: " + str(levels))
 lambdas = 1E-2
 print("lambda: " + str(lambdas))
@@ -34,9 +37,9 @@ k =5
 print("k: " + str(k))
 
 # refinement
-refinement_steps=5
-refinement_points=20
-coarsen_points=100
+refinement_steps=1
+refinement_points=0
+coarsen_points=10000
 coarsen_threshold=1E-3
 
 CSV_SEP = ";"
@@ -44,7 +47,7 @@ CSV_SEP = ";"
 # for dim in range(2, 3, 2):
 for dim in range(2, 11, 2):
 
-    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + ".csv", "w")
+    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + ".csv", "w")
     f_result.write("dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density" + CSV_SEP + "duration_create_graph" + CSV_SEP + "gflops_create_graph" + CSV_SEP + "duration_prune_graph" + CSV_SEP + "gflops_prune_graph\n")
 
     # for dataset_size in [200]:
