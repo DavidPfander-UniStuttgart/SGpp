@@ -16,6 +16,7 @@ print("configFile: " + configFile)
 precision = "double"
 if configFile.find("double") == -1:
     precision = "float"
+print("precision: " + precision)
 
 deviceName = sys.argv[1]
 print("deviceName: " + deviceName)
