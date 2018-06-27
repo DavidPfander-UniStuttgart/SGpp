@@ -27,7 +27,8 @@ print("clusters_distance: " + str(clusters_distance))
 # print("noise: " + )
 
 # common
-levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
+# levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
+levels = {2: 5, 4: 5, 6: 5, 8: 5, 10: 5}
 print("levels: " + str(levels))
 lambdas = 1E-2
 print("lambda: " + str(lambdas))
