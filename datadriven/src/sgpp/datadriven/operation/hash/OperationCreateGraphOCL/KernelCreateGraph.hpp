@@ -181,7 +181,9 @@ class KernelCreateGraph {
   double finalize_graph_creation(std::vector<int> &result, size_t startid, size_t chunksize) {
     clFinish(device->commandQueue);
 
-    if (verbose) std::cout << "Finished kernel execution" << std::endl;
+    if (verbose) {
+      std::cout << "Finished kernel execution" << std::endl;
+    }
     deviceResultData.readFromBuffer();
     clFinish(device->commandQueue);
 

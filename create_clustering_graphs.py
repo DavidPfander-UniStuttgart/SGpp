@@ -15,6 +15,7 @@ requiredNamed.add_argument('--dataset_name', required=True)
 parser.add_argument('--use_unpruned_graph', default=False, action='store_true')
 parser.add_argument('--dont_display_grid', default=False, action='store_true')
 parser.add_argument('--dont_display_knn', default=False, action='store_true')
+parser.add_argument('--dont_display_data', default=False, action='store_true')
 args = parser.parse_args()
 
 # read-in dataset
@@ -91,7 +92,7 @@ graph_edges = []
 for l_index in range(len(neighborhood_list)):
     # print(len(neighborhood_list[l_index]))
     for n_index in neighborhood_list[l_index]:
-        print("from: " + str(l_index) + " -> " + str(n_index))
+        # print("from: " + str(l_index) + " -> " + str(n_index))
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         graph_edges += [line]
@@ -116,22 +117,25 @@ colors = ["r", "r", "r"]
 markers = ["o", "o", "o"]
 c=colors[0]
 m=markers[0]
+marker_size = 0.2
 
 ##################################################
 # Estimate density
 ##################################################
 
+
 fig = plt.figure()
 # ax = fig.add_subplot(111, projection='3d')
 ax = fig.add_subplot(111)
 
-# ax.set_xlim(0.0, 1.0)
-# ax.set_ylim(0.0, 1.0)
+ax.set_xlim(0.0, 1.0)
+ax.set_ylim(0.0, 1.0)
 
 if not args.dont_display_grid:
-    ax.scatter(X_grid, Y_grid, c='y', zorder=3)
+    ax.scatter(X_grid, Y_grid, c='y', zorder=3, s=marker_size)
 
-ax.scatter(X_dataset, Y_dataset, c='k', zorder=3)
+if not args.dont_display_data:
+    ax.scatter(X_dataset, Y_dataset, c='k', zorder=3, s=marker_size)
 
 cs = ax.contourf(X_density_grid, Y_density_grid, DensityValues, zorder=1,cmap=plt.cm.jet) #, zorder=2
 fig.colorbar(cs)
@@ -145,7 +149,10 @@ if not args.dont_display_knn:
 # plt.show()
 if args.dont_display_knn:
     if args.dont_display_grid:
-        fig.savefig("graphs/" + args.scenario_name + "_density.png", dpi=300)
+        if args.dont_display_data:
+            fig.savefig("graphs/" + args.scenario_name + "_density_only.png", dpi=300)
+        else:
+            fig.savefig("graphs/" + args.scenario_name + "_density.png", dpi=300)
     else:
         fig.savefig("graphs/" + args.scenario_name + "_density_with_grid.png", dpi=300)
 else:

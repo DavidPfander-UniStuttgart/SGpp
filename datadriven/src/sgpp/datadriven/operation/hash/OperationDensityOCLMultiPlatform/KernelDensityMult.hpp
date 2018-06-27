@@ -365,7 +365,9 @@ class KernelDensityMult {
   double finish_mult(std::vector<T> &result, int startid, int chunksize) {
     clFinish(device->commandQueue);
 
-    if (verbose) std::cerr << "Finished kernel execution" << std::endl;
+    if (verbose) {
+      std::cout << "Finished kernel execution" << std::endl;
+    }
     deviceResultData.readFromBuffer();
     clFinish(device->commandQueue);
 

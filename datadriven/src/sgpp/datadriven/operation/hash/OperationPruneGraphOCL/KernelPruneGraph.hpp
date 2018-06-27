@@ -185,7 +185,9 @@ class KernelPruneGraph {
     }
     clFinish(device->commandQueue);
 
-    if (verbose) std::cout << "Finished kernel execution" << std::endl;
+    if (verbose) {
+      std::cout << "Finished kernel execution" << std::endl;
+    }
     deviceGraph.readFromBuffer();
     clFinish(device->commandQueue);
 
