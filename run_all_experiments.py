@@ -13,7 +13,12 @@ if len(sys.argv) > 3 or len(sys.argv) < 3:
 configFile = sys.argv[1]
 print("configFile: " + configFile)
 
-deviceName = sys.argv[1]
+precision = "double"
+if configFile.find("double") == -1:
+    precision = "float"
+print("precision: " + precision)
+
+deviceName = sys.argv[2]
 print("deviceName: " + deviceName)
 
 # common dataset parameters
@@ -29,6 +34,7 @@ print("clusters_distance: " + str(clusters_distance))
 # common
 # levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
 levels = {2: 5, 4: 5, 6: 5, 8: 5, 10: 5}
+
 print("levels: " + str(levels))
 lambdas = 1E-2
 print("lambda: " + str(lambdas))
@@ -48,7 +54,7 @@ CSV_SEP = ";"
 # for dim in range(2, 3, 2):
 for dim in range(2, 11, 2):
 
-    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + ".csv", "w")
+    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + "_" + precision + ".csv", "w")
     f_result.write("dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density" + CSV_SEP + "duration_create_graph" + CSV_SEP + "gflops_create_graph" + CSV_SEP + "duration_prune_graph" + CSV_SEP + "gflops_prune_graph\n")
 
     # for dataset_size in [200]:
