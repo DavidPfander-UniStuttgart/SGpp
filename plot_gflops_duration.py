@@ -6,11 +6,13 @@ import csv
 import pylab
 
 clusters=3
+deviceName="config_ocl_float_i76700k.cfg" # i76700k
+precision="float"
 
 # for dim in range(2, 3, 2):
 for dim in range(2, 11, 2):
 
-    results_file = "results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + ".csv"
+    results_file = "results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + "_" + precision + ".csv"
 
     csvfile = open(results_file, 'r')
     reader = csv.reader(csvfile, delimiter=';', quotechar='#')

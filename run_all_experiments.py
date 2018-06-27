@@ -18,7 +18,7 @@ if configFile.find("double") == -1:
     precision = "float"
 print("precision: " + precision)
 
-deviceName = sys.argv[1]
+deviceName = sys.argv[2]
 print("deviceName: " + deviceName)
 
 # common dataset parameters
@@ -32,7 +32,7 @@ print("clusters_distance: " + str(clusters_distance))
 # print("noise: " + )
 
 # common
-levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
+levels = {2: 9, 4: 8, 6: 7, 8: 6, 10: 5}
 print("levels: " + str(levels))
 lambdas = 1E-2
 print("lambda: " + str(lambdas))
