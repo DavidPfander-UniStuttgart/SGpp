@@ -13,6 +13,10 @@ if len(sys.argv) > 3 or len(sys.argv) < 3:
 configFile = sys.argv[1]
 print("configFile: " + configFile)
 
+precision = "double"
+if configFile.find("double") == -1:
+    precision = "float"
+
 deviceName = sys.argv[1]
 print("deviceName: " + deviceName)
 
@@ -47,7 +51,7 @@ CSV_SEP = ";"
 # for dim in range(2, 3, 2):
 for dim in range(2, 11, 2):
 
-    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + ".csv", "w")
+    f_result = open("results/results_gaussian_c" + str(clusters) + "_dim" + str(dim) + "_" + deviceName + "_" + precision ".csv", "w")
     f_result.write("dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density" + CSV_SEP + "duration_create_graph" + CSV_SEP + "gflops_create_graph" + CSV_SEP + "duration_prune_graph" + CSV_SEP + "gflops_prune_graph\n")
 
     # for dataset_size in [200]:
