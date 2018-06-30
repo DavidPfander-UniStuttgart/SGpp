@@ -52,6 +52,7 @@ for level in [5, 6]:
         pylab.tight_layout()
         for kernel_gflops in kernels_gflops:
             pylab.plot(columns[header_map['dataset_size']], columns[header_map[kernel_gflops]], label=kernels_print_name[kernel_gflops])
+            print("gflops kernel: " + kernel_gflops + ", dim: " + str(dim) + ", level: " + str(level) + " -> last dataset (should be 1m): " + str(columns[header_map[kernel_gflops]][-1]))
         pylab.legend(loc='upper left')
         pylab.title("Performance for gaussian dataset, clusters = " + str(clusters) + ", dim = " + str(dim) + ", level = " + str(level))
         pylab.xlabel("dataset size")
