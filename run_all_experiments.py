@@ -45,7 +45,7 @@ k =5
 print("k: " + str(k))
 
 # refinement
-refinement_steps=1
+refinement_steps=0
 refinement_points=0
 coarsen_points=10000
 coarsen_threshold=1E-3

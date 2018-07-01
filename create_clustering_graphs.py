@@ -2,6 +2,13 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rc('text', usetex=True)
+font = {'family' : 'Times',
+        'weight' : 'normal',
+        'size'   : 8}
+plt.rc('font', **font)
+
 from matplotlib.collections import LineCollection
 import csv
 import argparse
@@ -16,6 +23,7 @@ parser.add_argument('--use_unpruned_graph', default=False, action='store_true')
 parser.add_argument('--dont_display_grid', default=False, action='store_true')
 parser.add_argument('--dont_display_knn', default=False, action='store_true')
 parser.add_argument('--dont_display_data', default=False, action='store_true')
+parser.add_argument('--dont_display_density', default=False, action='store_true')
 args = parser.parse_args()
 
 # read-in dataset
@@ -96,7 +104,7 @@ for l_index in range(len(neighborhood_list)):
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         graph_edges += [line]
-graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['r'], linestyle='solid')
+graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['xkcd:black'], linestyle='solid')
 
 # read-in pruned dataset
 f = open("results/" + args.scenario_name + "_graph_pruned.csv", 'r')
@@ -110,21 +118,22 @@ for l_index in range(len(pruned_neighborhood_list)):
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         pruned_graph_edges += [line]
-pruned_graph_edges_collection = LineCollection(pruned_graph_edges, linewidths=(1), colors = ['r'], linestyle='solid')
+pruned_graph_edges_collection = LineCollection(pruned_graph_edges, linewidths=(1), colors = ['xkcd:black'], linestyle='solid')
 
 # colors
 colors = ["r", "r", "r"]
 markers = ["o", "o", "o"]
-c=colors[0]
-m=markers[0]
-marker_size = 0.2
+# c=colors[0]
+# m=markers[0]
+marker_size = 3.0
 
 ##################################################
 # Estimate density
 ##################################################
 
 
-fig = plt.figure()
+# fig = plt.figure(figsize=(4, 2.5))
+fig = plt.figure(figsize=(3, 1.875))
 # ax = fig.add_subplot(111, projection='3d')
 ax = fig.add_subplot(111)
 
@@ -132,13 +141,14 @@ ax.set_xlim(0.0, 1.0)
 ax.set_ylim(0.0, 1.0)
 
 if not args.dont_display_grid:
-    ax.scatter(X_grid, Y_grid, c='y', zorder=3, s=marker_size)
+    ax.scatter(X_grid, Y_grid, c='xkcd:black', zorder=3, s=marker_size)
 
 if not args.dont_display_data:
-    ax.scatter(X_dataset, Y_dataset, c='k', zorder=3, s=marker_size)
+    ax.scatter(X_dataset, Y_dataset, c='xkcd:red', zorder=3, s=marker_size)
 
-cs = ax.contourf(X_density_grid, Y_density_grid, DensityValues, zorder=1,cmap=plt.cm.jet) #, zorder=2
-fig.colorbar(cs)
+if not args.dont_display_density:
+    cs = ax.contourf(X_density_grid, Y_density_grid, DensityValues, zorder=1,cmap=plt.cm.jet) #, zorder=2
+    fig.colorbar(cs)
 
 if not args.dont_display_knn:
     if not args.use_unpruned_graph:
@@ -146,25 +156,40 @@ if not args.dont_display_knn:
     else:
         ax.add_collection(graph_edges_collection)
 
-# plt.show()
 if args.dont_display_knn:
     if args.dont_display_grid:
         if args.dont_display_data:
-            fig.savefig("graphs/" + args.scenario_name + "_density_only.png", dpi=300)
+            plt.title("Sparse grid density estimation")
+            fig.savefig("graphs/" + args.scenario_name + "_density_only.eps", dpi=300)
         else:
-            fig.savefig("graphs/" + args.scenario_name + "_density.png", dpi=300)
+            if args.dont_display_density:
+                # fig.set_size_inches(6, 5)
+                plt.title("Dataset to be clustered")
+                fig.savefig("graphs/" + args.scenario_name + "_data_only.eps", dpi=300)
+            else:
+                plt.title("Density estimation from dataset")
+                fig.savefig("graphs/" + args.scenario_name + "_density.eps", dpi=300)
     else:
-        fig.savefig("graphs/" + args.scenario_name + "_density_with_grid.png", dpi=300)
+        if args.dont_display_data:
+            plt.title("Grid points spanning density estimation")
+            fig.savefig("graphs/" + args.scenario_name + "_density_with_grid_no_data.eps", dpi=300)
+        else:
+            plt.title("Density estimation from dataset with supporting grid points")
+            fig.savefig("graphs/" + args.scenario_name + "_density_with_grid.eps", dpi=300)
 else:
     if args.use_unpruned_graph:
         if args.dont_display_grid:
-            fig.savefig("graphs/" + args.scenario_name + "_unpruned.png", dpi=300)
+            plt.title("k-nearest-neighbors graph for dataset")
+            fig.savefig("graphs/" + args.scenario_name + "_unpruned.eps", dpi=300)
         else:
-            fig.savefig("graphs/" + args.scenario_name + "_unpruned_with_grid.png", dpi=300)
+            plt.title("k-nearest-neighbors graph for dataset with supporting grid")
+            fig.savefig("graphs/" + args.scenario_name + "_unpruned_with_grid.eps", dpi=300)
     else:
         if args.dont_display_grid:
-            fig.savefig("graphs/" + args.scenario_name + "_pruned.png", dpi=300)
+            plt.title("Pruned k-nearest-neighbors graph")
+            fig.savefig("graphs/" + args.scenario_name + "_pruned.eps", dpi=300)
         else:
-            fig.savefig("graphs/" + args.scenario_name + "_pruned_with_grid.png", dpi=300)
+            plt.title("Pruned k-nearest-neighbors graph with supporting grid")
+            fig.savefig("graphs/" + args.scenario_name + "_pruned_with_grid.eps", dpi=300)
 
 plt.close()
