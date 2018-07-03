@@ -129,9 +129,10 @@ int main(int argc, char *argv[]) {
       find_clusters_end;
   find_clusters_start = std::chrono::system_clock::now();
 
-  std::vector<size_t> cluster_assignments =
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(knn_graph,
-                                                                                        12);
+  std::vector<int> node_cluster_map;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+      knn_graph, 12, node_cluster_map, clusters);
 
   find_clusters_end = std::chrono::system_clock::now();
   if (rank == 0) {
@@ -143,7 +144,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::ofstream out("cluster_erg.txt");
-  for (size_t datapoint : cluster_assignments) {
+  for (size_t datapoint : node_cluster_map) {
     out << datapoint << " ";
   }
 
