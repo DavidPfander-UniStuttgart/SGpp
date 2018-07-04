@@ -127,6 +127,17 @@ class KernelDensityB {
       this->kernelB = manager->buildKernel(program_src, device, kernelConfiguration, "cscheme");
     }
 
+    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    size_t globalworkrange;
+    size_t local_padding;
+    if (chunksize == 0) {
+      local_padding = local_size - (gridSize % local_size);
+      globalworkrange = gridSize + local_padding;
+    } else {
+      local_padding = local_size - (chunksize % local_size);
+      globalworkrange = chunksize + local_padding;
+    }
+
     // Load data into buffers if not already done
     if (!deviceResultData.isInitialized()) {
       if (chunksize == 0) {
@@ -136,11 +147,11 @@ class KernelDensityB {
         }
         deviceResultData.intializeTo(zeros, 1, 0, gridSize);
       } else {
-        std::vector<T> zeros(chunksize);
-        for (size_t i = 0; i < chunksize; i++) {
+        std::vector<T> zeros(chunksize + local_padding);
+        for (size_t i = 0; i < chunksize + local_padding; i++) {
           zeros[i] = 0.0;
         }
-        deviceResultData.intializeTo(zeros, 1, 0, chunksize);
+        deviceResultData.intializeTo(zeros, 1, 0, chunksize + local_padding);
       }
       clFinish(device->commandQueue);
     }
@@ -174,17 +185,6 @@ class KernelDensityB {
 
     clTiming = nullptr;
 
-    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
-
-    size_t globalworkrange;
-    size_t local_padding;
-    if (chunksize == 0) {
-      local_padding = local_size - (gridSize % local_size);
-      globalworkrange = gridSize + local_padding;
-    } else {
-      local_padding = local_size - (chunksize % local_size);
-      globalworkrange = chunksize + local_padding;
-    }
     // enqueue kernel
 
     if (verbose) {
@@ -204,7 +204,9 @@ class KernelDensityB {
   }
 
   double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t chunksize = 0) {
+    std::cerr << "Start finishing" << std::endl;
     clFinish(device->commandQueue);
+    std::cerr << "End finishing" << std::endl;
 
     if (verbose) {
       std::cout << "Finished kernel execution" << std::endl;
