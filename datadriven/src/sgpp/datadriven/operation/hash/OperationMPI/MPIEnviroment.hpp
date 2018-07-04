@@ -220,7 +220,7 @@ class SimpleQueue {
       MPI_Probe(MPI_ANY_SOURCE, 1, comm, &stat);
       MPI_Get_count(&stat, mpi_typ, &messagesize);
       if (verbose) {
-        std::cout << "Received work package [" << received_packageindex + 1 << " / " << packagecount
+        std::cout << "Received work package results [" << received_packageindex + 1 << " / " << packagecount
                   << "] from node " << stat.MPI_SOURCE << "! Messagesize: " << messagesize
                   << std::endl;
       }

@@ -120,11 +120,10 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
         alphaVector(gridSize),
         dataVector(data.getSize()) {
     // Store Grid in a opencl compatible buffer
-    std::vector<int> points;
     for (size_t i = 0; i < gridSize; i++) {
       for (size_t d = 0; d < dims; d++) {
-        points.push_back(gridpoints[2 * dimensions * i + 2 * d]);
-        points.push_back(gridpoints[2 * dimensions * i + 2 * d + 1]);
+        pointsVector.push_back(gridpoints[2 * dimensions * i + 2 * d]);
+        pointsVector.push_back(gridpoints[2 * dimensions * i + 2 * d + 1]);
       }
     }
     if (verbose)
