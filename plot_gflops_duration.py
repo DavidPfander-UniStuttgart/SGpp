@@ -12,7 +12,8 @@ plt.rc('font', **font)
 import csv
 import pylab
 from pylab import rcParams
-rcParams['figure.figsize'] = 4.5, 3.2
+rcParams['figure.figsize'] = 4.2, 3.15
+# rcParams['figure.figsize'] = 3.7, 2.3125
 # rcParams.update({'figure.autolayout': True})
 import argparse
 
@@ -50,22 +51,27 @@ for level in [5, 6]:
             counter += 1
 
         pylab.tight_layout()
+
         for kernel_gflops in kernels_gflops:
             pylab.plot(columns[header_map['dataset_size']], columns[header_map[kernel_gflops]], label=kernels_print_name[kernel_gflops])
             print("gflops kernel: " + kernel_gflops + ", dim: " + str(dim) + ", level: " + str(level) + " -> last dataset (should be 1m): " + str(columns[header_map[kernel_gflops]][-1]))
         pylab.legend(loc='upper left')
-        pylab.title("Performance for gaussian dataset, clusters = " + str(clusters) + ", dim = " + str(dim) + ", level = " + str(level))
+        pylab.title("Performance for gaussian dataset, " + str(clusters) + " clusters, " + str(dim) + "d, level = " + str(level))
         pylab.xlabel("dataset size")
         pylab.ylabel("GFLOPS (" + str(args.precision) + ")")
         pylab.savefig("graphs/" + "gflops_gaussian_c" + str(clusters)  + "_" + args.device_name + "_" + args.precision + "_l" + str(level) + "_d" + str(dim) + ".eps")
         pylab.clf()
 
+        # pylab.figure(4,3)
         pylab.tight_layout()
+        total_runtime = [sum([columns[header_map[kernel_duration]][i] for kernel_duration in kernels_duration]) for i in range(len(columns[header_map[kernels_duration[0]]])) ]
+        pylab.plot(columns[header_map['dataset_size']], total_runtime, label="total duration")
+        # print(total_runtime)
         for kernel_duration in kernels_duration:
             pylab.plot(columns[header_map['dataset_size']], columns[header_map[kernel_duration]], label=kernels_duration_print_name[kernel_duration])
 
         pylab.legend(loc='upper left')
-        pylab.title("Duration for gaussian dataset, clusters = " + str(clusters) + ", dim = " + str(dim) + ", " + args.precision + ", level = " + str(level))
+        pylab.title("Duration for gaussian dataset, " + str(clusters) + " clusters, " + str(dim) + "d, " + args.precision + ", level = " + str(level))
         pylab.xlabel("dataset size")
         pylab.ylabel("duration (s)")
         pylab.savefig("graphs/" + "duration_gaussian_c" + str(clusters)  + "_" + args.device_name + "_" + args.precision + "_l" + str(level) + "_d" + str(dim) + ".eps")
