@@ -448,6 +448,10 @@ class KernelDensityMult {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         }
 
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(128));
+        }
+
         if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
           kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
         }
@@ -460,9 +464,9 @@ class KernelDensityMult {
           kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
         }
 
-        if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        }
+        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
+        // }
 
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
@@ -487,6 +491,9 @@ class KernelDensityMult {
         }
         if (kernelNode.contains("PREPROCESS_POSITIONS") == false) {
           kernelNode.addIDAttr("PREPROCESS_POSITIONS", false);
+        }
+        if (kernelNode.contains("UNROLL_DIM") == false) {
+          kernelNode.addIDAttr("UNROLL_DIM", false);
         }
       }
     }

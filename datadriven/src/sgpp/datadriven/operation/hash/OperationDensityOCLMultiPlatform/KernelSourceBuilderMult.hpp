@@ -27,9 +27,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   size_t localWorkgroupSize;
   /// Using local memory?
   bool useLocalMemory;
+  size_t localCacheSize;
   size_t dataBlockSize;
-  size_t transGridBlockSize;
-  uint64_t maxDimUnroll;
+  // size_t transGridBlockSize;
+  // uint64_t maxDimUnroll;
 
   /// Use a cache for the 2^l values? Configuration parameter is USE_LEVEL_CACHE
   bool use_level_cache;
@@ -269,30 +270,32 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         use_fabs_instead_of_fmax(false),
         preprocess_positions(false),
         unroll_dim(false) {
-    if (kernelConfiguration.contains("LOCAL_SIZE"))
-      localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    if (kernelConfiguration.contains("KERNEL_USE_LOCAL_MEMORY"))
-      useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
-    if (kernelConfiguration.contains("KERNEL_DATA_BLOCKING_SIZE"))
-      dataBlockSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
-    if (kernelConfiguration.contains("USE_LEVEL_CACHE"))
-      use_level_cache = kernelConfiguration["USE_LEVEL_CACHE"].getBool();
-    if (kernelConfiguration.contains("USE_LESS_OPERATIONS"))
-      use_less = kernelConfiguration["USE_LESS_OPERATIONS"].getBool();
-    if (kernelConfiguration.contains("DO_NOT_USE_TERNARY"))
-      do_not_use_ternary = kernelConfiguration["DO_NOT_USE_TERNARY"].getBool();
-    if (kernelConfiguration.contains("USE_IMPLICIT"))
-      use_implicit_zero = kernelConfiguration["USE_IMPLICIT"].getBool();
-    if (kernelConfiguration.contains("USE_FABS"))
-      use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
-    if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
-      preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
-      // These two options are not compatible
-      if (preprocess_positions) use_level_cache = false;
-    }
-    if (kernelConfiguration.contains("UNROLL_DIM")) {
-      unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
-    }
+    // if (kernelConfiguration.contains("LOCAL_SIZE"))
+    localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("KERNEL_USE_LOCAL_MEMORY"))
+    useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
+    // if (kernelConfiguration.contains("KERNEL_LOCAL_MEMORY_CACHE_SIZE"))
+    localCacheSize = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("KERNEL_DATA_BLOCKING_SIZE"))
+    dataBlockSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("USE_LEVEL_CACHE"))
+    use_level_cache = kernelConfiguration["USE_LEVEL_CACHE"].getBool();
+    // if (kernelConfiguration.contains("USE_LESS_OPERATIONS"))
+    use_less = kernelConfiguration["USE_LESS_OPERATIONS"].getBool();
+    // if (kernelConfiguration.contains("DO_NOT_USE_TERNARY"))
+    do_not_use_ternary = kernelConfiguration["DO_NOT_USE_TERNARY"].getBool();
+    // if (kernelConfiguration.contains("USE_IMPLICIT"))
+    use_implicit_zero = kernelConfiguration["USE_IMPLICIT"].getBool();
+    // if (kernelConfiguration.contains("USE_FABS"))
+    use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
+    // if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
+    preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
+    // These two options are not compatible
+    if (preprocess_positions) use_level_cache = false;
+    // }
+    // if (kernelConfiguration.contains("UNROLL_DIM")) {
+    unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
+    // }
   }
 
   /// Generates the opencl source code for the density matrix-vector multiplication
@@ -347,15 +350,17 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     // Store points in local memory
     if (useLocalMemory && !preprocess_positions) {
       sourceStream << this->indent[0] << "__local "
-                   << "int indices_local[" << localWorkgroupSize * dimensions << "];" << std::endl
+                   << "int indices_local[" << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local "
-                   << "int level_local[" << localWorkgroupSize * dimensions << "];" << std::endl
+                   << "int level_local[" << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl
+                   << localCacheSize << "];" << std::endl
                    << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << problemsize / localCacheSize << "; group++) {" << std::endl
+                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                   << std::endl;
+      sourceStream << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl
                    << this->indent[2] << "indices_local[local_id * " << dimensions
                    << " + j] = starting_points[group * " << localWorkgroupSize * dimensions * 2
@@ -365,78 +370,85 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << "  + local_id * " << dimensions * 2 << " + 2 * j + 1];" << std::endl
                    << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
+                   << localWorkgroupSize << "  + local_id ];" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "__private " << this->floatType();
     } else if (preprocess_positions && !unroll_dim) {
       // declare local arrays for grid point positions, and hs and hs inverses
       sourceStream << this->indent[0] << "__local " << this->floatType() << " positions_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " hs_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local int hinverses_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl;
+                   << localCacheSize << "];" << std::endl;
       // start loop
       sourceStream << this->indent[0] << "for (int group = 0; group < "
                    << problemsize / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                   << std::endl;
+      sourceStream << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl;
       // get hs inverse
       sourceStream << this->indent[2] << "hinverses_local[local_id * " << dimensions
-                   << " + j] = hs_inverses[group * " << localWorkgroupSize * dimensions
+                   << " + j] = hs_inverses[group * " << localCacheSize * dimensions
                    << " + local_id*" << dimensions << " + j];" << std::endl;
       // get hs
       sourceStream << this->indent[2] << "hs_local[local_id * " << dimensions
-                   << " + j] = hs[group * " << localWorkgroupSize * dimensions << " + local_id*"
+                   << " + j] = hs[group * " << localCacheSize * dimensions << " + local_id*"
                    << dimensions << " + j];" << std::endl;
       // get positions
       sourceStream << this->indent[2] << "positions_local[local_id * " << dimensions
-                   << " + j] = positions[group * " << localWorkgroupSize * dimensions
-                   << " + local_id*" << dimensions << " + j];" << std::endl;
+                   << " + j] = positions[group * " << localCacheSize * dimensions << " + local_id*"
+                   << dimensions << " + j];" << std::endl;
       sourceStream << "}" << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
+                   << localCacheSize << "  + local_id ];" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "__private " << this->floatType();
     } else if (preprocess_positions && unroll_dim) {
       for (size_t dim = 0; dim < dimensions; ++dim) {
         sourceStream << this->indent[0] << "__local " << this->floatType() << " positions_local_dim"
-                     << dim << "[" << localWorkgroupSize << "];" << std::endl
+                     << dim << "[" << localCacheSize << "];" << std::endl
                      << this->indent[0] << "__local " << this->floatType() << " hs_local"
-                     << "_dim" << dim << "[" << localWorkgroupSize << "];" << std::endl
+                     << "_dim" << dim << "[" << localCacheSize << "];" << std::endl
                      << this->indent[0] << "__local int hinverses_local"
-                     << "_dim" << dim << "[" << localWorkgroupSize << "];" << std::endl;
+                     << "_dim" << dim << "[" << localCacheSize << "];" << std::endl;
       }
       sourceStream << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl;
+                   << localCacheSize << "];" << std::endl;
       // start loop
       sourceStream << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
+                   << problemsize / localCacheSize << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                   << std::endl;
       for (size_t dim = 0; dim < dimensions; ++dim) {
         // get hs inverse
         sourceStream << this->indent[2] << "hinverses_local_dim" << dim
-                     << "[local_id] = hs_inverses[group * " << localWorkgroupSize * dimensions
+                     << "[local_id] = hs_inverses[group * " << localCacheSize * dimensions
                      << " + local_id*" << dimensions << " + " << dim << "];" << std::endl;
         // get hs
         sourceStream << this->indent[2] << "hs_local_dim" << dim << "[local_id] = hs[group * "
-                     << localWorkgroupSize * dimensions << " + local_id*" << dimensions << " + "
-                     << dim << "];" << std::endl;
+                     << localCacheSize * dimensions << " + local_id*" << dimensions << " + " << dim
+                     << "];" << std::endl;
         // get positions
         sourceStream << this->indent[2] << "positions_local_dim" << dim
-                     << "[local_id] = positions[group * " << localWorkgroupSize * dimensions
+                     << "[local_id] = positions[group * " << localCacheSize * dimensions
                      << " + local_id*" << dimensions << " + " << dim << "];" << std::endl;
       }
-      sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
+      sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * " << localCacheSize
+                   << "  + local_id ];" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "__private " << this->floatType();
     } else {
@@ -541,14 +553,13 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
 
     sourceStream << "}" << std::endl;
 
-    if (kernelConfiguration.contains("WRITE_SOURCE")) {
-      if (kernelConfiguration["WRITE_SOURCE"].getBool()) {
-        this->writeSource("DensityMultiplication.cl", sourceStream.str());
-      }
+    if (kernelConfiguration["WRITE_SOURCE"].getBool() &&
+        !kernelConfiguration["REUSE_SOURCE"].getBool()) {
+      this->writeSource("DensityMultiplication.cl", sourceStream.str());
     }
     return sourceStream.str();
   }
-};
+};  // namespace DensityOCLMultiPlatform
 
 }  // namespace DensityOCLMultiPlatform
 }  // namespace datadriven

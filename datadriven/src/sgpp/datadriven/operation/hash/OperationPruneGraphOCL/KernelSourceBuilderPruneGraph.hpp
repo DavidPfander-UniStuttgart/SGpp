@@ -225,11 +225,12 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[1] << "// cache next set of grid points in local memory"
                    << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
-      sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
+      sourceStream << this->indent[1] << "int grid_index = outer_grid_index + get_local_id(0);"
                    << std::endl;
-      sourceStream << this->indent[2] << "int grid_index = outer_grid_index + get_local_id(0);"
+      sourceStream << this->indent[1] << "if (grid_index < " << gridSize << ") {" << std::endl;
+      sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
                    << std::endl;
-      sourceStream << this->indent[2] << "if (grid_index < " << gridSize << ") {" << std::endl;
+
       sourceStream << this->indent[3] << "grid_indices[get_local_id(0) * " << dimensions
                    << " + d] =" << std::endl;
       sourceStream << this->indent[5] << "(" << this->floatType() << ")starting_points[grid_index * 2 * " << dimensions
@@ -238,9 +239,9 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << " + d] =" << std::endl;
       sourceStream << this->indent[5] << "(" << this->floatType() << ")(1 << starting_points[grid_index * 2 * "
                    << dimensions << " + 2 * d + 1]);" << std::endl;
-      sourceStream << this->indent[3] << "grid_alpha[get_local_id(0)] = alphas[grid_index];"
-                   << std::endl;
       sourceStream << this->indent[2] << "}" << std::endl;
+      sourceStream << this->indent[2] << "grid_alpha[get_local_id(0)] = alphas[grid_index];"
+                   << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl << std::endl;
 
