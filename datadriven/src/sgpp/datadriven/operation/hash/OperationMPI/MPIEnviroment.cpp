@@ -2,6 +2,8 @@
 // This file is part of the SG++ project. For conditions of distribution and
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
+#include <iostream>
+#include <mpi.h>
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -14,6 +16,17 @@ namespace datadriven {
 namespace clusteringmpi {
 MPIEnviroment *MPIEnviroment::singleton_instance = NULL;
 
+void debugger_trap(int process_rank) {
+  if(getenv("SG_MPI_DEBUG_ON") != NULL && process_rank == 0) {
+    std::cerr << "Rank 0 is waiting for debugger!"
+              << "Attach debugger and set i a value that is not zero to continue!"
+              << "See pgrep for the PIDs." << std::endl;
+    volatile int i = 0; // volatile to prevent compiler optimizations (see later loop)
+    while (i==0) {}
+  }
+  MPI_Barrier(MPI_COMM_WORLD);
+
+}
 MPIEnviroment::MPIEnviroment(int argc, char *argv[], bool verbose)
     : numTasks(0), rank(0), verbose(verbose), initialized(false), initialized_worker_counter(0) {
   MPI_Init(&argc, &argv);
@@ -21,6 +34,7 @@ MPIEnviroment::MPIEnviroment(int argc, char *argv[], bool verbose)
   MPI_Comm_size(MPI_COMM_WORLD, &numTasks);
   // Gets the rank (process/task number) that this program is running on
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  debugger_trap(rank);
 }
 MPIEnviroment::MPIEnviroment(void) {}
 MPIEnviroment::MPIEnviroment(MPIEnviroment &cpy) {}
