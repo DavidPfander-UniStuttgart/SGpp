@@ -1,0 +1,24 @@
+#ProfileFileVersion=5.2
+#ProfilerVersion=5.2.6553
+#API=OpenCL
+#Application=/home/pfandedd/git/SGpp/datadriven/examplesOCL/clustering_cmd
+#ApplicationArgs=--datasetFileName datasets/gaussian_c3_size100000_dim10.arff --config config_ocl_float_w8100.cfg --level 7 --lambda 1E-2 --k 5 --threshold 0.1
+#WorkingDirectory=.
+#Device Hawaii Platform Vendor=Advanced Micro Devices, Inc.
+#Device Hawaii Platform Name=AMD Accelerated Parallel Processing
+#Device Hawaii Platform Version=OpenCL 2.0 AMD-APP (2482.3)
+#Device Hawaii CLDriver Version=2482.3
+#Device Hawaii CLRuntime Version=OpenCL 1.2 AMD-APP (2482.3)
+#Device Hawaii NumberAppAddressBits=64
+#OS Version=Linux version 4.10.0-28-generic (buildd@lgw01-12) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 Build 4.10.0
+#DisplayName=
+#ListSeparator=;
+#ForceSinglePass=False
+Method; ExecutionOrder; ThreadID; CallIndex; GlobalWorkSize; WorkGroupSize; Time; LocalMemSize; VGPRs; SGPRs; ScratchRegs; Wavefronts; VALUInsts; SALUInsts; VFetchInsts; SFetchInsts; VWriteInsts; FlatVMemInsts; LDSInsts; FlatLDSInsts; GDSInsts; VALUUtilization; VALUBusy; SALUBusy; FetchSize; WriteSize; CacheHit; MemUnitBusy; MemUnitStalled; WriteUnitStalled; LDSBankConflict
+cscheme__k1_Hawaii1; 1; 11077; 36; { 397952       1       1}; {  128     1     1};      1246.62533; 5120; 55; 16; 0;      6218.00;   4824692.50;   1005108.00;      7820.00;         5.00;         1.00;      7821.00;    504689.00;         0.00;         0.00;        97.93;        81.83;        68.16;    748963.25;      1554.03;        93.74;         3.64;         0.00;         0.00;         0.07
+multdensity__k2_Hawaii1; 2; 11077; 60; { 397952       1       1}; {  128     1     1};     19530.78622; 15872; 103; 26; 0;      6218.00;  64138740.00;    233180.00;     31100.00;         5.00;         2.00;     31102.00;   6218000.00;         0.00;         0.00;       100.00;        70.98;         0.83; 100910177.06;      1554.50;        33.35;         0.70;         0.00;         0.00;         0.04
+multdensity__k2_Hawaii1; 3; 11077; 75; { 397952       1       1}; {  128     1     1};     19537.19704; 15872; 103; 26; 0;      6218.00;  64138740.00;    233180.00;     31100.00;         5.00;         2.00;     31102.00;   6218000.00;         0.00;         0.00;       100.00;        70.99;         0.83; 115892903.00;      1554.50;        23.72;         0.70;         0.00;         0.00;         0.04
+multdensity__k2_Hawaii1; 4; 11077; 90; { 397952       1       1}; {  128     1     1};     19536.23881; 15872; 103; 26; 0;      6218.00;  64138740.00;    233180.00;     31100.00;         5.00;         2.00;     31102.00;   6218000.00;         0.00;         0.00;       100.00;        70.98;         0.83;  93778351.94;      1554.50;        37.99;         0.69;         0.00;         0.00;         0.04
+multdensity__k2_Hawaii1; 5; 11077; 105; { 397952       1       1}; {  128     1     1};     19531.38415; 15872; 103; 26; 0;      6218.00;  64138740.00;    233180.00;     31100.00;         5.00;         2.00;     31102.00;   6218000.00;         0.00;         0.00;       100.00;        71.02;         0.83; 102379791.12;      1554.50;        32.54;         0.71;         0.00;         0.00;         0.04
+connectNeighbors__k3_Hawaii1; 6; 11077; 146; { 100096       1       1}; {  128     1     1};       166.43274; 5120; 52; 26; 0;      1564.00;   2370480.12;    418443.60;      2349.00;         4.00;        10.00;      2359.00;    504390.00;         0.00;         0.00;        98.14;        73.21;        51.68;    230101.88;      1957.88;        92.15;         2.00;         0.00;         0.00;         0.12
+removeEdges__k4_Hawaii1; 7; 11077; 187; { 100096       1       1}; {  128     1     1};      9056.63570; 10752; 138; 26; 0;      1564.00; 125881335.39;   3207944.16;     18715.96;         6.00;         0.00;     18715.96;   4410268.50;         0.00;         0.00;       100.00;        60.57;         6.17;    458757.75;         0.00;        97.93;         0.27;         0.00;         0.00;         0.01
