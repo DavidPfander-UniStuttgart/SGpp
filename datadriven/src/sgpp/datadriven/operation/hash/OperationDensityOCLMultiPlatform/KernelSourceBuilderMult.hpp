@@ -388,7 +388,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << localCacheSize << "];" << std::endl;
       // start loop
       sourceStream << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
+                   << problemsize / localCacheSize << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
                    << std::endl;
