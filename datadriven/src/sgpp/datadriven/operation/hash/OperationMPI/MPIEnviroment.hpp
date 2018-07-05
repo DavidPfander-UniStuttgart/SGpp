@@ -168,12 +168,12 @@ class SimpleQueue {
       std::cout << "in if commsize" << std::endl;
       packagesize = static_cast<int>(workitem_count / (commsize * 2));
     }
-    if (packagesize % 128 != 0) packagesize -= packagesize % 128;
-    if (packagesize == 0) {
-      // this can happen e.g. if workitem_count < 128
-      // TODO: why 128?
-      packagesize = 128;
-    }
+    // if (packagesize % 128 != 0) packagesize -= packagesize % 128;
+    // if (packagesize == 0) {
+    //   // this can happen e.g. if workitem_count < 128
+    //   // TODO: why 128?
+    //   packagesize = 128;
+    // }
     std::cout << "packagesize after: " << packagesize << std::endl;
 
     packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
