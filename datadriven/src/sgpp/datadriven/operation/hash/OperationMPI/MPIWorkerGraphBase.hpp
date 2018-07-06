@@ -29,8 +29,6 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
         k(k),
         dimensions(static_cast<int>(data.getNcols())),
         delete_dataset(false) {
-    std::cout << "Node " << MPIEnviroment::get_node_rank() << ": Received dataset (size "
-              << dataset_size / dimensions << " datapoints) and graph parameters" << std::endl;
     send_dataset();
   }
   MPIWorkerGraphBase(sgpp::base::DataMatrix &data, int k)
@@ -81,10 +79,6 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
     MPI_Probe(0, 1, MPIEnviroment::get_input_communicator(), &stat);
     MPI_Recv(&k, 1, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPIEnviroment::get_input_communicator(),
              &stat);
-    if (verbose) {
-      std::cout << "Node " << MPIEnviroment::get_node_rank() << ": Received dataset (size "
-                << dataset_size / dimensions << " datapoints) and graph parameters" << std::endl;
-    }
   }
 };
 

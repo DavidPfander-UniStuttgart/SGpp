@@ -87,8 +87,6 @@ class KernelPruneGraph {
     devicePoints.intializeTo(pointsVector, 1, 0, gridSize * dims * 2);
     deviceAlpha.intializeTo(alphaVector, 1, 0, gridSize);
 
-    std::cout << "dataVector.size(): " << dataVector.size()
-              << " div: " << (dataVector.size() / dims) << std::endl;
     deviceData.intializeTo(dataVector, 1, 0, dataVector.size());
     clFinish(device->commandQueue);
   }

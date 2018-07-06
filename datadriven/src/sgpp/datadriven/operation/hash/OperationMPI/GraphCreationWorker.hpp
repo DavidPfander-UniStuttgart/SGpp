@@ -101,21 +101,17 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
       }
       // Check for exit
       if (datainfo[0] == -2 && datainfo[1] == -2) {
-        std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
-                  << std::endl;
         for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
           MPI_Send(datainfo, 2, MPI_INT, dest, 1, sub_worker_comm);
         break;
       } else {
         if (datainfo[1] * k != old_partial_size) {
           partial_graph.resize(datainfo[1] * k);
-          if (verbose) std::cout << "New Buffer created!" << std::endl;
           old_partial_size = datainfo[1] * k;
         }
         if (opencl_node) {
           // Create partial rhs
           op->create_graph(partial_graph, datainfo[0], datainfo[1]);
-          if (verbose) std::cerr << "Workpackage abgeschlossen" << std::endl;
         } else {
           divide_workpackages(datainfo, partial_graph);
         }

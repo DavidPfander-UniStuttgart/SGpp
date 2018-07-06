@@ -92,8 +92,6 @@ class KernelCreateGraph {
     unpadded_data_size = data.size() / dims;
     size_t element_to_add = localSize - (unpadded_data_size % localSize);
     padded_data_size = unpadded_data_size + element_to_add;
-    std::cout << "unpadded_datasize: " << unpadded_data_size
-              << " adding elements: " << element_to_add << " (* dims)" << std::endl;
     // max difference between valid elements (squared): dims
     double padd_value = 3.0 * dims;
     for (size_t i = 0; i < element_to_add * dims; i++) {

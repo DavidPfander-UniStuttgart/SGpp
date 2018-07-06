@@ -204,9 +204,7 @@ class KernelDensityB {
   }
 
   double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t chunksize = 0) {
-    std::cerr << "Start finishing" << std::endl;
     clFinish(device->commandQueue);
-    std::cerr << "End finishing" << std::endl;
 
     if (verbose) {
       std::cout << "Finished kernel execution" << std::endl;

@@ -51,110 +51,104 @@ int main(int argc, char *argv[]) {
   // Create Grid
   std::chrono::time_point<std::chrono::high_resolution_clock> grid_creation_start,
       grid_creation_end;
-  grid_creation_start = std::chrono::system_clock::now();
 
   sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(dim);
   sgpp::base::GridGenerator &gridGen = grid->getGenerator();
-  std::cout << "level:" << level << std::endl;
   gridGen.regular(level);
   size_t gridsize = grid->getStorage().getSize();
-  std::cerr << "Grid created! Number of grid points:     " << gridsize << std::endl;
-
-  grid_creation_end = std::chrono::system_clock::now();
-  if (rank == 0) {
-    std::cout << "grid creation duration: "
-              << std::chrono::duration_cast<std::chrono::seconds>(grid_creation_end -
-                                                                  grid_creation_start)
-                     .count()
-              << "s" << std::endl;
-  }
-
-  sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, 0.001, "MyOCLConf.cfg");
   sgpp::base::DataVector alpha(gridsize);
   sgpp::base::DataVector result(gridsize);
   alpha.setAll(1.0);
+  std::cerr << "Grid created! Number of grid points:     " << gridsize << std::endl;
+  std::cout << std::endl << std::endl;
 
-  std::chrono::time_point<std::chrono::high_resolution_clock> rhs_start, rhs_end;
-  rhs_start = std::chrono::system_clock::now();
 
   // Create right hand side vector
-  sgpp::base::DataVector rhs(gridsize);
+  std::chrono::time_point<std::chrono::high_resolution_clock> rhs_start, rhs_end;
+  rhs_start = std::chrono::system_clock::now();
+  std::cout << "Create right hand side of density equation: " << std::endl;
+  std::cout << "-------------------------------------------- " << std::endl;
   sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset, "MyOCLConf.cfg");
+  sgpp::base::DataVector rhs(gridsize);
   rhs_op.generate_b(rhs);
-
   rhs_end = std::chrono::system_clock::now();
-  if (rank == 0) {
-    std::cout << "rhs creation duration: "
-              << std::chrono::duration_cast<std::chrono::seconds>(rhs_end - rhs_start).count()
-              << "s" << std::endl;
-  }
+  std::cout << std::endl << std::endl;
 
   // Solve for alpha vector via CG solver
+  std::cout << "Solve for alpha: " << std::endl;
+  std::cout << "--------------- " << std::endl;
+  sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, 0.001, "MyOCLConf.cfg");
   std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
   solver_start = std::chrono::system_clock::now();
-
   alpha.setAll(1.0);
   sgpp::solver::ConjugateGradients solver(1000, 0.001);
   solver.solve(mult_op, alpha, rhs, false, true);
-
   solver_end = std::chrono::system_clock::now();
-  if (rank == 0) {
-    std::cout << "solver duration: "
-              << std::chrono::duration_cast<std::chrono::seconds>(solver_end - solver_start).count()
-              << "s" << std::endl;
-  }
-
   double max = alpha.max();
   double min = alpha.min();
   for (size_t i = 0; i < gridsize; i++) alpha[i] = alpha[i] * 1.0 / (max - min);
+  std::cout << std::endl << std::endl;
 
   // Create and prune knn graph
+  std::cout << "Create and prune graph: " << std::endl;
+  std::cout << "----------------------- " << std::endl;
   std::chrono::time_point<std::chrono::high_resolution_clock> create_knn_start, create_knn_end;
   create_knn_start = std::chrono::system_clock::now();
-  std::cout << "Graph Creation/Pruning:" << std::endl;
   sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
-      *grid, alpha, dataset, 12, 0.2, "MyOCLConf.cfg");
+      *grid, alpha, dataset, 5, 0.0, "MyOCLConf.cfg");
   std::vector<int> knn_graph;
   graph_op.create_graph(knn_graph);
-
   create_knn_end = std::chrono::system_clock::now();
-  if (rank == 0) {
-    std::cout << "create knn operation duration: "
-              << std::chrono::duration_cast<std::chrono::seconds>(create_knn_end - create_knn_start)
-                     .count()
-              << "s" << std::endl;
-  }
+  std::cout << std::endl << std::endl;
 
+  std::cout << "Find clusters in pruned graph: " << std::endl;
+  std::cout << "------------------------------ " << std::endl;
   std::chrono::time_point<std::chrono::high_resolution_clock> find_clusters_start,
       find_clusters_end;
   find_clusters_start = std::chrono::system_clock::now();
-
   std::vector<int> node_cluster_map;
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-      knn_graph, 12, node_cluster_map, clusters);
-
+      knn_graph, 5, node_cluster_map, clusters);
   find_clusters_end = std::chrono::system_clock::now();
-  if (rank == 0) {
-    std::cout << "find clusters duration: "
-              << std::chrono::duration_cast<std::chrono::seconds>(find_clusters_end -
-                                                                  find_clusters_start)
-                     .count()
-              << "s" << std::endl;
-  }
-
+  // Output ergs
+  std::cout << "detected clusters: " << clusters.size() << std::endl;
   std::ofstream out("cluster_erg.txt");
   for (size_t datapoint : node_cluster_map) {
-    out << datapoint << " ";
+    out << datapoint << std::endl;
   }
+  std::cout << std::endl << std::endl;
+
 
   // Calc time
   end = std::chrono::system_clock::now();
   std::chrono::duration<double> elapsed_seconds = end - start;
   std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+  // Output timings
+  std::cout << "Runtimes: " << std::endl;
+  std::cout << "--------- " << std::endl;
+  std::cout << "rhs creation duration: "
+            << std::chrono::duration_cast<std::chrono::seconds>(rhs_end - rhs_start).count()
+            << "s" << std::endl;
+  std::cout << "solver duration: "
+            << std::chrono::duration_cast<std::chrono::seconds>(solver_end - solver_start).count()
+            << "s" << std::endl;
+  std::cout << "create knn operation duration: "
+            << std::chrono::duration_cast<std::chrono::seconds>(create_knn_end - create_knn_start)
+                     .count()
+            << "s" << std::endl;
+  std::cout << "find clusters duration: "
+            << std::chrono::duration_cast<std::chrono::seconds>(find_clusters_end -
+                                                                find_clusters_start).count()
+            << "s" << std::endl;
   std::cout << "finished computation at " << std::ctime(&end_time)
             << "elapsed time: " << elapsed_seconds.count() << "s\n";
+  std::cout << std::endl << std::endl;
+
   // Cleanup MPI enviroment
+  std::cout << "Finishing: " << std::endl;
+  std::cout << "---------- " << std::endl;
   sgpp::datadriven::clusteringmpi::MPIEnviroment::release();
   return 0;
 }

@@ -41,9 +41,6 @@ MPIEnviroment::MPIEnviroment(MPIEnviroment &cpy) {}
 
 void MPIEnviroment::slave_mainloop(void) {
   MPI_Status stat;
-  if (verbose) {
-    std::cout << "Node " << rank << ": Started slave mainloop" << std::endl;
-  }
   std::vector<MPIWorkerBase *> slave_ops;
   do {
     int messagesize = 0;
@@ -73,7 +70,6 @@ void MPIEnviroment::slave_mainloop(void) {
       }
       // Send the order to terminate all slaves processes!
       for (int i = 1; i < worker_count + 1; i++) {
-        std::cout << "Sending cleanup signal to" << neighbor_list[i] << std::endl;
         MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, communicator);
       }
       delete[] message;
@@ -136,11 +132,10 @@ void MPIEnviroment::slave_mainloop(void) {
       MPI_Group_incl(world_group, messagesize, nodelist, &tmp_group);
       if (is_input_comm) {
         MPI_Comm_create(MPI_COMM_WORLD, tmp_group, &input_communicator);
-        std::cout << "Created input_comm on " << rank << std::endl;
       } else {
         MPI_Comm_create(MPI_COMM_WORLD, tmp_group, &tmp_comm);
         if (tmp_comm != MPI_COMM_NULL) {
-          std::cout << "ERROR - created unnecessary comm!" << std::endl;
+          std::cerr << "ERROR - created unnecessary comm!" << std::endl;
         }
       }
       delete[] nodelist;
@@ -163,7 +158,6 @@ void MPIEnviroment::slave_mainloop(void) {
     } else if (message[0] == 5) {
       initialized_worker_counter++;
       if (initialized_worker_counter == worker_count) {
-        std::cout << "Node " << rank << " initialized!" << std::endl;
         if (rank == 0) {
           return;
         } else {
@@ -176,14 +170,9 @@ void MPIEnviroment::slave_mainloop(void) {
         init_worker(initialized_worker_counter, initial_source);
       }
     } else if (message[0] == 6) {
-      std::cout << "Node " << rank << " switched to local communicator!" << std::endl;
       initialized = true;
     } else if (message[0] >= 10) {
       // run operation here
-      if (verbose) {
-        std::cout << "Node " << rank << ": Starting slave operation "
-                  << " with index " << message[0] << std::endl;
-      }
       if (slave_ops[message[0] - 10] == NULL)
         throw std::logic_error("Trying to run an non existing slave operation!");
       slave_ops[message[0] - 10]->start_sub_workers();
@@ -220,7 +209,6 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   worker_count = 0;
   if (conf.contains("SLAVES")) {
     for (std::string &slaveName : conf["SLAVES"].keys()) {
-      std::cout << "SLAVENAME: " << slaveName << std::endl;
       neighbor_list.push_back(slaveid);
       slaveid += count_slaves(conf["SLAVES"][slaveName]) + 1;
       worker_count++;
@@ -245,7 +233,6 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   MPI_Group_incl(world_group, static_cast<int>(neighbor_list.size()), neighbor_list.data(),
                  &node_neighbors);
 
-  std::cout << "Created comm on " << MPIEnviroment::get_node_rank() << "\n";
   MPI_Comm_create(MPI_COMM_WORLD, node_neighbors, &communicator);
   if (communicator == MPI_COMM_NULL) {
     throw std::logic_error("Comm on node could not be created! Check configuration file");
@@ -258,8 +245,6 @@ void MPIEnviroment::init_worker(int workerid, int source) {
     int message[1];
     message[0] = 5;
     MPI_Send(message, 1, MPI_INT, source, 1, MPI_COMM_WORLD);
-    std::cout << "Node " << rank << " initialized! Sending signal to " << neighbor_list[1]
-              << std::endl;
     return;
   }
   // Command for creation and execution of a slave

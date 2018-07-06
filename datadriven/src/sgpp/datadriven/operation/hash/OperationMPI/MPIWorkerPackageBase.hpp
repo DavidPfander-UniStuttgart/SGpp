@@ -47,9 +47,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
                      (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
     }
-    std::cout << "packagesize: " << packagesize << std::endl;
-    std::cout << "packagesize_multiplier: " << packagesize_multiplier << std::endl;
-    std::cout << "sizeof(T): " << sizeof(T) << std::endl;
     T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);
@@ -58,11 +55,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     while (!workitem_queue.is_finished()) {
       // Store result
       messagesize = workitem_queue.receive_result(chunkid, package_result);
-      if (verbose) {
-        std::cout << "Messagesize: " << messagesize << std::endl;
-        std::cout << package_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
-                  << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
-      }
       // for (size_t i = 0; i < messagesize; i++) {
       //   erg[(chunkid - package[0]) * packagesize_multiplier + i] = package_result[i];
       // }
@@ -120,8 +112,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       opencl_device = MPIEnviroment::get_configuration()["OPENCL_DEVICE"].getUInt();
 
     // receive opencl configuration
-    std::cerr << "waiting for opencl configuration on" << MPIEnviroment::get_node_rank()
-              << std::endl;
     MPI_Status stat;
     int messagesize = 0;
     MPI_Probe(0, 1, master_worker_comm, &stat);
@@ -135,7 +125,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     parameters = std::make_shared<base::OCLOperationConfiguration>();
     parameters->deserialize(serialized_conf);
     delete[] serialized_conf;
-    std::cerr << "Received ocl config on" << MPIEnviroment::get_node_rank() << std::endl;
   }
   MPIWorkerPackageBase(std::string operationName, int multiplier, std::string ocl_conf_filename)
       : MPIWorkerBase(operationName),
@@ -179,7 +168,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE"))
       opencl_device = MPIEnviroment::get_configuration()["OPENCL_DEVICE"].getUInt();
 
-    std::cerr << "Start sending ocl conf" << MPIEnviroment::get_node_rank() << std::endl;
     parameters = std::make_shared<base::OCLOperationConfiguration>(ocl_conf_filename);
     std::ostringstream sstream;
     parameters->serialize(sstream, 0);
@@ -225,8 +213,10 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       }
       // Check for exit
       if (datainfo[0] == -2 && datainfo[1] == -2) {
-        std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
-                  << std::endl;
+        if (verbose) {
+          std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
+                    << std::endl;
+        }
         for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
           MPI_Send(datainfo, 2, MPI_INT, dest, 1, sub_worker_comm);
         break;
@@ -240,7 +230,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
             partial_results[currentbuffer] == NULL) {
           if (partial_results[currentbuffer] != NULL) delete[] partial_results[currentbuffer];
           partial_results[currentbuffer] = new T[datainfo[1] * packagesize_multiplier];
-          if (verbose) std::cout << "New Buffer created!" << std::endl;
           buffersizes[currentbuffer] = datainfo[1] * packagesize_multiplier;
         }
         if (opencl_node) {
@@ -271,8 +260,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
           }
           divide_workpackages(datainfo, partial_results[currentbuffer]);
         }
-        std::cout << "Trying to send back results on " << MPIEnviroment::get_node_rank()
-                  << std::endl;
         // Send results back
         MPI_Isend(partial_results[currentbuffer], datainfo[1] * packagesize_multiplier, mpi_typ, 0,
                   1, master_worker_comm, request + currentbuffer);

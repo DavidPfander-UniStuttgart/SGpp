@@ -157,15 +157,10 @@ class SimpleQueue {
     received_packageindex = 0;
 
     // Adapt packagesize
-    std::cout << "packagesize: " << packagesize << std::endl;
-    std::cout << "workitem_count: " << workitem_count << std::endl;
-    std::cout << "commsize: " << commsize << std::endl;
     if (packagesize > workitem_count) {
-      std::cout << "in > workitem_count" << std::endl;
       commsize = 1;
       packagesize = workitem_count;
     } else if (packagesize > workitem_count / (commsize * 2)) {
-      std::cout << "in if commsize" << std::endl;
       packagesize = static_cast<int>(workitem_count / (commsize * 2));
     }
     // if (packagesize % 128 != 0) packagesize -= packagesize % 128;
@@ -174,7 +169,6 @@ class SimpleQueue {
     //   // TODO: why 128?
     //   packagesize = 128;
     // }
-    std::cout << "packagesize after: " << packagesize << std::endl;
 
     packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
     startindices = new unsigned int[commsize];
@@ -183,7 +177,6 @@ class SimpleQueue {
     packageinfo[1] = static_cast<int>(packagesize);
 
     // Send first packages
-    if (verbose) std::cout << "Sending size: " << packageinfo[1] << std::endl;
     for (int dest = 1; dest < commsize + 1; dest++) {
       packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
       MPI_Send(packageinfo, 2, MPI_INT, dest, 1, comm);
@@ -276,7 +269,7 @@ class SimpleQueue {
         }
       }
     } else {
-      std::cout << "Error - packagecount: " << packagecount << " Received:" << received_packageindex
+      std::cerr << "Error - packagecount: " << packagecount << " Received:" << received_packageindex
                 << "\n";
       throw std::logic_error("Queue error! Received too many packages!");
     }
@@ -296,7 +289,6 @@ class SimpleQueue {
   virtual ~SimpleQueue() {
     delete[] startindices;
     delete[] secondary_indices;
-    std::cerr << "Queue deleted" << std::endl;
   }
 };
 

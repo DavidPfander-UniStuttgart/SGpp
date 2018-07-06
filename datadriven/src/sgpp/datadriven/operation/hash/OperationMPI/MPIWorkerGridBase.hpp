@@ -32,11 +32,6 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
     MPI_Recv(&grid_dimensions, 1, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG,
              MPIEnviroment::get_input_communicator(), &stat);
     gridsize = complete_gridsize / (2 * grid_dimensions);
-    if (verbose) {
-      std::cout << "Node " << MPIEnviroment::get_node_rank() << ":  Recevied grid with "
-                << complete_gridsize / (grid_dimensions * 2) << " integers and " << grid_dimensions
-                << " dimensions " << std::endl;
-    }
   }
   void send_grid(void) {
     // Send grid to slaves
@@ -61,8 +56,6 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
   }
   MPIWorkerGridBase(std::string operationName, base::Grid &grid) : MPIWorkerBase(operationName) {
     // Store grid in integer array
-    std::cout << "IN GridWorker cstr"
-              << "\n";
     sgpp::base::GridStorage &gridStorage = grid.getStorage();
     gridsize = static_cast<int>(gridStorage.getSize());
     int dimensions = static_cast<int>(gridStorage.getDimension());
