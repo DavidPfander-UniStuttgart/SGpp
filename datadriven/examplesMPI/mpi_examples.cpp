@@ -61,6 +61,9 @@ int main(int argc, char *argv[]) {
     boost::program_options::store(options, variables_map);
     boost::program_options::notify(variables_map);
 
+    std::cout << std::endl << std::endl;
+    std::cout << "Arguments (Scenario):" << std::endl;
+    std::cout << "--------------------- " << std::endl;
     if (variables_map.count("help")) {
       std::cout << description << std::endl;
       return 0;
@@ -78,18 +81,16 @@ int main(int argc, char *argv[]) {
       std::cout << "datasetFileName: " << datasetFileName << std::endl;
     }
 
-    if (variables_map.count("level") == 0) {
-      std::cerr << "error: option \"level\" not specified" << std::endl;
+    if (variables_map.count("MPIconfig") == 0) {
+      std::cerr << "error: option \"MPIconfig\" not specified" << std::endl;
       return 1;
     } else {
-      std::cout << "level: " << level << std::endl;
-    }
-
-    if (variables_map.count("lambda") == 0) {
-      std::cerr << "error: option \"lambda\" not specified" << std::endl;
-      return 1;
-    } else {
-      std::cout << "lambda: " << lambda << std::endl;
+      std::experimental::filesystem::path configFilePath(configFileName);
+      if (!std::experimental::filesystem::exists(configFilePath)) {
+        std::cerr << "error: MPI config file does not exist: " << configFileName << std::endl;
+        return 1;
+      }
+      std::cout << "MPI configuration file: " << configFileName << std::endl;
     }
 
     if (variables_map.count("config") == 0) {
@@ -104,16 +105,18 @@ int main(int argc, char *argv[]) {
       std::cout << "OpenCL configuration file: " << configFileName << std::endl;
     }
 
-    if (variables_map.count("MPIconfig") == 0) {
-      std::cerr << "error: option \"MPIconfig\" not specified" << std::endl;
+    if (variables_map.count("level") == 0) {
+      std::cerr << "error: option \"level\" not specified" << std::endl;
       return 1;
     } else {
-      std::experimental::filesystem::path configFilePath(configFileName);
-      if (!std::experimental::filesystem::exists(configFilePath)) {
-        std::cerr << "error: MPI config file does not exist: " << configFileName << std::endl;
-        return 1;
-      }
-      std::cout << "MPI configuration file: " << configFileName << std::endl;
+      std::cout << "level: " << level << std::endl;
+    }
+
+    if (variables_map.count("lambda") == 0) {
+      std::cerr << "error: option \"lambda\" not specified" << std::endl;
+      return 1;
+    } else {
+      std::cout << "lambda: " << lambda << std::endl;
     }
 
     if (variables_map.count("k") == 0) {
@@ -129,12 +132,15 @@ int main(int argc, char *argv[]) {
     } else {
       std::cout << "threshold: " << threshold << std::endl;
     }
+    std::cout << std::endl << std::endl;
 
     // Measure times
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::system_clock::now();
 
     // setup MPI network according to config file
+    std::cout << "Setup:" << std::endl;
+    std::cout << "------ " << std::endl;
     sgpp::base::OperationConfiguration network_conf(MPIconfigFileName);
     sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
     int rank = sgpp::datadriven::clusteringmpi::MPIEnviroment::get_node_rank();
