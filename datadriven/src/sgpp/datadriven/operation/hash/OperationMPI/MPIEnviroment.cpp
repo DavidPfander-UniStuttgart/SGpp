@@ -68,6 +68,7 @@ void MPIEnviroment::slave_mainloop(void) {
       for (auto p : slave_ops) {
         if (p != NULL) delete p;
       }
+      std::cout << "Node " << rank << " All remaining workers are deleted now" << std::endl;
       // Send the order to terminate all slaves processes!
       for (int i = 1; i < worker_count + 1; i++) {
         MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, communicator);

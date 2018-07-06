@@ -11,7 +11,8 @@ class OperationDensityRhsMPI : public DensityRhsWorker {
   OperationDensityRhsMPI(base::Grid &grid, sgpp::base::DataMatrix &data,
                          std::string ocl_config_file)
       : MPIWorkerBase("DensityRHSWorker"), DensityRhsWorker(grid, data, ocl_config_file) {}
-  virtual ~OperationDensityRhsMPI() {}
+  virtual ~OperationDensityRhsMPI() {
+  }
   virtual void generate_b(base::DataVector &b) {
     DensityRhsWorker::MPIWorkerGridBase::start_sub_workers();
     int datainfo[2];
