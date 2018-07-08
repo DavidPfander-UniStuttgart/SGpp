@@ -4,11 +4,10 @@
 #define FP_BITS 64
 
 constexpr uint64_t DIMS = 20;
-constexpr uint64_t BITS_PER_LEVEL = 6; // log_2(64)
+constexpr uint64_t BITS_PER_LEVEL = 6;  // log_2(64)
 constexpr uint64_t DIMS_PER_ELEMENT = FP_BITS / BITS_PER_LEVEL;
-constexpr uint64_t ELEMENTS = DIMS % DIMS_PER_ELEMENT == 0
-                                  ? DIMS / DIMS_PER_ELEMENT
-                                  : DIMS / DIMS_PER_ELEMENT + 1;
+constexpr uint64_t ELEMENTS =
+    DIMS % DIMS_PER_ELEMENT == 0 ? DIMS / DIMS_PER_ELEMENT : DIMS / DIMS_PER_ELEMENT + 1;
 constexpr uint64_t LEVEL_MASK = pow(2, BITS_PER_LEVEL) - 1;
 
 double expo_patterns[FP_BITS];
@@ -97,7 +96,6 @@ void print_binary(uint64_t value, uint64_t (&bounds)[DIMS]) {
   }
   for (int32_t i = FP_BITS - 1; i >= 0; i--) {
     if (skip_counter == bits_to_skip) {
-
       if (bound_counter == bounds[bound_index]) {
         std::cout << "|";
         bound_counter = 1;
@@ -141,8 +139,7 @@ void encode_level(uint64_t level, uint64_t &encoded_levels, uint64_t d) {
   // print_binary(encoded_levels);
 }
 
-void encode_levels(uint64_t levels[DIMS],
-                   uint64_t (&encoded_levels)[ELEMENTS]) {
+void encode_levels(uint64_t levels[DIMS], uint64_t (&encoded_levels)[ELEMENTS]) {
   uint64_t cur_element = 0;
   for (size_t d = 0; d < DIMS; d++) {
     if (d % DIMS_PER_ELEMENT == 0 && d > 0) {
@@ -158,8 +155,20 @@ static inline uint64_t log2(const uint64_t x) {
   return y;
 }
 
-void encode_index_1d(uint64_t levels[DIMS], uint64_t indices[DIMS],
-                     uint64_t &encoded_indices, uint64_t d) {
+uint64_t encode_nonzero_level_mask(uint64_t levels[DIMS]) {
+  uint64_t nonzero_levels_mask = 0;
+  for (uint32_t d = 0; d < DIMS; d++) {
+    if (levels[d] != 1) {
+      nonzero_levels_mask <<= 1;
+      nonzero_levels_mask += 1;  // set lowest bit
+    } else {
+      nonzero_levels_mask <<= 1;  // shift in zero
+    }
+  }
+}
+
+void encode_index_1d(uint64_t levels[DIMS], uint64_t indices[DIMS], uint64_t &encoded_indices,
+                     uint64_t d) {
   // std::cout << "level: " << level //<< " log2(level): " << log2(level)
   //           << " index: " << index << std::endl;
   // print_binary(index);
@@ -173,23 +182,20 @@ void encode_index_1d(uint64_t levels[DIMS], uint64_t indices[DIMS],
   encoded_indices |= encoded_index;
 }
 
-void encode_indices(uint64_t levels[DIMS], uint64_t indices[DIMS],
-                    uint64_t &encoded_indices) {
+void encode_indices(uint64_t levels[DIMS], uint64_t indices[DIMS], uint64_t &encoded_indices) {
   for (uint64_t d = 0; d < DIMS; d++) {
     encode_index_1d(levels, indices, encoded_indices, d);
   }
 }
 
 uint64_t get_level(uint64_t (&encoded_levels)[ELEMENTS], uint64_t d) {
-  uint64_t element = d / DIMS_PER_ELEMENT; // 9 / 5 = 1
-  uint64_t extracted_bits =
-      encoded_levels[element] >> (d % DIMS_PER_ELEMENT) * BITS_PER_LEVEL;
+  uint64_t element = d / DIMS_PER_ELEMENT;  // 9 / 5 = 1
+  uint64_t extracted_bits = encoded_levels[element] >> (d % DIMS_PER_ELEMENT) * BITS_PER_LEVEL;
   uint64_t masked = extracted_bits & LEVEL_MASK;
   return masked;
 }
 
-uint64_t get_index(uint64_t (&encoded_levels)[ELEMENTS],
-                   uint64_t encoded_indices, uint64_t d) {
+uint64_t get_index(uint64_t (&encoded_levels)[ELEMENTS], uint64_t encoded_indices, uint64_t d) {
   uint64_t start_bit = 0;
   for (size_t dd = 0; dd < d; dd++) {
     start_bit += get_level(encoded_levels, dd);
@@ -202,17 +208,15 @@ uint64_t get_index(uint64_t (&encoded_levels)[ELEMENTS],
 }
 
 class packed_grid_point_iterator {
-private:
+ private:
   uint64_t cur_element;
   uint64_t (&encoded_levels)[ELEMENTS];
   uint64_t encoded_indices;
   uint64_t element;
 
-public:
-  packed_grid_point_iterator(uint64_t (&encoded_levels)[ELEMENTS],
-                             uint64_t &encoded_indices)
-      : encoded_levels(encoded_levels), encoded_indices(encoded_indices),
-        element(0) {
+ public:
+  packed_grid_point_iterator(uint64_t (&encoded_levels)[ELEMENTS], uint64_t &encoded_indices)
+      : encoded_levels(encoded_levels), encoded_indices(encoded_indices), element(0) {
     cur_element = encoded_levels[0];
   }
 
@@ -222,15 +226,14 @@ public:
     cur_element >>= BITS_PER_LEVEL;
     index = encoded_indices & index_masks[level];
     encoded_indices >>= level;
-    if (cur_element == 0) { // makes use of all levels being >= 1
+    if (cur_element == 0) {  // makes use of all levels being >= 1
       element += 1;
       cur_element = encoded_levels[element];
-    } // sum: 4 + 1 comp (not counting stuff in if) + 2 convert after return
+    }  // sum: 4 + 1 comp (not counting stuff in if) + 2 convert after return
   }
 };
 
 int main() {
-
   std::cout << "DIMS: " << DIMS << std::endl;
   std::cout << "BITS_PER_LEVEL: " << BITS_PER_LEVEL << std::endl;
   std::cout << "DIMS_PER_ELEMENT: " << DIMS_PER_ELEMENT << std::endl;
@@ -279,8 +282,8 @@ int main() {
   //           << get_index(encoded_levels, encoded_indices, 0) << std::endl;
 
   for (size_t d = 0; d < DIMS; d++) {
-    std::cout << "index d: " << d << " -> "
-              << get_index(encoded_levels, encoded_indices, d) << std::endl;
+    std::cout << "index d: " << d << " -> " << get_index(encoded_levels, encoded_indices, d)
+              << std::endl;
   }
 
   {
