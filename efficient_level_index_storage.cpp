@@ -3,7 +3,7 @@
 
 #define FP_BITS 64
 
-constexpr uint64_t DIMS = 5;
+constexpr uint64_t DIMS = 20;
 constexpr uint64_t BITS_PER_LEVEL = 6;  // log_2(64)
 constexpr uint64_t DIMS_PER_ELEMENT = FP_BITS / BITS_PER_LEVEL;
 constexpr uint64_t ELEMENTS =
@@ -123,8 +123,8 @@ class li_vector {
 
  private:
   void pack_level_index_dim(uint64_t (&level)[DIMS], uint64_t (&index)[DIMS], uint64_t d) {
-    std::cout << "------------------------------------" << std::endl;
-    std::cout << "cur l: " << level[d] << " i: " << index[d] << std::endl;
+    // std::cout << "------------------------------------" << std::endl;
+    // std::cout << "cur l: " << level[d] << " i: " << index[d] << std::endl;
     // std::cout << "dim_zero_flags: " << std::endl;
     // print_binary(dim_zero_flags);
     dim_zero_flags <<= 1;
@@ -133,21 +133,21 @@ class li_vector {
       std::cout << "empty" << std::endl;
       return;
     }
-    std::cout << "l - 2: " << (level[d] - 2) << std::endl;
+    // std::cout << "l - 2: " << (level[d] - 2) << std::endl;
     // marked dimension as level > 1
     dim_zero_flags += 1;
     // print_binary(dim_zero_flags);
     uint64_t level_bits = log2(level[d]);
-    std::cout << "level_bits: " << level_bits << std::endl;
+    // std::cout << "level_bits: " << level_bits << std::endl;
     level_offsets <<= level_bits;
     level_offsets |= level_bits;
     level_packed <<= level_bits;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
     uint64_t adjusted_index = index[d] >> 1;
-    std::cout << "adjusted_index: " << adjusted_index << std::endl;
+    // std::cout << "adjusted_index: " << adjusted_index << std::endl;
     // uint64_t index_bits = (1 << level[d]) - 1;
-    std::cout << "index_bits: " << (level[d] - 1) << std::endl;
+    // std::cout << "index_bits: " << (level[d] - 1) << std::endl;
     index_packed <<= level[d] - 1;
     index_packed |= adjusted_index;
   }
@@ -155,8 +155,16 @@ class li_vector {
  public:
   li_vector(uint64_t (&level)[DIMS], uint64_t (&index)[DIMS])
       : dim_zero_flags(0), level_offsets(0), level_packed(0), index_packed(0) {
-    for (uint64_t d = 0; d < DIMS; d++) {
+    for (int64_t d = DIMS - 1; d >= 0; d--) {
       pack_level_index_dim(level, index, d);
+      // std::cout << "dim_zero_flags d: " << d << std::endl;
+      // print_binary(dim_zero_flags);
+      // std::cout << "level_offsets d: " << d << std::endl;
+      // print_binary(level_offsets);
+      // std::cout << "level_packed d: " << d << std::endl;
+      // print_binary(level_packed);
+      // std::cout << "index_packed d: " << d << std::endl;
+      // print_binary(index_packed);
     }
     std::cout << "dim_zero_flags" << std::endl;
     print_binary(dim_zero_flags);
@@ -169,24 +177,34 @@ class li_vector {
   }
 
   void get_next(uint64_t &level_d, uint64_t &index_d) {
+    // std::cout << "------------------------------------" << std::endl;
+    // std::cout << "next dim_zero_flags" << std::endl;
+    // print_binary(dim_zero_flags);
+    // std::cout << "next level_offsets" << std::endl;
+    // print_binary(level_offsets);
+    // std::cout << "next level_packed" << std::endl;
+    // print_binary(level_packed);
+    // std::cout << "next index_packed" << std::endl;
+    // print_binary(index_packed);
     uint64_t is_dim_implicit = dim_zero_flags & one_mask;
+    dim_zero_flags >>= 1;
     if (is_dim_implicit == 0) {
       level_d = 1;
       index_d = 1;
       return;
     }
-    dim_zero_flags >>= 1;
     uint64_t level_bits = __builtin_ffs(level_offsets);
+    level_offsets >>= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
-    level_mask >>= level_bits;
-    uint64_t index_bits = 1 << level_d;
-    uint64_t index_mask = index_bits - 1;
+    level_packed >>= level_bits;
+    uint64_t index_bits = level_d - 1;
+    uint64_t index_mask = (1 << index_bits) - 1;
     index_d = ((index_packed & index_mask) << 1) + 1;
     index_packed >>= index_bits;
   }
 };
-}
+}  // namespace grid
 
 int main() {
   std::cout << "DIMS: " << DIMS << std::endl;
@@ -203,7 +221,11 @@ int main() {
     if (d % 2 == 0) {
       index[d] = std::pow(2, level[d]) - 1;
     } else {
-      index[d] = 3;
+      if (level[d] > 1) {
+        index[d] = 3;
+      } else {
+        index[d] = 1;
+      }
     }
   }
   {
