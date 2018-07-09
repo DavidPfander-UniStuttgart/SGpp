@@ -449,7 +449,7 @@ class KernelDensityMult {
         }
 
         if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(128));
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
         }
 
         if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
@@ -463,10 +463,6 @@ class KernelDensityMult {
         if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
         }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
 
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));

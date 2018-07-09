@@ -22,29 +22,6 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
   json::Node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
-  /// Used workgroupsize for opencl kernel execution
-  size_t localWorkgroupSize;
-  /// Using local memory?
-  // bool useLocalMemory;
-  // size_t dataBlockSize;
-  // size_t transGridBlockSize;
-  // uint64_t maxDimUnroll;
-
-  // std::string getData(std::string dim, size_t dataBlockingIndex) {
-  //   std::stringstream output;
-  //   if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
-  //     output << "data_" << dataBlockingIndex << "[" << dim << "]";
-  //   } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
-  //     output << "data_" << dataBlockingIndex << "_" << dim;
-  //   } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
-  //     output << "ptrData[(" << dataBlockSize << " * globalIdx) + (resultSize * " << dim << ") + "
-  //            << dataBlockingIndex << "]";
-  //   } else {
-  //     std::string error("OCL Error: Illegal value for parameter \"KERNEL_STORE_DATA\"");
-  //     throw new base::operation_exception(error.c_str());
-  //   }
-  //   return output.str();
-  // }
 
  public:
   SourceBuilderB(json::Node &kernelConfiguration, size_t dims)
@@ -59,6 +36,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
     }
 
     uint64_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    uint64_t local_cache_size = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
 
     std::stringstream sourceStream;
 
@@ -101,9 +79,6 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << "}" << std::endl;
     } else {
       // with local memory
-      // int dims = 10;
-      // int data_points_num = 16;
-
       sourceStream << this->indent[0] << this->floatType() << " grid_index[" << dimensions << "];"
                    << std::endl;
       sourceStream << this->indent[0] << this->floatType() << " grid_level_2[" << dimensions << "];"
@@ -128,28 +103,33 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << this->indent[0] << "}" << std::endl;
 
       sourceStream << this->indent[0] << "local " << this->floatType() << " data_group["
-                   << local_size << " * " << dimensions << "];" << std::endl
+                   << (local_cache_size * dimensions) << "];" << std::endl
                    << std::endl;
 
       sourceStream << this->indent[0] << this->floatType() << " result = 0.0" << this->constSuffix()
                    << ";" << std::endl;
       sourceStream << this->indent[0] << "for (int outer_data_index = 0; outer_data_index < "
                    << data_points << ";" << std::endl;
-      sourceStream << this->indent[2] << "outer_data_index += get_local_size(0)) {" << std::endl;
+      sourceStream << this->indent[2] << "outer_data_index += " << local_cache_size << ") {"
+                   << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
-      sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << local_cache_size << ") {"
                    << std::endl;
-      sourceStream << this->indent[2] << "int data_index = outer_data_index + get_local_id(0);"
+      sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
                    << std::endl;
-      sourceStream << this->indent[2] << "if (data_index < " << data_points << ") {" << std::endl;
-      sourceStream << this->indent[3] << "data_group[get_local_id(0) * " << dimensions
+      sourceStream << this->indent[3] << "int data_index = outer_data_index + get_local_id(0);"
+                   << std::endl;
+      sourceStream << this->indent[3] << "if (data_index < " << data_points << ") {" << std::endl;
+      sourceStream << this->indent[4] << "data_group[get_local_id(0) * " << dimensions
                    << " + d] = data_points[data_index * " << dimensions << " + d];" << std::endl;
+      sourceStream << this->indent[3] << "}" << std::endl;
       sourceStream << this->indent[2] << "}" << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl << std::endl;
 
-      sourceStream << this->indent[1]
-                   << "for (int inner_data_index = 0; inner_data_index < get_local_size(0); "
+      sourceStream << this->indent[1] << "for (int inner_data_index = 0; inner_data_index < "
+                   << local_cache_size
+                   << "; "
                       "inner_data_index += 1) {"
                    << std::endl;
       sourceStream << this->indent[2] << "int data_index = outer_data_index + inner_data_index;"

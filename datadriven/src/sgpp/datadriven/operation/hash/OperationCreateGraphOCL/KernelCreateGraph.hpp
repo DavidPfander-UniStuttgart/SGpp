@@ -45,9 +45,6 @@ class KernelCreateGraph {
   /// OpenCL configuration containing the building flags
   json::Node &kernelConfiguration;
   size_t localSize;
-  // size_t dataBlockingSize;
-  // size_t scheduleSize;
-  // size_t totalBlockSize;
   /// Host side buffer for the dataset
   std::vector<T> &data;
   size_t unpadded_data_size;
@@ -116,16 +113,6 @@ class KernelCreateGraph {
                 << ")" << std::endl;
       std::cout << "k: " << k << " Dims:" << dims << std::endl;
     }
-    // size_t datasize = unpadded_datasize / dims;
-
-    // size_t globalworkrange[1];
-    // if (chunksize == 0) {
-    //   globalworkrange[0] = unpadded_datasize / dims;
-    // } else {
-    //   globalworkrange[0] = chunksize;
-    // }
-    // globalworkrange[0] = globalworkrange[0] + (localSize - globalworkrange[0] % localSize);
-    // size_t data_points = data.size() / dims;
 
     // Build kernel if not already done
     if (this->kernel == nullptr) {
@@ -265,25 +252,9 @@ class KernelCreateGraph {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
-        // if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-        //   kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        // }
-
-        // if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-        //   kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        // }
-
-        // if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        // }
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
 
         if (kernelNode.contains("USE_SELECT") == false) {
           kernelNode.addIDAttr("USE_SELECT", false);

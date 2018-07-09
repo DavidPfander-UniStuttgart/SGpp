@@ -23,13 +23,6 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
   json::Node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
-  /// Used workgroupsize for opencl kernel execution
-  // size_t localWorkgroupSize;
-  /// Using local memory?
-  // bool useLocalMemory;
-  // size_t dataBlockSize;
-  // size_t transGridBlockSize;
-  // uint64_t maxDimUnroll;
 
  public:
   SourceBuilderPruneGraph(json::Node &kernelConfiguration, size_t dims)
@@ -45,6 +38,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
     }
 
     size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    uint64_t local_cache_size = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
 
     std::stringstream sourceStream;
 
@@ -141,8 +135,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[0] << "}" << std::endl;
       sourceStream << "}" << std::endl;
     } else {
-      sourceStream << "" << this->floatType() << " get_u(const " << this->floatType() << " grenze, const int index, const int level_2) {"
-                   << std::endl;
+      sourceStream << "" << this->floatType() << " get_u(const " << this->floatType()
+                   << " grenze, const int index, const int level_2) {" << std::endl;
       sourceStream << this->indent[0] << "" << this->floatType() << " ret = level_2;" << std::endl;
       sourceStream << this->indent[0] << "ret *= grenze;" << std::endl;
       sourceStream << this->indent[0] << "ret -= index;" << std::endl;
@@ -156,15 +150,16 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
           << "void kernel __attribute__((reqd_work_group_size(" << local_size
           << ", 1, 1))) removeEdges(__global int *nodes, __global const int *starting_points,"
           << std::endl;
-      sourceStream << this->indent[1]
-                   << "__global const " << this->floatType() << " *data, __global const " << this->floatType() << " *alphas, int startid) {"
+      sourceStream << this->indent[1] << "__global const " << this->floatType()
+                   << " *data, __global const " << this->floatType() << " *alphas, int startid) {"
                    << std::endl;
       sourceStream << this->indent[0] << "size_t global_index = startid + get_global_id(0);"
                    << std::endl
                    << std::endl;
 
-      sourceStream << this->indent[0] << "" << this->floatType() << " eval_locations[(" << k << " + 1) * " << dimensions
-                   << "];  // (k + 1) * " << dimensions << "" << std::endl;
+      sourceStream << this->indent[0] << "" << this->floatType() << " eval_locations[(" << k
+                   << " + 1) * " << dimensions << "];  // (k + 1) * " << dimensions << ""
+                   << std::endl;
       sourceStream << this->indent[0] << "" << this->floatType() << " evals[" << k
                    << " + 1];                  // (k + 1)-many results" << std::endl;
       sourceStream << this->indent[0] << "for (int cur_eval = 0; cur_eval < " << k
@@ -198,8 +193,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << std::endl;
       sourceStream << this->indent[2] << "if (global_index < " << data_size
                    << " && neighbor_index >= 0) {" << std::endl;
-      sourceStream << this->indent[3] << "" << this->floatType() << " loc_dim = data[d + neighbor_index * " << dimensions
-                   << "];" << std::endl;
+      sourceStream << this->indent[3] << "" << this->floatType()
+                   << " loc_dim = data[d + neighbor_index * " << dimensions << "];" << std::endl;
       sourceStream << this->indent[3] << "eval_locations[cur_k * " << dimensions
                    << " + d] = loc_dim + 0.5 * (eval_locations[" << k << " * " << dimensions
                    << " + d] - loc_dim);" << std::endl;
@@ -210,43 +205,50 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl << std::endl;
 
-      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_indices[" << local_size << " * "
-                   << dimensions << "];   // local_size * " << dimensions << "" << std::endl;
-      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_levels_2[" << local_size << " * "
-                   << dimensions << "];  // local_size * " << dimensions << "" << std::endl;
-      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_alpha[" << local_size
-                   << "]; // local_size" << std::endl
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_indices["
+                   << local_cache_size << " * " << dimensions << "];   // local_size * "
+                   << dimensions << "" << std::endl;
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_levels_2["
+                   << local_cache_size << " * " << dimensions << "];  // local_size * "
+                   << dimensions << "" << std::endl;
+      sourceStream << this->indent[0] << "local " << this->floatType() << " grid_alpha["
+                   << local_cache_size << "]; // local_size" << std::endl
                    << std::endl;
 
       sourceStream << this->indent[0] << "// evaluate in the middle of the edges" << std::endl;
       sourceStream << this->indent[0] << "for (int outer_grid_index = 0; outer_grid_index < "
                    << gridSize << ";" << std::endl;
-      sourceStream << this->indent[2] << "outer_grid_index += get_local_size(0)) {" << std::endl;
+      sourceStream << this->indent[2] << "outer_grid_index += " << local_cache_size << ") {"
+                   << std::endl;
       sourceStream << this->indent[1] << "// cache next set of grid points in local memory"
                    << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       sourceStream << this->indent[1] << "int grid_index = outer_grid_index + get_local_id(0);"
                    << std::endl;
-      sourceStream << this->indent[1] << "if (grid_index < " << gridSize << ") {" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << local_cache_size
+                   << " && grid_index < " << gridSize << ") {" << std::endl;
       sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
                    << std::endl;
 
       sourceStream << this->indent[3] << "grid_indices[get_local_id(0) * " << dimensions
                    << " + d] =" << std::endl;
-      sourceStream << this->indent[5] << "(" << this->floatType() << ")starting_points[grid_index * 2 * " << dimensions
-                   << " + 2 * d];" << std::endl;
+      sourceStream << this->indent[5] << "(" << this->floatType()
+                   << ")starting_points[grid_index * 2 * " << dimensions << " + 2 * d];"
+                   << std::endl;
       sourceStream << this->indent[3] << "grid_levels_2[get_local_id(0) * " << dimensions
                    << " + d] =" << std::endl;
-      sourceStream << this->indent[5] << "(" << this->floatType() << ")(1 << starting_points[grid_index * 2 * "
-                   << dimensions << " + 2 * d + 1]);" << std::endl;
+      sourceStream << this->indent[5] << "(" << this->floatType()
+                   << ")(1 << starting_points[grid_index * 2 * " << dimensions << " + 2 * d + 1]);"
+                   << std::endl;
       sourceStream << this->indent[2] << "}" << std::endl;
       sourceStream << this->indent[2] << "grid_alpha[get_local_id(0)] = alphas[grid_index];"
                    << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl << std::endl;
 
-      sourceStream << this->indent[1]
-                   << "for (int inner_grid_index = 0; inner_grid_index < get_local_size(0); "
+      sourceStream << this->indent[1] << "for (int inner_grid_index = 0; inner_grid_index < "
+                   << local_cache_size
+                   << "; "
                       "inner_grid_index += 1) {"
                    << std::endl;
       sourceStream << this->indent[2] << "if (outer_grid_index + inner_grid_index >= " << gridSize
@@ -255,8 +257,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[2] << "}" << std::endl;
       sourceStream << this->indent[2] << "for (int cur_eval = 0; cur_eval < " << k
                    << " + 1; cur_eval += 1) {" << std::endl;
-      sourceStream << this->indent[3] << "" << this->floatType() << " eval_1d = 1.0" << this->constSuffix() << ";"
-                   << std::endl;
+      sourceStream << this->indent[3] << "" << this->floatType() << " eval_1d = 1.0"
+                   << this->constSuffix() << ";" << std::endl;
       sourceStream << this->indent[3] << "for (int d = 0; d < " << dimensions << "; d += 1) {"
                    << std::endl;
       sourceStream << this->indent[4] << "eval_1d *=" << std::endl;

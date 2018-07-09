@@ -130,7 +130,7 @@ class li_vector {
     dim_zero_flags <<= 1;
     if (level[d] == 1) {
       // dimension marked as level = 1, index = 1
-      std::cout << "empty" << std::endl;
+      // std::cout << "empty" << std::endl;
       return;
     }
     // std::cout << "l - 2: " << (level[d] - 2) << std::endl;
@@ -166,17 +166,17 @@ class li_vector {
       // std::cout << "index_packed d: " << d << std::endl;
       // print_binary(index_packed);
     }
-    std::cout << "dim_zero_flags" << std::endl;
-    print_binary(dim_zero_flags);
-    std::cout << "level_offsets" << std::endl;
-    print_binary(level_offsets);
-    std::cout << "level_packed" << std::endl;
-    print_binary(level_packed);
-    std::cout << "index_packed" << std::endl;
-    print_binary(index_packed);
+    // std::cout << "dim_zero_flags" << std::endl;
+    // print_binary(dim_zero_flags);
+    // std::cout << "level_offsets" << std::endl;
+    // print_binary(level_offsets);
+    // std::cout << "level_packed" << std::endl;
+    // print_binary(level_packed);
+    // std::cout << "index_packed" << std::endl;
+    // print_binary(index_packed);
   }
 
-  void get_next(uint64_t &level_d, uint64_t &index_d) {
+  __attribute__((noinline)) void get_next(uint64_t &level_d, uint64_t &index_d) {
     // std::cout << "------------------------------------" << std::endl;
     // std::cout << "next dim_zero_flags" << std::endl;
     // print_binary(dim_zero_flags);
@@ -241,6 +241,16 @@ int main() {
     for (size_t d = 0; d < DIMS; d++) {
       li.get_next(l, i);
       std::cout << "l: " << l << " i: " << i << std::endl;
+    }
+  }
+
+  grid::li_vector li(level, index);
+  for (size_t rep = 0; rep < 1000000; rep++) {
+    grid::li_vector li_copy(li);
+    uint64_t l;
+    uint64_t i;
+    for (size_t d = 0; d < DIMS; d++) {
+      li_copy.get_next(l, i);
     }
   }
 
