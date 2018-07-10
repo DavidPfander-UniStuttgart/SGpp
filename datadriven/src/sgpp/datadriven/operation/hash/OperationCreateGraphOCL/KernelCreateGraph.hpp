@@ -120,7 +120,7 @@ class KernelCreateGraph {
       globalworkrange[0] = padded_data_size;
     } else {
       globalworkrange[0] = chunksize;
-      size_t element_to_add = localSize - (unpadded_data_size % localSize);
+      size_t element_to_add = localSize - (chunksize % localSize);
       globalworkrange[0] += element_to_add;
     }
 
