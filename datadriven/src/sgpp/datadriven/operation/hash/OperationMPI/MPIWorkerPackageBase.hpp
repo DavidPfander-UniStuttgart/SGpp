@@ -83,6 +83,10 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
         for (std::string &deviceName : platformNode["DEVICES"].keys()) {
           json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+          if (chosen_device_name == std::string("Unknown")) {
+            chosen_device_name = deviceName;
+            found_device = true;
+          }
           if (deviceName == chosen_device_name) {
             if (deviceNode.contains("SELECT")) {
               std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
