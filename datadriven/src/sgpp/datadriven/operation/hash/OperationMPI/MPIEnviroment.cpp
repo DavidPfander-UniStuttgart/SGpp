@@ -188,6 +188,18 @@ void MPIEnviroment::slave_mainloop(void) {
   std::exit(0);
 }
 
+// counts all nodes
+int MPIEnviroment::count_nodes(json::Node &currentworker) {
+  int workercount = 1;
+  if (currentworker.contains("SLAVES")) {
+    for (std::string &slaveName : currentworker["SLAVES"].keys()) {
+        workercount += count_nodes(currentworker["SLAVES"][slaveName]);
+    }
+  }
+  return workercount;
+}
+
+// counts only slaves
 int MPIEnviroment::count_slaves(json::Node &currentslave) {
   int slavecount = 0;
   if (currentslave.contains("SLAVES")) {
@@ -291,6 +303,25 @@ void MPIEnviroment::init(int argc, char *argv[], bool verbose) {
 void MPIEnviroment::connect_nodes(base::OperationConfiguration conf) {
   if (singleton_instance != NULL) {
     if (singleton_instance->rank == 0) {
+      // Check config
+      size_t nodecount = singleton_instance->count_nodes(conf);
+      if (nodecount > MPIEnviroment::get_node_count()) {
+        std::stringstream errorString;
+        errorString << "Config mismatch:" << std::endl
+                    << "Not enough MPI processes launched for given MPI config file." << std::endl
+                    << "Launched processes: " << MPIEnviroment::get_node_count()
+                    << ". Required by config file: " << nodecount << std::endl;
+        throw std::logic_error(errorString.str());
+      }
+      if (nodecount < MPIEnviroment::get_node_count()) {
+        std::stringstream errorString;
+        errorString << "Config mismatch:" << std::endl
+                    << "Too many MPI processes launched for given MPI config file." << std::endl
+                    << "Launched processes: " << MPIEnviroment::get_node_count()
+                    << ". Required by config file: " << nodecount << std::endl;
+        throw std::logic_error(errorString.str());
+      }
+
       singleton_instance->init_communicator(conf);
       singleton_instance->init_worker(0, 0);
       singleton_instance->slave_mainloop();

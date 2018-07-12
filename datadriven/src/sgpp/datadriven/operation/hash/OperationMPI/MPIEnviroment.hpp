@@ -44,6 +44,7 @@ class MPIEnviroment {
    */
   void slave_mainloop(void);
   int count_slaves(json::Node &currentslave);
+  int count_nodes(json::Node &currentworker);
   void init_communicator(base::OperationConfiguration conf);
   void init_worker(int workerid, int source);
 
