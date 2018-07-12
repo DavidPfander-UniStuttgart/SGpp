@@ -6,10 +6,81 @@ import os
 import subprocess
 import atexit
 import numpy as np
+import json
+import time
 
 def cleanup():
     subprocess.run(["rm", "-rf", "dataset-tmp"])
     subprocess.run(["rm", "-rf", "ocl-results"])
+    subprocess.run(["rm", "-rf", "mpi-results"])
+
+def get_subworker_count(worker_node_json):
+    if 'SLAVES' not in worker_node_json:
+        return 1
+    else:
+        slaves = worker_node_json['SLAVES']
+        total_workers = 1 #self
+        for slave_id in slaves:
+            total_workers = total_workers + get_subworker_count(slaves[slave_id])
+        return total_workers
+
+def get_number_mpi_nodes(config_file):
+    with open(config_file) as data_file:
+        data_loaded = json.load(data_file)
+        return get_subworker_count(data_loaded)
+
+def count_correct_cluster_hits(correct_output, actual_output):
+    # Now count the correct hits .. to do so we must first assigne the
+    # clustering IDs from the dataset to the IDs our clustering program produced
+
+    # coutner for correct hits
+    counter_correct = 0
+
+    # IDs of clusters from the dataset
+    cluster_ids = np.unique(correct_output)
+    # IDs of clusters from the clustering program
+    found_cluster_ids = np.unique(actual_output)
+    # For sanity reasons check for outliners
+    for i in found_cluster_ids:
+        if i > 1000:
+            print("WARNING: outliner in output detected! Clusterid: ", i)
+    # dict for possible assignements between the two
+    bins = {}
+    # create bins for each possible assignement
+    for key in [(x,y) for x in cluster_ids for y in found_cluster_ids]:
+        bins[key] = 0
+    # Iterate over data and record hits for each bin
+    for i in range(0, actual_output.shape[0]):
+        bins[(correct_output[i], actual_output[i])] = bins[(correct_output[i], actual_output[i])] + 1
+    #print(bins)
+
+    # Now find the optimal assignement for each cluster id from the
+    # dataset. We want to maximize the correct hits (important if clusters
+    # of differenct size were merged by the clustering program)
+    correct_assignements = {}
+    # find optimal assignement by looking for the bins with the most hits
+    for cluster in cluster_ids:
+        current_maximum = -1
+        to_remove_key = (0, 0)
+        # find current best bin
+        for (x,y) in bins:
+            if bins[(x,y)] > current_maximum:
+                current_maximum = bins[(x,y)]
+                combination_key = (x,y)
+                correct_assignements[x] = y
+                to_remove_key = (x, y)
+        # Add this bin to correct hits
+        counter_correct = counter_correct + current_maximum
+        # Remove all assignement combinations made impossible by this assignement
+        to_remove_list = []
+        for (x,y) in bins:
+            if x == to_remove_key[0] or y == to_remove_key[1]:
+                to_remove_list.append((x,y)) #cannot del in bins whilst iterating
+        for d in to_remove_list:
+            del bins[d] # but we can delete in this loop
+
+    #print(correct_assignements)
+    return counter_correct
 
 if __name__ == '__main__':
     # dimensions, clusters, setsize, abweichung, rauschensize
@@ -57,12 +128,13 @@ if __name__ == '__main__':
 
     subprocess.run(["mkdir", "dataset-tmp"])
     subprocess.run(["mkdir", "ocl-results"])
+    subprocess.run(["mkdir", "mpi-results"])
 
     # Cleanup trap
     atexit.register(cleanup)
 
-    print("Starting correctness test...")
-    print("----------------------------")
+    print("#--------------------------------------------------------------------------------------------")
+    print("Status , Recall\t\t, Pipeline, Dim, Size, Level, OCL Config, MPI Config")
     # Iterate over dataset dimensions
     dataset_arg = "--datasetFileName=dataset-tmp/input-data.arff"
     for dim in range(args.dimension_args[0], args.dimension_args[2], args.dimension_args[1]):
@@ -74,6 +146,7 @@ if __name__ == '__main__':
             write_arff_header(f, dim, "dataset-tmp/input-data.arff", False)
             write_csv_without_erg(f, dim, dataset1)
             f.close()
+            print("#--------------------------------------------------------------------------------------------")
             # Iterate over level
             for level in range(args.level_args[0], args.level_args[2], args.level_args[1]):
                 level_arg = "--level=" + str(level)
@@ -84,79 +157,58 @@ if __name__ == '__main__':
                     oclconf_arg = "--config=" + args.opencl_config_folder + opencl_config_name
                     if args.opencl_flag:
                         # clustering run
-                        subprocess.run(["../examplesOCL/clustering_cmd", dataset_arg,
-                                        oclconf_arg, level_arg, "--epsilon=0.001",
+                        start = time.time()
+                        subprocess.run(["../examplesOCL/clustering_cmd", dataset_arg, "--k=5",
+                                        oclconf_arg, level_arg, "--epsilon=0.001","--lambda=0.000001",
                                         "--cluster_file=ocl-results/raw-clusters.txt"],
                                        stdout=subprocess.PIPE)
+                        end = time.time()
+                        duration = end - start
                         # load real result from clustering run
-                        Y1_run = np.loadtxt("ocl-results/raw-clusters.txt", int)
-
-                        # Now count the correct hits .. to do so we must first assigne the
-                        # clustering IDs from the dataset to the IDs our clustering program produced
-
-                        # coutner for correct hits
                         counter_correct = 0
+                        if os.path.exists("ocl-results/raw-clusters.txt"):
+                            Y1_run = np.loadtxt("ocl-results/raw-clusters.txt", int)
+                            subprocess.run(["rm", "ocl-results/raw-clusters.txt"])
+                            counter_correct = count_correct_cluster_hits(Y1, Y1_run)
 
-                        # IDs of clusters from the dataset
-                        cluster_ids = np.unique(Y1)
-                        # IDs of clusters from the clustering program
-                        found_cluster_ids = np.unique(Y1_run)
-                        # For sanity reasons check for outliners
-                        for i in found_cluster_ids:
-                            if i > 1000:
-                                print("WARNING: outliner in output detected! Clusterid: ", i)
-                        # dict for possible assignements between the two
-                        bins = {}
-                        # create bins for each possible assignement
-                        for key in [(x,y) for x in cluster_ids for y in found_cluster_ids]:
-                            bins[key] = 0
-                        # Iterate over data and record hits for each bin
-                        for i in range(0, Y1_run.shape[0]):
-                            bins[(Y1[i], Y1_run[i])] = bins[(Y1[i], Y1_run[i])] + 1
-                        #print(bins)
-
-                        # Now find the optimal assignement for each cluster id from the
-                        # dataset. We want to maximize the correct hits (important if clusters
-                        # of differenct size were merged by the clustering program)
-                        correct_assignements = {}
-                        # find optimal assignement by looking for the bins with the most hits
-                        for cluster in cluster_ids:
-                            current_maximum = -1
-                            to_remove_key = (0, 0)
-                            # find current best bin
-                            for (x,y) in bins:
-                                if bins[(x,y)] > current_maximum:
-                                    current_maximum = bins[(x,y)]
-                                    combination_key = (x,y)
-                                    correct_assignements[x] = y
-                                    to_remove_key = (x, y)
-                            # Add this bin to correct hits
-                            counter_correct = counter_correct + current_maximum
-                            # Remove all assignement combinations made impossible by this assignement
-                            to_remove_list = []
-                            for (x,y) in bins:
-                                if x == to_remove_key[0] or y == to_remove_key[1]:
-                                    to_remove_list.append((x,y)) #cannot del in bins whilst iterating
-                            for d in to_remove_list:
-                                del bins[d] # but we can delete in this loop
-
-                        #print(correct_assignements)
                         # Output ocl test results
-                        percent = round(counter_correct/ Y1.shape[0] * 100.0,3)
+                        percent = round(counter_correct/ Y1.shape[0] * 100.0, 3)
                         if percent >= 99.0:
-                            print("-> OpenCL test -> Dimension ", dim, "-> Size ",
-                                    size, "-> Level ", level, "-> config ",
-                                    opencl_config_name,"\t: PASSED (", percent, "%)" )
+                            print("SUCCESS, %3.3f"% percent, "%,", " %3.3fs"% duration, "\t, OCL, ", dim, ",",
+                                    size, ",", level, ",", opencl_config_name)
                         else:
-                            print("-> OpenCL test -> Dimension ", dim, "-> Size ",
-                                    size, "-> Level ", level, "-> config ",
-                                    opencl_config_name,"\t: FAILED (", percent, "%)" )
+                            print("FAILED , %3.3f"% percent, "%,", "%3.3fs"% duration, "\t, OCL, ", dim, ",",
+                                    size, ",", level, ",", opencl_config_name)
                     if args.mpi_flag:
                         # Iterate over MPI configurations
                         for mpi_config_name in os.listdir(args.mpi_config_folder):
                             if not mpi_config_name.endswith(".cfg"):
                                 continue
-                            print("   -> MPI test -> Dimension ", dim, "-> Size ",
-                                  size, "-> Level ", level, "-> MPI config ", mpi_config_name,"\t\t:")
-                        pass
+                            mpiconf_arg = "--MPIconfig=" + args.mpi_config_folder + mpi_config_name
+                            number_mpi_processes = "-n=" + str(get_number_mpi_nodes(\
+                                                   args.mpi_config_folder + mpi_config_name))
+                            start = time.time()
+                            subprocess.run(["mpirun", number_mpi_processes, "../examplesMPI/mpi_examples",
+                                            dataset_arg, mpiconf_arg,
+                                            oclconf_arg, level_arg, "--epsilon=0.001", "--lambda=0.000001",
+                                            "--cluster_file=mpi-results/raw-clusters.txt", "--k=5"],
+                                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                            end = time.time()
+                            duration = end - start
+                            # load real result from clustering run
+                            counter_correct = 0
+                            if os.path.exists("mpi-results/raw-clusters.txt"):
+                                Y1_run = np.loadtxt("mpi-results/raw-clusters.txt", int)
+                                subprocess.run(["rm", "mpi-results/raw-clusters.txt"])
+                                counter_correct = count_correct_cluster_hits(Y1, Y1_run)
+                            percent = round(counter_correct/ Y1.shape[0] * 100.0, 3)
+                            if percent >= 99.0:
+                                print("SUCCESS, %3.3f"% percent, "%,", " %3.3fs"% duration, "\t, MPI, ", dim, ",",
+                                      size, ",", level, ",", opencl_config_name, "\t,",
+                                      mpi_config_name)
+                            else:
+                                print("FAILED , %3.3f"% percent, "%,", "%3.3fs"% duration, "\t, MPI, ", dim, ",",
+                                      size, ",", level, ",", opencl_config_name, "\t,",
+                                      mpi_config_name)
+                            pass
                     pass
