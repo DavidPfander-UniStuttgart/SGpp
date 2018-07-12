@@ -59,7 +59,10 @@ def normiere_centers(liste, dimensions, mins, maxs):
       B[:, dimension] = teil
    return B
 
-def generate_dataset(dimensions, clusters, setsize, abweichung, rauschensize, clusters_distance):
+def generate_dataset(dimensions, clusters, setsize, abweichung, rauschensize,
+                     clusters_distance, zero_seed_enabled):
+   if zero_seed_enabled:
+      random.seed(0) # Always generate the same datasets
    #generate centers
    centers = []
    for cluster in range(0, clusters):
@@ -144,6 +147,12 @@ if __name__ == '__main__':
                     help='Filename (with path) for generated dataset (arff format)')
     parser.add_argument('-fc', '--erg_filename', type=str, required=True,
                     help='Filename (with path) for generated dataset (arff format)')
+    parser.add_argument('-zs', '--zero_seed', dest='seed_flag', action='store_const', const=True, default=False,
+                        help='If this flag is set, the used random seed will always be zero to\
+                        get reproducible datasets')
+    parser.add_argument('--test_mpi', dest='mpi_flag', action='store_const', const=True, default=False,
+                        help='If used, the script will test the MPI example examples_mpi \
+                        for correctness')
     args = parser.parse_args()
     print("Number of clusters: ", args.clusters)
     print("Dimension of generated dataset: ", args.dimensions)
@@ -153,8 +162,8 @@ if __name__ == '__main__':
     print("Filename of expected results clusters: ", args.erg_filename)
 
     print("Generating dataset", args.filename, " ... ")
-    random.seed(0) # Always generate the same datasets
-    dataset1, Y1, centers = generate_dataset(args.dimensions, args.clusters, args.size, args.deviation, args.noise_size, args.distance)
+    dataset1, Y1, centers = generate_dataset(args.dimensions, args.clusters, args.size,
+                                             args.deviation, args.noise_size, args.distance, args.seed_flag)
     f = open(args.filename, "w")
     write_arff_header(f, args.dimensions, args.filename, False)
     write_csv_without_erg(f, args.dimensions, dataset1)

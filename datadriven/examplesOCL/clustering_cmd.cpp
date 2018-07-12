@@ -41,12 +41,14 @@ int main(int argc, char **argv) {
   double threshold;
 
   bool do_output_graphs = false;
+  std::string cluster_file = "";
   std::string scenario_name;
 
   size_t refinement_steps;
   size_t refinement_points;
   size_t coarsening_points;
   double coarsening_threshold;
+  double epsilon;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -77,6 +79,12 @@ int main(int argc, char **argv) {
       "coarsen_points",
       boost::program_options::value<uint64_t>(&coarsening_points)->default_value(0),
       "number of points to coarsen during density estimation")(
+      "cluster_file",
+      boost::program_options::value<std::string>(&cluster_file)->default_value(""),
+      "Output file for the detected clusters. None if empty.")(
+      "epsilon",
+      boost::program_options::value<double>(&epsilon)->default_value(0.0001),
+      "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "coarsen_threshold",
       boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
       "for density estimation, only surpluses below threshold are coarsened");
@@ -224,7 +232,7 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> density_timer_start;
   std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
   density_timer_start = std::chrono::system_clock::now();
-  auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
+  auto solver = std::make_unique<solver::ConjugateGradients>(1000, epsilon);
 
   base::DataVector alpha(grid->getSize());
   alpha.setAll(0.0);
@@ -559,6 +567,13 @@ int main(int argc, char **argv) {
 
     if (do_output_graphs) {
       std::ofstream out_cluster_map(std::string("results/") + scenario_name + "_cluster_map.csv");
+      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+        out_cluster_map << node_cluster_map[i] << std::endl;
+      }
+      out_cluster_map.close();
+    }
+    if (cluster_file != "") {
+      std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         out_cluster_map << node_cluster_map[i] << std::endl;
       }
