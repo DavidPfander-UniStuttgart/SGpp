@@ -20,9 +20,6 @@
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 
-// arg 1: MPI Config File
-// arg 2: Dataset
-// arg 3: Gridlevel
 int main(int argc, char *argv[]) {
 
   // Init MPI enviroment - always has to be done first - capture slaves
@@ -35,8 +32,10 @@ int main(int argc, char *argv[]) {
     double lambda;
     std::string configFileName;
     std::string MPIconfigFileName;
+    std::string cluster_file;
     uint64_t k;
     double threshold;
+    double epsilon;
 
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
@@ -52,6 +51,12 @@ int main(int argc, char *argv[]) {
       "MPI configuration file. Should be a json file, specifying the connections of the network")(
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
+      "cluster_file",
+      boost::program_options::value<std::string>(&cluster_file)->default_value(""),
+      "Output file for the detected clusters. None if empty.")(
+      "epsilon",
+      boost::program_options::value<double>(&epsilon)->default_value(0.0001),
+      "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "threshold", boost::program_options::value<double>(&threshold)->default_value(0.0),
       "threshold for sparse grid function for removing edges");
 
@@ -85,12 +90,12 @@ int main(int argc, char *argv[]) {
       std::cerr << "error: option \"MPIconfig\" not specified" << std::endl;
       return 1;
     } else {
-      std::experimental::filesystem::path configFilePath(configFileName);
+      std::experimental::filesystem::path configFilePath(MPIconfigFileName);
       if (!std::experimental::filesystem::exists(configFilePath)) {
-        std::cerr << "error: MPI config file does not exist: " << configFileName << std::endl;
+        std::cerr << "error: MPI config file does not exist: " << MPIconfigFileName << std::endl;
         return 1;
       }
-      std::cout << "MPI configuration file: " << configFileName << std::endl;
+      std::cout << "MPI configuration file: " << MPIconfigFileName << std::endl;
     }
 
     if (variables_map.count("config") == 0) {
@@ -168,7 +173,7 @@ int main(int argc, char *argv[]) {
     rhs_start = std::chrono::system_clock::now();
     std::cout << "Create right hand side of density equation: " << std::endl;
     std::cout << "-------------------------------------------- " << std::endl;
-    sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset, "MyOCLConf.cfg");
+    sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset, configFileName);
     sgpp::base::DataVector rhs(gridsize);
     rhs_op.generate_b(rhs);
     rhs_end = std::chrono::system_clock::now();
@@ -177,11 +182,11 @@ int main(int argc, char *argv[]) {
     // Solve for alpha vector via CG solver
     std::cout << "Solve for alpha: " << std::endl;
     std::cout << "--------------- " << std::endl;
-    sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda, "MyOCLConf.cfg");
+    sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda, configFileName);
     std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
     solver_start = std::chrono::system_clock::now();
     alpha.setAll(1.0);
-    sgpp::solver::ConjugateGradients solver(1000, 0.001);
+    sgpp::solver::ConjugateGradients solver(1000, epsilon);
     solver.solve(mult_op, alpha, rhs, false, true);
     solver_end = std::chrono::system_clock::now();
     double max = alpha.max();
@@ -195,7 +200,7 @@ int main(int argc, char *argv[]) {
     std::chrono::time_point<std::chrono::high_resolution_clock> create_knn_start, create_knn_end;
     create_knn_start = std::chrono::system_clock::now();
     sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
-        *grid, alpha, dataset, k, threshold, "MyOCLConf.cfg");
+        *grid, alpha, dataset, k, threshold, configFileName);
     std::vector<int> knn_graph;
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();
@@ -213,9 +218,12 @@ int main(int argc, char *argv[]) {
     find_clusters_end = std::chrono::system_clock::now();
     // Output ergs
     std::cout << "detected clusters: " << clusters.size() << std::endl;
-    std::ofstream out("cluster_erg.txt");
-    for (size_t datapoint : node_cluster_map) {
-      out << datapoint << std::endl;
+    if (cluster_file != "") {
+      std::ofstream out_cluster_map(cluster_file);
+      for (size_t i = 0; i < dataset.getNrows(); ++i) {
+        out_cluster_map << node_cluster_map[i] << std::endl;
+      }
+      out_cluster_map.close();
     }
     std::cout << std::endl << std::endl;
 
