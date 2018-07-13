@@ -139,9 +139,10 @@ class li_vector {
     // print_binary(dim_zero_flags);
     uint64_t level_bits = log2(level[d]);
     // std::cout << "level_bits: " << level_bits << std::endl;
+    level_offsets <<= 1;
+    level_offsets |= 1;
     level_offsets <<= level_bits;
-    level_offsets |= level_bits;
-    level_packed <<= level_bits;
+    level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
     uint64_t adjusted_index = index[d] >> 1;
@@ -194,6 +195,7 @@ class li_vector {
       return;
     }
     uint64_t level_bits = __builtin_ffs(level_offsets);
+    // uint64_t level_bits = __builtin_ctz(level_offsets) + 1;
     level_offsets >>= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
@@ -212,10 +214,15 @@ int main() {
   std::cout << "DIMS_PER_ELEMENT: " << DIMS_PER_ELEMENT << std::endl;
   std::cout << "ELEMENTS: " << ELEMENTS << std::endl;
 
-  uint64_t level[DIMS];
+  uint64_t level[DIMS]; // DIMS = 20
   for (size_t d = 0; d < DIMS; d++) {
-    level[d] = (d % 5) + 1;
+    level[d] = 1;
   }
+  level[19] = 20;
+  level[18] = 7;
+  level[17] = 20;
+  level[2] = 20;
+  level[13] = 7;
   uint64_t index[DIMS];
   for (size_t d = 0; d < DIMS; d++) {
     if (d % 2 == 0) {
@@ -244,15 +251,15 @@ int main() {
     }
   }
 
-  grid::li_vector li(level, index);
-  for (size_t rep = 0; rep < 1000000; rep++) {
-    grid::li_vector li_copy(li);
-    uint64_t l;
-    uint64_t i;
-    for (size_t d = 0; d < DIMS; d++) {
-      li_copy.get_next(l, i);
-    }
-  }
+  // grid::li_vector li(level, index);
+  // for (size_t rep = 0; rep < 1000000; rep++) {
+  //   grid::li_vector li_copy(li);
+  //   uint64_t l;
+  //   uint64_t i;
+  //   for (size_t d = 0; d < DIMS; d++) {
+  //     li_copy.get_next(l, i);
+  //   }
+  // }
 
   return 0;
 }
