@@ -1,9 +1,11 @@
 #include <cmath>
 #include <iostream>
+#include <memory>
+#include <cmath>
 
 #define FP_BITS 64
 
-constexpr uint64_t DIMS = 20;
+constexpr uint64_t DIMS = 4;
 constexpr uint64_t BITS_PER_LEVEL = 6;  // log_2(64)
 constexpr uint64_t DIMS_PER_ELEMENT = FP_BITS / BITS_PER_LEVEL;
 constexpr uint64_t ELEMENTS =
@@ -208,6 +210,92 @@ class li_vector {
 };
 }  // namespace grid
 
+void apply_token(uint64_t (&levels)[DIMS], size_t remaining_tokens) {
+  for (auto i = 0; i < DIMS; i++) {
+    // apply one token to the current dimension level
+    levels[i]++;
+
+    // Test encoding with indices 1 or 3
+    {
+      // create indices
+      uint64_t index[DIMS];
+      for (size_t d = 0; d < DIMS; d++) {
+        if (levels[d] > 1) {
+          index[d] = 3;
+        } else {
+          index[d] = 1;
+        }
+      }
+
+      // encode
+      grid::li_vector li(levels, index);
+
+      // decode and check
+      uint64_t l;
+      uint64_t i;
+      for (size_t d = 0; d < DIMS; d++) {
+        li.get_next(l, i);
+        if (l != levels[d] || i != index[d]) {
+          std::cerr << "ERROR! Decoding did not yield the right values!" << std::endl;
+          std::cerr << "Original values: l: " << levels[d] << " i: " << index[d] << std::endl;
+          std::cerr << "Decoded values: l: " << l << " i: " << i << std::endl;
+          std::cin.get();
+        }
+      }
+    }
+
+    // Test encoding with maximum
+    {
+      // create indices
+      uint64_t index[DIMS];
+      for (size_t d = 0; d < DIMS; d++) {
+        index[d] = std::pow(2, levels[d]) - 1;
+      }
+
+      // encode
+      grid::li_vector li(levels, index);
+
+      // decode and check
+      uint64_t l;
+      uint64_t i;
+      for (size_t d = 0; d < DIMS; d++) {
+        li.get_next(l, i);
+        if (l != levels[d] || i != index[d]) {
+          std::cerr << "ERROR! Decoding did not yield the right values!" << std::endl;
+          std::cerr << "Original values: l: " << levels[d] << " i: " << index[d] << std::endl;
+          std::cerr << "Decoded values: l: " << l << " i: " << i << std::endl;
+          std::cin.get();
+        }
+      }
+    }
+
+    // Test for remaining tokens
+    if (remaining_tokens - 1 > 0) {
+      // apply rest of the tokens
+      apply_token(levels, remaining_tokens - 1);
+    }
+    // else
+    //   std::cout << "bottom" << std::endl;
+
+    // Remove token for next iteration
+    levels[i]--;
+  }
+}
+
+/// Test encoding/decoding for all combinations the given tokens (level increments) and levels.
+/// Complexity is dimension^tokens
+void test_encoding(size_t tokens) {
+
+  std::cout << "Started encoding/decoding test with " << DIMS << " dimensions and level sum "
+            << DIMS+tokens << " [ " << std::pow(DIMS, tokens) << " Tests]..." << std::endl;
+  uint64_t levels[DIMS];
+  for (auto i = 0; i < DIMS; i++) {
+    levels[i] = 1;
+  }
+  apply_token(levels, tokens);
+  std::cout << "Test finished!" << std::endl;
+}
+
 int main() {
   std::cout << "DIMS: " << DIMS << std::endl;
   std::cout << "BITS_PER_LEVEL: " << BITS_PER_LEVEL << std::endl;
@@ -218,11 +306,11 @@ int main() {
   for (size_t d = 0; d < DIMS; d++) {
     level[d] = 1;
   }
-  level[19] = 20;
-  level[18] = 7;
-  level[17] = 20;
-  level[2] = 20;
-  level[13] = 7;
+  level[3] = 20;
+  level[2] = 7;
+  level[1] = 20;
+  // level[2] = 20;
+  // level[13] = 7;
   uint64_t index[DIMS];
   for (size_t d = 0; d < DIMS; d++) {
     if (d % 2 == 0) {
@@ -250,6 +338,8 @@ int main() {
       std::cout << "l: " << l << " i: " << i << std::endl;
     }
   }
+
+  test_encoding(14);
 
   // grid::li_vector li(level, index);
   // for (size_t rep = 0; rep < 1000000; rep++) {
