@@ -134,7 +134,8 @@ class KernelDensityMult {
     scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = dataBlockingSize * localSize;
     if (kernelConfiguration.contains("USE_COMPRESSION")) {
-      if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
+      use_compression = kernelConfiguration["USE_COMPRESSION"].getBool();
+      if (kernelConfiguration.contains("PREPROCESS_POSITIONS") && use_compression) {
         if (kernelConfiguration["PREPROCESS_POSITIONS"].getBool()) {
           std::stringstream errorString;
           errorString << "OCL Error: option \"PREPROCESS_POSITIONS\" is inkompatible with "
@@ -142,9 +143,10 @@ class KernelDensityMult {
           throw base::operation_exception(errorString.str());
         }
       }
-      use_compression = kernelConfiguration["USE_COMPRESSION"].getBool();
       for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
-        points.push_back(0);
+        points.push_back(0); //Does not yield 0 at evaluation but we cannot encode zeros
+        // needs to be fixed in the opencl kernel itself
+      devicePoints.intializeTo(points, 1, 0, points.size());
       }
       compressed_grid test(points, dims);
       if(!test.check_grid_compression(points)) {
@@ -152,14 +154,6 @@ class KernelDensityMult {
       } else {
         std::cerr << "Grid compression check succeded! " << std::endl;
       }
-      std::cin.get();
-      // padding
-      if(!test.check_grid_compression(points)) {
-        std::cerr << "Grid compression check failed! " << std::endl;
-      } else {
-        std::cerr << "Grid compression check succeded! " << std::endl;
-      }
-      std::cin.get();
       device_dim_zero_flags.intializeTo(test.dim_zero_flags_v, 1, 0, test.dim_zero_flags_v.size());
       device_level_offsets.intializeTo(test.level_offsets_v, 1, 0, test.level_offsets_v.size());
       device_level_packed.intializeTo(test.level_packed_v, 1, 0, test.level_packed_v.size());
@@ -294,17 +288,16 @@ class KernelDensityMult {
     // Set mandatory kernel arguments
     int argument_counter = 0;
     if (!preprocess_positions) {
-      if (!use_compression) {
-        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
-                             this->devicePoints.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                      << ") for device " << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        argument_counter++;
-      } else {
+      err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                           this->devicePoints.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      if (use_compression) {
         err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
                              this->device_dim_zero_flags.getBuffer());
         if (err != CL_SUCCESS) {
@@ -341,6 +334,22 @@ class KernelDensityMult {
           throw base::operation_exception(errorString.str());
         }
         argument_counter++;
+        long non_padding_size = 0;
+        if (chunksize == 0) {
+          non_padding_size = gridSize / dataBlockingSize;
+        } else {
+          non_padding_size = chunksize / dataBlockingSize;
+        }
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_long),
+                             &non_padding_size);
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
+
       }
     } else {
       err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
@@ -510,8 +519,8 @@ class KernelDensityMult {
         const std::string &kernelName = "multdensity";
 
         json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                     ? deviceNode["KERNELS"][kernelName]
-                                     : deviceNode["KERNELS"].addDictAttr(kernelName);
+                                 ? deviceNode["KERNELS"][kernelName]
+                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
 
         if (kernelNode.contains("REUSE_SOURCE") == false) {
           kernelNode.addIDAttr("REUSE_SOURCE", false);
