@@ -82,6 +82,11 @@ class OperationMultipleEvalConfiguration {
 
   OperationMultipleEvalSubType getSubType() { return this->subType; }
 
+  void setParameters(
+      std::shared_ptr<base::OperationConfiguration> parameters) {
+    this->parameters = parameters;
+  }
+
   std::shared_ptr<base::OperationConfiguration> getParameters() { return this->parameters; }
 
   std::string& getName() { return this->name; }

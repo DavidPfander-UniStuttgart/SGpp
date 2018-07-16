@@ -403,10 +403,14 @@ datadriven::OperationDensityConditionalKDE* createOperationDensityConditionalKDE
 
 base::OperationMultipleEval* createOperationMultipleEval(
     base::Grid& grid, base::DataMatrix& dataset,
-    sgpp::datadriven::OperationMultipleEvalConfiguration& configuration) {
+    sgpp::datadriven::OperationMultipleEvalConfiguration& configuration, bool verbose) {
   if (configuration.getMPIType() == sgpp::datadriven::OperationMultipleEvalMPIType::MASTERSLAVE) {
 #ifdef USE_MPI
     if (grid.getType() == base::GridType::Linear) {
+      if (verbose) {
+        std::cout << "creating createOperationMultipleEval type: MASTERSLAVE subType: Linear"
+                  << std::endl;
+      }
       return new datadriven::OperationMultiEvalMPI(
           grid, dataset, sgpp::datadriven::OperationMultipleEvalType::STREAMING,
           sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT);
@@ -418,6 +422,9 @@ base::OperationMultipleEval* createOperationMultipleEval(
   } else if (configuration.getMPIType() == sgpp::datadriven::OperationMultipleEvalMPIType::HPX) {
 #ifdef USE_HPX
     if (grid.getType() == base::GridType::Linear) {
+      if (verbose) {
+        std::cout << "creating createOperationMultipleEval type: HPX subType: Linear" << std::endl;
+      }
       return new datadriven::OperationMultiEvalHPX(grid, dataset, configuration);
     }
 #else
@@ -428,6 +435,10 @@ base::OperationMultipleEval* createOperationMultipleEval(
 
   // can now assume that MPI type is NONE
   if (configuration.getType() == sgpp::datadriven::OperationMultipleEvalType::DEFAULT) {
+    if (verbose) {
+      std::cout << "creating createOperationMultipleEval type: DEFAULT, using base operator factory"
+                << std::endl;
+    }
     return createOperationMultipleEval(grid, dataset);
   }
 
@@ -435,10 +446,20 @@ base::OperationMultipleEval* createOperationMultipleEval(
     if (configuration.getType() == datadriven::OperationMultipleEvalType::DEFAULT ||
         configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT "
+                       "subType: DEFAULT"
+                    << std::endl;
+        }
         return new datadriven::OperationMultiEvalStreaming(grid, dataset);
       }
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCLMP) {
 #ifdef USE_OCL
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT "
+                       "subType: OCLMP"
+                    << std::endl;
+        }
         return datadriven::createStreamingOCLMultiPlatformConfigured(grid, dataset, configuration);
 #else
         throw base::factory_exception(
@@ -449,6 +470,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
           configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
 #ifdef __AVX__
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Linear type: SUBSPACELINEAR "
+                       "subType: DEFAULT==COMBINED"
+                    << std::endl;
+        }
         return new datadriven::OperationMultipleEvalSubspaceCombined(grid, dataset);
 #else
         throw base::factory_exception(
@@ -457,6 +483,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
       } else if (configuration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::SIMPLE) {
 #ifdef __AVX__
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Linear type: SUBSPACELINEAR "
+                       "subType: SIMPLE"
+                    << std::endl;
+        }
         return new datadriven::OperationMultipleEvalSubspaceSimple(grid, dataset);
 #else
         throw base::factory_exception(
@@ -467,10 +498,20 @@ base::OperationMultipleEval* createOperationMultipleEval(
   } else if (grid.getType() == base::GridType::ModLinear) {
     if (configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear type: STREAMING "
+                       "subType: DEFAULT"
+                    << std::endl;
+        }
         return new datadriven::OperationMultiEvalModMaskStreaming(grid, dataset);
       }
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCLFASTMP) {
 #ifdef USE_OCL
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear type: STREAMING "
+                       "subType: OCLFASTMP"
+                    << std::endl;
+        }
         return datadriven::createStreamingModOCLFastMultiPlatformConfigured(grid, dataset,
                                                                             configuration);
 #else
@@ -480,6 +521,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
       } else if (configuration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP) {
 #ifdef USE_OCL
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear type: STREAMING "
+                       "subType: OCLMASKMP"
+                    << std::endl;
+        }
         return datadriven::createStreamingModOCLMaskMultiPlatformConfigured(grid, dataset,
                                                                             configuration);
 #else
@@ -489,6 +535,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
       } else if (configuration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLOPT) {
 #ifdef USE_OCL
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear type: STREAMING "
+                       "subType: OCLOPT"
+                    << std::endl;
+        }
         return datadriven::createStreamingModOCLOptConfigured(grid, dataset, configuration);
 #else
         throw base::factory_exception(
@@ -500,6 +551,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
     if (configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCL) {
 #ifdef USE_OCL
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Bspline type: STREAMING "
+                       "subType: OCL"
+                    << std::endl;
+        }
         return datadriven::createStreamingBSplineOCLConfigured(grid, dataset, configuration);
 #else
         throw base::factory_exception(
@@ -511,6 +567,12 @@ base::OperationMultipleEval* createOperationMultipleEval(
     if (configuration.getType() == datadriven::OperationMultipleEvalType::DEFAULT) {
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
 #ifdef USE_CUDA
+        // type should probably be DEFAULT||STREAMING
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Poly type: DEFAULT "
+                       "subType: CUDA"
+                    << std::endl;
+        }
         return new datadriven::OperationMultiEvalCuda(grid, dataset, grid.getDegree(), false);
 #else
         throw base::factory_exception(
@@ -520,6 +582,11 @@ base::OperationMultipleEval* createOperationMultipleEval(
     } else if (configuration.getType() == datadriven::OperationMultipleEvalType::MORTONORDER) {
       if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
 #ifdef USE_CUDA
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Poly type: MORTONORDER "
+                       "subType: CUDA"
+                    << std::endl;
+        }
         return new datadriven::OperationMultiEvalCuda(grid, dataset, grid.getDegree(), true);
 #else
         throw base::factory_exception(

@@ -166,7 +166,7 @@ public:
       json::Node &kernelConfiguration = deviceConfiguration
           ["KERNELS"]
           [StreamingOCLMultiPlatform::Configuration::getKernelName()];
-      std::cout << "adding new multKernels..." << std::endl;
+      // std::cout << "adding new multKernels..." << std::endl;
       multKernels.emplace_back(devices[deviceIndex], dims, this->manager,
                                kernelConfiguration, queueLoadBalancerMult);
       multTransposeKernels.emplace_back(devices[deviceIndex], dims,
@@ -302,9 +302,9 @@ public:
         this->padIndexDown(startIndexGrid, commonGridPadding);
     size_t endIndexGridPadded =
         this->padIndexUp(endIndexGrid, commonGridPadding);
-    std::cout << "endIndexGrid: " << endIndexGrid << std::endl;
-    std::cout << "commonGridPadding: " << commonGridPadding << std::endl;
-    std::cout << "endIndexGridPadded: " << endIndexGridPadded << std::endl;
+    // std::cout << "endIndexGrid: " << endIndexGrid << std::endl;
+    // std::cout << "commonGridPadding: " << commonGridPadding << std::endl;
+    // std::cout << "endIndexGridPadded: " << endIndexGridPadded << std::endl;
 
     if (startIndexGrid > endIndexGrid) {
       std::stringstream errorString;
