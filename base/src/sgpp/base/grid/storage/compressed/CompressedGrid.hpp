@@ -74,8 +74,9 @@ class compressed_grid {
         const int grid_index = gridpoints[i * 2 * dims + 2 * d];
         const int grid_level = gridpoints[i * 2 * dims + 2 * d + 1];
         if (grid_index != extracted_index || grid_level != extracted_level) {
-          std::cerr << "should be " << grid_index << " " << grid_level << std::endl;
-          std::cerr << "is " << extracted_index << " " << extracted_level << std::endl;
+          if (grid_index == 0 && grid_level == 0) // padding point (0,0) - we cannot compress that
+            //anyway - in this case the wrong result is expected. This needs to be handled in the opencl kernels
+            continue;
           return false;
         }
       }
@@ -108,28 +109,16 @@ class compressed_grid {
       // dimension marked as level = 1, index = 1
       return;
     }
-    if (level[d] == 0) {
-      // dimension marked as level = 0, index = 0
-      dim_zero_flags += 1;
-      uint64_t level_bits = 1;
-      level_offsets <<= 1;
-      level_offsets |= 1;
-      level_offsets <<= level_bits;
-      return;
-    }
     // marked dimension as level > 1
     dim_zero_flags += 1;
     uint64_t level_bits = log2(level[d]);
-    level_offsets <<= 1;
-    level_offsets |= 1;
-    level_offsets <<= level_bits;
+    level_offsets >>= 1;
+    level_offsets |= (static_cast<uint64_t>(1)<< 63);
+    level_offsets >>= level_bits;
     level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
     uint64_t adjusted_index = index[d] >> 1;
-    // std::cout << "adjusted_index: " << adjusted_index << std::endl;
-    // uint64_t index_bits = (1 << level[d]) - 1;
-    // std::cout << "index_bits: " << (level[d] - 1) << std::endl;
     index_packed <<= level[d] - 1;
     index_packed |= adjusted_index;
   }
@@ -144,9 +133,8 @@ class compressed_grid {
       index_d = 1;
       return;
     }
-    uint64_t level_bits = __builtin_ffs(level_offsets);
-    // uint64_t level_bits = __builtin_ctz(level_offsets) + 1;
-    level_offsets >>= level_bits;
+    uint64_t level_bits = __builtin_clzll(level_offsets) + 1;
+    level_offsets <<= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
     level_packed >>= level_bits;
