@@ -234,6 +234,9 @@ public:
 
       clFinish(device->commandQueue);
 
+    // TODO compression: Instead of those first 2 buffers, move 4 compressed onto the device
+    // TODO compression: Add argument counter
+
       if (rangeSize > 0) {
         err = clSetKernelArg(kernelMultTranspose, 0, sizeof(cl_mem),
                              this->deviceLevelTranspose.getBuffer());
@@ -406,6 +409,8 @@ private:
                                      kernelEndGrid);
     deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
                                      kernelEndGrid);
+
+    // TODO compression: Add branch where the grid is compressed and moves into the buffers
   }
 
   /**

@@ -56,6 +56,9 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
       output << "level_" << gridBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
       output << "ptrLevel[dimLevelIndex]";
+
+      // TODO insert access to decompression variable
+
     } else {
       throw base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -77,6 +80,9 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
       output << "index_" << gridBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
       output << "ptrIndex[dimLevelIndex]";
+
+      // TODO insert access to decompression variable
+
     } else {
       throw base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -132,6 +138,8 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
       } else {
         dString = pointerAccess;
       }
+
+      // TODO compression: insert decompression
 
       for (size_t gridPoint = 0; gridPoint < transGridBlockSize; gridPoint++) {
         output << this->indent[2] << "curSupport_" << gridPoint << " *= fmax(1.0"

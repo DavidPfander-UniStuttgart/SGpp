@@ -24,6 +24,8 @@ class compressed_grid {
       pack_gridpoint(gridpoints, i);
     }
   }
+  // TODO compression: Add constructor for seperate level index vectors
+
  public:
   std::vector<uint64_t> dim_zero_flags_v;
   std::vector<uint64_t> level_offsets_v;
@@ -100,6 +102,7 @@ class compressed_grid {
                                   level_packed_v[i], index_packed_v[i]);
     }
   }
+  // TODO compression: Add overload for seperate level index vectors
 
   void pack_level_index_dim(uint64_t *level, uint64_t *index, uint64_t d, uint64_t
                             &dim_zero_flags, uint64_t &level_offsets, uint64_t &level_packed,

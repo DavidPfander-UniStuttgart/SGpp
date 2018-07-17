@@ -243,6 +243,11 @@ BOOST_AUTO_TEST_CASE(MultiPlatformSinglePrecision) {
   compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
 }
 
+// TODO compression: Insert WRITE SOURCE
+// TODO compression: Add own unittests
+// TODO compression: Remove WRITE SOURCE
+
+
 BOOST_AUTO_TEST_SUITE_END()
 
 #endif
