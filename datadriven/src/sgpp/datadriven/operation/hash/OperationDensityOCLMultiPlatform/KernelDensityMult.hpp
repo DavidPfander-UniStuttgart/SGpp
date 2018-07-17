@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CL/cl.h>
+#include <sgpp/base/grid/storage/compressed/CompressedGrid.hpp>
 #include <sgpp/base/opencl/OCLBufferWrapperSD.hpp>
 #include <sgpp/base/opencl/OCLManagerMultiPlatform.hpp>
 #include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
@@ -49,6 +50,11 @@ class KernelDensityMult {
   base::OCLBufferWrapperSD<T> devicehs;
   /// Buffer for the preprocessed h (if used)
   base::OCLBufferWrapperSD<T> devicePositions;
+  // Compression buffers
+  base::OCLBufferWrapperSD<unsigned long> device_dim_zero_flags;
+  base::OCLBufferWrapperSD<unsigned long> device_level_offsets;
+  base::OCLBufferWrapperSD<unsigned long> device_level_packed;
+  base::OCLBufferWrapperSD<unsigned long> device_index_packed;
 
   cl_kernel kernelMult;
   /// Source builder for the opencl source code of the kernel
@@ -74,6 +80,7 @@ class KernelDensityMult {
   bool do_not_use_ternary;
   /// Use preprocessed grid positions? Configuration parameter is PREPROCESSED_POSITIONS
   bool preprocess_positions;
+  bool use_compression;
 
   cl_event clTiming;
 
@@ -93,6 +100,10 @@ class KernelDensityMult {
         devicehInverse(device),
         devicehs(device),
         devicePositions(device),
+        device_dim_zero_flags(device),
+        device_level_offsets(device),
+        device_level_packed(device),
+        device_index_packed(device),
         kernelMult(nullptr),
         kernelSourceBuilder(kernelConfiguration),
         manager(manager),
@@ -101,7 +112,8 @@ class KernelDensityMult {
         use_level_cache(false),
         use_less(false),
         do_not_use_ternary(false),
-        preprocess_positions(false) {
+        preprocess_positions(false),
+        use_compression(false) {
     this->verbose = use_level_cache = kernelConfiguration["VERBOSE"].getBool();
     gridSize = points.size() / (2 * dims);
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
@@ -115,15 +127,49 @@ class KernelDensityMult {
       throw base::operation_exception(errorString.str());
     }
 
+
     // Get local size and push grid points into opencl buffer
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = dataBlockingSize * localSize;
-    for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
-      points.push_back(0);
+    if (kernelConfiguration.contains("USE_COMPRESSION")) {
+      if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
+        if (kernelConfiguration["PREPROCESS_POSITIONS"].getBool()) {
+          std::stringstream errorString;
+          errorString << "OCL Error: option \"PREPROCESS_POSITIONS\" is inkompatible with "
+                      << "\"USE_COMPRESSION\"";
+          throw base::operation_exception(errorString.str());
+        }
+      }
+      use_compression = kernelConfiguration["USE_COMPRESSION"].getBool();
+      for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
+        points.push_back(0);
+      }
+      compressed_grid test(points, dims);
+      if(!test.check_grid_compression(points)) {
+        std::cerr << "Grid compression check failed! " << std::endl;
+      } else {
+        std::cerr << "Grid compression check succeded! " << std::endl;
+      }
+      std::cin.get();
+      // padding
+      if(!test.check_grid_compression(points)) {
+        std::cerr << "Grid compression check failed! " << std::endl;
+      } else {
+        std::cerr << "Grid compression check succeded! " << std::endl;
+      }
+      std::cin.get();
+      device_dim_zero_flags.intializeTo(test.dim_zero_flags_v, 1, 0, test.dim_zero_flags_v.size());
+      device_level_offsets.intializeTo(test.level_offsets_v, 1, 0, test.level_offsets_v.size());
+      device_level_packed.intializeTo(test.level_packed_v, 1, 0, test.level_packed_v.size());
+      device_index_packed.intializeTo(test.index_packed_v, 1, 0, test.index_packed_v.size());
+    } else {
+      for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
+        points.push_back(0);
+      }
+      devicePoints.intializeTo(points, 1, 0, points.size());
     }
-    devicePoints.intializeTo(points, 1, 0, points.size());
 
     // Check whether to calculate h_n on the host side (true) or in the opencl kernel (false)
     if (kernelConfiguration.contains("USE_LEVEL_CACHE")) {
@@ -248,15 +294,54 @@ class KernelDensityMult {
     // Set mandatory kernel arguments
     int argument_counter = 0;
     if (!preprocess_positions) {
-      err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
-                           this->devicePoints.getBuffer());
-      if (err != CL_SUCCESS) {
-        std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                    << ") for device " << std::endl;
-        throw base::operation_exception(errorString.str());
+      if (!use_compression) {
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                             this->devicePoints.getBuffer());
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
+      } else {
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                             this->device_dim_zero_flags.getBuffer());
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                             this->device_level_offsets.getBuffer());
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                             this->device_level_packed.getBuffer());
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
+                             this->device_index_packed.getBuffer());
+        if (err != CL_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                      << ") for device " << std::endl;
+          throw base::operation_exception(errorString.str());
+        }
+        argument_counter++;
       }
-      argument_counter++;
     } else {
       err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_mem),
                            devicehInverse.getBuffer());
@@ -449,7 +534,7 @@ class KernelDensityMult {
         }
 
         if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(128));
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
         }
 
         if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
@@ -463,10 +548,6 @@ class KernelDensityMult {
         if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
         }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
 
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));

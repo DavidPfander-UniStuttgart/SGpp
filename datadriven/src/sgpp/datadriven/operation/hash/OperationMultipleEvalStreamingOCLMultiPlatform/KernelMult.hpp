@@ -417,7 +417,7 @@ private:
   void initGridBuffers(std::vector<T> &level, std::vector<T> &index,
                        std::vector<T> &alpha, size_t kernelStartGrid,
                        size_t kernelEndGrid) {
-    std::cout << "in initGridBuffers" << std::endl;
+    // std::cout << "in initGridBuffers" << std::endl;
     deviceLevel.intializeTo(level, dims, kernelStartGrid, kernelEndGrid);
     deviceIndex.intializeTo(index, dims, kernelStartGrid, kernelEndGrid);
     deviceAlpha.intializeTo(alpha, 1, kernelStartGrid, kernelEndGrid);
@@ -433,7 +433,7 @@ private:
    */
   void initDatasetBuffers(std::vector<T> &dataset, size_t kernelStartData,
                           size_t kernelEndData) {
-    std::cout << "in initDatasetBuffers" << std::endl;
+    // std::cout << "in initDatasetBuffers" << std::endl;
     deviceData.intializeTo(dataset, dims, kernelStartData, kernelEndData, true);
   }
 
@@ -446,7 +446,7 @@ private:
    * @param kernelEndData End of the range to be processed by the device
    */
   void initDatasetResultBuffers(size_t kernelStartData, size_t kernelEndData) {
-    std::cout << "in initDatasetBuffers" << std::endl;
+    // std::cout << "in initDatasetBuffers" << std::endl;
     size_t range = kernelEndData - kernelStartData;
 
     std::vector<T> zeros(range);

@@ -7,9 +7,10 @@
 #include <string>
 #include <vector>
 
-#include "sgpp/globaldef.hpp"
+#include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include "sgpp/datadriven/application/MetaLearner.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
+#include "sgpp/globaldef.hpp"
 
 namespace sgpp {
 namespace base {
@@ -183,6 +184,8 @@ int main(int argc, char* argv[]) {
       sgpp::datadriven::OperationMultipleEvalType::DEFAULT;
   sgpp::datadriven::OperationMultipleEvalSubType subType =
       sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT;
+  // additional configuration in JSON format (primarily for OpenCL)
+  std::string additionalConfigFileName;
 
   // parse command line options
   boost::program_options::options_description description("Allowed options");
@@ -221,18 +224,15 @@ int main(int argc, char* argv[]) {
           "adaptConfig.numRefinements",
           boost::program_options::value<size_t>(&adaptConfig.numRefinements_),
           "number of refinement steps")(
-          "adaptConfig.percent",
-          boost::program_options::value<double>(&adaptConfig.percent_),
+          "adaptConfig.percent", boost::program_options::value<double>(&adaptConfig.percent_),
           "maximum number of grid points in percent of the size of the grid "
           "that are considered for refinement")(
-          "adaptConfig.threshold",
-          boost::program_options::value<double>(&adaptConfig.threshold_),
+          "adaptConfig.threshold", boost::program_options::value<double>(&adaptConfig.threshold_),
           "minimum surplus value for a grid point to be considered for "
           "refinement")
 
       // options for the solver during refinement
-      ("solverRefine.eps",
-       boost::program_options::value<double>(&SLESolverConfigRefine.eps_),
+      ("solverRefine.eps", boost::program_options::value<double>(&SLESolverConfigRefine.eps_),
        "error for early aborting training (set to 0 to disable)")(
           "solverRefine.maxIterations",
           boost::program_options::value<size_t>(&SLESolverConfigRefine.maxIterations_),
@@ -263,7 +263,9 @@ int main(int argc, char* argv[]) {
        "implementation type of the operation")(
           "operation.subType",
           boost::program_options::value<sgpp::datadriven::OperationMultipleEvalSubType>(&subType),
-          "implementation sub type of the operation");
+          "implementation sub type of the operation")(
+          "additionalConfig", boost::program_options::value<std::string>(&additionalConfigFileName),
+          "(OpenCL) kernel configuration file");
 
   boost::program_options::variables_map variables_map;
 
@@ -294,6 +296,10 @@ int main(int argc, char* argv[]) {
                                         adaptConfig, lambda, verbose);
 
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(type, subType);
+  if (variables_map.count("additionalConfig")) {
+    auto parameters = std::make_shared<sgpp::base::OCLOperationConfiguration>(additionalConfigFileName);
+    configuration.setParameters(parameters);
+  }
 
   if (learnerMode == sgpp::datadriven::LearnerMode::LEARN) {
     // only execute learning (no comparisons or tests, for performance

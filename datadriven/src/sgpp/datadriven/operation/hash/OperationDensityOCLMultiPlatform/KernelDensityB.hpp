@@ -55,10 +55,6 @@ class KernelDensityB {
 
   bool verbose;
 
-  // size_t localSize;
-  // size_t dataBlockingSize;
-  // size_t scheduleSize;
-  // size_t totalBlockSize;
   cl_event clTiming = nullptr;
 
  public:
@@ -78,22 +74,6 @@ class KernelDensityB {
         kernelConfiguration(kernelConfiguration) {
     gridSize = points.size() / (2 * dims);
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
-
-    // if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
-    //     kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() < dims) {
-    //   std::stringstream errorString;
-    //   errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
-    //               << "requires value of \"KERNEL_MAX_DIM_UNROLL\"";
-    //   errorString << " to be greater than the dimension of the data set, was set to"
-    //               << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() << "(device: \""
-    //               << device->deviceName << "\")" << std::endl;
-    //   throw base::operation_exception(errorString.str());
-    // }
-
-    // localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    // dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
-    // scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
-    // totalBlockSize = dataBlockingSize * localSize;
 
     devicePoints.intializeTo(points, 1, 0, points.size());
   }
@@ -290,25 +270,9 @@ class KernelDensityB {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
-        // if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-        //   kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        // }
-
-        // if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-        //   kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        // }
-
-        // if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        // }
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
       }
     }
   }
