@@ -424,7 +424,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     sourceStream << "{" << std::endl;
     sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
     if (use_compression_streaming || use_compression_fixed) {
-      sourceStream << this->indent[2] << "if(gridindex >= non_padding_size) return;" << std::endl;
+      // sourceStream << this->indent[2] << "if(gridindex >= non_padding_size) return;" << std::endl;
       sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
     }
     sourceStream << this->indent[0] << "__private int local_id = get_local_id(0);" << std::endl;
