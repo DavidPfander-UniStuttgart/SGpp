@@ -338,6 +338,25 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   }
   multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 
+  std::cout << "Testing multiplication kernel with compression but without optimized operation count..."
+            << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", false);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
   std::cout << "Density multiplication test done!" << std::endl;
 }
 
