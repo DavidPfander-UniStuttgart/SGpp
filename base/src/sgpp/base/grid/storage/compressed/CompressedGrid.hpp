@@ -112,9 +112,9 @@ class compressed_grid {
     // marked dimension as level > 1
     dim_zero_flags += 1;
     uint64_t level_bits = log2(level[d]);
-    level_offsets <<= 1;
-    level_offsets |= 1;
-    level_offsets <<= level_bits;
+    level_offsets >>= 1;
+    level_offsets |= (static_cast<uint64_t>(1)<< 63);
+    level_offsets >>= level_bits;
     level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
@@ -133,8 +133,8 @@ class compressed_grid {
       index_d = 1;
       return;
     }
-    uint64_t level_bits = 32 - __builtin_clz(level_offsets & (-level_offsets));
-    level_offsets >>= level_bits;
+    uint64_t level_bits = __builtin_clzll(level_offsets) + 1;
+    level_offsets <<= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
     level_packed >>= level_bits;

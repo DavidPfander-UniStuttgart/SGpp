@@ -148,10 +148,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[3] << "ulong level2 = 1;" << std::endl;
       output << this->indent[3] << "ulong index2 = 1;" << std::endl;
       output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-      output << this->indent[4] << "ulong level_bits = 64 - "
-             << "clz(current_level_offsets & (-current_level_offsets));"
+      output << this->indent[4] << "ulong level_bits = 1 + "
+             << "clz(current_level_offsets);"
              << std::endl;
-      output << this->indent[4] << "current_level_offsets >>= level_bits;" << std::endl;
+      output << this->indent[4] << "current_level_offsets <<= level_bits;" << std::endl;
       output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
       output << this->indent[4] << "level2 = (current_level_packed & level_mask) + 2;" << std::endl;
       output << this->indent[4] << "current_level_packed >>= level_bits;" << std::endl;
@@ -177,10 +177,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[3] << "ulong level = 1;" << std::endl;
       output << this->indent[3] << "ulong index = 1;" << std::endl;
       output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-      output << this->indent[4] << "ulong level_bits = 64 - "
-             << "clz(fixed_level_offsets & (-fixed_level_offsets));"
+      output << this->indent[4] << "ulong level_bits = 1 + "
+             << "clz(fixed_level_offsets);"
              << std::endl;
-      output << this->indent[4] << "fixed_level_offsets >>= level_bits;" << std::endl;
+      output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
       output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
       output << this->indent[4] << "level = (fixed_level_packed & level_mask) + 2;" << std::endl;
       output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;

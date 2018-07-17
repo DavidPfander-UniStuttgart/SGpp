@@ -141,9 +141,12 @@ class li_vector {
     // print_binary(dim_zero_flags);
     uint64_t level_bits = log2(level[d]);
     // std::cout << "level_bits: " << level_bits << std::endl;
-    level_offsets <<= 1;
-    level_offsets |= 1;
-    level_offsets <<= level_bits;
+    // level_offsets <<= 1;
+    // level_offsets |= 1;
+    // level_offsets <<= level_bits;
+    level_offsets >>= 1;
+    level_offsets |= (static_cast<uint64_t>(1)<< 63);
+    level_offsets >>= level_bits;
     level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
@@ -160,14 +163,15 @@ class li_vector {
       : dim_zero_flags(0), level_offsets(0), level_packed(0), index_packed(0) {
     for (int64_t d = DIMS - 1; d >= 0; d--) {
       pack_level_index_dim(level, index, d);
-      // std::cout << "dim_zero_flags d: " << d << std::endl;
-      // print_binary(dim_zero_flags);
-      // std::cout << "level_offsets d: " << d << std::endl;
-      // print_binary(level_offsets);
-      // std::cout << "level_packed d: " << d << std::endl;
-      // print_binary(level_packed);
-      // std::cout << "index_packed d: " << d << std::endl;
-      // print_binary(index_packed);
+    //   std::cout << "dim_zero_flags d: " << d << std::endl;
+    //   print_binary(dim_zero_flags);
+    //   std::cout << "level_offsets d: " << d << std::endl;
+    //   print_binary(level_offsets);
+    //   std::cout << "level_packed d: " << d << std::endl;
+    //   print_binary(level_packed);
+    //   std::cout << "index_packed d: " << d << std::endl;
+    //   print_binary(index_packed);
+    // std::cin.get();
     }
     // std::cout << "dim_zero_flags" << std::endl;
     // print_binary(dim_zero_flags);
@@ -177,18 +181,10 @@ class li_vector {
     // print_binary(level_packed);
     // std::cout << "index_packed" << std::endl;
     // print_binary(index_packed);
+    // std::cin.get();
   }
 
   __attribute__((noinline)) void get_next(uint64_t &level_d, uint64_t &index_d) {
-    // std::cout << "------------------------------------" << std::endl;
-    // std::cout << "next dim_zero_flags" << std::endl;
-    // print_binary(dim_zero_flags);
-    // std::cout << "next level_offsets" << std::endl;
-    // print_binary(level_offsets);
-    // std::cout << "next level_packed" << std::endl;
-    // print_binary(level_packed);
-    // std::cout << "next index_packed" << std::endl;
-    // print_binary(index_packed);
     uint64_t is_dim_implicit = dim_zero_flags & one_mask;
     dim_zero_flags >>= 1;
     if (is_dim_implicit == 0) {
@@ -196,9 +192,9 @@ class li_vector {
       index_d = 1;
       return;
     }
-    uint64_t level_bits = __builtin_ffs(level_offsets);
-    // uint64_t level_bits = __builtin_ctz(level_offsets) + 1;
-    level_offsets >>= level_bits;
+    //uint64_t level_bits = __builtin_ffs(level_offsets);
+    uint64_t level_bits = __builtin_clzll(level_offsets) + 1;
+    level_offsets <<= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
     level_packed >>= level_bits;
@@ -339,7 +335,7 @@ int main() {
     }
   }
 
-  test_encoding(14);
+  test_encoding(12);
 
   // grid::li_vector li(level, index);
   // for (size_t rep = 0; rep < 1000000; rep++) {
