@@ -101,7 +101,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         std::string("starting_points[i* ") + std::to_string(dimensions) + std::string("*2+2*dim]");
     // In case we use local memory we need to adjust the alias names
     // if (useLocalMemory) {
-    if (false) {
+    if (useLocalMemory) {
       level_func2 =
           std::string("level_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
       index_func2 =
@@ -231,10 +231,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       // Swap aliases
       std::string level_func_tmp = level_func2;
       level_func2 = level_func1;
-      level_func1 = level_func2;
+      level_func1 = level_func_tmp;
       std::string index_func_tmp = index_func2;
       index_func2 = index_func1;
-      index_func1 = index_func2;
+      index_func1 = index_func_tmp;
       // level_func2 = std::string("point_level_block") + std::to_string(block) + std::string("[dim]");
       // level_func1 = std::string("starting_points[i* ") + std::to_string(dimensions) +
       //               std::string("*2+2*dim+1]");
@@ -424,14 +424,14 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl
                    << this->indent[2] << "indices_local[local_id * " << dimensions
-                   << " + j] = starting_points[group * " << localWorkgroupSize * dimensions * 2
+                   << " + j] = starting_points[group * " << localCacheSize * dimensions * 2
                    << "  + local_id * " << dimensions * 2 << " + 2 * j];" << std::endl
                    << this->indent[2] << "level_local[local_id * " << dimensions
-                   << " + j] = starting_points[group * " << localWorkgroupSize * dimensions * 2
+                   << " + j] = starting_points[group * " << localCacheSize * dimensions * 2
                    << "  + local_id * " << dimensions * 2 << " + 2 * j + 1];" << std::endl
                    << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl;
+                   << localCacheSize << "  + local_id ];" << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
                    << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
