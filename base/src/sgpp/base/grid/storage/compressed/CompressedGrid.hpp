@@ -74,8 +74,9 @@ class compressed_grid {
         const int grid_index = gridpoints[i * 2 * dims + 2 * d];
         const int grid_level = gridpoints[i * 2 * dims + 2 * d + 1];
         if (grid_index != extracted_index || grid_level != extracted_level) {
-          std::cerr << "should be " << grid_index << " " << grid_level << std::endl;
-          std::cerr << "is " << extracted_index << " " << extracted_level << std::endl;
+          if (grid_index == 0 && grid_level == 0) // padding point (0,0) - we cannot compress that
+            //anyway - in this case the wrong result is expected. This needs to be handled in the opencl kernels
+            continue;
           return false;
         }
       }

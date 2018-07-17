@@ -265,6 +265,60 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
     }
   }
   multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression for streaming gridpoints..." << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression for fixed gridpoints..." << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression for all gridpoints..." << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 }
 
 BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
