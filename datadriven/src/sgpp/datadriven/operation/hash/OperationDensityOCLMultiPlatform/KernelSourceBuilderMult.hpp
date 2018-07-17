@@ -122,10 +122,17 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     output << " zellenintegral = 1.0;" << std::endl;
     // copy variables for shifting
     if (use_compression_streaming) {
-      output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags[i];" << std::endl;
-      output << this->indent[2] << "ulong current_level_offsets = level_offsets[i];" << std::endl;
-      output << this->indent[2] << "ulong current_level_packed = level_packed[i];" << std::endl;
-      output << this->indent[2] << "ulong current_index_packed = index_packed[i];" << std::endl;
+      if (useLocalMemory) {
+        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_offsets = level_offsets[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_packed = level_packed[i];" << std::endl;
+        output << this->indent[2] << "ulong current_index_packed = index_packed[i];" << std::endl;
+      } else {
+        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_offsets = level_offsets_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_packed = level_packed_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_index_packed = index_packed_v[i];" << std::endl;
+      }
     }
     if (use_compression_fixed) {
       output << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
@@ -324,8 +331,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       }
     }
     // Mutliply with corresponding alpha value
-    if (use_compression_streaming)
-      output << this->indent[2] << "if (group * " << localCacheSize << " + i < non_padding_size)" << std::endl;
+    if (use_compression_streaming) {
+      if (useLocalMemory)
+        output << this->indent[2] << "if (group * " << localCacheSize << " + i < non_padding_size)" << std::endl;
+      else
+        output << this->indent[2] << "if (i < non_padding_size)" << std::endl;
+    }
     if (useLocalMemory) {
       output << this->indent[2] << "gesamtint_block" << block
              << " += zellenintegral*alpha_local[i];" << std::endl;

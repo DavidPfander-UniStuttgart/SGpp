@@ -274,6 +274,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       const std::string &kernelName = "multdensity";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
       kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
@@ -292,6 +293,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       const std::string &kernelName = "multdensity";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
       kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
@@ -310,6 +312,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       const std::string &kernelName = "multdensity";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
       kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
@@ -328,6 +331,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       const std::string &kernelName = "multdensity";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
       kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
@@ -347,9 +351,29 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
       const std::string &kernelName = "multdensity";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
       kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", false);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression and without local memory..." << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
       kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
       kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
       kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
