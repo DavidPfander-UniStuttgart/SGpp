@@ -145,25 +145,25 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[3]
              << "ulong is_dim_implicit = current_dim_zero_flags & one_mask;" << std::endl;
       output << this->indent[3] << "current_dim_zero_flags >>= 1;" << std::endl;
-      output << this->indent[3] << "ulong level2 = 1;" << std::endl;
-      output << this->indent[3] << "ulong index2 = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_level2 = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_index2 = 1;" << std::endl;
       output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
       output << this->indent[4] << "ulong level_bits = 1 + "
              << "clz(current_level_offsets);"
              << std::endl;
       output << this->indent[4] << "current_level_offsets <<= level_bits;" << std::endl;
       output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-      output << this->indent[4] << "level2 = (current_level_packed & level_mask) + 2;" << std::endl;
+      output << this->indent[4] << "decompressed_level2 = (current_level_packed & level_mask) + 2;" << std::endl;
       output << this->indent[4] << "current_level_packed >>= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong index_bits = level2 - 1;" << std::endl;
+      output << this->indent[4] << "ulong index_bits = decompressed_level2 - 1;" << std::endl;
       output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-      output << this->indent[4] << "index2 = ((current_index_packed & index_mask) << 1) + 1;" << std::endl;
+      output << this->indent[4] << "decompressed_index2 = ((current_index_packed & index_mask) << 1) + 1;" << std::endl;
       output << this->indent[4] << "current_index_packed >>= index_bits;" << std::endl;
       output << this->indent[3] << "}" << std::endl;
       level_func2 =
-          std::string("level2");
+          std::string("decompressed_level2");
       index_func2 =
-          std::string("index2");
+          std::string("decompressed_index2");
     }
     if (use_compression_fixed) {
       if (!use_compression_streaming) {
@@ -174,25 +174,25 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
              << "is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
       }
       output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-      output << this->indent[3] << "ulong level = 1;" << std::endl;
-      output << this->indent[3] << "ulong index = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
       output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
       output << this->indent[4] << "ulong level_bits = 1 + "
              << "clz(fixed_level_offsets);"
              << std::endl;
       output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
       output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-      output << this->indent[4] << "level = (fixed_level_packed & level_mask) + 2;" << std::endl;
+      output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
       output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong index_bits = level - 1;" << std::endl;
+      output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
       output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-      output << this->indent[4] << "index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
+      output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
       output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
       output << this->indent[3] << "}" << std::endl;
       level_func1 =
-          std::string("level");
+          std::string("decompressed_level");
       index_func1 =
-          std::string("index");
+          std::string("decompressed_index");
     }
     // In case we do not want to use that the entry is implicitly zero if we use the wrong order
     // we need to find the smallest level
