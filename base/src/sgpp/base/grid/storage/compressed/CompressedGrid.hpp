@@ -118,9 +118,6 @@ class compressed_grid {
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
     uint64_t adjusted_index = index[d] >> 1;
-    // std::cout << "adjusted_index: " << adjusted_index << std::endl;
-    // uint64_t index_bits = (1 << level[d]) - 1;
-    // std::cout << "index_bits: " << (level[d] - 1) << std::endl;
     index_packed <<= level[d] - 1;
     index_packed |= adjusted_index;
   }
@@ -135,18 +132,6 @@ class compressed_grid {
       index_d = 1;
       return;
     }
-    //uint64_t level_bits = __builtin_ffs(level_offsets);
-    // uint64_t level_bits = __builtin_ctz(level_offsets) + 1;
-    // uint64_t test1 = static_cast<uint64_t>(1) << 33;
-    // uint64_t test2 = static_cast<uint64_t>(1) << 32;
-    // uint64_t test3 = static_cast<uint64_t>(1) << 31;
-    // uint64_t test4 = static_cast<uint64_t>(1) << 30;
-    // uint64_t test5 = level_offsets & static_cast<uint64_t>(-level_offsets);
-    // std::cout << sizeof(uint64_t) << std::endl;
-    // std::cout << __builtin_clz(test1) << " vs " << __builtin_ctz(level_offsets) + 1 << std::endl;
-    // std::cout << __builtin_clz(test2) << " vs " << __builtin_ctz(level_offsets) + 1 << std::endl;
-    // std::cout << __builtin_clz(test3) << " vs " << __builtin_ctz(level_offsets) + 1 << std::endl;
-    // std::cout << __builtin_clz(test4) << " vs " << __builtin_ctz(level_offsets) + 1 << std::endl;
     uint64_t level_bits = 32 - __builtin_clz(level_offsets & (-level_offsets));
     level_offsets >>= level_bits;
     uint64_t level_mask = (1 << level_bits) - 1;

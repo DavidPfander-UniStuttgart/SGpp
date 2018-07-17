@@ -133,13 +133,15 @@ class KernelDensityMult {
     dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = dataBlockingSize * localSize;
-    if (kernelConfiguration.contains("USE_COMPRESSION")) {
-      use_compression = kernelConfiguration["USE_COMPRESSION"].getBool();
+    if (kernelConfiguration.contains("USE_COMPRESSION_STREAMING")  ||
+        kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
+      use_compression = kernelConfiguration["USE_COMPRESSION_STREAMING"].getBool() ||
+                        kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
       if (kernelConfiguration.contains("PREPROCESS_POSITIONS") && use_compression) {
         if (kernelConfiguration["PREPROCESS_POSITIONS"].getBool()) {
           std::stringstream errorString;
-          errorString << "OCL Error: option \"PREPROCESS_POSITIONS\" is inkompatible with "
-                      << "\"USE_COMPRESSION\"";
+          errorString << "OCL Error: option \"PREPROCESS_POSITIONS\" is incompatible with "
+                      << "\"USE_COMPRESSION_STREAMING\"/\"USE_COMPRESSION_FIXED\"";
           throw base::operation_exception(errorString.str());
         }
       }
