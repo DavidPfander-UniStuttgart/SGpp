@@ -84,29 +84,15 @@ class KernelDensityB {
         kernelSourceBuilder(kernelConfiguration, dims),
         manager(manager),
         deviceTimingMult(0.0),
+        use_compression(false),
         kernelConfiguration(kernelConfiguration) {
     gridSize = points.size() / (2 * dims);
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
 
-    if (kernelConfiguration.contains("USE_COMPRESSION_STREAMING")  ||
-        kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
-      use_compression = kernelConfiguration["USE_COMPRESSION_STREAMING"].getBool() ||
-                        kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
-      if (kernelConfiguration.contains("PREPROCESS_POSITIONS") && use_compression) {
-        if (kernelConfiguration["PREPROCESS_POSITIONS"].getBool()) {
-          std::stringstream errorString;
-          errorString << "OCL Error: option \"PREPROCESS_POSITIONS\" is incompatible with "
-                      << "\"USE_COMPRESSION_STREAMING\"/\"USE_COMPRESSION_FIXED\"";
-          throw base::operation_exception(errorString.str());
-        }
-      }
-      for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
-        points.push_back(0); //Does not yield 0 at evaluation but we cannot encode zeros
-        // needs to be fixed in the opencl kernel itself
-      devicePoints.intializeTo(points, 1, 0, points.size());
-      }
+    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
+      use_compression = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
       compressed_grid grid(points, dims);
       // if(!grid.check_grid_compression(points)) {
       //   std::cerr << "Grid compression check failed! " << std::endl;
@@ -118,9 +104,6 @@ class KernelDensityB {
       device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
       device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
     } else {
-      for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
-        points.push_back(0);
-      }
       devicePoints.intializeTo(points, 1, 0, points.size());
     }
   }
