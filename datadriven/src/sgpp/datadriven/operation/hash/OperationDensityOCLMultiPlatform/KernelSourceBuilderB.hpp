@@ -52,19 +52,19 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 
     // TODO: startid currently not used appropriately! -> add startid + get_global_id() to kernel
     if (!use_compression_fixed) {
-    sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
-                 << ", 1, 1))) cscheme(global const int* starting_points," << std::endl
-                 << "global const " << this->floatType() << "* data_points,global "
-                 << this->floatType() << "* C, private int startid) {" << std::endl;
+      sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
+                   << ", 1, 1))) cscheme(global const int* starting_points," << std::endl
+                   << "global const " << this->floatType() << "* data_points,global "
+                   << this->floatType() << "* C, private int startid) {" << std::endl;
     } else {
-    sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
-                 << ", 1, 1))) cscheme("
-                 << "__global const ulong *dim_zero_flags_v, "
-                 << "__global const ulong *level_offsets_v, "
-                 << "__global const ulong *level_packed_v, "
-                 << "__global const ulong *index_packed_v, "
-                 << "global const " << this->floatType() << "* data_points,global "
-                 << this->floatType() << "* C, private int startid) {" << std::endl;
+      sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
+                   << ", 1, 1))) cscheme("
+                   << "__global const ulong *dim_zero_flags_v, "
+                   << "__global const ulong *level_offsets_v, "
+                   << "__global const ulong *level_packed_v, "
+                   << "__global const ulong *index_packed_v, "
+                   << "global const " << this->floatType() << "* data_points,global "
+                   << this->floatType() << "* C, private int startid) {" << std::endl;
     }
     if (!kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool()) {
       sourceStream << this->indent[0] << "C[get_global_id(0)]=0.0;" << std::endl
@@ -96,25 +96,54 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << "}" << std::endl;
     } else {
       // with local memory
-      sourceStream << this->indent[0] << this->floatType() << " grid_index[" << dimensions << "];"
-                   << std::endl;
-      sourceStream << this->indent[0] << this->floatType() << " grid_level_2[" << dimensions << "];"
-                   << std::endl;
-      sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
-                   << std::endl;
-      sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
-                   << std::endl;
-      sourceStream << this->indent[2] << "grid_index[d] = (" << this->floatType()
-                   << ")(starting_points[(startid + get_global_id(0)) * 2 * " << dimensions
-                   << " + 2 * d]);" << std::endl;
-      sourceStream << this->indent[2] << "grid_level_2[d] =" << std::endl;
-      sourceStream << this->indent[3] << "(" << this->floatType()
-                   << ")(1 << starting_points[(startid + get_global_id(0)) * 2 * " << dimensions
-                   << " + 2 * d + 1]);" << std::endl;
-      sourceStream << this->indent[1] << "}" << std::endl << std::endl;
-      sourceStream << this->indent[0] << "} else {" << std::endl;
-      sourceStream << this->indent[1] << "return;" << std::endl;
-      sourceStream << this->indent[0] << "}" << std::endl;
+      sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
+      if (!use_compression_fixed) {
+        sourceStream << this->indent[0] << this->floatType() << " grid_index[" << dimensions << "];"
+                     << std::endl;
+        sourceStream << this->indent[0] << this->floatType() << " grid_level_2[" << dimensions << "];"
+                     << std::endl;
+        sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+                     << std::endl;
+        sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
+                     << std::endl;
+        sourceStream << this->indent[2] << "grid_index[d] = (" << this->floatType()
+                     << ")(starting_points[(startid + get_global_id(0)) * 2 * " << dimensions
+                     << " + 2 * d]);" << std::endl;
+        sourceStream << this->indent[2] << "grid_level_2[d] =" << std::endl;
+        sourceStream << this->indent[3] << "(" << this->floatType()
+                     << ")(1 << starting_points[(startid + get_global_id(0)) * 2 * " << dimensions
+                     << " + 2 * d + 1]);" << std::endl;
+        sourceStream << this->indent[1] << "}" << std::endl << std::endl;
+        sourceStream << this->indent[0] << "} else {" << std::endl;
+        sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
+                     << std::endl;
+        sourceStream << this->indent[2] << "grid_index[d] = 1;" << std::endl;
+        sourceStream << this->indent[2] << "grid_level_2[d] = 2;" << std::endl;
+        sourceStream << this->indent[1] << "}" << std::endl << std::endl;
+        sourceStream << this->indent[0] << "}" << std::endl;
+      } else {
+        sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
+        sourceStream << this->indent[0] << "__private ulong point_dim_zero_flags = 0;"
+                     << std::endl;
+        sourceStream << this->indent[0] << "__private ulong point_level_offsets = 0;"
+                     << std::endl;
+        sourceStream << this->indent[0] << "__private ulong point_level_packed = 0;"
+                     << std::endl;
+        sourceStream << this->indent[0] << "__private ulong point_index_packed = 0;"
+                     << std::endl;
+
+        sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+                     << std::endl;
+        sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
+                     << std::endl;
+        sourceStream << this->indent[1] << "point_level_offsets = level_offsets_v[gridindex];"
+                     << std::endl;
+        sourceStream << this->indent[1] << "point_level_packed = level_packed_v[gridindex];"
+                     << std::endl;
+        sourceStream << this->indent[1] << "point_index_packed = index_packed_v[gridindex];"
+                     << std::endl;
+        sourceStream << this->indent[0] << "}" << std::endl;
+      }
 
       sourceStream << this->indent[0] << "local " << this->floatType() << " data_group["
                    << (local_cache_size * dimensions) << "];" << std::endl
@@ -144,22 +173,61 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << this->indent[1] << "for (int inner_data_index = 0; inner_data_index < "
                    << local_cache_size
                    << "; "
-                      "inner_data_index += 1) {"
+          "inner_data_index += 1) {"
                    << std::endl;
       sourceStream << this->indent[2] << "int data_index = outer_data_index + inner_data_index;"
                    << std::endl;
       sourceStream << this->indent[2] << "if (data_index >= " << data_points << ") {" << std::endl;
       sourceStream << this->indent[3] << "break;" << std::endl;
       sourceStream << this->indent[2] << "}" << std::endl;
+      if (use_compression_fixed) {
+        sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+        sourceStream << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
+        sourceStream << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
+        sourceStream << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+      }
       sourceStream << this->indent[2] << this->floatType() << " eval = 1.0" << this->constSuffix()
                    << ";" << std::endl;
       sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
                    << std::endl;
-      sourceStream << this->indent[3] << this->floatType() << " eval_1d = grid_level_2[d];"
-                   << std::endl;
+
+      std::string index_func =
+          std::string("grid_index[d]");
+      std::string level_func =
+          std::string("grid_level_2[d]");
+      if (use_compression_fixed) {
+        sourceStream << this->indent[3]
+                     << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+        sourceStream << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
+        sourceStream << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
+        sourceStream << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+        sourceStream << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
+        sourceStream << this->indent[4] << "ulong level_bits = 1 + "
+                     << "clz(fixed_level_offsets);"
+                     << std::endl;
+        sourceStream << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
+        sourceStream << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+        sourceStream << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
+        sourceStream << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
+        sourceStream << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
+        sourceStream << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+        sourceStream << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
+        sourceStream << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
+        sourceStream << this->indent[3] << "}" << std::endl;
+        level_func =
+            std::string("decompressed_level");
+        index_func =
+            std::string("decompressed_index");
+        sourceStream << this->indent[3] << this->floatType() << " eval_1d = (" << this->floatType()
+                     << ")(1 << " << level_func << ");"
+                     << std::endl;
+      } else {
+        sourceStream << this->indent[3] << this->floatType() << " eval_1d = " << level_func << ";"
+                     << std::endl;
+      }
       sourceStream << this->indent[3] << "eval_1d *= data_group[inner_data_index * " << dimensions
                    << " + d];" << std::endl;
-      sourceStream << this->indent[3] << "eval_1d -= grid_index[d];" << std::endl;
+      sourceStream << this->indent[3] << "eval_1d -= " << index_func << ";" << std::endl;
       sourceStream << this->indent[3] << "eval_1d = fabs(eval_1d);" << std::endl;
       sourceStream << this->indent[3] << "eval_1d = 1 - eval_1d;" << std::endl;
       sourceStream << this->indent[3] << "if (eval_1d < 0) eval_1d = 0;" << std::endl;

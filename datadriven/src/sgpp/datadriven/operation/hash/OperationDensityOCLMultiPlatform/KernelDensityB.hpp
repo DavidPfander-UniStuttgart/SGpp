@@ -94,18 +94,18 @@ class KernelDensityB {
     if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
       use_compression = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
       compressed_grid grid(points, dims);
-      // if(!grid.check_grid_compression(points)) {
-      //   std::cerr << "Grid compression check failed! " << std::endl;
-      // } else {
-      //   std::cerr << "Grid compression check succeded! " << std::endl;
-      // }
+      if(!grid.check_grid_compression(points)) {
+        std::cerr << "Grid compression check failed! " << std::endl;
+      } else {
+        std::cerr << "Grid compression check succeded! " << std::endl;
+      }
       device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0, grid.dim_zero_flags_v.size());
       device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0, grid.level_offsets_v.size());
       device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
       device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
-    } else {
-      devicePoints.intializeTo(points, 1, 0, points.size());
     }
+    if (!use_compression)
+      devicePoints.intializeTo(points, 1, 0, points.size());
   }
 
   ~KernelDensityB() {
@@ -164,44 +164,45 @@ class KernelDensityB {
         std::stringstream errorString;
         errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
         throw base::operation_exception(errorString.str());
-    }
-    argument_counter++;
-    } else {        err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
-                             this->device_dim_zero_flags.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                      << ") for device " << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        argument_counter++;
-        err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
-                             this->device_level_offsets.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                      << ") for device " << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        argument_counter++;
-        err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
-                             this->device_level_packed.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                      << ") for device " << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        argument_counter++;
-        err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
-                             this->device_index_packed.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                      << ") for device " << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        argument_counter++;
+      }
+      argument_counter++;
+    } else {
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                                         this->device_dim_zero_flags.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_level_offsets.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_level_packed.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_index_packed.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
     }
     err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->deviceData.getBuffer());
     if (err != CL_SUCCESS) {
@@ -320,8 +321,8 @@ class KernelDensityB {
         const std::string &kernelName = "cscheme";
 
         json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                     ? deviceNode["KERNELS"][kernelName]
-                                     : deviceNode["KERNELS"].addDictAttr(kernelName);
+                                 ? deviceNode["KERNELS"][kernelName]
+                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
 
         if (kernelNode.contains("REUSE_SOURCE") == false) {
           kernelNode.addIDAttr("REUSE_SOURCE", false);
