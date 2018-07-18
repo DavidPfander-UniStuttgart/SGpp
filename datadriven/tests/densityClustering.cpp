@@ -38,8 +38,8 @@ void multiply_and_test(std::shared_ptr<sgpp::base::OCLOperationConfiguration> pa
   alpha.setAll(1.0);
   // Create operation
   auto mult_operation = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-      grid, 2, manager, parameters, 0.001);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+        grid, 2, manager, parameters, 0.001);
   // Execute multiplication
   mult_operation->mult(alpha, result);
   // Compare results with optimal results
@@ -49,6 +49,158 @@ void multiply_and_test(std::shared_ptr<sgpp::base::OCLOperationConfiguration> pa
 }
 
 BOOST_AUTO_TEST_SUITE(TestClusteringOpenCL)
+
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+      "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData();
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing default rhs kernel ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+      }
+    }
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with local memory ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with local memory and compression ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with compression and without local memory ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+
+  }
+
+  std::cout << "Finished rhs kernel tests" << std::endl << std::endl;
+}
 
 BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   // Load correct results for comparison
@@ -427,8 +579,8 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
 
   // Create operation
   auto mult_operation = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-      *grid, 2, manager, parameters, 0.001);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+        *grid, 2, manager, parameters, 0.001);
 
   // Create solver
   auto solver = std::make_unique<sgpp::solver::ConjugateGradients>(100, 0.001);
@@ -448,49 +600,6 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
   }
 }
 
-BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
-  // Load correct results for comparison
-  std::vector<double> rhs_optimal_result;
-  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
-  if (rhs_in) {
-    double value;
-    while (rhs_in >> value) rhs_optimal_result.push_back(value);
-  } else {
-    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
-  }
-  rhs_in.close();
-
-  // Create OCL configuration
-  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
-      getConfigurationDefaultsSingleDevice();
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
-
-  // Create OpenCL Manager
-  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
-
-  // Create grid for test scenario
-  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
-  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
-  gridGen.regular(11);
-  size_t gridsize = grid->getStorage().getSize();
-
-  // Load dataset for test scenario
-  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
-      "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData();
-
-  // Create operation
-  auto operation_rhs = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-      *grid, 2, manager, parameters, 0.001);
-
-  std::cout << "Testing rhs kernel ..." << std::endl;
-  sgpp::base::DataVector b(gridsize);
-  operation_rhs->generateb(dataset, b);
-  for (size_t i = 0; i < gridsize; ++i) {
-    BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
-  }
-}
 
 BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   // Load correct results for comparison
@@ -521,8 +630,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   // Create operation
   size_t k = 8;
   auto operation_graph = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters, k);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+        dataset, 2, manager, parameters, k);
   // Test graph kernel
   std::vector<int> graph(dataset.getNrows() * k);
   operation_graph->create_graph(graph);
@@ -541,8 +650,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     }
   }
   operation_graph = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters, k);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+        dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -561,8 +670,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     }
   }
   operation_graph = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters, k);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+        dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -582,8 +691,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     }
   }
   operation_graph = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-      dataset, 2, manager, parameters, k);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+        dataset, 2, manager, parameters, k);
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
@@ -654,8 +763,8 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
 
   // Create operation
   auto operation_prune = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
-      *grid, alpha, dataset, 2, manager, parameters, 0.2, 8);
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
+        *grid, alpha, dataset, 2, manager, parameters, 0.2, 8);
 
   std::cout << "Testing knn prune kernel ..." << std::endl;
   operation_prune->prune_graph(graph);
