@@ -76,6 +76,8 @@ BOOST_AUTO_TEST_CASE(Compression) {
       getConfigurationDefaultsSingleDevice();
 
   std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+  parameters->replaceIDAttr("VERBOSE", true);
+  parameters->replaceIDAttr("SHOW_BUILD_LOG", true);
 
   for (json::Node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
@@ -84,7 +86,7 @@ BOOST_AUTO_TEST_CASE(Compression) {
     kernelNode.replaceIDAttr("WRITE_SOURCE", true);
     kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
     kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
-    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compression");
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
   }
 
