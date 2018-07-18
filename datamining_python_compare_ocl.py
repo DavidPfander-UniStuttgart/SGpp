@@ -16,7 +16,7 @@ f = open('python_cpp_compare_ocl.csv', 'wb')
 fieldnames = ['dataset_size', 'duration', 'gflops', 'final_residuum']
 writer = csv.DictWriter(f, fieldnames=fieldnames)
 writer.writeheader()
-for numElements in [10000, 20000, 40000, 60000, 80000, 100000]:
+for numElements in [1000, 10000, 20000, 40000, 60000, 80000, 100000]:
     print "work on dataset with " + str(numElements) + " elements"
     print "using device: " + str(args.device_name)
     fileName = "friedman2_4d_" + str(numElements) + ".arff"
