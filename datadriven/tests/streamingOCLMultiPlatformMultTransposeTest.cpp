@@ -71,6 +71,31 @@ BOOST_AUTO_TEST_CASE(Simple) {
                            configuration);
 }
 
+BOOST_AUTO_TEST_CASE(Compression) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+    kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compression");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
+  }
+
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
+                           configuration);
+}
+
 BOOST_AUTO_TEST_CASE(Blocking) {
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
