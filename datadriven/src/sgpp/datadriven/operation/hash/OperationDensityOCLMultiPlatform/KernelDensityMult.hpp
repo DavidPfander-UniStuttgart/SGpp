@@ -150,16 +150,16 @@ class KernelDensityMult {
         // needs to be fixed in the opencl kernel itself
       devicePoints.intializeTo(points, 1, 0, points.size());
       }
-      compressed_grid test(points, dims);
-      if(!test.check_grid_compression(points)) {
-        std::cerr << "Grid compression check failed! " << std::endl;
-      } else {
-        std::cerr << "Grid compression check succeded! " << std::endl;
-      }
-      device_dim_zero_flags.intializeTo(test.dim_zero_flags_v, 1, 0, test.dim_zero_flags_v.size());
-      device_level_offsets.intializeTo(test.level_offsets_v, 1, 0, test.level_offsets_v.size());
-      device_level_packed.intializeTo(test.level_packed_v, 1, 0, test.level_packed_v.size());
-      device_index_packed.intializeTo(test.index_packed_v, 1, 0, test.index_packed_v.size());
+      compressed_grid grid(points, dims);
+      // if(!grid.check_grid_compression(points)) {
+      //   std::cerr << "Grid compression check failed! " << std::endl;
+      // } else {
+      //   std::cerr << "Grid compression check succeded! " << std::endl;
+      // }
+      device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0, grid.dim_zero_flags_v.size());
+      device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0, grid.level_offsets_v.size());
+      device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
+      device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
     } else {
       for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
         points.push_back(0);
