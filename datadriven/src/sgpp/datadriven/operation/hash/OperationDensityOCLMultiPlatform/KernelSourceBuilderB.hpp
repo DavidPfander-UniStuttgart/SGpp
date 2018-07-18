@@ -22,10 +22,16 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
   json::Node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
+  bool use_compression_fixed;
 
  public:
   SourceBuilderB(json::Node &kernelConfiguration, size_t dims)
-      : kernelConfiguration(kernelConfiguration), dims(dims) {}
+      : kernelConfiguration(kernelConfiguration), dims(dims) {
+    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED"))
+      use_compression_fixed = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
+    else
+      use_compression_fixed = false;
+  }
 
   /// Generates the opencl source code for the density right hand side vector
   std::string generateSource(size_t dimensions, size_t data_points, size_t grid_points) {
@@ -45,10 +51,21 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
     }
 
     // TODO: startid currently not used appropriately! -> add startid + get_global_id() to kernel
+    if (!use_compression_fixed) {
     sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                  << ", 1, 1))) cscheme(global const int* starting_points," << std::endl
                  << "global const " << this->floatType() << "* data_points,global "
                  << this->floatType() << "* C, private int startid) {" << std::endl;
+    } else {
+    sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
+                 << ", 1, 1))) cscheme("
+                 << "__global const ulong *dim_zero_flags_v, "
+                 << "__global const ulong *level_offsets_v, "
+                 << "__global const ulong *level_packed_v, "
+                 << "__global const ulong *index_packed_v, "
+                 << "global const " << this->floatType() << "* data_points,global "
+                 << this->floatType() << "* C, private int startid) {" << std::endl;
+    }
     if (!kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool()) {
       sourceStream << this->indent[0] << "C[get_global_id(0)]=0.0;" << std::endl
                    << this->indent[0] << "private " << this->floatType() << " value=1;" << std::endl
@@ -96,10 +113,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << " + 2 * d + 1]);" << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl << std::endl;
       sourceStream << this->indent[0] << "} else {" << std::endl;
-      sourceStream << this->indent[1] << "for (int d = 0; d < 10; d++) {" << std::endl;
-      sourceStream << this->indent[2] << "grid_index[d] = 1.0;" << std::endl;
-      sourceStream << this->indent[2] << "grid_level_2[d] = 2.0;" << std::endl;
-      sourceStream << this->indent[1] << "}" << std::endl;
+      sourceStream << this->indent[1] << "return;" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl;
 
       sourceStream << this->indent[0] << "local " << this->floatType() << " data_group["
