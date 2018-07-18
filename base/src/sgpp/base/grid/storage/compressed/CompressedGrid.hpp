@@ -24,7 +24,18 @@ class compressed_grid {
       pack_gridpoint(gridpoints, i);
     }
   }
-  // TODO compression: Add constructor for seperate level index vectors
+  template<class T>
+  compressed_grid(std::vector<T> &level, std::vector<T> &index, size_t dimensions) :
+      gridsize(level.size()/(dimensions)), dims(dimensions),
+      dim_zero_flags_v(level.size()/(dimensions)),
+      level_offsets_v(level.size()/(dimensions), 0),
+      level_packed_v(level.size()/(dimensions), 0),
+      index_packed_v(level.size()/(dimensions), 0)
+  {
+    for (size_t i = 0; i < gridsize; i++) {
+      pack_gridpoint(level, index, i);
+    }
+  }
 
  public:
   std::vector<uint64_t> dim_zero_flags_v;
@@ -102,7 +113,22 @@ class compressed_grid {
                                   level_packed_v[i], index_packed_v[i]);
     }
   }
-  // TODO compression: Add overload for seperate level index vectors
+
+  template<class T>
+  void pack_gridpoint(std::vector<T> &levels, std::vector<T> &indices, size_t i) {
+    uint64_t level[dims];
+    uint64_t index[dims];
+    // stage values
+    for (int64_t d = 0; d < dims; d++) {
+      index[d] = static_cast<uint64_t>(indices[i * dims + d]);
+      level[d] = static_cast<uint64_t>(levels[i * dims + d]);
+    }
+    // pack values into the compressed vectors
+    for (int64_t d = dims - 1; d >= 0; d--) {
+      pack_level_index_dim(level, index, d, dim_zero_flags_v[i], level_offsets_v[i],
+                                  level_packed_v[i], index_packed_v[i]);
+    }
+  }
 
   void pack_level_index_dim(uint64_t *level, uint64_t *index, uint64_t d, uint64_t
                             &dim_zero_flags, uint64_t &level_offsets, uint64_t &level_packed,
