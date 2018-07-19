@@ -141,23 +141,40 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
 
       for (size_t gridPoint = 0; gridPoint < transGridBlockSize; gridPoint++) {
         if (use_compression) {
+          if (gridPoint == 0 && d == startDim) {
           output << this->indent[3]
-                 << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
-          output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-          output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
-          output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+                 << "ulong is_dim_implicit = fixed_dim_zero_flags_" << gridPoint
+                 << " & one_mask;" << std::endl;
+            output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
+            output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+          } else {
+          output << this->indent[3]
+                 << "is_dim_implicit = fixed_dim_zero_flags_" << gridPoint
+                 << " & one_mask;" << std::endl;
+            output << this->indent[3] << "decompressed_level = 1;" << std::endl;
+            output << this->indent[3] << "decompressed_index = 1;" << std::endl;
+          }
+          output << this->indent[3] << "fixed_dim_zero_flags_" << gridPoint
+                 << " >>= 1;" << std::endl;
           output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
           output << this->indent[4] << "ulong level_bits = 1 + "
-                 << "clz(fixed_level_offsets);"
+                 << "clz(fixed_level_offsets_" << gridPoint << ");"
                  << std::endl;
-          output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
-          output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-          output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
-          output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-          output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
-          output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-          output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
-          output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
+          output << this->indent[4] << "fixed_level_offsets_" << gridPoint
+                 << " <<= level_bits;" << std::endl;
+          output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;"
+                 << std::endl;
+          output << this->indent[4] << "decompressed_level = (fixed_level_packed_"
+                 << gridPoint << " & level_mask) + 2;" << std::endl;
+          output << this->indent[4] << "fixed_level_packed_" << gridPoint
+                 << " >>= level_bits;" << std::endl;
+          output << this->indent[4] << "ulong index_bits = decompressed_level - 1;"
+                 << std::endl;
+          output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;"
+                 << std::endl;
+          output << this->indent[4] << "decompressed_index = ((fixed_index_packed_"
+                 << gridPoint << " & index_mask) << 1) + 1;" << std::endl;
+          output << this->indent[4] << "fixed_index_packed_" << gridPoint << " >>= index_bits;" << std::endl;
           output << this->indent[3] << "}" << std::endl;
         }
 
@@ -292,18 +309,22 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
         sourceStream << std::endl;
       }
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("compressed") == 0) {
+      sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
       for (size_t gridPoint = 0; gridPoint < transGridBlockSize; gridPoint++) {
-        sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_dim_zero_flags = "
+        sourceStream << this->indent[0] << "__private ulong point_dim_zero_flags_"
+                     << gridPoint <<" = "
                      << " dim_zero_flags_v[((globalSize *" << gridPoint << ") + globalIdx)];"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_level_offsets = "
+        sourceStream << this->indent[0] << "__private ulong point_level_offsets_"
+                     << gridPoint <<" = "
                      << " level_offsets_v[((globalSize *" << gridPoint << ") + globalIdx)];"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_level_packed = "
+        sourceStream << this->indent[0] << "__private ulong point_level_packed_"
+                     << gridPoint <<" = "
                      << " level_packed_v[((globalSize *" << gridPoint << ") + globalIdx)];"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_index_packed = "
+        sourceStream << this->indent[0] << "__private ulong point_index_packed_"
+                     << gridPoint <<" = "
                      << " index_packed_v[((globalSize *" << gridPoint << ") + globalIdx)];"
                      << std::endl;
       }
@@ -358,13 +379,19 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
     }
     sourceStream << std::endl;
 
+    for (size_t gridPoint = 0; gridPoint < transGridBlockSize; gridPoint++) {
     if (use_compression) {
-      sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-      sourceStream << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
-      sourceStream << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
-      sourceStream << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags_" << gridPoint
+                   << " = point_dim_zero_flags_" << gridPoint << ";" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_level_offsets_" << gridPoint
+                   << " = point_level_offsets_" << gridPoint << ";" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_level_packed_" << gridPoint
+                   << " = point_level_packed_" << gridPoint << ";" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_index_packed_" << gridPoint
+                   << " = point_index_packed_" << gridPoint << ";" << std::endl;
     }
     sourceStream << std::endl;
+    }
 
     if (dims > maxDimUnroll) {
       sourceStream << this->indent[1] << "for (int unrollDim = 0; unrollDim < "
