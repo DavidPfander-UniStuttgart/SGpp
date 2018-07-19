@@ -114,6 +114,15 @@ class KernelCreateGraph {
       std::cout << "k: " << k << " Dims:" << dims << std::endl;
     }
 
+    size_t globalworkrange[1];
+    if (chunksize == 0) {
+      globalworkrange[0] = padded_data_size;
+    } else {
+      globalworkrange[0] = chunksize;
+      size_t element_to_add = localSize - (chunksize % localSize);
+      globalworkrange[0] += element_to_add;
+    }
+
     // Build kernel if not already done
     if (this->kernel == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
@@ -156,7 +165,7 @@ class KernelCreateGraph {
     if (verbose) {
       std::cout << "Starting the kernel for " << padded_data_size << " items" << std::endl;
     }
-    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, &padded_data_size,
+    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, globalworkrange,
                                  &localSize, 0, nullptr, &clTiming);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
