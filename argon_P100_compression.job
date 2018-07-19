@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name="clustering experiments"
+#SBATCH --nodelist=argon-tesla1
+#SBATCH --gres=gpu:1
+#SBATCH --exclusive
+
+echo "starting"
+echo `hostname`
+echo srun `srun hostname`
+cd /home/pfandedd/git/SGpp_PASC18
+srun ./argon_compression_run.sh
+

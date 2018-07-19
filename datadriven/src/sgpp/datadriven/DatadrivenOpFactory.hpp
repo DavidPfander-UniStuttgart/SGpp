@@ -7,28 +7,28 @@
 
 #include <sgpp/base/grid/Grid.hpp>
 
-#include <sgpp/datadriven/operation/hash/simple/OperationTest.hpp>
 #include <sgpp/base/operation/hash/OperationMatrix.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensityMarginalize.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensityMargTo1D.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensityConditional.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensitySampling1D.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensitySampling.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensityRejectionSampling.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationTransformation1D.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationRosenblattTransformation.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationInverseRosenblattTransformation.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationCovariance.hpp>
 #include <sgpp/base/operation/hash/OperationMultipleEval.hpp>
 #include <sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationCovariance.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensityConditional.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensityMargTo1D.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensityMarginalize.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensityRejectionSampling.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensitySampling.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensitySampling1D.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationInverseRosenblattTransformation.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationRosenblattTransformation.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationTest.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationTransformation1D.hpp>
 
 #include <sgpp/datadriven/operation/hash/simple/OperationLimitFunctionValueRange.hpp>
 #include <sgpp/datadriven/operation/hash/simple/OperationMakePositive.hpp>
 
-#include <sgpp/datadriven/operation/hash/simple/OperationRosenblattTransformationKDE.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationInverseRosenblattTransformationKDE.hpp>
-#include <sgpp/datadriven/operation/hash/simple/OperationDensityMarginalizeKDE.hpp>
 #include <sgpp/datadriven/operation/hash/simple/OperationDensityConditionalKDE.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationDensityMarginalizeKDE.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationInverseRosenblattTransformationKDE.hpp>
+#include <sgpp/datadriven/operation/hash/simple/OperationRosenblattTransformationKDE.hpp>
 
 #include <sgpp/optimization/function/scalar/ScalarFunction.hpp>
 
@@ -189,7 +189,7 @@ datadriven::OperationDensityConditionalKDE* createOperationDensityConditionalKDE
  */
 base::OperationMultipleEval* createOperationMultipleEval(
     base::Grid& grid, base::DataMatrix& dataset,
-    sgpp::datadriven::OperationMultipleEvalConfiguration& configuration);
+    sgpp::datadriven::OperationMultipleEvalConfiguration& configuration, bool verbose = true);
 
 /**
  * Factory method, returning an OperationMakePositive for an arbitrary function f or some

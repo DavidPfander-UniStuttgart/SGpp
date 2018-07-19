@@ -3,15 +3,15 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include <utility>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include "sgpp/datadriven/application/LearnerLeastSquaresIdentity.hpp"
-#include "sgpp/datadriven/algorithm/SystemMatrixLeastSquaresIdentity.hpp"
-#include "sgpp/datadriven/tools/LearnerVectorizedPerformanceCalculator.hpp"
-#include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/base/exception/factory_exception.hpp"
+#include "sgpp/datadriven/DatadrivenOpFactory.hpp"
+#include "sgpp/datadriven/algorithm/SystemMatrixLeastSquaresIdentity.hpp"
+#include "sgpp/datadriven/application/LearnerLeastSquaresIdentity.hpp"
+#include "sgpp/datadriven/tools/LearnerVectorizedPerformanceCalculator.hpp"
 #include "sgpp/globaldef.hpp"
 
 namespace sgpp {
@@ -60,6 +60,7 @@ void LearnerLeastSquaresIdentity::postProcessing(const sgpp::base::DataMatrix& t
 
 void LearnerLeastSquaresIdentity::predict(sgpp::base::DataMatrix& testDataset,
                                           sgpp::base::DataVector& classesComputed) {
+  // TODO: cannot reuse DMSystem because of padding -> fix!
   classesComputed.resize(testDataset.getNrows());
 
   sgpp::op_factory::createOperationMultipleEval(*(this->grid), testDataset,
@@ -70,6 +71,7 @@ void LearnerLeastSquaresIdentity::predict(sgpp::base::DataMatrix& testDataset,
 void LearnerLeastSquaresIdentity::multTranspose(sgpp::base::DataMatrix& dataset,
                                                 sgpp::base::DataVector& multiplier,
                                                 sgpp::base::DataVector& result) {
+  // TODO: cannot reuse DMSystem because of padding -> fix!
   result.resize(grid->getSize());
 
   sgpp::op_factory::createOperationMultipleEval(*(this->grid), dataset,

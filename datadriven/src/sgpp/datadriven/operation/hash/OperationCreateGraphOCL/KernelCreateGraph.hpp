@@ -45,9 +45,6 @@ class KernelCreateGraph {
   /// OpenCL configuration containing the building flags
   json::Node &kernelConfiguration;
   size_t localSize;
-  // size_t dataBlockingSize;
-  // size_t scheduleSize;
-  // size_t totalBlockSize;
   /// Host side buffer for the dataset
   std::vector<T> &data;
   size_t unpadded_data_size;
@@ -92,6 +89,8 @@ class KernelCreateGraph {
     unpadded_data_size = data.size() / dims;
     size_t element_to_add = localSize - (unpadded_data_size % localSize);
     padded_data_size = unpadded_data_size + element_to_add;
+    std::cout << "unpadded_datasize: " << unpadded_data_size
+              << " adding elements: " << element_to_add << " (* dims)" << std::endl;
     // max difference between valid elements (squared): dims
     double padd_value = 3.0 * dims;
     for (size_t i = 0; i < element_to_add * dims; i++) {
@@ -113,15 +112,6 @@ class KernelCreateGraph {
       std::cout << "entering graph, device: " << device->deviceName << " (" << device->deviceId
                 << ")" << std::endl;
       std::cout << "k: " << k << " Dims:" << dims << std::endl;
-    }
-
-    size_t globalworkrange[1];
-    if (chunksize == 0) {
-      globalworkrange[0] = padded_data_size;
-    } else {
-      globalworkrange[0] = chunksize;
-      size_t element_to_add = localSize - (chunksize % localSize);
-      globalworkrange[0] += element_to_add;
     }
 
     // Build kernel if not already done
@@ -164,9 +154,9 @@ class KernelCreateGraph {
     clTiming = nullptr;
 
     if (verbose) {
-      std::cout << "Starting the create kernel for " << globalworkrange[0] << " items" << std::endl;
+      std::cout << "Starting the kernel for " << padded_data_size << " items" << std::endl;
     }
-    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, globalworkrange,
+    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, &padded_data_size,
                                  &localSize, 0, nullptr, &clTiming);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
@@ -262,25 +252,9 @@ class KernelCreateGraph {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
-        // if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-        //   kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        // }
-
-        // if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-        //   kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        // }
-
-        // if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        // }
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
 
         if (kernelNode.contains("USE_SELECT") == false) {
           kernelNode.addIDAttr("USE_SELECT", false);

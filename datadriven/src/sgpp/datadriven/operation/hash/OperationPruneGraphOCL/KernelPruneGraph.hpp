@@ -253,6 +253,10 @@ class KernelPruneGraph {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
+
         if (kernelNode.contains("WRITE_SOURCE") == false) {
           kernelNode.addIDAttr("WRITE_SOURCE", false);
         }

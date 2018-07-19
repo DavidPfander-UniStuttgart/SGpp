@@ -4,6 +4,7 @@
 // sgpp.sparsegrids.org
 #pragma once
 
+#include <sgpp/base/grid/storage/compressed/CompressedGrid.hpp>
 #include <sgpp/base/opencl/OCLBufferWrapperSD.hpp>
 #include <sgpp/base/opencl/OCLManagerMultiPlatform.hpp>
 #include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
@@ -40,6 +41,11 @@ class KernelDensityB {
   base::OCLBufferWrapperSD<T> deviceData;
   /// Buffer for the result vector
   base::OCLBufferWrapperSD<T> deviceResultData;
+  // Compression buffers
+  base::OCLBufferWrapperSD<unsigned long> device_dim_zero_flags;
+  base::OCLBufferWrapperSD<unsigned long> device_level_offsets;
+  base::OCLBufferWrapperSD<unsigned long> device_level_packed;
+  base::OCLBufferWrapperSD<unsigned long> device_index_packed;
 
   cl_kernel kernelB;
 
@@ -55,11 +61,10 @@ class KernelDensityB {
 
   bool verbose;
 
-  // size_t localSize;
-  // size_t dataBlockingSize;
-  // size_t scheduleSize;
-  // size_t totalBlockSize;
   cl_event clTiming = nullptr;
+
+  bool use_compression;
+  size_t localSize;
 
  public:
   KernelDensityB(std::shared_ptr<base::OCLDevice> dev, size_t dims,
@@ -71,31 +76,36 @@ class KernelDensityB {
         devicePoints(device),
         deviceData(device),
         deviceResultData(device),
+        device_dim_zero_flags(device),
+        device_level_offsets(device),
+        device_level_packed(device),
+        device_index_packed(device),
         kernelB(nullptr),
         kernelSourceBuilder(kernelConfiguration, dims),
         manager(manager),
         deviceTimingMult(0.0),
+        use_compression(false),
         kernelConfiguration(kernelConfiguration) {
     gridSize = points.size() / (2 * dims);
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
-    // if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
-    //     kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() < dims) {
-    //   std::stringstream errorString;
-    //   errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
-    //               << "requires value of \"KERNEL_MAX_DIM_UNROLL\"";
-    //   errorString << " to be greater than the dimension of the data set, was set to"
-    //               << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() << "(device: \""
-    //               << device->deviceName << "\")" << std::endl;
-    //   throw base::operation_exception(errorString.str());
-    // }
+    localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
 
-    // localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    // dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
-    // scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
-    // totalBlockSize = dataBlockingSize * localSize;
-
-    devicePoints.intializeTo(points, 1, 0, points.size());
+    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
+      use_compression = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
+      compressed_grid grid(points, dims);
+      if(!grid.check_grid_compression(points)) {
+        std::cerr << "Grid compression check failed! " << std::endl;
+      } else {
+        std::cerr << "Grid compression check succeded! " << std::endl;
+      }
+      device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0, grid.dim_zero_flags_v.size());
+      device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0, grid.level_offsets_v.size());
+      device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
+      device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
+    }
+    if (!use_compression)
+      devicePoints.intializeTo(points, 1, 0, points.size());
   }
 
   ~KernelDensityB() {
@@ -158,30 +168,74 @@ class KernelDensityB {
     this->deviceTimingMult = 0.0;
 
     // Set kernel arguments
-    err = clSetKernelArg(this->kernelB, 0, sizeof(cl_mem), this->devicePoints.getBuffer());
+    size_t argument_counter = 0;
+    if (!use_compression) {
+      err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->devicePoints.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+    } else {
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                                         this->device_dim_zero_flags.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_level_offsets.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_level_packed.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+      err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
+                           this->device_index_packed.getBuffer());
+      if (err != CL_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                    << ") for device " << std::endl;
+        throw base::operation_exception(errorString.str());
+      }
+      argument_counter++;
+    }
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->deviceData.getBuffer());
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernelB, 1, sizeof(cl_mem), this->deviceData.getBuffer());
+    argument_counter++;
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->deviceResultData.getBuffer());
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernelB, 2, sizeof(cl_mem), this->deviceResultData.getBuffer());
+    argument_counter++;
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_uint), &startid);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernelB, 3, sizeof(cl_uint), &startid);
-    if (err != CL_SUCCESS) {
-      std::stringstream errorString;
-      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
-      throw base::operation_exception(errorString.str());
-    }
+    argument_counter++;
 
     clTiming = nullptr;
 
@@ -267,8 +321,8 @@ class KernelDensityB {
         const std::string &kernelName = "cscheme";
 
         json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                     ? deviceNode["KERNELS"][kernelName]
-                                     : deviceNode["KERNELS"].addDictAttr(kernelName);
+                                 ? deviceNode["KERNELS"][kernelName]
+                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
 
         if (kernelNode.contains("REUSE_SOURCE") == false) {
           kernelNode.addIDAttr("REUSE_SOURCE", false);
@@ -290,25 +344,9 @@ class KernelDensityB {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
-        // if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-        //   kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        // }
-
-        // if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-        //   kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        // }
-
-        // if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_TRANS_GRID_BLOCKING_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCKING_SIZE", UINT64_C(1));
-        // }
-
-        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        // }
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
       }
     }
   }

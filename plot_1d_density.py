@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-
+plt.figure(figsize=(4,3))
 plt.title("Estimated density for varied regularization")
 plt.tight_layout()
 
