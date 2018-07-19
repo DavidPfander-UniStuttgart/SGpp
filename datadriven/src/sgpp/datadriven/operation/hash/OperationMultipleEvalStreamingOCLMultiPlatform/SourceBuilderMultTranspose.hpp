@@ -140,26 +140,26 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
 
 
       for (size_t gridPoint = 0; gridPoint < transGridBlockSize; gridPoint++) {
-      if (use_compression) {
-        output << this->indent[3]
-               << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
-        output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-        output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
-        output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
-        output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-        output << this->indent[4] << "ulong level_bits = 1 + "
-               << "clz(fixed_level_offsets);"
-               << std::endl;
-        output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
-        output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-        output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
-        output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-        output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
-        output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-        output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
-        output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
-        output << this->indent[3] << "}" << std::endl;
-      }
+        if (use_compression) {
+          output << this->indent[3]
+                 << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+          output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
+          output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
+          output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+          output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
+          output << this->indent[4] << "ulong level_bits = 1 + "
+                 << "clz(fixed_level_offsets);"
+                 << std::endl;
+          output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
+          output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+          output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
+          output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
+          output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
+          output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+          output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
+          output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
+          output << this->indent[3] << "}" << std::endl;
+        }
 
 
         output << this->indent[2] << "curSupport_" << gridPoint << " *= fmax(1.0"
@@ -219,14 +219,14 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
       sourceStream << "__global const " << this->floatType() << "* ptrLevel," << std::endl;
       sourceStream << "                  __global const " << this->floatType() << "* ptrIndex,"
                    << std::endl;
-      sourceStream << "                  __global const " << this->floatType() << "* ptrData,"
-                   << std::endl;
     } else {
       sourceStream << "__global const ulong *dim_zero_flags_v, "
                    << "__global const ulong *level_offsets_v, "
                    << "__global const ulong *level_packed_v, "
                    << "__global const ulong *index_packed_v, ";
     }
+    sourceStream << "                  __global const " << this->floatType() << "* ptrData,"
+                 << std::endl;
     sourceStream << "                  __global const " << this->floatType() << "* ptrSource,"
                  << std::endl;
     sourceStream << "                  __global       " << this->floatType() << "* ptrResult,"
@@ -355,6 +355,14 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<real_typ
         sourceStream << this->indent[1] << this->floatType() << " curSupport_" << gridPoint
                      << " = ptrSource[k];" << std::endl;
       }
+    }
+    sourceStream << std::endl;
+
+    if (use_compression) {
+      sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
+      sourceStream << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
     }
     sourceStream << std::endl;
 
