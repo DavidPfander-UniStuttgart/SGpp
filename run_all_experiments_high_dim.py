@@ -43,13 +43,15 @@ CSV_SEP = ";"
 
 # for dim in range(2, 3, 2):
 for level in levels:
-    f_result = open("results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + ".csv", "w")
-    f_result.write("dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density\n")
-    for dim in range(4, 10, 1):
+    resultsFileName = "results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + ".csv"
+    print("resultsFileName:", resultsFileName)
+    f_result = open(resultsFileName, "w")
+    f_result.write("dim" + CSV_SEP + "dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density\n")
+    for dim in range(4, 40, 1):
 
         # for dataset_size in [200]:
         # for dataset_size in chain(range(20000, 110000, 20000), range(200000, 1100000, 200000)):
-        for dataset_size in [500000]:            
+        for dataset_size in [500000]:
            dataset_file_name = "datasets/friedman/friedman2_filled_dim" + str(dim) + "_" + str(dataset_size) + ".arff"
            print("experiments for " + dataset_file_name)
            cmd = "./datadriven/examplesOCL/density_cmd --datasetFileName " + dataset_file_name + " --level " + str(level) + " --lambda " + str(lambdas) + " --config " + args.config_file + " --refinement_steps " + str(refinement_steps) + " --refinement_points " + str(refinement_points) + " --coarsen_points " + str(coarsen_points) + " --coarsen_threshold " + str(coarsen_threshold)
@@ -85,4 +87,4 @@ for level in levels:
            for g in re.finditer(r"acc_duration_density: (.*?)s", output):
               total_duration_density += float(g.group(1))
 
-           f_result.write(str(dataset_size) + CSV_SEP + str(refinement_steps) + CSV_SEP + str(total_duration_generate_b) + CSV_SEP + str(avr_gflops_generate_b) + CSV_SEP + str(total_duration_density) + CSV_SEP + str(avr_gflops_density) + "\n")
+           f_result.write(str(dim) + CSV_SEP + str(dataset_size) + CSV_SEP + str(refinement_steps) + CSV_SEP + str(total_duration_generate_b) + CSV_SEP + str(avr_gflops_generate_b) + CSV_SEP + str(total_duration_density) + CSV_SEP + str(avr_gflops_density) + "\n")
