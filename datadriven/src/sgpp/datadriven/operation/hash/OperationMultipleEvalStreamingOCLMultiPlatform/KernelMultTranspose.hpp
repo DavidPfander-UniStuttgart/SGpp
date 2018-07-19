@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include <sgpp/base/grid/storage/compressed/CompressedGrid.hpp>
 #include "SourceBuilderMultTranspose.hpp"
 #include "sgpp/base/opencl/OCLBufferWrapperSD.hpp"
 #include "sgpp/base/opencl/OCLClonedBufferMultiPlatform.hpp"
@@ -58,6 +59,12 @@ private:
 
   base::OCLBufferWrapperSD<T> deviceResultGridTranspose;
 
+  // Compression buffers - will be used if use_compression is true
+  base::OCLBufferWrapperSD<unsigned long> device_dim_zero_flags;
+  base::OCLBufferWrapperSD<unsigned long> device_level_offsets;
+  base::OCLBufferWrapperSD<unsigned long> device_level_packed;
+  base::OCLBufferWrapperSD<unsigned long> device_index_packed;
+
   cl_kernel kernelMultTranspose;
 
   double deviceTimingMultTranspose;
@@ -78,6 +85,8 @@ private:
 
   double buildDuration;
 
+  bool use_compression;
+
 public:
   /**
    * Constructs a new KernelMultTranspose object.
@@ -97,12 +106,14 @@ public:
       : device(device), dims(dims), err(CL_SUCCESS),
         deviceLevelTranspose(device), deviceIndexTranspose(device),
         deviceDataTranspose(device), deviceSourceTranspose(device),
+        device_dim_zero_flags(device), device_level_offsets(device),
+        device_level_packed(device), device_index_packed(device),
         deviceResultGridTranspose(device), kernelMultTranspose(nullptr),
         deviceTimingMultTranspose(0.0),
         kernelSourceBuilder(device, kernelConfiguration, dims),
         manager(manager), kernelConfiguration(kernelConfiguration),
         queueLoadBalancerMultTranspose(queueBalancerMultTranspose),
-        buildDuration(0.0) {
+        buildDuration(0.0), use_compression(false) {
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
             0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
@@ -124,6 +135,10 @@ public:
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * gridBlockSize;
+
+    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("compressed") == 0) {
+      use_compression = true;
+    }
   }
 
   /**
@@ -234,26 +249,68 @@ public:
 
       clFinish(device->commandQueue);
 
+      size_t argument_counter = 0;
       if (rangeSize > 0) {
-        err = clSetKernelArg(kernelMultTranspose, 0, sizeof(cl_mem),
-                             this->deviceLevelTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw base::operation_exception(errorString.str());
+        if (!use_compression) { // move normal grid to device
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->deviceLevelTranspose.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString
+                << "OCL Error: Failed to create kernel arguments for device "
+                << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->deviceIndexTranspose.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString
+                << "OCL Error: Failed to create kernel arguments for device "
+                << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
+        } else { // move compressed grid to device
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->device_dim_zero_flags.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                        << ") for device " << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->device_level_offsets.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                        << ") for device " << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->device_level_packed.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                        << ") for device " << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
+          err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
+                               this->device_index_packed.getBuffer());
+          if (err != CL_SUCCESS) {
+            std::stringstream errorString;
+            errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
+                        << ") for device " << std::endl;
+            throw base::operation_exception(errorString.str());
+          }
+          argument_counter++;
         }
-        err = clSetKernelArg(kernelMultTranspose, 1, sizeof(cl_mem),
-                             this->deviceIndexTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 2, sizeof(cl_mem),
+        err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
                              this->deviceDataTranspose.getBuffer());
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -262,7 +319,8 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
-        err = clSetKernelArg(kernelMultTranspose, 3, sizeof(cl_mem),
+        argument_counter++;
+        err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
                              this->deviceSourceTranspose.getBuffer());
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -271,7 +329,8 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
-        err = clSetKernelArg(kernelMultTranspose, 4, sizeof(cl_mem),
+        argument_counter++;
+        err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_mem),
                              this->deviceResultGridTranspose.getBuffer());
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -280,8 +339,9 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
+        argument_counter++;
         err =
-            clSetKernelArg(kernelMultTranspose, 5, sizeof(cl_int), &sourceSize);
+            clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_int), &sourceSize);
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
           errorString
@@ -289,7 +349,8 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
-        err = clSetKernelArg(kernelMultTranspose, 6, sizeof(cl_int),
+        argument_counter++;
+        err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_int),
                              &kernelStartData);
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -298,7 +359,8 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
-        err = clSetKernelArg(kernelMultTranspose, 7, sizeof(cl_int),
+        argument_counter++;
+        err = clSetKernelArg(kernelMultTranspose, argument_counter, sizeof(cl_int),
                              &kernelEndData);
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -307,6 +369,7 @@ public:
               << std::endl;
           throw base::operation_exception(errorString.str());
         }
+        argument_counter++;
 
         cl_event clTiming;
 
@@ -402,10 +465,18 @@ private:
    */
   void initGridBuffersTranspose(std::vector<T> &level, std::vector<T> &index,
                                 size_t kernelStartGrid, size_t kernelEndGrid) {
-    deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
-                                     kernelEndGrid);
-    deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
-                                     kernelEndGrid);
+    if (!use_compression) {
+      deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
+                                       kernelEndGrid);
+      deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
+                                       kernelEndGrid);
+    } else {
+      compressed_grid grid(level, index, dims);
+      device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0, grid.dim_zero_flags_v.size());
+      device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0, grid.level_offsets_v.size());
+      device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
+      device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
+    }
   }
 
   /**
