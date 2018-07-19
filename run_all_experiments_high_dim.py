@@ -8,6 +8,8 @@ import re
 
 import argparse
 parser = argparse.ArgumentParser(description='Run all high dim experiments.')
+parser.add_argument('--with-compression', dest='with_compression', action='store_true')
+parser.set_defaults(with_compression=False)
 requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument('--device_name', required=True)
 requiredNamed.add_argument('--config_file', required=True)
@@ -17,6 +19,7 @@ args = parser.parse_args()
 print("config_file: " + args.config_file)
 print("precision: " + args.precision)
 print("device_name: " + args.device_name)
+print("with_compression: " + str(args.with_compression))
 
 # noise = 0
 # print("noise: " + )
@@ -24,7 +27,7 @@ print("device_name: " + args.device_name)
 # common
 # levels = {2: 8, 4: 7, 6: 6, 8: 5, 10: 4}
 # levels = {2: 5, 4: 5, 6: 5, 8: 5, 10: 5}
-levels = [1]
+levels = [4]
 
 print("levels: " + str(levels))
 lambdas = 1E-2
@@ -40,7 +43,7 @@ CSV_SEP = ";"
 
 # for dim in range(2, 3, 2):
 for level in levels:
-    f_result = open("results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + ".csv", "w")
+    f_result = open("results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + ".csv", "w")
     f_result.write("dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density\n")
     for dim in range(4, 10, 1):
 
