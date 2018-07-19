@@ -63,6 +63,32 @@ BOOST_AUTO_TEST_CASE(Simple) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
   }
 
+  std::cout << "Testing simple version... " << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
+                           configuration);
+}
+
+BOOST_AUTO_TEST_CASE(SimpleCompression) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(1));
+  }
+  std::cout << "Testing compressed simple version... " << std::endl;
+
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -87,6 +113,7 @@ BOOST_AUTO_TEST_CASE(Blocking) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing blocking version... " << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -94,6 +121,33 @@ BOOST_AUTO_TEST_CASE(Blocking) {
   compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
                            configuration);
 }
+
+BOOST_AUTO_TEST_CASE(CompressedBlocking) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed blocking version... " << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
+                           configuration);
+}
+
 
 BOOST_AUTO_TEST_CASE(MultiDevice) {
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -111,6 +165,31 @@ BOOST_AUTO_TEST_CASE(MultiDevice) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing multi device version... " << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
+                           configuration);
+}
+BOOST_AUTO_TEST_CASE(CompressedMultiDevice) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsMultiDevice();
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed multi device version... " << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -135,6 +214,31 @@ BOOST_AUTO_TEST_CASE(MultiPlatform) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing MultiPlatform..." << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorDouble, sgpp::base::GridType::Linear, level,
+                           configuration);
+}
+BOOST_AUTO_TEST_CASE(CompressedMultiPlatform) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsMultiPlatform();
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed MultiPlatform..." << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -161,6 +265,32 @@ BOOST_AUTO_TEST_CASE(SimpleSinglePrecision) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing single precision..." << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
+}
+BOOST_AUTO_TEST_CASE(CompressedSimpleSinglePrecision) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+
+  (*parameters)["INTERNAL_PRECISION"].set("float");
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed single precision..." << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -186,6 +316,33 @@ BOOST_AUTO_TEST_CASE(BlockingSinglePrecision) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing with single precision and blocking..." << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
+}
+
+BOOST_AUTO_TEST_CASE(CompressedBlockingSinglePrecision) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+
+  (*parameters)["INTERNAL_PRECISION"].set("float");
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(4));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed with single precision and blocking..." << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -211,6 +368,33 @@ BOOST_AUTO_TEST_CASE(MultiDeviceSinglePrecision) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing with single precision multi device..." << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
+}
+
+BOOST_AUTO_TEST_CASE(CompressedMultiDeviceSinglePrecision) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsMultiDevice();
+
+  (*parameters)["INTERNAL_PRECISION"].set("float");
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed with single precision multi device..." << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
@@ -236,12 +420,39 @@ BOOST_AUTO_TEST_CASE(MultiPlatformSinglePrecision) {
     kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
   }
 
+  std::cout << "Testing with single precision multi platform..." << std::endl;
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
       sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
 
   compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
 }
+BOOST_AUTO_TEST_CASE(CompressedMultiPlatformSinglePrecision) {
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsMultiPlatform();
+
+  (*parameters)["INTERNAL_PRECISION"].set("float");
+
+  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
+
+  for (json::Node &deviceNode : deviceNodes) {
+    auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
+        sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName());
+    kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+    kernelNode.replaceIDAttr("KERNEL_DATA_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
+    kernelNode.replaceTextAttr("KERNEL_STORE_DATA", "compressed");
+    kernelNode.replaceIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+  }
+
+  std::cout << "Testing compressed with single precision multi platform..." << std::endl;
+  sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *parameters);
+
+  compareDatasetsTranspose(fileNamesErrorFloat, sgpp::base::GridType::Linear, level, configuration);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
 
