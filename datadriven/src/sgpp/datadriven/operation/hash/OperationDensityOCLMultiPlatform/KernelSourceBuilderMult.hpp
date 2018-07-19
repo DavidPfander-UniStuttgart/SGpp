@@ -27,9 +27,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   size_t localWorkgroupSize;
   /// Using local memory?
   bool useLocalMemory;
+  size_t localCacheSize;
   size_t dataBlockSize;
-  size_t transGridBlockSize;
-  uint64_t maxDimUnroll;
+  // size_t transGridBlockSize;
+  // uint64_t maxDimUnroll;
 
   /// Use a cache for the 2^l values? Configuration parameter is USE_LEVEL_CACHE
   bool use_level_cache;
@@ -44,23 +45,36 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   /// Use preprocessed grid positions? Configuration parameter is PREPROCESSED_POSITIONS
   bool preprocess_positions;
   bool unroll_dim;
+  bool use_compression_fixed;
+  bool use_compression_streaming;
 
   /// Generate the opencl code to save the fixed gridpoint of a workitem to the local memory
   std::string save_from_global_to_private(size_t dimensions) {
     std::stringstream output;
     for (size_t block = 0; block < dataBlockSize; block++) {
       if (!preprocess_positions) {
-        output << this->indent[0] << "__private int point_indices_block" << block << "["
-               << dimensions << "];" << std::endl;
-        output << this->indent[0] << "__private int point_level_block" << block << "[" << dimensions
-               << "];" << std::endl;
-        for (size_t i = 0; i < dimensions; i++) {
-          output << this->indent[0] << "point_indices_block" << block << "[" << i
-                 << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
-                 << dimensions << " * 2 + 2 * " << i << "];" << std::endl;
-          output << this->indent[0] << "point_level_block" << block << "[" << i
-                 << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
-                 << dimensions << " * 2 + 2 * " << i << " + 1];" << std::endl;
+        if (!use_compression_fixed) {
+          output << this->indent[0] << "__private int point_indices_block" << block << "["
+                 << dimensions << "];" << std::endl;
+          output << this->indent[0] << "__private int point_level_block" << block << "[" << dimensions
+                 << "];" << std::endl;
+          for (size_t i = 0; i < dimensions; i++) {
+            output << this->indent[0] << "point_indices_block" << block << "[" << i
+                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
+                   << dimensions << " * 2 + 2 * " << i << "];" << std::endl;
+            output << this->indent[0] << "point_level_block" << block << "[" << i
+                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
+                   << dimensions << " * 2 + 2 * " << i << " + 1];" << std::endl;
+          }
+        } else {
+          output << this->indent[0] << "__private ulong point_dim_zero_flags = dim_zero_flags_v[gridindex];"
+                 << std::endl;
+          output << this->indent[0] << "__private ulong point_level_offsets = level_offsets_v[gridindex];"
+                 << std::endl;
+          output << this->indent[0] << "__private ulong point_level_packed = level_packed_v[gridindex];"
+                 << std::endl;
+          output << this->indent[0] << "__private ulong point_index_packed = index_packed_v[gridindex];"
+                 << std::endl;
         }
       } else {
         output << this->indent[0] << "__private " << this->floatType() << " point_positions_block"
@@ -98,19 +112,95 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     std::string index_func2 =
         std::string("starting_points[i* ") + std::to_string(dimensions) + std::string("*2+2*dim]");
     // In case we use local memory we need to adjust the alias names
-    if (useLocalMemory) {
+    // if (useLocalMemory) {
+    if (useLocalMemory && !use_compression_streaming) {
       level_func2 =
           std::string("level_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
       index_func2 =
           std::string("indices_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
     }
     output << " zellenintegral = 1.0;" << std::endl;
+    // copy variables for shifting
+    if (use_compression_streaming) {
+      if (useLocalMemory) {
+        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_offsets = level_offsets[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_packed = level_packed[i];" << std::endl;
+        output << this->indent[2] << "ulong current_index_packed = index_packed[i];" << std::endl;
+      } else {
+        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_offsets = level_offsets_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_level_packed = level_packed_v[i];" << std::endl;
+        output << this->indent[2] << "ulong current_index_packed = index_packed_v[i];" << std::endl;
+      }
+    }
+    if (use_compression_fixed) {
+      output << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+      output << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
+      output << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
+      output << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+    }
     // In case we want replace the ternary operator we need to declare the counter variable
     if ((use_less && do_not_use_ternary) || (!use_implicit_zero && do_not_use_ternary))
       output << this->indent[2] << "int same_levels = " << dimensions << ";" << std::endl;
     // Loop over all dimensions
     output << this->indent[2] << "for(private int dim = 0;dim< " << dimensions << ";dim++) {"
            << std::endl;
+
+    // if we use compression - now is the time to decompress
+    if (use_compression_streaming) {
+      output << this->indent[3]
+             << "ulong is_dim_implicit = current_dim_zero_flags & one_mask;" << std::endl;
+      output << this->indent[3] << "current_dim_zero_flags >>= 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_level2 = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_index2 = 1;" << std::endl;
+      output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
+      output << this->indent[4] << "ulong level_bits = 1 + "
+             << "clz(current_level_offsets);"
+             << std::endl;
+      output << this->indent[4] << "current_level_offsets <<= level_bits;" << std::endl;
+      output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+      output << this->indent[4] << "decompressed_level2 = (current_level_packed & level_mask) + 2;" << std::endl;
+      output << this->indent[4] << "current_level_packed >>= level_bits;" << std::endl;
+      output << this->indent[4] << "ulong index_bits = decompressed_level2 - 1;" << std::endl;
+      output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+      output << this->indent[4] << "decompressed_index2 = ((current_index_packed & index_mask) << 1) + 1;" << std::endl;
+      output << this->indent[4] << "current_index_packed >>= index_bits;" << std::endl;
+      output << this->indent[3] << "}" << std::endl;
+      level_func2 =
+          std::string("decompressed_level2");
+      index_func2 =
+          std::string("decompressed_index2");
+    }
+    if (use_compression_fixed) {
+      if (!use_compression_streaming) {
+      output << this->indent[3]
+             << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+      } else {
+      output << this->indent[3]
+             << "is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+      }
+      output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
+      output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+      output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
+      output << this->indent[4] << "ulong level_bits = 1 + "
+             << "clz(fixed_level_offsets);"
+             << std::endl;
+      output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
+      output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+      output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
+      output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
+      output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
+      output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+      output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
+      output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
+      output << this->indent[3] << "}" << std::endl;
+      level_func1 =
+          std::string("decompressed_level");
+      index_func1 =
+          std::string("decompressed_index");
+    }
     // In case we do not want to use that the entry is implicitly zero if we use the wrong order
     // we need to find the smallest level
     if (!use_implicit_zero) {
@@ -192,19 +282,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
           output << this->indent[3] << "sum += h/3.0*(umid + uleft + uright);" << std::endl;
       }
       // Swap aliases
-      level_func2 = std::string("point_level_block") + std::to_string(block) + std::string("[dim]");
-      level_func1 = std::string("starting_points[i* ") + std::to_string(dimensions) +
-                    std::string("*2+2*dim+1]");
-      index_func2 =
-          std::string("point_indices_block") + std::to_string(block) + std::string("[dim]");
-      index_func1 = std::string("starting_points[i* ") + std::to_string(dimensions) +
-                    std::string("*2+2*dim]");
-      if (useLocalMemory) {
-        level_func1 =
-            std::string("level_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
-        index_func1 =
-            std::string("indices_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
-      }
+      std::string level_func_tmp = level_func2;
+      level_func2 = level_func1;
+      level_func1 = level_func_tmp;
+      std::string index_func_tmp = index_func2;
+      index_func2 = index_func1;
+      index_func1 = index_func_tmp;
     }
     // Check whether we need to do something about base functions with the same level
     if (use_less) {
@@ -248,6 +331,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       }
     }
     // Mutliply with corresponding alpha value
+    if (use_compression_streaming) {
+      if (useLocalMemory)
+        output << this->indent[2] << "if (group * " << localCacheSize << " + i < non_padding_size)" << std::endl;
+      else
+        output << this->indent[2] << "if (i < non_padding_size)" << std::endl;
+    }
     if (useLocalMemory) {
       output << this->indent[2] << "gesamtint_block" << block
              << " += zellenintegral*alpha_local[i];" << std::endl;
@@ -269,30 +358,41 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         use_fabs_instead_of_fmax(false),
         preprocess_positions(false),
         unroll_dim(false) {
-    if (kernelConfiguration.contains("LOCAL_SIZE"))
-      localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    if (kernelConfiguration.contains("KERNEL_USE_LOCAL_MEMORY"))
-      useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
-    if (kernelConfiguration.contains("KERNEL_DATA_BLOCKING_SIZE"))
-      dataBlockSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
-    if (kernelConfiguration.contains("USE_LEVEL_CACHE"))
-      use_level_cache = kernelConfiguration["USE_LEVEL_CACHE"].getBool();
-    if (kernelConfiguration.contains("USE_LESS_OPERATIONS"))
-      use_less = kernelConfiguration["USE_LESS_OPERATIONS"].getBool();
-    if (kernelConfiguration.contains("DO_NOT_USE_TERNARY"))
-      do_not_use_ternary = kernelConfiguration["DO_NOT_USE_TERNARY"].getBool();
-    if (kernelConfiguration.contains("USE_IMPLICIT"))
-      use_implicit_zero = kernelConfiguration["USE_IMPLICIT"].getBool();
-    if (kernelConfiguration.contains("USE_FABS"))
-      use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
-    if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
-      preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
-      // These two options are not compatible
-      if (preprocess_positions) use_level_cache = false;
-    }
-    if (kernelConfiguration.contains("UNROLL_DIM")) {
-      unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
-    }
+    // if (kernelConfiguration.contains("LOCAL_SIZE"))
+    localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("KERNEL_USE_LOCAL_MEMORY"))
+    useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
+    // if (kernelConfiguration.contains("KERNEL_LOCAL_MEMORY_CACHE_SIZE"))
+    localCacheSize = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("KERNEL_DATA_BLOCKING_SIZE"))
+    dataBlockSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
+    // if (kernelConfiguration.contains("USE_LEVEL_CACHE"))
+    use_level_cache = kernelConfiguration["USE_LEVEL_CACHE"].getBool();
+    // if (kernelConfiguration.contains("USE_LESS_OPERATIONS"))
+    use_less = kernelConfiguration["USE_LESS_OPERATIONS"].getBool();
+    // if (kernelConfiguration.contains("DO_NOT_USE_TERNARY"))
+    do_not_use_ternary = kernelConfiguration["DO_NOT_USE_TERNARY"].getBool();
+    // if (kernelConfiguration.contains("USE_IMPLICIT"))
+    use_implicit_zero = kernelConfiguration["USE_IMPLICIT"].getBool();
+    // if (kernelConfiguration.contains("USE_FABS"))
+    use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
+    // if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
+    preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
+
+    if (kernelConfiguration.contains("USE_COMPRESSION_STREAMING"))
+      use_compression_streaming = kernelConfiguration["USE_COMPRESSION_STREAMING"].getBool();
+    else
+      use_compression_streaming = false;
+    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED"))
+      use_compression_fixed = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
+    else
+      use_compression_fixed = false;
+    // These two options are not compatible
+    if (preprocess_positions) use_level_cache = false;
+    // }
+    // if (kernelConfiguration.contains("UNROLL_DIM")) {
+    unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
+    // }
   }
 
   /// Generates the opencl source code for the density matrix-vector multiplication
@@ -311,7 +411,16 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     sourceStream << "__attribute__((reqd_work_group_size(" << localWorkgroupSize << ", 1, 1)))"
                  << std::endl;
     if (!preprocess_positions) {
-      sourceStream << "void multdensity(__global const int *starting_points,";
+      if (use_compression_streaming || use_compression_fixed) {
+        sourceStream << "void multdensity(__global const int *starting_points, "
+                     << "__global const ulong *dim_zero_flags_v, "
+                     << "__global const ulong *level_offsets_v, "
+                     << "__global const ulong *level_packed_v, "
+                     << "__global const ulong *index_packed_v, "
+                     << "const long non_padding_size, ";
+      } else {
+        sourceStream << "void multdensity(__global const int *starting_points,";
+      }
     } else {
       sourceStream << "void multdensity(__global const int *hs_inverses, __global const "
                    << this->floatType() << " *hs," << std::endl
@@ -324,8 +433,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     if (do_not_use_ternary) sourceStream << ", __global " << this->floatType() << " *divisors";
     sourceStream << ")" << std::endl;
     sourceStream << "{" << std::endl;
-    sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl
-                 << this->indent[0] << "__private int local_id = get_local_id(0);" << std::endl;
+    sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
+    if (use_compression_streaming || use_compression_fixed) {
+      // sourceStream << this->indent[2] << "if(gridindex >= non_padding_size) return;" << std::endl;
+      sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
+    }
+    sourceStream << this->indent[0] << "__private int local_id = get_local_id(0);" << std::endl;
     sourceStream << save_from_global_to_private(dimensions);
     sourceStream << this->indent[0] << "__private int teiler = 0;" << std::endl;
     sourceStream << this->indent[0] << "__private " << this->floatType() << " h = 1.0 / 3.0;"
@@ -346,97 +459,145 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << " = 0.0;" << std::endl;
     // Store points in local memory
     if (useLocalMemory && !preprocess_positions) {
-      sourceStream << this->indent[0] << "__local "
-                   << "int indices_local[" << localWorkgroupSize * dimensions << "];" << std::endl
-                   << this->indent[0] << "__local "
-                   << "int level_local[" << localWorkgroupSize * dimensions << "];" << std::endl
-                   << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl
-                   << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-                   << std::endl
-                   << this->indent[2] << "indices_local[local_id * " << dimensions
-                   << " + j] = starting_points[group * " << localWorkgroupSize * dimensions * 2
-                   << "  + local_id * " << dimensions * 2 << " + 2 * j];" << std::endl
-                   << this->indent[2] << "level_local[local_id * " << dimensions
-                   << " + j] = starting_points[group * " << localWorkgroupSize * dimensions * 2
-                   << "  + local_id * " << dimensions * 2 << " + 2 * j + 1];" << std::endl
-                   << this->indent[1] << "}" << std::endl
-                   << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
-                   << std::endl
-                   << this->indent[2] << "__private " << this->floatType();
+      if (!use_compression_streaming) {
+        sourceStream << this->indent[0] << "__local "
+                     << "int indices_local[" << localCacheSize * dimensions << "];" << std::endl
+                     << this->indent[0] << "__local "
+                     << "int level_local[" << localCacheSize * dimensions << "];" << std::endl
+                     << this->indent[0] << "__local " << this->floatType() << " alpha_local["
+                     << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "for (int group = 0; group < "
+                     << problemsize / localCacheSize << "; group++) {" << std::endl
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+        sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                     << std::endl;
+        sourceStream << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                     << std::endl
+                     << this->indent[2] << "indices_local[local_id * " << dimensions
+                     << " + j] = starting_points[group * " << localCacheSize * dimensions * 2
+                     << "  + local_id * " << dimensions * 2 << " + 2 * j];" << std::endl
+                     << this->indent[2] << "level_local[local_id * " << dimensions
+                     << " + j] = starting_points[group * " << localCacheSize * dimensions * 2
+                     << "  + local_id * " << dimensions * 2 << " + 2 * j + 1];" << std::endl
+                     << this->indent[1] << "}" << std::endl
+                     << this->indent[1] << "alpha_local[local_id] = alpha[group * "
+                     << localCacheSize << "  + local_id ];" << std::endl;
+        sourceStream << this->indent[1] << "}" << std::endl
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
+                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
+                     << std::endl
+                     << this->indent[2] << "__private " << this->floatType();
+      } else { // use compression
+
+        sourceStream << this->indent[0] << "__local "
+                     << "ulong dim_zero_flags[" << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local "
+                     << "ulong level_offsets[" << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local "
+                     << "ulong level_packed[" << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local "
+                     << "ulong index_packed[" << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local " << this->floatType() << " alpha_local["
+                     << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "for (int group = 0; group < "
+                     << problemsize / localCacheSize << "; group++) {" << std::endl
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+        sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                     << std::endl;
+        sourceStream << this->indent[1] << "dim_zero_flags[local_id]"
+                     << " = dim_zero_flags_v[group * " << localCacheSize
+                     << "  + local_id];" << std::endl;
+        sourceStream << this->indent[1] << "level_offsets[local_id]"
+                     << " = level_offsets_v[group * " << localCacheSize
+                     << "  + local_id];" << std::endl;
+        sourceStream << this->indent[1] << "level_packed[local_id]"
+                     << " = level_packed_v[group * " << localCacheSize
+                     << "  + local_id];" << std::endl;
+        sourceStream << this->indent[1] << "index_packed[local_id]"
+                     << " = index_packed_v[group * " << localCacheSize
+                     << "  + local_id];" << std::endl;
+
+        sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * "
+                     << localCacheSize << "  + local_id ];" << std::endl;
+        sourceStream << this->indent[1] << "}" << std::endl
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
+                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
+                     << std::endl
+                     << this->indent[2] << "__private " << this->floatType();
+      }
     } else if (preprocess_positions && !unroll_dim) {
       // declare local arrays for grid point positions, and hs and hs inverses
       sourceStream << this->indent[0] << "__local " << this->floatType() << " positions_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " hs_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local int hinverses_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl;
+                   << localCacheSize << "];" << std::endl;
       // start loop
       sourceStream << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << problemsize / localCacheSize << "; group++) {" << std::endl
+                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                   << std::endl;
+      sourceStream << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl;
       // get hs inverse
       sourceStream << this->indent[2] << "hinverses_local[local_id * " << dimensions
-                   << " + j] = hs_inverses[group * " << localWorkgroupSize * dimensions
+                   << " + j] = hs_inverses[group * " << localCacheSize * dimensions
                    << " + local_id*" << dimensions << " + j];" << std::endl;
       // get hs
       sourceStream << this->indent[2] << "hs_local[local_id * " << dimensions
-                   << " + j] = hs[group * " << localWorkgroupSize * dimensions << " + local_id*"
+                   << " + j] = hs[group * " << localCacheSize * dimensions << " + local_id*"
                    << dimensions << " + j];" << std::endl;
       // get positions
       sourceStream << this->indent[2] << "positions_local[local_id * " << dimensions
-                   << " + j] = positions[group * " << localWorkgroupSize * dimensions
-                   << " + local_id*" << dimensions << " + j];" << std::endl;
+                   << " + j] = positions[group * " << localCacheSize * dimensions << " + local_id*"
+                   << dimensions << " + j];" << std::endl;
       sourceStream << "}" << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
+                   << localCacheSize << "  + local_id ];" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "__private " << this->floatType();
     } else if (preprocess_positions && unroll_dim) {
       for (size_t dim = 0; dim < dimensions; ++dim) {
         sourceStream << this->indent[0] << "__local " << this->floatType() << " positions_local_dim"
-                     << dim << "[" << localWorkgroupSize << "];" << std::endl
+                     << dim << "[" << localCacheSize << "];" << std::endl
                      << this->indent[0] << "__local " << this->floatType() << " hs_local"
-                     << "_dim" << dim << "[" << localWorkgroupSize << "];" << std::endl
+                     << "_dim" << dim << "[" << localCacheSize << "];" << std::endl
                      << this->indent[0] << "__local int hinverses_local"
-                     << "_dim" << dim << "[" << localWorkgroupSize << "];" << std::endl;
+                     << "_dim" << dim << "[" << localCacheSize << "];" << std::endl;
       }
       sourceStream << this->indent[0] << "__local " << this->floatType() << " alpha_local["
-                   << localWorkgroupSize << "];" << std::endl;
+                   << localCacheSize << "];" << std::endl;
       // start loop
       sourceStream << this->indent[0] << "for (int group = 0; group < "
-                   << problemsize / localWorkgroupSize << "; group++) {" << std::endl
+                   << problemsize / localCacheSize << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
+                   << std::endl;
       for (size_t dim = 0; dim < dimensions; ++dim) {
         // get hs inverse
         sourceStream << this->indent[2] << "hinverses_local_dim" << dim
-                     << "[local_id] = hs_inverses[group * " << localWorkgroupSize * dimensions
+                     << "[local_id] = hs_inverses[group * " << localCacheSize * dimensions
                      << " + local_id*" << dimensions << " + " << dim << "];" << std::endl;
         // get hs
         sourceStream << this->indent[2] << "hs_local_dim" << dim << "[local_id] = hs[group * "
-                     << localWorkgroupSize * dimensions << " + local_id*" << dimensions << " + "
-                     << dim << "];" << std::endl;
+                     << localCacheSize * dimensions << " + local_id*" << dimensions << " + " << dim
+                     << "];" << std::endl;
         // get positions
         sourceStream << this->indent[2] << "positions_local_dim" << dim
-                     << "[local_id] = positions[group * " << localWorkgroupSize * dimensions
+                     << "[local_id] = positions[group * " << localCacheSize * dimensions
                      << " + local_id*" << dimensions << " + " << dim << "];" << std::endl;
       }
-      sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * "
-                   << localWorkgroupSize << "  + local_id ];" << std::endl
+      sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * " << localCacheSize
+                   << "  + local_id ];" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "__private " << this->floatType();
     } else {
@@ -541,14 +702,13 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
 
     sourceStream << "}" << std::endl;
 
-    if (kernelConfiguration.contains("WRITE_SOURCE")) {
-      if (kernelConfiguration["WRITE_SOURCE"].getBool()) {
-        this->writeSource("DensityMultiplication.cl", sourceStream.str());
-      }
+    if (kernelConfiguration["WRITE_SOURCE"].getBool() &&
+        !kernelConfiguration["REUSE_SOURCE"].getBool()) {
+      this->writeSource("DensityMultiplication.cl", sourceStream.str());
     }
     return sourceStream.str();
   }
-};
+};  // namespace DensityOCLMultiPlatform
 
 }  // namespace DensityOCLMultiPlatform
 }  // namespace datadriven

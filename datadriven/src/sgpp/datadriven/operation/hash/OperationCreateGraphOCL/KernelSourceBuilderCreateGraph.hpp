@@ -135,6 +135,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     }
 
     std::stringstream sourceStream;
+    uint64_t local_cache_size = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
 
     if (this->floatType().compare("double") == 0) {
       sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl << std::endl;
@@ -158,7 +159,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << this->floatType() << " dist = 0.0;" << std::endl;
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << local_cache_size * dimensions << "];" << std::endl
                    << this->indent[0] << "__private " << this->floatType() << " dist_reg["
 
                    << approxRegCount << "];" << std::endl
@@ -171,21 +172,25 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                    << this->indent[1] << "index_reg[i] = -1;" << std::endl
                    << this->indent[0] << "}" << std::endl
                    << this->indent[0] << "for (int group = 0; group < "
-                   << problem_size / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) "
-                   << std::endl
-                   << this->indent[2] << "data_local[local_id * " << dimensions
-                   << " + j] = data[group * " << localWorkgroupSize * dimensions
-                   << "  + local_id * " << dimensions << " + j];" << std::endl
+                   << problem_size / local_cache_size << "; group++) {" << std::endl
                    << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << local_cache_size << ") {"
+                   << std::endl;
+      sourceStream << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << std::endl;
+      sourceStream << this->indent[3] << "data_local[local_id * " << dimensions
+                   << " + j] = data[group * " << local_cache_size * dimensions << "  + local_id * "
+                   << dimensions << " + j];" << std::endl;
+      sourceStream << this->indent[2] << "}" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl;
+      sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       if (localWorkgroupSize == approxRegCount) {
-        sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize
-                     << "; i++) {" << std::endl;
+        sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount << "; i++) {"
+                     << std::endl;
       } else {
         sourceStream << this->indent[2] << "int chunkindex = 0;" << std::endl;
         sourceStream << this->indent[1] << "for (int chunk = 0 ; chunk < "
-                     << localWorkgroupSize / approxRegCount << "; chunk++) {" << std::endl;
+                     << local_cache_size / approxRegCount << "; chunk++) {" << std::endl;
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
                      << "; i++, chunkindex++) {" << std::endl;
       }
@@ -199,9 +204,9 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                      << dimensions << " ]);" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl
                      << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
-                     << localWorkgroupSize << " != global_index) {" << std::endl
+                     << local_cache_size << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
-                     << this->indent[3] << "index_reg[i] = group * " << localWorkgroupSize
+                     << this->indent[3] << "index_reg[i] = group * " << local_cache_size
                      << " + chunkindex;" << std::endl;
       } else {
         sourceStream << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
@@ -210,7 +215,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                      << " ]);" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl
                      << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
-                     << localWorkgroupSize << " != global_index) {" << std::endl
+                     << local_cache_size << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group;" << std::endl;
       }
@@ -234,7 +239,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         sourceStream << this->indent[1] << "if (dist_reg[min_index] < " << dims << ".0"
                      << this->constSuffix() << ") {" << std::endl;
         sourceStream << this->indent[2] << "neighbors[chunk_index * " << k
-                     << " + neighbor] = min_index + index_reg[min_index] * " << localWorkgroupSize
+                     << " + neighbor] = min_index + index_reg[min_index] * " << local_cache_size
                      << ";" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl;
       } else {
@@ -250,16 +255,21 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[0] << "}" << std::endl;
     } else if (useLocalMemory) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
-                   << localWorkgroupSize * dimensions << "];" << std::endl
+                   << local_cache_size * dimensions << "];" << std::endl
                    << this->indent[0] << "for (int group = 0; group < "
-                   << problem_size / localWorkgroupSize << "; group++) {" << std::endl
-                   << this->indent[1] << "for (int j = 0; j <     " << dimensions << " ; j++) "
+                   << problem_size / localWorkgroupSize << "; group++) {" << std::endl;
+      sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "if (get_local_id(0) < " << local_cache_size << ") {"
+                   << std::endl;
+      sourceStream << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl
-                   << this->indent[2] << "data_local[local_id * " << dimensions
-                   << " + j] = data[group * " << localWorkgroupSize * dimensions
-                   << "  + local_id * " << dimensions << " + j];" << std::endl
-                   << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                   << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+                   << this->indent[3] << "data_local[local_id * " << dimensions
+                   << " + j] = data[group * " << local_cache_size * dimensions << "  + local_id * "
+                   << dimensions << " + j];" << std::endl;
+      sourceStream << this->indent[2] << "}" << std::endl;
+      sourceStream << this->indent[1] << "}" << std::endl;
+      sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "dist = 0.0;" << std::endl
                    << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
@@ -272,7 +282,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
 
                    << this->indent[2] << "int min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]
-                   << "if (dist < k_dists[min_index] && i + group * " << localWorkgroupSize
+                   << "if (dist < k_dists[min_index] && i + group * " << local_cache_size
                    << " != global_index) {" << std::endl
                    << this->indent[3] << "k_reg[min_index] = i + group * " << localWorkgroupSize
                    << ";" << std::endl
