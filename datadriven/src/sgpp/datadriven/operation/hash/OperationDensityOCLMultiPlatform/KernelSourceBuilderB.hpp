@@ -48,6 +48,8 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
     }
     if (kernelConfiguration.contains("USE_COMPRESSION_REGISTERS")) {
       use_compression_register = kernelConfiguration["USE_COMPRESSION_REGISTERS"].getBool();
+    } else {
+      use_compression_register = true;
     }
   }
 
