@@ -9,6 +9,8 @@ parser.add_argument('--with-compression', dest='with_compression', action='store
 parser.set_defaults(with_compression=False)
 parser.add_argument('--fixed-grid-points', dest='fixed_grid_points', action='store_true')
 parser.set_defaults(with_compression=False)
+parser.add_argument('--use-32-bits-compression', dest='use_32_bits_compression', action='store_true')
+parser.set_defaults(use_32_bits_compression=False)
 requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument('--device_name', required=True)
 requiredNamed.add_argument('--config_file', required=True)
@@ -46,14 +48,25 @@ CSV_SEP = ";"
 
 # for dim in range(2, 3, 2):
 for level in [level]:
-    if args.fixed_grid_points:
-        resultsFileName = "results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + "_fixed_dim" + str(base_dim) + ".csv"
+    if args.use_32_bits_compression:
+        compression_length_string = "_32bits"
     else:
-        resultsFileName = "results/results_friedman2_high_dim_gaussian_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + ".csv"
+        compression_length_string = "_64bits"
+    if args.fixed_grid_points:
+        fixed_grid_points_string = "_fixed_dim"
+    else:
+        fixed_grid_points_string = ""
+
+    resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + compression_length_string + fixed_grid_points_string + ".csv"
+        
+    # if args.fixed_grid_points:
+    #     resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + "_fixed_dim" + str(base_dim) + ".csv"
+    # else:
+    #     resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + ".csv"
     print("resultsFileName:", resultsFileName)
     f_result = open(resultsFileName, "w")
-    f_result.write("dim" + CSV_SEP + "dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density\n")
-    for dim in range(4, 40, 1):
+    f_result.write("dim" + CSV_SEP + "dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density" + CSV_SEP + "density_iterations" + CSV_SEP + "avr_density_duration_per_iteration\n")
+    for dim in range(4, 20, 1):
 
         # for dataset_size in [200]:
         # for dataset_size in chain(range(20000, 110000, 20000), range(200000, 1100000, 200000)):
@@ -96,4 +109,10 @@ for level in [level]:
            for g in re.finditer(r"acc_duration_density: (.*?)s", output):
               total_duration_density += float(g.group(1))
 
-           f_result.write(str(dim) + CSV_SEP + str(dataset_size) + CSV_SEP + str(refinement_steps) + CSV_SEP + str(total_duration_generate_b) + CSV_SEP + str(avr_gflops_generate_b) + CSV_SEP + str(total_duration_density) + CSV_SEP + str(avr_gflops_density) + "\n")
+           density_iterations = 0
+           for g in re.finditer(r"act_it: (.*?)\n", output):
+              density_iterations += float(g.group(1))
+
+           avr_density_duration_per_iteration = total_duration_density / density_iterations
+
+           f_result.write(str(dim) + CSV_SEP + str(dataset_size) + CSV_SEP + str(refinement_steps) + CSV_SEP + str(total_duration_generate_b) + CSV_SEP + str(avr_gflops_generate_b) + CSV_SEP + str(total_duration_density) + CSV_SEP + str(avr_gflops_density) + CSV_SEP + str(density_iterations) + CSV_SEP + str(avr_density_duration_per_iteration) + "\n")
