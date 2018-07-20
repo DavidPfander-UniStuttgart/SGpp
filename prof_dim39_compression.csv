@@ -1,0 +1,20 @@
+#ProfileFileVersion=5.2
+#ProfilerVersion=5.2.6553
+#API=OpenCL
+#Application=/home/pfandedd/git/SGpp/datadriven/examplesOCL/density_cmd_filled_dim
+#ApplicationArgs=--datasetFileName datasets/friedman/friedman2_filled_dim20_500000.arff --base_dim 4 --base_dim_level 9 --lambda 0.01 --config config_ocl_float_w8100_compression.cfg --refinement_steps 0 --refinement_points 0 --coarsen_points 10000 --coarsen_threshold 0.001
+#WorkingDirectory=.
+#Device Hawaii Platform Vendor=Advanced Micro Devices, Inc.
+#Device Hawaii Platform Name=AMD Accelerated Parallel Processing
+#Device Hawaii Platform Version=OpenCL 2.0 AMD-APP (2482.3)
+#Device Hawaii CLDriver Version=2482.3
+#Device Hawaii CLRuntime Version=OpenCL 1.2 AMD-APP (2482.3)
+#Device Hawaii NumberAppAddressBits=64
+#OS Version=Linux version 4.10.0-28-generic (buildd@lgw01-12) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 Build 4.10.0
+#DisplayName=
+#ListSeparator=;
+#ForceSinglePass=False
+Method; ExecutionOrder; ThreadID; CallIndex; GlobalWorkSize; WorkGroupSize; Time; LocalMemSize; VGPRs; SGPRs; ScratchRegs; Wavefronts; VALUInsts; SALUInsts; VFetchInsts; SFetchInsts; VWriteInsts; FlatVMemInsts; LDSInsts; FlatLDSInsts; GDSInsts; VALUUtilization; VALUBusy; SALUBusy; FetchSize; WriteSize; CacheHit; MemUnitBusy; MemUnitStalled; WriteUnitStalled; LDSBankConflict
+cscheme__k1_Hawaii1; 1; 15359; 47; {  65664       1       1}; {  128     1     1};     16927.38667; 2560; 42; 18; 0;      1026.00; 400893707.80;  45695323.50;    156254.00;         5.00;         1.00;    156255.00;  10093750.00;         0.00;         0.00;        97.25;        77.36;        30.86;   7637442.69;       256.03;        61.86;         0.49;         0.00;         0.00;         0.02
+multdensity__k2_Hawaii1; 2; 15359; 74; {  65664       1       1}; {  128     1     1};      4460.13082; 5248; 72; 20; 0;      1026.00;  88430516.00;   6263735.00;     11291.00;         7.00;         2.00;     11293.00;   2713770.00;         0.00;         0.00;        98.45;        73.32;        16.08;    394151.88;       256.50;        92.68;         0.18;         0.00;         0.00;         0.02
+multdensity__k2_Hawaii1; 3; 15359; 92; {  65664       1       1}; {  128     1     1};      4451.26993; 5248; 72; 20; 0;      1026.00;  88430516.00;   6263735.00;     11291.00;         7.00;         2.00;     11293.00;   2713770.00;         0.00;         0.00;        98.45;        73.26;        16.06;    382853.25;       256.50;        92.89;         0.18;         0.00;         0.00;         0.02

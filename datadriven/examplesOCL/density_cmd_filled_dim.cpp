@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
   base::GridGenerator &fixed_grid_generator = fixed_dim_grid->getGenerator();
   fixed_grid_generator.regular(base_dim_level);
   base::GridStorage &fixed_grid_storage = fixed_dim_grid->getStorage();
-  std::cout << "Fixed dim grid created! dim: " << base_dim_level
+  std::cout << "Fixed dim grid created! dim: " << base_dim
             << ", number of grid points: " << fixed_dim_grid->getSize() << std::endl;
 
   // read dataset

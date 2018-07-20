@@ -147,9 +147,10 @@ class KernelDensityMult {
       }
       for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
         points.push_back(0); //Does not yield 0 at evaluation but we cannot encode zeros
-        // needs to be fixed in the opencl kernel itself
-      devicePoints.intializeTo(points, 1, 0, points.size());
       }
+      // needs to be fixed in the opencl kernel itself
+      devicePoints.intializeTo(points, 1, 0, points.size());
+
       compressed_grid grid(points, dims);
       // if(!grid.check_grid_compression(points)) {
       //   std::cerr << "Grid compression check failed! " << std::endl;
