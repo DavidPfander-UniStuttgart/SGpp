@@ -33,7 +33,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   size_t dims;
   size_t gridSize;
   /// OpenCL kernel which executes the matrix-vector density multiplications
-  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityMult<T>> multKernel;
+  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityMultInterface<T>> multKernel;
   /// OpenCL kernel which generates the right hand side vector of the density equation
   std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityBInterface<T>> bKernel;
   /// Vector with all OpenCL devices
@@ -116,8 +116,27 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       }
     }
 
-    multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
-                                                        points, lambda);
+    if (!firstKernelConfig.contains("USE_COMPRESSION_FIXED")) {
+      multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                    points, lambda);
+    } else {
+      if (!firstKernelConfig.contains("COMPRESSION_TYPE")) {
+        multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                      points, lambda);
+      } else {
+        if (firstKernelConfig["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+          multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                        points, lambda);
+        } else if (firstKernelConfig["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+          multKernel = std::make_unique<KernelDensityMult<T, unsigned int>>(device, dims, manager, firstKernelConfig,
+                                                                            points, lambda);
+        } else {
+          throw base::operation_exception(
+              "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+        }
+      }
+    }
+
     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
   }
   /// Constructor for mpi nodes - accepts grid als integer array
@@ -181,8 +200,26 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
         }
       }
     }
-    multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
-                                                        points, lambda);
+    if (!firstKernelConfig.contains("USE_COMPRESSION_FIXED")) {
+      multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                    points, lambda);
+    } else {
+      if (!firstKernelConfig.contains("COMPRESSION_TYPE")) {
+        multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                      points, lambda);
+      } else {
+        if (firstKernelConfig["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+          multKernel = std::make_unique<KernelDensityMult<T, uint64_t>>(device, dims, manager, firstKernelConfig,
+                                                                        points, lambda);
+        } else if (firstKernelConfig["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+          multKernel = std::make_unique<KernelDensityMult<T, unsigned int>>(device, dims, manager, firstKernelConfig,
+                                                                            points, lambda);
+        } else {
+          throw base::operation_exception(
+              "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+        }
+      }
+    }
     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
   }
 
