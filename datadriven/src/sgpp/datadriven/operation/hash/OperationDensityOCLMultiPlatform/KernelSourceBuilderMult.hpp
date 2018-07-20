@@ -47,6 +47,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   bool unroll_dim;
   bool use_compression_fixed;
   bool use_compression_streaming;
+  bool use_compression_register;
   std::string compression_type;
 
   /// Generate the opencl code to save the fixed gridpoint of a workitem to the local memory
@@ -67,7 +68,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
                    << dimensions << " * 2 + 2 * " << i << " + 1];" << std::endl;
           }
-        } else {
+        } else if (use_compression_register) {
           output << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = dim_zero_flags_v[gridindex];"
                  << std::endl;
           output << this->indent[0] << "__private " << compression_type << " point_level_offsets = level_offsets_v[gridindex];"
@@ -136,10 +137,17 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       }
     }
     if (use_compression_fixed) {
-      output << this->indent[2] << compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-      output << this->indent[2] << compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
-      output << this->indent[2] << compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
-      output << this->indent[2] << compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+      if (use_compression_register) {
+        output << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+      } else {
+        output << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = dim_zero_flags_v[gridindex];" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_level_offsets = level_offsets_v[gridindex];" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_level_packed = level_packed_v[gridindex];" << std::endl;
+        output << this->indent[2] <<  compression_type << " fixed_index_packed = index_packed_v[gridindex];" << std::endl;
+      }
     }
     // In case we want replace the ternary operator we need to declare the counter variable
     if ((use_less && do_not_use_ternary) || (!use_implicit_zero && do_not_use_ternary))
@@ -401,6 +409,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     } else {
       compression_type = "ulong";
     }
+    if (kernelConfiguration.contains("USE_COMPRESSION_REGISTERS")) {
+      use_compression_register = kernelConfiguration["USE_COMPRESSION_REGISTERS"].getBool();
+    } else {
+      use_compression_register = true;
+    }
+
     // These two options are not compatible
     if (preprocess_positions) use_level_cache = false;
     // }

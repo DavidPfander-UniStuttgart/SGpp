@@ -259,6 +259,138 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
     }
   }
 
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with unsigned compression type unsigned int, without "
+              << "local memory and without compression registers ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with unsigned compression type unsigned int, with "
+              << "local memory and without compression registers ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with long compression type, without "
+              << "local memory and without compression registers ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with long compression type, with "
+              << "local memory and without compression registers ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
   std::cout << "Finished rhs kernel tests" << std::endl << std::endl;
 }
 
@@ -713,6 +845,273 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
     }
   }
   multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for streaming gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for fixed gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for all gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" but without implicit..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", false);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" but without optimized operation count..."
+            << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", false);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" and without local memory..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for streaming gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for fixed gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for all gridpoints..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" but without implicit..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", false);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" but without optimized operation count..."
+            << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", false);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
+  std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" and without local memory..." << std::endl;
+  std::cout << "No compression register!" << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
+
 
   std::cout << "Density multiplication test done!" << std::endl;
 }
