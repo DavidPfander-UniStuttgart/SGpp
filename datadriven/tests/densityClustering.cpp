@@ -202,7 +202,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
         getConfigurationDefaultsSingleDevice();
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
-    std::cout << "Testing rhs kernel with unsigned compression type unsigned int and with local memory ..." << std::endl;
+    std::cout << "Testing rhs kernel with unsigned compression type unsigned int and without local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
       json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -210,6 +210,37 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
         const std::string &kernelName = "cscheme";
         json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
+
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with unsigned compression type unsigned int and with local memory ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
       }
