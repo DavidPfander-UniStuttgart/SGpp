@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 
+template<class T = uint64_t>
 class compressed_grid {
  public:
   compressed_grid(std::vector<int> &gridpoints, size_t dimensions) :
@@ -24,8 +25,8 @@ class compressed_grid {
       pack_gridpoint(gridpoints, i);
     }
   }
-  template<class T>
-  compressed_grid(std::vector<T> &level, std::vector<T> &index, size_t dimensions) :
+  template<class G>
+  compressed_grid(std::vector<G> &level, std::vector<G> &index, size_t dimensions) :
       gridsize(level.size()/(dimensions)), dims(dimensions),
       dim_zero_flags_v(level.size()/(dimensions)),
       level_offsets_v(level.size()/(dimensions), 0),
@@ -38,10 +39,10 @@ class compressed_grid {
   }
 
  public:
-  std::vector<uint64_t> dim_zero_flags_v;
-  std::vector<uint64_t> level_offsets_v;
-  std::vector<uint64_t> level_packed_v;
-  std::vector<uint64_t> index_packed_v;
+  std::vector<T> dim_zero_flags_v;
+  std::vector<T> level_offsets_v;
+  std::vector<T> level_packed_v;
+  std::vector<T> index_packed_v;
 
   ///
   std::string extraction_ocl_code(std::string dim_zero_flags_name, std::string
@@ -75,13 +76,13 @@ class compressed_grid {
     //   return false;
     // }
     for (size_t i = 0; i < gridsize; i++) {
-      uint64_t dim_zero_flags_copy = dim_zero_flags_v[i];
-      uint64_t level_offsets_copy = level_offsets_v[i];
-      uint64_t level_packed_copy = level_packed_v[i];
-      uint64_t index_packed_copy = index_packed_v[i];
+      T dim_zero_flags_copy = dim_zero_flags_v[i];
+      T level_offsets_copy = level_offsets_v[i];
+      T level_packed_copy = level_packed_v[i];
+      T index_packed_copy = index_packed_v[i];
       for (size_t d = 0; d < dims; d++) {
-        uint64_t extracted_level = 0;
-        uint64_t extracted_index = 0;
+        T extracted_level = 0;
+        T extracted_index = 0;
         get_next(extracted_level, extracted_index, dim_zero_flags_copy, level_offsets_copy,
                  level_packed_copy, index_packed_copy);
         const int grid_index = gridpoints[i * 2 * dims + 2 * d];
@@ -90,6 +91,9 @@ class compressed_grid {
           if (grid_index == 0 && grid_level == 0) // padding point (0,0) - we cannot compress that
             //anyway - in this case the wrong result is expected. This needs to be handled in the opencl kernels
             continue;
+          std::cout << extracted_index << " vs " << grid_index << std::endl;
+          std::cout << extracted_level << " vs " << grid_level << std::endl;
+          std::cin.get();
           return false;
         }
       }
@@ -100,8 +104,8 @@ class compressed_grid {
   size_t gridsize;
   size_t dims;
   void pack_gridpoint(std::vector<int> &gridpoints, size_t i) {
-    uint64_t level[dims];
-    uint64_t index[dims];
+    T level[dims];
+    T index[dims];
     // stage values
     for (int64_t d = 0; d < dims; d++) {
       index[d] = gridpoints[i * 2 * dims + 2 * d];
@@ -114,14 +118,14 @@ class compressed_grid {
     }
   }
 
-  template<class T>
-  void pack_gridpoint(std::vector<T> &levels, std::vector<T> &indices, size_t i) {
-    uint64_t level[dims];
-    uint64_t index[dims];
+  template<class G>
+  void pack_gridpoint(std::vector<G> &levels, std::vector<G> &indices, size_t i) {
+    T level[dims];
+    T index[dims];
     // stage values
     for (int64_t d = 0; d < dims; d++) {
-      index[d] = static_cast<uint64_t>(indices[i * dims + d]);
-      level[d] = static_cast<uint64_t>(levels[i * dims + d]);
+      index[d] = static_cast<T>(indices[i * dims + d]);
+      level[d] = static_cast<T>(levels[i * dims + d]);
     }
     // pack values into the compressed vectors
     for (int64_t d = dims - 1; d >= 0; d--) {
@@ -130,9 +134,9 @@ class compressed_grid {
     }
   }
 
-  void pack_level_index_dim(uint64_t *level, uint64_t *index, uint64_t d, uint64_t
-                            &dim_zero_flags, uint64_t &level_offsets, uint64_t &level_packed,
-                            uint64_t &index_packed) {
+  void pack_level_index_dim(T *level, T *index, T d, T
+                            &dim_zero_flags, T &level_offsets, T &level_packed,
+                            T &index_packed) {
     dim_zero_flags <<= 1;
     if (level[d] == 1) {
       // dimension marked as level = 1, index = 1
@@ -140,46 +144,57 @@ class compressed_grid {
     }
     // marked dimension as level > 1
     dim_zero_flags += 1;
-    uint64_t level_bits = log2(level[d]);
+    T level_bits = log2(static_cast<uint64_t>(level[d]));
     level_offsets >>= 1;
-    level_offsets |= (static_cast<uint64_t>(1)<< 63);
+    if(std::is_same<T, uint64_t>::value)
+      level_offsets |= (static_cast<T>(1)<< 63);
+    if(std::is_same<T, unsigned int>::value)
+      level_offsets |= (static_cast<T>(1)<< 31);
+    if(std::is_same<T, int>::value)
+      level_offsets |= (static_cast<T>(1)<< 31);
     level_offsets >>= level_bits;
     level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
     // index is odd, shift out zero
-    uint64_t adjusted_index = index[d] >> 1;
+    T adjusted_index = index[d] >> 1;
     index_packed <<= level[d] - 1;
     index_packed |= adjusted_index;
   }
 
-  __attribute__((noinline)) void get_next(uint64_t &level_d, uint64_t &index_d, uint64_t
-                            &dim_zero_flags, uint64_t &level_offsets, uint64_t &level_packed,
-                            uint64_t &index_packed) {
-    uint64_t is_dim_implicit = dim_zero_flags & one_mask;
+  __attribute__((noinline)) void get_next(T &level_d, T &index_d, T
+                            &dim_zero_flags, T &level_offsets, T &level_packed,
+                            T &index_packed) {
+    T is_dim_implicit = dim_zero_flags & one_mask;
     dim_zero_flags >>= 1;
     if (is_dim_implicit == 0) {
       level_d = 1;
       index_d = 1;
       return;
     }
-    uint64_t level_bits = __builtin_clzll(level_offsets) + 1;
+    T level_bits;
+    if(std::is_same<T, uint64_t>::value)
+      level_bits = __builtin_clzll(level_offsets) + 1;
+    if(std::is_same<T, unsigned int>::value)
+      level_bits = __builtin_clz(level_offsets) + 1;
+    if(std::is_same<T, int>::value)
+      level_bits = __builtin_clz(level_offsets) + 1;
     level_offsets <<= level_bits;
-    uint64_t level_mask = (1 << level_bits) - 1;
+    T level_mask = (1 << level_bits) - 1;
     level_d = (level_packed & level_mask) + 2;
     level_packed >>= level_bits;
-    uint64_t index_bits = level_d - 1;
-    uint64_t index_mask = (1 << index_bits) - 1;
+    T index_bits = level_d - 1;
+    T index_mask = (1 << index_bits) - 1;
     index_d = ((index_packed & index_mask) << 1) + 1;
     index_packed >>= index_bits;
   }
 
   // TODO: this requries Haswell or newer
-  static inline uint64_t log2(const uint64_t x) {
+  static inline T log2(const uint64_t x) {
     uint64_t y;
     asm("\tbsr %1, %0\n" : "=r"(y) : "r"(x));
-    return y;
+    return static_cast<T>(y);
   }
-  static constexpr uint64_t one_mask = 1;
+  static constexpr T one_mask = 1;
 
 
 

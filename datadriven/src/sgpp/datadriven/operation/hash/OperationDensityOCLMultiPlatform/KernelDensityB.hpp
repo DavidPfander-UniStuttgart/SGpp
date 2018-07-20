@@ -21,10 +21,59 @@
 namespace sgpp {
 namespace datadriven {
 namespace DensityOCLMultiPlatform {
+template <class T>
+class KernelDensityBInterface{
+ public:
+  virtual void start_rhs_generation(size_t startid = 0, size_t chunksize = 0) = 0;
+  virtual double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t
+                                         chunksize = 0) = 0;
+  virtual void initialize_dataset(std::vector<T> &data) = 0;
+
+  /// Adds the possible building parameters to the configuration if they do not exist yet
+  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
+    for (std::string &platformName : parameters["PLATFORMS"].keys()) {
+      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+
+        const std::string &kernelName = "cscheme";
+
+        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+                                 ? deviceNode["KERNELS"][kernelName]
+                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
+
+        if (kernelNode.contains("REUSE_SOURCE") == false) {
+          kernelNode.addIDAttr("REUSE_SOURCE", false);
+        }
+
+        if (kernelNode.contains("WRITE_SOURCE") == false) {
+          kernelNode.addIDAttr("WRITE_SOURCE", false);
+        }
+
+        if (kernelNode.contains("VERBOSE") == false) {
+          kernelNode.addIDAttr("VERBOSE", false);
+        }
+
+        if (kernelNode.contains("LOCAL_SIZE") == false) {
+          kernelNode.addIDAttr("LOCAL_SIZE", UINT64_C(128));
+        }
+
+        if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
+          kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+        }
+
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
+      }
+    }
+  }
+
+};
 
 /// Class for the OpenCL density matrix vector multiplication
-template <typename T>
-class KernelDensityB {
+template <class T, class C>
+class KernelDensityB : public KernelDensityBInterface<T> {
  private:
   /// Used opencl device
   std::shared_ptr<base::OCLDevice> device;
@@ -42,10 +91,10 @@ class KernelDensityB {
   /// Buffer for the result vector
   base::OCLBufferWrapperSD<T> deviceResultData;
   // Compression buffers
-  base::OCLBufferWrapperSD<unsigned long> device_dim_zero_flags;
-  base::OCLBufferWrapperSD<unsigned long> device_level_offsets;
-  base::OCLBufferWrapperSD<unsigned long> device_level_packed;
-  base::OCLBufferWrapperSD<unsigned long> device_index_packed;
+  base::OCLBufferWrapperSD<C> device_dim_zero_flags;
+  base::OCLBufferWrapperSD<C> device_level_offsets;
+  base::OCLBufferWrapperSD<C> device_level_packed;
+  base::OCLBufferWrapperSD<C> device_index_packed;
 
   cl_kernel kernelB;
 
@@ -93,7 +142,7 @@ class KernelDensityB {
 
     if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
       use_compression = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
-      compressed_grid grid(points, dims);
+      compressed_grid<C> grid(points, dims);
       if(!grid.check_grid_compression(points)) {
         std::cerr << "Grid compression check failed! " << std::endl;
       } else {
@@ -115,13 +164,13 @@ class KernelDensityB {
     }
   }
 
-  void initialize_dataset(std::vector<T> &data) {
+  virtual void initialize_dataset(std::vector<T> &data) {
     this->dataSize = data.size() / dims;
     if (!deviceData.isInitialized()) deviceData.intializeTo(data, 1, 0, data.size());
   }
 
   /// Generates part of the right hand side density vector
-  void start_rhs_generation(size_t startid = 0, size_t chunksize = 0) {
+  virtual void start_rhs_generation(size_t startid = 0, size_t chunksize = 0) {
     if (verbose) {
       std::cout << "entering mult, device: " << device->deviceName << " (" << device->deviceId
                 << ")" << std::endl;
@@ -257,7 +306,7 @@ class KernelDensityB {
     }
   }
 
-  double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t chunksize = 0) {
+  virtual double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t chunksize = 0) {
     clFinish(device->commandQueue);
 
     if (verbose) {
@@ -310,45 +359,6 @@ class KernelDensityB {
 
     this->deviceTimingMult += time;
     return 0;
-  }
-  /// Adds the possible building parameters to the configuration if they do not exist yet
-  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
-    for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
-      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
-
-        const std::string &kernelName = "cscheme";
-
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                 ? deviceNode["KERNELS"][kernelName]
-                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
-
-        if (kernelNode.contains("REUSE_SOURCE") == false) {
-          kernelNode.addIDAttr("REUSE_SOURCE", false);
-        }
-
-        if (kernelNode.contains("WRITE_SOURCE") == false) {
-          kernelNode.addIDAttr("WRITE_SOURCE", false);
-        }
-
-        if (kernelNode.contains("VERBOSE") == false) {
-          kernelNode.addIDAttr("VERBOSE", false);
-        }
-
-        if (kernelNode.contains("LOCAL_SIZE") == false) {
-          kernelNode.addIDAttr("LOCAL_SIZE", UINT64_C(128));
-        }
-
-        if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
-          kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
-        }
-
-        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
-        }
-      }
-    }
   }
 };
 

@@ -23,14 +23,28 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
   /// Dimensions of grid
   size_t dims;
   bool use_compression_fixed;
+  std::string compression_type;
 
  public:
   SourceBuilderB(json::Node &kernelConfiguration, size_t dims)
       : kernelConfiguration(kernelConfiguration), dims(dims) {
-    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED"))
+    if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
       use_compression_fixed = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
-    else
+      if(kernelConfiguration.contains("COMPRESSION_TYPE")) {
+        if (kernelConfiguration["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+          compression_type = "ulong";
+        } else if (kernelConfiguration["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+          compression_type = "unsigned int";
+        } else {
+          throw base::operation_exception(
+              "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+        }
+      } else {
+        compression_type = "ulong";
+      }
+    } else {
       use_compression_fixed = false;
+    }
   }
 
   /// Generates the opencl source code for the density right hand side vector
@@ -59,10 +73,10 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
     } else {
       sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                    << ", 1, 1))) cscheme("
-                   << "__global const ulong *dim_zero_flags_v, "
-                   << "__global const ulong *level_offsets_v, "
-                   << "__global const ulong *level_packed_v, "
-                   << "__global const ulong *index_packed_v, "
+                   << "__global const " << compression_type << " *dim_zero_flags_v, "
+                   << "__global const " << compression_type << " *level_offsets_v, "
+                   << "__global const " << compression_type << " *level_packed_v, "
+                   << "__global const " << compression_type << " *index_packed_v, "
                    << "global const " << this->floatType() << "* data_points,global "
                    << this->floatType() << "* C, private int startid) {" << std::endl;
       sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
@@ -73,13 +87,13 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << this->indent[0] << "private " << this->floatType() << " wert=1.0;";
       if(use_compression_fixed) {
         sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_dim_zero_flags = 0;"
+        sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_level_offsets = 0;"
+        sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_level_packed = 0;"
+        sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
                      << std::endl;
-        sourceStream << this->indent[0] << "__private ulong point_index_packed = 0;"
+        sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
                      << std::endl;
 
         sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
@@ -100,10 +114,10 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "value=1;" << std::endl;
       if (use_compression_fixed) {
-        sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-        sourceStream << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
-        sourceStream << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
-        sourceStream << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+        sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+        sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
+        sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
+        sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
       }
       sourceStream << this->indent[1] << "for(private int d=0;d< " << dimensions << ";d++)"
                    << std::endl
@@ -117,20 +131,20 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
           std::to_string(dimensions) + std::string("+2*d+1]");
       if (use_compression_fixed) {
         sourceStream << this->indent[3]
-                     << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+                     <<  compression_type << " is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
         sourceStream << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-        sourceStream << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
-        sourceStream << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+        sourceStream << this->indent[3] <<  compression_type << " decompressed_level = 1;" << std::endl;
+        sourceStream << this->indent[3] <<  compression_type << " decompressed_index = 1;" << std::endl;
         sourceStream << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-        sourceStream << this->indent[4] << "ulong level_bits = 1 + "
+        sourceStream << this->indent[4] <<  compression_type << " level_bits = 1 + "
                      << "clz(fixed_level_offsets);"
                      << std::endl;
         sourceStream << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
-        sourceStream << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+        sourceStream << this->indent[4] <<  compression_type << " level_mask = (1 << level_bits) - 1;" << std::endl;
         sourceStream << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
         sourceStream << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-        sourceStream << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
-        sourceStream << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+        sourceStream << this->indent[4] <<  compression_type << " index_bits = decompressed_level - 1;" << std::endl;
+        sourceStream << this->indent[4] <<  compression_type << " index_mask = (1 << index_bits) - 1;" << std::endl;
         sourceStream << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
         sourceStream << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
         sourceStream << this->indent[3] << "}" << std::endl;
@@ -182,13 +196,13 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
           sourceStream << this->indent[0] << "}" << std::endl;
         } else {
           sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
-          sourceStream << this->indent[0] << "__private ulong point_dim_zero_flags = 0;"
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
                        << std::endl;
-          sourceStream << this->indent[0] << "__private ulong point_level_offsets = 0;"
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
                        << std::endl;
-          sourceStream << this->indent[0] << "__private ulong point_level_packed = 0;"
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
                        << std::endl;
-          sourceStream << this->indent[0] << "__private ulong point_index_packed = 0;"
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
                        << std::endl;
 
           sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
@@ -240,10 +254,10 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
         sourceStream << this->indent[3] << "break;" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl;
         if (use_compression_fixed) {
-          sourceStream << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-          sourceStream << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
-          sourceStream << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
-          sourceStream << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
         }
         sourceStream << this->indent[2] << this->floatType() << " eval = 1.0" << this->constSuffix()
                      << ";" << std::endl;
@@ -256,20 +270,20 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
             std::string("grid_level_2[d]");
         if (use_compression_fixed) {
           sourceStream << this->indent[3]
-                       << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+                       <<  compression_type << " is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
           sourceStream << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-          sourceStream << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
-          sourceStream << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+          sourceStream << this->indent[3] <<  compression_type << " decompressed_level = 1;" << std::endl;
+          sourceStream << this->indent[3] <<  compression_type << " decompressed_index = 1;" << std::endl;
           sourceStream << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-          sourceStream << this->indent[4] << "ulong level_bits = 1 + "
+          sourceStream << this->indent[4] <<  compression_type << " level_bits = 1 + "
                        << "clz(fixed_level_offsets);"
                        << std::endl;
           sourceStream << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
-          sourceStream << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
+          sourceStream << this->indent[4] <<  compression_type << " level_mask = (1 << level_bits) - 1;" << std::endl;
           sourceStream << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
           sourceStream << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-          sourceStream << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
-          sourceStream << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
+          sourceStream << this->indent[4] <<  compression_type << " index_bits = decompressed_level - 1;" << std::endl;
+          sourceStream << this->indent[4] <<  compression_type << " index_mask = (1 << index_bits) - 1;" << std::endl;
           sourceStream << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
           sourceStream << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
           sourceStream << this->indent[3] << "}" << std::endl;
