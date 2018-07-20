@@ -38,6 +38,11 @@ print("levels: " + str(level))
 lambdas = 1E-2
 print("lambda: " + str(lambdas))
 
+if args.use_32_bits_compression:
+    max_dim_to_test = 32
+else:
+    max_dim_to_test = 64
+
 # refinement
 refinement_steps=0
 refinement_points=0
@@ -66,7 +71,7 @@ for level in [level]:
     print("resultsFileName:", resultsFileName)
     f_result = open(resultsFileName, "w")
     f_result.write("dim" + CSV_SEP + "dataset_size" + CSV_SEP + "refinement_steps" + CSV_SEP + "total_duration_generate_b" + CSV_SEP + "avr_gflops_generate_b" + CSV_SEP + "total_duration_density" + CSV_SEP + "avr_gflops_density" + CSV_SEP + "density_iterations" + CSV_SEP + "avr_density_duration_per_iteration\n")
-    for dim in range(4, 20, 1):
+    for dim in range(4, max_dim_to_test, 1):
 
         # for dataset_size in [200]:
         # for dataset_size in chain(range(20000, 110000, 20000), range(200000, 1100000, 200000)):
