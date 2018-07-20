@@ -424,13 +424,13 @@ class KernelDensityMult : public KernelDensityMultInterface<T> {
           throw base::operation_exception(errorString.str());
         }
         argument_counter++;
-        long non_padding_size = 0;
+        unsigned int non_padding_size = 0;
         if (chunksize == 0) {
           non_padding_size = gridSize / dataBlockingSize;
         } else {
           non_padding_size = chunksize / dataBlockingSize;
         }
-        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_long),
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_uint),
                              &non_padding_size);
         if (err != CL_SUCCESS) {
           std::stringstream errorString;

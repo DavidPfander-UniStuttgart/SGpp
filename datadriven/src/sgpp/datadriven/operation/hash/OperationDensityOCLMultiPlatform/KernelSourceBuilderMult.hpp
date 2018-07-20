@@ -431,7 +431,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                      << "__global const " << compression_type << " *level_offsets_v, "
                      << "__global const " << compression_type << " *level_packed_v, "
                      << "__global const " << compression_type << " *index_packed_v, "
-                     << "const long non_padding_size, ";
+                     << "const unsigned int non_padding_size, ";
       } else {
         sourceStream << "void multdensity(__global const int *starting_points,";
       }
