@@ -21,6 +21,11 @@ class compressed_grid {
       index_packed_v(gridpoints.size()/(2 * dimensions), 0)
   {
 
+    if(!(std::is_same<T, uint64_t>::value || std::is_same<T, unsigned int>::value)) {
+      throw std::logic_error(
+              "Illegal compression type! Supported are only uint64_t and unsigned int\n");
+    }
+
     for (size_t i = 0; i < gridsize; i++) {
       pack_gridpoint(gridpoints, i);
     }
@@ -150,8 +155,6 @@ class compressed_grid {
       level_offsets |= (static_cast<T>(1)<< 63);
     if(std::is_same<T, unsigned int>::value)
       level_offsets |= (static_cast<T>(1)<< 31);
-    if(std::is_same<T, int>::value)
-      level_offsets |= (static_cast<T>(1)<< 31);
     level_offsets >>= level_bits;
     level_packed <<= level_bits + 1;
     level_packed |= (level[d] - 2);
@@ -175,8 +178,6 @@ class compressed_grid {
     if(std::is_same<T, uint64_t>::value)
       level_bits = __builtin_clzll(level_offsets) + 1;
     if(std::is_same<T, unsigned int>::value)
-      level_bits = __builtin_clz(level_offsets) + 1;
-    if(std::is_same<T, int>::value)
       level_bits = __builtin_clz(level_offsets) + 1;
     level_offsets <<= level_bits;
     T level_mask = (1 << level_bits) - 1;
