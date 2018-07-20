@@ -35,7 +35,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   /// OpenCL kernel which executes the matrix-vector density multiplications
   std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityMult<T>> multKernel;
   /// OpenCL kernel which generates the right hand side vector of the density equation
-  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityB<T>> bKernel;
+  std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::KernelDensityBInterface<T>> bKernel;
   /// Vector with all OpenCL devices
   std::vector<std::shared_ptr<base::OCLDevice>> devices;
   /// Verbosity
@@ -77,7 +77,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
     if (devices.size() == 0) {
       std::stringstream errorString;
       errorString << "OperationDensityOCLMultiPlatform: No devices to use specified. Check you "
-                     "OpenCL configuration file"
+          "OpenCL configuration file"
                   << std::endl;
       throw base::operation_exception(errorString.str());
     } else if (devices.size() > 1) {
@@ -85,7 +85,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
                   << devices.size()
                   << " devices. Use the \"COUNT\" key in the configuration or remove sections "
-                     "of the configuration."
+          "of the configuration."
                   << std::endl;
       throw base::operation_exception(errorString.str());
     }
@@ -94,8 +94,28 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
     json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
     json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
-    bKernel =
-        std::make_unique<KernelDensityB<T>>(device, dims, manager, secondKernelConfig, points);
+
+    if (!secondKernelConfig.contains("USE_COMPRESSION_FIXED")) {
+      bKernel =
+          std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+    } else {
+      if (!secondKernelConfig.contains("COMPRESSION_TYPE")) {
+        bKernel =
+            std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+      } else {
+        if (secondKernelConfig["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+          bKernel =
+              std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+        } else if (secondKernelConfig["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+          bKernel =
+              std::make_unique<KernelDensityB<T, unsigned int>>(device, dims, manager, secondKernelConfig, points);
+        } else {
+          throw base::operation_exception(
+              "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+        }
+      }
+    }
+
     multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
                                                         points, lambda);
     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
@@ -122,7 +142,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
     if (devices.size() == 0) {
       std::stringstream errorString;
       errorString << "OperationDensityOCLMultiPlatform: No devices to use specified. Check you "
-                     "OpenCL configuration file"
+          "OpenCL configuration file"
                   << std::endl;
       throw base::operation_exception(errorString.str());
     } else if (devices.size() > 1) {
@@ -130,7 +150,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       errorString << "OperationDensityOCLMultiPlatform: need a single device to be specified, got "
                   << devices.size()
                   << " devices. Use the \"COUNT\" key in the configuration or remove sections "
-                     "of the configuration."
+          "of the configuration."
                   << std::endl;
       throw base::operation_exception(errorString.str());
     }
@@ -139,8 +159,28 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
     json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
     json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
-    bKernel =
-        std::make_unique<KernelDensityB<T>>(device, dims, manager, secondKernelConfig, points);
+
+
+    if (!secondKernelConfig.contains("USE_COMPRESSION_FIXED")) {
+      bKernel =
+          std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+    } else {
+      if (!secondKernelConfig.contains("COMPRESSION_TYPE")) {
+        bKernel =
+            std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+      } else {
+        if (secondKernelConfig["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+          bKernel =
+              std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager, secondKernelConfig, points);
+        } else if (secondKernelConfig["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+          bKernel =
+              std::make_unique<KernelDensityB<T, unsigned int>>(device, dims, manager, secondKernelConfig, points);
+        } else {
+          throw base::operation_exception(
+              "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+        }
+      }
+    }
     multKernel = std::make_unique<KernelDensityMult<T>>(device, dims, manager, firstKernelConfig,
                                                         points, lambda);
     if (firstKernelConfig["VERBOSE"].getBool()) verbose = true;
