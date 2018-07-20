@@ -86,7 +86,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << this->indent[0] << "private " << this->floatType() << " value=1;" << std::endl
                    << this->indent[0] << "private " << this->floatType() << " wert=1.0;";
       if(use_compression_fixed) {
-        sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
+        sourceStream << this->indent[0] << compression_type << " one_mask = 1;" << std::endl;
         sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
                      << std::endl;
         sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
@@ -195,7 +195,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
           sourceStream << this->indent[1] << "}" << std::endl << std::endl;
           sourceStream << this->indent[0] << "}" << std::endl;
         } else {
-          sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
+          sourceStream << this->indent[0] << compression_type << " one_mask = 1;" << std::endl;
           sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
                        << std::endl;
           sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
