@@ -23,6 +23,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
   /// Dimensions of grid
   size_t dims;
   bool use_compression_fixed;
+  bool use_compression_register;
   std::string compression_type;
 
  public:
@@ -44,6 +45,9 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       }
     } else {
       use_compression_fixed = false;
+    }
+    if (kernelConfiguration.contains("USE_COMPRESSION_REGISTERS")) {
+      use_compression_register = kernelConfiguration["USE_COMPRESSION_REGISTERS"].getBool();
     }
   }
 
@@ -85,28 +89,30 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << this->indent[0] << "C[get_global_id(0)]=0.0;" << std::endl
                    << this->indent[0] << "private " << this->floatType() << " value=1;" << std::endl
                    << this->indent[0] << "private " << this->floatType() << " wert=1.0;";
-      if(use_compression_fixed) {
+      if (use_compression_fixed) {
         sourceStream << this->indent[0] << compression_type << " one_mask = 1;" << std::endl;
-        sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
-                     << std::endl;
-        sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
-                     << std::endl;
-        sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
-                     << std::endl;
-        sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
-                     << std::endl;
+        if (use_compression_register) {
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
+                       << std::endl;
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
+                       << std::endl;
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
+                       << std::endl;
+          sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
+                       << std::endl;
 
-        sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
-                     << std::endl;
-        sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
-                     << std::endl;
-        sourceStream << this->indent[1] << "point_level_offsets = level_offsets_v[gridindex];"
-                     << std::endl;
-        sourceStream << this->indent[1] << "point_level_packed = level_packed_v[gridindex];"
-                     << std::endl;
-        sourceStream << this->indent[1] << "point_index_packed = index_packed_v[gridindex];"
-                     << std::endl;
-        sourceStream << this->indent[0] << "}" << std::endl;
+          sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+                       << std::endl;
+          sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
+                       << std::endl;
+          sourceStream << this->indent[1] << "point_level_offsets = level_offsets_v[gridindex];"
+                       << std::endl;
+          sourceStream << this->indent[1] << "point_level_packed = level_packed_v[gridindex];"
+                       << std::endl;
+          sourceStream << this->indent[1] << "point_index_packed = index_packed_v[gridindex];"
+                       << std::endl;
+          sourceStream << this->indent[0] << "}" << std::endl;
+        }
       }
       sourceStream << std::endl
                    << this->indent[0] << "for(unsigned int ds=0;ds< " << data_points << ";ds++)"
@@ -114,10 +120,17 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "value=1;" << std::endl;
       if (use_compression_fixed) {
-        sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-        sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
-        sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
-        sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+        if (use_compression_register) {
+          sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+        } else {
+          sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = dim_zero_flags_v[gridindex];" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = level_offsets_v[gridindex];" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = level_packed_v[gridindex];" << std::endl;
+          sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = index_packed_v[gridindex];" << std::endl;
+        }
       }
       sourceStream << this->indent[1] << "for(private int d=0;d< " << dimensions << ";d++)"
                    << std::endl
@@ -196,26 +209,28 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
           sourceStream << this->indent[0] << "}" << std::endl;
         } else {
           sourceStream << this->indent[0] << compression_type << " one_mask = 1;" << std::endl;
-          sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
-                       << std::endl;
-          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
-                       << std::endl;
-          sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
-                       << std::endl;
-          sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
-                       << std::endl;
+          if (use_compression_register) {
+            sourceStream << this->indent[0] << "__private " << compression_type << " point_dim_zero_flags = 0;"
+                         << std::endl;
+            sourceStream << this->indent[0] << "__private " << compression_type << " point_level_offsets = 0;"
+                         << std::endl;
+            sourceStream << this->indent[0] << "__private " << compression_type << " point_level_packed = 0;"
+                         << std::endl;
+            sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
+                         << std::endl;
 
-          sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
-                       << std::endl;
-          sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
-                       << std::endl;
-          sourceStream << this->indent[1] << "point_level_offsets = level_offsets_v[gridindex];"
-                       << std::endl;
-          sourceStream << this->indent[1] << "point_level_packed = level_packed_v[gridindex];"
-                       << std::endl;
-          sourceStream << this->indent[1] << "point_index_packed = index_packed_v[gridindex];"
-                       << std::endl;
-          sourceStream << this->indent[0] << "}" << std::endl;
+            sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+                         << std::endl;
+            sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
+                         << std::endl;
+            sourceStream << this->indent[1] << "point_level_offsets = level_offsets_v[gridindex];"
+                         << std::endl;
+            sourceStream << this->indent[1] << "point_level_packed = level_packed_v[gridindex];"
+                         << std::endl;
+            sourceStream << this->indent[1] << "point_index_packed = index_packed_v[gridindex];"
+                         << std::endl;
+            sourceStream << this->indent[0] << "}" << std::endl;
+          }
         }
 
         sourceStream << this->indent[0] << "local " << this->floatType() << " data_group["
@@ -254,10 +269,17 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
         sourceStream << this->indent[3] << "break;" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl;
         if (use_compression_fixed) {
-          sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-          sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
-          sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
-          sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+          if (use_compression_register) {
+            sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = point_level_offsets;" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = point_level_packed;" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = point_index_packed;" << std::endl;
+          } else {
+            sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = dim_zero_flags_v[gridindex];" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_level_offsets = level_offsets_v[gridindex];" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_level_packed = level_packed_v[gridindex];" << std::endl;
+            sourceStream << this->indent[2] <<  compression_type << " fixed_index_packed = index_packed_v[gridindex];" << std::endl;
+          }
         }
         sourceStream << this->indent[2] << this->floatType() << " eval = 1.0" << this->constSuffix()
                      << ";" << std::endl;
