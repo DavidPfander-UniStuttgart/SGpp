@@ -11,10 +11,13 @@ parser.add_argument('--fixed-grid-points', dest='fixed_grid_points', action='sto
 parser.set_defaults(with_compression=False)
 parser.add_argument('--use-32-bits-compression', dest='use_32_bits_compression', action='store_true')
 parser.set_defaults(use_32_bits_compression=False)
+parser.add_argument('--use-fewer-registers', dest='use_fewer_registers', action='store_true')
+parser.set_defaults(use_fewer_registers=False)
 requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument('--device_name', required=True)
 requiredNamed.add_argument('--config_file', required=True)
 requiredNamed.add_argument('--precision', required=True)
+
 
 args = parser.parse_args()
 
@@ -61,8 +64,12 @@ for level in [level]:
         fixed_grid_points_string = "_fixed_dim"
     else:
         fixed_grid_points_string = ""
+    if args.use_fewer_registers:
+        fewer_registers_string = "_fewer_regs"
+    else:
+        fewer_registers_string = ""
 
-    resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + compression_length_string + fixed_grid_points_string + ".csv"
+    resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + compression_length_string + fixed_grid_points_string + fewer_registers_string + ".csv"
         
     # if args.fixed_grid_points:
     #     resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + "_fixed_dim" + str(base_dim) + ".csv"
