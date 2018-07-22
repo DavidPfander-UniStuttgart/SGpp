@@ -44,6 +44,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   bool use_fabs_instead_of_fmax;
   /// Use preprocessed grid positions? Configuration parameter is PREPROCESSED_POSITIONS
   bool preprocess_positions;
+  uint64_t eval_blocking;  
   bool unroll_dim;
   bool use_compression_fixed;
   bool use_compression_streaming;
@@ -121,7 +122,14 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       index_func2 =
           std::string("indices_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
     }
-    output << " zellenintegral = 1.0;" << std::endl;
+    if (use_compression_fixed) {
+      output << this->floatType() << " zellenintegral_blocked[" << eval_blocking << "];" << std::endl;
+      output << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
+      output << this->indent[1] << "zellenintegral_blocked[j] = 1.0" << this->constSuffix() << ";" << std::endl;
+      output << "}" << std::endl;
+    } else {
+      output << "zellenintegral = 1.0" << this->constSuffix() << ";" << std::endl;
+    }
     // copy variables for shifting
     if (use_compression_streaming) {
       if (useLocalMemory) {
@@ -175,7 +183,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[4] << compression_type << " index_mask = (1 << index_bits) - 1;" << std::endl;
       output << this->indent[4] << "decompressed_index2 = ((current_index_packed & index_mask) << 1) + 1;" << std::endl;
       output << this->indent[4] << "current_index_packed >>= index_bits;" << std::endl;
-      output << this->indent[3] << "}" << std::endl;
+      output << this->indent[3] << "}" << std::endl;      
       level_func2 =
           std::string("decompressed_level2");
       index_func2 =
@@ -205,6 +213,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
       output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
       output << this->indent[3] << "}" << std::endl;
+      output << this->indent[3] << "float l_2 = (float)(1 << decompressed_level);" << std::endl;
+      output << this->indent[3] << "float i = (float)(decompressed_index);" << std::endl;
+      output << this->indent[3] << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
       level_func1 =
           std::string("decompressed_level");
       index_func1 =
@@ -387,6 +398,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
     // if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
     preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
+    eval_blocking  = kernelConfiguration["KERNEL_EVAL_BLOCKING"].getUInt();
 
     if (kernelConfiguration.contains("USE_COMPRESSION_STREAMING"))
       use_compression_streaming = kernelConfiguration["USE_COMPRESSION_STREAMING"].getBool();
@@ -511,10 +523,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                      << this->indent[1] << "alpha_local[local_id] = alpha[group * "
                      << localCacheSize << "  + local_id ];" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl
-                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
-                     << std::endl
-                     << this->indent[2] << "__private " << this->floatType();
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+	sourceStream << this->indent[1] << "for (int local_index = 0; local_index < " << localCacheSize << "; local_index += " << eval_blocking << ") {" << std::endl;
+	sourceStream << this->indent[2] << "__private " << this->floatType();
       } else { // use compression
 
         sourceStream << this->indent[0] << "__local "
@@ -549,7 +560,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                      << localCacheSize << "  + local_id ];" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl
                      << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
+                     << this->indent[1] << "for (int local_index = 0; local_index < " << localCacheSize << "; local_index += " << eval_blocking << ") {"
                      << std::endl
                      << this->indent[2] << "__private " << this->floatType();
       }

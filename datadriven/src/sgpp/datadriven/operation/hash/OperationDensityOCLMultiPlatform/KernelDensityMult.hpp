@@ -76,6 +76,10 @@ class KernelDensityMultInterface {
           kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
         }
 
+	if (kernelNode.contains("KERNEL_EVAL_BLOCKING") == false) {
+          kernelNode.addIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(1));
+        }
+
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
         }
