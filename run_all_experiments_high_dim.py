@@ -56,10 +56,13 @@ CSV_SEP = ";"
 
 # for dim in range(2, 3, 2):
 for level in [level]:
-    if args.use_32_bits_compression:
-        compression_length_string = "_32bits"
+    if args.with_compression:
+        if args.use_32_bits_compression:
+            compression_length_string = "_32bits_comp"
+        else:
+            compression_length_string = "_64bits_comp"
     else:
-        compression_length_string = "_64bits"
+        compression_length_string = "_no_comp"
     if args.fixed_grid_points:
         fixed_grid_points_string = "_fixed_dim"
     else:
@@ -69,8 +72,8 @@ for level in [level]:
     else:
         fewer_registers_string = ""
 
-    resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + compression_length_string + fixed_grid_points_string + fewer_registers_string + ".csv"
-        
+    resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + compression_length_string + fixed_grid_points_string + fewer_registers_string + ".csv"
+
     # if args.fixed_grid_points:
     #     resultsFileName = "results/results_friedman2_high_dim_" + args.device_name + "_" + args.precision + "_compression" + str(args.with_compression) + "_fixed_dim" + str(base_dim) + ".csv"
     # else:
