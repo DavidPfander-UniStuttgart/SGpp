@@ -50,7 +50,7 @@ void multiply_and_test(std::shared_ptr<sgpp::base::OCLOperationConfiguration> pa
 
 BOOST_AUTO_TEST_SUITE(TestClusteringOpenCL)
 
-BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Default) {
   std::cout << "Starting rhs kernel tests" << std::endl;
   // Load correct results for comparison
   std::vector<double> rhs_optimal_result;
@@ -62,8 +62,6 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
     BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
   }
   rhs_in.close();
-
-
 
   // Create grid for test scenario
   sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
@@ -106,11 +104,36 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
-  {
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemory) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData();
+
+  {  
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
-        getConfigurationDefaultsSingleDevice();
+      getConfigurationDefaultsSingleDevice();
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -121,6 +144,8 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
         json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
+	// kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+	// kernelNode.replaceIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(1));
       }
     }
     // Create OpenCL Manager
@@ -128,7 +153,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
     // Create operation
     auto operation_rhs = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-          *grid, 2, manager, parameters, 0.001);
+											   *grid, 2, manager, parameters, 0.001);
 
     sgpp::base::DataVector b(gridsize);
     operation_rhs->generateb(dataset, b);
@@ -136,7 +161,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+      "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -151,6 +200,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
         json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+	kernelNode.replaceIDAttr("WRITE_SOURCE", true);
       }
     }
     // Create OpenCL Manager
@@ -166,41 +216,89 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
-  {
-    // Create OCL configuration
-    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
-        getConfigurationDefaultsSingleDevice();
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
-    std::cout << "Testing rhs kernel with local memory and compression ..." << std::endl;
-    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
-      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
-        const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
-        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
-      }
-    }
-    // Create OpenCL Manager
-    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
-    // Create operation
-    auto operation_rhs = std::make_unique<
-      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-          *grid, 2, manager, parameters, 0.001);
+// BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression) {
+//   std::cout << "Starting rhs kernel tests" << std::endl;
+//   // Load correct results for comparison
+//   std::vector<double> rhs_optimal_result;
+//   std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+//   if (rhs_in) {
+//     double value;
+//     while (rhs_in >> value) rhs_optimal_result.push_back(value);
+//   } else {
+//     BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+//   }
+//   rhs_in.close();
 
-    sgpp::base::DataVector b(gridsize);
-    operation_rhs->generateb(dataset, b);
-    for (size_t i = 0; i < gridsize; ++i) {
-      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
-    }
+//   // Create grid for test scenario
+//   sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+//   sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+//   gridGen.regular(11);
+//   size_t gridsize = grid->getStorage().getSize();
+
+//   // Load dataset for test scenario
+//   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+//       "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+//   sgpp::base::DataMatrix &dataset = data.getData(); 
+//   {
+//     // Create OCL configuration
+//     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+//         getConfigurationDefaultsSingleDevice();
+//     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+//     std::cout << "Testing rhs kernel with local memory and compression ..." << std::endl;
+//     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+//       json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+//       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+//         json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+//         const std::string &kernelName = "cscheme";
+//         json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+//         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+//         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+//       }
+//     }
+//     // Create OpenCL Manager
+//     auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+//     // Create operation
+//     auto operation_rhs = std::make_unique<
+//       sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+//           *grid, 2, manager, parameters, 0.001);
+
+//     sgpp::base::DataVector b(gridsize);
+//     operation_rhs->generateb(dataset, b);
+//     for (size_t i = 0; i < gridsize; ++i) {
+//       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+//     }
+//   }
+// }
+
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression32) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
   }
+  rhs_in.close();
 
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
-        getConfigurationDefaultsSingleDevice();
+      getConfigurationDefaultsSingleDevice();
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with unsigned compression type unsigned int and without local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -219,7 +317,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
     // Create operation
     auto operation_rhs = std::make_unique<
       sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
-          *grid, 2, manager, parameters, 0.001);
+											   *grid, 2, manager, parameters, 0.001);
 
     sgpp::base::DataVector b(gridsize);
     operation_rhs->generateb(dataset, b);
@@ -227,7 +325,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -258,7 +380,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32Registers) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -291,7 +437,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32NoRegisters) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -324,7 +494,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression64NoRegisters) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -357,7 +551,31 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegisters) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -390,8 +608,65 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL) {
       BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
     }
   }
+}
 
-  std::cout << "Finished rhs kernel tests" << std::endl << std::endl;
+BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegistersEvalBlocked8) {
+  std::cout << "Starting rhs kernel tests" << std::endl;
+  // Load correct results for comparison
+  std::vector<double> rhs_optimal_result;
+  std::ifstream rhs_in("datadriven/tests/data/clustering_test_data/rhs_erg_dim2_depth11.txt");
+  if (rhs_in) {
+    double value;
+    while (rhs_in >> value) rhs_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density rhs result file is missing!"));
+  }
+  rhs_in.close();
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  size_t gridsize = grid->getStorage().getSize();
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
+									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::base::DataMatrix &dataset = data.getData(); 
+  {
+    // Create OCL configuration
+    std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+        getConfigurationDefaultsSingleDevice();
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+    std::cout << "Testing rhs kernel with long compression type, with "
+              << "local memory and without compression registers ..." << std::endl;
+    for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        const std::string &kernelName = "cscheme";
+        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+        kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+        kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+	kernelNode.replaceIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(8));
+	// kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      }
+    }
+    // Create OpenCL Manager
+    auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+    // Create operation
+    auto operation_rhs = std::make_unique<
+      sgpp::datadriven::DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
+          *grid, 2, manager, parameters, 0.001);
+
+    sgpp::base::DataVector b(gridsize);
+    operation_rhs->generateb(dataset, b);
+    for (size_t i = 0; i < gridsize; ++i) {
+      BOOST_CHECK_CLOSE(rhs_optimal_result[i], b[i], 0.001);
+    }
+  }
 }
 
 BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {

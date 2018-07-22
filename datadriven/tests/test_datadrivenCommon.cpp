@@ -386,6 +386,7 @@ std::shared_ptr<OCLOperationConfiguration> getConfigurationDefaultsSingleDevice(
   // detects the platform
   OCLManagerMultiPlatform manager;
   auto parameters = manager.getConfiguration();
+  (*parameters).replaceIDAttr("VERBOSE", true);
 
   // filter all devices except for the first
   bool firstPlatform = true;
