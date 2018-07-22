@@ -65,6 +65,10 @@ class KernelDensityBInterface{
         if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
         }
+
+	if (kernelNode.contains("KERNEL_EVAL_BLOCKING") == false) {
+          kernelNode.addIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(1));
+        }
       }
     }
   }
