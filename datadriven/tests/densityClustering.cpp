@@ -650,7 +650,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegistersEvalBlo
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
         kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
-	kernelNode.replaceIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(8));
+				kernelNode.replaceIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(8));
 	// kernelNode.replaceIDAttr("WRITE_SOURCE", true);
       }
     }
@@ -1431,6 +1431,7 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL_EvalBlocking) {
       kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", false);
       kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
       kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(8));
       kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
     }
   }
