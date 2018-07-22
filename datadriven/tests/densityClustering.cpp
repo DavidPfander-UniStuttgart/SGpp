@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemory) {
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
   sgpp::base::DataMatrix &dataset = data.getData();
 
-  {  
+  {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression) {
 //   // Load dataset for test scenario
 //   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 //       "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-//   sgpp::base::DataMatrix &dataset = data.getData(); 
+//   sgpp::base::DataMatrix &dataset = data.getData();
 //   {
 //     // Create OCL configuration
 //     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -294,7 +294,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression32) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -349,7 +349,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -404,7 +404,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32Registers) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -461,7 +461,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32NoRegisters) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -518,7 +518,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression64NoRegisters) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -575,7 +575,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegisters) {
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -632,7 +632,7 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegistersEvalBlo
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
 									 "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData(); 
+  sgpp::base::DataMatrix &dataset = data.getData();
   {
     // Create OCL configuration
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -1389,6 +1389,52 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
 
   std::cout << "Density multiplication test done!" << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL_EvalBlocking) {
+  // Load correct results for comparison
+  std::vector<double> mult_optimal_result;
+  std::ifstream mult_in("datadriven/tests/data/clustering_test_data/mult_erg_dim2_depth11.txt");
+  if (mult_in) {
+    double value;
+    while (mult_in >> value) mult_optimal_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("Density multiplication result file is missing!"));
+  }
+  mult_in.close();
+
+  // Create OCL configuration
+  std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
+      getConfigurationDefaultsSingleDevice();
+  // parameters->serialize(std::cout, 0);
+  sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
+
+  // Create OpenCL Manager
+  auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
+
+  // Create grid for test scenario
+  sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(2);
+  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+  gridGen.regular(11);
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "multdensity";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_FABS", true);
+      kernelNode.replaceIDAttr("USE_IMPLICIT", true);
+      kernelNode.replaceIDAttr("USE_LESS_OPERATIONS", true);
+      kernelNode.replaceIDAttr("USE_LEVEL_CACHE", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_STREAMING", false);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
+      kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
+      kernelNode.replaceIDAttr("COMPRESSION_TYPE", "uint64_t");
+    }
+  }
+  multiply_and_test(parameters, mult_optimal_result, manager, *grid);
 }
 
 BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
