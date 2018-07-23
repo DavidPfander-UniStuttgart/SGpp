@@ -321,9 +321,9 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 	  sourceStream << this->indent[3] << "float l_2 = (float)(1 << decompressed_level);" << std::endl;
 	  sourceStream << this->indent[3] << "float i = (float)(decompressed_index);" << std::endl;
 	  sourceStream << this->indent[3] << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
-	  sourceStream << this->indent[4] << "if (data_index + j >= " << data_points << ")  {" << std::endl;
-	  sourceStream << this->indent[5] << "break;" << std::endl;
-	  sourceStream << this->indent[4] << "}" << std::endl;
+	  // sourceStream << this->indent[4] << "if (data_index + j >= " << data_points << ")  {" << std::endl;
+	  // sourceStream << this->indent[5] << "break;" << std::endl;
+	  // sourceStream << this->indent[4] << "}" << std::endl;
 	  
           level_func =
               std::string("decompressed_level");
