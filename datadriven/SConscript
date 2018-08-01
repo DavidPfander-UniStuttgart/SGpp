@@ -23,6 +23,7 @@ if env["USE_GSL"]:
     additionalDependencies += ["gsl", "gslcblas"]
 if env["USE_CGAL"]:
   additionalDependencies += ["CGAL"]
+additionalDependencies += ["lshknn"]
 
 additionalBoostTestDependencies = ["z"]
 performanceTestFlag = "COMPILE_BOOST_PERFORMANCE_TESTS"
@@ -43,10 +44,9 @@ if env["ARCH"] == "mic":
 else:
     module.buildExamples()
 if env["USE_OCL"]:
+    additionalOCLDependencies = ["boost_program_options", "boost_filesystem", "boost_system"] + additionalDependencies
     module.buildExamples("examplesOCL",
-                         additionalExampleDependencies=["boost_program_options",
-                                                        "boost_filesystem",
-                                                        "boost_system"])
+                         additionalExampleDependencies=additionalOCLDependencies)
 if env["USE_MPI"] and env["USE_OCL"]:
     module.buildExamples("examplesMPI")
 if (env["ARCH"].lower() == "avx2"):
