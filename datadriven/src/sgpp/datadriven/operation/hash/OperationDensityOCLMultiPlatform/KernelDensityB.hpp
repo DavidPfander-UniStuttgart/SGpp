@@ -170,6 +170,13 @@ class KernelDensityB : public KernelDensityBInterface<T> {
 
   virtual void initialize_dataset(std::vector<T> &data) {
     this->dataSize = data.size() / dims;
+
+    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    size_t local_padding = local_size;
+    local_padding *= dims;
+    for (auto i = 0; i < local_padding; ++i) {
+      data.push_back(4.0);
+    }
     if (!deviceData.isInitialized()) deviceData.intializeTo(data, 1, 0, data.size());
   }
 
