@@ -37,6 +37,10 @@ int main(int argc, char *argv[]) {
     double threshold;
     double epsilon;
 
+    std::string rhs_erg_filename = "";
+    std::string density_coefficients_filename = "";
+    std::string pruned_knn_filename = "";
+
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
       "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
@@ -54,6 +58,15 @@ int main(int argc, char *argv[]) {
       "cluster_file",
       boost::program_options::value<std::string>(&cluster_file)->default_value(""),
       "Output file for the detected clusters. None if empty.")(
+      "rhs_erg_file",
+      boost::program_options::value<std::string>(&rhs_erg_filename),
+      "Filename where the final rhs values will be written.")(
+      "density_coefficients_file",
+      boost::program_options::value<std::string>(&density_coefficients_filename),
+      "Filename where the final grid coefficients for the density function will be written.")(
+      "pruned_knn_file",
+      boost::program_options::value<std::string>(&pruned_knn_filename),
+      "Filename for the pruned knn graph")(
       "epsilon",
       boost::program_options::value<double>(&epsilon)->default_value(0.0001),
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
@@ -194,6 +207,24 @@ int main(int argc, char *argv[]) {
     for (size_t i = 0; i < gridsize; i++) alpha[i] = alpha[i] * 1.0 / (max - min);
     std::cout << std::endl << std::endl;
 
+
+    // Output final rhs values
+    if (rhs_erg_filename != "") {
+      std::ofstream out_rhs(rhs_erg_filename);
+      for (size_t i = 0; i < grid->getSize(); ++i) {
+        out_rhs << rhs[i] << std::endl;
+      }
+      out_rhs.close();
+    }
+    // Output final coefficients
+    if (density_coefficients_filename != "") {
+      std::ofstream out_coefficients(density_coefficients_filename);
+      for (size_t i = 0; i < grid->getSize(); ++i) {
+        out_coefficients << alpha[i] << std::endl;
+      }
+      out_coefficients.close();
+    }
+
     // Create and prune knn graph
     std::cout << "Create and prune graph: " << std::endl;
     std::cout << "----------------------- " << std::endl;
@@ -205,6 +236,29 @@ int main(int argc, char *argv[]) {
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();
     std::cout << std::endl << std::endl;
+    auto print_knn_graph = [&dataset, k](std::string filename, std::vector<int> &graph) {
+      std::ofstream out_graph(filename);
+      for (size_t i = 0; i < dataset.getNrows(); ++i) {
+        bool first = true;
+        for (size_t j = 0; j < k; ++j) {
+          if (graph[i * k + j] == -1) {
+            continue;
+          }
+          if (!first) {
+            out_graph << ", ";
+          } else {
+            first = false;
+          }
+          out_graph << graph[i * k + j];
+        }
+        out_graph << std::endl;
+      }
+      out_graph.close();
+    };
+    // output for opencl/mpi comparison script
+    if (pruned_knn_filename != "") {
+      print_knn_graph(pruned_knn_filename, knn_graph);
+    }
 
     std::cout << "Find clusters in pruned graph: " << std::endl;
     std::cout << "------------------------------ " << std::endl;

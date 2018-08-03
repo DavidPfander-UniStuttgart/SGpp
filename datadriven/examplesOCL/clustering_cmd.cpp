@@ -50,6 +50,11 @@ int main(int argc, char **argv) {
   double coarsening_threshold;
   double epsilon;
 
+  std::string rhs_erg_filename = "";
+  std::string density_coefficients_filename = "";
+  std::string knn_filename = "";
+  std::string pruned_knn_filename = "";
+
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
@@ -82,6 +87,18 @@ int main(int argc, char **argv) {
       "cluster_file",
       boost::program_options::value<std::string>(&cluster_file)->default_value(""),
       "Output file for the detected clusters. None if empty.")(
+      "rhs_erg_file",
+      boost::program_options::value<std::string>(&rhs_erg_filename),
+      "Filename where the final rhs values will be written.")(
+      "density_coefficients_file",
+      boost::program_options::value<std::string>(&density_coefficients_filename),
+      "Filename where the final grid coefficients for the density function will be written.")(
+      "knn_file",
+      boost::program_options::value<std::string>(&knn_filename),
+      "Filename for the knn graph")(
+      "pruned_knn_file",
+      boost::program_options::value<std::string>(&pruned_knn_filename),
+      "Filename for the pruned knn graph")(
       "epsilon",
       boost::program_options::value<double>(&epsilon)->default_value(0.0001),
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
@@ -391,6 +408,23 @@ int main(int argc, char **argv) {
     alpha[i] = alpha[i] * 1.0 / (max - min);
   }
 
+  // Output final rhs values
+  if (rhs_erg_filename != "") {
+    std::ofstream out_rhs(rhs_erg_filename);
+    for (size_t i = 0; i < grid->getSize(); ++i) {
+      out_rhs << b[i] << std::endl;
+    }
+    out_rhs.close();
+  }
+  // Output final coefficients
+  if (density_coefficients_filename != "") {
+    std::ofstream out_coefficients(density_coefficients_filename);
+    for (size_t i = 0; i < grid->getSize(); ++i) {
+      out_coefficients << alpha[i] << std::endl;
+    }
+    out_coefficients.close();
+  }
+
   if (do_output_graphs) {
     std::ofstream out_grid(std::string("results/") + scenario_name + "_grid.csv");
     auto &storage = grid->getStorage();
@@ -449,6 +483,25 @@ int main(int argc, char **argv) {
     out_density.close();
   }
 
+  auto print_knn_graph = [&trainingData, k](std::string filename, std::vector<int> &graph) {
+    std::ofstream out_graph(filename);
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      bool first = true;
+      for (size_t j = 0; j < k; ++j) {
+        if (graph[i * k + j] == -1) {
+          continue;
+        }
+        if (!first) {
+          out_graph << ", ";
+        } else {
+          first = false;
+        }
+        out_graph << graph[i * k + j];
+      }
+      out_graph << std::endl;
+    }
+    out_graph.close();
+  };
   std::vector<int> graph(trainingData.getNrows() * k, -1);
   {
     std::cout << "Starting graph creation..." << std::endl;
@@ -470,35 +523,13 @@ int main(int argc, char **argv) {
 
     result_timings << last_duration_create_graph << "; " << flops_create_graph << "; ";
 
-    // for (size_t i = 0; i < graph.size() / k; i++)  {
-    //   std::cout << " node: " << i << " neigh: ";
-    //   for (size_t cur_k = 0; cur_k < k; cur_k+= 1) {
-    //    if (cur_k > 0) {
-    //      std::cout << ", ";
-    //    }
-    //    std::cout << graph[i * k + cur_k];
-    //   }
-    //   std::cout << std::endl;
-    // }
-
+    // keep this output to support already existing scripts
     if (do_output_graphs) {
-      std::ofstream out_graph(std::string("results/") + scenario_name + "_graph.csv");
-      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-        bool first = true;
-        for (size_t j = 0; j < k; ++j) {
-          if (graph[i * k + j] == -1) {
-            continue;
-          }
-          if (!first) {
-            out_graph << ", ";
-          } else {
-            first = false;
-          }
-          out_graph << graph[i * k + j];
-        }
-        out_graph << std::endl;
-      }
-      out_graph.close();
+      print_knn_graph(std::string("results/") + scenario_name + "_graph.csv", graph);
+    }
+    // output for opencl/mpi comparison script
+    if (knn_filename != "") {
+      print_knn_graph(knn_filename, graph);
     }
   }
 
@@ -523,24 +554,13 @@ int main(int argc, char **argv) {
 
     result_timings << last_duration_prune_graph << "; " << flops_prune_graph << "; ";
 
+    // keep this output to support already existing scripts
     if (do_output_graphs) {
-      std::ofstream out_graph(std::string("results/") + scenario_name + "_graph_pruned.csv");
-      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-        bool first = true;
-        for (size_t j = 0; j < k; ++j) {
-          if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
-            continue;
-          }
-          if (!first) {
-            out_graph << ", ";
-          } else {
-            first = false;
-          }
-          out_graph << graph[i * k + j];
-        }
-        out_graph << std::endl;
-      }
-      out_graph.close();
+      print_knn_graph(std::string("results/") + scenario_name + "_graph_pruned.csv", graph);
+    }
+    // output for opencl/mpi comparison script
+    if (pruned_knn_filename != "") {
+      print_knn_graph(pruned_knn_filename, graph);
     }
   }
 

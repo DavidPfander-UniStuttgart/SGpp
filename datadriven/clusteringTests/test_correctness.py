@@ -8,6 +8,7 @@ import atexit
 import numpy as np
 import json
 import time
+import filecmp
 
 def cleanup():
     subprocess.run(["rm", "-rf", "dataset-tmp"])
@@ -156,11 +157,22 @@ if __name__ == '__main__':
                         continue
                     oclconf_arg = "--config=" + args.opencl_config_folder + opencl_config_name
                     if args.opencl_flag:
+                        if os.path.exists("ocl-results/raw-clusters.txt"):
+                            subprocess.run(["rm", "ocl-results/raw-clusters.txt"])
+                        if os.path.exists("ocl-results/rhs.txt"):
+                            subprocess.run(["rm", "ocl-results/rhs.txt"])
+                        if os.path.exists("ocl-results/density-coefficients.txt"):
+                            subprocess.run(["rm", "ocl-results/density-coefficients.txt"])
+                        if os.path.exists("ocl-results/pruned-knn.txt"):
+                            subprocess.run(["rm", "ocl-results/pruned-knn.txt"])
                         # clustering run
                         start = time.time()
                         subprocess.run(["../examplesOCL/clustering_cmd", dataset_arg, "--k=5",
                                         oclconf_arg, level_arg, "--epsilon=0.001","--lambda=0.000001",
-                                        "--cluster_file=ocl-results/raw-clusters.txt"],
+                                        "--cluster_file=ocl-results/raw-clusters.txt",
+                                        "--rhs_erg_file=ocl-results/rhs.txt",
+                                        "--density_coefficients_file=ocl-results/density-coefficients.txt",
+                                        "--pruned_knn_file=ocl-results/pruned-knn.txt"],
                                        stdout=subprocess.PIPE)
                         end = time.time()
                         duration = end - start
@@ -168,7 +180,6 @@ if __name__ == '__main__':
                         counter_correct = 0
                         if os.path.exists("ocl-results/raw-clusters.txt"):
                             Y1_run = np.loadtxt("ocl-results/raw-clusters.txt", int)
-                            subprocess.run(["rm", "ocl-results/raw-clusters.txt"])
                             counter_correct = count_correct_cluster_hits(Y1, Y1_run)
 
                         # Output ocl test results
@@ -187,11 +198,22 @@ if __name__ == '__main__':
                             mpiconf_arg = "--MPIconfig=" + args.mpi_config_folder + mpi_config_name
                             number_mpi_processes = "-n=" + str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name))
+                            if os.path.exists("mpi-results/raw-clusters.txt"):
+                                subprocess.run(["rm", "mpi-results/raw-clusters.txt"])
+                            if os.path.exists("mpi-results/rhs.txt"):
+                                subprocess.run(["rm", "mpi-results/rhs.txt"])
+                            if os.path.exists("mpi-results/density-coefficients.txt"):
+                                subprocess.run(["rm", "mpi-results/density-coefficients.txt"])
+                            if os.path.exists("mpi-results/pruned-knn.txt"):
+                                subprocess.run(["rm", "mpi-results/pruned-knn.txt"])
                             start = time.time()
                             subprocess.run(["mpirun", number_mpi_processes, "../examplesMPI/mpi_examples",
                                             dataset_arg, mpiconf_arg,
                                             oclconf_arg, level_arg, "--epsilon=0.001", "--lambda=0.000001",
-                                            "--cluster_file=mpi-results/raw-clusters.txt", "--k=5"],
+                                            "--cluster_file=mpi-results/raw-clusters.txt", "--k=5",
+                                            "--rhs_erg_file=mpi-results/rhs.txt",
+                                            "--density_coefficients_file=mpi-results/density-coefficients.txt",
+                                            "--pruned_knn_file=mpi-results/pruned-knn.txt"],
                                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                             end = time.time()
                             duration = end - start
@@ -202,13 +224,27 @@ if __name__ == '__main__':
                                 subprocess.run(["rm", "mpi-results/raw-clusters.txt"])
                                 counter_correct = count_correct_cluster_hits(Y1, Y1_run)
                             percent = round(counter_correct/ Y1.shape[0] * 100.0, 3)
+                            success_rhs = False
+                            if os.path.exists("mpi-results/rhs.txt"):
+                                success_rhs = filecmp.cmp("ocl-results/rhs.txt",
+                                                        "mpi-results/rhs.txt", False)
+                            success_density_coefficients = False
+                            if os.path.exists("mpi-results/density-coefficients.txt"):
+                                success_density_coefficients = filecmp.cmp("ocl-results/density-coefficients.txt",
+                                                        "mpi-results/density-coefficients.txt", False)
+                            success_pruned_knn = False
+                            if os.path.exists("mpi-results/pruned-knn.txt"):
+                                success_pruned_knn = filecmp.cmp("ocl-results/pruned-knn.txt",
+                                                        "mpi-results/pruned-knn.txt", False)
                             if percent >= 99.0:
                                 print("SUCCESS, %3.3f"% percent, "%,", " %3.3fs"% duration, "\t, MPI, ", dim, ",",
-                                      size, ",", level, ",", opencl_config_name, "\t,",
-                                      mpi_config_name)
+                                      size, ",", level, ",", success_rhs, ",",
+                                      success_density_coefficients, ",", success_pruned_knn,
+                                      ",", opencl_config_name, "\t,", mpi_config_name)
                             else:
                                 print("FAILED , %3.3f"% percent, "%,", "%3.3fs"% duration, "\t, MPI, ", dim, ",",
-                                      size, ",", level, ",", opencl_config_name, "\t,",
-                                      mpi_config_name)
+                                      size, ",", level, ",", success_rhs, ",",
+                                      success_density_coefficients, ",", success_pruned_knn,
+                                      ",", opencl_config_name, "\t,", mpi_config_name)
                             pass
                     pass
