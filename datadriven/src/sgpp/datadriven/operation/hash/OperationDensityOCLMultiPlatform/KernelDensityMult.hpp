@@ -21,9 +21,100 @@ namespace sgpp {
 namespace datadriven {
 namespace DensityOCLMultiPlatform {
 
+template <class T>
+class KernelDensityMultInterface {
+ public:
+  virtual void initialize_alpha_buffer(std::vector<T> &alpha) = 0;
+  virtual void start_mult(size_t startid, size_t chunksize) = 0;
+  virtual double finish_mult(std::vector<T> &result, int startid, int chunksize) = 0;
+  /// Adds all possible building parameters to the configuration if they do not exist yet
+  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
+    for (std::string &platformName : parameters["PLATFORMS"].keys()) {
+      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+
+        const std::string &kernelName = "multdensity";
+
+        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+                                 ? deviceNode["KERNELS"][kernelName]
+                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
+
+        if (kernelNode.contains("REUSE_SOURCE") == false) {
+          kernelNode.addIDAttr("REUSE_SOURCE", false);
+        }
+
+        if (kernelNode.contains("WRITE_SOURCE") == false) {
+          kernelNode.addIDAttr("WRITE_SOURCE", false);
+        }
+
+        if (kernelNode.contains("VERBOSE") == false) {
+          kernelNode.addIDAttr("VERBOSE", false);
+        }
+
+        if (kernelNode.contains("LOCAL_SIZE") == false) {
+          kernelNode.addIDAttr("LOCAL_SIZE", UINT64_C(128));
+        }
+
+        if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
+          kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+        }
+
+        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
+        }
+
+        if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
+          kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
+        }
+
+        if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
+          kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+        }
+
+        if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
+        }
+
+	if (kernelNode.contains("KERNEL_EVAL_BLOCKING") == false) {
+          kernelNode.addIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(1));
+        }
+
+        if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
+        }
+        if (kernelNode.contains("USE_LEVEL_CACHE") == false) {
+          kernelNode.addIDAttr("USE_LEVEL_CACHE", false);
+        }
+        if (kernelNode.contains("USE_LESS_OPERATIONS") == false) {
+          kernelNode.addIDAttr("USE_LESS_OPERATIONS", true);
+        }
+
+        if (kernelNode.contains("DO_NOT_USE_TERNARY") == false) {
+          kernelNode.addIDAttr("DO_NOT_USE_TERNARY", false);
+        }
+
+        if (kernelNode.contains("USE_IMPLICIT") == false) {
+          kernelNode.addIDAttr("USE_IMPLICIT", false);
+        }
+
+        if (kernelNode.contains("USE_FABS") == false) {
+          kernelNode.addIDAttr("USE_FABS", false);
+        }
+        if (kernelNode.contains("PREPROCESS_POSITIONS") == false) {
+          kernelNode.addIDAttr("PREPROCESS_POSITIONS", false);
+        }
+        if (kernelNode.contains("UNROLL_DIM") == false) {
+          kernelNode.addIDAttr("UNROLL_DIM", false);
+        }
+      }
+    }
+  }
+};
+
 /// Class for the OpenCL density matrix vector multiplication
-template <typename T>
-class KernelDensityMult {
+template <class T, class C>
+class KernelDensityMult : public KernelDensityMultInterface<T> {
  private:
   /// Used opencl device
   std::shared_ptr<base::OCLDevice> device;
@@ -51,10 +142,10 @@ class KernelDensityMult {
   /// Buffer for the preprocessed h (if used)
   base::OCLBufferWrapperSD<T> devicePositions;
   // Compression buffers
-  base::OCLBufferWrapperSD<unsigned long> device_dim_zero_flags;
-  base::OCLBufferWrapperSD<unsigned long> device_level_offsets;
-  base::OCLBufferWrapperSD<unsigned long> device_level_packed;
-  base::OCLBufferWrapperSD<unsigned long> device_index_packed;
+  base::OCLBufferWrapperSD<C> device_dim_zero_flags;
+  base::OCLBufferWrapperSD<C> device_level_offsets;
+  base::OCLBufferWrapperSD<C> device_level_packed;
+  base::OCLBufferWrapperSD<C> device_index_packed;
 
   cl_kernel kernelMult;
   /// Source builder for the opencl source code of the kernel
@@ -147,10 +238,11 @@ class KernelDensityMult {
       }
       for (size_t i = 0; i < (localSize - (gridSize % localSize)) * 2 * dims; i++) {
         points.push_back(0); //Does not yield 0 at evaluation but we cannot encode zeros
-        // needs to be fixed in the opencl kernel itself
-      devicePoints.intializeTo(points, 1, 0, points.size());
       }
-      compressed_grid grid(points, dims);
+      // needs to be fixed in the opencl kernel itself
+      devicePoints.intializeTo(points, 1, 0, points.size());
+
+      compressed_grid<C> grid(points, dims);
       // if(!grid.check_grid_compression(points)) {
       //   std::cerr << "Grid compression check failed! " << std::endl;
       // } else {
@@ -336,13 +428,13 @@ class KernelDensityMult {
           throw base::operation_exception(errorString.str());
         }
         argument_counter++;
-        long non_padding_size = 0;
+        unsigned int non_padding_size = 0;
         if (chunksize == 0) {
           non_padding_size = gridSize / dataBlockingSize;
         } else {
           non_padding_size = chunksize / dataBlockingSize;
         }
-        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_long),
+        err = clSetKernelArg(this->kernelMult, argument_counter, sizeof(cl_uint),
                              &non_padding_size);
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -510,85 +602,6 @@ class KernelDensityMult {
 
     this->deviceTimingMult += time;
     return 0;
-  }
-  /// Adds all possible building parameters to the configuration if they do not exist yet
-  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
-    for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
-      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
-
-        const std::string &kernelName = "multdensity";
-
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                 ? deviceNode["KERNELS"][kernelName]
-                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
-
-        if (kernelNode.contains("REUSE_SOURCE") == false) {
-          kernelNode.addIDAttr("REUSE_SOURCE", false);
-        }
-
-        if (kernelNode.contains("WRITE_SOURCE") == false) {
-          kernelNode.addIDAttr("WRITE_SOURCE", false);
-        }
-
-        if (kernelNode.contains("VERBOSE") == false) {
-          kernelNode.addIDAttr("VERBOSE", false);
-        }
-
-        if (kernelNode.contains("LOCAL_SIZE") == false) {
-          kernelNode.addIDAttr("LOCAL_SIZE", UINT64_C(128));
-        }
-
-        if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
-          kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-        }
-
-        if (kernelNode.contains("KERNEL_LOCAL_CACHE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
-        }
-
-        if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
-          kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
-        }
-
-        if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
-          kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
-        }
-
-        if (kernelNode.contains("KERNEL_DATA_BLOCKING_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_DATA_BLOCKING_SIZE", UINT64_C(1));
-        }
-
-        if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        }
-        if (kernelNode.contains("USE_LEVEL_CACHE") == false) {
-          kernelNode.addIDAttr("USE_LEVEL_CACHE", false);
-        }
-        if (kernelNode.contains("USE_LESS_OPERATIONS") == false) {
-          kernelNode.addIDAttr("USE_LESS_OPERATIONS", true);
-        }
-
-        if (kernelNode.contains("DO_NOT_USE_TERNARY") == false) {
-          kernelNode.addIDAttr("DO_NOT_USE_TERNARY", false);
-        }
-
-        if (kernelNode.contains("USE_IMPLICIT") == false) {
-          kernelNode.addIDAttr("USE_IMPLICIT", false);
-        }
-
-        if (kernelNode.contains("USE_FABS") == false) {
-          kernelNode.addIDAttr("USE_FABS", false);
-        }
-        if (kernelNode.contains("PREPROCESS_POSITIONS") == false) {
-          kernelNode.addIDAttr("PREPROCESS_POSITIONS", false);
-        }
-        if (kernelNode.contains("UNROLL_DIM") == false) {
-          kernelNode.addIDAttr("UNROLL_DIM", false);
-        }
-      }
-    }
   }
 };
 

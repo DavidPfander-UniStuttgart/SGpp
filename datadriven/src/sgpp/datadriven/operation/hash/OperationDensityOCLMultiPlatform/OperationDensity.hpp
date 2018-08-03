@@ -67,11 +67,11 @@ class OperationDensity : public base::OperationMatrix {
     }
 
     if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-      DensityOCLMultiPlatform::KernelDensityMult<float>::augmentDefaultParameters(*parameters);
-      DensityOCLMultiPlatform::KernelDensityB<float>::augmentDefaultParameters(*parameters);
+      DensityOCLMultiPlatform::KernelDensityMultInterface<float>::augmentDefaultParameters(*parameters);
+      DensityOCLMultiPlatform::KernelDensityBInterface<float>::augmentDefaultParameters(*parameters);
     } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-      DensityOCLMultiPlatform::KernelDensityMult<double>::augmentDefaultParameters(*parameters);
-      DensityOCLMultiPlatform::KernelDensityB<double>::augmentDefaultParameters(*parameters);
+      DensityOCLMultiPlatform::KernelDensityMultInterface<double>::augmentDefaultParameters(*parameters);
+      DensityOCLMultiPlatform::KernelDensityBInterface<double>::augmentDefaultParameters(*parameters);
     } else {
       std::stringstream errorString;
       errorString << "Error creating operation\"OperationDensityOCLMultiPlatform\": "

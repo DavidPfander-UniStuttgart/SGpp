@@ -44,9 +44,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   bool use_fabs_instead_of_fmax;
   /// Use preprocessed grid positions? Configuration parameter is PREPROCESSED_POSITIONS
   bool preprocess_positions;
+  uint64_t eval_blocking;
   bool unroll_dim;
   bool use_compression_fixed;
   bool use_compression_streaming;
+  bool use_compression_register;
+  std::string compression_type;
 
   /// Generate the opencl code to save the fixed gridpoint of a workitem to the local memory
   std::string save_from_global_to_private(size_t dimensions) {
@@ -56,25 +59,25 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         if (!use_compression_fixed) {
           output << this->indent[0] << "__private int point_indices_block" << block << "["
                  << dimensions << "];" << std::endl;
-          output << this->indent[0] << "__private int point_level_block" << block << "[" << dimensions
-                 << "];" << std::endl;
+          output << this->indent[0] << "__private int point_level_block" << block << "["
+                 << dimensions << "];" << std::endl;
           for (size_t i = 0; i < dimensions; i++) {
             output << this->indent[0] << "point_indices_block" << block << "[" << i
-                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
-                   << dimensions << " * 2 + 2 * " << i << "];" << std::endl;
+                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block
+                   << ") * " << dimensions << " * 2 + 2 * " << i << "];" << std::endl;
             output << this->indent[0] << "point_level_block" << block << "[" << i
-                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block << ") * "
-                   << dimensions << " * 2 + 2 * " << i << " + 1];" << std::endl;
+                   << "] = starting_points[(gridindex * " << dataBlockSize << " + " << block
+                   << ") * " << dimensions << " * 2 + 2 * " << i << " + 1];" << std::endl;
           }
-        } else {
-          output << this->indent[0] << "__private ulong point_dim_zero_flags = dim_zero_flags_v[gridindex];"
-                 << std::endl;
-          output << this->indent[0] << "__private ulong point_level_offsets = level_offsets_v[gridindex];"
-                 << std::endl;
-          output << this->indent[0] << "__private ulong point_level_packed = level_packed_v[gridindex];"
-                 << std::endl;
-          output << this->indent[0] << "__private ulong point_index_packed = index_packed_v[gridindex];"
-                 << std::endl;
+        } else if (use_compression_register) {
+          output << this->indent[0] << "__private " << compression_type
+                 << " point_dim_zero_flags = dim_zero_flags_v[gridindex];" << std::endl;
+          output << this->indent[0] << "__private " << compression_type
+                 << " point_level_offsets = level_offsets_v[gridindex];" << std::endl;
+          output << this->indent[0] << "__private " << compression_type
+                 << " point_level_packed = level_packed_v[gridindex];" << std::endl;
+          output << this->indent[0] << "__private " << compression_type
+                 << " point_index_packed = index_packed_v[gridindex];" << std::endl;
         }
       } else {
         output << this->indent[0] << "__private " << this->floatType() << " point_positions_block"
@@ -105,40 +108,77 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     // Use alias names for levels and indices
     std::string level_func1 =
         std::string("point_level_block") + std::to_string(block) + std::string("[dim]");
-    std::string level_func2 = std::string("starting_points[i* ") + std::to_string(dimensions) +
-                              std::string("*2+2*dim+1]");
+    std::string level_func2 = std::string("starting_points[(local_index + j)* ") +
+                              std::to_string(dimensions) + std::string("*2+2*dim+1]");
     std::string index_func1 =
         std::string("point_indices_block") + std::to_string(block) + std::string("[dim]");
-    std::string index_func2 =
-        std::string("starting_points[i* ") + std::to_string(dimensions) + std::string("*2+2*dim]");
+    std::string index_func2 = std::string("starting_points[(local_index + j)* ") +
+                              std::to_string(dimensions) + std::string("*2+2*dim]");
     // In case we use local memory we need to adjust the alias names
     // if (useLocalMemory) {
-    if (useLocalMemory && !use_compression_streaming) {
-      level_func2 =
-          std::string("level_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
-      index_func2 =
-          std::string("indices_local[i* ") + std::to_string(dimensions) + std::string("+dim]");
+    if (useLocalMemory && !use_compression_streaming && use_compression_fixed) {
+      level_func2 = std::string("level_local[(local_index + j)* ") + std::to_string(dimensions) +
+                    std::string("+dim]");
+      index_func2 = std::string("indices_local[(local_index + j)* ") + std::to_string(dimensions) +
+                    std::string("+dim]");
+    } else if (useLocalMemory && !use_compression_streaming && !use_compression_fixed) {
+      level_func2 = std::string("level_local[(local_index)* ") + std::to_string(dimensions) +
+                    std::string("+dim]");
+      index_func2 = std::string("indices_local[(local_index)* ") + std::to_string(dimensions) +
+                    std::string("+dim]");
     }
-    output << " zellenintegral = 1.0;" << std::endl;
+    if (use_compression_fixed) {
+      output << this->floatType() << " zellenintegral_blocked[" << eval_blocking << "];"
+             << std::endl;
+      output << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
+      output << this->indent[1] << "zellenintegral_blocked[j] = 1.0" << this->constSuffix() << ";"
+             << std::endl;
+      output << "}" << std::endl;
+    } else {
+      output << " zellenintegral = 1.0" << this->constSuffix() << ";" << std::endl;
+    }
     // copy variables for shifting
     if (use_compression_streaming) {
       if (useLocalMemory) {
-        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags[i];" << std::endl;
-        output << this->indent[2] << "ulong current_level_offsets = level_offsets[i];" << std::endl;
-        output << this->indent[2] << "ulong current_level_packed = level_packed[i];" << std::endl;
-        output << this->indent[2] << "ulong current_index_packed = index_packed[i];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_dim_zero_flags = dim_zero_flags[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_level_offsets = level_offsets[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_level_packed = level_packed[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_index_packed = index_packed[(local_index + j)];" << std::endl;
       } else {
-        output << this->indent[2] << "ulong current_dim_zero_flags = dim_zero_flags_v[i];" << std::endl;
-        output << this->indent[2] << "ulong current_level_offsets = level_offsets_v[i];" << std::endl;
-        output << this->indent[2] << "ulong current_level_packed = level_packed_v[i];" << std::endl;
-        output << this->indent[2] << "ulong current_index_packed = index_packed_v[i];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_dim_zero_flags = dim_zero_flags_v[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_level_offsets = level_offsets_v[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_level_packed = level_packed_v[(local_index + j)];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " current_index_packed = index_packed_v[(local_index + j)];" << std::endl;
       }
     }
     if (use_compression_fixed) {
-      output << this->indent[2] << "ulong fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
-      output << this->indent[2] << "ulong fixed_level_offsets = point_level_offsets;" << std::endl;
-      output << this->indent[2] << "ulong fixed_level_packed = point_level_packed;" << std::endl;
-      output << this->indent[2] << "ulong fixed_index_packed = point_index_packed;" << std::endl;
+      if (use_compression_register) {
+        output << this->indent[2] << compression_type
+               << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
+        output << this->indent[2] << compression_type
+               << " fixed_level_offsets = point_level_offsets;" << std::endl;
+        output << this->indent[2] << compression_type << " fixed_level_packed = point_level_packed;"
+               << std::endl;
+        output << this->indent[2] << compression_type << " fixed_index_packed = point_index_packed;"
+               << std::endl;
+      } else {
+        output << this->indent[2] << compression_type
+               << " fixed_dim_zero_flags = dim_zero_flags_v[gridindex];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " fixed_level_offsets = level_offsets_v[gridindex];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " fixed_level_packed = level_packed_v[gridindex];" << std::endl;
+        output << this->indent[2] << compression_type
+               << " fixed_index_packed = index_packed_v[gridindex];" << std::endl;
+      }
     }
     // In case we want replace the ternary operator we need to declare the counter variable
     if ((use_less && do_not_use_ternary) || (!use_implicit_zero && do_not_use_ternary))
@@ -147,59 +187,68 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     output << this->indent[2] << "for(private int dim = 0;dim< " << dimensions << ";dim++) {"
            << std::endl;
 
-    // if we use compression - now is the time to decompress
-    if (use_compression_streaming) {
-      output << this->indent[3]
-             << "ulong is_dim_implicit = current_dim_zero_flags & one_mask;" << std::endl;
-      output << this->indent[3] << "current_dim_zero_flags >>= 1;" << std::endl;
-      output << this->indent[3] << "ulong decompressed_level2 = 1;" << std::endl;
-      output << this->indent[3] << "ulong decompressed_index2 = 1;" << std::endl;
-      output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-      output << this->indent[4] << "ulong level_bits = 1 + "
-             << "clz(current_level_offsets);"
-             << std::endl;
-      output << this->indent[4] << "current_level_offsets <<= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-      output << this->indent[4] << "decompressed_level2 = (current_level_packed & level_mask) + 2;" << std::endl;
-      output << this->indent[4] << "current_level_packed >>= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong index_bits = decompressed_level2 - 1;" << std::endl;
-      output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-      output << this->indent[4] << "decompressed_index2 = ((current_index_packed & index_mask) << 1) + 1;" << std::endl;
-      output << this->indent[4] << "current_index_packed >>= index_bits;" << std::endl;
-      output << this->indent[3] << "}" << std::endl;
-      level_func2 =
-          std::string("decompressed_level2");
-      index_func2 =
-          std::string("decompressed_index2");
-    }
     if (use_compression_fixed) {
       if (!use_compression_streaming) {
-      output << this->indent[3]
-             << "ulong is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+        output << this->indent[3] << compression_type
+               << " is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
       } else {
-      output << this->indent[3]
-             << "is_dim_implicit = fixed_dim_zero_flags & one_mask;" << std::endl;
+        output << this->indent[3] << "is_dim_implicit = fixed_dim_zero_flags & one_mask;"
+               << std::endl;
       }
       output << this->indent[3] << "fixed_dim_zero_flags >>= 1;" << std::endl;
-      output << this->indent[3] << "ulong decompressed_level = 1;" << std::endl;
-      output << this->indent[3] << "ulong decompressed_index = 1;" << std::endl;
+      output << this->indent[3] << compression_type << " decompressed_level = 1;" << std::endl;
+      output << this->indent[3] << compression_type << " decompressed_index = 1;" << std::endl;
       output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
-      output << this->indent[4] << "ulong level_bits = 1 + "
-             << "clz(fixed_level_offsets);"
-             << std::endl;
+      output << this->indent[4] << compression_type << " level_bits = 1 + "
+             << "clz(fixed_level_offsets);" << std::endl;
       output << this->indent[4] << "fixed_level_offsets <<= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong level_mask = (1 << level_bits) - 1;" << std::endl;
-      output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;" << std::endl;
+      output << this->indent[4] << compression_type << " level_mask = (1 << level_bits) - 1;"
+             << std::endl;
+      output << this->indent[4] << "decompressed_level = (fixed_level_packed & level_mask) + 2;"
+             << std::endl;
       output << this->indent[4] << "fixed_level_packed >>= level_bits;" << std::endl;
-      output << this->indent[4] << "ulong index_bits = decompressed_level - 1;" << std::endl;
-      output << this->indent[4] << "ulong index_mask = (1 << index_bits) - 1;" << std::endl;
-      output << this->indent[4] << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
+      output << this->indent[4] << compression_type << " index_bits = decompressed_level - 1;"
+             << std::endl;
+      output << this->indent[4] << compression_type << " index_mask = (1 << index_bits) - 1;"
+             << std::endl;
+      output << this->indent[4]
+             << "decompressed_index = ((fixed_index_packed & index_mask) << 1) + 1;" << std::endl;
       output << this->indent[4] << "fixed_index_packed >>= index_bits;" << std::endl;
       output << this->indent[3] << "}" << std::endl;
-      level_func1 =
-          std::string("decompressed_level");
-      index_func1 =
-          std::string("decompressed_index");
+      output << this->indent[3] << "float l_2 = (float)(1 << decompressed_level);" << std::endl;
+      output << this->indent[3] << "float i = (float)(decompressed_index);" << std::endl;
+      output << this->indent[3] << "for (size_t j = 0; j < " << eval_blocking << "; j++) {"
+             << std::endl;
+      level_func1 = std::string("l_2");
+      index_func1 = std::string("i");
+    }
+    // if we use compression - now is the time to decompress
+    if (use_compression_streaming) {
+      output << this->indent[3] << compression_type
+             << " is_dim_implicit = current_dim_zero_flags & one_mask;" << std::endl;
+      output << this->indent[3] << "current_dim_zero_flags >>= 1;" << std::endl;
+      output << this->indent[3] << compression_type << " decompressed_level2 = 1;" << std::endl;
+      output << this->indent[3] << compression_type << " decompressed_index2 = 1;" << std::endl;
+      output << this->indent[3] << "if (is_dim_implicit != 0) {" << std::endl;
+      output << this->indent[4] << compression_type << " level_bits = 1 + "
+             << "clz(current_level_offsets);" << std::endl;
+      output << this->indent[4] << "current_level_offsets <<= level_bits;" << std::endl;
+      output << this->indent[4] << compression_type << " level_mask = (1 << level_bits) - 1;"
+             << std::endl;
+      output << this->indent[4] << "decompressed_level2 = (current_level_packed & level_mask) + 2;"
+             << std::endl;
+      output << this->indent[4] << "current_level_packed >>= level_bits;" << std::endl;
+      output << this->indent[4] << compression_type << " index_bits = decompressed_level2 - 1;"
+             << std::endl;
+      output << this->indent[4] << compression_type << " index_mask = (1 << index_bits) - 1;"
+             << std::endl;
+      output << this->indent[4]
+             << "decompressed_index2 = ((current_index_packed & index_mask) << 1) + 1;"
+             << std::endl;
+      output << this->indent[4] << "current_index_packed >>= index_bits;" << std::endl;
+      output << this->indent[3] << "}" << std::endl;
+      level_func2 = std::string("decompressed_level2");
+      index_func2 = std::string("decompressed_index2");
     }
     // In case we do not want to use that the entry is implicitly zero if we use the wrong order
     // we need to find the smallest level
@@ -229,10 +278,16 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         output << this->indent[3] << "h = hs[" << level_func2 << "];" << std::endl;
       } else {
         // Calculate h
-        output << this->indent[3] << "h = 1.0 / (1 << " << level_func2 << ");" << std::endl;
+        if (level_func2 == std::string("l_2"))
+          output << this->indent[3] << "h = 1.0 / (" << level_func2 << ");" << std::endl;
+        else
+          output << this->indent[3] << "h = 1.0 / (1 << " << level_func2 << ");" << std::endl;
       }
       // Calculate u
-      output << this->indent[3] << "u = (1 << " << level_func1 << ");" << std::endl;
+      if (level_func1 == std::string("l_2"))
+        output << this->indent[3] << "u = (" << level_func1 << ");" << std::endl;
+      else
+        output << this->indent[3] << "u = (1 << " << level_func1 << ");" << std::endl;
       // Check whether we will just need to calculate umid, or umid uright and uleft
       if (use_less) {
         // Calculate just umid
@@ -294,8 +349,12 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       if (!do_not_use_ternary) {
         if (use_implicit_zero) {
           // Use ternary operator to multiply with 1/3
-          output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
-                 << " ? 1.0/3.0 : 1.0;" << std::endl;
+          if (use_compression_fixed)
+            output << this->indent[3] << "sum *= " << level_func2 << " == "
+                   << "decompressed_level ? 1.0/3.0 : 1.0;" << std::endl;
+          else
+            output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
+                   << "? 1.0/3.0 : 1.0;" << std::endl;
         } else {
           // Use ternary operator to multiply with 2/3
           output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
@@ -303,8 +362,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         }
       } else {
         // decrement counter of same levels by one if the two levels do not match
-        output << this->indent[3] << "same_levels -= min((int)(abs(level_local[i*" << dimensions
-               << "+dim] - point_level_block" << block << "[dim])),(int)(1));" << std::endl;
+        output << this->indent[3] << "same_levels -= min((int)(abs(level_local[(local_index + j)*"
+               << dimensions << "+dim] - point_level_block" << block << "[dim])),(int)(1));"
+               << std::endl;
       }
     } else if (!use_implicit_zero) {
       if (!do_not_use_ternary) {
@@ -312,12 +372,18 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                << " ? 2.0 : 1.0;" << std::endl;
       } else {
         // decrement counter of same levels by one if the two levels do not match
-        output << this->indent[3] << "same_levels -= min((int)(abs(level_local[i*" << dimensions
-               << "+dim] - point_level_block" << block << "[dim])),(int)(1));" << std::endl;
+        output << this->indent[3] << "same_levels -= min((int)(abs(level_local[(local_index + j)*"
+               << dimensions << "+dim] - point_level_block" << block << "[dim])),(int)(1));"
+               << std::endl;
       }
     }
     // Update cell integral
-    output << this->indent[3] << "zellenintegral*=sum;" << std::endl;
+    if (!use_compression_fixed) {
+      output << this->indent[3] << "zellenintegral*=sum;" << std::endl;
+    } else {
+      output << this->indent[3] << "zellenintegral_blocked[j]*=sum;" << std::endl;
+      output << this->indent[2] << "}" << std::endl; // CHANGED: correct?
+    }
     output << this->indent[2] << "}" << std::endl;
     // Update cell integral with missing factors
     if (do_not_use_ternary) {
@@ -333,16 +399,24 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     // Mutliply with corresponding alpha value
     if (use_compression_streaming) {
       if (useLocalMemory)
-        output << this->indent[2] << "if (group * " << localCacheSize << " + i < non_padding_size)" << std::endl;
+        output << this->indent[2] << "if (group * " << localCacheSize << " + i < non_padding_size)"
+               << std::endl;
       else
         output << this->indent[2] << "if (i < non_padding_size)" << std::endl;
     }
     if (useLocalMemory) {
-      output << this->indent[2] << "gesamtint_block" << block
-             << " += zellenintegral*alpha_local[i];" << std::endl;
+      if (use_compression_fixed) {
+        output << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
+        output << this->indent[2] << "gesamtint_block" << block
+               << " += zellenintegral_blocked[j]*alpha_local[(local_index + j)];" << std::endl;
+        output << "}" << std::endl;
+      } else {
+        output << this->indent[2] << "gesamtint_block" << block
+               << " += zellenintegral*alpha_local[(local_index)];" << std::endl;
+      }
     } else {
-      output << this->indent[2] << "gesamtint_block" << block << " += zellenintegral*alpha[i];"
-             << std::endl;
+      output << this->indent[2] << "gesamtint_block" << block
+             << " += zellenintegral*alpha[(local_index)];" << std::endl;
     }
     return output.str();
   }
@@ -378,6 +452,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     use_fabs_instead_of_fmax = kernelConfiguration["USE_FABS"].getBool();
     // if (kernelConfiguration.contains("PREPROCESS_POSITIONS")) {
     preprocess_positions = kernelConfiguration["PREPROCESS_POSITIONS"].getBool();
+    eval_blocking = kernelConfiguration["KERNEL_EVAL_BLOCKING"].getUInt();
 
     if (kernelConfiguration.contains("USE_COMPRESSION_STREAMING"))
       use_compression_streaming = kernelConfiguration["USE_COMPRESSION_STREAMING"].getBool();
@@ -387,6 +462,25 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       use_compression_fixed = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
     else
       use_compression_fixed = false;
+
+    if (kernelConfiguration.contains("COMPRESSION_TYPE")) {
+      if (kernelConfiguration["COMPRESSION_TYPE"].get().compare("uint64_t") == 0) {
+        compression_type = "ulong";
+      } else if (kernelConfiguration["COMPRESSION_TYPE"].get().compare("unsigned int") == 0) {
+        compression_type = "unsigned int";
+      } else {
+        throw base::operation_exception(
+            "OCL error: Illegal value for parameter \"COMPRESSION_TYPE\"\n");
+      }
+    } else {
+      compression_type = "ulong";
+    }
+    if (kernelConfiguration.contains("USE_COMPRESSION_REGISTERS")) {
+      use_compression_register = kernelConfiguration["USE_COMPRESSION_REGISTERS"].getBool();
+    } else {
+      use_compression_register = true;
+    }
+
     // These two options are not compatible
     if (preprocess_positions) use_level_cache = false;
     // }
@@ -413,11 +507,11 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     if (!preprocess_positions) {
       if (use_compression_streaming || use_compression_fixed) {
         sourceStream << "void multdensity(__global const int *starting_points, "
-                     << "__global const ulong *dim_zero_flags_v, "
-                     << "__global const ulong *level_offsets_v, "
-                     << "__global const ulong *level_packed_v, "
-                     << "__global const ulong *index_packed_v, "
-                     << "const long non_padding_size, ";
+                     << "__global const " << compression_type << " *dim_zero_flags_v, "
+                     << "__global const " << compression_type << " *level_offsets_v, "
+                     << "__global const " << compression_type << " *level_packed_v, "
+                     << "__global const " << compression_type << " *index_packed_v, "
+                     << "const unsigned int non_padding_size, ";
       } else {
         sourceStream << "void multdensity(__global const int *starting_points,";
       }
@@ -435,8 +529,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     sourceStream << "{" << std::endl;
     sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
     if (use_compression_streaming || use_compression_fixed) {
-      // sourceStream << this->indent[2] << "if(gridindex >= non_padding_size) return;" << std::endl;
-      sourceStream << this->indent[0] << " ulong one_mask = 1;" << std::endl;
+      // sourceStream << this->indent[2] << "if(gridindex >= non_padding_size) return;" <<
+      // std::endl;
+      sourceStream << this->indent[0] << " " << compression_type << " one_mask = 1;" << std::endl;
     }
     sourceStream << this->indent[0] << "__private int local_id = get_local_id(0);" << std::endl;
     sourceStream << save_from_global_to_private(dimensions);
@@ -483,20 +578,22 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                      << this->indent[1] << "alpha_local[local_id] = alpha[group * "
                      << localCacheSize << "  + local_id ];" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl
-                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
-                     << std::endl
-                     << this->indent[2] << "__private " << this->floatType();
-      } else { // use compression
+                     << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+        sourceStream << this->indent[1] << "for (int local_index = 0; local_index < "
+                     << localCacheSize << "; local_index += " << eval_blocking << ") {"
+                     << std::endl;
+        if (!use_compression_fixed)
+          sourceStream << this->indent[2] << "__private " << this->floatType();
+      } else {  // use compression
 
-        sourceStream << this->indent[0] << "__local "
-                     << "ulong dim_zero_flags[" << localCacheSize << "];" << std::endl
-                     << this->indent[0] << "__local "
-                     << "ulong level_offsets[" << localCacheSize << "];" << std::endl
-                     << this->indent[0] << "__local "
-                     << "ulong level_packed[" << localCacheSize << "];" << std::endl
-                     << this->indent[0] << "__local "
-                     << "ulong index_packed[" << localCacheSize << "];" << std::endl
+        sourceStream << this->indent[0] << "__local " << compression_type << " dim_zero_flags["
+                     << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local " << compression_type << " level_offsets["
+                     << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local " << compression_type << " level_packed["
+                     << localCacheSize << "];" << std::endl
+                     << this->indent[0] << "__local " << compression_type << " index_packed["
+                     << localCacheSize << "];" << std::endl
                      << this->indent[0] << "__local " << this->floatType() << " alpha_local["
                      << localCacheSize << "];" << std::endl
                      << this->indent[0] << "for (int group = 0; group < "
@@ -505,25 +602,27 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         sourceStream << this->indent[1] << "if (get_local_id(0) < " << localCacheSize << ") {"
                      << std::endl;
         sourceStream << this->indent[1] << "dim_zero_flags[local_id]"
-                     << " = dim_zero_flags_v[group * " << localCacheSize
-                     << "  + local_id];" << std::endl;
+                     << " = dim_zero_flags_v[group * " << localCacheSize << "  + local_id];"
+                     << std::endl;
         sourceStream << this->indent[1] << "level_offsets[local_id]"
-                     << " = level_offsets_v[group * " << localCacheSize
-                     << "  + local_id];" << std::endl;
+                     << " = level_offsets_v[group * " << localCacheSize << "  + local_id];"
+                     << std::endl;
         sourceStream << this->indent[1] << "level_packed[local_id]"
-                     << " = level_packed_v[group * " << localCacheSize
-                     << "  + local_id];" << std::endl;
+                     << " = level_packed_v[group * " << localCacheSize << "  + local_id];"
+                     << std::endl;
         sourceStream << this->indent[1] << "index_packed[local_id]"
-                     << " = index_packed_v[group * " << localCacheSize
-                     << "  + local_id];" << std::endl;
+                     << " = index_packed_v[group * " << localCacheSize << "  + local_id];"
+                     << std::endl;
 
         sourceStream << this->indent[1] << "alpha_local[local_id] = alpha[group * "
                      << localCacheSize << "  + local_id ];" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl
                      << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
-                     << this->indent[1] << "for (int i = 0 ; i < " << localCacheSize << "; i++) {"
-                     << std::endl
-                     << this->indent[2] << "__private " << this->floatType();
+                     << this->indent[1] << "for (int local_index = 0; local_index < "
+                     << localCacheSize << "; local_index += " << eval_blocking << ") {"
+                     << std::endl;
+        if (!use_compression_fixed)
+          sourceStream << this->indent[2] << "__private " << this->floatType();
       }
     } else if (preprocess_positions && !unroll_dim) {
       // declare local arrays for grid point positions, and hs and hs inverses
