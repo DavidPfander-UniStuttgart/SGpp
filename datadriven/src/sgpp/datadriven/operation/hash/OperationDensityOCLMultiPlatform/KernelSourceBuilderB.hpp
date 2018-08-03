@@ -253,10 +253,8 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                      << std::endl;
         sourceStream << this->indent[3] << "int data_index = outer_data_index + get_local_id(0);"
                      << std::endl;
-        sourceStream << this->indent[3] << "if (data_index < " << data_points << ") {" << std::endl;
         sourceStream << this->indent[4] << "data_group[get_local_id(0) * " << dimensions
                      << " + d] = data_points[data_index * " << dimensions << " + d];" << std::endl;
-        sourceStream << this->indent[3] << "}" << std::endl;
         sourceStream << this->indent[2] << "}" << std::endl;
         sourceStream << this->indent[1] << "}" << std::endl;
         sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl << std::endl;
@@ -268,9 +266,6 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                      << std::endl;
         sourceStream << this->indent[2] << "int data_index = outer_data_index + inner_data_index;"
                      << std::endl;
-        sourceStream << this->indent[2] << "if (data_index >= " << data_points << ") {" << std::endl;
-        sourceStream << this->indent[3] << "break;" << std::endl;
-        sourceStream << this->indent[2] << "}" << std::endl;
         if (use_compression_fixed) {
           if (use_compression_register) {
             sourceStream << this->indent[2] <<  compression_type << " fixed_dim_zero_flags = point_dim_zero_flags;" << std::endl;
@@ -294,7 +289,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 		       << ";" << std::endl;
 	}
 	sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
-		     << std::endl;	
+		     << std::endl;
         std::string index_func =
             std::string("grid_index[d]");
         std::string level_func =
@@ -321,10 +316,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 	  sourceStream << this->indent[3] << "float l_2 = (float)(1 << decompressed_level);" << std::endl;
 	  sourceStream << this->indent[3] << "float i = (float)(decompressed_index);" << std::endl;
 	  sourceStream << this->indent[3] << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
-	  // sourceStream << this->indent[4] << "if (data_index + j >= " << data_points << ")  {" << std::endl;
-	  // sourceStream << this->indent[5] << "break;" << std::endl;
-	  // sourceStream << this->indent[4] << "}" << std::endl;
-	  
+
           level_func =
               std::string("decompressed_level");
           index_func =
@@ -336,19 +328,16 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 	  sourceStream << this->indent[4] << "eval_1d *= data_group[(inner_data_index + j) * " << dimensions
 		       << " + d];" << std::endl;
 	  // sourceStream << this->indent[4] << "eval_1d -= " << index_func << ";" << std::endl;
-	  sourceStream << this->indent[4] << "eval_1d -= i;" << std::endl;	  
+	  sourceStream << this->indent[4] << "eval_1d -= i;" << std::endl;
 	  sourceStream << this->indent[4] << "eval_1d = fabs(eval_1d);" << std::endl;
 	  sourceStream << this->indent[4] << "eval_1d = 1 - eval_1d;" << std::endl;
 	  sourceStream << this->indent[4] << "if (eval_1d < 0.0" << this->constSuffix() << ") {" << std::endl;
 	  sourceStream << this->indent[5] << "eval_1d = 0.0" << this->constSuffix() << ";" << std::endl;
-	  sourceStream << this->indent[4] << "}" << std::endl;	  
+	  sourceStream << this->indent[4] << "}" << std::endl;
 	  sourceStream << this->indent[4] << "evals_blocked[j] *= eval_1d;" << std::endl;
-	  sourceStream << this->indent[3] << "}" << std::endl;	  
+	  sourceStream << this->indent[3] << "}" << std::endl;
 	  sourceStream << this->indent[2] << "}" << std::endl;
 	  sourceStream << this->indent[2] << "for (size_t j = 0; j < " << eval_blocking << "; j++) {" << std::endl;
-	  sourceStream << this->indent[3] << "if (data_index + j >= " << data_points << ")  {" << std::endl;
-	  sourceStream << this->indent[4] << "break;" << std::endl;
-	  sourceStream << this->indent[3] << "}" << std::endl;	  
 	  sourceStream << this->indent[3] << "result += evals_blocked[j];" << std::endl;
 	  sourceStream << this->indent[2] << "}" << std::endl;
 	  sourceStream << this->indent[1] << "}" << std::endl;
