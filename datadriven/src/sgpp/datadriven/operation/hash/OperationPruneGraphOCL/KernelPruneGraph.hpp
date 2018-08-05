@@ -58,6 +58,7 @@ class KernelPruneGraph {
   bool verbose;
 
   size_t localSize;
+  size_t dataSize;
   // size_t totalBlockSize;
 
  public:
@@ -88,6 +89,7 @@ class KernelPruneGraph {
     deviceAlpha.intializeTo(alphaVector, 1, 0, gridSize);
 
     deviceData.intializeTo(dataVector, 1, 0, dataVector.size());
+    dataSize = dataVector.size() / dims;
     clFinish(device->commandQueue);
   }
 
@@ -107,9 +109,8 @@ class KernelPruneGraph {
     // Build kernel if not already done
     if (this->kernel == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
-      size_t data_size = graph.size() / k;
       std::string program_src =
-          kernelSourceBuilder.generateSource(dims, data_size, gridSize, k, threshold);
+          kernelSourceBuilder.generateSource(dims, dataSize, gridSize, k, threshold);
       if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
       this->kernel = manager->buildKernel(program_src, device, kernelConfiguration, "removeEdges");

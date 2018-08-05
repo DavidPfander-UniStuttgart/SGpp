@@ -276,8 +276,12 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
 
       sourceStream << this->indent[0] << "if (global_index < " << data_size << ") {" << std::endl;
       sourceStream << this->indent[0] << "// point itself below density?" << std::endl;
-      sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
-                   << this->constSuffix() << ") {" << std::endl;
+      if (threshold > 0.0)
+        sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
+                     << this->constSuffix() << ") {" << std::endl;
+      else // Suffix does not work with 0
+        sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
+                     << ") {" << std::endl;
       sourceStream << this->indent[1] << "// invalidate all neighbors, point now isolated"
                    << std::endl;
       sourceStream << this->indent[1] << "for (int cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
@@ -290,8 +294,12 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << std::endl;
       sourceStream << this->indent[1] << "for (size_t cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
                    << std::endl;
-      sourceStream << this->indent[2] << "if (evals[cur_k] < " << threshold << this->constSuffix()
-                   << ") {" << std::endl;
+      if (threshold > 0.0)
+        sourceStream << this->indent[2] << "if (evals[cur_k] < " << threshold << this->constSuffix()
+                     << ") {" << std::endl;
+      else // Suffix does not work with 0
+        sourceStream << this->indent[2] << "if (evals[cur_k] < " << threshold
+                     << ") {" << std::endl;
       sourceStream << this->indent[3] << "nodes[get_global_id(0) * " << k << " + cur_k] = -2;"
                    << std::endl;
       sourceStream << this->indent[2] << "}" << std::endl;

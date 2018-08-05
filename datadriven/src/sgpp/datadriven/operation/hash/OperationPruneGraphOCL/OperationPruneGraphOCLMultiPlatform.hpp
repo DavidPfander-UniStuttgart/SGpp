@@ -55,7 +55,7 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
   OperationPruneGraphOCLMultiPlatform(
       base::Grid &grid, base::DataVector &alpha, base::DataMatrix &data, size_t dims,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T treshold, size_t k)
+      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T threshold, size_t k)
       : OperationPruneGraphOCL(),
         dims(dims),
         gridSize(grid.getStorage().getSize()),
@@ -102,14 +102,14 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
     json::Node &configuration = deviceNode["KERNELS"]["removeEdges"];
     graph_kernel = std::make_shared<KernelPruneGraph<T>>(
-        device, dims, treshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
+        device, dims, threshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
     if (configuration["VERBOSE"].getBool()) verbose = true;
   }
   /// Constructor using a double vector as a dataset and a serialized grid
   OperationPruneGraphOCLMultiPlatform(
       int *gridpoints, size_t gridSize, size_t dimensions, double *alpha, base::DataMatrix &data,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T treshold, size_t k)
+      std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T threshold, size_t k)
       : OperationPruneGraphOCL(),
         dims(dimensions),
         gridSize(gridSize),
@@ -158,7 +158,7 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
     json::Node &configuration = deviceNode["KERNELS"]["removeEdges"];
     graph_kernel = std::make_shared<KernelPruneGraph<T>>(
-        device, dims, treshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
+        device, dims, threshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
     if (configuration["VERBOSE"].getBool()) verbose = true;
   }
 
