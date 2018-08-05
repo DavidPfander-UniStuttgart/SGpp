@@ -166,8 +166,9 @@ if __name__ == '__main__':
                         if os.path.exists("ocl-results/pruned-knn.txt"):
                             subprocess.run(["rm", "ocl-results/pruned-knn.txt"])
                         # clustering run
+                        print("Gathering reference data with OCL conf ", oclconf_arg, "...")
                         start = time.time()
-                        subprocess.run(["../examplesOCL/clustering_cmd", dataset_arg, "--k=5",
+                        subprocess.run(["../examplesOCL/clustering_cmd", dataset_arg, "--k=5", "--threshold=0.0",
                                         oclconf_arg, level_arg, "--epsilon=0.001","--lambda=0.000001",
                                         "--cluster_file=ocl-results/raw-clusters.txt",
                                         "--rhs_erg_file=ocl-results/rhs.txt",
@@ -196,6 +197,7 @@ if __name__ == '__main__':
                             if not mpi_config_name.endswith(".cfg"):
                                 continue
                             mpiconf_arg = "--MPIconfig=" + args.mpi_config_folder + mpi_config_name
+                            print("Starting test with MPI conf ", mpiconf_arg, "...")
                             number_mpi_processes = "-n=" + str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name))
                             if os.path.exists("mpi-results/raw-clusters.txt"):
@@ -210,7 +212,8 @@ if __name__ == '__main__':
                             subprocess.run(["mpirun", number_mpi_processes, "../examplesMPI/mpi_examples",
                                             dataset_arg, mpiconf_arg,
                                             oclconf_arg, level_arg, "--epsilon=0.001", "--lambda=0.000001",
-                                            "--cluster_file=mpi-results/raw-clusters.txt", "--k=5",
+                                            "--cluster_file=mpi-results/raw-clusters.txt",
+                                            "--k=5", "--threshold=0.0",
                                             "--rhs_erg_file=mpi-results/rhs.txt",
                                             "--density_coefficients_file=mpi-results/density-coefficients.txt",
                                             "--pruned_knn_file=mpi-results/pruned-knn.txt"],
@@ -228,14 +231,53 @@ if __name__ == '__main__':
                             if os.path.exists("mpi-results/rhs.txt"):
                                 success_rhs = filecmp.cmp("ocl-results/rhs.txt",
                                                         "mpi-results/rhs.txt", False)
+                                if not success_rhs:
+                                    id = 0
+                                    error_folder = "rhs_error_" + mpi_config_name + "-" + str(id)
+                                    while os.path.exists(error_folder):
+                                        error_folder = "rhs_error_" + mpi_config_name + "-" + str(id)
+                                    subprocess.run(["mkdir", error_folder])
+                                    subprocess.run(["cp", "ocl-results/rhs.txt",
+                                                    error_folder + "/ocl-rhs.txt"])
+                                    subprocess.run(["cp", "mpi-results/rhs.txt",
+                                                    error_folder + "/mpi-rhs.txt"])
+                                    print("rhs check failed! Check folder " +
+                                          error_folder + " for both ocl and mpi results!")
+
+
                             success_density_coefficients = False
                             if os.path.exists("mpi-results/density-coefficients.txt"):
                                 success_density_coefficients = filecmp.cmp("ocl-results/density-coefficients.txt",
                                                         "mpi-results/density-coefficients.txt", False)
+                                if not success_density_coefficients:
+                                    id = 0
+                                    error_folder = "coefficient_error_" + mpi_config_name + "-" + str(id)
+                                    while os.path.exists(error_folder):
+                                        id = id + 1
+                                        error_folder = "coefficient_error_" + mpi_config_name + "-" + str(id)
+                                    subprocess.run(["mkdir", error_folder])
+                                    subprocess.run(["cp", "ocl-results/density-coefficients.txt",
+                                                    error_folder + "/ocl-density-coefficients.txt"])
+                                    subprocess.run(["cp", "mpi-results/density-coefficients.txt",
+                                                    error_folder + "/mpi-density-coefficients.txt"])
+                                    print("coefficients check failed! Check folder " +
+                                          error_folder + " for both ocl and mpi results!")
                             success_pruned_knn = False
                             if os.path.exists("mpi-results/pruned-knn.txt"):
                                 success_pruned_knn = filecmp.cmp("ocl-results/pruned-knn.txt",
                                                         "mpi-results/pruned-knn.txt", False)
+                                if not success_pruned_knn:
+                                    id = 0
+                                    error_folder = "knn_error_" + mpi_config_name + "-" + str(id)
+                                    while os.path.exists(error_folder):
+                                        id = id + 1
+                                        error_folder = "knn_error_" + mpi_config_name + "-" + str(id)
+                                    subprocess.run(["mkdir", error_folder])
+                                    subprocess.run(["cp", "ocl-results/pruned-knn.txt",
+                                                    error_folder + "/ocl-pruned-knn.txt"])
+                                    subprocess.run(["cp", "mpi-results/pruned-knn.txt",
+                                                    error_folder + "/mpi-pruned-knn.txt"])
+                                    print("pruned knn check failed! Check folder " + error_folder + " for both ocl and mpi results!")
                             if percent >= 99.0:
                                 print("SUCCESS, %3.3f"% percent, "%,", " %3.3fs"% duration, "\t, MPI, ", dim, ",",
                                       size, ",", level, ",", success_rhs, ",",
