@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -33,27 +34,24 @@
 #include "TestAccuracy.hpp"
 
 double testAccuracy(const std::vector<int> correct,
-                    const std::vector<int> result,
-                    const std::vector<int> result_count, const int size,
+                    const std::vector<int> result, const int size,
                     const int k) {
   std::cout << "size: " << size << std::endl;
   int count = 0;
   int total = 0;
   for (int s = 0; s < size; s += 1) {
     for (int c = 0; c < k; c += 1) {
-      for (int r = 0; r < result_count[s]; r += 1) {
-        if (correct[s * k + c] < 0) {
-          continue;
-        }
-        if (result[s * k + r] < 0) {
-          continue;
-        }
+      for (int r = 0; r < k; r += 1) {
+        // if (correct[s * k + c] < 0 && result[s * k + r] < 0) {
+        //   total += 1;
+        //   continue;
+        // }
         if (correct[s * k + c] == result[s * k + r]) {
           count += 1;
           break;
         }
-        total += 1;
       }
+      total += 1;
     }
   }
   std::cout << "count: " << count << std::endl;
@@ -63,16 +61,15 @@ double testAccuracy(const std::vector<int> correct,
 
 double testDistanceAccuracy(const std::vector<double> data,
                             const std::vector<int> correct,
-                            const std::vector<int> result,
-                            const std::vector<int> result_count, const int size,
+                            const std::vector<int> result, const int size,
                             const int dim, const int k) {
   double dist_sum_correct = 0.0;
   double dist_sum_lsh = 0.0;
   for (int i = 0; i < size; ++i) {
     for (int j = 0; j < k; ++j) {
-      if (correct[k * i + j] < 0) {
-        continue;
-      }
+      // if (correct[k * i + j] < 0) {
+      //   continue;
+      // }
 
       double dist_correct = 0.0;
       for (int d = 0; d < dim; ++d) {
@@ -82,10 +79,10 @@ double testDistanceAccuracy(const std::vector<double> data,
       }
       dist_sum_correct += sqrt(dist_correct);
     }
-    for (int j = 0; j < result_count[i]; ++j) {
-      if (result[k * i + j] < 0) {
-        continue;
-      }
+    for (int j = 0; j < k; ++j) {
+      // if (result[k * i + j] < 0) {
+      //   continue;
+      // }
       double dist_lsh = 0.0;
       for (int d = 0; d < dim; ++d) {
         dist_lsh += (data[size * d + i] - data[size * d + result[k * i + j]]) *
@@ -94,7 +91,19 @@ double testDistanceAccuracy(const std::vector<double> data,
       dist_sum_lsh += sqrt(dist_lsh);
     }
   }
-  return std::abs((dist_sum_lsh / dist_sum_correct) * 100 - 100);
+  return 1.0 - std::abs(dist_sum_lsh / dist_sum_correct);
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+  std::stringstream ss(s);
+  std::string item;
+  std::vector<std::string> r;
+
+  while (std::getline(ss, item, delim)) {
+    r.push_back(item);
+  }
+
+  return r;
 }
 
 using namespace sgpp;
@@ -116,11 +125,16 @@ int main(int argc, char **argv) {
   bool record_timings;
   std::string scenario_name;
 
+  std::string compare_knn_csv_file_name;
+
   size_t refinement_steps;
   size_t refinement_points;
   size_t coarsening_points;
   double coarsening_threshold;
   bool use_lsh;
+  uint64_t lsh_tables;
+  uint64_t lsh_hashes;
+  double lsh_w;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -143,56 +157,66 @@ int main(int argc, char **argv) {
       "specifies number of neighbors for kNN algorithm")(
       "threshold",
       boost::program_options::value<double>(&threshold)->default_value(0.0),
-      "threshold for sparse grid function for removing edges")
-      // (
-      //   "write_graphs",
-      //   boost::program_options::value<std::string>(&scenario_name),
-      //   "output the clustering steps into files")
-      ("refinement_steps",
-       boost::program_options::value<uint64_t>(&refinement_steps)
-           ->default_value(0),
-       "number of refinment steps for density estimation")(
-          "refinement_points",
-          boost::program_options::value<uint64_t>(&refinement_points)
-              ->default_value(0),
-          "number of points to refinement during density estimation")(
-          "coarsen_points",
-          boost::program_options::value<uint64_t>(&coarsening_points)
-              ->default_value(0),
-          "number of points to coarsen during density estimation")(
-          "coarsen_threshold",
-          boost::program_options::value<double>(&coarsening_threshold)
-              ->default_value(1000.0),
-          "for density estimation, only surpluses below threshold are "
-          "coarsened")(
-          "use_lsh_knn",
-          boost::program_options::value<bool>(&use_lsh)->default_value(false),
-          "use O(n) lsh for knn instead of default naive O(n^2) algorithm")(
-          "write_knn_graph",
-          boost::program_options::value<bool>(&write_knn_graph)
-              ->default_value(false),
-          "write the knn graph calculated to a csv-file")(
-          "write_pruned_knn_graph",
-          boost::program_options::value<bool>(&write_pruned_knn_graph)
-              ->default_value(false),
-          "write the pruned knn graph calculated to a csv-file")(
-          "write_cluster_map",
-          boost::program_options::value<bool>(&write_cluster_map)
-              ->default_value(false),
-          "write mapped clusters to a csv-file")(
-          "write_density_grid",
-          boost::program_options::value<bool>(&write_density_grid)
-              ->default_value(false),
-          "write the coordinates, levels and indices to a csv-file")(
-          "write_evaluated_density_full_grid",
-          boost::program_options::value<bool>(
-              &write_evaluated_density_full_grid)
-              ->default_value(false),
-          "evaluate density function on full grid and write result to a "
-          "csv-file")("record_timings",
-                      boost::program_options::value<bool>(&record_timings)
-                          ->default_value(false),
-                      "write runtime performance measurements to a csv-file");
+      "threshold for sparse grid function for removing edges")(
+      "scenario_name",
+      boost::program_options::value<std::string>(&scenario_name),
+      "name for the current run, used when files are written")(
+      "refinement_steps",
+      boost::program_options::value<uint64_t>(&refinement_steps)
+          ->default_value(0),
+      "number of refinment steps for density estimation")(
+      "refinement_points",
+      boost::program_options::value<uint64_t>(&refinement_points)
+          ->default_value(0),
+      "number of points to refinement during density estimation")(
+      "coarsen_points",
+      boost::program_options::value<uint64_t>(&coarsening_points)
+          ->default_value(0),
+      "number of points to coarsen during density estimation")(
+      "coarsen_threshold",
+      boost::program_options::value<double>(&coarsening_threshold)
+          ->default_value(1000.0),
+      "for density estimation, only surpluses below threshold are "
+      "coarsened")(
+      "use_lsh_knn",
+      boost::program_options::value<bool>(&use_lsh)->default_value(false),
+      "use O(n) lsh for knn instead of default naive O(n^2) algorithm")(
+      "lsh_tables",
+      boost::program_options::value<uint64_t>(&lsh_tables)->default_value(10),
+      "number of hash tables for lsh knn")(
+      "lsh_hashes",
+      boost::program_options::value<uint64_t>(&lsh_hashes)->default_value(10),
+      "number of hash functions used by lsh knn")(
+      "lsh_w",
+      boost::program_options::value<double>(&lsh_w)->default_value(1.0),
+      "number of segments for hash functions used by lsh knn")(
+      "write_knn_graph",
+      boost::program_options::value<bool>(&write_knn_graph)
+          ->default_value(false),
+      "write the knn graph calculated to a csv-file")(
+      "write_pruned_knn_graph",
+      boost::program_options::value<bool>(&write_pruned_knn_graph)
+          ->default_value(false),
+      "write the pruned knn graph calculated to a csv-file")(
+      "write_cluster_map",
+      boost::program_options::value<bool>(&write_cluster_map)
+          ->default_value(false),
+      "write mapped clusters to a csv-file")(
+      "write_density_grid",
+      boost::program_options::value<bool>(&write_density_grid)
+          ->default_value(false),
+      "write the coordinates, levels and indices to a csv-file")(
+      "write_evaluated_density_full_grid",
+      boost::program_options::value<bool>(&write_evaluated_density_full_grid)
+          ->default_value(false),
+      "evaluate density function on full grid and write result to a "
+      "csv-file")("record_timings",
+                  boost::program_options::value<bool>(&record_timings)
+                      ->default_value(false),
+                  "write runtime performance measurements to a csv-file")(
+      "compare_knn_csv_file_name",
+      boost::program_options::value<std::string>(&compare_knn_csv_file_name),
+      "compare the knn results to a reference solution");
 
   boost::program_options::variables_map variables_map;
 
@@ -702,13 +726,31 @@ int main(int argc, char **argv) {
         out_graph.close();
       }
     } else {
+			trainingData.transpose();
+
       std::cout << "using O(n) lsh knn algorithm (fast)" << std::endl;
-      std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_lsh(
-          trainingData, trainingData.getNrows(), dimension, 10, 50, 1.0));
+      std::cout << "dimension: " << dimension << std::endl;
+      std::cout << "lsh_tables: " << lsh_tables << std::endl;
+      std::cout << "lsh_hashes: " << lsh_hashes << std::endl;
+      std::cout << "lsh_w: " << lsh_w << std::endl;
+      for (size_t i = 0; i < 10; i++) {
+        for (size_t d = 0; d < dimension; d++) {
+          if (d > 0)
+            std::cout << ", ";
+          std::cout << trainingData[i * dimension + d];
+        }
+        std::cout << std::endl;
+      }
+
+      std::unique_ptr<lshknn::KNN> lsh(
+          lshknn::create_knn_lsh(trainingData, trainingData.getNcols(),
+                                 dimension, lsh_tables, lsh_hashes, lsh_w));
+      // std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_naive_cpu(
+      //     trainingData, trainingData.getNrows(), dimension));
 
       std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
           std::chrono::system_clock::now();
-      std::vector<int> graph_knn_lsh = lsh->kNearestNeighbors(k);
+      graph = lsh->kNearestNeighbors(k);
       std::chrono::time_point<std::chrono::system_clock> timer_lsh_stop =
           std::chrono::system_clock::now();
       double lsh_duration =
@@ -729,7 +771,7 @@ int main(int argc, char **argv) {
         for (size_t i = 0; i < trainingData.getNrows(); ++i) {
           bool first = true;
           for (size_t j = 0; j < k; ++j) {
-            if (graph_knn_lsh[i * k + j] == -1) {
+            if (graph[i * k + j] == -1) {
               continue;
             }
             if (!first) {
@@ -737,18 +779,58 @@ int main(int argc, char **argv) {
             } else {
               first = false;
             }
-            out_graph << graph_knn_lsh[i * k + j];
+            out_graph << graph[i * k + j];
           }
           out_graph << std::endl;
         }
         out_graph.close();
       }
-      std::vector<int> result_count =
-          lshknn::createDummyResultCount(trainingData.getNrows(), k);
-      double acc_assigned = testAccuracy(graph_knn_lsh, graph, result_count,
-                                         trainingData.getNrows(), k);
+
+      // std::vector<int> result_count =
+      //     lshknn::createDummyResultCount(trainingData.getNrows(), k);
+      // double acc_assigned = testAccuracy(graph_knn_lsh, graph, result_count,
+      //                                    trainingData.getNrows(), k);
+      // double acc_distance =
+      //     testDistanceAccuracy(trainingData, graph_knn_lsh, graph,
+      //     result_count,
+      //                          trainingData.getNrows(), dimension, k);
+      // std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
+      // std::cout << "knn distance error: " << acc_distance << std::endl;
+			trainingData.transpose();
+    }
+    if (variables_map.count("compare_knn_csv_file_name") > 0) {
+      std::vector<int> neighbors_reference;
+      std::ifstream compare_csv_file(compare_knn_csv_file_name,
+                                     std::ifstream::in);
+      std::string line;
+      while (compare_csv_file.good()) {
+        std::getline(compare_csv_file, line);
+        // std::cout << "line: " << line << std::endl;
+        std::vector<std::string> splitted = split(line, ',');
+        for (size_t i = 0; i < splitted.size(); i++) {
+          std::stringstream ss;
+          ss << splitted[i];
+          int value;
+          ss >> value;
+          // std::cout << "value int: " << value <<  std::endl;
+          neighbors_reference.push_back(value);
+        }
+      }
+      // for (size_t i = 0; i < neighbors_reference.size() / 5; i++) {
+      //   for (size_t j = 0; j < 5; j++) {
+      //     if (j > 0)
+      //       std::cout << ", ";
+      //     std::cout << neighbors_reference[i * 5 + j];
+      //   }
+      //   std::cout << std::endl;
+      // }
+
+      // std::vector<int> result_count =
+      //     lshknn::createDummyResultCount(trainingData.getNrows(), k);
+      double acc_assigned =
+          testAccuracy(neighbors_reference, graph, trainingData.getNrows(), k);
       double acc_distance =
-          testDistanceAccuracy(trainingData, graph_knn_lsh, graph, result_count,
+          testDistanceAccuracy(trainingData, neighbors_reference, graph,
                                trainingData.getNrows(), dimension, k);
       std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
       std::cout << "knn distance error: " << acc_distance << std::endl;
