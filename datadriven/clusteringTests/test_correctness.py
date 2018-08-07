@@ -235,6 +235,7 @@ if __name__ == '__main__':
                                     id = 0
                                     error_folder = "rhs_error_" + mpi_config_name + "-" + str(id)
                                     while os.path.exists(error_folder):
+                                        id = id + 1
                                         error_folder = "rhs_error_" + mpi_config_name + "-" + str(id)
                                     subprocess.run(["mkdir", error_folder])
                                     subprocess.run(["cp", "ocl-results/rhs.txt",
