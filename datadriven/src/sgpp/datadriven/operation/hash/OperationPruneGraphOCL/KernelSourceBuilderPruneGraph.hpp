@@ -184,7 +184,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[0] << "for (size_t cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
                    << std::endl;
       sourceStream << this->indent[1] << "int neighbor_index;" << std::endl;
-      sourceStream << this->indent[1] << "if (global_index < chunksize) {" << std::endl;
+      sourceStream << this->indent[1] << "if (get_global_id(0) < chunksize) {" << std::endl;
       sourceStream << this->indent[2] << "neighbor_index = nodes[get_global_id(0) * " << k
                    << " + cur_k];" << std::endl;
       sourceStream << this->indent[1] << "} else {" << std::endl;
@@ -275,7 +275,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl << std::endl;
 
-      sourceStream << this->indent[0] << "if (global_index < chunksize) {" << std::endl;
+      sourceStream << this->indent[0] << "if (get_global_id(0) < chunksize) {" << std::endl;
       sourceStream << this->indent[0] << "// point itself below density?" << std::endl;
       if (threshold > 0.0)
         sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
