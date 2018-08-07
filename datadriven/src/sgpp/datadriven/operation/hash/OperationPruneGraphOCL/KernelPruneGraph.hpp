@@ -145,7 +145,17 @@ class KernelPruneGraph {
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernel, 4, sizeof(cl_uint), &startid);
+    err = clSetKernelArg(this->kernel, 4, sizeof(cl_ulong), &startid);
+    if (err != CL_SUCCESS) {
+      std::stringstream errorString;
+      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+      throw base::operation_exception(errorString.str());
+    }
+    if (chunksize > 0) {
+      err = clSetKernelArg(this->kernel, 5, sizeof(cl_ulong), &chunksize);
+    } else {
+      err = clSetKernelArg(this->kernel, 5, sizeof(cl_ulong), &dataSize);
+    }
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;

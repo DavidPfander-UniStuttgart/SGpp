@@ -163,7 +163,7 @@ class KernelCreateGraph {
     clTiming = nullptr;
 
     if (verbose) {
-      std::cout << "Starting the kernel for " << padded_data_size << " items" << std::endl;
+      std::cout << "Starting the kernel for " << globalworkrange[0] << " items" << std::endl;
     }
     err = clEnqueueNDRangeKernel(device->commandQueue, this->kernel, 1, 0, globalworkrange,
                                  &localSize, 0, nullptr, &clTiming);
