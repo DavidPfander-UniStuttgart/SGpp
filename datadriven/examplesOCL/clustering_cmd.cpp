@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "KNNFactory.hpp"
 #include "sgpp/base/datatypes/DataVector.hpp"
 #include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/base/grid/GridStorage.hpp"
@@ -25,13 +26,11 @@
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/OperationDensityMultiplicationAVX/OperationDensityMultiplicationAVX.hpp"
 #include "sgpp/datadriven/operation/hash/OperationDensityOCLMultiPlatform/OpFactory.hpp"
+#include "sgpp/datadriven/operation/hash/OperationNearestNeighborSampled/OperationNearestNeighborSampled.hpp"
 #include "sgpp/datadriven/operation/hash/OperationPruneGraphOCL/OpFactory.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 #include "sgpp/solver/sle/ConjugateGradients.hpp"
-
-#include "KNNFactory.hpp"
-#include "TestAccuracy.hpp"
 
 double testAccuracy(const std::vector<int> correct,
                     const std::vector<int> result, const int size,
@@ -726,7 +725,7 @@ int main(int argc, char **argv) {
         out_graph.close();
       }
     } else {
-			trainingData.transpose();
+      trainingData.transpose();
 
       std::cout << "using O(n) lsh knn algorithm (fast)" << std::endl;
       std::cout << "dimension: " << dimension << std::endl;
@@ -796,7 +795,7 @@ int main(int argc, char **argv) {
       //                          trainingData.getNrows(), dimension, k);
       // std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
       // std::cout << "knn distance error: " << acc_distance << std::endl;
-			trainingData.transpose();
+      trainingData.transpose();
     }
     if (variables_map.count("compare_knn_csv_file_name") > 0) {
       std::vector<int> neighbors_reference;

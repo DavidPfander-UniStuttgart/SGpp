@@ -118,8 +118,9 @@ abweichung = 0.12
 clusters_distance = 3 # required distance between cluster centers, criterion dis < c_dis * abw
 noise_percent = 0.18
 # for dim in range(2, 11, 2):
-for dim in range(2, 3, 2):
-    for dataset_size in [200]:
+for dim in range(10, 11, 2):
+    # for dataset_size in [1E7, 1E8, 1E9]:
+    for dataset_size in [int(1E7)]:
     # for dataset_size in chain([200], range(20000, 110000, 20000), range(200000, 1100000, 200000)):
       file_name = "datasets/gaussian_c" + str(clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
       print "creating " + file_name + ".arff"
