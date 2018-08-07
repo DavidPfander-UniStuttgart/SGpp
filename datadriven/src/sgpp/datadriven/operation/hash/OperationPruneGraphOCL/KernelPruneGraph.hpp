@@ -56,6 +56,7 @@ class KernelPruneGraph {
   json::Node &kernelConfiguration;
 
   bool verbose;
+  bool uselocal;
 
   size_t localSize;
   size_t dataSize;
@@ -84,6 +85,7 @@ class KernelPruneGraph {
     gridSize = pointsVector.size() / (2 * dims);
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    uselocal = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
 
     devicePoints.intializeTo(pointsVector, 1, 0, gridSize * dims * 2);
     deviceAlpha.intializeTo(alphaVector, 1, 0, gridSize);
@@ -167,15 +169,19 @@ class KernelPruneGraph {
     // enqueue kernel
     if (verbose) std::cout << "Starting the kernel" << std::endl;
     size_t globalworkrange;
-    size_t local_padding;
+    size_t local_padding = 0;
     if (chunksize == 0) {
       globalworkrange = graph.size() / k;
-      local_padding = localSize - (globalworkrange % localSize);
-      globalworkrange += local_padding;
+      if (uselocal) {
+        local_padding = localSize - (globalworkrange % localSize);
+        globalworkrange += local_padding;
+      }
     } else {
       globalworkrange = chunksize;
-      local_padding = localSize - (globalworkrange % localSize);
-      globalworkrange += local_padding;
+      if (uselocal) {
+        local_padding = localSize - (globalworkrange % localSize);
+        globalworkrange += local_padding;
+      }
     }
 
     if (verbose) {
