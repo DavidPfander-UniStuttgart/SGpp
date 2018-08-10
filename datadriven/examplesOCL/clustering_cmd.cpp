@@ -130,10 +130,13 @@ int main(int argc, char **argv) {
   size_t refinement_points;
   size_t coarsening_points;
   double coarsening_threshold;
-  bool use_lsh;
+  std::string knn_algorithm;
   uint64_t lsh_tables;
   uint64_t lsh_hashes;
   double lsh_w;
+
+  uint64_t sampling_chunk_size;
+  uint64_t sampling_chunk_count;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -176,18 +179,18 @@ int main(int argc, char **argv) {
       boost::program_options::value<double>(&coarsening_threshold)
           ->default_value(1000.0),
       "for density estimation, only surpluses below threshold are "
-      "coarsened")(
-      "use_lsh_knn",
-      boost::program_options::value<bool>(&use_lsh)->default_value(false),
-      "use O(n) lsh for knn instead of default naive O(n^2) algorithm")(
+      "coarsened")("knn_algorithm",
+                   boost::program_options::value<std::string>(&knn_algorithm)
+                       ->default_value("lsh"),
+                   "type of kNN algorithm used, either 'lsh' or 'naive'")(
       "lsh_tables",
-      boost::program_options::value<uint64_t>(&lsh_tables)->default_value(10),
+      boost::program_options::value<uint64_t>(&lsh_tables)->default_value(50),
       "number of hash tables for lsh knn")(
       "lsh_hashes",
-      boost::program_options::value<uint64_t>(&lsh_hashes)->default_value(10),
+      boost::program_options::value<uint64_t>(&lsh_hashes)->default_value(15),
       "number of hash functions used by lsh knn")(
       "lsh_w",
-      boost::program_options::value<double>(&lsh_w)->default_value(1.0),
+      boost::program_options::value<double>(&lsh_w)->default_value(1.5),
       "number of segments for hash functions used by lsh knn")(
       "write_knn_graph",
       boost::program_options::value<bool>(&write_knn_graph)
@@ -215,7 +218,15 @@ int main(int argc, char **argv) {
                   "write runtime performance measurements to a csv-file")(
       "compare_knn_csv_file_name",
       boost::program_options::value<std::string>(&compare_knn_csv_file_name),
-      "compare the knn results to a reference solution");
+      "compare the knn results to a reference solution")(
+      "sampling_chunk_size",
+      boost::program_options::value<uint64_t>(&sampling_chunk_size)
+          ->default_value(0),
+      "size of the chunk for sampling of dataset for knn")(
+      "sampling_chunk_count",
+      boost::program_options::value<uint64_t>(&sampling_chunk_count)
+          ->default_value(1),
+      "number of chunks for sampling of dataset for knn");
 
   boost::program_options::variables_map variables_map;
 
@@ -289,6 +300,18 @@ int main(int argc, char **argv) {
     return 1;
   } else {
     std::cout << "threshold: " << threshold << std::endl;
+  }
+
+  if (knn_algorithm.compare("lsh") == 0) {
+    std::cout << "using lsh knn" << std::endl;
+  } else if (knn_algorithm.compare("naive") == 0) {
+    std::cout << "using naive multicore knn" << std::endl;
+  } else if (knn_algorithm.compare("ocl") == 0) {
+    std::cout << "using naive ocl knn" << std::endl;
+  } else {
+    std::cerr << "error: option \"knn_algorithm\" only supports 'lsh', 'ocl' "
+                 "and 'naive'"
+              << std::endl;
   }
 
   std::ofstream result_timings;
@@ -675,19 +698,28 @@ int main(int argc, char **argv) {
     out_density.close();
   }
 
-  std::vector<int> graph(trainingData.getNrows() * k, -1);
+  std::vector<int> graph;
+
+  if (sampling_chunk_size == 0) {
+    sampling_chunk_size = trainingData.getNrows();
+  }
+
+  sgpp::datadriven::OperationNearestNeighborSampled knn_op(trainingData,
+                                                           dimension, true);
+
   {
     std::cout << "Starting graph creation..." << std::endl;
-    if (!use_lsh) {
-      std::cout << "using default O(n^2) knn algorithm (slow)" << std::endl;
-      auto operation_graph = std::unique_ptr<
-          sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL>(
-          sgpp::datadriven::createNearestNeighborGraphConfigured(
-              trainingData, k, dimension, configFileName));
 
-      operation_graph->create_graph(graph);
+    if (knn_algorithm.compare("lsh") == 0) {
+      graph = knn_op.knn_lsh(k, lsh_tables, lsh_hashes, lsh_w);
+      double lsh_duration = knn_op.get_last_duration();
 
-      double last_duration_create_graph = operation_graph->getLastDuration();
+      std::cout << "lsh_duration: " << lsh_duration << "s" << std::endl;
+
+      result_timings << lsh_duration << "; 0.0;";
+    } else if (knn_algorithm.compare("ocl") == 0) {
+      graph = knn_op.knn_ocl(k, configFileName);
+      double last_duration_create_graph = knn_op.get_last_duration();
       std::cout << "last_duration_create_graph: " << last_duration_create_graph
                 << "s" << std::endl;
 
@@ -703,134 +735,29 @@ int main(int argc, char **argv) {
 
       result_timings << last_duration_create_graph << "; " << flops_create_graph
                      << "; ";
+    } else if (knn_algorithm.compare("naive") == 0) {
+      graph = knn_op.knn_naive(k);
+      double naive_duration = knn_op.get_last_duration();
 
-      if (write_knn_graph) {
-        std::ofstream out_graph(std::string("results/") + scenario_name +
-                                "_graph_naive.csv");
-        for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-          bool first = true;
-          for (size_t j = 0; j < k; ++j) {
-            if (graph[i * k + j] == -1) {
-              continue;
-            }
-            if (!first) {
-              out_graph << ", ";
-            } else {
-              first = false;
-            }
-            out_graph << graph[i * k + j];
-          }
-          out_graph << std::endl;
-        }
-        out_graph.close();
-      }
-    } else {
-      trainingData.transpose();
+      std::cout << "naive_duration: " << naive_duration << "s" << std::endl;
 
-      std::cout << "using O(n) lsh knn algorithm (fast)" << std::endl;
-      std::cout << "dimension: " << dimension << std::endl;
-      std::cout << "lsh_tables: " << lsh_tables << std::endl;
-      std::cout << "lsh_hashes: " << lsh_hashes << std::endl;
-      std::cout << "lsh_w: " << lsh_w << std::endl;
-      for (size_t i = 0; i < 10; i++) {
-        for (size_t d = 0; d < dimension; d++) {
-          if (d > 0)
-            std::cout << ", ";
-          std::cout << trainingData[i * dimension + d];
-        }
-        std::cout << std::endl;
-      }
-
-      std::unique_ptr<lshknn::KNN> lsh(
-          lshknn::create_knn_lsh(trainingData, trainingData.getNcols(),
-                                 dimension, lsh_tables, lsh_hashes, lsh_w));
-      // std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_naive_cpu(
-      //     trainingData, trainingData.getNrows(), dimension));
-
-      std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
-          std::chrono::system_clock::now();
-      graph = lsh->kNearestNeighbors(k);
-      std::chrono::time_point<std::chrono::system_clock> timer_lsh_stop =
-          std::chrono::system_clock::now();
-      double lsh_duration =
-          std::chrono::duration<double>(timer_lsh_stop - timer_lsh_start)
-              .count();
-
-      std::cout << "lsh_duration: " << lsh_duration << "s" << std::endl;
-
-      result_timings << lsh_duration << "; 0.0;";
-
-      // std::unique_ptr<lshknn::KNN>
-      // knn_naive_cpu(lshknn::create_knn_naive_cpu(
-      //     trainingData, trainingData.getNrows(), dimension));
-      // std::vector<int> graph_knn_lsh = knn_naive_cpu->kNearestNeighbors(k);
-      if (write_knn_graph) {
-        std::ofstream out_graph(std::string("results/") + scenario_name +
-                                "_graph_lsh.csv");
-        for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-          bool first = true;
-          for (size_t j = 0; j < k; ++j) {
-            if (graph[i * k + j] == -1) {
-              continue;
-            }
-            if (!first) {
-              out_graph << ", ";
-            } else {
-              first = false;
-            }
-            out_graph << graph[i * k + j];
-          }
-          out_graph << std::endl;
-        }
-        out_graph.close();
-      }
-
-      // std::vector<int> result_count =
-      //     lshknn::createDummyResultCount(trainingData.getNrows(), k);
-      // double acc_assigned = testAccuracy(graph_knn_lsh, graph, result_count,
-      //                                    trainingData.getNrows(), k);
-      // double acc_distance =
-      //     testDistanceAccuracy(trainingData, graph_knn_lsh, graph,
-      //     result_count,
-      //                          trainingData.getNrows(), dimension, k);
-      // std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
-      // std::cout << "knn distance error: " << acc_distance << std::endl;
-      trainingData.transpose();
+      result_timings << naive_duration << "; 0.0;";
     }
-    if (variables_map.count("compare_knn_csv_file_name") > 0) {
-      std::vector<int> neighbors_reference;
-      std::ifstream compare_csv_file(compare_knn_csv_file_name,
-                                     std::ifstream::in);
-      std::string line;
-      while (compare_csv_file.good()) {
-        std::getline(compare_csv_file, line);
-        // std::cout << "line: " << line << std::endl;
-        std::vector<std::string> splitted = split(line, ',');
-        for (size_t i = 0; i < splitted.size(); i++) {
-          std::stringstream ss;
-          ss << splitted[i];
-          int value;
-          ss >> value;
-          // std::cout << "value int: " << value <<  std::endl;
-          neighbors_reference.push_back(value);
-        }
-      }
-      // for (size_t i = 0; i < neighbors_reference.size() / 5; i++) {
-      //   for (size_t j = 0; j < 5; j++) {
-      //     if (j > 0)
-      //       std::cout << ", ";
-      //     std::cout << neighbors_reference[i * 5 + j];
-      //   }
-      //   std::cout << std::endl;
-      // }
 
-      // std::vector<int> result_count =
-      //     lshknn::createDummyResultCount(trainingData.getNrows(), k);
-      double acc_assigned =
-          testAccuracy(neighbors_reference, graph, trainingData.getNrows(), k);
-      double acc_distance =
-          testDistanceAccuracy(trainingData, neighbors_reference, graph,
-                               trainingData.getNrows(), dimension, k);
+    if (write_knn_graph) {
+      knn_op.write_graph_file(std::string("results/") + scenario_name +
+                                  "_graph_naive.csv",
+                              graph, k);
+    }
+
+    if (variables_map.count("compare_knn_csv_file_name") > 0) {
+      std::vector<int> neighbors_reference =
+          knn_op.read_csv(compare_knn_csv_file_name);
+      double acc_assigned = knn_op.test_accuracy(neighbors_reference, graph,
+                                                 trainingData.getNrows(), k);
+      double acc_distance = knn_op.test_distance_accuracy(
+          trainingData, neighbors_reference, graph, trainingData.getNrows(),
+          dimension, k);
       std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
       std::cout << "knn distance error: " << acc_distance << std::endl;
     }
@@ -864,24 +791,9 @@ int main(int argc, char **argv) {
                    << "; ";
 
     if (write_pruned_knn_graph) {
-      std::ofstream out_graph(std::string("results/") + scenario_name +
-                              "_graph_pruned.csv");
-      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-        bool first = true;
-        for (size_t j = 0; j < k; ++j) {
-          if (graph[i * k + j] == -1 || graph[i * k + j] == -2) {
-            continue;
-          }
-          if (!first) {
-            out_graph << ", ";
-          } else {
-            first = false;
-          }
-          out_graph << graph[i * k + j];
-        }
-        out_graph << std::endl;
-      }
-      out_graph.close();
+      knn_op.write_graph_file(std::string("results/") + scenario_name +
+                                  "_graph_pruned.csv",
+                              graph, k);
     }
   }
 

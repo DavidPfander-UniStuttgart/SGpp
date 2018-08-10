@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-
+import matplotlib
+matplotlib.use('Agg')
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.rc('text', usetex=True)
+# plt.rc('text', usetex=True)
 font = {'family' : 'Times',
         'weight' : 'normal',
         'size'   : 8}
@@ -19,6 +20,8 @@ requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument('--eval_grid_level', type=int, required=True)
 requiredNamed.add_argument('--scenario_name', required=True)
 requiredNamed.add_argument('--dataset_name', required=True)
+requiredNamed.add_argument('--knn_algorithm', required=True) # 'lsh' or 'naive'
+
 parser.add_argument('--use_unpruned_graph', default=False, action='store_true')
 parser.add_argument('--dont_display_grid', default=False, action='store_true')
 parser.add_argument('--dont_display_knn', default=False, action='store_true')
@@ -41,7 +44,7 @@ X_dataset = [float(row[0]) for row in content]
 Y_dataset = [float(row[1]) for row in content]
 
 # read-in grid points
-f = open("results/" + args.scenario_name + "_grid.csv", 'r')
+f = open("results/" + args.scenario_name + "_grid_coord.csv", 'r')
 reader = csv.reader(f)
 content = [] # [row for row in reader]
 for c in reader:
@@ -92,7 +95,7 @@ for r in range(eval_dim_grid_points):
 
 
 # read-in dataset
-f = open("results/" + args.scenario_name + "_graph.csv", 'r')
+f = open("results/" + args.scenario_name + "_graph_" + args.knn_algorithm + ".csv", 'r')
 reader = csv.reader(f)
 neighborhood_list = [[int(i) for i in row] for row in reader]
 # print(neighborhood_list)
@@ -104,7 +107,7 @@ for l_index in range(len(neighborhood_list)):
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         graph_edges += [line]
-graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['xkcd:black'], linestyle='solid')
+graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['k'], linestyle='solid') # 'xkcd:black'
 
 # read-in pruned dataset
 f = open("results/" + args.scenario_name + "_graph_pruned.csv", 'r')
@@ -118,7 +121,7 @@ for l_index in range(len(pruned_neighborhood_list)):
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
         pruned_graph_edges += [line]
-pruned_graph_edges_collection = LineCollection(pruned_graph_edges, linewidths=(1), colors = ['xkcd:black'], linestyle='solid')
+pruned_graph_edges_collection = LineCollection(pruned_graph_edges, linewidths=(1), colors = ['k'], linestyle='solid')
 
 # colors
 colors = ["r", "r", "r"]
@@ -141,10 +144,10 @@ ax.set_xlim(0.0, 1.0)
 ax.set_ylim(0.0, 1.0)
 
 if not args.dont_display_grid:
-    ax.scatter(X_grid, Y_grid, c='xkcd:black', zorder=3, s=marker_size)
+    ax.scatter(X_grid, Y_grid, c='k', zorder=3, s=marker_size)
 
 if not args.dont_display_data:
-    ax.scatter(X_dataset, Y_dataset, c='xkcd:red', zorder=3, s=marker_size)
+    ax.scatter(X_dataset, Y_dataset, c='r', zorder=3, s=marker_size)
 
 if not args.dont_display_density:
     cs = ax.contourf(X_density_grid, Y_density_grid, DensityValues, zorder=1,cmap=plt.cm.jet) #, zorder=2

@@ -286,9 +286,7 @@ def checkZlib(config):
 
 def checkLSHGPU(config):
     config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
-    print config.env["LSHKNN_INCLUDE_PATH"]
     config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
-    print config.env["LSHKNN_LIBRARY_PATH"]
     # for high-performance clustering
     # if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
     if not config.CheckLib("lshknn", language="C++",autoadd=0):
