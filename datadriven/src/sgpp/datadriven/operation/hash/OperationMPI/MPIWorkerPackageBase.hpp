@@ -88,6 +88,13 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
             found_device = true;
           }
           if (deviceName == chosen_device_name) {
+            if (deviceNode.contains("COUNT")) {
+              std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
+                        << " is going to delete COUNT entry for " << deviceName
+                        << " and will insert its own SELECT entry with the"
+                        << "value given in the MPI config!" << std::endl;
+              deviceNode.removeAttribute("COUNT");
+            }
             if (deviceNode.contains("SELECT")) {
               std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
                         << " is going to overwrite SELECT entry for "
@@ -173,6 +180,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       size = 2048;
     if (MPIEnviroment::get_configuration().contains("REDISTRIBUTE"))
       redistribute = MPIEnviroment::get_configuration()["REDISTRIBUTE"].getBool();
+    redistribute = true;
     if (MPIEnviroment::get_configuration().contains("PREFETCHING"))
       prefetching = MPIEnviroment::get_configuration()["PREFETCHING"].getBool();
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_NAME"))

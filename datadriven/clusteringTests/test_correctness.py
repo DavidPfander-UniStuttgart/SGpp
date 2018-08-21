@@ -198,8 +198,9 @@ if __name__ == '__main__':
                                 continue
                             mpiconf_arg = "--MPIconfig=" + args.mpi_config_folder + mpi_config_name
                             print("Starting test with MPI conf ", mpiconf_arg, "...")
-                            number_mpi_processes = "-n=" + str(get_number_mpi_nodes(\
+                            number_mpi_processes = "-n " + str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name))
+                            print(number_mpi_processes)
                             if os.path.exists("mpi-results/raw-clusters.txt"):
                                 subprocess.run(["rm", "mpi-results/raw-clusters.txt"])
                             if os.path.exists("mpi-results/rhs.txt"):
@@ -209,7 +210,10 @@ if __name__ == '__main__':
                             if os.path.exists("mpi-results/pruned-knn.txt"):
                                 subprocess.run(["rm", "mpi-results/pruned-knn.txt"])
                             start = time.time()
-                            subprocess.run(["mpirun", number_mpi_processes, "../examplesMPI/mpi_examples",
+                            subprocess.run(["mpirun", "-n", str(get_number_mpi_nodes(\
+                                                   args.mpi_config_folder + mpi_config_name)),
+                                            "--oversubscribe",
+                                            "../examplesMPI/mpi_examples",
                                             dataset_arg, mpiconf_arg,
                                             oclconf_arg, level_arg, "--epsilon=0.001", "--lambda=0.000001",
                                             "--cluster_file=mpi-results/raw-clusters.txt",
@@ -217,7 +221,7 @@ if __name__ == '__main__':
                                             "--rhs_erg_file=mpi-results/rhs.txt",
                                             "--density_coefficients_file=mpi-results/density-coefficients.txt",
                                             "--pruned_knn_file=mpi-results/pruned-knn.txt"],
-                                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                             end = time.time()
                             duration = end - start
                             # load real result from clustering run
