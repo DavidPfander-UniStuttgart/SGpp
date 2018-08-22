@@ -124,6 +124,8 @@ vars.Add(BoolVariable("USE_CUDA", "Enable CUDA support (you might need to provid
 vars.Add(BoolVariable("USE_HPX", "Enable HPX support (implies USE_OCL)", False))
 vars.Add("OCL_INCLUDE_PATH", "Set path to the OpenCL header files (parent directory of CL/)")
 vars.Add("OCL_LIBRARY_PATH", "Set path to the OpenCL library")
+vars.Add("LSHKNN_INCLUDE_PATH", "Set path to the lshknn header files")
+vars.Add("LSHKNN_LIBRARY_PATH", "Set path to the lshknn library")
 vars.Add("BOOST_INCLUDE_PATH", "Set path to the Boost header files", "/usr/include")
 vars.Add("BOOST_LIBRARY_PATH", "Set path to the Boost library", None)
 vars.Add("AUTOTUNETMP_INCLUDE_PATH", "Set path to the AutoTuneTMP header files", "")

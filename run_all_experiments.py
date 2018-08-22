@@ -24,10 +24,10 @@ print("deviceName: " + deviceName)
 # common dataset parameters
 clusters=3
 print("clusters: " + str(clusters))
-abweichung = 0.05
-print("abweichung: " + str(abweichung))
-clusters_distance = 3 # required distance between cluster centers, criterion dis < c_dis * abw
-print("clusters_distance: " + str(clusters_distance))
+# abweichung = 0.05
+# print("abweichung: " + str(abweichung))
+# clusters_distance = 3 # required distance between cluster centers, criterion dis < c_dis * abw
+# print("clusters_distance: " + str(clusters_distance))
 # noise = 0
 # print("noise: " + )
 

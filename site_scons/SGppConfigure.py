@@ -102,6 +102,7 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
     checkDot(config)
   checkOpenCL(config)
   checkZlib(config)
+  checkLSHGPU(config)
   checkGSL(config)
   checkDAKOTA(config)
   checkCGAL(config)
@@ -229,7 +230,7 @@ def checkOpenCL(config):
     else:
       Helper.printInfo("Trying to find the libOpenCL library without the OCL_LIBRARY_PATH variable.")
 
-    if not config.CheckLib("OpenCL", language="c++", autoadd=1):
+    if not config.CheckLib("OpenCL", language="c++", autoadd=0):
       Helper.printErrorAndExit("libOpenCL not found, but required for OpenCL")
 
     if not config.CheckLib("boost_program_options", language="c++", autoadd=0):
@@ -282,6 +283,14 @@ def checkZlib(config):
                 Helper.printErrorAndExit("The flag USE_ZLIB was set, but the necessary header 'zlib.h' or library was not found.")
 
             config.env["CPPDEFINES"]["ZLIB"] = "1"
+
+def checkLSHGPU(config):
+    config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
+    config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
+    # for high-performance clustering
+    # if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
+    if not config.CheckLib("lshknn", language="C++",autoadd=0):
+        Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
 
 def checkBoostTests(config):
   # Check the availability of the boost unit test dependencies
