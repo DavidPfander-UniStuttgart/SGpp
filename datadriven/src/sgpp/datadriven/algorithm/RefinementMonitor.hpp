@@ -44,4 +44,3 @@ class RefinementMonitor {
 
 }  // namespace datadriven
 }  // namespace sgpp
-

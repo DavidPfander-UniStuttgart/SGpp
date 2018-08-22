@@ -8,7 +8,7 @@
  *      Author: dominik
  */
 
-
+#include <cstddef>
 #include <sgpp/datadriven/algorithm/RefinementMonitorPeriodic.hpp>
 
 #include <iostream>
@@ -40,7 +40,3 @@ size_t RefinementMonitorPeriodic::refinementsNecessary() {
 
 }  // namespace datadriven
 }  // namespace sgpp
-
-
-
-

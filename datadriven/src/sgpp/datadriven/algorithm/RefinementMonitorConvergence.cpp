@@ -3,6 +3,7 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include <cstddef>
 #include <sgpp/datadriven/algorithm/RefinementMonitorConvergence.hpp>
 
 namespace sgpp {
@@ -84,4 +85,3 @@ size_t RefinementMonitorConvergence::refinementsNecessary() {
 
 }  // namespace datadriven
 }  // namespace sgpp
-
