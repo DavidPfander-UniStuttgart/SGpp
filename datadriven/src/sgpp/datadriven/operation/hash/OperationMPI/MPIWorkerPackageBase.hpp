@@ -37,14 +37,15 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
 
   void divide_workpackages(int *package, T *erg) {
     // Divide into more work packages
-    size_t packagesize = size;
-    if (redistribute) {
-      size_t logical_package_count =
-          (package[1] / (packagesize * MPIEnviroment::get_sub_worker_count()));
-      if (logical_package_count < 1) logical_package_count = 1;
-      packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
-                     (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
-    }
+    size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * 2;
+    size_t packagesize = package[1] / desired_packagecount;
+    // if (redistribute) {
+    //   size_t logical_package_count =
+    //       (package[1] / (packagesize * MPIEnviroment::get_sub_worker_count()));
+    //   if (logical_package_count < 1) logical_package_count = 1;
+    //   packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
+    //                  (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
+    // }
     T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);
