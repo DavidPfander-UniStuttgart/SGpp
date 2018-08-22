@@ -28,7 +28,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   MPI_Comm &master_worker_comm;
   MPI_Comm &sub_worker_comm;
   bool prefetching;
-  bool redistribute;
   std::shared_ptr<base::OCLOperationConfiguration> parameters;
 
   MPI_Datatype mpi_typ;
@@ -37,15 +36,11 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
 
   void divide_workpackages(int *package, T *erg) {
     // Divide into more work packages
-    size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * 2;
-    size_t packagesize = package[1] / desired_packagecount;
-    // if (redistribute) {
-    //   size_t logical_package_count =
-    //       (package[1] / (packagesize * MPIEnviroment::get_sub_worker_count()));
-    //   if (logical_package_count < 1) logical_package_count = 1;
-    //   packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
-    //                  (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
-    // }
+    size_t packagesize = size;
+    if (size == 0) {
+      size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * 2;
+      packagesize = package[1] / desired_packagecount;
+    }
     T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);
@@ -152,7 +147,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
-        redistribute(true),
         parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
@@ -176,12 +170,15 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     std::string chosen_device_name("Unknown");
     size_t device_select = 0;
     if (MPIEnviroment::get_configuration().contains("PREFERED_PACKAGESIZE"))
-      size = MPIEnviroment::get_configuration()["PREFERED_PACKAGESIZE"].getUInt();
+      std::cerr << "Warning! Flag PREFERED_PACKAGESIZE is deprecated!"
+                << " Use PACKAGESIZE instead or rely on the defaults." << std::endl;
+    if (MPIEnviroment::get_configuration().contains("PACKAGESIZE"))
+      size = MPIEnviroment::get_configuration()["PACKAGESIZE"].getUInt();
     else
-      size = 2048;
+      size = 0;
     if (MPIEnviroment::get_configuration().contains("REDISTRIBUTE"))
-      redistribute = MPIEnviroment::get_configuration()["REDISTRIBUTE"].getBool();
-    redistribute = true;
+      std::cerr << "Warning! Flag REDISTRIBUTE is deprecated and will be ignored!"
+                << std::endl;
     if (MPIEnviroment::get_configuration().contains("PREFETCHING"))
       prefetching = MPIEnviroment::get_configuration()["PREFETCHING"].getBool();
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_NAME"))
@@ -216,7 +213,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
-        redistribute(true),
         parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
@@ -240,11 +236,15 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     std::string chosen_device_name("Unknown");
     size_t device_select = 0;
     if (MPIEnviroment::get_configuration().contains("PREFERED_PACKAGESIZE"))
-      size = MPIEnviroment::get_configuration()["PREFERED_PACKAGESIZE"].getUInt();
+      std::cerr << "Warning! Flag PREFERED_PACKAGESIZE is deprecated!"
+                << " Use PACKAGESIZE instead or rely on the defaults." << std::endl;
+    if (MPIEnviroment::get_configuration().contains("PACKAGESIZE"))
+      size = MPIEnviroment::get_configuration()["PACKAGESIZE"].getUInt();
     else
-      size = 2048;
+      size = 0;
     if (MPIEnviroment::get_configuration().contains("REDISTRIBUTE"))
-      redistribute = MPIEnviroment::get_configuration()["REDISTRIBUTE"].getBool();
+      std::cerr << "Warning! Flag REDISTRIBUTE is deprecated and will be ignored!"
+                << std::endl;
     if (MPIEnviroment::get_configuration().contains("PREFETCHING"))
       prefetching = MPIEnviroment::get_configuration()["PREFETCHING"].getBool();
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_NAME"))
