@@ -200,7 +200,6 @@ if __name__ == '__main__':
                             print("Starting test with MPI conf ", mpiconf_arg, "...")
                             number_mpi_processes = "-n " + str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name))
-                            print(number_mpi_processes)
                             if os.path.exists("mpi-results/raw-clusters.txt"):
                                 subprocess.run(["rm", "mpi-results/raw-clusters.txt"])
                             if os.path.exists("mpi-results/rhs.txt"):

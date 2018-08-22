@@ -3,22 +3,27 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 #include <unistd.h>
-#include <chrono>
-#include <boost/program_options.hpp>
-#include <experimental/filesystem>
-#include <iostream>
+
+#include "sgpp/base/grid/generation/GridGenerator.hpp"
+#include "sgpp/base/grid/generation/functors/SurplusCoarseningFunctor.hpp"
+#include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
+#include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include <sgpp/base/grid/Grid.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
 #include <sgpp/globaldef.hpp>
 #include <sgpp/solver/sle/ConjugateGradients.hpp>
-#include <string>
-#include <vector>
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityMultMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
+
+#include <experimental/filesystem>
+#include <boost/program_options.hpp>
+#include <iostream>
+#include <chrono>
+#include <string>
+#include <vector>
 
 int main(int argc, char *argv[]) {
 
@@ -35,6 +40,12 @@ int main(int argc, char *argv[]) {
     std::string cluster_file;
     uint64_t k;
     double threshold;
+
+    std::string scenario_name;
+    size_t refinement_steps;
+    size_t refinement_points;
+    size_t coarsening_points;
+    double coarsening_threshold;
     double epsilon;
 
     std::string rhs_erg_filename = "";
@@ -58,6 +69,17 @@ int main(int argc, char *argv[]) {
       "cluster_file",
       boost::program_options::value<std::string>(&cluster_file)->default_value(""),
       "Output file for the detected clusters. None if empty.")(
+      "write_graphs", boost::program_options::value<std::string>(&scenario_name),
+      "output the clustering steps into files")(
+      "refinement_steps",
+      boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
+      "number of refinment steps for density estimation")(
+      "refinement_points",
+      boost::program_options::value<uint64_t>(&refinement_points)->default_value(0),
+      "number of points to refinement during density estimation")(
+      "coarsen_points",
+      boost::program_options::value<uint64_t>(&coarsening_points)->default_value(0),
+      "number of points to coarsen during density estimation")(
       "rhs_erg_file",
       boost::program_options::value<std::string>(&rhs_erg_filename),
       "Filename where the final rhs values will be written.")(
@@ -71,7 +93,10 @@ int main(int argc, char *argv[]) {
       boost::program_options::value<double>(&epsilon)->default_value(0.0001),
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "threshold", boost::program_options::value<double>(&threshold)->default_value(0.0),
-      "threshold for sparse grid function for removing edges");
+      "threshold for sparse grid function for removing edges")(
+      "coarsen_threshold",
+      boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
+      "for density estimation, only surpluses below threshold are coarsened");
 
     boost::program_options::variables_map variables_map;
     boost::program_options::parsed_options options = parse_command_line(argc, argv,
@@ -161,7 +186,6 @@ int main(int argc, char *argv[]) {
     std::cout << "------ " << std::endl;
     sgpp::base::OperationConfiguration network_conf(MPIconfigFileName);
     sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
-    int rank = sgpp::datadriven::clusteringmpi::MPIEnviroment::get_node_rank();
 
     // Loading dataset
     sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
@@ -177,31 +201,121 @@ int main(int argc, char *argv[]) {
     size_t gridsize = grid->getStorage().getSize();
     sgpp::base::DataVector alpha(gridsize);
     sgpp::base::DataVector result(gridsize);
+    sgpp::base::DataVector rhs(gridsize);
     alpha.setAll(1.0);
     std::cerr << "Grid created! Number of grid points:     " << gridsize << std::endl;
     std::cout << std::endl << std::endl;
 
-    // Create right hand side vector
     std::chrono::time_point<std::chrono::high_resolution_clock> rhs_start, rhs_end;
-    rhs_start = std::chrono::system_clock::now();
-    std::cout << "Create right hand side of density equation: " << std::endl;
-    std::cout << "-------------------------------------------- " << std::endl;
-    sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset, configFileName);
-    sgpp::base::DataVector rhs(gridsize);
-    rhs_op.generate_b(rhs);
-    rhs_end = std::chrono::system_clock::now();
-    std::cout << std::endl << std::endl;
-
-    // Solve for alpha vector via CG solver
-    std::cout << "Solve for alpha: " << std::endl;
-    std::cout << "--------------- " << std::endl;
-    sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda, configFileName);
     std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
-    solver_start = std::chrono::system_clock::now();
-    alpha.setAll(1.0);
-    sgpp::solver::ConjugateGradients solver(1000, epsilon);
-    solver.solve(mult_op, alpha, rhs, false, true);
-    solver_end = std::chrono::system_clock::now();
+    {
+      // Create right hand side vector
+      std::chrono::time_point<std::chrono::high_resolution_clock> rhs_start, rhs_end;
+      rhs_start = std::chrono::system_clock::now();
+      std::cout << "Create right-hand side of density equation: " << std::endl;
+      std::cout << "-------------------------------------------- " << std::endl;
+      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                     configFileName);
+      rhs_op.generate_b(rhs);
+      rhs_end = std::chrono::system_clock::now();
+      std::cout << std::endl << std::endl;
+
+      // Solve for alpha vector via CG solver
+      std::cout << "Solve for alpha: " << std::endl;
+      std::cout << "--------------- " << std::endl;
+      sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
+                                                                       configFileName);
+      solver_start = std::chrono::system_clock::now();
+      alpha.setAll(1.0);
+      sgpp::solver::ConjugateGradients solver(1000, epsilon);
+      solver.solve(mult_op, alpha, rhs, false, true);
+      solver_end = std::chrono::system_clock::now();
+    }
+    for (size_t i = 0; i < refinement_steps; i++) {
+      if (refinement_points > 0) {
+        sgpp::base::SurplusRefinementFunctor refine_func(alpha, refinement_points);
+        gridGen.refine(refine_func);
+        size_t old_size = alpha.getSize();
+
+        // adjust alpha to refined grid
+        alpha.resize(grid->getSize());
+        for (size_t j = old_size; j < alpha.getSize(); j++) {
+          alpha[j] = 0.0;
+        }
+
+        // regenerate b with refined grid
+        rhs.resize(grid->getSize());
+        for (size_t j = old_size; j < alpha.getSize(); j++) {
+          rhs[j] = 0.0;
+        }
+
+        // Create right hand side vector
+        std::chrono::time_point<std::chrono::high_resolution_clock> rhs_start, rhs_end;
+        rhs_start = std::chrono::system_clock::now();
+        std::cout << "Create right-hand side of density equation: " << std::endl;
+        std::cout << "-------------------------------------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                       configFileName);
+        rhs_op.generate_b(rhs);
+        rhs_end = std::chrono::system_clock::now();
+        std::cout << std::endl << std::endl;
+
+        // Solve for alpha vector via CG solver
+        std::cout << "Solve for alpha: " << std::endl;
+        std::cout << "--------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
+                                                                         configFileName);
+        std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
+        solver_start = std::chrono::system_clock::now();
+        alpha.setAll(1.0);
+        sgpp::solver::ConjugateGradients solver(1000, epsilon);
+        solver.solve(mult_op, alpha, rhs, false, true);
+        solver_end = std::chrono::system_clock::now();
+      }
+      if (coarsening_points > 0) {
+        size_t grid_size_before_coarsen = grid->getSize();
+        sgpp::base::SurplusCoarseningFunctor coarsen_func(alpha, coarsening_points,
+                                                          coarsening_threshold);
+        gridGen.coarsen(coarsen_func, alpha);
+
+        size_t grid_size_after_coarsen = grid->getSize();
+        std::cout << "coarsen: removed " << (grid_size_before_coarsen - grid_size_after_coarsen)
+                  << " grid points" << std::endl;
+
+        // adjust alpha to coarsen grid
+        alpha.resize(grid->getSize());
+
+        // regenerate b with coarsen grid
+        rhs.resize(grid->getSize());
+
+        // Create right hand side vector
+        rhs_start = std::chrono::system_clock::now();
+        std::cout << "Create right-hand side of density equation: " << std::endl;
+        std::cout << "-------------------------------------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                       configFileName);
+        rhs_op.generate_b(rhs);
+        rhs_end = std::chrono::system_clock::now();
+        std::cout << std::endl << std::endl;
+
+        // Solve for alpha vector via CG solver
+        std::cout << "Solve for alpha: " << std::endl;
+        std::cout << "--------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
+                                                                         configFileName);
+        std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
+        solver_start = std::chrono::system_clock::now();
+        alpha.setAll(1.0);
+        sgpp::solver::ConjugateGradients solver(1000, epsilon);
+        solver.solve(mult_op, alpha, rhs, false, true);
+        solver_end = std::chrono::system_clock::now();
+      }
+    }
+    gridsize = grid->getSize();
+    std::cerr << "Number of grid points:     " << gridsize << std::endl;
+
+
+
     double max = alpha.max();
     double min = alpha.min();
     for (size_t i = 0; i < gridsize; i++) alpha[i] = alpha[i] * 1.0 / (max - min);
@@ -266,7 +380,8 @@ int main(int argc, char *argv[]) {
         find_clusters_end;
     find_clusters_start = std::chrono::system_clock::now();
     std::vector<int> node_cluster_map;
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+    sgpp::datadriven::DensityOCLMultiPlatform::
+        OperationCreateGraphOCL::neighborhood_list_t clusters;
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
         knn_graph, k, node_cluster_map, clusters);
     find_clusters_end = std::chrono::system_clock::now();
