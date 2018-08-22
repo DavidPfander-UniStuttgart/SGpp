@@ -43,6 +43,7 @@ if env["ARCH"] == "mic":
     module.buildExamples("examplesMIC")
 else:
     module.buildExamples()
+    module.buildExamples("examplesPipeline")
 if env["USE_OCL"]:
     additionalOCLDependencies = ["boost_program_options", "boost_filesystem", "boost_system"] + additionalDependencies
     module.buildExamples("examplesOCL",

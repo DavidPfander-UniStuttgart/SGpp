@@ -3,8 +3,7 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#ifndef REGRESSIONLEARNER_H
-#define REGRESSIONLEARNER_H
+#pragma once
 
 #include <sgpp/globaldef.hpp>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
@@ -130,7 +129,7 @@ class RegressionLearner {
    * include the vector [1,2] in terms.
    */
   RegressionLearner(sgpp::base::RegularGridConfiguration gridConfig,
-                    sgpp::base::AdpativityConfiguration adaptivityConfig,
+                    sgpp::base::AdaptivityConfiguration adaptivityConfig,
                     sgpp::solver::SLESolverConfiguration solverConfig,
                     sgpp::solver::SLESolverConfiguration finalSolverConfig,
                     datadriven::RegularizationConfiguration regularizationConfig,
@@ -145,7 +144,7 @@ class RegressionLearner {
    * @param regularizationConfig
    */
   RegressionLearner(sgpp::base::RegularGridConfiguration gridConfig,
-                    sgpp::base::AdpativityConfiguration adaptivityConfig,
+                    sgpp::base::AdaptivityConfiguration adaptivityConfig,
                     sgpp::solver::SLESolverConfiguration solverConfig,
                     sgpp::solver::SLESolverConfiguration finalSolverConfig,
                     datadriven::RegularizationConfiguration regularizationConfig);
@@ -191,7 +190,7 @@ class RegressionLearner {
 
  private:
   sgpp::base::RegularGridConfiguration gridConfig;
-  sgpp::base::AdpativityConfiguration adaptivityConfig;
+  sgpp::base::AdaptivityConfiguration adaptivityConfig;
   sgpp::solver::SLESolverConfiguration solverConfig;
   sgpp::solver::SLESolverConfiguration finalSolverConfig;
   datadriven::RegularizationConfiguration regularizationConfig;
@@ -218,5 +217,3 @@ class RegressionLearner {
 
 }  // namespace datadriven
 }  // namespace sgpp
-
-#endif  // REGRESSIONLEARNER_H

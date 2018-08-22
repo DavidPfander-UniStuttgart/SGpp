@@ -3,8 +3,7 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#ifndef DATADRIVEN_SRC_SGPP_DATADRIVEN_ALGORITHM_DBMATDATABASE_HPP_
-#define DATADRIVEN_SRC_SGPP_DATADRIVEN_ALGORITHM_DBMATDATABASE_HPP_
+#pragma once
 
 #include <sgpp/base/tools/json/JSON.hpp>
 #include <sgpp/base/tools/json/ListNode.hpp>
@@ -38,7 +37,7 @@ class DBMatDatabase{
    * @return weather the configuration is held in the database
    */
   bool hasDataMatrix(sgpp::base::GeneralGridConfiguration& gridConfig,
-      sgpp::base::AdpativityConfiguration& adaptivityConfig,
+      sgpp::base::AdaptivityConfiguration& adaptivityConfig,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig);
 
@@ -52,7 +51,7 @@ class DBMatDatabase{
    * otherwise
    */
   std::string& getDataMatrix(sgpp::base::GeneralGridConfiguration& gridConfig,
-      sgpp::base::AdpativityConfiguration& adaptivityConfig,
+      sgpp::base::AdaptivityConfiguration& adaptivityConfig,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig);
 
@@ -69,7 +68,7 @@ class DBMatDatabase{
    * this parameter is set
    */
   void putDataMatrix(sgpp::base::GeneralGridConfiguration& gridConfig,
-      sgpp::base::AdpativityConfiguration& adaptivityConfig,
+      sgpp::base::AdaptivityConfiguration& adaptivityConfig,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig,
       std::string filepath, bool overwriteEntry = false);
@@ -102,7 +101,7 @@ class DBMatDatabase{
    * @return the index of the entry that matches the configuration or -1 if not entry matches
    */
   int entryIndexByConfiguration(sgpp::base::GeneralGridConfiguration& gridConfig,
-      sgpp::base::AdpativityConfiguration& adaptivityConfig,
+      sgpp::base::AdaptivityConfiguration& adaptivityConfig,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig);
 
@@ -144,5 +143,3 @@ class DBMatDatabase{
 };
 } /* namespace datadriven */
 } /* namespace sgpp */
-
-#endif /* DATADRIVEN_SRC_SGPP_DATADRIVEN_ALGORITHM_DBMATDATABASE_HPP_ */
