@@ -136,7 +136,9 @@ class KernelCreateGraph {
           manager->buildKernel(program_src, device, kernelConfiguration, "connectNeighbors");
     }
 
-    if (!deviceResultData.isInitialized()) deviceResultData.initializeBuffer(padded_data_size * k);
+    if (!deviceResultData.isInitialized() || deviceResultData.size() < globalworkrange[0] * k) {
+      deviceResultData.initializeBuffer(globalworkrange[0] * k);
+    }
     clFinish(device->commandQueue);
     this->deviceTimingMult = 0.0;
 
