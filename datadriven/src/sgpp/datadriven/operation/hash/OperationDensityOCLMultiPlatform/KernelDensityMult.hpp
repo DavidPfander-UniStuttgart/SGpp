@@ -371,7 +371,7 @@ class KernelDensityMult : public KernelDensityMultInterface<T> {
           manager->buildKernel(program_src, device, kernelConfiguration, "multdensity");
     }
 
-    if (!deviceResultData.isInitialized()) {
+    if (!deviceResultData.isInitialized() || deviceResultData.size() < globalworkrange[0] * dataBlockingSize) {
       if (chunksize == 0)
         deviceResultData.initializeBuffer(gridSize + localSize - gridSize % localSize);
       else

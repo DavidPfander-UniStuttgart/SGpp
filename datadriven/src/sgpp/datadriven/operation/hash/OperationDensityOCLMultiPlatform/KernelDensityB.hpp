@@ -209,7 +209,7 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     }
 
     // Load data into buffers if not already done
-    if (!deviceResultData.isInitialized()) {
+    if (!deviceResultData.isInitialized() || deviceResultData.size() < chunksize + local_padding) {
       if (chunksize == 0) {
         std::vector<T> zeros(gridSize);
         for (size_t i = 0; i < gridSize; i++) {

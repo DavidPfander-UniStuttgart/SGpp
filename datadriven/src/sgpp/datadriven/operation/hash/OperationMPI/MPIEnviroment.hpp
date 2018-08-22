@@ -167,7 +167,7 @@ class SimpleQueue {
       std::cerr << "Warning - Adjusted packagesize" << std::endl;
     }
 
-    packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
+    packagecount = static_cast<unsigned int>(workitem_count / packagesize);
     startindices = new unsigned int[commsize];
     secondary_indices = new unsigned int[commsize];
     packageinfo[0] = static_cast<int>(startindex);
@@ -236,7 +236,7 @@ class SimpleQueue {
     } else if (send_packageindex == packagecount - 1) {
       // Send last package
       packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-      packageinfo[1] = static_cast<int>((workitem_count) % packagesize);
+      packageinfo[1] = static_cast<int>(packagesize + (workitem_count) % packagesize);
       if (packageinfo[1] == 0) {
         if (prefetching) {
           startindices[source - 1] = secondary_indices[source - 1];
