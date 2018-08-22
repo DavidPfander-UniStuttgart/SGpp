@@ -131,6 +131,7 @@ int main(int argc, char **argv) {
   std::string pruned_knn_filename = "";
 
   std::string compare_knn_csv_file_name;
+  double epsilon;
 
   size_t refinement_steps;
   size_t refinement_points;
@@ -163,6 +164,9 @@ int main(int argc, char **argv) {
       "OpenCL and kernel configuration file")(
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
+      "epsilon",
+      boost::program_options::value<double>(&epsilon)->default_value(0.0001),
+      "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "threshold",
       boost::program_options::value<double>(&threshold)->default_value(0.0),
       "threshold for sparse grid function for removing edges")(
@@ -188,7 +192,7 @@ int main(int argc, char **argv) {
       "coarsened")("knn_algorithm",
                    boost::program_options::value<std::string>(&knn_algorithm)
                        ->default_value("lsh"),
-                   "type of kNN algorithm used, either 'lsh' or 'naive'")(
+                   "type of kNN algorithm used, either 'lsh' 'ocl' or 'naive'")(
       "lsh_tables",
       boost::program_options::value<uint64_t>(&lsh_tables)->default_value(50),
       "number of hash tables for lsh knn")(
@@ -409,7 +413,7 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> density_timer_start;
   std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
   density_timer_start = std::chrono::system_clock::now();
-  auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
+  auto solver = std::make_unique<solver::ConjugateGradients>(1000, epsilon);
 
   base::DataVector alpha(grid->getSize());
   alpha.setAll(0.0);
@@ -800,6 +804,25 @@ int main(int argc, char **argv) {
       std::cout << "knn distance error: " << acc_distance << std::endl;
     }
   }
+  auto print_knn_graph = [&trainingData, k](std::string filename, std::vector<int> &graph) {
+    std::ofstream out_graph(filename);
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      bool first = true;
+      for (size_t j = 0; j < k; ++j) {
+        if (graph[i * k + j] == -1) {
+          continue;
+        }
+        if (!first) {
+          out_graph << ", ";
+        } else {
+          first = false;
+        }
+        out_graph << graph[i * k + j];
+      }
+      out_graph << std::endl;
+    }
+    out_graph.close();
+  };
 
   {
     std::cout << "Pruning graph..." << std::endl;
@@ -833,29 +856,10 @@ int main(int argc, char **argv) {
                                   "_graph_pruned.csv",
                               graph, k);
     }
-  }
-  auto print_knn_graph = [&trainingData, k](std::string filename, std::vector<int> &graph) {
-    std::ofstream out_graph(filename);
-    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
-      bool first = true;
-      for (size_t j = 0; j < k; ++j) {
-        if (graph[i * k + j] == -1) {
-          continue;
-        }
-        if (!first) {
-          out_graph << ", ";
-        } else {
-          first = false;
-        }
-        out_graph << graph[i * k + j];
-      }
-      out_graph << std::endl;
+    // output for opencl/mpi comparison script
+    if (pruned_knn_filename != "") {
+        print_knn_graph(pruned_knn_filename, graph);
     }
-    out_graph.close();
-  };
-  // output for opencl/mpi comparison script
-  if (knn_filename != "") {
-    print_knn_graph(knn_filename, graph);
   }
 
   {

@@ -173,7 +173,8 @@ if __name__ == '__main__':
                                         "--cluster_file=ocl-results/raw-clusters.txt",
                                         "--rhs_erg_file=ocl-results/rhs.txt",
                                         "--density_coefficients_file=ocl-results/density-coefficients.txt",
-                                        "--pruned_knn_file=ocl-results/pruned-knn.txt"],
+                                        "--pruned_knn_file=ocl-results/pruned-knn.txt",
+                                        "--knn_algorithm=ocl"],
                                        stdout=subprocess.PIPE)
                         end = time.time()
                         duration = end - start
