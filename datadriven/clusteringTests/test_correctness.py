@@ -213,7 +213,7 @@ if __name__ == '__main__':
                             subprocess.run(["mpirun", "-n", str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name)),
                                             "--oversubscribe",
-                                            "../examplesMPI/mpi_examples",
+                                            "../examplesMPI/distributed_clustering_cmd",
                                             dataset_arg, mpiconf_arg,
                                             oclconf_arg, level_arg, "--epsilon=0.001", "--lambda=0.000001",
                                             "--cluster_file=mpi-results/raw-clusters.txt",
