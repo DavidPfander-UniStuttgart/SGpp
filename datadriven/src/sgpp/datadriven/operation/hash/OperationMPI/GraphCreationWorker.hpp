@@ -36,15 +36,16 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
     size_t messagesize = 0;
     while (!workitem_queue.is_finished()) {
       // Store result
-      if (verbose) {
-        std::cout << "Messagesize: " << messagesize << std::endl;
-        std::cout << partial_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
-                  << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
-      }
-      messagesize = workitem_queue.receive_result(chunkid, partial_result);
-      for (size_t i = 0; i < messagesize; i++) {
-        graph[chunkid - package[0] + i] = partial_result[i];
-      }
+      // if (verbose) {
+      //   std::cout << "Messagesize: " << messagesize << std::endl;
+      //   std::cout << partial_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
+      //             << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
+      // }
+      // messagesize = workitem_queue.receive_result(chunkid, partial_result, 0);
+      // for (size_t i = 0; i < messagesize; i++) {
+      //   graph[chunkid - package[0] + i] = partial_result[i];
+      // }
+      throw std::logic_error("Operation is deprecated");
     }
     delete[] partial_result;
   }
