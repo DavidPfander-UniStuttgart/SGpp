@@ -20,10 +20,11 @@ if env["USE_ZLIB"]:
 if env["USE_OCL"]:
   additionalDependencies += ["OpenCL"]
 if env["USE_GSL"]:
-    additionalDependencies += ["gsl", "gslcblas"]
+  additionalDependencies += ["gsl", "gslcblas"]
 if env["USE_CGAL"]:
   additionalDependencies += ["CGAL"]
-additionalDependencies += ["lshknn"]
+if env["USE_LSH_KNN"]:
+  additionalDependencies += ["lshknn"]
 
 additionalBoostTestDependencies = ["z"]
 performanceTestFlag = "COMPILE_BOOST_PERFORMANCE_TESTS"

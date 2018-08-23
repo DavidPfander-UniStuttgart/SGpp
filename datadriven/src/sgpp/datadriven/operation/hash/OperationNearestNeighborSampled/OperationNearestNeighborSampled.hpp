@@ -42,6 +42,7 @@ public:
   OperationNearestNeighborSampled(base::DataMatrix dataset, size_t dim,
                                   bool verbose = false);
 
+#ifdef USE_LSH_KNN
   std::vector<int32_t> knn_lsh(uint32_t k, uint64_t lsh_tables,
                                uint64_t lsh_hashes, double lsh_w);
 
@@ -49,10 +50,12 @@ public:
 
   std::vector<int32_t> knn_naive(base::DataMatrix &local_dataset, uint32_t k);
 
-  std::vector<int32_t> knn_ocl(uint32_t k, std::string configFileName);
-
   std::vector<int32_t> knn_naive_sampling(uint32_t k, uint32_t input_chunk_size,
                                           uint32_t randomize_count);
+#endif
+
+  std::vector<int32_t> knn_ocl(uint32_t k, std::string configFileName);
+
 
   double get_last_duration();
 

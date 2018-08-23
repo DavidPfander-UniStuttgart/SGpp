@@ -287,12 +287,14 @@ def checkZlib(config):
             config.env["CPPDEFINES"]["ZLIB"] = "1"
 
 def checkLSHGPU(config):
-    config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
-    config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
-    # for high-performance clustering
-    # if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
-    if not config.CheckLib("lshknn", language="C++",autoadd=0):
-        Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
+    if config.env["USE_LSH_KNN"]:
+        config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
+        config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
+        config.env["CPPDEFINES"]["USE_LSH_KNN"] = "1"
+        # for high-performance clustering
+        # if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
+        if not config.CheckLib("lshknn", language="C++",autoadd=0):
+            Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
 
 def checkBoostTests(config):
   # Check the availability of the boost unit test dependencies
@@ -364,7 +366,7 @@ def checkPython(config):
       if config.env["RUN_PYTHON_TESTS"]:
         Helper.printWarning("Python unit tests were disabled because numpy is not available.")
         config.env["RUN_PYTHON_TESTS"] = False
-        
+
     try:
         import scipy
     except:

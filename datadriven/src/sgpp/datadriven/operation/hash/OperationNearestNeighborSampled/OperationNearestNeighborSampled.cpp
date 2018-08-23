@@ -1,5 +1,9 @@
 #include "OperationNearestNeighborSampled.hpp"
+#ifdef USE_LSH_KNN
 #include "KNNFactory.hpp"
+#else
+#include <random>
+#endif
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
 #include "sgpp/globaldef.hpp"
 #include <cassert>
@@ -73,6 +77,7 @@ OperationNearestNeighborSampled::sample_dataset(size_t chunk_size,
   return sampled_dataset;
 }
 
+#ifdef USE_LSH_KNN
 std::vector<int32_t>
 OperationNearestNeighborSampled::knn_lsh(uint32_t k, uint64_t lsh_tables,
                                          uint64_t lsh_hashes, double lsh_w) {
@@ -123,6 +128,7 @@ OperationNearestNeighborSampled::knn_naive(base::DataMatrix &local_dataset,
       std::chrono::duration<double>(timer_lsh_stop - timer_lsh_start).count();
   return graph;
 }
+#endif
 
 double OperationNearestNeighborSampled::l2_dist(const size_t k,
                                                 const base::DataMatrix &dataset,
@@ -263,6 +269,7 @@ void OperationNearestNeighborSampled::randomize(base::DataMatrix &dataset) {
   }
 }
 
+#ifdef USE_LSH_KNN
 std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
     uint32_t k, uint32_t input_chunk_size, uint32_t randomize_count) {
   std::chrono::time_point<std::chrono::system_clock> timer_start =
@@ -352,6 +359,7 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
       std::chrono::duration<double>(timer_stop - timer_start).count();
   return final_graph;
 }
+#endif
 
 std::vector<int32_t>
 OperationNearestNeighborSampled::knn_ocl(uint32_t k,

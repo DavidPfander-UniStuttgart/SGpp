@@ -14,7 +14,9 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_LSH_KNN
 #include "KNNFactory.hpp"
+#endif
 #include "sgpp/base/datatypes/DataVector.hpp"
 #include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/base/grid/GridStorage.hpp"
@@ -328,9 +330,21 @@ int main(int argc, char **argv) {
   }
 
   if (knn_algorithm.compare("lsh") == 0) {
+#ifdef USE_LSH_KNN
     std::cout << "using lsh knn" << std::endl;
+#else
+    std::cout << "detected lsh flag but SGpp was compiled without lsh support."
+              << std::endl <<" See flag USE_LSH_KNN, or use ocl for this parameter" << std::endl;
+    return 1;
+#endif
   } else if (knn_algorithm.compare("naive") == 0) {
+#ifdef USE_LSH_KNN
     std::cout << "using naive multicore knn" << std::endl;
+#else
+    std::cout << "detected naive flag but SGpp was compiled without lsh (includes naive algorithm) support."
+              << std::endl <<" See flag USE_LSH_KNN, or use ocl for this parameter" << std::endl;
+    return 1;
+#endif
   } else if (knn_algorithm.compare("ocl") == 0) {
     std::cout << "using naive ocl knn" << std::endl;
   } else {
@@ -753,12 +767,14 @@ int main(int argc, char **argv) {
     std::cout << "Starting graph creation..." << std::endl;
 
     if (knn_algorithm.compare("lsh") == 0) {
+#ifdef USE_LSH_KNN // purely for the compiler - program exits earlier anyway if this is not the case
       graph = knn_op.knn_lsh(k, lsh_tables, lsh_hashes, lsh_w);
       double lsh_duration = knn_op.get_last_duration();
 
       std::cout << "lsh_duration: " << lsh_duration << "s" << std::endl;
 
       result_timings << lsh_duration << "; 0.0;";
+#endif
     } else if (knn_algorithm.compare("ocl") == 0) {
       graph = knn_op.knn_ocl(k, configFileName);
       double last_duration_create_graph = knn_op.get_last_duration();
@@ -778,12 +794,14 @@ int main(int argc, char **argv) {
       result_timings << last_duration_create_graph << "; " << flops_create_graph
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
+#ifdef USE_LSH_KNN // program exits earlier anyway if this is not the case
       graph = knn_op.knn_naive(k);
       double naive_duration = knn_op.get_last_duration();
 
       std::cout << "naive_duration: " << naive_duration << "s" << std::endl;
 
       result_timings << naive_duration << "; 0.0;";
+#endif
     }
 
     if (write_knn_graph) {
