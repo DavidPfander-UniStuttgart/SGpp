@@ -23,20 +23,25 @@ private:
 
   base::DataMatrix sample_dataset(size_t chunk_size, size_t chunk_count);
 
-  double l2_dist(const size_t k, const base::DataMatrix &dataset,
-                 const size_t first_index, const size_t second_index);
+  double l2_dist(const base::DataMatrix &dataset, const size_t first_index,
+                 const size_t second_index);
 
-  void far_neighbor(size_t k, std::vector<int> &final_graph,
-                    std::vector<double> &final_graph_distances,
-                    size_t first_index, size_t &far_neighbor_index,
-                    double &far_neighbor_distance);
+  std::tuple<size_t, double>
+  far_neighbor(size_t k, std::vector<int> &final_graph,
+               std::vector<double> &final_graph_distances,
+               size_t first_index); //, size_t &far_neighbor_index, double
+                                    // &far_neighbor_distance
 
-  void randomize(base::DataMatrix &dataset);
+  void randomize(base::DataMatrix &dataset, std::vector<int> &indices_map);
+
+  base::DataMatrix undo_randomize(base::DataMatrix &dataset,
+                                  std::vector<int> &indices_map);
 
   void merge_knn(size_t k, base::DataMatrix &dataset, size_t chunk_first_index,
                  size_t chunk_range, std::vector<int> &final_graph,
                  std::vector<double> &final_graph_distances,
-                 std::vector<int> &partial_graph);
+                 std::vector<int> &partial_graph,
+                 std::vector<int> &indices_map);
 
 public:
   OperationNearestNeighborSampled(base::DataMatrix dataset, size_t dim,

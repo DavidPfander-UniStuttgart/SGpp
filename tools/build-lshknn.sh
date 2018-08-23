@@ -2,7 +2,7 @@
 set -x
 
 # - to be run from project root directory
-# - don't source any other file before running this scripts
+# - only source proper sourceme-*.sh files (e.g. for the argon machines)
 # - make sure gcc <=6 is loaded
 # - make sure cuda 9.0 (or possibly newer) is available
 
