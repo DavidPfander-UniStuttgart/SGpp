@@ -197,7 +197,7 @@ class SimpleQueue {
    * @param partial_result Buffer containing the package result
    * @return Size of the result array
    */
-  size_t receive_result(int &startid, T *partial_result) {
+  size_t receive_result(T *erg, size_t multiplier) {
     MPI_Status stat;
     int messagesize = 0;
     if (received_packageindex < packagecount + 1) {
@@ -209,8 +209,7 @@ class SimpleQueue {
                   << std::endl;
       }
       int source = stat.MPI_SOURCE;
-      startid = startindices[source - 1];
-      MPI_Recv(partial_result, messagesize, mpi_typ, stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
+      MPI_Recv(erg+startindices[source -1] * multiplier, messagesize, mpi_typ, stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
       received_packageindex++;
 
       // Send next packagesource

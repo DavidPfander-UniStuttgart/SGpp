@@ -28,6 +28,8 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   MPI_Comm &master_worker_comm;
   MPI_Comm &sub_worker_comm;
   bool prefetching;
+  size_t packages_per_worker;
+  bool force_balancing;
   std::shared_ptr<base::OCLOperationConfiguration> parameters;
 
   MPI_Datatype mpi_typ;
@@ -38,24 +40,26 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     // Divide into more work packages
     size_t packagesize = size;
     if (size == 0) {
-      size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * 2;
+      const size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * packages_per_worker;
       packagesize = package[1] / desired_packagecount;
+    } else if (force_balancing) {
+      size_t number_steps = package[1] / (size * MPIEnviroment::get_sub_worker_count());
+      if (number_steps > 0) {
+        std::cout << "number steps:" << number_steps << std::endl;
+        const size_t last_step_size = package[1] % (size * MPIEnviroment::get_sub_worker_count());
+        std::cout << "last step:" << last_step_size << std::endl;
+        packagesize += (last_step_size / (MPIEnviroment::get_sub_worker_count() * number_steps));
+        // The rest of the workitems will be handled per default by the last package
+      }
     }
-    T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);
     int chunkid = package[0];
     size_t messagesize = 0;
     while (!workitem_queue.is_finished()) {
       // Store result
-      messagesize = workitem_queue.receive_result(chunkid, package_result);
-      // for (size_t i = 0; i < messagesize; i++) {
-      //   erg[(chunkid - package[0]) * packagesize_multiplier + i] = package_result[i];
-      // }
-      memcpy(erg + (chunkid - package[0]) * packagesize_multiplier, package_result,
-             sizeof(T) * messagesize);
+      messagesize = workitem_queue.receive_result( erg, packagesize_multiplier);
     }
-    delete[] package_result;
   }
 
   virtual void receive_and_send_initial_data(void) = 0;
@@ -144,6 +148,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         opencl_node(false),
         packagesize_multiplier(multiplier),
         overseer_node(false),
+        force_balancing(true),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
@@ -185,6 +190,32 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       chosen_device_name = MPIEnviroment::get_configuration()["OPENCL_DEVICE_NAME"].get();
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_SELECT"))
       device_select = MPIEnviroment::get_configuration()["OPENCL_DEVICE_SELECT"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER"))
+      packages_per_worker = MPIEnviroment::get_configuration()["PACKAGES_PER_WORKER"].getUInt();
+    else
+      packages_per_worker = 2;
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING"))
+      force_balancing = MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool();
+
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER") &&
+        MPIEnviroment::get_configuration().contains("PACKAGESIZE")) {
+      std::stringstream errorString;
+      errorString << "Both PACKAGESIZE and PACKAGES_PER_WORKER are specified for node"
+                  << MPIEnviroment::get_node_rank() << std::endl
+                  << "These are mutually exclusive! Use only one of them" << std::endl;
+      throw std::logic_error(errorString.str());
+    }
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING") &&
+        !MPIEnviroment::get_configuration().contains("PACKAGESIZE") &&
+        MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool()) {
+      std::stringstream errorString;
+      errorString << "FORCE_BALANCING is used without PACKAGESIZE on node "
+                  << MPIEnviroment::get_node_rank() << std::endl;
+      errorString << "FORCE_BALANCING only works with specified PACKAGESIZE. Otherwise the"
+                  << "number of packages is known anyway and there is no need for rebalancing"
+                  << std::endl;
+      throw std::logic_error(errorString.str());
+    }
 
     // receive opencl configuration
     MPI_Status stat;
@@ -210,6 +241,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         opencl_node(false),
         packagesize_multiplier(multiplier),
         overseer_node(false),
+        force_balancing(true),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
@@ -251,6 +283,32 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       chosen_device_name = MPIEnviroment::get_configuration()["OPENCL_DEVICE_NAME"].get();
     if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_SELECT"))
       device_select = MPIEnviroment::get_configuration()["OPENCL_DEVICE_SELECT"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER"))
+      packages_per_worker = MPIEnviroment::get_configuration()["PACKAGES_PER_WORKER"].getUInt();
+    else
+      packages_per_worker = 2;
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING"))
+      force_balancing = MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool();
+
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER") &&
+        MPIEnviroment::get_configuration().contains("PACKAGESIZE")) {
+      std::stringstream errorString;
+      errorString << "Both PACKAGESIZE and PACKAGES_PER_WORKER are specified for node"
+                  << MPIEnviroment::get_node_rank() << std::endl
+                  << "These are mutually exclusive! Use only one of them" << std::endl;
+      throw std::logic_error(errorString.str());
+    }
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING") &&
+        !MPIEnviroment::get_configuration().contains("PACKAGESIZE") &&
+        MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool()) {
+      std::stringstream errorString;
+      errorString << "FORCE_BALANCING is used without PACKAGESIZE on node "
+                  << MPIEnviroment::get_node_rank() << std::endl;
+      errorString << "FORCE_BALANCING only works with specified PACKAGESIZE. Otherwise the"
+                  << "number of packages is known anyway and there is no need for rebalancing"
+                  << std::endl;
+      throw std::logic_error(errorString.str());
+    }
 
     parameters = std::make_shared<base::OCLOperationConfiguration>(ocl_conf_filename);
     std::ostringstream sstream;
