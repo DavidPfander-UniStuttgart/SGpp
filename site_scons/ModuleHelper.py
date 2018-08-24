@@ -123,11 +123,11 @@ class Module(object):
       envClone.AppendUnique(LIBS=self.moduleDependencies + self.additionalDependencies)
       self.lib = envClone.SharedLibrary(target=self.libname, source=self.objs)
 
-    # set module dependencies
-    for module in self.moduleDependencies:
-      if module.startswith("sgpp"):
-        otherLib = os.path.join("#", BUILD_DIR.path, env["LIBPREFIX"] + module + libsuffix)
-        env.Depends(self.lib, otherLib)
+    # # set module dependencies
+    # for module in self.moduleDependencies:
+    #   if module.startswith("sgpp"):
+    #     otherLib = os.path.join("#", BUILD_DIR.path, env["LIBPREFIX"] + module + libsuffix)
+    #     env.Depends(self.lib, otherLib)
 
     # install the library
     self.libInstall = env.Install(BUILD_DIR, self.lib)
@@ -171,7 +171,7 @@ class Module(object):
         cpp = os.path.join(exampleFolder, fileName)
         self.cpps.append(cpp)
         example = exampleEnv.Program(source=cpp)
-        exampleEnv.Depends(example, self.libInstall)
+        # exampleEnv.Depends(example, self.libInstall)
         exampleTargetList.append(example)
       elif fnmatch.fnmatch(fileName, "*.hpp"):
         # header file
@@ -217,7 +217,7 @@ class Module(object):
             os.path.join(boostTestFolder, "test_{}_boost".format(moduleName)) + \
             (".exe" if env["PLATFORM"] == "win32" else "")
         test = testEnv.Program(self.boostTestExecutable, testObjs)
-        testEnv.Depends(test, self.libInstall)
+        # testEnv.Depends(test, self.libInstall)
         boostTestTargetList.append(test)
 
   def runBoostTests(self, boostTestFolder="tests",
@@ -236,4 +236,4 @@ class Module(object):
       # run the style checker on all source and header files
       for path in self.cpps + self.hpps:
         lintCommand = env.Command(path + ".lint", path, lintAction)
-        env.Depends(self.lib, lintCommand)
+        # env.Depends(self.lib, lintCommand)

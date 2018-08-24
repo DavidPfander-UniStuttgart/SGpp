@@ -499,32 +499,32 @@ if env["RUN_PYTHON_TESTS"] and env["SG_PYTHON"]:
     env.Depends(installPythonLibToTmpCommand, finalStepDependencies)
     env.Depends(pythonTestTargetList, installPythonLibToTmpCommand)
 
-  # serialize tests (from https://bitbucket.org/scons/scons/wiki/FrequentlyAskedQuestions#
-  # markdown-header-how-do-i-prevent-commands-from-being-executed-in-parallel)
-  # and move them at the end of the build
-  env.Depends(pythonTestTargetList, finalStepDependencies)
-  finalStepDependencies.append(pythonTestTargetList)
-  env.SideEffect("sideEffectFinalSteps", pythonTestTargetList)
+  # # serialize tests (from https://bitbucket.org/scons/scons/wiki/FrequentlyAskedQuestions#
+  # # markdown-header-how-do-i-prevent-commands-from-being-executed-in-parallel)
+  # # and move them at the end of the build
+  # env.Depends(pythonTestTargetList, finalStepDependencies)
+  # finalStepDependencies.append(pythonTestTargetList)
+  # env.SideEffect("sideEffectFinalSteps", pythonTestTargetList)
 
 # Boost tests
 #########################################################################
 
-if env["COMPILE_BOOST_TESTS"]:
-  env.Depends(boostTestTargetList, finalStepDependencies)
-  finalStepDependencies.append(boostTestTargetList)
-  env.SideEffect("sideEffectFinalSteps", boostTestTargetList)
+# if env["COMPILE_BOOST_TESTS"]:
+#   env.Depends(boostTestTargetList, finalStepDependencies)
+#   finalStepDependencies.append(boostTestTargetList)
+#   env.SideEffect("sideEffectFinalSteps", boostTestTargetList)
 
-  if env["RUN_BOOST_TESTS"]:
-    env.Depends(boostTestRunTargetList, finalStepDependencies)
-    finalStepDependencies.append(boostTestRunTargetList)
-    env.SideEffect("sideEffectFinalSteps", boostTestRunTargetList)
+#   if env["RUN_BOOST_TESTS"]:
+#     env.Depends(boostTestRunTargetList, finalStepDependencies)
+#     finalStepDependencies.append(boostTestRunTargetList)
+#     env.SideEffect("sideEffectFinalSteps", boostTestRunTargetList)
 
 # Examples
 #########################################################################
 
-env.Depends(exampleTargetList, finalStepDependencies)
-finalStepDependencies.append(exampleTargetList)
-env.SideEffect("sideEffectFinalSteps", exampleTargetList)
+# env.Depends(exampleTargetList, finalStepDependencies)
+# finalStepDependencies.append(exampleTargetList)
+# env.SideEffect("sideEffectFinalSteps", exampleTargetList)
 
 # System-wide installation
 #########################################################################
