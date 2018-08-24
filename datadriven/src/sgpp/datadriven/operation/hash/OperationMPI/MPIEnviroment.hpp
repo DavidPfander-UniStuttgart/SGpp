@@ -209,7 +209,8 @@ class SimpleQueue {
                   << std::endl;
       }
       int source = stat.MPI_SOURCE;
-      MPI_Recv(erg+startindices[source -1] * multiplier, messagesize, mpi_typ, stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
+      MPI_Recv(erg + (startindices[source -1] - startindex) * multiplier, messagesize, mpi_typ,
+               stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
       received_packageindex++;
 
       // Send next packagesource
