@@ -14,6 +14,7 @@ namespace datadriven {
 class OperationNearestNeighborSampled {
 private:
   base::DataMatrix dataset;
+  base::DataMatrix dataset_copy;
   size_t dataset_count;
   size_t dim;
 
