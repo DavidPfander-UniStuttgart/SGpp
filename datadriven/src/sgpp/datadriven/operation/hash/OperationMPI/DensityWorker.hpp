@@ -91,6 +91,10 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       std::cout << "Density master node " << MPIEnviroment::get_node_rank() << std::endl;
     }
   }
+  virtual ~DensityWorker(void) {
+    if (alpha != NULL)
+      delete [] alpha;
+  }
 
  protected:
   void send_alpha(double **alpha) {
