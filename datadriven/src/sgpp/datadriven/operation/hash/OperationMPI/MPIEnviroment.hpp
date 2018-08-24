@@ -170,6 +170,11 @@ class SimpleQueue {
     packagecount = static_cast<unsigned int>(workitem_count / packagesize);
     startindices = new unsigned int[commsize];
     secondary_indices = new unsigned int[commsize];
+    for (auto i = 0; i < commsize; ++i) {
+      startindices[i] = 0;
+      secondary_indices[i] = 0;
+    }
+
     packageinfo[0] = static_cast<int>(startindex);
     packageinfo[1] = static_cast<int>(packagesize);
 
@@ -226,13 +231,22 @@ class SimpleQueue {
     if (send_packageindex < packagecount - 1) {
       packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
       MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
-      if (prefetching) {
-        startindices[source - 1] = secondary_indices[source - 1];
-        secondary_indices[source - 1] = packageinfo[0];
-      } else {
+      if (send_packageindex < commsize) { // univerisal init case
+        startindices[source - 1] = packageinfo[0];
+        secondary_indices[source - 1] = packageinfo[0]; // purely in case this is already the last package
+      }
+      else if (prefetching) { // prefetching init case
+        if (packagesize < commsize * 2) {
+          secondary_indices[source - 1] = packageinfo[0];
+        } else { // normal case with prefetching
+          startindices[source - 1] = secondary_indices[source - 1];
+          secondary_indices[source - 1] = packageinfo[0];
+        }
+      } else { // normal case without prefetching
         startindices[source - 1] = packageinfo[0];
       }
       send_packageindex++;
+    // last case
     } else if (send_packageindex == packagecount - 1) {
       // Send last package
       packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
@@ -249,6 +263,7 @@ class SimpleQueue {
         if (verbose)
           std::cout << "Received work package [" << received_packageindex << " / " << packagecount
                     << "] (empty package)" << std::endl;
+
       } else {
         MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
         if (prefetching) {
@@ -259,6 +274,7 @@ class SimpleQueue {
         }
         send_packageindex++;
       }
+    // stop case
     } else {
       if (prefetching) {
         startindices[source - 1] = secondary_indices[source - 1];
