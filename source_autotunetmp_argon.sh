@@ -9,3 +9,4 @@ export VC_INCLUDE_DIR=/home/pfandedd/git/AutoTuneTMP/Vc_install/include
 export BOOST_INCLUDE_DIR=/home/pfandedd/git/AutoTuneTMP/boost_install/include
 export LSHKNN_CMAKE_CUDA_COMPILER=/usr/local.nfs/sw/cuda/cuda-9.0/bin/nvcc
 export LSHKNN_CXX_COMPILER=g++-5
+export VALGRIND_LIB=/home/pfandedd/usr_local/lib/valgrind/

@@ -100,11 +100,11 @@ OperationNearestNeighborSampled::knn_lsh(uint32_t k, uint64_t lsh_tables,
   return graph;
 }
 
-std::vector<int32_t> OperationNearestNeighborSampled::knn_naive(uint32_t k) {
+std::vector<int64_t> OperationNearestNeighborSampled::knn_naive(uint32_t k) {
   return knn_naive(dataset, k);
 }
 
-std::vector<int32_t>
+std::vector<int64_t>
 OperationNearestNeighborSampled::knn_naive(base::DataMatrix &local_dataset,
                                            uint32_t k) {
   // sample
@@ -122,7 +122,8 @@ OperationNearestNeighborSampled::knn_naive(base::DataMatrix &local_dataset,
       std::chrono::system_clock::now();
   last_duration_s =
       std::chrono::duration<double>(timer_lsh_stop - timer_lsh_start).count();
-  return graph;
+  std::vector<int64_t> converted_graph(graph.begin(), graph.end());
+  return converted_graph;
 }
 
 double OperationNearestNeighborSampled::l2_dist(const base::DataMatrix &dataset,
@@ -138,9 +139,8 @@ double OperationNearestNeighborSampled::l2_dist(const base::DataMatrix &dataset,
 }
 
 std::tuple<size_t, double> OperationNearestNeighborSampled::far_neighbor(
-    size_t k, std::vector<int> &graph, std::vector<double> &graph_distances,
-    size_t first_index) { // size_t &far_neighbor_index, double
-                          // &far_neighbor_distance
+    size_t k, std::vector<int64_t> &graph, std::vector<double> &graph_distances,
+    size_t first_index) {
 
   size_t far_neighbor_index;
   double far_neighbor_distance;
@@ -178,17 +178,18 @@ std::tuple<size_t, double> OperationNearestNeighborSampled::far_neighbor(
 }
 
 void OperationNearestNeighborSampled::merge_knn(
-    size_t k, base::DataMatrix &dataset, size_t chunk_first_index,
-    size_t chunk_range, std::vector<int> &final_graph,
-    std::vector<double> &final_graph_distances, std::vector<int> &partial_graph,
-    std::vector<int> &indices_map) {
+    size_t k, base::DataMatrix &chunk, size_t chunk_first_index,
+    size_t chunk_range, std::vector<int64_t> &partial_final_graph,
+    std::vector<double> &partial_final_graph_distances,
+    std::vector<int64_t> &partial_graph,
+    std::vector<int64_t> &partial_indices_map) {
   for (size_t i = 0; i < chunk_range; i += 1) {
     // next index in graph to process (updating its neighbors)
     // first look up which index in the final graph is to be updated
     // dataset index in the randomized data
-    const size_t mapped_index = chunk_first_index + i;
+    // const int64_t index = chunk_first_index + i;
     // original index, needed to properly access the final graph
-    const int original_index = indices_map[mapped_index];
+    // const int64_t original_index = indices_map[mapped_index];
     // std::cout << "final_graph index: " << original_index << " ns: ";
     // for (size_t j = 0; j < k; j += 1) {
     //   if (j > 0)
@@ -219,7 +220,7 @@ void OperationNearestNeighborSampled::merge_knn(
     // TODO: change final_graph_distances to contain -1.0 as marker for
     // not-yet-set to get rid of final_graph
     auto [max_dist_index, max_dist] =
-        far_neighbor(k, final_graph, final_graph_distances, original_index);
+        far_neighbor(k, partial_final_graph, partial_final_graph_distances, i);
     // std::cout << "final_graph_distances: ";
     // for (size_t j = 0; j < k; j += 1) {
     //   if (j > 0)
@@ -266,22 +267,24 @@ void OperationNearestNeighborSampled::merge_knn(
     //           << std::endl;
 
     for (size_t j = 0; j < k; j += 1) {
-      size_t mapped_candidate_index =
-          chunk_first_index + partial_graph[i * k + j];
-      int unmapped_candidate_index = indices_map[mapped_candidate_index];
+
+      // size_t mapped_candidate_index =
+      //     chunk_first_index + partial_graph[i * k + j];
+      // int64_t unmapped_candidate_index = indices_map[mapped_candidate_index];
       // test that the data point used actually matches
-      for (size_t dd = 0; dd < dim; dd += 1) {
-        assert(dataset[mapped_candidate_index * dim + dd] ==
-               dataset_copy[unmapped_candidate_index * dim + dd]);
-        // std::cout << "map: " << mapped_candidate_index
-        //           << " unmapped: " << unmapped_candidate_index
-        //           << " d map: " << dataset[mapped_candidate_index * dim + dd]
-        //           << " d unmapped: "
-        //           << dataset_copy[unmapped_candidate_index * dim + dd]
-        //           << std::endl;
-      }
-      double dist = l2_dist(dataset, mapped_index, mapped_candidate_index);
-      // std::cout << "dist: " << dist << " max_dist: " << max_dist << std::endl;
+      // for (size_t dd = 0; dd < dim; dd += 1) {
+      // assert(dataset[mapped_candidate_index * dim + dd] ==
+      //        dataset_copy[unmapped_candidate_index * dim + dd]);
+      // std::cout << "map: " << mapped_candidate_index
+      //           << " unmapped: " << unmapped_candidate_index
+      //           << " d map: " << dataset[mapped_candidate_index * dim + dd]
+      //           << " d unmapped: "
+      //           << dataset_copy[unmapped_candidate_index * dim + dd]
+      //           << std::endl;
+      // }
+      double dist = l2_dist(chunk, i, partial_graph[i * k + j]);
+      // std::cout << "dist: " << dist << " max_dist: " << max_dist <<
+      // std::endl;
       if (dist < max_dist) {
         // std::cout << "update!" << std::endl;
 
@@ -290,9 +293,10 @@ void OperationNearestNeighborSampled::merge_knn(
         //           << "] = " << partial_graph[mapped_chunk_index * k + j]
         //           << " -- unmapped to --> " << unmapped_candidate_index
         //           << std::endl;
+        int64_t candidate_index = chunk_first_index + partial_graph[i * k + j];
         bool is_duplicate = false;
         for (size_t h = 0; h < k; h += 1) {
-          if (final_graph[original_index * k + h] == unmapped_candidate_index) {
+          if (partial_final_graph[i * k + h] == candidate_index) {
             is_duplicate = true;
             break;
           }
@@ -301,15 +305,14 @@ void OperationNearestNeighborSampled::merge_knn(
           // std::cout << "is duplicate!" << std::endl;
           continue;
         }
-        assert(final_graph[original_index * k + max_dist_index] !=
-               unmapped_candidate_index);
+
+        assert(partial_final_graph[i * k + max_dist_index] != candidate_index);
         // std::cout << "non-duplicate update!" << std::endl;
-        final_graph_distances[original_index * k + max_dist_index] = dist;
-        final_graph[original_index * k + max_dist_index] =
-            unmapped_candidate_index;
+        partial_final_graph_distances[i * k + max_dist_index] = dist;
+        partial_final_graph[i * k + max_dist_index] = candidate_index;
         if (j != k - 1) {
           std::tie(max_dist_index, max_dist) = far_neighbor(
-              k, final_graph, final_graph_distances, original_index);
+              k, partial_final_graph, partial_final_graph_distances, i);
         }
       }
     }
@@ -393,38 +396,183 @@ void OperationNearestNeighborSampled::merge_knn(
   }
 } // namespace datadriven
 
-void OperationNearestNeighborSampled::randomize(base::DataMatrix &dataset,
-                                                std::vector<int> &indices_map) {
+void OperationNearestNeighborSampled::randomize(
+    size_t k, base::DataMatrix &dataset, std::vector<int64_t> &final_graph,
+    std::vector<double> &final_graph_distances,
+    std::vector<int64_t> &indices_map) {
   std::random_device rd;
   std::mt19937 mt(rd());
   std::uniform_int_distribution<size_t> dist(0, dataset.getNrows() - 1);
   for (size_t i = 0; i < dataset.getNrows(); i += 1) {
     size_t swap_index = dist(mt);
+    // swap (partial) dataset
     for (size_t d = 0; d < dim; d += 1) {
       double temp = dataset[swap_index * dim + d];
       dataset[swap_index * dim + d] = dataset[i * dim + d];
       dataset[i * dim + d] = temp;
     }
-    int index_temp = indices_map[swap_index];
+    // swap in (partial) final_graph
+    for (size_t j = 0; j < k; j += 1) {
+      size_t temp = final_graph[swap_index * k + j];
+      final_graph[swap_index * k + j] = final_graph[i * k + j];
+      final_graph[i * k + j] = temp;
+    }
+    // swap in (partial) final_graph_distances
+    for (size_t j = 0; j < k; j += 1) {
+      double temp = final_graph_distances[swap_index * k + j];
+      final_graph_distances[swap_index * k + j] =
+          final_graph_distances[i * k + j];
+      final_graph_distances[i * k + j] = temp;
+    }
+    // swap in (partial) indices_map
+    int64_t index_temp = indices_map[swap_index];
     indices_map[swap_index] = indices_map[i];
     indices_map[i] = index_temp;
   }
 }
 
-base::DataMatrix
-OperationNearestNeighborSampled::undo_randomize(base::DataMatrix &dataset,
-                                                std::vector<int> &indices_map) {
-  base::DataMatrix original(dataset_count, dim);
-  for (size_t i = 0; i < dataset.getNrows(); i += 1) {
-    int cur = indices_map[i];
+namespace detail {
+
+class swap_helper {
+private:
+  size_t dim;
+  size_t k;
+  std::vector<double> data_point;
+  std::vector<int64_t> neigh;
+  std::vector<double> neigh_dist;
+  base::DataMatrix &dataset;
+  std::vector<int64_t> &final_graph;
+  std::vector<double> &final_graph_distances;
+
+public:
+  swap_helper(size_t dim, size_t k, base::DataMatrix &dataset,
+              std::vector<int64_t> &final_graph,
+              std::vector<double> &final_graph_distances)
+      : dim(dim), k(k), data_point(dim), neigh(k), neigh_dist(k),
+        dataset(dataset), final_graph(final_graph),
+        final_graph_distances(final_graph_distances) {}
+
+  void save_temp(const size_t index) {
     for (size_t d = 0; d < dim; d += 1) {
-      original[cur * dim + d] = dataset[i * dim + d];
+      this->data_point[d] = dataset[index * dim + d];
+    }
+    for (size_t j = 0; j < k; j += 1) {
+      this->neigh[j] = final_graph[index * k + j];
+    }
+    for (size_t j = 0; j < k; j += 1) {
+      this->neigh_dist[j] = final_graph_distances[index * k + j];
     }
   }
-  return original;
+
+  void write_temp(const size_t index) {
+    for (size_t d = 0; d < dim; d += 1) {
+      dataset[index * dim + d] = this->data_point[d];
+    }
+    for (size_t j = 0; j < k; j += 1) {
+      final_graph[index * k + j] = this->neigh[j];
+    }
+    for (size_t j = 0; j < k; j += 1) {
+      final_graph_distances[index * k + j] = this->neigh_dist[j];
+    }
+  }
+};
+
+} // namespace detail
+
+// base::DataMatrix
+void OperationNearestNeighborSampled::undo_randomize(
+    size_t k, base::DataMatrix &dataset, std::vector<int64_t> &final_graph,
+    std::vector<double> &final_graph_distances,
+    std::vector<int64_t> &indices_map) {
+  std::array<detail::swap_helper, 2> temps{
+      detail::swap_helper{dim, k, dataset, final_graph, final_graph_distances},
+      detail::swap_helper{dim, k, dataset, final_graph, final_graph_distances}};
+  for (size_t i = 0; i < indices_map.size(); i += 1) {
+    // test if already processd as part of a cycle
+    if (indices_map[i] == -1 && indices_map[i] != 1) {
+      continue;
+    }
+    // int64_t last_index = -1;
+    int64_t cur_index = i;
+    size_t save_temp = 0;
+    size_t write_temp = 1;
+
+    temps[write_temp].save_temp(cur_index);
+    // now can assume that cur_index was already processed
+    while (cur_index != -1) {
+
+      int64_t next_index = indices_map[cur_index];
+      // save values of next index
+      if (next_index)
+      temps[save_temp].save_temp(next_index);
+      // overwrite next index with values of current index (saved in last round)
+      temps[write_temp].write_temp(next_index);
+
+      indices_map[cur_index] = -1;
+      cur_index = next_index;
+      std::swap(save_temp, write_temp);
+    }
+  }
 }
 
-std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
+namespace detail {
+std::tuple<base::DataMatrix, std::vector<int64_t>, std::vector<double>,
+           std::vector<int64_t>>
+extract_chunk(size_t dim, size_t k, size_t chunk_first_index,
+              size_t chunk_range, base::DataMatrix &dataset,
+              std::vector<int64_t> &final_graph,
+              std::vector<double> &final_graph_distances,
+              std::vector<int64_t> &indices_map) {
+  base::DataMatrix chunk(chunk_range, dim); // TODO: padding!
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    for (size_t d = 0; d < dim; d += 1) {
+      chunk[i * dim + d] = dataset[(chunk_first_index + i) * dim + d];
+    }
+  }
+  std::vector<int64_t> partial_final_graph(chunk_range * k);
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    for (size_t j = 0; j < k; j += 1) {
+      partial_final_graph[i * k + j] =
+          final_graph[(chunk_first_index + i) * k + j];
+    }
+  }
+  std::vector<double> partial_final_graph_distances(chunk_range * k);
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    for (size_t j = 0; j < k; j += 1) {
+      partial_final_graph_distances[i * k + j] =
+          final_graph_distances[(chunk_first_index + i) * k + j];
+    }
+  }
+  std::vector<int64_t> partial_indices_map(chunk_range);
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    partial_indices_map[i] = indices_map[chunk_first_index + i];
+  }
+  return {chunk, partial_final_graph, partial_final_graph_distances,
+          partial_indices_map};
+}
+
+void merge_chunk(size_t k, size_t chunk_first_index, size_t chunk_range,
+                 std::vector<int64_t> &final_graph,
+                 std::vector<double> &final_graph_distances,
+                 std::vector<int64_t> &partial_final_graph,
+                 std::vector<double> &partial_final_graph_distances) {
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    for (size_t j = 0; j < k; j += 1) {
+      final_graph[(chunk_first_index + i) * k + j] =
+          partial_final_graph[i * k + j];
+    }
+  }
+  for (size_t i = 0; i < chunk_range; i += 1) {
+    for (size_t j = 0; j < k; j += 1) {
+      final_graph_distances[(chunk_first_index + i) * k + j] =
+          partial_final_graph_distances[i * k + j];
+    }
+  }
+}
+
+} // namespace detail
+
+std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_sampling(
     uint32_t k, uint32_t input_chunk_size, uint32_t randomize_count) {
   std::chrono::time_point<std::chrono::system_clock> timer_start =
       std::chrono::system_clock::now();
@@ -435,15 +583,15 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
   }
   std::cout << "total_input_chunks: " << total_input_chunks << std::endl;
 
-  std::vector<int> indices_map(dataset_count);
+  std::vector<int64_t> indices_map(dataset_count);
   for (size_t i = 0; i < dataset_count; i += 1) {
     indices_map[i] = i;
   }
 
-  randomize(dataset, indices_map);
-
-  std::vector<int> final_graph(dataset_count * k, -1);
+  std::vector<int64_t> final_graph(dataset_count * k, -1);
   std::vector<double> final_graph_distances(dataset_count * k);
+
+  randomize(k, dataset, final_graph, final_graph_distances, indices_map);
 
   for (size_t random_iteration = 0; random_iteration < randomize_count;
        random_iteration += 1) {
@@ -457,12 +605,45 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
       std::cout << "chunk from: " << chunk_first_index
                 << " to: " << chunk_last_index << " range: " << chunk_range
                 << std::endl;
-      base::DataMatrix chunk(chunk_range, dim); // TODO: padding!
-      for (size_t i = 0; i < chunk_range; i += 1) {
-        for (size_t d = 0; d < dim; d += 1) {
-          chunk[i * dim + d] = dataset[(chunk_first_index + i) * dim + d];
-        }
-      }
+      // base::DataMatrix chunk(chunk_range, dim); // TODO: padding!
+      // for (size_t i = 0; i < chunk_range; i += 1) {
+      //   for (size_t d = 0; d < dim; d += 1) {
+      //     chunk[i * dim + d] = dataset[(chunk_first_index + i) * dim + d];
+      //   }
+      // }
+      // base::DataMatrix partial_dataset(chunk_range, dim);
+      // for (size_t i = 0; i < chunk_range; i += 1) {
+      //   for (size_t d = 0; d < dim; d += 1) {
+      //     partial_dataset[i * dim + d] =
+      //         partial_dataset[(chunk_first_index + i) * dim + d];
+      //   }
+      // }
+      // std::vector<int> partial_final_graph(chunk_range * k, -1);
+      // for (size_t i = 0; i < chunk_range; i += 1) {
+      //   for (size_t j = 0; j < k; j += 1) {
+      //     partial_final_graph[i * k + j] =
+      //         final_graph[(chunk_first_index + i) * k + j];
+      //   }
+      // }
+      // std::vector<double> partial_final_graph_distances(chunk_range * k);
+      // for (size_t i = 0; i < chunk_range; i += 1) {
+      //   for (size_t j = 0; j < k; j += 1) {
+      //     partial_final_graph_distances[i * k + j] =
+      //         final_graph_distances[(chunk_first_index + i) * k + j];
+      //   }
+      // }
+      // std::vector<int> partial_indices_map(chunk_range);
+      // for (size_t i = 0; i < chunk_range; i += 1) {
+      //   for (size_t j = 0; j < k; j += 1) {
+      //     partial_indices_map[i * k + j] =
+      //         indices_map[(chunk_first_index + i) * k + j];
+      //   }
+      // }
+      auto [chunk, partial_final_graph, partial_final_graph_distances,
+            partial_indices_map] =
+          detail::extract_chunk(dim, k, chunk_first_index, chunk_range, dataset,
+                                final_graph, final_graph_distances,
+                                indices_map);
 
       // std::cout << "----- chunk -----" << std::endl;
       // for (size_t i = 0; i < chunk_range; i += 1) {
@@ -476,7 +657,7 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
       // }
       // std::cout << "----- end chunk -----" << std::endl;
       // std::cout << "chunk.size() = " << chunk.size() << std::endl;
-      std::vector<int> partial_graph = knn_naive(chunk, k);
+      std::vector<int64_t> partial_graph = knn_naive(chunk, k);
 
       // std::cout << "real indices:" << std::endl;
       // for (size_t i = 0; i < chunk_range; i += 1) {
@@ -500,16 +681,27 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
       // }
       // std::cout << "----- end partial -----" << std::endl;
 
-      merge_knn(k, dataset, chunk_first_index, chunk_range, final_graph,
-                final_graph_distances, partial_graph, indices_map);
+      // TODO: should get rid of everything that requires the full dataset, that
+      // is
+      // - dataset -> node-local partial dataset (== chunk)
+      // - final_graph -> node-local partial final_graph
+      // - final_graph_distances -> same as final_graph
+      // - indices_map -> node-local partial indices_map
+      merge_knn(k, dataset, chunk_first_index, chunk_range, partial_final_graph,
+                partial_final_graph_distances, partial_graph,
+                partial_indices_map);
+
+      detail::merge_chunk(k, chunk_first_index, chunk_range, final_graph,
+                          final_graph_distances, partial_final_graph,
+                          partial_final_graph_distances);
     }
-    randomize(dataset, indices_map);
+    randomize(k, dataset, final_graph, final_graph_distances, indices_map);
 
     double dist_sum_lsh = 0.0;
     for (size_t i = 0; i < dataset_count; i += 1) {
-      for (int j = 0; j < k; ++j) {
+      for (size_t j = 0; j < k; j += 1) {
         double dist_lsh = 0.0;
-        for (int d = 0; d < dim; ++d) {
+        for (size_t d = 0; d < dim; ++d) {
           dist_lsh += (dataset_copy[i * dim + d] -
                        dataset_copy[final_graph[k * i + j] * dim + d]) *
                       (dataset_copy[i * dim + d] -
@@ -522,7 +714,7 @@ std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
               << " dist: " << dist_sum_lsh << std::endl;
   }
 
-  dataset = undo_randomize(dataset, indices_map);
+  undo_randomize(k, dataset, final_graph, final_graph_distances, indices_map);
 
   for (size_t i = 0; i < dataset_count; i += 1) {
     for (size_t d = 0; d < dim; d += 1) {
@@ -561,10 +753,9 @@ double OperationNearestNeighborSampled::get_last_duration() {
   return last_duration_s;
 }
 
-double
-OperationNearestNeighborSampled::test_accuracy(const std::vector<int> correct,
-                                               const std::vector<int> result,
-                                               const int size, const int k) {
+double OperationNearestNeighborSampled::test_accuracy(
+    const std::vector<int64_t> correct, const std::vector<int64_t> result,
+    const int size, const int k) {
   int count = 0;
   int total = 0;
   for (int s = 0; s < size; s += 1) {
@@ -582,8 +773,9 @@ OperationNearestNeighborSampled::test_accuracy(const std::vector<int> correct,
 }
 
 double OperationNearestNeighborSampled::test_distance_accuracy(
-    const std::vector<double> data, const std::vector<int> correct,
-    const std::vector<int> result, const int size, const int dim, const int k) {
+    const std::vector<double> data, const std::vector<int64_t> correct,
+    const std::vector<int64_t> result, const int size, const int dim,
+    const int k) {
   double dist_sum_correct = 0.0;
   double dist_sum_lsh = 0.0;
   for (int i = 0; i < size; ++i) {
@@ -610,9 +802,9 @@ double OperationNearestNeighborSampled::test_distance_accuracy(
   return std::abs(dist_sum_lsh - dist_sum_correct) / dist_sum_correct;
 }
 
-std::vector<int>
+std::vector<int64_t>
 OperationNearestNeighborSampled::read_csv(const std::string &csv_file_name) {
-  std::vector<int> neighbors_csv;
+  std::vector<int64_t> neighbors_csv;
   std::ifstream csv_file(csv_file_name, std::ifstream::in);
   std::string line;
   while (csv_file.good()) {
@@ -630,7 +822,8 @@ OperationNearestNeighborSampled::read_csv(const std::string &csv_file_name) {
 }
 
 void OperationNearestNeighborSampled::write_graph_file(
-    const std::string &graph_file_name, std::vector<int> &graph, uint64_t k) {
+    const std::string &graph_file_name, std::vector<int64_t> &graph,
+    uint64_t k) {
   std::ofstream out_graph(graph_file_name);
   for (size_t i = 0; i < graph.size() / k; ++i) {
     bool first = true;
