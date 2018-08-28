@@ -736,7 +736,9 @@ int main(int argc, char **argv) {
       result_timings << last_duration_create_graph << "; " << flops_create_graph
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
-      graph = knn_op.knn_naive(k);
+
+      std::vector<int64_t> graph_unconverted = knn_op.knn_naive(k);
+      graph = std::vector<int32_t>(graph.begin(), graph.end());
       double naive_duration = knn_op.get_last_duration();
 
       std::cout << "naive_duration: " << naive_duration << "s" << std::endl;
@@ -745,19 +747,23 @@ int main(int argc, char **argv) {
     }
 
     if (write_knn_graph) {
+      std::vector<int64_t> graph_converted;
+      graph_converted = std::vector<int64_t>(graph.begin(), graph.end());
       knn_op.write_graph_file(std::string("results/") + scenario_name +
                                   "_graph_naive.csv",
-                              graph, k);
+                              graph_converted, k);
     }
 
     if (variables_map.count("compare_knn_csv_file_name") > 0) {
-      std::vector<int> neighbors_reference =
+      std::vector<int64_t> neighbors_reference =
           knn_op.read_csv(compare_knn_csv_file_name);
-      double acc_assigned = knn_op.test_accuracy(neighbors_reference, graph,
-                                                 trainingData.getNrows(), k);
+      std::vector<int64_t> graph_converted;
+      graph_converted = std::vector<int64_t>(graph.begin(), graph.end());
+      double acc_assigned = knn_op.test_accuracy(
+          neighbors_reference, graph_converted, trainingData.getNrows(), k);
       double acc_distance = knn_op.test_distance_accuracy(
-          trainingData, neighbors_reference, graph, trainingData.getNrows(),
-          dimension, k);
+          trainingData, neighbors_reference, graph_converted,
+          trainingData.getNrows(), dimension, k);
       std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
       std::cout << "knn distance error: " << acc_distance << std::endl;
     }
@@ -791,9 +797,11 @@ int main(int argc, char **argv) {
                    << "; ";
 
     if (write_pruned_knn_graph) {
+      std::vector<int64_t> graph_converted;
+      graph_converted = std::vector<int64_t>(graph.begin(), graph.end());
       knn_op.write_graph_file(std::string("results/") + scenario_name +
                                   "_graph_pruned.csv",
-                              graph, k);
+                              graph_converted, k);
     }
   }
 

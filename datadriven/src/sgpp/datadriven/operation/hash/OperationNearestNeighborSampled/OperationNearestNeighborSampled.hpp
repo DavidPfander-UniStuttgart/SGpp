@@ -33,25 +33,6 @@ private:
                size_t first_index); //, size_t &far_neighbor_index, double
                                     // &far_neighbor_distance
 
-  void randomize(size_t k, base::DataMatrix &dataset,
-                 std::vector<int64_t> &final_graph,
-                 std::vector<double> &final_graph_distances,
-                 std::vector<int64_t> &indices_map);
-
-  // base::DataMatrix undo_randomize(base::DataMatrix &dataset,
-  //                                 std::vector<int64_t> &indices_map);
-
-  void undo_randomize(size_t k, base::DataMatrix &dataset,
-                      std::vector<int64_t> &final_graph,
-                      std::vector<double> &final_graph_distances,
-                      std::vector<int64_t> &indices_map);
-
-  void merge_knn(size_t k, base::DataMatrix &chunk, size_t chunk_first_index,
-                 size_t chunk_range, std::vector<int64_t> &final_graph,
-                 std::vector<double> &final_graph_distances,
-                 std::vector<int64_t> &partial_graph,
-                 std::vector<int64_t> &indices_map);
-
 public:
   OperationNearestNeighborSampled(base::DataMatrix dataset, size_t dim,
                                   bool verbose = false);
@@ -70,14 +51,42 @@ public:
 
   double get_last_duration();
 
-  double test_accuracy(const std::vector<int64_t> correct,
-                       const std::vector<int64_t> result, const int size,
-                       const int k);
+  void randomize(size_t k, base::DataMatrix &dataset,
+                 std::vector<int64_t> &graph,
+                 std::vector<double> &graph_distances,
+                 std::vector<int64_t> &indices_map);
 
-  double test_distance_accuracy(const std::vector<double> data,
-                                const std::vector<int64_t> correct,
-                                const std::vector<int64_t> result,
-                                const int size, const int dim, const int k);
+  void undo_randomize(size_t k, base::DataMatrix &dataset,
+                      std::vector<int64_t> &graph,
+                      std::vector<double> &graph_distances,
+                      std::vector<int64_t> &indices_map);
+
+  void merge_knn(size_t k, base::DataMatrix &chunk, size_t chunk_first_index,
+                 size_t chunk_range, std::vector<int64_t> &final_graph,
+                 std::vector<double> &final_graph_distances,
+                 std::vector<int64_t> &partial_graph);
+
+  std::tuple<base::DataMatrix, std::vector<int64_t>, std::vector<double>>
+  extract_chunk(size_t dim, size_t k, size_t chunk_first_index,
+                size_t chunk_range, base::DataMatrix &dataset,
+                std::vector<int64_t> &final_graph,
+                std::vector<double> &final_graph_distances);
+
+  void merge_chunk(size_t k, size_t chunk_first_index, size_t chunk_range,
+                   std::vector<int64_t> &final_graph,
+                   std::vector<double> &final_graph_distances,
+                   std::vector<int64_t> &partial_final_graph,
+                   std::vector<double> &partial_final_graph_distances);
+
+  double test_accuracy(const std::vector<int64_t> &correct,
+                       const std::vector<int64_t> &result,
+                       const int dataset_count, const int k);
+
+  double test_distance_accuracy(const std::vector<double> &data,
+                                const std::vector<int64_t> &correct,
+                                const std::vector<int64_t> &result,
+                                const int dataset_count, const int dim,
+                                const int k);
 
   inline std::vector<std::string> split(const std::string &s, char delim) {
     std::stringstream ss(s);

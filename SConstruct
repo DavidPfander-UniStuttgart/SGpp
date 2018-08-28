@@ -509,21 +509,21 @@ if env["RUN_PYTHON_TESTS"] and env["SG_PYTHON"]:
 # Boost tests
 #########################################################################
 
-# if env["COMPILE_BOOST_TESTS"]:
-#   env.Depends(boostTestTargetList, finalStepDependencies)
-#   finalStepDependencies.append(boostTestTargetList)
-#   env.SideEffect("sideEffectFinalSteps", boostTestTargetList)
+if env["COMPILE_BOOST_TESTS"]:
+  # env.Depends(boostTestTargetList, finalStepDependencies)
+  finalStepDependencies.append(boostTestTargetList)
+  # env.SideEffect("sideEffectFinalSteps", boostTestTargetList)
 
-#   if env["RUN_BOOST_TESTS"]:
-#     env.Depends(boostTestRunTargetList, finalStepDependencies)
-#     finalStepDependencies.append(boostTestRunTargetList)
-#     env.SideEffect("sideEffectFinalSteps", boostTestRunTargetList)
+  if env["RUN_BOOST_TESTS"]:
+    #   env.Depends(boostTestRunTargetList, finalStepDependencies)
+    finalStepDependencies.append(boostTestRunTargetList)
+    #   env.SideEffect("sideEffectFinalSteps", boostTestRunTargetList)
 
 # Examples
 #########################################################################
 
 # env.Depends(exampleTargetList, finalStepDependencies)
-# finalStepDependencies.append(exampleTargetList)
+finalStepDependencies.append(exampleTargetList)
 # env.SideEffect("sideEffectFinalSteps", exampleTargetList)
 
 # System-wide installation
