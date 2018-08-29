@@ -704,21 +704,21 @@ int main(int argc, char **argv) {
     sampling_chunk_size = trainingData.getNrows();
   }
 
-  sgpp::datadriven::OperationNearestNeighborSampled knn_op(trainingData,
-                                                           dimension, true);
+  sgpp::datadriven::OperationNearestNeighborSampled knn_op(true);
 
   {
     std::cout << "Starting graph creation..." << std::endl;
 
     if (knn_algorithm.compare("lsh") == 0) {
-      graph = knn_op.knn_lsh(k, lsh_tables, lsh_hashes, lsh_w);
+      graph = knn_op.knn_lsh(dimension, trainingData, k, lsh_tables, lsh_hashes,
+                             lsh_w);
       double lsh_duration = knn_op.get_last_duration();
 
       std::cout << "lsh_duration: " << lsh_duration << "s" << std::endl;
 
       result_timings << lsh_duration << "; 0.0;";
     } else if (knn_algorithm.compare("ocl") == 0) {
-      graph = knn_op.knn_ocl(k, configFileName);
+      graph = knn_op.knn_ocl(dimension, trainingData, k, configFileName);
       double last_duration_create_graph = knn_op.get_last_duration();
       std::cout << "last_duration_create_graph: " << last_duration_create_graph
                 << "s" << std::endl;
@@ -737,7 +737,8 @@ int main(int argc, char **argv) {
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
 
-      std::vector<int64_t> graph_unconverted = knn_op.knn_naive(k);
+      std::vector<int64_t> graph_unconverted =
+          knn_op.knn_naive(dimension, trainingData, k);
       graph = std::vector<int32_t>(graph.begin(), graph.end());
       double naive_duration = knn_op.get_last_duration();
 

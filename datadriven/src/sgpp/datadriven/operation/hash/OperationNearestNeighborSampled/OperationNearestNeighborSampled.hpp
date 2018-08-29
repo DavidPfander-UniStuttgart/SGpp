@@ -13,64 +13,66 @@ namespace datadriven {
 
 class OperationNearestNeighborSampled {
 private:
-  base::DataMatrix dataset;
-  base::DataMatrix dataset_copy;
-  size_t dataset_count;
-  size_t dim;
+  // base::DataMatrix &dataset;
+  // size_t dataset_count;
+  // size_t dim;
 
   double last_duration_s;
 
   bool verbose;
 
-  base::DataMatrix sample_dataset(size_t chunk_size, size_t chunk_count);
+  // base::DataMatrix sample_dataset(size_t chunk_size, size_t chunk_count);
 
-  double l2_dist(const base::DataMatrix &dataset, const size_t first_index,
-                 const size_t second_index);
+  double l2_dist(size_t dim, const base::DataMatrix &dataset,
+                 const size_t first_index, const size_t second_index);
 
   std::tuple<size_t, double>
-  far_neighbor(size_t k, std::vector<int64_t> &final_graph,
-               std::vector<double> &final_graph_distances,
-               size_t first_index); //, size_t &far_neighbor_index, double
-                                    // &far_neighbor_distance
+  far_neighbor(size_t dim, size_t k, std::vector<int64_t> &final_graph,
+               std::vector<double> &final_graph_distances, size_t first_index);
 
 public:
-  OperationNearestNeighborSampled(base::DataMatrix dataset, size_t dim,
-                                  bool verbose = false);
+  OperationNearestNeighborSampled(bool verbose = false);
 
-  std::vector<int32_t> knn_lsh(uint32_t k, uint64_t lsh_tables,
+  std::vector<int32_t> knn_lsh(size_t dim, sgpp::base::DataMatrix &dataset,
+                               uint32_t k, uint64_t lsh_tables,
                                uint64_t lsh_hashes, double lsh_w);
 
-  std::vector<int64_t> knn_naive(uint32_t k);
+  std::vector<int64_t> knn_naive(size_t dim, sgpp::base::DataMatrix &dataset,
+                                 uint32_t k);
 
-  std::vector<int64_t> knn_naive(base::DataMatrix &local_dataset, uint32_t k);
+  std::vector<int32_t> knn_ocl(size_t dim, sgpp::base::DataMatrix &dataset,
+                               uint32_t k, std::string configFileName);
 
-  std::vector<int32_t> knn_ocl(uint32_t k, std::string configFileName);
-
-  std::vector<int64_t> knn_naive_sampling(uint32_t k, uint32_t input_chunk_size,
+  std::vector<int64_t> knn_naive_sampling(size_t dim,
+                                          sgpp::base::DataMatrix &dataset,
+                                          uint32_t k, uint32_t input_chunk_size,
                                           uint32_t randomize_count);
 
   double get_last_duration();
 
-  void randomize(size_t k, base::DataMatrix &dataset,
+  void randomize(size_t dim, base::DataMatrix &dataset, size_t k,
                  std::vector<int64_t> &graph,
                  std::vector<double> &graph_distances,
                  std::vector<int64_t> &indices_map);
 
-  void undo_randomize(size_t k, base::DataMatrix &dataset,
+  void undo_randomize(size_t dim, base::DataMatrix &dataset, size_t k,
                       std::vector<int64_t> &graph,
                       std::vector<double> &graph_distances,
                       std::vector<int64_t> &indices_map);
 
-  void merge_knn(size_t k, base::DataMatrix &chunk, size_t chunk_first_index,
-                 size_t chunk_range, std::vector<int64_t> &final_graph,
-                 std::vector<double> &final_graph_distances,
-                 std::vector<int64_t> &partial_graph);
+  void merge_knn(size_t dim, size_t k, base::DataMatrix &chunk,
+                 size_t chunk_range, std::vector<int64_t> &partial_final_graph,
+                 std::vector<double> &partial_final_graph_distances,
+                 std::vector<int64_t> &partial_graph,
+                 std::vector<int64_t> &partial_indices_map);
 
-  std::tuple<base::DataMatrix, std::vector<int64_t>, std::vector<double>>
+  std::tuple<base::DataMatrix, std::vector<int64_t>, std::vector<double>,
+             std::vector<int64_t>>
   extract_chunk(size_t dim, size_t k, size_t chunk_first_index,
                 size_t chunk_range, base::DataMatrix &dataset,
                 std::vector<int64_t> &final_graph,
-                std::vector<double> &final_graph_distances);
+                std::vector<double> &final_graph_distances,
+                std::vector<int64_t> &indices_map);
 
   void merge_chunk(size_t k, size_t chunk_first_index, size_t chunk_range,
                    std::vector<int64_t> &final_graph,
