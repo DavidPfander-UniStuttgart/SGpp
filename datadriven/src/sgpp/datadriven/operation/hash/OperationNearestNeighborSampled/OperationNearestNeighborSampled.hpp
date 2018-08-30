@@ -5,6 +5,7 @@
 
 #include <cmath>
 #include <fstream>
+#include <functional>
 #include <sstream>
 #include <vector>
 
@@ -33,20 +34,32 @@ private:
 public:
   OperationNearestNeighborSampled(bool verbose = false);
 
-  std::vector<int32_t> knn_lsh(size_t dim, sgpp::base::DataMatrix &dataset,
+  std::vector<int64_t> knn_lsh(size_t dim, sgpp::base::DataMatrix &dataset,
                                uint32_t k, uint64_t lsh_tables,
                                uint64_t lsh_hashes, double lsh_w);
 
   std::vector<int64_t> knn_naive(size_t dim, sgpp::base::DataMatrix &dataset,
                                  uint32_t k);
 
-  std::vector<int32_t> knn_ocl(size_t dim, sgpp::base::DataMatrix &dataset,
+  std::vector<int64_t> knn_ocl(size_t dim, sgpp::base::DataMatrix &dataset,
                                uint32_t k, std::string configFileName);
+
+  std::vector<int64_t>
+  knn_lsh_sampling(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+                   uint32_t input_chunk_size, uint32_t randomize_count,
+                   uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w);
 
   std::vector<int64_t> knn_naive_sampling(size_t dim,
                                           sgpp::base::DataMatrix &dataset,
                                           uint32_t k, uint32_t input_chunk_size,
                                           uint32_t randomize_count);
+
+  std::vector<int64_t> knn_sampling(
+      size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+      uint32_t input_chunk_size, uint32_t randomize_count,
+      std::function<std::vector<int64_t>(size_t, sgpp::base::DataMatrix &,
+                                         uint32_t)>
+          chunk_knn);
 
   double get_last_duration();
 

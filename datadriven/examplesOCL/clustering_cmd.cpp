@@ -698,7 +698,7 @@ int main(int argc, char **argv) {
     out_density.close();
   }
 
-  std::vector<int> graph;
+  std::vector<int64_t> graph;
 
   if (sampling_chunk_size == 0) {
     sampling_chunk_size = trainingData.getNrows();
@@ -737,22 +737,16 @@ int main(int argc, char **argv) {
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
 
-      std::vector<int64_t> graph_unconverted =
-          knn_op.knn_naive(dimension, trainingData, k);
-      graph = std::vector<int32_t>(graph.begin(), graph.end());
+      graph = knn_op.knn_naive(dimension, trainingData, k);
       double naive_duration = knn_op.get_last_duration();
-
       std::cout << "naive_duration: " << naive_duration << "s" << std::endl;
-
       result_timings << naive_duration << "; 0.0;";
     }
 
     if (write_knn_graph) {
-      std::vector<int64_t> graph_converted;
-      graph_converted = std::vector<int64_t>(graph.begin(), graph.end());
       knn_op.write_graph_file(std::string("results/") + scenario_name +
                                   "_graph_naive.csv",
-                              graph_converted, k);
+                              graph, k);
     }
 
     if (variables_map.count("compare_knn_csv_file_name") > 0) {
@@ -778,7 +772,11 @@ int main(int argc, char **argv) {
         operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
             *grid, dimension, alpha, trainingData, threshold, k,
             configFileName));
-    operation_prune->prune_graph(graph);
+    std::vector<int> graph_unconverted;
+    operation_prune->prune_graph(graph_unconverted);
+    // TODO: remove after operation is converted to int64_t
+    graph = std::vector<int64_t>(graph_unconverted.begin(),
+                                 graph_unconverted.end());
 
     double last_duration_prune_graph = operation_prune->getLastDuration();
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph
@@ -816,8 +814,11 @@ int main(int argc, char **argv) {
     std::chrono::time_point<std::chrono::system_clock> find_cluster_timer_stop;
     find_cluster_timer_start = std::chrono::system_clock::now();
 
+    // TODO: update after conversion
+    std::vector<int32_t> graph_converted(graph.begin(), graph.end());
+
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::
-        find_clusters(graph, k, node_cluster_map, clusters);
+        find_clusters(graph_converted, k, node_cluster_map, clusters);
 
     find_cluster_timer_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> find_cluster_elapsed_seconds =
