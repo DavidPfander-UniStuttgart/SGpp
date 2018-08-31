@@ -214,7 +214,7 @@ int main(int argc, char *argv[]) {
       rhs_start = std::chrono::system_clock::now();
       std::cout << "Create right-hand side of density equation: " << std::endl;
       std::cout << "-------------------------------------------- " << std::endl;
-      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, datasetFileName,
                                                                      configFileName);
       rhs_op.generate_b(rhs);
       rhs_end = std::chrono::system_clock::now();
@@ -254,7 +254,7 @@ int main(int argc, char *argv[]) {
         rhs_start = std::chrono::system_clock::now();
         std::cout << "Create right-hand side of density equation: " << std::endl;
         std::cout << "-------------------------------------------- " << std::endl;
-        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, datasetFileName,
                                                                        configFileName);
         rhs_op.generate_b(rhs);
         rhs_end = std::chrono::system_clock::now();
@@ -292,7 +292,7 @@ int main(int argc, char *argv[]) {
         rhs_start = std::chrono::system_clock::now();
         std::cout << "Create right-hand side of density equation: " << std::endl;
         std::cout << "-------------------------------------------- " << std::endl;
-        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, datasetFileName,
                                                                        configFileName);
         rhs_op.generate_b(rhs);
         rhs_end = std::chrono::system_clock::now();
@@ -345,7 +345,7 @@ int main(int argc, char *argv[]) {
     std::chrono::time_point<std::chrono::high_resolution_clock> create_knn_start, create_knn_end;
     create_knn_start = std::chrono::system_clock::now();
     sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
-        *grid, alpha, dataset, k, threshold, configFileName);
+        *grid, alpha, datasetFileName, k, threshold, configFileName);
     std::vector<int> knn_graph;
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();

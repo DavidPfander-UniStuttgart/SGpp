@@ -71,9 +71,9 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
                                                 "MyOCLConf.cfg");
     }
   }
-  GraphCreationWorker(sgpp::base::DataMatrix &data, int k)
+  GraphCreationWorker(std::string dataset_filename, int k)
       : MPIWorkerBase("GraphCreationWorker"),
-        MPIWorkerGraphBase("GraphCreationWorker", data, k),
+        MPIWorkerGraphBase("GraphCreationWorker", dataset_filename, k),
         opencl_node(false),
         overseer_node(false),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
@@ -124,8 +124,8 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
 };
 class OperationGraphCreationMPI : public GraphCreationWorker {
  public:
-  OperationGraphCreationMPI(sgpp::base::DataMatrix &data, int k)
-      : MPIWorkerBase("GraphCreationWorker"), GraphCreationWorker(data, k) {}
+  OperationGraphCreationMPI(std::string dataset_filename, int k)
+      : MPIWorkerBase("GraphCreationWorker"), GraphCreationWorker(dataset_filename, k) {}
   virtual ~OperationGraphCreationMPI() {}
   virtual void create_graph(std::vector<int> &result) {
     start_sub_workers();

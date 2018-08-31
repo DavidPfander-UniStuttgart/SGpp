@@ -83,11 +83,11 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
           data_matrix, treshold, k, parameters);  // , opencl_platform, opencl_device
     }
   }
-  PrunedGraphCreationWorker(base::Grid &grid, base::DataVector &alpha, base::DataMatrix &data,
+  PrunedGraphCreationWorker(base::Grid &grid, base::DataVector &alpha, std::string dataset_filename,
                             int k, double treshold, std::string ocl_conf_filename)
       : MPIWorkerBase("PrunedGraphCreationWorker"),
         MPIWorkerGridBase("PrunedGraphCreationWorker", grid),
-        MPIWorkerGraphBase("PrunedGraphCreationWorker", data, k),
+        MPIWorkerGraphBase("PrunedGraphCreationWorker", dataset_filename, k),
         MPIWorkerPackageBase("PrunedGraphCreationWorker", k, ocl_conf_filename),
         delete_alpha(false) {
     // Send alpha vector
