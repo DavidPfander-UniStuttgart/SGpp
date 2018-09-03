@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE(lsh_gaussian_multiple_datasets) {
 
 BOOST_AUTO_TEST_CASE(lsh_gaussian_multiple_datasets_small) {
 
-  for (size_t rep = 0; rep < 100; rep += 1) {
+  for (size_t rep = 0; rep < 10; rep += 1) {
     size_t dim = 2;
     std::string dataset_file{"datasets/gaussian_c3_size20_dim2.arff"};
     sgpp::datadriven::Dataset dataset =
@@ -217,6 +217,79 @@ BOOST_AUTO_TEST_CASE(lsh_gaussian_multiple_datasets_small) {
     // } else if (dim == 4) {
     std::vector<int64_t> graph =
         knn_op.knn_lsh(dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
+    // }
+    std::vector<int64_t> graph_reference =
+        knn_op.knn_naive(dim, trainingData, k);
+
+    double err_acc = knn_op.test_accuracy(graph_reference, graph,
+                                          trainingData.getNrows(), k);
+    double err_distance_acc = knn_op.test_distance_accuracy(
+        trainingData, graph_reference, graph, trainingData.getNrows(), dim, k);
+    // std::cout << "err_acc: " << err_acc << std::endl;
+    // std::cout << "err_distance_acc: " << err_distance_acc << std::endl;
+    BOOST_CHECK(err_acc > 0.9);
+    BOOST_CHECK(err_distance_acc < 1E-1);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_single_chunk_randomize_chunk) {
+
+  for (size_t dim = 2; dim <= 8; dim += 2) {
+    std::string dataset_file{std::string{"datasets/gaussian_c3_size20000_dim"} +
+                             std::to_string(dim) + ".arff"};
+    sgpp::datadriven::Dataset dataset =
+        sgpp::datadriven::ARFFTools::readARFF(dataset_file);
+    sgpp::base::DataMatrix trainingData{dataset.getData()};
+    uint32_t sampling_randomize{100};
+    uint32_t sampling_chunk_size{99999};
+    size_t k{5};
+    uint64_t lsh_tables{50};
+    uint64_t lsh_hashes{5};
+    double lsh_w{2.0};
+
+    sgpp::datadriven::OperationNearestNeighborSampled knn_op;
+    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+        dim, trainingData, k, sampling_chunk_size, sampling_randomize,
+        lsh_tables, lsh_hashes, lsh_w, 100);
+    std::vector<int64_t> graph_reference =
+        knn_op.knn_naive(dim, trainingData, k);
+
+    double err_acc = knn_op.test_accuracy(graph_reference, graph,
+                                          trainingData.getNrows(), k);
+    double err_distance_acc = knn_op.test_distance_accuracy(
+        trainingData, graph_reference, graph, trainingData.getNrows(), dim, k);
+    // std::cout << "err_acc: " << err_acc << std::endl;
+    // std::cout << "err_distance_acc: " << err_distance_acc << std::endl;
+    BOOST_CHECK(err_acc > 0.9);
+    BOOST_CHECK(err_distance_acc < 1E-1);
+  }
+}
+
+BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_multiple_chunks_randomize_chunk) {
+
+  for (size_t dim = 2; dim <= 4; dim += 2) {
+    // size_t dim = 4;
+    std::string dataset_file{std::string{"datasets/gaussian_c3_size20000_dim"} +
+                             std::to_string(dim) + ".arff"};
+    sgpp::datadriven::Dataset dataset =
+        sgpp::datadriven::ARFFTools::readARFF(dataset_file);
+    sgpp::base::DataMatrix trainingData{dataset.getData()};
+    uint32_t sampling_randomize{100};
+    uint32_t sampling_chunk_size{1000};
+    size_t k{5};
+    uint64_t lsh_tables{50};
+    uint64_t lsh_hashes{5};
+    double lsh_w{2.0};
+
+    sgpp::datadriven::OperationNearestNeighborSampled knn_op{true};
+    // std::vector<int64_t> graph;
+    // if (dim == 2) {
+    // graph = knn_op.knn_naive_sampling(
+    //     dim, trainingData, k, sampling_chunk_size, sampling_randomize);
+    // } else if (dim == 4) {
+    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+        dim, trainingData, k, sampling_chunk_size, sampling_randomize,
+        lsh_tables, lsh_hashes, lsh_w, 100);
     // }
     std::vector<int64_t> graph_reference =
         knn_op.knn_naive(dim, trainingData, k);
@@ -673,7 +746,7 @@ BOOST_AUTO_TEST_CASE(extract_chunk) {
   }
 }
 
-BOOST_AUTO_TEST_CASE(merge_chunk) {
+BOOST_AUTO_TEST_CASE(write_back_chunk) {
   dim = 2;
   k = 2;
   dataset_count = 4;
@@ -740,9 +813,9 @@ BOOST_AUTO_TEST_CASE(merge_chunk) {
     //   std::cout << std::endl;
     // }
 
-    knn_op.merge_chunk(k, chunk_first_index, chunk_range, final_graph,
-                       final_graph_distances, partial_final_graph,
-                       partial_final_graph_distances);
+    knn_op.write_back_chunk(k, chunk_first_index, chunk_range, final_graph,
+                            final_graph_distances, partial_final_graph,
+                            partial_final_graph_distances);
 
     // std::cout << "final_graph after merge:" << std::endl;
     // for (size_t i = 0; i < dataset_count; i += 1) {
@@ -949,7 +1022,7 @@ BOOST_AUTO_TEST_CASE(merge_knn_second_round_two_ranges) {
   }
 }
 
-BOOST_AUTO_TEST_CASE(merge_chunk_randomize) {
+BOOST_AUTO_TEST_CASE(write_back_chunk_randomize) {
   dim = 2;
   k = 2;
   dataset_count = 4;
@@ -1000,9 +1073,9 @@ BOOST_AUTO_TEST_CASE(merge_chunk_randomize) {
       }
     }
 
-    knn_op.merge_chunk(k, chunk_first_index, chunk_range, final_graph,
-                       final_graph_distances, partial_final_graph,
-                       partial_final_graph_distances);
+    knn_op.write_back_chunk(k, chunk_first_index, chunk_range, final_graph,
+                            final_graph_distances, partial_final_graph,
+                            partial_final_graph_distances);
   }
 
   knn_op.undo_randomize(dim, trainingData, k, final_graph,

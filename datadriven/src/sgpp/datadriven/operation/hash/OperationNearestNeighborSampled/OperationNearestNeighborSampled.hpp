@@ -47,19 +47,23 @@ public:
   std::vector<int64_t>
   knn_lsh_sampling(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
                    uint32_t input_chunk_size, uint32_t randomize_count,
-                   uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w);
+                   uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w,
+                   size_t rand_chunk_size = 0);
 
   std::vector<int64_t> knn_naive_sampling(size_t dim,
                                           sgpp::base::DataMatrix &dataset,
                                           uint32_t k, uint32_t input_chunk_size,
-                                          uint32_t randomize_count);
+                                          uint32_t randomize_count,
+                                          size_t rand_chunk_size = 0);
 
+  // set rand_chunk_size to 0 to disabled randomization on the chunk level
   std::vector<int64_t> knn_sampling(
       size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
       uint32_t input_chunk_size, uint32_t randomize_count,
       std::function<std::vector<int64_t>(size_t, sgpp::base::DataMatrix &,
                                          uint32_t)>
-          chunk_knn);
+          chunk_knn,
+      size_t rand_chunk_size = 0);
 
   double get_last_duration();
 
@@ -72,6 +76,12 @@ public:
                       std::vector<int64_t> &graph,
                       std::vector<double> &graph_distances,
                       std::vector<int64_t> &indices_map);
+
+  void randomize_chunk(size_t dim, base::DataMatrix &dataset, size_t k,
+                       std::vector<int64_t> &graph,
+                       std::vector<double> &graph_distances,
+                       std::vector<int64_t> &indices_map,
+                       size_t rand_chunk_size);
 
   void merge_knn(size_t dim, size_t k, base::DataMatrix &chunk,
                  size_t chunk_range, std::vector<int64_t> &partial_final_graph,
@@ -87,11 +97,21 @@ public:
                 std::vector<double> &final_graph_distances,
                 std::vector<int64_t> &indices_map);
 
-  void merge_chunk(size_t k, size_t chunk_first_index, size_t chunk_range,
-                   std::vector<int64_t> &final_graph,
-                   std::vector<double> &final_graph_distances,
-                   std::vector<int64_t> &partial_final_graph,
-                   std::vector<double> &partial_final_graph_distances);
+  void write_back_chunk(size_t k, size_t chunk_first_index, size_t chunk_range,
+                        std::vector<int64_t> &final_graph,
+                        std::vector<double> &final_graph_distances,
+                        std::vector<int64_t> &partial_final_graph,
+                        std::vector<double> &partial_final_graph_distances);
+
+  void write_back_chunk(size_t dim, size_t k, size_t chunk_first_index,
+                        size_t chunk_range, base::DataMatrix &dataset,
+                        base::DataMatrix &chunk,
+                        std::vector<int64_t> &final_graph,
+                        std::vector<double> &final_graph_distances,
+                        std::vector<int64_t> &partial_final_graph,
+                        std::vector<double> &partial_final_graph_distances,
+                        std::vector<int64_t> &indices_map,
+                        std::vector<int64_t> &partial_indices_map);
 
   double test_accuracy(const std::vector<int64_t> &correct,
                        const std::vector<int64_t> &result,
