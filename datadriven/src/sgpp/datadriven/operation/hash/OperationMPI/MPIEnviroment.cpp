@@ -36,8 +36,6 @@ MPIEnviroment::MPIEnviroment(int argc, char *argv[], bool verbose)
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   debugger_trap(rank);
 }
-MPIEnviroment::MPIEnviroment(void) {}
-MPIEnviroment::MPIEnviroment(MPIEnviroment &cpy) {}
 
 void MPIEnviroment::slave_mainloop(void) {
   MPI_Status stat;

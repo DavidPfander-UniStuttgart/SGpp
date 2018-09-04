@@ -28,15 +28,17 @@ class MPIEnviroment {
   int initialized_worker_counter;
   int initial_source;
 
+  /// Communicator for talking to own slaves
   MPI_Comm communicator;
+  /// Communicator for talking to own master node
   MPI_Comm input_communicator;
+  /// Communicator for talking with all OpenCL nodes - useful for loading data with MPI I/O
+  MPI_Comm opencl_communicator;
   MPI_Group node_neighbors;
   std::vector<int> neighbor_list;
   int worker_count;
 
   MPIEnviroment(int argc, char *argv[], bool verbose);
-  MPIEnviroment(void);
-  MPIEnviroment(MPIEnviroment &cpy);
   /**
    * Slave main - every MPI node except the master should run in one of those
    *
@@ -83,6 +85,12 @@ class MPIEnviroment {
   static base::OperationConfiguration createMPIConfiguration(
       int compute_nodes, base::OCLOperationConfiguration node_opencl_configuration);
   ~MPIEnviroment();
+
+  MPIEnviroment(void) = delete;
+  MPIEnviroment(MPIEnviroment &cpy) = delete;
+  MPIEnviroment(MPIEnviroment &&cpy) = delete;
+  MPIEnviroment& operator=(MPIEnviroment other) = delete;
+  MPIEnviroment& operator=(MPIEnviroment &&other) = delete;
 };
 
 template <class T>
