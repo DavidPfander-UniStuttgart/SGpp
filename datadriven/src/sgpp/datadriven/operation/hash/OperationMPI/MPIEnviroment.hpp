@@ -48,7 +48,7 @@ class MPIEnviroment {
   int count_slaves(json::Node &currentslave);
   int count_nodes(json::Node &currentworker);
   void create_opencl_node_list(std::vector<int> &node_id_list,
-                               unsigned int current_node_id,
+                               unsigned int &current_node_id,
                                json::Node &currentslave);
   void init_communicator(base::OperationConfiguration conf);
   void init_opencl_communicator(base::OperationConfiguration conf);

@@ -28,7 +28,10 @@ void debugger_trap(int process_rank) {
 
 }
 MPIEnviroment::MPIEnviroment(int argc, char *argv[], bool verbose)
-    : numTasks(0), rank(0), verbose(verbose), initialized(false), initialized_worker_counter(0) {
+    : numTasks(0), rank(0), verbose(verbose), initialized(false),
+      initialized_worker_counter(0), communicator(MPI_COMM_NULL),
+      input_communicator(MPI_COMM_NULL), opencl_communicator(MPI_COMM_NULL)
+{
   MPI_Init(&argc, &argv);
   // Gets number of tasks/processes that this program is running on
   MPI_Comm_size(MPI_COMM_WORLD, &numTasks);
@@ -134,7 +137,7 @@ void MPIEnviroment::slave_mainloop(void) {
         if (result != MPI_SUCCESS) {
           std::stringstream errorString;
           errorString << "MPI network initialisation error:";
-          errorString << "Could not creat input communicator on node " << rank << std::endl;
+          errorString << "Could not create input communicator on node " << rank << std::endl;
           if (result == MPI_ERR_COMM)
             errorString << "Error Code: " << result << "(MPI_ERR_COMM)" << std::endl;
           else if (result == MPI_ERR_GROUP)
@@ -189,6 +192,67 @@ void MPIEnviroment::slave_mainloop(void) {
       }
     } else if (message[0] == 6) {
       initialized = true;
+    } else if (message[0] == 7) {
+      // Receive node list
+      MPI_Probe(message_source, 1, MPI_COMM_WORLD, &stat);
+      MPI_Get_count(&stat, MPI_INT, &messagesize);
+      int *opencl_nodelist = new int[messagesize];
+      MPI_Recv(opencl_nodelist, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
+               &stat);
+      // Check received opencl_nodelist for correctness
+      bool contains_this_node = false;
+      for (int i = 0; i < messagesize; ++i) {
+        if (rank == opencl_nodelist[i]) {
+          contains_this_node = true;
+          break;
+        }
+      }
+      if (!contains_this_node) {
+        std::stringstream errorString;
+        errorString << "MPI network initialisation error:";
+        errorString << "Tried to create opencl comm on rank that is not in comm group (rank "
+                    << rank << ")" << std::endl;
+        errorString << "OpenCL comm group: ";
+        for (int i = 0; i < messagesize; ++i)
+          errorString << opencl_nodelist[i] << " ";
+        throw std::logic_error(errorString.str());
+
+      }
+      bool is_opencl_node = (worker_count == 0);
+      if (!contains_this_node) {
+        std::stringstream errorString;
+        errorString << "MPI network initialisation error:";
+        errorString << "Tried to create opencl comm on rank " << rank
+                    << " that is no opencl node (since it has workers)"
+                    << std::endl;
+        throw std::logic_error(errorString.str());
+      }
+      // Create Comm
+      MPI_Group world_group, tmp_group;
+      MPI_Comm tmp_comm;
+      MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+      MPI_Group_incl(world_group, messagesize, opencl_nodelist, &tmp_group);
+      int result = MPI_Comm_create_group(MPI_COMM_WORLD, tmp_group, 0, &opencl_communicator);
+      if (result != MPI_SUCCESS) {
+        std::stringstream errorString;
+        errorString << "MPI network initialisation error:";
+        errorString << "Could not create opencl communicator on node " << rank << std::endl;
+        if (result == MPI_ERR_COMM)
+          errorString << "Error Code: " << result << "(MPI_ERR_COMM)" << std::endl;
+        else if (result == MPI_ERR_GROUP)
+          errorString << "Error Code: " << result << "(MPI_ERR_GROUP)" << std::endl;
+        else
+          errorString << "Error Code: " << result << "(Unknown error code)" << std::endl;
+        throw std::logic_error(errorString.str());
+      }
+      if (input_communicator == MPI_COMM_NULL) {
+        std::stringstream errorString;
+        errorString << "Communicator is MPI_COMM_NULL. OpenCL Comm on node " << rank
+                    << " could not be created properly! Check configuration file" << std::endl;
+        throw std::logic_error(errorString.str());
+
+      }
+      delete [] opencl_nodelist;
     } else if (message[0] >= 10) {
       // run operation here
       if (slave_ops[message[0] - 10] == NULL)
@@ -233,14 +297,13 @@ int MPIEnviroment::count_slaves(json::Node &currentslave) {
 
 // counts only slaves
 void MPIEnviroment::create_opencl_node_list(std::vector<int> &node_id_list,
-                                            unsigned int current_node_id,
+                                            unsigned int &current_node_id,
                                             json::Node &currentslave) {
   if (currentslave.contains("SLAVES")) {
-    unsigned int slave_offset = 1;
     for (std::string &slaveName : currentslave["SLAVES"].keys()) {
-      create_opencl_node_list(node_id_list, current_node_id + slave_offset,
+      current_node_id++;
+      create_opencl_node_list(node_id_list, current_node_id,
                               currentslave["SLAVES"][slaveName]);
-      slave_offset++;
     }
   } else {
     node_id_list.push_back(current_node_id);
@@ -300,19 +363,23 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
 }
 
 void MPIEnviroment::init_opencl_communicator(base::OperationConfiguration conf) {
-  std::vector<int> opencl_nodes;
-  create_opencl_node_list(opencl_nodes, 0, conf);
-  // Send Action ID to slaves (7 to create the opencl communicator)
-  int message[1];
-  message[0] = 7;
-  // for (int id : ); ++i) {
-  //   if (i != rank) MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, MPI_COMM_WORLD);
-  // }
-  // Send the actual configuration
-  for (int i = 0; i < MPIEnviroment::get_node_count(); ++i) {
-    if (i != rank)
-      MPI_Send(neighbor_list.data(), static_cast<int>(neighbor_list.size()), MPI_INT, i, 1,
+  if (rank == 0) {
+    // Gather all nodes
+    std::vector<int> opencl_nodes;
+    unsigned int id = 0;
+    create_opencl_node_list(opencl_nodes, id, conf);
+    // Send Action ID to slaves (7 to create the opencl communicator)
+    int message[1];
+    message[0] = 7;
+
+    for (int i : opencl_nodes) {
+      if (i != rank) MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, MPI_COMM_WORLD);
+    }
+    // Send the actual configuration
+    for (int i : opencl_nodes) {
+      MPI_Send(opencl_nodes.data(), static_cast<int>(opencl_nodes.size()), MPI_INT, i, 1,
                MPI_COMM_WORLD);
+    }
   }
 }
 
@@ -386,6 +453,7 @@ void MPIEnviroment::connect_nodes(base::OperationConfiguration conf) {
         throw std::logic_error(errorString.str());
       }
       singleton_instance->init_communicator(conf);
+      singleton_instance->init_opencl_communicator(conf);
       singleton_instance->init_worker(0, 0);
       singleton_instance->slave_mainloop();
       int message[1];
