@@ -130,12 +130,31 @@ void MPIEnviroment::slave_mainloop(void) {
       MPI_Comm_group(MPI_COMM_WORLD, &world_group);
       MPI_Group_incl(world_group, messagesize, nodelist, &tmp_group);
       if (is_input_comm) {
-        MPI_Comm_create(MPI_COMM_WORLD, tmp_group, &input_communicator);
-      } else {
-        MPI_Comm_create(MPI_COMM_WORLD, tmp_group, &tmp_comm);
-        if (tmp_comm != MPI_COMM_NULL) {
-          std::cerr << "ERROR - created unnecessary comm!" << std::endl;
+        int result = MPI_Comm_create_group(MPI_COMM_WORLD, tmp_group, 0, &input_communicator);
+        if (result != MPI_SUCCESS) {
+          std::stringstream errorString;
+          errorString << "MPI network initialisation error:";
+          errorString << "Could not creat input communicator on node " << rank << std::endl;
+          if (result == MPI_ERR_COMM)
+            errorString << "Error Code: " << result << "(MPI_ERR_COMM)" << std::endl;
+          else if (result == MPI_ERR_GROUP)
+            errorString << "Error Code: " << result << "(MPI_ERR_GROUP)" << std::endl;
+          else
+            errorString << "Error Code: " << result << "(Unknown error code)" << std::endl;
+          throw std::logic_error(errorString.str());
         }
+        if (input_communicator == MPI_COMM_NULL) {
+          std::stringstream errorString;
+          errorString << "Communicator is MPI_COMM_NULL. Comm on node " << rank
+                      << " could not be created properly! Check configuration file" << std::endl;
+          throw std::logic_error(errorString.str());
+        }
+      } else {
+        std::stringstream errorString;
+        errorString << "MPI network initialisation error:";
+        errorString << "Tried to create comm on rank that is not in comm group (rank "
+                    << rank << ")" << std::endl;
+        throw std::logic_error(errorString.str());
       }
       delete[] nodelist;
     } else if (message[0] == 4) {
@@ -191,7 +210,7 @@ int MPIEnviroment::count_nodes(json::Node &currentworker) {
   int workercount = 1;
   if (currentworker.contains("SLAVES")) {
     for (std::string &slaveName : currentworker["SLAVES"].keys()) {
-        workercount += count_nodes(currentworker["SLAVES"][slaveName]);
+      workercount += count_nodes(currentworker["SLAVES"][slaveName]);
     }
   }
   return workercount;
@@ -212,6 +231,22 @@ int MPIEnviroment::count_slaves(json::Node &currentslave) {
   return slavecount;
 }
 
+// counts only slaves
+void MPIEnviroment::create_opencl_node_list(std::vector<int> &node_id_list,
+                                            unsigned int current_node_id,
+                                            json::Node &currentslave) {
+  if (currentslave.contains("SLAVES")) {
+    unsigned int slave_offset = 1;
+    for (std::string &slaveName : currentslave["SLAVES"].keys()) {
+      create_opencl_node_list(node_id_list, current_node_id + slave_offset,
+                              currentslave["SLAVES"][slaveName]);
+      slave_offset++;
+    }
+  } else {
+    node_id_list.push_back(current_node_id);
+  }
+}
+
 void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   configuration = conf;
   // Get Slave MPI IDs to construct an MPI_Group
@@ -229,10 +264,10 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   // Send MPI_Group to Slaves - they need to create the same comm!
   int message[1];
   message[0] = 3;
-  for (int i = 0; i < MPIEnviroment::get_node_count(); ++i) {
+  for (int i : neighbor_list) {
     if (i != rank) MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, MPI_COMM_WORLD);
   }
-  for (int i = 0; i < MPIEnviroment::get_node_count(); ++i) {
+  for (int i : neighbor_list) {
     if (i != rank)
       MPI_Send(neighbor_list.data(), static_cast<int>(neighbor_list.size()), MPI_INT, i, 1,
                MPI_COMM_WORLD);
@@ -243,10 +278,41 @@ void MPIEnviroment::init_communicator(base::OperationConfiguration conf) {
   MPI_Comm_group(MPI_COMM_WORLD, &world_group);
   MPI_Group_incl(world_group, static_cast<int>(neighbor_list.size()), neighbor_list.data(),
                  &node_neighbors);
-
-  MPI_Comm_create(MPI_COMM_WORLD, node_neighbors, &communicator);
+  int result = MPI_Comm_create_group(MPI_COMM_WORLD, node_neighbors, 0, &communicator);
+  if (result != MPI_SUCCESS) {
+    std::stringstream errorString;
+    errorString << "MPI network initialisation error:";
+    errorString << "Could not creat input communicator on node " << rank << std::endl;
+    if (result == MPI_ERR_COMM)
+      errorString << "Error Code: " << result << "(MPI_ERR_COMM)" << std::endl;
+    else if (result == MPI_ERR_GROUP)
+      errorString << "Error Code: " << result << "(MPI_ERR_GROUP)" << std::endl;
+    else
+      errorString << "Error Code: " << result << "(Unknown error code)" << std::endl;
+    throw std::logic_error(errorString.str());
+  }
   if (communicator == MPI_COMM_NULL) {
-    throw std::logic_error("Comm on node could not be created! Check configuration file");
+    std::stringstream errorString;
+    errorString << "Communicator is MPI_COMM_NULL. Comm on node " << rank
+                << " could not be created properly! Check configuration file" << std::endl;
+    throw std::logic_error(errorString.str());
+  }
+}
+
+void MPIEnviroment::init_opencl_communicator(base::OperationConfiguration conf) {
+  std::vector<int> opencl_nodes;
+  create_opencl_node_list(opencl_nodes, 0, conf);
+  // Send Action ID to slaves (7 to create the opencl communicator)
+  int message[1];
+  message[0] = 7;
+  // for (int id : ); ++i) {
+  //   if (i != rank) MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, MPI_COMM_WORLD);
+  // }
+  // Send the actual configuration
+  for (int i = 0; i < MPIEnviroment::get_node_count(); ++i) {
+    if (i != rank)
+      MPI_Send(neighbor_list.data(), static_cast<int>(neighbor_list.size()), MPI_INT, i, 1,
+               MPI_COMM_WORLD);
   }
 }
 
@@ -319,7 +385,6 @@ void MPIEnviroment::connect_nodes(base::OperationConfiguration conf) {
                     << ". Required by config file: " << nodecount << std::endl;
         throw std::logic_error(errorString.str());
       }
-
       singleton_instance->init_communicator(conf);
       singleton_instance->init_worker(0, 0);
       singleton_instance->slave_mainloop();
