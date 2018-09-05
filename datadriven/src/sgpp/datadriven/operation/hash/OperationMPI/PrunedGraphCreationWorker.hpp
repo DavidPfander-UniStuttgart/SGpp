@@ -48,8 +48,6 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
     // Create datamatrix for operation creation
     base::DataMatrix data_matrix(dataset, dataset_size / dimensions, dimensions);
     // Receive alpha vector
-    int gridsize = complete_gridsize / (2 * grid_dimensions);
-    MPI_Status stat;
     alpha.reserve(complete_gridsize / (2 * grid_dimensions));
 
     // Receive alpha vector
@@ -63,11 +61,14 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
     }
 
     // Receive treshold
-    MPI_Recv(&treshold, 1, MPI_DOUBLE, 0, 1, master_worker_comm, &stat);
+    MPI_Bcast(&treshold, 1, MPI_DOUBLE, 0,
+              MPIEnviroment::get_input_communicator());
 
     // Send treshold
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(&treshold, static_cast<int>(1), MPI_DOUBLE, dest, 1, sub_worker_comm);
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(&treshold, 1, MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
+    }
     // Create opencl operation
     if (opencl_node) {
       op = createNearestNeighborGraphConfigured(dataset, dataset_size, k, dimensions,
@@ -88,8 +89,8 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
     MPI_Bcast(alpha.getPointer(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
               MPIEnviroment::get_communicator());
     // Send treshold
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(&treshold, static_cast<int>(1), MPI_DOUBLE, dest, 1, sub_worker_comm);
+    MPI_Bcast(&treshold, 1, MPI_DOUBLE, 0,
+              MPIEnviroment::get_communicator());
   }
   virtual ~PrunedGraphCreationWorker(void) {
     if (opencl_node) {
