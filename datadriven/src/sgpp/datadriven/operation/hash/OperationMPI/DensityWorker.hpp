@@ -20,7 +20,7 @@ namespace clusteringmpi {
 class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<double> {
  protected:
   double lambda;
-  std::shared_ptr<DensityOCLMultiPlatform::OperationDensity> op;
+  std::unique_ptr<DensityOCLMultiPlatform::OperationDensity> op;
   std::vector<double> alpha;
   size_t oldgridsize;
 
@@ -56,10 +56,9 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
 
     // Create opencl operation
     if (opencl_node) {
-      op = std::shared_ptr<DensityOCLMultiPlatform::OperationDensity>(
-          createDensityOCLMultiPlatformConfigured(
-              gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
-              parameters));  // TODO: , opencl_platform, opencl_device
+      op = createDensityOCLMultiPlatformConfigured(
+          gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
+          parameters);
     }
     if (verbose) {
       std::cout << "Created mpi opencl density operation on " << MPIEnviroment::get_node_rank()
