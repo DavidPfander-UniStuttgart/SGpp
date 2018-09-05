@@ -21,13 +21,13 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
  protected:
   double lambda;
   std::shared_ptr<DensityOCLMultiPlatform::OperationDensity> op;
-  double *alpha;
+  std::vector<double> alpha;
   size_t oldgridsize;
 
   void receive_and_send_initial_data(void) {
-    receive_alpha(&alpha);
+    receive_alpha();
     if (opencl_node) op->initialize_alpha(alpha);
-    send_alpha(&alpha);
+    send_alpha();
     if (verbose) {
       std::cout << "Received alpha on " << MPIEnviroment::get_node_rank() << std::endl;
     }
@@ -44,8 +44,7 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       : MPIWorkerBase("DensityMultiplicationWorker"),
         MPIWorkerGridBase("DensityMultiplicationWorker"),
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1) {
-    alpha = NULL;
-    oldgridsize = 0;
+    alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Receive lambda
     MPI_Status stat;
     MPI_Probe(0, 1, master_worker_comm, &stat);
@@ -71,7 +70,7 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       : MPIWorkerBase("DensityMultiplicationWorker"),
         MPIWorkerGridBase("DensityMultiplicationWorker", grid),
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1) {
-    alpha = NULL;
+    alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Send lambda to slaves
     for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
       MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
@@ -83,7 +82,7 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       : MPIWorkerBase("DensityMultiplicationWorker"),
         MPIWorkerGridBase("DensityMultiplicationWorker", grid),
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1, ocl_conf_filename) {
-    alpha = NULL;
+    alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Send lambda to slaves
     for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
       MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
@@ -92,38 +91,38 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
     }
   }
   virtual ~DensityWorker(void) {
-    if (alpha != NULL)
-      delete [] alpha;
   }
 
  protected:
-  void send_alpha(double **alpha) {
+  void send_alpha(void) {
     // Send alpha vector
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(*alpha, static_cast<int>(complete_gridsize / (2 * grid_dimensions)), MPI_DOUBLE,
-               dest, 1, sub_worker_comm);
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(alpha.data(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
+    }
   }
-  void receive_alpha(double **alpha) {
+  void receive_alpha(void) {
     // Receive alpha vector
-    size_t gridsize = complete_gridsize / (2 * grid_dimensions);
-    int buffer_size = 0;
-    MPI_Status stat;
-    MPI_Probe(0, 1, master_worker_comm, &stat);
+    MPI_Bcast(alpha.data(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
+              MPIEnviroment::get_input_communicator());
+    // int buffer_size = 0;
+    // MPI_Status stat;
+    // MPI_Probe(0, 1, master_worker_comm, &stat);
 
-    MPI_Get_count(&stat, MPI_DOUBLE, &buffer_size);
-    if (static_cast<size_t>(buffer_size) != gridsize) {
-      std::stringstream errorString;
-      errorString << "Error: Gridsize " << gridsize << " and the size of the alpha vector "
-                  << buffer_size << " should match!" << std::endl;
-      throw std::logic_error(errorString.str());
-    }
-    if (gridsize != oldgridsize) {
-      if (*alpha != NULL) delete[](*alpha);
-      *alpha = new double[gridsize];
-      oldgridsize = gridsize;
-    }
-    MPI_Recv(*alpha, static_cast<int>(gridsize), MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG,
-             master_worker_comm, &stat);
+    // MPI_Get_count(&stat, MPI_DOUBLE, &buffer_size);
+    // if (static_cast<size_t>(buffer_size) != gridsize) {
+    //   std::stringstream errorString;
+    //   errorString << "Error: Gridsize " << gridsize << " and the size of the alpha vector "
+    //               << buffer_size << " should match!" << std::endl;
+    //   throw std::logic_error(errorString.str());
+    // }
+    // if (gridsize != oldgridsize) {
+    //   if (*alpha != NULL) delete[](*alpha);
+    //   *alpha = new double[gridsize];
+    //   oldgridsize = gridsize;
+    // }
+    // MPI_Recv(*alpha, static_cast<int>(gridsize), MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG,
+    //          master_worker_comm, &stat);
   }
 };
 

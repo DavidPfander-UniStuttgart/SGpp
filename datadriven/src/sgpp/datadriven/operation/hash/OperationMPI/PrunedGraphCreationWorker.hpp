@@ -24,7 +24,7 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
 
  protected:
   double treshold;
-  double *alpha;
+  std::vector<double> alpha;
   DensityOCLMultiPlatform::OperationCreateGraphOCL *op;
   DensityOCLMultiPlatform::OperationPruneGraphOCL *op_prune;
   void receive_and_send_initial_data(void) {}
@@ -49,27 +49,21 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
     base::DataMatrix data_matrix(dataset, dataset_size / dimensions, dimensions);
     // Receive alpha vector
     int gridsize = complete_gridsize / (2 * grid_dimensions);
-    int buffer_size = 0;
     MPI_Status stat;
-    MPI_Probe(0, 1, master_worker_comm, &stat);
-    MPI_Get_count(&stat, MPI_DOUBLE, &buffer_size);
-    if (buffer_size != gridsize) {
-      std::stringstream errorString;
-      errorString << "Error: Gridsize " << gridsize << " and the size of the alpha vector "
-                  << buffer_size << " should match!" << std::endl;
-      throw std::logic_error(errorString.str());
-    }
-    alpha = new double[gridsize];
+    alpha.reserve(complete_gridsize / (2 * grid_dimensions));
 
-    MPI_Recv(alpha, gridsize, MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG, master_worker_comm, &stat);
+    // Receive alpha vector
+    MPI_Bcast(alpha.data(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
+              MPIEnviroment::get_input_communicator());
 
     // Send alpha vector
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(alpha, static_cast<int>(complete_gridsize / (2 * grid_dimensions)), MPI_DOUBLE, dest,
-               1, sub_worker_comm);
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(alpha.data(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
+    }
 
     // Receive treshold
-    MPI_Recv(&treshold, 1, MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG, master_worker_comm, &stat);
+    MPI_Recv(&treshold, 1, MPI_DOUBLE, 0, 1, master_worker_comm, &stat);
 
     // Send treshold
     for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
@@ -77,10 +71,10 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
     // Create opencl operation
     if (opencl_node) {
       op = createNearestNeighborGraphConfigured(dataset, dataset_size, k, dimensions,
-                                                parameters);  // TODO opencl_platform, opencl_device
+                                                parameters);
       op_prune = pruneNearestNeighborGraphConfigured(
           gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, alpha,
-          data_matrix, treshold, k, parameters);  // , opencl_platform, opencl_device
+          data_matrix, treshold, k, parameters);
     }
   }
   PrunedGraphCreationWorker(base::Grid &grid, base::DataVector &alpha, std::string dataset_filename,
@@ -91,17 +85,13 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
         MPIWorkerPackageBase("PrunedGraphCreationWorker", k, ocl_conf_filename),
         delete_alpha(false) {
     // Send alpha vector
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(alpha.getPointer(), static_cast<int>(complete_gridsize / (2 * grid_dimensions)),
-               MPI_DOUBLE, dest, 1, sub_worker_comm);
+    MPI_Bcast(alpha.getPointer(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
+              MPIEnviroment::get_communicator());
     // Send treshold
     for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
       MPI_Send(&treshold, static_cast<int>(1), MPI_DOUBLE, dest, 1, sub_worker_comm);
   }
   virtual ~PrunedGraphCreationWorker(void) {
-    if (delete_alpha) {
-      delete[] alpha;
-    }
     if (opencl_node) {
       delete op;
       delete op_prune;
