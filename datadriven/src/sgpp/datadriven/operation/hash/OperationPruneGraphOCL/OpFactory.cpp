@@ -13,7 +13,8 @@
 namespace sgpp {
 namespace datadriven {
 
-DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+pruneNearestNeighborGraphConfigured(
     base::Grid &grid, size_t dimensions, base::DataVector &alpha, base::DataMatrix &data,
     double threshold, size_t k, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
@@ -22,10 +23,10 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>>(
         grid, alpha, data, dimensions, manager, parameters, static_cast<float>(threshold), k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
         grid, alpha, data, dimensions, manager, parameters, threshold, k);
   } else {
     std::stringstream errorString;
@@ -35,7 +36,8 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   }
   return nullptr;
 }
-DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+pruneNearestNeighborGraphConfigured(
     const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
     std::vector<double> &alpha, base::DataMatrix &data,
     double threshold, size_t k, std::string opencl_conf) {
@@ -45,11 +47,11 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>>(
         gridpoints, gridsize, dimensions, alpha, data, manager, parameters,
         static_cast<float>(threshold), k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
         gridpoints, gridsize, dimensions, alpha, data, manager, parameters, threshold, k);
   } else {
     std::stringstream errorString;
@@ -60,7 +62,8 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   return nullptr;
 }
 
-DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+pruneNearestNeighborGraphConfigured(
     const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
     std::vector<double> &alpha, base::DataMatrix &data,
     double threshold, size_t k, std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters) {
@@ -68,11 +71,11 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   DensityOCLMultiPlatform::OperationPruneGraphOCL::load_default_parameters(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<float>>(
         gridpoints, gridsize, dimensions, alpha, data, manager, parameters,
         static_cast<float>(threshold), k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationPruneGraphOCLMultiPlatform<double>>(
         gridpoints, gridsize, dimensions, alpha, data, manager, parameters, threshold, k);
   } else {
     std::stringstream errorString;
