@@ -22,8 +22,8 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
     // Receive gridsize
     MPI_Bcast(&complete_gridsize, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
     // Receive grid
-    gridpoints = std::make_unique<int[]>(complete_gridsize);
-    MPI_Bcast(gridpoints.get(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+    gridpoints.reserve(complete_gridsize);
+    MPI_Bcast(gridpoints.data(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_input_communicator());
     // Receive grid dimension
     MPI_Bcast(&grid_dimensions, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
   }
@@ -31,7 +31,7 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
     // Send gridsize
     MPI_Bcast(&complete_gridsize, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
     // Send grid
-    MPI_Bcast(gridpoints.get(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_communicator());
+    MPI_Bcast(gridpoints.data(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_communicator());
     // Send grid dimension
     MPI_Bcast(&grid_dimensions, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
   }
@@ -40,7 +40,7 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
   int grid_dimensions;
   int complete_gridsize;
   int gridsize;
-  std::unique_ptr<int[]> gridpoints;
+  std::vector<int> gridpoints;
   explicit MPIWorkerGridBase(std::string operationName) :
       MPIWorkerBase(operationName) {
     receive_grid();
@@ -51,7 +51,7 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
     sgpp::base::GridStorage &gridStorage = grid.getStorage();
     gridsize = static_cast<int>(gridStorage.getSize());
     int dimensions = static_cast<int>(gridStorage.getDimension());
-    gridpoints = std::make_unique<int[]>(gridsize * 2 * dimensions);
+    gridpoints.reserve(gridsize * 2 * dimensions);
     size_t pointscount = 0;
     for (int i = 0; i < gridsize; i++) {
       sgpp::base::HashGridPoint &point = gridStorage.getPoint(i);

@@ -47,7 +47,7 @@ class DensityRhsWorker : public MPIWorkerGridBase,
     if (opencl_node) {
       op = std::shared_ptr<DensityOCLMultiPlatform::OperationDensity>(
           createDensityOCLMultiPlatformConfigured(
-              gridpoints.get(), complete_gridsize / (2 * grid_dimensions), grid_dimensions, 0.0,
+              gridpoints.data(), complete_gridsize / (2 * grid_dimensions), grid_dimensions, 0.0,
               parameters));  // TODO: opencl_platform, opencl_device
     }
     data_matrix = NULL;

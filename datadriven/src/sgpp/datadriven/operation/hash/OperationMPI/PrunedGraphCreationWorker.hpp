@@ -79,7 +79,7 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
       op = createNearestNeighborGraphConfigured(dataset, dataset_size, k, dimensions,
                                                 parameters);  // TODO opencl_platform, opencl_device
       op_prune = pruneNearestNeighborGraphConfigured(
-          gridpoints.get(), complete_gridsize / (2 * grid_dimensions), grid_dimensions, alpha,
+          gridpoints.data(), complete_gridsize / (2 * grid_dimensions), grid_dimensions, alpha,
           data_matrix, treshold, k, parameters);  // , opencl_platform, opencl_device
     }
   }
