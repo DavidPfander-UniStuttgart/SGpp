@@ -19,38 +19,30 @@ namespace clusteringmpi {
 class MPIWorkerGridBase : virtual public MPIWorkerBase {
  private:
   void receive_grid(void) {
-    // receive grid
-    MPI_Status stat;
-    MPI_Probe(0, 1, MPIEnviroment::get_input_communicator(), &stat);
-    MPI_Get_count(&stat, MPI_INT, &complete_gridsize);
-    gridpoints = new int[complete_gridsize];
-    MPI_Recv(gridpoints, complete_gridsize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG,
-             MPIEnviroment::get_input_communicator(), &stat);
-
-    // Receive grid dimensions
-    MPI_Probe(0, 1, MPIEnviroment::get_input_communicator(), &stat);
-    MPI_Recv(&grid_dimensions, 1, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG,
-             MPIEnviroment::get_input_communicator(), &stat);
-    gridsize = complete_gridsize / (2 * grid_dimensions);
+    // Receive gridsize
+    MPI_Bcast(&complete_gridsize, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+    // Receive grid
+    gridpoints = std::make_unique<int[]>(complete_gridsize);
+    MPI_Bcast(gridpoints.get(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+    // Receive grid dimension
+    MPI_Bcast(&grid_dimensions, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
   }
   void send_grid(void) {
-    // Send grid to slaves
-    for (int i = 1; i < MPIEnviroment::get_sub_worker_count() + 1; i++) {
-      MPI_Send(gridpoints, static_cast<int>(complete_gridsize), MPI_INT, i, 1,
-               MPIEnviroment::get_communicator());
-    }
-    // Send grid dimension to slaves
-    for (int i = 1; i < MPIEnviroment::get_sub_worker_count() + 1; i++) {
-      MPI_Send(&grid_dimensions, 1, MPI_INT, i, 1, MPIEnviroment::get_communicator());
-    }
+    // Send gridsize
+    MPI_Bcast(&complete_gridsize, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+    // Send grid
+    MPI_Bcast(gridpoints.get(), complete_gridsize, MPI_INT, 0, MPIEnviroment::get_communicator());
+    // Send grid dimension
+    MPI_Bcast(&grid_dimensions, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
   }
 
  protected:
   int grid_dimensions;
   int complete_gridsize;
   int gridsize;
-  int *gridpoints;
-  explicit MPIWorkerGridBase(std::string operationName) : MPIWorkerBase(operationName) {
+  std::unique_ptr<int[]> gridpoints;
+  explicit MPIWorkerGridBase(std::string operationName) :
+      MPIWorkerBase(operationName) {
     receive_grid();
     send_grid();
   }
@@ -59,7 +51,7 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
     sgpp::base::GridStorage &gridStorage = grid.getStorage();
     gridsize = static_cast<int>(gridStorage.getSize());
     int dimensions = static_cast<int>(gridStorage.getDimension());
-    gridpoints = new int[gridsize * 2 * dimensions];
+    gridpoints = std::make_unique<int[]>(gridsize * 2 * dimensions);
     size_t pointscount = 0;
     for (int i = 0; i < gridsize; i++) {
       sgpp::base::HashGridPoint &point = gridStorage.getPoint(i);
@@ -76,7 +68,7 @@ class MPIWorkerGridBase : virtual public MPIWorkerBase {
   }
 
  public:
-  virtual ~MPIWorkerGridBase() { delete[] gridpoints; }
+  virtual ~MPIWorkerGridBase() {}
 };
 
 }  // namespace clusteringmpi
