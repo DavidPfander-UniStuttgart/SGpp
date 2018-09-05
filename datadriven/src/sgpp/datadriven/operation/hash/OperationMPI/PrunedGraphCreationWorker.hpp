@@ -25,7 +25,7 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
  protected:
   double treshold;
   std::vector<double> alpha;
-  DensityOCLMultiPlatform::OperationCreateGraphOCL *op;
+  std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> op;
   std::unique_ptr<DensityOCLMultiPlatform::OperationPruneGraphOCL> op_prune;
   void receive_and_send_initial_data(void) {}
   void begin_opencl_operation(int *workpackage) {
@@ -93,9 +93,6 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
               MPIEnviroment::get_communicator());
   }
   virtual ~PrunedGraphCreationWorker(void) {
-    if (opencl_node) {
-      delete op;
-    }
   }
 };
 

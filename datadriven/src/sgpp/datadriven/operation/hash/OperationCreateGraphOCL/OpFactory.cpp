@@ -13,7 +13,7 @@
 namespace sgpp {
 namespace datadriven {
 
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     base::DataMatrix &dataset, size_t k, size_t dimensions, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<sgpp::base::OCLOperationConfiguration>(opencl_conf);
@@ -21,10 +21,10 @@ DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConf
   DensityOCLMultiPlatform::OperationCreateGraphOCL::load_default_parameters(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>>(
         dataset, dimensions, manager, parameters, k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
         dataset, dimensions, manager, parameters, k);
   } else {
     std::stringstream errorString;
@@ -34,17 +34,17 @@ DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConf
   }
   return nullptr;
 }
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     double *dataset, size_t dataset_size, size_t k, size_t dimensions,
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters) {
   DensityOCLMultiPlatform::OperationCreateGraphOCL::load_default_parameters(parameters);
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>>(
         dataset, dataset_size, dimensions, manager, parameters, k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
         dataset, dataset_size, dimensions, manager, parameters, k);
   } else {
     std::stringstream errorString;
@@ -55,7 +55,7 @@ DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConf
   return nullptr;
 }
 
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     double *dataset, size_t dataset_size, size_t k, size_t dimensions, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<sgpp::base::OCLOperationConfiguration>(opencl_conf);
@@ -63,10 +63,10 @@ DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConf
   DensityOCLMultiPlatform::OperationCreateGraphOCL::load_default_parameters(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<float>>(
         dataset, dataset_size, dimensions, manager, parameters, k);
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
         dataset, dataset_size, dimensions, manager, parameters, k);
   } else {
     std::stringstream errorString;

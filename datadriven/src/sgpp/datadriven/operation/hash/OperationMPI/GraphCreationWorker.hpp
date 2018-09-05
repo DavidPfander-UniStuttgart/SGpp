@@ -21,7 +21,7 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
   bool opencl_node;
   bool overseer_node;
   double lambda;
-  DensityOCLMultiPlatform::OperationCreateGraphOCL *op;
+  std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> op;
 
   MPI_Comm &master_worker_comm;
   MPI_Comm &sub_worker_comm;
@@ -79,9 +79,6 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()) {}
   virtual ~GraphCreationWorker(void) {
-    if (opencl_node) {
-      delete op;
-    }
   }
   void start_worker_main(void) {
     base::DataMatrix data_matrix(dataset, dataset_size / dimensions, dimensions);
