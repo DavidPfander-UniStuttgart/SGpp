@@ -53,16 +53,15 @@ void MPIEnviroment::slave_mainloop(void) {
     }
     MPI_Get_count(&stat, MPI_INT, &messagesize);
     message_source = stat.MPI_SOURCE;
-    int *message = new int[messagesize];
+    auto message = std::make_unique<int[]>(messagesize);
     if (!initialized)
-      MPI_Recv(message, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD, &stat);
+      MPI_Recv(message.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD, &stat);
     else  // if (!(rank == 0))
-      MPI_Recv(message, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
+      MPI_Recv(message.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
                &stat);
     if (messagesize != 1) {
       std::cout << "Warning! Received illegal message at node " << rank
                 << "! Messagesize: " << messagesize << " - Going to ignore this..." << std::endl;
-      delete[] message;
       continue;
     } else if (message[0] == -1) {
       std::cout << "Node " << rank << " received cleanup signal..." << std::endl;
@@ -72,39 +71,37 @@ void MPIEnviroment::slave_mainloop(void) {
       std::cout << "Node " << rank << " All remaining workers are now deleted!" << std::endl;
       // Send the order to terminate all slaves processes!
       for (int i = 1; i < worker_count + 1; i++) {
-        MPI_Send(message, static_cast<int>(1), MPI_INT, i, 1, communicator);
+        MPI_Send(message.get(), static_cast<int>(1), MPI_INT, i, 1, communicator);
       }
-      delete[] message;
       break;
     } else if (message[0] == 1) {
       if (!initialized) {
         std::cout << "Warning! Received illegal message at node " << rank
                   << "! Node not yet initialized with configuration file" << std::endl;
-        delete[] message;
         continue;
       }
 
       // Get Operationname and create operation here
       MPI_Probe(message_source, 1, input_communicator, &stat);
       MPI_Get_count(&stat, MPI_CHAR, &messagesize);
-      char *classname = new char[messagesize];
-      MPI_Recv(classname, messagesize, MPI_CHAR, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
+      auto classname = std::make_unique<char[]>(messagesize);
+      MPI_Recv(classname.get(), messagesize, MPI_CHAR, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
                &stat);
-      slave_ops.push_back(create_mpi_operation(message_source, configuration, classname));
+      // ugly with the get method, but MPI_Recv does not really work with std::string
+      // so it is either that or completely raw pointers
+      slave_ops.push_back(create_mpi_operation(message_source, configuration, classname.get()));
       if (verbose) {
-        std::cout << "Node " << rank << ": Created slave operation \"" << classname << "\""
+        std::cout << "Node " << rank << ": Created slave operation \"" << classname.get() << "\""
                   << std::endl;
       }
-      delete[] classname;
     } else if (message[0] == 2) {
       if (!initialized) {
         std::cout << "Warning! Received illegal message at node " << rank
                   << "! Node not yet initialized with configuration file" << std::endl;
-        delete[] message;
         continue;
       }
       MPI_Probe(message_source, 1, communicator, &stat);
-      MPI_Recv(message, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
+      MPI_Recv(message.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, input_communicator,
                &stat);
       delete slave_ops[message[0] - 10];
       slave_ops[message[0] - 10] = NULL;
@@ -116,8 +113,8 @@ void MPIEnviroment::slave_mainloop(void) {
       // Receive node list
       MPI_Probe(message_source, 1, MPI_COMM_WORLD, &stat);
       MPI_Get_count(&stat, MPI_INT, &messagesize);
-      int *nodelist = new int[messagesize];
-      MPI_Recv(nodelist, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
+      auto nodelist = std::make_unique<int[]>(messagesize);
+      MPI_Recv(nodelist.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
                &stat);
       bool is_input_comm = false;
       for (int i = 0; i < messagesize; ++i) {
@@ -131,7 +128,7 @@ void MPIEnviroment::slave_mainloop(void) {
       MPI_Group world_group, tmp_group;
       MPI_Comm tmp_comm;
       MPI_Comm_group(MPI_COMM_WORLD, &world_group);
-      MPI_Group_incl(world_group, messagesize, nodelist, &tmp_group);
+      MPI_Group_incl(world_group, messagesize, nodelist.get(), &tmp_group);
       if (is_input_comm) {
         int result = MPI_Comm_create_group(MPI_COMM_WORLD, tmp_group, 0, &input_communicator);
         if (result != MPI_SUCCESS) {
@@ -159,23 +156,22 @@ void MPIEnviroment::slave_mainloop(void) {
                     << rank << ")" << std::endl;
         throw std::logic_error(errorString.str());
       }
-      delete[] nodelist;
     } else if (message[0] == 4) {
       // Get serialized configuration and deserialize
       MPI_Probe(message_source, 1, MPI_COMM_WORLD, &stat);
       MPI_Get_count(&stat, MPI_CHAR, &messagesize);
-      char *serialized_conf = new char[messagesize];
-      MPI_Recv(serialized_conf, messagesize, MPI_CHAR, stat.MPI_SOURCE, stat.MPI_TAG,
+      //auto nodelist = std::make_unique<int[]>(messagesize);
+      auto serialized_conf = std::make_unique<char[]>(messagesize);
+      MPI_Recv(serialized_conf.get(), messagesize, MPI_CHAR, stat.MPI_SOURCE, stat.MPI_TAG,
                MPI_COMM_WORLD, &stat);
       base::OperationConfiguration conf;
-      conf.deserialize(serialized_conf);
+      conf.deserialize(serialized_conf.get()); // ugly, but the alternative is using completely raw pointers
 
       // Init communicator
       init_communicator(conf);
       // Init subworkers if necessary
       init_worker(0, message_source);
       initial_source = message_source;
-      delete[] serialized_conf;
     } else if (message[0] == 5) {
       initialized_worker_counter++;
       if (initialized_worker_counter == worker_count) {
@@ -196,8 +192,8 @@ void MPIEnviroment::slave_mainloop(void) {
       // Receive node list
       MPI_Probe(message_source, 1, MPI_COMM_WORLD, &stat);
       MPI_Get_count(&stat, MPI_INT, &messagesize);
-      int *opencl_nodelist = new int[messagesize];
-      MPI_Recv(opencl_nodelist, messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
+      auto opencl_nodelist = std::make_unique<int[]>(messagesize);
+      MPI_Recv(opencl_nodelist.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
                &stat);
       // Check received opencl_nodelist for correctness
       bool contains_this_node = false;
@@ -231,7 +227,7 @@ void MPIEnviroment::slave_mainloop(void) {
       MPI_Group world_group, tmp_group;
       MPI_Comm tmp_comm;
       MPI_Comm_group(MPI_COMM_WORLD, &world_group);
-      MPI_Group_incl(world_group, messagesize, opencl_nodelist, &tmp_group);
+      MPI_Group_incl(world_group, messagesize, opencl_nodelist.get(), &tmp_group);
       int result = MPI_Comm_create_group(MPI_COMM_WORLD, tmp_group, 0, &opencl_communicator);
       if (result != MPI_SUCCESS) {
         std::stringstream errorString;
@@ -252,7 +248,6 @@ void MPIEnviroment::slave_mainloop(void) {
         throw std::logic_error(errorString.str());
 
       }
-      delete [] opencl_nodelist;
     } else if (message[0] >= 10) {
       // run operation here
       if (slave_ops[message[0] - 10] == NULL)
@@ -260,7 +255,6 @@ void MPIEnviroment::slave_mainloop(void) {
       slave_ops[message[0] - 10]->start_sub_workers();
       slave_ops[message[0] - 10]->start_worker_main();
     }
-    delete[] message;
   } while (true);
   MPI_Finalize();
   if (verbose) {
@@ -408,16 +402,14 @@ void MPIEnviroment::init_worker(int workerid, int source) {
       std::ostringstream sstream;
       slave.serialize(sstream, 0);
       std::string serialized_conf = sstream.str();
-      char *conf_message = new char[serialized_conf.length() + 1];
-      std::copy(serialized_conf.begin(), serialized_conf.end(), conf_message);
+      auto conf_message = std::make_unique<char[]>(serialized_conf.length() + 1);
+      std::copy(serialized_conf.begin(), serialized_conf.end(), conf_message.get());
       conf_message[serialized_conf.size()] = '\0';
       // Send configuration
-      MPI_Send(conf_message, static_cast<int>(serialized_conf.size() + 1), MPI_CHAR,
+      MPI_Send(conf_message.get(), static_cast<int>(serialized_conf.size() + 1), MPI_CHAR,
                neighbor_list[workerid + 1], 1, MPI_COMM_WORLD);
 
-      delete[] conf_message;
     }
-
     workercounter++;
   }
 }
