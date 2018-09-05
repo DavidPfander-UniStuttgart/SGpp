@@ -59,7 +59,7 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
     if (opencl_node) {
       op = std::shared_ptr<DensityOCLMultiPlatform::OperationDensity>(
           createDensityOCLMultiPlatformConfigured(
-              gridpoints.data(), complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
+              gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
               parameters));  // TODO: , opencl_platform, opencl_device
     }
     if (verbose) {

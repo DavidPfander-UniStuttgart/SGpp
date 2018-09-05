@@ -107,7 +107,7 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
   }
   /// Constructor using a double vector as a dataset and a serialized grid
   OperationPruneGraphOCLMultiPlatform(
-      int *gridpoints, size_t gridSize, size_t dimensions, double *alpha, base::DataMatrix &data,
+      const std::vector<int> &gridpoints, size_t gridSize, size_t dimensions, double *alpha, base::DataMatrix &data,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T threshold, size_t k)
       : OperationPruneGraphOCL(),

@@ -54,7 +54,7 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   return nullptr;
 }
 DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
-    int* gridpoints, size_t gridsize, size_t dimension, double lambda, std::string opencl_conf) {
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimension, double lambda, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<base::OCLOperationConfiguration>(opencl_conf);
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
@@ -75,7 +75,7 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   return nullptr;
 }
 DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
-    int* gridpoints, size_t gridsize, size_t dimension, double lambda,
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimension, double lambda,
     std::shared_ptr<base::OCLOperationConfiguration> parameters) {
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
   auto manager =

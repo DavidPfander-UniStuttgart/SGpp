@@ -36,7 +36,7 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
   return nullptr;
 }
 DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
-    int *gridpoints, size_t gridsize, size_t dimensions, double *alpha, base::DataMatrix &data,
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions, double *alpha, base::DataMatrix &data,
     double threshold, size_t k, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<sgpp::base::OCLOperationConfiguration>(opencl_conf);
@@ -60,7 +60,7 @@ DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfig
 }
 
 DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
-    int *gridpoints, size_t gridsize, size_t dimensions, double *alpha, base::DataMatrix &data,
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions, double *alpha, base::DataMatrix &data,
     double threshold, size_t k, std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters) {
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
   DensityOCLMultiPlatform::OperationPruneGraphOCL::load_default_parameters(parameters);

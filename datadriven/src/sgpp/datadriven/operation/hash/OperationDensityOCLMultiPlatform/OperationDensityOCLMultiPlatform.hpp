@@ -141,7 +141,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   }
   /// Constructor for mpi nodes - accepts grid als integer array
   OperationDensityOCLMultiPlatform(
-      int *gridpoints, size_t gridsize, size_t dimensions,
+      const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T lambda)
       : OperationDensity(),
