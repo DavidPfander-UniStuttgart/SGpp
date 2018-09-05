@@ -241,7 +241,7 @@ void MPIEnviroment::slave_mainloop(void) {
           errorString << "Error Code: " << result << "(Unknown error code)" << std::endl;
         throw std::logic_error(errorString.str());
       }
-      if (input_communicator == MPI_COMM_NULL) {
+      if (opencl_communicator == MPI_COMM_NULL) {
         std::stringstream errorString;
         errorString << "Communicator is MPI_COMM_NULL. OpenCL Comm on node " << rank
                     << " could not be created properly! Check configuration file" << std::endl;
