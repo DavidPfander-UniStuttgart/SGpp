@@ -46,13 +46,14 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1) {
     alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Receive lambda
-    MPI_Status stat;
-    MPI_Probe(0, 1, master_worker_comm, &stat);
-    MPI_Recv(&lambda, 1, MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG, master_worker_comm, &stat);
+    MPI_Bcast(&lambda, 1, MPI_DOUBLE, 0,
+              MPIEnviroment::get_input_communicator());
 
     // Send lambda
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(&lambda, 1, MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
+    }
 
     // Create opencl operation
     if (opencl_node) {
@@ -71,10 +72,9 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1) {
     alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Send lambda to slaves
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
-    if (verbose) {
-      std::cout << "Density master node " << MPIEnviroment::get_node_rank() << std::endl;
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(&lambda, 1, MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
     }
   }
   DensityWorker(base::Grid &grid, double lambda, std::string ocl_conf_filename)
@@ -83,10 +83,9 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1, ocl_conf_filename) {
     alpha.reserve(complete_gridsize / (2 * grid_dimensions));
     // Send lambda to slaves
-    for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-      MPI_Send(&lambda, 1, MPI_DOUBLE, dest, 1, sub_worker_comm);
-    if (verbose) {
-      std::cout << "Density master node " << MPIEnviroment::get_node_rank() << std::endl;
+    if (MPIEnviroment::get_sub_worker_count() > 0) {
+      MPI_Bcast(&lambda, 1, MPI_DOUBLE, 0,
+                MPIEnviroment::get_communicator());
     }
   }
   virtual ~DensityWorker(void) {
