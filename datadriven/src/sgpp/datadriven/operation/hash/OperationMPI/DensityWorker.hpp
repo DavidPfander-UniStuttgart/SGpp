@@ -28,9 +28,6 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
     receive_alpha();
     if (opencl_node) op->initialize_alpha(alpha);
     send_alpha();
-    if (verbose) {
-      std::cout << "Received alpha on " << MPIEnviroment::get_node_rank() << std::endl;
-    }
   }
   void begin_opencl_operation(int *workpackage) {
     op->start_partial_mult(workpackage[0], workpackage[1]);
@@ -60,10 +57,6 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
       op = createDensityOCLMultiPlatformConfigured(
           gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, lambda,
           parameters);
-    }
-    if (verbose) {
-      std::cout << "Created mpi opencl density operation on " << MPIEnviroment::get_node_rank()
-                << std::endl;
     }
   }
   DensityWorker(base::Grid &grid, double lambda)
@@ -103,24 +96,6 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
     // Receive alpha vector
     MPI_Bcast(alpha.data(), complete_gridsize / (2 * grid_dimensions), MPI_DOUBLE, 0,
               MPIEnviroment::get_input_communicator());
-    // int buffer_size = 0;
-    // MPI_Status stat;
-    // MPI_Probe(0, 1, master_worker_comm, &stat);
-
-    // MPI_Get_count(&stat, MPI_DOUBLE, &buffer_size);
-    // if (static_cast<size_t>(buffer_size) != gridsize) {
-    //   std::stringstream errorString;
-    //   errorString << "Error: Gridsize " << gridsize << " and the size of the alpha vector "
-    //               << buffer_size << " should match!" << std::endl;
-    //   throw std::logic_error(errorString.str());
-    // }
-    // if (gridsize != oldgridsize) {
-    //   if (*alpha != NULL) delete[](*alpha);
-    //   *alpha = new double[gridsize];
-    //   oldgridsize = gridsize;
-    // }
-    // MPI_Recv(*alpha, static_cast<int>(gridsize), MPI_DOUBLE, stat.MPI_SOURCE, stat.MPI_TAG,
-    //          master_worker_comm, &stat);
   }
 };
 
