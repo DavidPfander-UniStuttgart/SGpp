@@ -192,8 +192,8 @@ void MPIEnviroment::slave_mainloop(void) {
       // Receive node list
       MPI_Probe(message_source, 1, MPI_COMM_WORLD, &stat);
       MPI_Get_count(&stat, MPI_INT, &messagesize);
-      auto opencl_nodelist = std::make_unique<int[]>(messagesize);
-      MPI_Recv(opencl_nodelist.get(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
+      opencl_nodelist.reserve(messagesize);
+      MPI_Recv(opencl_nodelist.data(), messagesize, MPI_INT, stat.MPI_SOURCE, stat.MPI_TAG, MPI_COMM_WORLD,
                &stat);
       // Check received opencl_nodelist for correctness
       bool contains_this_node = false;
@@ -227,7 +227,7 @@ void MPIEnviroment::slave_mainloop(void) {
       MPI_Group world_group, tmp_group;
       MPI_Comm tmp_comm;
       MPI_Comm_group(MPI_COMM_WORLD, &world_group);
-      MPI_Group_incl(world_group, messagesize, opencl_nodelist.get(), &tmp_group);
+      MPI_Group_incl(world_group, messagesize, opencl_nodelist.data(), &tmp_group);
       int result = MPI_Comm_create_group(MPI_COMM_WORLD, tmp_group, 0, &opencl_communicator);
       if (result != MPI_SUCCESS) {
         std::stringstream errorString;
