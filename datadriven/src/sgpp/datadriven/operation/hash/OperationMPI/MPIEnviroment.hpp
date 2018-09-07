@@ -34,6 +34,7 @@ class MPIEnviroment {
   MPI_Comm input_communicator;
   /// Communicator for talking with all OpenCL nodes - useful for loading data with MPI I/O
   MPI_Comm opencl_communicator;
+  MPI_Group node_neighbors;
   std::vector<int> neighbor_list;
   std::vector<int> opencl_nodelist;
   int worker_count;
