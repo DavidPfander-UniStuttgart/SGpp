@@ -188,6 +188,8 @@ int main(int argc, char *argv[]) {
     sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
 
     // Loading dataset
+    long offset = 0;
+    sgpp::datadriven::ARFFTools::readARFFHeader(datasetFileName, offset);
     sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
     sgpp::base::DataMatrix &dataset = data.getData();
     size_t dim = data.getDimension();

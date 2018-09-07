@@ -31,6 +31,11 @@ class ARFFTools {
    * @return ARFF as Dataset
    */
   static Dataset readARFF(const std::string& filename, bool hasTargets = true);
+  static std::string readARFFHeader(const std::string &filename, long &offset);
+  #ifdef USE_MPI
+  static Dataset distributed_readARFF(const std::string& filename, const int offset,
+                                      const int number_instances, const int dimensions);
+  #endif
 
   /**
    * Reads an ARFF file content.

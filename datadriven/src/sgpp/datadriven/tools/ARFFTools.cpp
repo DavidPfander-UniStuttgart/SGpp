@@ -15,6 +15,10 @@
 #include <string>
 #include <cstring>
 
+#ifdef USE_MPI
+#include <mpi.h>
+#endif
+
 namespace sgpp {
 namespace datadriven {
 
@@ -54,6 +58,48 @@ Dataset ARFFTools::readARFF(const std::string& filename, bool hasTargets) {
 
   return dataset;
 }
+std::string ARFFTools::readARFFHeader(const std::string &filename, long &offset) {
+  std::string line;
+  std::string result;
+  std::ifstream myfile(filename.c_str());
+  if (!myfile) {
+    const auto msg = "Unable to open file: " + filename;
+    throw sgpp::base::file_exception(msg.c_str());
+  }
+  bool dataReached = false;
+  while (!myfile.eof()) {
+    std::getline(myfile, line);
+    std::transform(line.begin(), line.end(), line.begin(), toupper);
+    bool reached_data =
+        (line.find("@DATA", 0) != line.npos);
+    if (reached_data) {
+      dataReached = true;
+      offset = result.size() * sizeof(char);
+      break;
+    } else {
+      result.append(line);
+      result.append("\n");
+    }
+  }
+  myfile.close();
+  return result;
+}
+
+#ifdef USE_MPI
+Dataset ARFFTools::distributed_readARFF(const std::string& filename, const int offset, const
+                                        int number_instances, const int dimensions) {
+
+  Dataset dataset(number_instances, dimensions);
+  double *raw_pointer = dataset.getData().data();
+  MPI_File fh;
+  MPI_Status stat;
+  MPI_File_open(MPI_COMM_WORLD, filename.c_str(), MPI_MODE_RDONLY, MPI_INFO_NULL, &fh);
+  MPI_File_set_view(fh, 0, MPI_DOUBLE, MPI_DOUBLE, "native", MPI_INFO_NULL);
+  MPI_File_read_at(fh, offset, raw_pointer, number_instances * dimensions, MPI_DOUBLE, &stat);
+  MPI_File_close(&fh);
+  return dataset;
+}
+#endif
 
 void ARFFTools::readARFFSize(const std::string& filename, size_t& numberInstances,
                              size_t& dimension) {

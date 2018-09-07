@@ -28,19 +28,19 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
   MPIWorkerGraphBase(std::string operationName, std::string filename, int k)
       : MPIWorkerBase(operationName), dataset_filename(filename),
         k(k) {
-    load_dataset(dataset_filename);
+    load_whole_dataset(dataset_filename);
     send_dataset();
   }
   MPIWorkerGraphBase(std::string filename, int k)
       : MPIWorkerBase(), dataset_filename(filename),
         k(k) {
-    load_dataset(dataset_filename);
+    load_whole_dataset(dataset_filename);
     send_dataset();
   }
   explicit MPIWorkerGraphBase(std::string operationName)
       : MPIWorkerBase(operationName) {
     receive_dataset();
-    load_dataset(dataset_filename);
+    load_whole_dataset(dataset_filename);
     send_dataset();
   }
 
@@ -59,7 +59,20 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
       MPI_Send(&k, 1, MPI_INT, i, 1, MPIEnviroment::get_communicator());
     }
   }
-  void load_dataset(std::string filename) {
+  void load_whole_dataset(std::string filename) {
+    data = sgpp::datadriven::ARFFTools::readARFF(filename);
+    sgpp::base::DataMatrix &datamatrix = data.getData();
+    dimensions = datamatrix.getNcols();
+    dataset_size = datamatrix.getSize();
+    dataset = datamatrix.getPointer();
+  }
+  void load_distributed_dataset(std::string filename) {
+    // 1. Requires ARFF Header
+    // 2. Requieres Starting Point (in Bytes)
+    // 3. Requires chunksize
+    // 4. Requires overall size? MPI_File_get_Size
+    // 3. Start Loading
+
     data = sgpp::datadriven::ARFFTools::readARFF(filename);
     sgpp::base::DataMatrix &datamatrix = data.getData();
     dimensions = datamatrix.getNcols();
