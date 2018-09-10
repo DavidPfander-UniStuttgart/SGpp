@@ -20,8 +20,8 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh(
     uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w) {
 
   dataset.transpose();
-  std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_lsh(
-      dataset, dataset.getNcols(), dim, lsh_tables, lsh_hashes, lsh_w));
+  std::unique_ptr<lshknn::KNN> lsh(
+      lshknn::create_knn_lsh_cuda(dataset, dim, lsh_tables, lsh_hashes, lsh_w));
   std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
       std::chrono::system_clock::now();
   std::vector<int32_t> graph = lsh->kNearestNeighbors(k);
@@ -41,8 +41,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh(
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive(
     size_t dim, base::DataMatrix &dataset, uint32_t k) {
   dataset.transpose();
-  std::unique_ptr<lshknn::KNN> lsh(
-      lshknn::create_knn_naive_cpu(dataset, dataset.getNcols(), dim));
+  std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_naive_cpu(dataset, dim));
   std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
       std::chrono::system_clock::now();
   std::vector<int> graph = lsh->kNearestNeighbors(k);

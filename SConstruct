@@ -126,6 +126,8 @@ vars.Add("OCL_INCLUDE_PATH", "Set path to the OpenCL header files (parent direct
 vars.Add("OCL_LIBRARY_PATH", "Set path to the OpenCL library")
 vars.Add("LSHKNN_INCLUDE_PATH", "Set path to the lshknn header files")
 vars.Add("LSHKNN_LIBRARY_PATH", "Set path to the lshknn library")
+vars.Add(BoolVariable("LSHKNN_WITH_CUDA", "States whether lshknn was compiled with CUDA support", False))
+vars.Add(BoolVariable("LSHKNN_WITH_OPENCL", "States whether lshknn was compiled with OpenCL support", False))
 vars.Add("BOOST_INCLUDE_PATH", "Set path to the Boost header files", "/usr/include")
 vars.Add("BOOST_LIBRARY_PATH", "Set path to the Boost library", None)
 vars.Add("AUTOTUNETMP_INCLUDE_PATH", "Set path to the AutoTuneTMP header files", "")
