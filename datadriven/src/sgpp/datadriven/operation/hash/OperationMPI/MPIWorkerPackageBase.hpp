@@ -28,53 +28,119 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   MPI_Comm &master_worker_comm;
   MPI_Comm &sub_worker_comm;
   bool prefetching;
-  bool redistribute;
+  size_t packages_per_worker;
+  bool force_balancing;
   std::shared_ptr<base::OCLOperationConfiguration> parameters;
 
   MPI_Datatype mpi_typ;
   int secondary_workpackage[2];
   size_t size;
-  size_t opencl_platform = 0;
-  size_t opencl_device = 0;
 
   void divide_workpackages(int *package, T *erg) {
     // Divide into more work packages
     size_t packagesize = size;
-    if (redistribute) {
-      size_t logical_package_count =
-          (package[1] / (packagesize * MPIEnviroment::get_sub_worker_count()));
-      if (logical_package_count < 1) logical_package_count = 1;
-      packagesize += (package[1] % (packagesize * MPIEnviroment::get_sub_worker_count())) /
-                     (MPIEnviroment::get_sub_worker_count() * (logical_package_count));
+    if (size == 0) {
+      const size_t desired_packagecount = MPIEnviroment::get_sub_worker_count() * packages_per_worker;
+      packagesize = package[1] / desired_packagecount;
+    } else if (force_balancing) {
+      size_t number_steps = package[1] / (size * MPIEnviroment::get_sub_worker_count());
+      if (number_steps > 0) {
+        std::cout << "number steps:" << number_steps << std::endl;
+        const size_t last_step_size = package[1] % (size * MPIEnviroment::get_sub_worker_count());
+        std::cout << "last step:" << last_step_size << std::endl;
+        packagesize += (last_step_size / (MPIEnviroment::get_sub_worker_count() * number_steps));
+        // The rest of the workitems will be handled per default by the last package
+      }
     }
-    std::cout << "packagesize: " << packagesize << std::endl;
-    std::cout << "packagesize_multiplier: " << packagesize_multiplier << std::endl;
-    std::cout << "sizeof(T): " << sizeof(T) << std::endl;
-    T *package_result = new T[packagesize * packagesize_multiplier];
     SimpleQueue<T> workitem_queue(package[0], package[1], packagesize, sub_worker_comm,
                                   MPIEnviroment::get_sub_worker_count(), verbose, prefetching);
     int chunkid = package[0];
     size_t messagesize = 0;
     while (!workitem_queue.is_finished()) {
       // Store result
-      messagesize = workitem_queue.receive_result(chunkid, package_result);
-      if (verbose) {
-        std::cout << "Messagesize: " << messagesize << std::endl;
-        std::cout << package_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
-                  << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
-      }
-      // for (size_t i = 0; i < messagesize; i++) {
-      //   erg[(chunkid - package[0]) * packagesize_multiplier + i] = package_result[i];
-      // }
-      memcpy(erg + (chunkid - package[0]) * packagesize_multiplier, package_result,
-             sizeof(T) * messagesize);
+      messagesize = workitem_queue.receive_result( erg, packagesize_multiplier);
     }
-    delete[] package_result;
   }
 
   virtual void receive_and_send_initial_data(void) = 0;
   virtual void begin_opencl_operation(int *workpackage) = 0;
   virtual void finalize_opencl_operation(T *result_buffer, int *workpackage) = 0;
+
+ private:
+  void augment_ocl_configuration(std::string chosen_device_name, size_t device_select) {
+    if (opencl_node) {
+      // Get possible device names for error message
+      std::vector<std::string> possible_devicenames;
+      for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+        json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+        for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+          possible_devicenames.push_back(deviceName);
+        }
+      }
+      // Insert/Update select on node level using opencl_platform and opencl_device
+      bool found_device = false;
+      for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+        json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+        for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+          json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+          if (chosen_device_name == std::string("Unknown")) {
+            chosen_device_name = deviceName;
+            found_device = true;
+          }
+          if (deviceName == chosen_device_name) {
+            if (deviceNode.contains("COUNT")) {
+              std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
+                        << " is going to delete COUNT entry for " << deviceName
+                        << " and will insert its own SELECT entry with the"
+                        << "value given in the MPI config!" << std::endl;
+              deviceNode.removeAttribute("COUNT");
+            }
+            if (deviceNode.contains("SELECT")) {
+              std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
+                        << " is going to overwrite SELECT entry for "
+                        << deviceName << " with the value given in the MPI config" << std::endl;
+              deviceNode.replaceIDAttr("SELECT", static_cast<int64_t>(device_select));
+            } else {
+              deviceNode.addIDAttr("SELECT", static_cast<int64_t>(device_select));
+            }
+            found_device = true;
+            break;
+          } else {
+            if (deviceNode.contains("COUNT")) {
+              std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
+                        << " is going to delete COUNT entry for " << deviceName
+                        << " and will insert its own SELECT entry with the"
+                        << "value given in the MPI config!" << std::endl;
+              deviceNode.removeAttribute("COUNT");
+            }
+            if (deviceNode.contains("SELECT")) {
+              std::cerr << "Warning: Node " << MPIEnviroment::get_node_rank()
+                        << " is going to overwrite SELECT entry for "
+                        << deviceName << " with the value given in the MPI config" << std::endl;
+              deviceNode.replaceIDAttr("SELECT", static_cast<int64_t>(9999));
+            } else {
+              deviceNode.addIDAttr("SELECT", static_cast<int64_t>(9999));
+            }
+          }
+        }
+      }
+      if (!found_device) {
+        std::stringstream errorString;
+        errorString << "Specified device \"" << chosen_device_name
+                    << "\" could not be found on MPI rank "
+                    << MPIEnviroment::get_node_rank() << std::endl;
+        errorString << "Specify one device for each opencl worker in the"
+                    << " MPI config file with OPENCL_DEVICE_NAME.\n"
+                    << "To pick a specific device of a certain name use "
+                    << "OPENCL_DEVICE_SELECT for an additional ID.\n";
+        errorString << "Possible device names: " << std::endl;
+        for (auto &name : possible_devicenames) {
+          errorString << name << std::endl;
+        }
+        throw sgpp::base::operation_exception(errorString.str());
+      }
+    }
+  }
 
  public:
   MPIWorkerPackageBase(std::string operationName, int multiplier)
@@ -82,10 +148,10 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
         opencl_node(false),
         packagesize_multiplier(multiplier),
         overseer_node(false),
+        force_balancing(true),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
-        redistribute(true),
         parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
@@ -106,22 +172,52 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       overseer_node = false;
       opencl_node = true;
     }
+    std::string chosen_device_name("Unknown");
+    size_t device_select = 0;
     if (MPIEnviroment::get_configuration().contains("PREFERED_PACKAGESIZE"))
-      size = MPIEnviroment::get_configuration()["PREFERED_PACKAGESIZE"].getUInt();
+      std::cerr << "Warning! Flag PREFERED_PACKAGESIZE is deprecated!"
+                << " Use PACKAGESIZE instead or rely on the defaults." << std::endl;
+    if (MPIEnviroment::get_configuration().contains("PACKAGESIZE"))
+      size = MPIEnviroment::get_configuration()["PACKAGESIZE"].getUInt();
     else
-      size = 2048;
+      size = 0;
     if (MPIEnviroment::get_configuration().contains("REDISTRIBUTE"))
-      redistribute = MPIEnviroment::get_configuration()["REDISTRIBUTE"].getBool();
+      std::cerr << "Warning! Flag REDISTRIBUTE is deprecated and will be ignored!"
+                << std::endl;
     if (MPIEnviroment::get_configuration().contains("PREFETCHING"))
       prefetching = MPIEnviroment::get_configuration()["PREFETCHING"].getBool();
-    if (MPIEnviroment::get_configuration().contains("OPENCL_PLATFORM"))
-      opencl_platform = MPIEnviroment::get_configuration()["OPENCL_PLATFORM"].getUInt();
-    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE"))
-      opencl_device = MPIEnviroment::get_configuration()["OPENCL_DEVICE"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_NAME"))
+      chosen_device_name = MPIEnviroment::get_configuration()["OPENCL_DEVICE_NAME"].get();
+    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_SELECT"))
+      device_select = MPIEnviroment::get_configuration()["OPENCL_DEVICE_SELECT"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER"))
+      packages_per_worker = MPIEnviroment::get_configuration()["PACKAGES_PER_WORKER"].getUInt();
+    else
+      packages_per_worker = 2;
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING"))
+      force_balancing = MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool();
+
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER") &&
+        MPIEnviroment::get_configuration().contains("PACKAGESIZE")) {
+      std::stringstream errorString;
+      errorString << "Both PACKAGESIZE and PACKAGES_PER_WORKER are specified for node"
+                  << MPIEnviroment::get_node_rank() << std::endl
+                  << "These are mutually exclusive! Use only one of them" << std::endl;
+      throw std::logic_error(errorString.str());
+    }
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING") &&
+        !MPIEnviroment::get_configuration().contains("PACKAGESIZE") &&
+        MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool()) {
+      std::stringstream errorString;
+      errorString << "FORCE_BALANCING is used without PACKAGESIZE on node "
+                  << MPIEnviroment::get_node_rank() << std::endl;
+      errorString << "FORCE_BALANCING only works with specified PACKAGESIZE. Otherwise the"
+                  << "number of packages is known anyway and there is no need for rebalancing"
+                  << std::endl;
+      throw std::logic_error(errorString.str());
+    }
 
     // receive opencl configuration
-    std::cerr << "waiting for opencl configuration on" << MPIEnviroment::get_node_rank()
-              << std::endl;
     MPI_Status stat;
     int messagesize = 0;
     MPI_Probe(0, 1, master_worker_comm, &stat);
@@ -135,17 +231,20 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     parameters = std::make_shared<base::OCLOperationConfiguration>();
     parameters->deserialize(serialized_conf);
     delete[] serialized_conf;
-    std::cerr << "Received ocl config on" << MPIEnviroment::get_node_rank() << std::endl;
+
+    // Augment opencl config if necessary
+    augment_ocl_configuration(chosen_device_name, device_select);
+
   }
   MPIWorkerPackageBase(std::string operationName, int multiplier, std::string ocl_conf_filename)
       : MPIWorkerBase(operationName),
         opencl_node(false),
         packagesize_multiplier(multiplier),
         overseer_node(false),
+        force_balancing(true),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()),
         prefetching(false),
-        redistribute(true),
         parameters(nullptr) {
     if (std::is_same<T, int>::value) {
       mpi_typ = MPI_INT;
@@ -166,20 +265,51 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       overseer_node = false;
       opencl_node = true;
     }
+    std::string chosen_device_name("Unknown");
+    size_t device_select = 0;
     if (MPIEnviroment::get_configuration().contains("PREFERED_PACKAGESIZE"))
-      size = MPIEnviroment::get_configuration()["PREFERED_PACKAGESIZE"].getUInt();
+      std::cerr << "Warning! Flag PREFERED_PACKAGESIZE is deprecated!"
+                << " Use PACKAGESIZE instead or rely on the defaults." << std::endl;
+    if (MPIEnviroment::get_configuration().contains("PACKAGESIZE"))
+      size = MPIEnviroment::get_configuration()["PACKAGESIZE"].getUInt();
     else
-      size = 2048;
+      size = 0;
     if (MPIEnviroment::get_configuration().contains("REDISTRIBUTE"))
-      redistribute = MPIEnviroment::get_configuration()["REDISTRIBUTE"].getBool();
+      std::cerr << "Warning! Flag REDISTRIBUTE is deprecated and will be ignored!"
+                << std::endl;
     if (MPIEnviroment::get_configuration().contains("PREFETCHING"))
       prefetching = MPIEnviroment::get_configuration()["PREFETCHING"].getBool();
-    if (MPIEnviroment::get_configuration().contains("OPENCL_PLATFORM"))
-      opencl_platform = MPIEnviroment::get_configuration()["OPENCL_PLATFORM"].getUInt();
-    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE"))
-      opencl_device = MPIEnviroment::get_configuration()["OPENCL_DEVICE"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_NAME"))
+      chosen_device_name = MPIEnviroment::get_configuration()["OPENCL_DEVICE_NAME"].get();
+    if (MPIEnviroment::get_configuration().contains("OPENCL_DEVICE_SELECT"))
+      device_select = MPIEnviroment::get_configuration()["OPENCL_DEVICE_SELECT"].getUInt();
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER"))
+      packages_per_worker = MPIEnviroment::get_configuration()["PACKAGES_PER_WORKER"].getUInt();
+    else
+      packages_per_worker = 2;
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING"))
+      force_balancing = MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool();
 
-    std::cerr << "Start sending ocl conf" << MPIEnviroment::get_node_rank() << std::endl;
+    if (MPIEnviroment::get_configuration().contains("PACKAGAGES_PER_WORKER") &&
+        MPIEnviroment::get_configuration().contains("PACKAGESIZE")) {
+      std::stringstream errorString;
+      errorString << "Both PACKAGESIZE and PACKAGES_PER_WORKER are specified for node"
+                  << MPIEnviroment::get_node_rank() << std::endl
+                  << "These are mutually exclusive! Use only one of them" << std::endl;
+      throw std::logic_error(errorString.str());
+    }
+    if (MPIEnviroment::get_configuration().contains("FORCE_BALANCING") &&
+        !MPIEnviroment::get_configuration().contains("PACKAGESIZE") &&
+        MPIEnviroment::get_configuration()["FORCE_BALANCING"].getBool()) {
+      std::stringstream errorString;
+      errorString << "FORCE_BALANCING is used without PACKAGESIZE on node "
+                  << MPIEnviroment::get_node_rank() << std::endl;
+      errorString << "FORCE_BALANCING only works with specified PACKAGESIZE. Otherwise the"
+                  << "number of packages is known anyway and there is no need for rebalancing"
+                  << std::endl;
+      throw std::logic_error(errorString.str());
+    }
+
     parameters = std::make_shared<base::OCLOperationConfiguration>(ocl_conf_filename);
     std::ostringstream sstream;
     parameters->serialize(sstream, 0);
@@ -192,6 +322,9 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       MPI_Send(conf_message, static_cast<int>(serialized_conf.size() + 1), MPI_CHAR, dest, 1,
                sub_worker_comm);
     delete[] conf_message;
+
+    // Augment opencl config if necessary
+    augment_ocl_configuration(chosen_device_name, device_select);
   }
   virtual ~MPIWorkerPackageBase() {}
 
@@ -225,8 +358,10 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       }
       // Check for exit
       if (datainfo[0] == -2 && datainfo[1] == -2) {
-        std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
-                  << std::endl;
+        if (verbose) {
+          std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
+                    << std::endl;
+        }
         for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
           MPI_Send(datainfo, 2, MPI_INT, dest, 1, sub_worker_comm);
         break;
@@ -240,7 +375,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
             partial_results[currentbuffer] == NULL) {
           if (partial_results[currentbuffer] != NULL) delete[] partial_results[currentbuffer];
           partial_results[currentbuffer] = new T[datainfo[1] * packagesize_multiplier];
-          if (verbose) std::cout << "New Buffer created!" << std::endl;
           buffersizes[currentbuffer] = datainfo[1] * packagesize_multiplier;
         }
         if (opencl_node) {
@@ -271,8 +405,6 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
           }
           divide_workpackages(datainfo, partial_results[currentbuffer]);
         }
-        std::cout << "Trying to send back results on " << MPIEnviroment::get_node_rank()
-                  << std::endl;
         // Send results back
         MPI_Isend(partial_results[currentbuffer], datainfo[1] * packagesize_multiplier, mpi_typ, 0,
                   1, master_worker_comm, request + currentbuffer);

@@ -28,15 +28,18 @@ class MPIEnviroment {
   int initialized_worker_counter;
   int initial_source;
 
+  /// Communicator for talking to own slaves
   MPI_Comm communicator;
+  /// Communicator for talking to own master node
   MPI_Comm input_communicator;
+  /// Communicator for talking with all OpenCL nodes - useful for loading data with MPI I/O
+  MPI_Comm opencl_communicator;
   MPI_Group node_neighbors;
   std::vector<int> neighbor_list;
+  std::vector<int> opencl_nodelist;
   int worker_count;
 
   MPIEnviroment(int argc, char *argv[], bool verbose);
-  MPIEnviroment(void);
-  MPIEnviroment(MPIEnviroment &cpy);
   /**
    * Slave main - every MPI node except the master should run in one of those
    *
@@ -44,7 +47,12 @@ class MPIEnviroment {
    */
   void slave_mainloop(void);
   int count_slaves(json::Node &currentslave);
+  int count_nodes(json::Node &currentworker);
+  void create_opencl_node_list(std::vector<int> &node_id_list,
+                               unsigned int &current_node_id,
+                               json::Node &currentslave);
   void init_communicator(base::OperationConfiguration conf);
+  void init_opencl_communicator(base::OperationConfiguration conf);
   void init_worker(int workerid, int source);
 
  public:
@@ -82,6 +90,12 @@ class MPIEnviroment {
   static base::OperationConfiguration createMPIConfiguration(
       int compute_nodes, base::OCLOperationConfiguration node_opencl_configuration);
   ~MPIEnviroment();
+
+  MPIEnviroment(void) = delete;
+  MPIEnviroment(MPIEnviroment &cpy) = delete;
+  MPIEnviroment(MPIEnviroment &&cpy) = delete;
+  MPIEnviroment& operator=(MPIEnviroment other) = delete;
+  MPIEnviroment& operator=(MPIEnviroment &&other) = delete;
 };
 
 template <class T>
@@ -157,38 +171,29 @@ class SimpleQueue {
     received_packageindex = 0;
 
     // Adapt packagesize
-    std::cout << "packagesize: " << packagesize << std::endl;
-    std::cout << "workitem_count: " << workitem_count << std::endl;
-    std::cout << "commsize: " << commsize << std::endl;
     if (packagesize > workitem_count) {
-      std::cout << "in > workitem_count" << std::endl;
       commsize = 1;
       packagesize = workitem_count;
+      std::cerr << "Warning - Adjusted packagesize" << std::endl;
     } else if (packagesize > workitem_count / (commsize * 2)) {
-      std::cout << "in if commsize" << std::endl;
       packagesize = static_cast<int>(workitem_count / (commsize * 2));
+      std::cerr << "Warning - Adjusted packagesize" << std::endl;
     }
-    if (packagesize % 128 != 0) packagesize -= packagesize % 128;
-    if (packagesize == 0) {
-      // this can happen e.g. if workitem_count < 128
-      // TODO: why 128?
-      packagesize = 128;
-    }
-    std::cout << "packagesize after: " << packagesize << std::endl;
 
-    packagecount = static_cast<unsigned int>(workitem_count / packagesize) + 1;
+    packagecount = static_cast<unsigned int>(workitem_count / packagesize);
     startindices = new unsigned int[commsize];
     secondary_indices = new unsigned int[commsize];
+    for (auto i = 0; i < commsize; ++i) {
+      startindices[i] = 0;
+      secondary_indices[i] = 0;
+    }
+
     packageinfo[0] = static_cast<int>(startindex);
     packageinfo[1] = static_cast<int>(packagesize);
 
     // Send first packages
-    if (verbose) std::cout << "Sending size: " << packageinfo[1] << std::endl;
     for (int dest = 1; dest < commsize + 1; dest++) {
-      packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-      MPI_Send(packageinfo, 2, MPI_INT, dest, 1, comm);
-      startindices[dest - 1] = packageinfo[0];
-      send_packageindex++;
+      send_package(dest);
     }
     if (prefetching) {
       if (packagesize == workitem_count) {
@@ -198,10 +203,7 @@ class SimpleQueue {
       } else {
         // Send secondary packages
         for (int dest = 1; dest < commsize + 1; dest++) {
-          packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-          MPI_Send(packageinfo, 2, MPI_INT, dest, 1, comm);
-          secondary_indices[dest - 1] = packageinfo[0];
-          send_packageindex++;
+          send_package(dest);
         }
       }
     }
@@ -213,25 +215,69 @@ class SimpleQueue {
    * @param partial_result Buffer containing the package result
    * @return Size of the result array
    */
-  size_t receive_result(int &startid, T *partial_result) {
+  size_t receive_result(T *erg, size_t multiplier) {
     MPI_Status stat;
     int messagesize = 0;
     if (received_packageindex < packagecount + 1) {
       MPI_Probe(MPI_ANY_SOURCE, 1, comm, &stat);
       MPI_Get_count(&stat, mpi_typ, &messagesize);
       if (verbose) {
-        std::cout << "Received work package [" << received_packageindex + 1 << " / " << packagecount
+        std::cout << "Received work package results [" << received_packageindex + 1 << " / " << packagecount
                   << "] from node " << stat.MPI_SOURCE << "! Messagesize: " << messagesize
                   << std::endl;
       }
       int source = stat.MPI_SOURCE;
-      startid = startindices[source - 1];
-      MPI_Recv(partial_result, messagesize, mpi_typ, stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
+      MPI_Recv(erg + (startindices[source -1] - startindex) * multiplier, messagesize, mpi_typ,
+               stat.MPI_SOURCE, stat.MPI_TAG, comm, &stat);
       received_packageindex++;
 
-      // Send next package
-      if (send_packageindex < packagecount - 1) {
-        packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
+      // Send next packagesource
+      send_package(source);
+    } else {
+      std::cerr << "Error - packagecount: " << packagecount << " Received:" << received_packageindex
+                << "\n";
+      throw std::logic_error("Queue error! Received too many packages!");
+    }
+    return messagesize;
+  }
+  void send_package(const int source) {
+    if (send_packageindex < packagecount - 1) {
+      packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
+      MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+      if (send_packageindex < commsize) { // univerisal init case
+        startindices[source - 1] = packageinfo[0];
+        secondary_indices[source - 1] = packageinfo[0]; // purely in case this is already the last package
+      }
+      else if (prefetching) { // prefetching init case
+        if (packagesize < commsize * 2) {
+          secondary_indices[source - 1] = packageinfo[0];
+        } else { // normal case with prefetching
+          startindices[source - 1] = secondary_indices[source - 1];
+          secondary_indices[source - 1] = packageinfo[0];
+        }
+      } else { // normal case without prefetching
+        startindices[source - 1] = packageinfo[0];
+      }
+      send_packageindex++;
+    // last case
+    } else if (send_packageindex == packagecount - 1) {
+      // Send last package
+      packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
+      packageinfo[1] = static_cast<int>(packagesize + (workitem_count) % packagesize);
+      if (packageinfo[1] == 0) {
+        if (prefetching) {
+          startindices[source - 1] = secondary_indices[source - 1];
+          packageinfo[0] = -1;
+          packageinfo[1] = -1;
+          MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+        }
+        send_packageindex++;
+        received_packageindex++;
+        if (verbose)
+          std::cout << "Received work package [" << received_packageindex << " / " << packagecount
+                    << "] (empty package)" << std::endl;
+
+      } else {
         MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
         if (prefetching) {
           startindices[source - 1] = secondary_indices[source - 1];
@@ -240,47 +286,17 @@ class SimpleQueue {
           startindices[source - 1] = packageinfo[0];
         }
         send_packageindex++;
-      } else if (send_packageindex == packagecount - 1) {
-        // Send last package
-        packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-        packageinfo[1] = static_cast<int>((workitem_count) % packagesize);
-        if (packageinfo[1] == 0) {
-          if (prefetching) {
-            startindices[source - 1] = secondary_indices[source - 1];
-            packageinfo[0] = -1;
-            packageinfo[1] = -1;
-            MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
-          }
-          send_packageindex++;
-          received_packageindex++;
-          if (verbose)
-            std::cout << "Received work package [" << received_packageindex << " / " << packagecount
-                      << "] (empty package)" << std::endl;
-        } else {
-          MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
-          if (prefetching) {
-            startindices[source - 1] = secondary_indices[source - 1];
-            secondary_indices[source - 1] = packageinfo[0];
-          } else {
-            startindices[source - 1] = packageinfo[0];
-          }
-          send_packageindex++;
-        }
-      } else {
-        if (prefetching) {
-          startindices[source - 1] = secondary_indices[source - 1];
-          // Send empty package to avoid deadlock on clients
-          packageinfo[0] = -1;
-          packageinfo[1] = -1;
-          MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
-        }
       }
+    // stop case
     } else {
-      std::cout << "Error - packagecount: " << packagecount << " Received:" << received_packageindex
-                << "\n";
-      throw std::logic_error("Queue error! Received too many packages!");
+      if (prefetching) {
+        startindices[source - 1] = secondary_indices[source - 1];
+        // Send empty package to avoid deadlock on clients
+        packageinfo[0] = -1;
+        packageinfo[1] = -1;
+        MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+      }
     }
-    return messagesize;
   }
   /**
    * Checks whether the queue has already finished
@@ -296,7 +312,6 @@ class SimpleQueue {
   virtual ~SimpleQueue() {
     delete[] startindices;
     delete[] secondary_indices;
-    std::cerr << "Queue deleted" << std::endl;
   }
 };
 

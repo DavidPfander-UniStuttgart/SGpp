@@ -13,13 +13,13 @@ namespace sgpp {
 namespace datadriven {
 
 /// Generates the k nearest neighbors graph creation using a specific opencl device and a datamatrix
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     base::DataMatrix &dataset, size_t k, size_t dimensions, std::string opencl_conf);
 /// Generates the k nearest neighbors graph creation using a specific opencl device and a double
 /// vector
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     double *dataset, size_t dataset_size, size_t k, size_t dimensions, std::string opencl_conf);
-DensityOCLMultiPlatform::OperationCreateGraphOCL *createNearestNeighborGraphConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> createNearestNeighborGraphConfigured(
     double *dataset, size_t dataset_size, size_t k, size_t dimensions,
     std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters);
 }  // namespace datadriven

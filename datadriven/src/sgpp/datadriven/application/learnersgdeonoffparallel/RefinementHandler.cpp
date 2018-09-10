@@ -5,13 +5,15 @@
 
 #include <sgpp_base.hpp>
 #include <sgpp/base/exception/data_exception.hpp>
-#include <sgpp/datadriven/algorithm/ConvergenceMonitor.hpp>
 #include <sgpp/datadriven/algorithm/DBMatOfflineChol.hpp>
 #include <sgpp/datadriven/algorithm/DBMatOnlineDE.hpp>
 #include <sgpp/datadriven/functors/MultiGridRefinementFunctor.hpp>
+#include <sgpp/datadriven/application/learnersgdeonoffparallel/LearnerSGDEOnOffParallel.hpp>
 #include <sgpp/datadriven/application/learnersgdeonoffparallel/MPIMethods.hpp>
 #include <sgpp/datadriven/application/learnersgdeonoffparallel/RefinementHandler.hpp>
-#include <sgpp/datadriven/application/learnersgdeonoffparallel/LearnerSGDEOnOffParallel.hpp>
+#include <sgpp/datadriven/algorithm/RefinementMonitor.hpp>
+#include <sgpp/datadriven/algorithm/RefinementMonitorPeriodic.hpp>
+#include <sgpp/datadriven/algorithm/RefinementMonitorConvergence.hpp>
 #include <sgpp/base/exception/algorithm_exception.hpp>
 
 #include <vector>
@@ -28,16 +30,18 @@ bool RefinementHandler::checkReadyForRefinement() const {
 void RefinementHandler::doRefinementForClass(
     const std::string &refType,
     RefinementResult *refinementResult,
-    const ClassDensityConntainer &onlineObjects,
+    const std::vector<std::pair<std::unique_ptr<DBMatOnlineDE>, size_t>> &onlineObjects,
+    Grid& grid,
+    DataVector& alpha,
     bool preCompute,
     MultiGridRefinementFunctor *refinementFunctor,
-    size_t classIndex) {
+    size_t classIndex,
+    sgpp::base::AdaptivityConfiguration& adaptivityConfig) {
   // perform refinement/coarsening for grid which corresponds to current
   // index
   std::cout << "Refinement and coarsening for class: " << classIndex
             << std::endl;
   auto densEst = onlineObjects[classIndex].first.get();
-  Grid &grid = densEst->getOfflineObject().getGrid();
 
   size_t oldGridSize = grid.getSize();
   D(std::cout << "Size before adaptivity: " << oldGridSize
@@ -48,7 +52,8 @@ void RefinementHandler::doRefinementForClass(
   size_t numberOfNewPoints = 0;
 
   if (refType == "surplus") {
-    numberOfNewPoints = handleSurplusBasedRefinement(densEst, grid, gridGen);
+    numberOfNewPoints = handleSurplusBasedRefinement(densEst, grid, alpha, gridGen,
+        adaptivityConfig);
   } else if ((refType == "data") || (refType == "zero")) {
     numberOfNewPoints = handleDataAndZeroBasedRefinement(preCompute, refinementFunctor,
                                                          classIndex, grid,
@@ -97,14 +102,14 @@ void RefinementHandler::doRefinementForClass(
     refinementResult->addedGridPoints.push_back(levelIndexVector);
   }
 
-  updateClassVariablesAfterRefinement(classIndex, refinementResult, densEst);
+  updateClassVariablesAfterRefinement(classIndex, refinementResult, densEst, grid);
 }
 
 void RefinementHandler::updateClassVariablesAfterRefinement(
     size_t classIndex,
     RefinementResult *refinementResult,
-    DBMatOnlineDE *densEst) {
-  base::Grid &grid = densEst->getOfflineObject().getGrid();
+    DBMatOnlineDE *densEst,
+    Grid& grid) {
 
   if (!MPIMethods::isMaster()) {
     std::cout << "Applying refinement result class " << classIndex << " from master"
@@ -187,55 +192,37 @@ void RefinementHandler::updateClassVariablesAfterRefinement(
 
   // update alpha vector
   D(size_t oldSize = densEst->getAlpha().size();)
-  densEst->updateAlpha(&(refinementResult->deletedGridPointsIndices),
+  learnerInstance->updateAlpha(classIndex, &(refinementResult->deletedGridPointsIndices),
                        refinementResult->addedGridPoints.size());
   D(std::cout << "Updated alpha vector " << classIndex << " (old size " << oldSize
               << ", new size " <<
               densEst->getAlpha().size() << ")" << std::endl;)
 }
 
-bool RefinementHandler::checkRefinementNecessary(
+size_t RefinementHandler::checkRefinementNecessary(
     const std::string &refMonitor,
     size_t refPeriod,
-    size_t totalInstances,
+    size_t batchSize,
     double currentValidError,
     double currentTrainError,
     size_t numberOfCompletedRefinements,
-    ConvergenceMonitor &monitor) {
+    RefinementMonitor &monitor,
+    sgpp::base::AdaptivityConfiguration adaptivityConfig) {
   auto &offline = learnerInstance->getOffline();
   // access DBMatOnlineDE-objects of all classes in order
   // to apply adaptivity to the specific sparse grids later on
 
-  // check if refinement should be performed
-  if (refMonitor == "periodic") {
-    // check periodic monitor
-    if (offline->isRefineable() && (totalInstances > 0) && (totalInstances % refPeriod == 0) &&
-        (numberOfCompletedRefinements < offline->getAdaptivityConfig().numRefinements_)) {
-      return true;
-    }
-  } else if (refMonitor == "convergence") {
-    // check convergence monitor
-    if (learnerInstance->getValidationData() == nullptr) {
-      throw sgpp::base::data_exception(
-          "No validation data for checking convergence provided!");
-    }
-    if (offline->isRefineable() &&
-        (numberOfCompletedRefinements < offline->getAdaptivityConfig().numRefinements_)) {
-      currentValidError = learnerInstance->getError(*learnerInstance->getValidationData());
-      currentTrainError = learnerInstance->getError(
-          learnerInstance->getTrainData());  // if train dataset is large
-      // use a subset for error
-      // evaluation
-      monitor.pushToBuffer(currentValidError, currentTrainError);
-      if (monitor.nextRefCnt > 0) {
-        monitor.nextRefCnt--;
-      }
-      if (monitor.nextRefCnt == 0) {
-        return monitor.checkConvergence();
-      }
-    }
+  // check if and how many refinements should be performed
+  size_t refinementsNecessary = 0;
+  if (offline->isRefineable() && numberOfCompletedRefinements < adaptivityConfig.numRefinements_) {
+    currentValidError = learnerInstance->getError(*learnerInstance->getValidationData());
+    currentTrainError = learnerInstance->getError(
+        learnerInstance->getTrainData());  // if train dataset is large
+    // use a subset for error
+    monitor.pushToBuffer(batchSize, currentValidError, currentTrainError);
+    refinementsNecessary = monitor.refinementsNecessary();
   }
-  return false;
+  return refinementsNecessary;
 }
 
 size_t
@@ -261,14 +248,16 @@ RefinementHandler::handleDataAndZeroBasedRefinement(
 size_t RefinementHandler::handleSurplusBasedRefinement(
     DBMatOnlineDE *densEst,
     base::Grid &grid,
-    base::GridGenerator &gridGen) const {
+    DataVector& alpha,
+    base::GridGenerator &gridGen,
+    sgpp::base::AdaptivityConfiguration adaptivityConfig) const {
   DataVector *alphaWork;  // required for surplus refinement
   // auxiliary variables
   DataVector p(learnerInstance->getTrainData().getDimension());
 
   std::unique_ptr<sgpp::base::OperationEval> opEval(op_factory::createOperationEval(grid));
   sgpp::base::HashGridStorage &gridStorage = grid.getStorage();
-  alphaWork = &(densEst->getAlpha());
+  alphaWork = &alpha;
   DataVector alphaWeight(alphaWork->getSize());
   // determine surpluses
   for (size_t k = 0; k < gridStorage.getSize(); k++) {
@@ -311,7 +300,7 @@ size_t RefinementHandler::handleSurplusBasedRefinement(
   // simple refinement based on surpluses
   sgpp::base::SurplusRefinementFunctor srf(
       alphaWeight,
-      learnerInstance->getOffline()->getAdaptivityConfig().noPoints_);
+      adaptivityConfig.noPoints_);
   gridGen.refine(srf);
   size_t sizeAfterRefine = grid.getSize();
   return sizeAfterRefine - sizeBeforeRefine;

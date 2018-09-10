@@ -20,10 +20,11 @@ if env["USE_ZLIB"]:
 if env["USE_OCL"]:
   additionalDependencies += ["OpenCL"]
 if env["USE_GSL"]:
-    additionalDependencies += ["gsl", "gslcblas"]
+  additionalDependencies += ["gsl", "gslcblas"]
 if env["USE_CGAL"]:
   additionalDependencies += ["CGAL"]
-additionalDependencies += ["lshknn"]
+if env["USE_LSH_KNN"]:
+  additionalDependencies += ["lshknn"]
 
 additionalBoostTestDependencies = ["z"]
 performanceTestFlag = "COMPILE_BOOST_PERFORMANCE_TESTS"
@@ -43,12 +44,17 @@ if env["ARCH"] == "mic":
     module.buildExamples("examplesMIC")
 else:
     module.buildExamples()
+    module.buildExamples("examplesPipeline")
 if env["USE_OCL"]:
     additionalOCLDependencies = ["boost_program_options", "boost_filesystem", "boost_system"] + additionalDependencies
     module.buildExamples("examplesOCL",
                          additionalExampleDependencies=additionalOCLDependencies)
 if env["USE_MPI"] and env["USE_OCL"]:
-    module.buildExamples("examplesMPI")
+    module.buildExamples("examplesMPI",
+                         additionalExampleDependencies=["boost_program_options",
+                                                        "boost_filesystem",
+                                                        "boost_system"]
+    )
 if (env["ARCH"].lower() == "avx2"):
     module.buildExamples("examplesAVX")
 if env["USE_HPX"]:

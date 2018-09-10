@@ -17,8 +17,6 @@ namespace clusteringmpi {
 
 MPIWorkerBase::MPIWorkerBase(std::string operationName)
     : object_index(index), operationName(operationName), verbose(false) {
-  std::cout << "In Base cstr" << std::endl;
-  std::cout << "Creating operation on " << MPIEnviroment::get_node_rank() << std::endl;
   if (MPIEnviroment::get_configuration().contains("VERBOSE"))
     verbose = MPIEnviroment::get_configuration()["VERBOSE"].getBool();
 
@@ -37,13 +35,9 @@ MPIWorkerBase::MPIWorkerBase(std::string operationName)
              MPIEnviroment::get_communicator());
   }
   delete[] class_message;
-  if (verbose) {
-    std::cout << "Created Worker on node " << MPIEnviroment::get_node_rank() << " with operation "
-              << operationName << " and workerindex" << object_index << std::endl;
-  }
 }
 
-MPIWorkerBase::MPIWorkerBase(void) { std::cout << "In default Base cstr" << std::endl; }
+MPIWorkerBase::MPIWorkerBase(void) {}
 
 int MPIWorkerBase::index = 0;
 MPIWorkerBase::~MPIWorkerBase(void) {}

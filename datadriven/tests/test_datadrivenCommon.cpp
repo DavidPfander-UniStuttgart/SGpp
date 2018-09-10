@@ -107,7 +107,7 @@ DataMatrix* readReferenceMatrix(sgpp::base::GridStorage& storage, std::string fi
   return m;
 }
 
-void doRandomRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::base::Grid& grid,
+void doRandomRefinements(sgpp::base::AdaptivityConfiguration& adaptConfig, sgpp::base::Grid& grid,
                          sgpp::base::GridGenerator& gridGen, sgpp::base::DataVector& alpha) {
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -126,7 +126,7 @@ void doRandomRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp:
   }
 }
 
-void doRandomRefinements(sgpp::base::AdpativityConfiguration& adaptConfig, sgpp::base::Grid& grid,
+void doRandomRefinements(sgpp::base::AdaptivityConfiguration& adaptConfig, sgpp::base::Grid& grid,
                          sgpp::base::GridGenerator& gridGen) {
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -196,7 +196,7 @@ void compareDatasets(const std::vector<std::tuple<std::string, double>>& fileNam
 
 double compareToReference(sgpp::base::GridType gridType, const std::string& fileName, size_t level,
                           sgpp::datadriven::OperationMultipleEvalConfiguration configuration) {
-  sgpp::base::AdpativityConfiguration adaptConfig;
+  sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
   adaptConfig.noPoints_ = 80;
   adaptConfig.numRefinements_ = 1;
@@ -296,7 +296,7 @@ void compareDatasetsTranspose(const std::vector<std::tuple<std::string, double>>
 double compareToReferenceTranspose(
     sgpp::base::GridType gridType, const std::string& fileName, size_t level,
     sgpp::datadriven::OperationMultipleEvalConfiguration configuration) {
-  sgpp::base::AdpativityConfiguration adaptConfig;
+  sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
   adaptConfig.noPoints_ = 80;
   adaptConfig.numRefinements_ = 1;

@@ -170,6 +170,13 @@ class KernelDensityB : public KernelDensityBInterface<T> {
 
   virtual void initialize_dataset(std::vector<T> &data) {
     this->dataSize = data.size() / dims;
+
+    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    size_t local_padding = local_size;
+    local_padding *= dims;
+    for (auto i = 0; i < local_padding; ++i) {
+      data.push_back(4.0);
+    }
     if (!deviceData.isInitialized()) deviceData.intializeTo(data, 1, 0, data.size());
   }
 
@@ -190,8 +197,19 @@ class KernelDensityB : public KernelDensityBInterface<T> {
       this->kernelB = manager->buildKernel(program_src, device, kernelConfiguration, "cscheme");
     }
 
+    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    size_t globalworkrange;
+    size_t local_padding;
+    if (chunksize == 0) {
+      local_padding = local_size - (gridSize % local_size);
+      globalworkrange = gridSize + local_padding;
+    } else {
+      local_padding = local_size - (chunksize % local_size);
+      globalworkrange = chunksize + local_padding;
+    }
+
     // Load data into buffers if not already done
-    if (!deviceResultData.isInitialized()) {
+    if (!deviceResultData.isInitialized() || deviceResultData.size() < chunksize + local_padding) {
       if (chunksize == 0) {
         std::vector<T> zeros(gridSize);
         for (size_t i = 0; i < gridSize; i++) {
@@ -199,11 +217,11 @@ class KernelDensityB : public KernelDensityBInterface<T> {
         }
         deviceResultData.intializeTo(zeros, 1, 0, gridSize);
       } else {
-        std::vector<T> zeros(chunksize);
-        for (size_t i = 0; i < chunksize; i++) {
+        std::vector<T> zeros(chunksize + local_padding);
+        for (size_t i = 0; i < chunksize + local_padding; i++) {
           zeros[i] = 0.0;
         }
-        deviceResultData.intializeTo(zeros, 1, 0, chunksize);
+        deviceResultData.intializeTo(zeros, 1, 0, chunksize + local_padding);
       }
       clFinish(device->commandQueue);
     }
@@ -281,17 +299,6 @@ class KernelDensityB : public KernelDensityBInterface<T> {
 
     clTiming = nullptr;
 
-    size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
-
-    size_t globalworkrange;
-    size_t local_padding;
-    if (chunksize == 0) {
-      local_padding = local_size - (gridSize % local_size);
-      globalworkrange = gridSize + local_padding;
-    } else {
-      local_padding = local_size - (chunksize % local_size);
-      globalworkrange = chunksize + local_padding;
-    }
     // enqueue kernel
 
     if (verbose) {

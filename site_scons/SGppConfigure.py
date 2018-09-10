@@ -275,6 +275,8 @@ def checkGSL(config):
 
 def checkZlib(config):
 #zlib needed for datamining
+    if config.env["SG_DATADRIVEN"] and config.env["COMPILE_BOOST_TESTS"]:
+      config.env["USE_ZLIB"] = True
     if(config.env["USE_ZLIB"]):
         if config.env["PLATFORM"] == "win32":
             Helper.printWarning("zlib is currently not supported on Windows. Continuing withouth zlib.")
@@ -330,8 +332,8 @@ def checkSWIG(config):
         r"[0-9.]*[0-9]+", subprocess.check_output(["swig", "-version"]))[0]
 
     swigVersionTuple = config.env._get_major_minor_revision(swigVersion)
-    if swigVersionTuple < (3, 0, 0):
-      Helper.printErrorAndExit("SWIG version too old! At least 3.0 required.")
+    if swigVersionTuple < (3, 0, 3):
+      Helper.printErrorAndExit("SWIG version too old! At least 3.0.3 required.")
 
     Helper.printInfo("Using SWIG {}".format(swigVersion))
 
@@ -366,6 +368,11 @@ def checkPython(config):
       if config.env["RUN_PYTHON_TESTS"]:
         Helper.printWarning("Python unit tests were disabled because numpy is not available.")
         config.env["RUN_PYTHON_TESTS"] = False
+
+    try:
+        import scipy
+    except:
+        Helper.printWarning("Warning: Scipy doesn't seem to be installed.")
   else:
     Helper.printInfo("Python extension (SG_PYTHON) not enabled.")
 

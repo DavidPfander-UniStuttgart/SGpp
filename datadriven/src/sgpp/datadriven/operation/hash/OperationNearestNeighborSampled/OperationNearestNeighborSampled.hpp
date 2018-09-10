@@ -32,6 +32,7 @@ private:
                std::vector<double> &final_graph_distances, size_t first_index);
 
 public:
+<<<<<<< HEAD
   OperationNearestNeighborSampled(bool verbose = false);
 
   std::vector<int64_t> knn_lsh_cuda(size_t dim, sgpp::base::DataMatrix &dataset,
@@ -76,6 +77,25 @@ public:
                                          uint32_t)>
           chunk_knn,
       size_t rand_chunk_size = 0);
+=======
+  OperationNearestNeighborSampled(base::DataMatrix dataset, size_t dim,
+                                  bool verbose = false);
+
+#ifdef USE_LSH_KNN
+  std::vector<int32_t> knn_lsh(uint32_t k, uint64_t lsh_tables,
+                               uint64_t lsh_hashes, double lsh_w);
+
+  std::vector<int32_t> knn_naive(uint32_t k);
+
+  std::vector<int32_t> knn_naive(base::DataMatrix &local_dataset, uint32_t k);
+
+  std::vector<int32_t> knn_naive_sampling(uint32_t k, uint32_t input_chunk_size,
+                                          uint32_t randomize_count);
+#endif
+
+  std::vector<int32_t> knn_ocl(uint32_t k, std::string configFileName);
+
+>>>>>>> origin/AutoTune_MPI_Fixes
 
   double get_last_duration();
 

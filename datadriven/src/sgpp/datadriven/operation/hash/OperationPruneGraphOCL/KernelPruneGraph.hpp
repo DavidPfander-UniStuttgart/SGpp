@@ -56,8 +56,10 @@ class KernelPruneGraph {
   json::Node &kernelConfiguration;
 
   bool verbose;
+  bool uselocal;
 
   size_t localSize;
+  size_t dataSize;
   // size_t totalBlockSize;
 
  public:
@@ -83,13 +85,13 @@ class KernelPruneGraph {
     gridSize = pointsVector.size() / (2 * dims);
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    uselocal = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
 
     devicePoints.intializeTo(pointsVector, 1, 0, gridSize * dims * 2);
     deviceAlpha.intializeTo(alphaVector, 1, 0, gridSize);
 
-    std::cout << "dataVector.size(): " << dataVector.size()
-              << " div: " << (dataVector.size() / dims) << std::endl;
     deviceData.intializeTo(dataVector, 1, 0, dataVector.size());
+    dataSize = dataVector.size() / dims;
     clFinish(device->commandQueue);
   }
 
@@ -109,9 +111,8 @@ class KernelPruneGraph {
     // Build kernel if not already done
     if (this->kernel == nullptr) {
       if (verbose) std::cout << "generating kernel source" << std::endl;
-      size_t data_size = graph.size() / k;
       std::string program_src =
-          kernelSourceBuilder.generateSource(dims, data_size, gridSize, k, threshold);
+          kernelSourceBuilder.generateSource(dims, dataSize, gridSize, k, threshold);
       if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
       if (verbose) std::cout << "building kernel" << std::endl;
       this->kernel = manager->buildKernel(program_src, device, kernelConfiguration, "removeEdges");
@@ -146,7 +147,17 @@ class KernelPruneGraph {
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernel, 4, sizeof(cl_uint), &startid);
+    err = clSetKernelArg(this->kernel, 4, sizeof(cl_ulong), &startid);
+    if (err != CL_SUCCESS) {
+      std::stringstream errorString;
+      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+      throw base::operation_exception(errorString.str());
+    }
+    if (chunksize > 0) {
+      err = clSetKernelArg(this->kernel, 5, sizeof(cl_ulong), &chunksize);
+    } else {
+      err = clSetKernelArg(this->kernel, 5, sizeof(cl_ulong), &dataSize);
+    }
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
@@ -158,15 +169,19 @@ class KernelPruneGraph {
     // enqueue kernel
     if (verbose) std::cout << "Starting the kernel" << std::endl;
     size_t globalworkrange;
-    size_t local_padding;
+    size_t local_padding = 0;
     if (chunksize == 0) {
       globalworkrange = graph.size() / k;
-      local_padding = localSize - (globalworkrange % localSize);
-      globalworkrange += local_padding;
+      if (uselocal) {
+        local_padding = localSize - (globalworkrange % localSize);
+        globalworkrange += local_padding;
+      }
     } else {
       globalworkrange = chunksize;
-      local_padding = localSize - (globalworkrange % localSize);
-      globalworkrange += local_padding;
+      if (uselocal) {
+        local_padding = localSize - (globalworkrange % localSize);
+        globalworkrange += local_padding;
+      }
     }
 
     if (verbose) {

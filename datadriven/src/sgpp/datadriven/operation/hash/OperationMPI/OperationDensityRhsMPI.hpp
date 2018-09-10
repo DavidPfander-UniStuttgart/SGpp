@@ -8,10 +8,11 @@ namespace clusteringmpi {
 
 class OperationDensityRhsMPI : public DensityRhsWorker {
  public:
-  OperationDensityRhsMPI(base::Grid &grid, sgpp::base::DataMatrix &data,
+  OperationDensityRhsMPI(base::Grid &grid, std::string dataset_filename,
                          std::string ocl_config_file)
-      : MPIWorkerBase("DensityRHSWorker"), DensityRhsWorker(grid, data, ocl_config_file) {}
-  virtual ~OperationDensityRhsMPI() {}
+      : MPIWorkerBase("DensityRHSWorker"), DensityRhsWorker(grid, dataset_filename, ocl_config_file) {}
+  virtual ~OperationDensityRhsMPI() {
+  }
   virtual void generate_b(base::DataVector &b) {
     DensityRhsWorker::MPIWorkerGridBase::start_sub_workers();
     int datainfo[2];

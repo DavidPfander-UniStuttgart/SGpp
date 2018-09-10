@@ -21,7 +21,7 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
   bool opencl_node;
   bool overseer_node;
   double lambda;
-  DensityOCLMultiPlatform::OperationCreateGraphOCL *op;
+  std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> op;
 
   MPI_Comm &master_worker_comm;
   MPI_Comm &sub_worker_comm;
@@ -36,15 +36,16 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
     size_t messagesize = 0;
     while (!workitem_queue.is_finished()) {
       // Store result
-      if (verbose) {
-        std::cout << "Messagesize: " << messagesize << std::endl;
-        std::cout << partial_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
-                  << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
-      }
-      messagesize = workitem_queue.receive_result(chunkid, partial_result);
-      for (size_t i = 0; i < messagesize; i++) {
-        graph[chunkid - package[0] + i] = partial_result[i];
-      }
+      // if (verbose) {
+      //   std::cout << "Messagesize: " << messagesize << std::endl;
+      //   std::cout << partial_result[0] << " at  " << chunkid - package[0] + 0 << " with packageid "
+      //             << chunkid << " on " << MPIEnviroment::get_node_rank() << std::endl;
+      // }
+      // messagesize = workitem_queue.receive_result(chunkid, partial_result, 0);
+      // for (size_t i = 0; i < messagesize; i++) {
+      //   graph[chunkid - package[0] + i] = partial_result[i];
+      // }
+      throw std::logic_error("Operation is deprecated");
     }
     delete[] partial_result;
   }
@@ -70,17 +71,14 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
                                                 "MyOCLConf.cfg");
     }
   }
-  GraphCreationWorker(sgpp::base::DataMatrix &data, int k)
+  GraphCreationWorker(std::string dataset_filename, int k)
       : MPIWorkerBase("GraphCreationWorker"),
-        MPIWorkerGraphBase("GraphCreationWorker", data, k),
+        MPIWorkerGraphBase("GraphCreationWorker", dataset_filename, k),
         opencl_node(false),
         overseer_node(false),
         master_worker_comm(MPIEnviroment::get_input_communicator()),
         sub_worker_comm(MPIEnviroment::get_communicator()) {}
   virtual ~GraphCreationWorker(void) {
-    if (opencl_node) {
-      delete op;
-    }
   }
   void start_worker_main(void) {
     base::DataMatrix data_matrix(dataset, dataset_size / dimensions, dimensions);
@@ -101,21 +99,17 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
       }
       // Check for exit
       if (datainfo[0] == -2 && datainfo[1] == -2) {
-        std::cerr << "Node" << MPIEnviroment::get_node_rank() << " received exit signal"
-                  << std::endl;
         for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
           MPI_Send(datainfo, 2, MPI_INT, dest, 1, sub_worker_comm);
         break;
       } else {
         if (datainfo[1] * k != old_partial_size) {
           partial_graph.resize(datainfo[1] * k);
-          if (verbose) std::cout << "New Buffer created!" << std::endl;
           old_partial_size = datainfo[1] * k;
         }
         if (opencl_node) {
           // Create partial rhs
           op->create_graph(partial_graph, datainfo[0], datainfo[1]);
-          if (verbose) std::cerr << "Workpackage abgeschlossen" << std::endl;
         } else {
           divide_workpackages(datainfo, partial_graph);
         }
@@ -127,8 +121,8 @@ class GraphCreationWorker : public MPIWorkerGraphBase {
 };
 class OperationGraphCreationMPI : public GraphCreationWorker {
  public:
-  OperationGraphCreationMPI(sgpp::base::DataMatrix &data, int k)
-      : MPIWorkerBase("GraphCreationWorker"), GraphCreationWorker(data, k) {}
+  OperationGraphCreationMPI(std::string dataset_filename, int k)
+      : MPIWorkerBase("GraphCreationWorker"), GraphCreationWorker(dataset_filename, k) {}
   virtual ~OperationGraphCreationMPI() {}
   virtual void create_graph(std::vector<int> &result) {
     start_sub_workers();

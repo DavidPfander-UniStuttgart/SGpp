@@ -12,17 +12,19 @@ namespace sgpp {
 namespace datadriven {
 
 /// Generates the graph pruning operation for a specific opencl device
-sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL *
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
 pruneNearestNeighborGraphConfigured(base::Grid &grid, size_t dimensions, base::DataVector &alpha,
                                     base::DataMatrix &data, double threshold, size_t k,
                                     std::string opencl_conf);
 /// Generates the graph pruning operation for a specific opencl device using a serialized grid
-sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL *
-pruneNearestNeighborGraphConfigured(int *gridpoints, size_t gridsize, size_t dimensions,
-                                    double *alpha, base::DataMatrix &data, double threshold,
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+pruneNearestNeighborGraphConfigured(const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
+                                    std::vector<double> &alpha, base::DataMatrix &data, double threshold,
                                     size_t k, std::string opencl_conf);
-DensityOCLMultiPlatform::OperationPruneGraphOCL *pruneNearestNeighborGraphConfigured(
-    int *gridpoints, size_t gridsize, size_t dimensions, double *alpha, base::DataMatrix &data,
+std::unique_ptr<sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL>
+pruneNearestNeighborGraphConfigured(
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
+    std::vector<double> &alpha, base::DataMatrix &data,
     double threshold, size_t k, std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters);
 }  // namespace datadriven
 }  // namespace sgpp

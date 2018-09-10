@@ -141,7 +141,7 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   }
   /// Constructor for mpi nodes - accepts grid als integer array
   OperationDensityOCLMultiPlatform(
-      int *gridpoints, size_t gridsize, size_t dimensions,
+      const std::vector<int> &gridpoints, size_t gridsize, size_t dimensions,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters, T lambda)
       : OperationDensity(),
@@ -224,17 +224,12 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   }
 
   /// Use before calling partial_mult directly
-  void initialize_alpha(double *alpha) override {
-    if (std::is_same<T, double>::value) {
-      std::vector<T> alphaVector(alpha, alpha + gridSize);
-      this->multKernel->initialize_alpha_buffer(alphaVector);
-    } else {
-      std::vector<T> alphaVector(gridSize);
-      for (size_t i = 0; i < gridSize; ++i) {
-        alphaVector[i] = static_cast<T>(alpha[i]);
-      }
-      this->multKernel->initialize_alpha_buffer(alphaVector);
+  void initialize_alpha(std::vector<double> &alpha) override {
+    std::vector<T> alphaVector(gridSize);
+    for (size_t i = 0; i < gridSize; ++i) {
+      alphaVector[i] = static_cast<T>(alpha[i]);
     }
+    this->multKernel->initialize_alpha_buffer(alphaVector);
   }
 
   /// Execute a partial (startindex to startindex+chunksize) multiplication with the density matrix

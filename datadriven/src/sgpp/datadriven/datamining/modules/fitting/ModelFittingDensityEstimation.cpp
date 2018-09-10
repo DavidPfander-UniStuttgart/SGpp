@@ -6,109 +6,92 @@
  *
  * ModelFittingDensityEstimation.cpp
  *
- * Created on: Jan 02, 2018
- *     Author: Kilian Röhner
+ * Created on: Jul 10, 2018
+ *     Author: dominik
  */
 
 #include <sgpp/base/exception/application_exception.hpp>
 #include <sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp>
-#include <sgpp/datadriven/algorithm/DBMatOfflineFactory.hpp>
-#include <sgpp/datadriven/algorithm/DBMatOnlineDEFactory.hpp>
-#include <sgpp/datadriven/algorithm/DBMatDatabase.hpp>
+#include <sgpp/base/grid/generation/functors/RefinementFunctor.hpp>
+#include <sgpp/base/grid/generation/functors/SurplusVolumeRefinementFunctor.hpp>
 #include <sgpp/datadriven/datamining/modules/fitting/ModelFittingDensityEstimation.hpp>
 
 #include <string>
+#include <vector>
+#include <list>
 
-using sgpp::base::Grid;
-using sgpp::base::DataMatrix;
-using sgpp::base::DataVector;
+using sgpp::base::RefinementFunctor;
 using sgpp::base::SurplusRefinementFunctor;
+using sgpp::base::SurplusVolumeRefinementFunctor;
+using sgpp::base::RefinementFunctorType;
 
 using sgpp::base::application_exception;
 
 namespace sgpp {
 namespace datadriven {
 
-ModelFittingDensityEstimation::ModelFittingDensityEstimation(
-    const FitterConfigurationDensityEstimation& config)
-    : ModelFittingBase{}, refinementsPerformed{0}, offline{nullptr} {
-  this->config = std::unique_ptr<FitterConfiguration>(
-      std::make_unique<FitterConfigurationDensityEstimation>(config));
+ModelFittingDensityEstimation::ModelFittingDensityEstimation() : refinementsPerformed{0} {}
 
-  // Get configurations
-  datadriven::DatabaseConfiguration databaseConfig =
-      this->config->getDatabaseConfig();
-  base::RegularGridConfiguration gridConfig =
-      this->config->getGridConfig();
-  base::AdpativityConfiguration refinementConfig =
-      this->config->getRefinementConfig();
-  datadriven::RegularizationConfiguration regularizationConfig =
-      this->config->getRegularizationConfig();
-  datadriven::DensityEstimationConfiguration densityEstimationConfig =
-      this->config->getDensityEstimationConfig();
-
-  bool offlineInitialized = false;
-  // Initialize database if provided (path is not empty)
-  if (!databaseConfig.filepath.empty()) {
-    datadriven::DBMatDatabase database(databaseConfig.filepath);
-    // Check if database holds a fitting lhs matrix decomposition
-    if (database.hasDataMatrix(gridConfig, refinementConfig, regularizationConfig,
-      densityEstimationConfig)) {
-      std::string offlineFilepath = database.getDataMatrix(gridConfig, refinementConfig,
-          regularizationConfig, densityEstimationConfig);
-      offline = std::unique_ptr<DBMatOffline>{DBMatOfflineFactory::buildFromFile(
-          offlineFilepath)};
-      offlineInitialized = true;
+RefinementFunctor *ModelFittingDensityEstimation::getRefinementFunctor() {
+  sgpp::base::AdaptivityConfiguration& refinementConfig = this->config->getRefinementConfig();
+  switch (refinementConfig.refinementFunctorType) {
+    case RefinementFunctorType::Surplus : {
+      return new SurplusRefinementFunctor(alpha, config->getRefinementConfig().noPoints_,
+                                             config->getRefinementConfig().threshold_);
     }
+    case RefinementFunctorType::SurplusVolume : {
+      return new SurplusVolumeRefinementFunctor(alpha, config->getRefinementConfig().noPoints_,
+          config->getRefinementConfig().threshold_);
+    }
+    case RefinementFunctorType::DataBased : {
+      std::string errorMessage = "Unsupported refinement functor type DataBased "
+          "for classification!";
+      throw new application_exception(errorMessage.c_str());
+    }
+    case RefinementFunctorType::ZeroCrossing : {
+      std::string errorMessage = "Unsupported refinement functor type ZeroCrossing "
+          "for classification!";
+      throw new application_exception(errorMessage.c_str());
+    }
+    case RefinementFunctorType::MultipleClass : {
+      std::string errorMessage = "Unsupported refinement functor type MultipleClass "
+          "for classification!";
+      throw new application_exception(errorMessage.c_str());
+    }
+    case RefinementFunctorType::GridPointBased : {
+      std::string errorMessage = "Unsupported refinement functor type GridPointBased "
+          "for classification!";
+      throw new application_exception(errorMessage.c_str());
+    }
+    default: break;
   }
-
-  // Build and decompose offline object if not loaded from database
-  if (!offlineInitialized) {
-    // Build offline object by factory, build matrix and decompose
-    offline = std::unique_ptr<DBMatOffline>{DBMatOfflineFactory::buildOfflineObject(
-        gridConfig, refinementConfig, regularizationConfig, densityEstimationConfig)};
-    offline->buildMatrix();
-    offline->decomposeMatrix();
-  }
-  online = std::unique_ptr<DBMatOnlineDE>{DBMatOnlineDEFactory::buildDBMatOnlineDE(*offline)};
-  alpha = online->getAlpha();
-}
-
-// TODO(lettrich): exceptions have to be thrown if not valid.
-double ModelFittingDensityEstimation::evaluate(const DataVector& sample) const {
-  return online->eval(sample);;
-}
-
-// TODO(lettrich): exceptions have to be thrown if not valid.
-void ModelFittingDensityEstimation::evaluate(DataMatrix& samples, DataVector& results) {
-    online->eval(samples, results);
-}
-
-void ModelFittingDensityEstimation::fit(Dataset& newDataset) {
-  online->computeDensityFunction(newDataset.getData());
+  return nullptr;
 }
 
 bool ModelFittingDensityEstimation::refine() {
-  /*if (grid != nullptr && offline->isRefineable()) {
+  if (grid != nullptr && this->isRefinable()) {
     if (refinementsPerformed < config->getRefinementConfig().numRefinements_) {
       // create refinement functor
-      SurplusRefinementFunctor refinementFunctor(alpha, config->getRefinementConfig().noPoints_,
-                                                 config->getRefinementConfig().threshold_);
-      // refine grid
-      auto oldNoPoints = grid->getSize();
-      grid->getGenerator().refine(refinementFunctor);
-      auto newNoPoints = grid->getSize();
-      if (newNoPoints > oldNoPoints) {
-        // Tell the SLE manager that the grid changed (for interal data structures)
-        alpha.resizeZero(newNoPoints);
-        
-        std::list<size_t> deletedGridPoints;
-        // TODO(roehner) enable coarsening
-        online->updateSystemMatrixDecomposition(newNoPoints - oldNoPoints,
-                                                deletedGridPoints, online->getBestLambda());
-        refinementsPerformed++;
-        return true;
+      RefinementFunctor *func = getRefinementFunctor();
+      if (func != nullptr) {
+        // refine grid
+        auto oldNoPoints = grid->getSize();
+        std::cout << "Old number points " << oldNoPoints << std::endl;
+        grid->getGenerator().refine(*func);
+        auto newNoPoints = grid->getSize();
+        std::cout << "New number points " << newNoPoints << std::endl;
+        if (newNoPoints != oldNoPoints) {
+          // TODO(roehner) enable coarsening
+          std::list<size_t> deletedGridPoints {};
+          this->refine(newNoPoints, &deletedGridPoints);
+          refinementsPerformed++;
+          return true;
+        } else {
+          return false;
+        }
       } else {
+        throw application_exception(
+            "ModelFittingDensityEstimation: No refinement functor could be created!");
         return false;
       }
     } else {
@@ -119,15 +102,9 @@ bool ModelFittingDensityEstimation::refine() {
     throw application_exception(
         "ModelFittingDensityEstimation: Can't refine before initial grid is created");
     return false;
-  }*/
+  }
   return false;
 }
-
-void ModelFittingDensityEstimation::update(Dataset& newDataset) {
-  fit(newDataset);
-}
-
-void ModelFittingDensityEstimation::resetState() { refinementsPerformed = 0; }
 
 }  // namespace datadriven
 }  // namespace sgpp

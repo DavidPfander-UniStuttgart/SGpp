@@ -13,10 +13,11 @@ class OperationDensityMultMPI : public base::OperationMatrix, public DensityWork
       : MPIWorkerBase("DensityMultiplicationWorker"),
         DensityWorker(grid, lambda, ocl_conf_filename) {}
   virtual ~OperationDensityMultMPI() {}
-  virtual void mult(base::DataVector &alpha, base::DataVector &result) {
+  virtual void mult(base::DataVector &alphavector, base::DataVector &result) {
     start_sub_workers();
-    double *alpha_ptr = alpha.getPointer();
-    send_alpha(&alpha_ptr);
+    double *alpha_ptr = alphavector.getPointer();
+    this->alpha = std::vector<double>(alpha_ptr, alpha_ptr+alphavector.size());
+    send_alpha();
     int datainfo[2];
     datainfo[0] = 0;
     datainfo[1] = static_cast<int>(result.getSize());

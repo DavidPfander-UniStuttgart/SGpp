@@ -49,15 +49,13 @@ class DensityRhsWorker : public MPIWorkerGridBase,
           createDensityOCLMultiPlatformConfigured(
               gridpoints, complete_gridsize / (2 * grid_dimensions), grid_dimensions, 0.0,
               parameters));  // TODO: opencl_platform, opencl_device
-    } else {
-      throw;
     }
     data_matrix = NULL;
   }
-  DensityRhsWorker(base::Grid &grid, sgpp::base::DataMatrix &data, std::string ocl_config_file)
+  DensityRhsWorker(base::Grid &grid, std::string dataset_filename, std::string ocl_config_file)
       : MPIWorkerBase("DensityRHSWorker"),
         MPIWorkerGridBase("DensityRHSWorker", grid),
-        MPIWorkerGraphBase("DensityRHSWorker", data, 0),
+        MPIWorkerGraphBase("DensityRHSWorker", dataset_filename, 0),
         MPIWorkerPackageBase("DensityMultiplicationWorker", 1, ocl_config_file) {
     data_matrix = NULL;
   }

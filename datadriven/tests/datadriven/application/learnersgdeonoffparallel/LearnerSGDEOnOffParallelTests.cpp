@@ -72,7 +72,7 @@ void createInstance() {
     sgpp::datadriven::DensityEstimationConfiguration densityEstimationConfig;
     densityEstimationConfig.decomposition_ = sgpp::datadriven::MatrixDecompositionType::DenseIchol;
 
-    sgpp::base::AdpativityConfiguration adaptConfig;
+    sgpp::base::AdaptivityConfiguration adaptConfig;
     adaptConfig.numRefinements_ = 2;
     adaptConfig.noPoints_ = 7;
     adaptConfig.threshold_ = 0.0;  // only required for surplus refinement
@@ -90,19 +90,6 @@ void createInstance() {
                                                                      trainData, testData, nullptr,
                                                                      classLabels, 2, false,
                                                                      0.0, *scheduler);
-
-    double cvLambdaStart = 1e-1;
-    double cvLambdaEnd = 1e-10;
-    int cvLambdaSteps = 10;
-    bool cvLogScale = true;
-    sgpp::base::DataMatrix *cvTestData = &testData.getData();
-    sgpp::base::DataMatrix *cvTestDataRes = nullptr;  // needed?
-    learnerInstance->setCrossValidationParameters(cvLambdaSteps,
-                                                  cvLambdaStart,
-                                                  cvLambdaEnd,
-                                                  cvTestData,
-                                                  cvTestDataRes,
-                                                  cvLogScale);
 
     atexit(freeInstance);
   }

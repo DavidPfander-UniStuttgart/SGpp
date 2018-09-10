@@ -1,5 +1,9 @@
 #include "OperationNearestNeighborSampled.hpp"
+#ifdef USE_LSH_KNN
 #include "KNNFactory.hpp"
+#else
+#include <random>
+#endif
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
 #include "sgpp/globaldef.hpp"
 #include <algorithm>
@@ -19,7 +23,22 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w) {
 
+<<<<<<< HEAD
   dataset.transpose();
+=======
+#ifdef USE_LSH_KNN
+std::vector<int32_t>
+OperationNearestNeighborSampled::knn_lsh(uint32_t k, uint64_t lsh_tables,
+                                         uint64_t lsh_hashes, double lsh_w) {
+  // sample
+  // base::DataMatrix sampled_dataset = sample_dataset(1, dataset_count);
+  base::DataMatrix sampled_dataset(dataset);
+
+  // transpose
+  sampled_dataset.transpose();
+  // std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_naive_cpu(
+  //     sampled_dataset, sampled_dataset.getNcols(), dim));
+>>>>>>> origin/AutoTune_MPI_Fixes
   std::unique_ptr<lshknn::KNN> lsh(
       lshknn::create_knn_lsh_cuda(dataset, dim, lsh_tables, lsh_hashes, lsh_w));
   std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
@@ -77,6 +96,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_naive(
   std::vector<int64_t> converted_graph(graph.begin(), graph.end());
   return converted_graph;
 }
+#endif
 
 double OperationNearestNeighborSampled::l2_dist(const size_t dim,
                                                 const base::DataMatrix &dataset,
@@ -350,6 +370,7 @@ void OperationNearestNeighborSampled::undo_randomize(
   }
 }
 
+<<<<<<< HEAD
 std::tuple<base::DataMatrix, std::vector<int64_t>, std::vector<double>,
            std::vector<int64_t>>
 OperationNearestNeighborSampled::extract_chunk(
@@ -484,6 +505,11 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_sampling(
                                        uint32_t)>
         chunk_knn,
     size_t rand_chunk_size) {
+=======
+#ifdef USE_LSH_KNN
+std::vector<int32_t> OperationNearestNeighborSampled::knn_naive_sampling(
+    uint32_t k, uint32_t input_chunk_size, uint32_t randomize_count) {
+>>>>>>> origin/AutoTune_MPI_Fixes
   std::chrono::time_point<std::chrono::system_clock> timer_start =
       std::chrono::system_clock::now();
   size_t dataset_count = dataset.getNrows();
@@ -572,7 +598,19 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_sampling(
   last_duration_s =
       std::chrono::duration<double>(timer_stop - timer_start).count();
   return final_graph;
+<<<<<<< HEAD
 } // namespace datadriven
+=======
+}
+#endif
+
+std::vector<int32_t>
+OperationNearestNeighborSampled::knn_ocl(uint32_t k,
+                                         std::string configFileName) {
+  // sample
+  // base::DataMatrix sampled_dataset = sample_dataset(1, dataset_count);
+  base::DataMatrix sampled_dataset(dataset);
+>>>>>>> origin/AutoTune_MPI_Fixes
 
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_ocl(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,

@@ -12,17 +12,17 @@
 #include "OperationDensityOCLMultiPlatform.hpp"
 namespace sgpp {
 namespace datadriven {
-DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationDensity> createDensityOCLMultiPlatformConfigured(
     base::Grid& grid, size_t dimension, double lambda,
     std::shared_ptr<base::OCLOperationConfiguration> parameters) {
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>>(
         grid, dimension, manager, parameters, static_cast<float>(lambda));
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
         grid, dimension, manager, parameters, lambda);
   } else {
     std::stringstream errorString;
@@ -32,7 +32,7 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   }
   return nullptr;
 }
-DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
+std::unique_ptr<DensityOCLMultiPlatform::OperationDensity> createDensityOCLMultiPlatformConfigured(
     base::Grid& grid, size_t dimension, double lambda, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<base::OCLOperationConfiguration>(opencl_conf);
@@ -40,10 +40,10 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>>(
         grid, dimension, manager, parameters, static_cast<float>(lambda));
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
         grid, dimension, manager, parameters, lambda);
   } else {
     std::stringstream errorString;
@@ -53,18 +53,18 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   }
   return nullptr;
 }
-DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
-    int* gridpoints, size_t gridsize, size_t dimension, double lambda, std::string opencl_conf) {
+std::unique_ptr<DensityOCLMultiPlatform::OperationDensity> createDensityOCLMultiPlatformConfigured(
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimension, double lambda, std::string opencl_conf) {
   std::cout << "Using configuration file " << opencl_conf << std::endl;
   auto parameters = std::make_shared<base::OCLOperationConfiguration>(opencl_conf);
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
   auto manager = std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>>(
         gridpoints, gridsize, dimension, manager, parameters, static_cast<float>(lambda));
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
         gridpoints, gridsize, dimension, manager, parameters, lambda);
   } else {
     std::stringstream errorString;
@@ -74,18 +74,18 @@ DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigur
   }
   return nullptr;
 }
-DensityOCLMultiPlatform::OperationDensity* createDensityOCLMultiPlatformConfigured(
-    int* gridpoints, size_t gridsize, size_t dimension, double lambda,
+std::unique_ptr<DensityOCLMultiPlatform::OperationDensity> createDensityOCLMultiPlatformConfigured(
+    const std::vector<int> &gridpoints, size_t gridsize, size_t dimension, double lambda,
     std::shared_ptr<base::OCLOperationConfiguration> parameters) {
   DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
   auto manager =
       std::make_shared<base::OCLManagerMultiPlatform>(parameters);
 
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<float>>(
         gridpoints, gridsize, dimension, manager, parameters, static_cast<float>(lambda));
   } else if ((*parameters)["INTERNAL_PRECISION"].get().compare("double") == 0) {
-    return new DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>(
+    return std::make_unique<DensityOCLMultiPlatform::OperationDensityOCLMultiPlatform<double>>(
         gridpoints, gridsize, dimension, manager, parameters, lambda);
   } else {
     std::stringstream errorString;

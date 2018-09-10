@@ -104,7 +104,7 @@ int main() {
   // out.close();
 
   std::cout << "Starting graph pruning" << std::endl;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationPruneGraphOCL* operation_prune =
+  auto operation_prune =
       sgpp::datadriven::pruneNearestNeighborGraphConfigured(*grid, dimension, alpha, dataset,
                                                             threshold, k, "MyOCLConf.cfg");
   operation_prune->prune_graph(graph);

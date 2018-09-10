@@ -22,42 +22,20 @@
 namespace sgpp {
 namespace datadriven {
 
-DBMatOnlineDEChol::DBMatOnlineDEChol(DBMatOffline& offline, double beta)
-    : DBMatOnlineDE{offline, beta} {}
+DBMatOnlineDEChol::DBMatOnlineDEChol(DBMatOffline& offline, Grid& grid, double lambda, double beta)
+    : DBMatOnlineDE{offline, grid, lambda, beta} {}
 
-void DBMatOnlineDEChol::solveSLE(DataVector& b, bool do_cv) {
+void DBMatOnlineDEChol::solveSLE(DataVector& alpha, DataVector& b, Grid& grid,
+    DensityEstimationConfiguration& densityEstimationConfig, bool do_cv) {
   DataMatrix& lhsMatrix = offlineObject.getDecomposedMatrix();
-  alpha = DataVector(lhsMatrix.getNcols());
+  alpha.resizeZero(lhsMatrix.getNcols());
 
-  auto cholsolver = std::unique_ptr<DBMatDMSChol>{buildCholSolver(offlineObject, do_cv)};
+  auto cholsolver = std::unique_ptr<DBMatDMSChol>{buildCholSolver(offlineObject, grid,
+      densityEstimationConfig, do_cv)};
 
-  double old_lambda = lambda;
-  // Perform cross-validation based on rank one up- and downdates
-  // -> SHOULD NOT BE USED FOR LARGER GRID SETTINGS
-  // ToDo: May be speed up by parallelization
-  if (canCV && do_cv) {
-    double best_crit = 0;
-    double cur_lambda;
-    for (int i = 0; i < lambdaStep; i++) {
-      cur_lambda = lambdaStart + i * (lambdaEnd - lambdaStart) / (lambdaStep - 1);
-      if (cvLogscale) cur_lambda = exp(cur_lambda);
-      // std::cout << "Cur_lambda: " << cur_lambda << "  Old_lambda: " <<
-      // old_lambda << std::endl;
-      // Solve for density declaring coefficients alpha based on changed
-      // lambda
-      cholsolver->solve(lhsMatrix, alpha, b, old_lambda, cur_lambda);
-      old_lambda = cur_lambda;
-      double crit = resDensity(alpha);
-      // std::cout << ", crit: " << crit << std::endl;
-      if (i == 0 || crit < best_crit) {
-        best_crit = crit;
-        lambda = cur_lambda;
-      }
-    }
-  }
   // Solve for density declaring coefficients alpha
   // std::cout << "lambda: " << lambda << std::endl;
-  cholsolver->solve(lhsMatrix, alpha, b, old_lambda, lambda);
+  cholsolver->solve(lhsMatrix, alpha, b, lambda, lambda);
 
   //  DBMatDMSChol myCholSolver;
   //  DataVector myAlpha{alpha.getSize()};
@@ -72,16 +50,17 @@ void DBMatOnlineDEChol::solveSLE(DataVector& b, bool do_cv) {
   //            << "\n";
 }
 
-DBMatDMSChol* DBMatOnlineDEChol::buildCholSolver(DBMatOffline& offlineObject, bool doCV) const {
+DBMatDMSChol* DBMatOnlineDEChol::buildCholSolver(DBMatOffline& offlineObject, Grid& grid,
+    DensityEstimationConfiguration& densityEstimationConfig, bool doCV) const {
   // const cast is OK here, since we access the config read only.
-  switch (offlineObject.getDensityEstimationConfig().decomposition_) {
+  switch (offlineObject.getDecompositionType()) {
     case (MatrixDecompositionType::Chol):
       return new DBMatDMSChol();
       break;
     case (MatrixDecompositionType::DenseIchol):
-      return new DBMatDMSDenseIChol(offlineObject.getDensityEstimationConfig(),
-                                    offlineObject.getGrid(),
-                                    offlineObject.getRegularizationConfig().lambda_,
+      return new DBMatDMSDenseIChol(densityEstimationConfig,
+                                    grid,
+                                    lambda,
                                     doCV);
       break;
     case (MatrixDecompositionType::LU):
@@ -93,12 +72,15 @@ DBMatDMSChol* DBMatOnlineDEChol::buildCholSolver(DBMatOffline& offlineObject, bo
 }
 
 std::vector<size_t> DBMatOnlineDEChol::updateSystemMatrixDecomposition(
+    DensityEstimationConfiguration& densityEstimationConfig,
+    Grid& grid,
     size_t numAddedGridPoints,
     std::list<size_t> deletedGridPointIndices,
     double lambda)  {
   DBMatOffline* offlineObject = &getOfflineObject();
   dynamic_cast<DBMatOfflineChol *>(offlineObject)
-      ->choleskyModification(numAddedGridPoints, deletedGridPointIndices, lambda);
+      ->choleskyModification(grid, densityEstimationConfig, numAddedGridPoints,
+          deletedGridPointIndices, lambda);
       std::vector<size_t> return_vector = {};
       return return_vector;
 }

@@ -14,7 +14,9 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_LSH_KNN
 #include "KNNFactory.hpp"
+#endif
 #include "sgpp/base/datatypes/DataVector.hpp"
 #include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/base/grid/GridStorage.hpp"
@@ -124,7 +126,14 @@ int main(int argc, char **argv) {
   bool record_timings;
   std::string scenario_name;
 
+  std::string cluster_file = "";
+  std::string rhs_erg_filename = "";
+  std::string density_coefficients_filename = "";
+  std::string knn_filename = "";
+  std::string pruned_knn_filename = "";
+
   std::string compare_knn_csv_file_name;
+  double epsilon;
 
   size_t refinement_steps;
   size_t refinement_points;
@@ -157,6 +166,9 @@ int main(int argc, char **argv) {
       "OpenCL and kernel configuration file")(
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
+      "epsilon",
+      boost::program_options::value<double>(&epsilon)->default_value(0.0001),
+      "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "threshold",
       boost::program_options::value<double>(&threshold)->default_value(0.0),
       "threshold for sparse grid function for removing edges")(
@@ -179,10 +191,12 @@ int main(int argc, char **argv) {
       boost::program_options::value<double>(&coarsening_threshold)
           ->default_value(1000.0),
       "for density estimation, only surpluses below threshold are "
-      "coarsened")("knn_algorithm",
-                   boost::program_options::value<std::string>(&knn_algorithm)
-                       ->default_value("lsh"),
-                   "type of kNN algorithm used, either 'lsh' or 'naive'")(
+      "coarsened")(
+      "knn_algorithm",
+      boost::program_options::value<std::string>(&knn_algorithm)
+          ->default_value("lsh"),
+      "type of kNN algorithm used, either 'lsh_cuda' (requires liblshknn), "
+      "'lsh_ocl' (requires liblshknn), 'naive_ocl' or 'naive'")(
       "lsh_tables",
       boost::program_options::value<uint64_t>(&lsh_tables)->default_value(50),
       "number of hash tables for lsh knn")(
@@ -196,6 +210,23 @@ int main(int argc, char **argv) {
       boost::program_options::value<bool>(&write_knn_graph)
           ->default_value(false),
       "write the knn graph calculated to a csv-file")(
+      "cluster_file",
+      boost::program_options::value<std::string>(&cluster_file)
+          ->default_value(""),
+      "Output file for the detected clusters. None if empty.")(
+      "rhs_erg_file",
+      boost::program_options::value<std::string>(&rhs_erg_filename),
+      "Filename where the final rhs values will be written.")(
+      "density_coefficients_file",
+      boost::program_options::value<std::string>(
+          &density_coefficients_filename),
+      "Filename where the final grid coefficients for the density function "
+      "will be written.")(
+      "knn_file", boost::program_options::value<std::string>(&knn_filename),
+      "Filename for the knn graph")(
+      "pruned_knn_file",
+      boost::program_options::value<std::string>(&pruned_knn_filename),
+      "Filename for the pruned knn graph")(
       "write_pruned_knn_graph",
       boost::program_options::value<bool>(&write_pruned_knn_graph)
           ->default_value(false),
@@ -303,7 +334,15 @@ int main(int argc, char **argv) {
   }
 
   if (knn_algorithm.compare("lsh_cuda") == 0) {
+#ifdef LSHKNN_WITH_CUDA
     std::cout << "using lsh CUDA knn" << std::endl;
+#else
+    std::cout << "detected lsh flag but SGpp was compiled without lsh support."
+              << std::endl
+              << " See flag USE_LSH_KNN, or use ocl for this parameter"
+              << std::endl;
+    return 1;
+#endif
   } else if (knn_algorithm.compare("lsh_ocl") == 0) {
     std::cout << "using lsh OpenCL knn" << std::endl;
   } else if (knn_algorithm.compare("naive") == 0) {
@@ -311,9 +350,11 @@ int main(int argc, char **argv) {
   } else if (knn_algorithm.compare("naive_ocl") == 0) {
     std::cout << "using naive ocl knn" << std::endl;
   } else {
-    std::cerr << "error: option \"knn_algorithm\" only supports 'lsh', 'ocl' "
-                 "and 'naive'"
-              << std::endl;
+    std::cerr
+        << "error: option \"knn_algorithm\" only supports 'lsh_cuda' (requires "
+           "liblshknn), 'lsh_ocl' (requires liblshknn), 'naive_ocl' "
+           "and 'naive'"
+        << std::endl;
   }
 
   std::ofstream result_timings;
@@ -390,7 +431,7 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> density_timer_start;
   std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
   density_timer_start = std::chrono::system_clock::now();
-  auto solver = std::make_unique<solver::ConjugateGradients>(1000, 0.0001);
+  auto solver = std::make_unique<solver::ConjugateGradients>(1000, epsilon);
 
   base::DataVector alpha(grid->getSize());
   alpha.setAll(0.0);
@@ -572,6 +613,23 @@ int main(int argc, char **argv) {
     alpha[i] = alpha[i] * 1.0 / (max - min);
   }
 
+  // Output final rhs values
+  if (rhs_erg_filename != "") {
+    std::ofstream out_rhs(rhs_erg_filename);
+    for (size_t i = 0; i < grid->getSize(); ++i) {
+      out_rhs << b[i] << std::endl;
+    }
+    out_rhs.close();
+  }
+  // Output final coefficients
+  if (density_coefficients_filename != "") {
+    std::ofstream out_coefficients(density_coefficients_filename);
+    for (size_t i = 0; i < grid->getSize(); ++i) {
+      out_coefficients << alpha[i] << std::endl;
+    }
+    out_coefficients.close();
+  }
+
   if (write_density_grid) {
     std::ofstream out_grid(std::string("results/") + scenario_name +
                            "_grid_coord.csv");
@@ -712,6 +770,9 @@ int main(int argc, char **argv) {
     std::cout << "Starting graph creation..." << std::endl;
 
     if (knn_algorithm.compare("lsh_cuda") == 0) {
+#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
+                        // anyway if
+                        // this is not the case
       graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
                                   lsh_hashes, lsh_w);
       double lsh_duration = knn_op.get_last_duration();
@@ -719,7 +780,11 @@ int main(int argc, char **argv) {
       std::cout << "lsh_cuda duration: " << lsh_duration << "s" << std::endl;
 
       result_timings << lsh_duration << "; 0.0;";
+#endif
     } else if (knn_algorithm.compare("lsh_ocl") == 0) {
+#ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
+                          // anyway if
+                          // this is not the case
       graph = knn_op.knn_lsh_opencl(dimension, trainingData, k, configFileName,
                                     lsh_tables, lsh_hashes, lsh_w);
       double lsh_duration = knn_op.get_last_duration();
@@ -727,7 +792,7 @@ int main(int argc, char **argv) {
       std::cout << "lsh_ocl duration: " << lsh_duration << "s" << std::endl;
 
       result_timings << lsh_duration << "; 0.0;";
-
+#endif
     } else if (knn_algorithm.compare("naive_ocl") == 0) {
       graph = knn_op.knn_naive_ocl(dimension, trainingData, k, configFileName);
       double last_duration_create_graph = knn_op.get_last_duration();
@@ -747,11 +812,15 @@ int main(int argc, char **argv) {
       result_timings << last_duration_create_graph << "; " << flops_create_graph
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
+#ifdef USE_LSH_KNN // program exits earlier anyway if this is not the case
+      graph = knn_op.knn_naive(k);
+      double naive_duration = knn_op.get_last_duration();
 
       graph = knn_op.knn_naive(dimension, trainingData, k);
       double naive_duration = knn_op.get_last_duration();
       std::cout << "naive_duration: " << naive_duration << "s" << std::endl;
       result_timings << naive_duration << "; 0.0;";
+#endif
     }
 
     if (write_knn_graph) {
@@ -774,6 +843,26 @@ int main(int argc, char **argv) {
       std::cout << "knn distance error: " << acc_distance << std::endl;
     }
   }
+  auto print_knn_graph = [&trainingData, k](std::string filename,
+                                            std::vector<int> &graph) {
+    std::ofstream out_graph(filename);
+    for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+      bool first = true;
+      for (size_t j = 0; j < k; ++j) {
+        if (graph[i * k + j] == -1) {
+          continue;
+        }
+        if (!first) {
+          out_graph << ", ";
+        } else {
+          first = false;
+        }
+        out_graph << graph[i * k + j];
+      }
+      out_graph << std::endl;
+    }
+    out_graph.close();
+  };
 
   {
     std::cout << "Pruning graph..." << std::endl;
@@ -813,6 +902,10 @@ int main(int argc, char **argv) {
                                   "_graph_pruned.csv",
                               graph_converted, k);
     }
+    // output for opencl/mpi comparison script
+    if (pruned_knn_filename != "") {
+      print_knn_graph(pruned_knn_filename, graph);
+    }
   }
 
   {
@@ -842,6 +935,14 @@ int main(int argc, char **argv) {
     if (write_cluster_map) {
       std::ofstream out_cluster_map(std::string("results/") + scenario_name +
                                     "_cluster_map.csv");
+      for (size_t i = 0; i < trainingData.getNrows(); ++i) {
+        out_cluster_map << node_cluster_map[i] << std::endl;
+      }
+      out_cluster_map.close();
+    }
+    // Keep for compatibility for extern scripts
+    if (cluster_file != "") {
+      std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         out_cluster_map << node_cluster_map[i] << std::endl;
       }
