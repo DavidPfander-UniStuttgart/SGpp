@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_single_chunk) {
     double lsh_w{2.0};
 
     sgpp::datadriven::OperationNearestNeighborSampled knn_op;
-    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda_sampling(
         dim, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w);
     std::vector<int64_t> graph_reference =
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_multiple_chunks) {
     // graph = knn_op.knn_naive_sampling(
     //     dim, trainingData, k, sampling_chunk_size, sampling_randomize);
     // } else if (dim == 4) {
-    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda_sampling(
         dim, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w);
     // }
@@ -179,8 +179,8 @@ BOOST_AUTO_TEST_CASE(lsh_gaussian_multiple_datasets) {
     // graph = knn_op.knn_naive_sampling(
     //     dim, trainingData, k, sampling_chunk_size, sampling_randomize);
     // } else if (dim == 4) {
-    std::vector<int64_t> graph =
-        knn_op.knn_lsh(dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda(
+        dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
     // }
     std::vector<int64_t> graph_reference =
         knn_op.knn_naive(dim, trainingData, k);
@@ -215,8 +215,8 @@ BOOST_AUTO_TEST_CASE(lsh_gaussian_multiple_datasets_small) {
     // graph = knn_op.knn_naive_sampling(
     //     dim, trainingData, k, sampling_chunk_size, sampling_randomize);
     // } else if (dim == 4) {
-    std::vector<int64_t> graph =
-        knn_op.knn_lsh(dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda(
+        dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
     // }
     std::vector<int64_t> graph_reference =
         knn_op.knn_naive(dim, trainingData, k);
@@ -248,7 +248,7 @@ BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_single_chunk_randomize_chunk) {
     double lsh_w{2.0};
 
     sgpp::datadriven::OperationNearestNeighborSampled knn_op;
-    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda_sampling(
         dim, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w, 100);
     std::vector<int64_t> graph_reference =
@@ -287,7 +287,7 @@ BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_multiple_chunks_randomize_chunk) {
     // graph = knn_op.knn_naive_sampling(
     //     dim, trainingData, k, sampling_chunk_size, sampling_randomize);
     // } else if (dim == 4) {
-    std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+    std::vector<int64_t> graph = knn_op.knn_lsh_cuda_sampling(
         dim, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w, 100);
     // }
@@ -355,7 +355,7 @@ BOOST_AUTO_TEST_CASE(knn_lsh) {
   uint64_t lsh_hashes{5};
   double lsh_w{2.0};
   std::vector<int64_t> graph =
-      knn_op.knn_lsh(dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
+      knn_op.knn_lsh_cuda(dim, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
   double err_acc = knn_op.test_accuracy(neighbors_reference, graph,
                                         trainingData.getNrows(), k);
   double err_distance_acc =
@@ -486,7 +486,7 @@ BOOST_AUTO_TEST_CASE(knn_lsh_sampling_two_chunks) {
   sgpp::datadriven::OperationNearestNeighborSampled knn_op;
   std::vector<int64_t> neighbors_reference =
       knn_op.read_csv(reference_neighbors_file);
-  std::vector<int64_t> graph = knn_op.knn_lsh_sampling(
+  std::vector<int64_t> graph = knn_op.knn_lsh_cuda_sampling(
       dim, trainingData, k, sampling_chunk_size, sampling_randomize, lsh_tables,
       lsh_hashes, lsh_w);
 

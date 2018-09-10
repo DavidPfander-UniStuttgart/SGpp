@@ -15,13 +15,37 @@ bool found;
 OperationNearestNeighborSampled::OperationNearestNeighborSampled(bool verbose)
     : verbose(verbose) {}
 
-std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh(
+std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w) {
 
   dataset.transpose();
   std::unique_ptr<lshknn::KNN> lsh(
       lshknn::create_knn_lsh_cuda(dataset, dim, lsh_tables, lsh_hashes, lsh_w));
+  std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
+      std::chrono::system_clock::now();
+  std::vector<int32_t> graph = lsh->kNearestNeighbors(k);
+  std::chrono::time_point<std::chrono::system_clock> timer_lsh_stop =
+      std::chrono::system_clock::now();
+  last_duration_s =
+      std::chrono::duration<double>(timer_lsh_stop - timer_lsh_start).count();
+
+  dataset.transpose(); // undo
+  // TODO: should get rid of this
+  std::vector<int64_t> graph_converted(graph.begin(), graph.end());
+
+  // std::cout << "lsh graph.size() / k = " << (graph.size() / k) << std::endl;
+  return graph_converted;
+}
+
+std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl(
+    size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+    const std::string &opencl_configuration_file, uint64_t lsh_tables,
+    uint64_t lsh_hashes, double lsh_w) {
+
+  dataset.transpose();
+  std::unique_ptr<lshknn::KNN> lsh(lshknn::create_knn_lsh_opencl(
+      opencl_configuration_file, dataset, dim, lsh_tables, lsh_hashes, lsh_w));
   std::chrono::time_point<std::chrono::system_clock> timer_lsh_start =
       std::chrono::system_clock::now();
   std::vector<int32_t> graph = lsh->kNearestNeighbors(k);
@@ -413,15 +437,29 @@ void OperationNearestNeighborSampled::write_back_chunk(
   }
 }
 
-std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_sampling(
+std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda_sampling(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     uint32_t input_chunk_size, uint32_t randomize_count, uint64_t lsh_tables,
     uint64_t lsh_hashes, double lsh_w, size_t rand_chunk_size) {
 
   auto chunk_knn =
-      std::bind(&OperationNearestNeighborSampled::knn_lsh, this,
+      std::bind(&OperationNearestNeighborSampled::knn_lsh_cuda, this,
                 std::placeholders::_1, std::placeholders::_2,
                 std::placeholders::_3, lsh_tables, lsh_hashes, lsh_w);
+  return knn_sampling(dim, dataset, k, input_chunk_size, randomize_count,
+                      chunk_knn, rand_chunk_size);
+}
+
+std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl_sampling(
+    size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+    const std::string &opencl_configuration_file, uint32_t input_chunk_size,
+    uint32_t randomize_count, uint64_t lsh_tables, uint64_t lsh_hashes,
+    double lsh_w, size_t rand_chunk_size) {
+
+  auto chunk_knn = std::bind(&OperationNearestNeighborSampled::knn_lsh_opencl,
+                             this, std::placeholders::_1, std::placeholders::_2,
+                             std::placeholders::_3, opencl_configuration_file,
+                             lsh_tables, lsh_hashes, lsh_w);
   return knn_sampling(dim, dataset, k, input_chunk_size, randomize_count,
                       chunk_knn, rand_chunk_size);
 }
@@ -536,7 +574,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_sampling(
   return final_graph;
 } // namespace datadriven
 
-std::vector<int64_t> OperationNearestNeighborSampled::knn_ocl(
+std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_ocl(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     std::string configFileName) {
   size_t dataset_count = dataset.getNrows();

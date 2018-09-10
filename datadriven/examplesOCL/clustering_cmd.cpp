@@ -302,11 +302,13 @@ int main(int argc, char **argv) {
     std::cout << "threshold: " << threshold << std::endl;
   }
 
-  if (knn_algorithm.compare("lsh") == 0) {
-    std::cout << "using lsh knn" << std::endl;
+  if (knn_algorithm.compare("lsh_cuda") == 0) {
+    std::cout << "using lsh CUDA knn" << std::endl;
+  } else if (knn_algorithm.compare("lsh_ocl") == 0) {
+    std::cout << "using lsh OpenCL knn" << std::endl;
   } else if (knn_algorithm.compare("naive") == 0) {
     std::cout << "using naive multicore knn" << std::endl;
-  } else if (knn_algorithm.compare("ocl") == 0) {
+  } else if (knn_algorithm.compare("naive_ocl") == 0) {
     std::cout << "using naive ocl knn" << std::endl;
   } else {
     std::cerr << "error: option \"knn_algorithm\" only supports 'lsh', 'ocl' "
@@ -709,16 +711,25 @@ int main(int argc, char **argv) {
   {
     std::cout << "Starting graph creation..." << std::endl;
 
-    if (knn_algorithm.compare("lsh") == 0) {
-      graph = knn_op.knn_lsh(dimension, trainingData, k, lsh_tables, lsh_hashes,
-                             lsh_w);
+    if (knn_algorithm.compare("lsh_cuda") == 0) {
+      graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
+                                  lsh_hashes, lsh_w);
       double lsh_duration = knn_op.get_last_duration();
 
-      std::cout << "lsh_duration: " << lsh_duration << "s" << std::endl;
+      std::cout << "lsh_cuda duration: " << lsh_duration << "s" << std::endl;
 
       result_timings << lsh_duration << "; 0.0;";
-    } else if (knn_algorithm.compare("ocl") == 0) {
-      graph = knn_op.knn_ocl(dimension, trainingData, k, configFileName);
+    } else if (knn_algorithm.compare("lsh_ocl") == 0) {
+      graph = knn_op.knn_lsh_opencl(dimension, trainingData, k, configFileName,
+                                    lsh_tables, lsh_hashes, lsh_w);
+      double lsh_duration = knn_op.get_last_duration();
+
+      std::cout << "lsh_ocl duration: " << lsh_duration << "s" << std::endl;
+
+      result_timings << lsh_duration << "; 0.0;";
+
+    } else if (knn_algorithm.compare("naive_ocl") == 0) {
+      graph = knn_op.knn_naive_ocl(dimension, trainingData, k, configFileName);
       double last_duration_create_graph = knn_op.get_last_duration();
       std::cout << "last_duration_create_graph: " << last_duration_create_graph
                 << "s" << std::endl;

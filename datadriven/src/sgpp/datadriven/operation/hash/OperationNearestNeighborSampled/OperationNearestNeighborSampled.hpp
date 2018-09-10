@@ -34,21 +34,33 @@ private:
 public:
   OperationNearestNeighborSampled(bool verbose = false);
 
-  std::vector<int64_t> knn_lsh(size_t dim, sgpp::base::DataMatrix &dataset,
-                               uint32_t k, uint64_t lsh_tables,
-                               uint64_t lsh_hashes, double lsh_w);
+  std::vector<int64_t> knn_lsh_cuda(size_t dim, sgpp::base::DataMatrix &dataset,
+                                    uint32_t k, uint64_t lsh_tables,
+                                    uint64_t lsh_hashes, double lsh_w);
+
+  std::vector<int64_t>
+  knn_lsh_opencl(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+                 const std::string &opencl_configuration_file,
+                 uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w);
 
   std::vector<int64_t> knn_naive(size_t dim, sgpp::base::DataMatrix &dataset,
                                  uint32_t k);
 
-  std::vector<int64_t> knn_ocl(size_t dim, sgpp::base::DataMatrix &dataset,
-                               uint32_t k, std::string configFileName);
+  std::vector<int64_t> knn_naive_ocl(size_t dim,
+                                     sgpp::base::DataMatrix &dataset,
+                                     uint32_t k, std::string configFileName);
 
   std::vector<int64_t>
-  knn_lsh_sampling(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
-                   uint32_t input_chunk_size, uint32_t randomize_count,
-                   uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w,
-                   size_t rand_chunk_size = 0);
+  knn_lsh_cuda_sampling(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+                        uint32_t input_chunk_size, uint32_t randomize_count,
+                        uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w,
+                        size_t rand_chunk_size = 0);
+
+  std::vector<int64_t> knn_lsh_opencl_sampling(
+      size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
+      const std::string &opencl_configuration_file, uint32_t input_chunk_size,
+      uint32_t randomize_count, uint64_t lsh_tables, uint64_t lsh_hashes,
+      double lsh_w, size_t rand_chunk_size = 0);
 
   std::vector<int64_t> knn_naive_sampling(size_t dim,
                                           sgpp::base::DataMatrix &dataset,
