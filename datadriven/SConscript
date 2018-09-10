@@ -23,7 +23,7 @@ if env["USE_GSL"]:
   additionalDependencies += ["gsl", "gslcblas"]
 if env["USE_CGAL"]:
   additionalDependencies += ["CGAL"]
-if env["USE_LSH_KNN"]:
+if env["USE_LSHKNN"]:
   additionalDependencies += ["lshknn"]
 
 additionalBoostTestDependencies = ["z"]

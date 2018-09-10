@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#ifdef USE_LSH_KNN
+#ifdef USE_LSHKNN
 #include "KNNFactory.hpp"
 #endif
 #include "sgpp/base/datatypes/DataVector.hpp"
@@ -196,7 +196,8 @@ int main(int argc, char **argv) {
       boost::program_options::value<std::string>(&knn_algorithm)
           ->default_value("lsh"),
       "type of kNN algorithm used, either 'lsh_cuda' (requires liblshknn), "
-      "'lsh_ocl' (requires liblshknn), 'naive_ocl' or 'naive'")(
+      "'lsh_ocl' (requires liblshknn), 'naive_ocl' or 'naive' (requires "
+      "liblshknn)")(
       "lsh_tables",
       boost::program_options::value<uint64_t>(&lsh_tables)->default_value(50),
       "number of hash tables for lsh knn")(
@@ -337,24 +338,27 @@ int main(int argc, char **argv) {
 #ifdef LSHKNN_WITH_CUDA
     std::cout << "using lsh CUDA knn" << std::endl;
 #else
-    std::cout << "detected lsh flag but SGpp was compiled without lsh support."
-              << std::endl
-              << " See flag USE_LSH_KNN, or use ocl for this parameter"
+    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+                 "without liblshknn."
               << std::endl;
     return 1;
 #endif
   } else if (knn_algorithm.compare("lsh_ocl") == 0) {
     std::cout << "using lsh OpenCL knn" << std::endl;
   } else if (knn_algorithm.compare("naive") == 0) {
+#ifdef USE_LSHKNN
     std::cout << "using naive multicore knn" << std::endl;
+#else
+    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+                 "without liblshknn."
+              << std::endl;
+    return 1;
+#endif
   } else if (knn_algorithm.compare("naive_ocl") == 0) {
     std::cout << "using naive ocl knn" << std::endl;
   } else {
-    std::cerr
-        << "error: option \"knn_algorithm\" only supports 'lsh_cuda' (requires "
-           "liblshknn), 'lsh_ocl' (requires liblshknn), 'naive_ocl' "
-           "and 'naive'"
-        << std::endl;
+    std::cerr << "error: invalid choice for \"knn_algorithm\" supplied"
+              << std::endl;
   }
 
   std::ofstream result_timings;
@@ -812,7 +816,7 @@ int main(int argc, char **argv) {
       result_timings << last_duration_create_graph << "; " << flops_create_graph
                      << "; ";
     } else if (knn_algorithm.compare("naive") == 0) {
-#ifdef USE_LSH_KNN // program exits earlier anyway if this is not the case
+#ifdef USE_LSHKNN // program exits earlier anyway if this is not the case
       graph = knn_op.knn_naive(k);
       double naive_duration = knn_op.get_last_duration();
 
@@ -844,7 +848,7 @@ int main(int argc, char **argv) {
     }
   }
   auto print_knn_graph = [&trainingData, k](std::string filename,
-                                            std::vector<int> &graph) {
+                                            std::vector<int64_t> &graph) {
     std::ofstream out_graph(filename);
     for (size_t i = 0; i < trainingData.getNrows(); ++i) {
       bool first = true;
@@ -903,7 +907,7 @@ int main(int argc, char **argv) {
                               graph_converted, k);
     }
     // output for opencl/mpi comparison script
-    if (pruned_knn_filename != "") {
+    if (pruned_knn_filename.compare("") != 0) {
       print_knn_graph(pruned_knn_filename, graph);
     }
   }

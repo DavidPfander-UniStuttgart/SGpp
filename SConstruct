@@ -134,11 +134,11 @@ vars.Add(BoolVariable("USE_OCL", "Enable OpenCL support (only actually enabled i
                                  "also the OpenCL environment variables are set)", False))
 vars.Add(BoolVariable("USE_CUDA", "Enable CUDA support (you might need to provide an 'CUDA_TOOLKIT_PATH')", False))
 vars.Add(BoolVariable("USE_HPX", "Enable HPX support (implies USE_OCL)", False))
-vars.Add(BoolVariable("USE_LSH_KNN", "Enable LSH support. Requires the lsh library (see" +
-                      "LSHKNN_INCLUDE_PATH and LSHKNN_LIBRARY_PATH as well as the build_lsh script" +
-                      "in the tools folder)", False))
 vars.Add("OCL_INCLUDE_PATH", "Set path to the OpenCL header files (parent directory of CL/)")
 vars.Add("OCL_LIBRARY_PATH", "Set path to the OpenCL library")
+vars.Add(BoolVariable("USE_LSHKNN", "Enable LSH support. Requires the lsh library (see" +
+                      "LSHKNN_INCLUDE_PATH and LSHKNN_LIBRARY_PATH as well as the build_lsh script" +
+                      "in the tools folder)", False))
 vars.Add("LSHKNN_INCLUDE_PATH", "Set path to the lshknn header files")
 vars.Add("LSHKNN_LIBRARY_PATH", "Set path to the lshknn library")
 vars.Add(BoolVariable("LSHKNN_WITH_CUDA", "States whether lshknn was compiled with CUDA support", False))

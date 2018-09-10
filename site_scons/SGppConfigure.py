@@ -294,8 +294,8 @@ def checkLSHGPU(config):
     if config.env["LSHKNN_WITH_OPENCL"]:
       config.env["CPPDEFINES"]["LSHKNN_WITH_OPENCL"] = "1"
     # for high-performance clustering
-    # if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
-    if not config.CheckLib("lshknn", language="C++",autoadd=0):
+    if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
+    # if not config.CheckLib("lshknn", language="C++",autoadd=0):
         Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
 
 def checkBoostTests(config):
