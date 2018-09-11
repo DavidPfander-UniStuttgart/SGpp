@@ -233,11 +233,11 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
   }
 
   /// Execute a partial (startindex to startindex+chunksize) multiplication with the density matrix
-  void start_partial_mult(int start_id, int chunksize) override {
+  void start_partial_mult(size_t start_id, size_t chunksize) override {
     this->multKernel->start_mult(start_id, chunksize);
   }
 
-  void finish_partial_mult(double *result, int start_id, int chunksize) override {
+  void finish_partial_mult(double *result, size_t start_id, size_t chunksize) override {
     if (std::is_same<T, double>::value) {
       std::vector<T> resultVector(result, result + chunksize);
       this->multKernel->finish_mult(resultVector, start_id, chunksize);

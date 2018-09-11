@@ -289,7 +289,7 @@ class KernelDensityB : public KernelDensityBInterface<T> {
       throw base::operation_exception(errorString.str());
     }
     argument_counter++;
-    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_uint), &startid);
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_ulong), &startid);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;

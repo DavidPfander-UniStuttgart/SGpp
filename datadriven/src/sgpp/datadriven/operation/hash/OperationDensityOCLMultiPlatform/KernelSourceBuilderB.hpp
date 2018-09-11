@@ -76,7 +76,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                    << ", 1, 1))) cscheme(global const int* starting_points," << std::endl
                    << "global const " << this->floatType() << "* data_points,global "
-                   << this->floatType() << "* C, private int startid) {" << std::endl;
+                   << this->floatType() << "* C, private size_t startid) {" << std::endl;
     } else {
       sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                    << ", 1, 1))) cscheme("
@@ -85,7 +85,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                    << "__global const " << compression_type << " *level_packed_v, "
                    << "__global const " << compression_type << " *index_packed_v, "
                    << "global const " << this->floatType() << "* data_points,global "
-                   << this->floatType() << "* C, private int startid) {" << std::endl;
+                   << this->floatType() << "* C, private size_t startid) {" << std::endl;
       sourceStream << this->indent[0] << "int gridindex = startid + get_global_id(0);" << std::endl;
     }
     if (!kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool()) {
@@ -118,7 +118,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
         }
       }
       sourceStream << std::endl
-                   << this->indent[0] << "for(unsigned int ds=0;ds< " << data_points << ";ds++)"
+                   << this->indent[0] << "for(size_t ds=0;ds< " << data_points << ";ds++)"
                    << std::endl
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "value=1;" << std::endl;
@@ -242,7 +242,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
 
         sourceStream << this->indent[0] << this->floatType() << " result = 0.0" << this->constSuffix()
                      << ";" << std::endl;
-        sourceStream << this->indent[0] << "for (int outer_data_index = 0; outer_data_index < "
+        sourceStream << this->indent[0] << "for (size_t outer_data_index = 0; outer_data_index < "
                      << data_points << ";" << std::endl;
         sourceStream << this->indent[2] << "outer_data_index += " << local_cache_size << ") {"
                      << std::endl;
@@ -251,7 +251,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                      << std::endl;
         sourceStream << this->indent[2] << "for (int d = 0; d < " << dimensions << "; d++) {"
                      << std::endl;
-        sourceStream << this->indent[3] << "int data_index = outer_data_index + get_local_id(0);"
+        sourceStream << this->indent[3] << "size_t data_index = outer_data_index + get_local_id(0);"
                      << std::endl;
         sourceStream << this->indent[4] << "data_group[get_local_id(0) * " << dimensions
                      << " + d] = data_points[data_index * " << dimensions << " + d];" << std::endl;
@@ -259,12 +259,12 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
         sourceStream << this->indent[1] << "}" << std::endl;
         sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl << std::endl;
 
-        sourceStream << this->indent[1] << "for (int inner_data_index = 0; inner_data_index < "
+        sourceStream << this->indent[1] << "for (size_t inner_data_index = 0; inner_data_index < "
                      << local_cache_size
                      << "; "
 	  "inner_data_index += " << eval_blocking << ") {"
                      << std::endl;
-        sourceStream << this->indent[2] << "int data_index = outer_data_index + inner_data_index;"
+        sourceStream << this->indent[2] << "size_t data_index = outer_data_index + inner_data_index;"
                      << std::endl;
         if (use_compression_fixed) {
           if (use_compression_register) {
