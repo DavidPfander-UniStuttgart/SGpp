@@ -34,9 +34,11 @@ private:
 public:
   OperationNearestNeighborSampled(bool verbose = false);
 
+#ifdef LSHKNN_WITH_CUDA
   std::vector<int64_t> knn_lsh_cuda(size_t dim, sgpp::base::DataMatrix &dataset,
                                     uint32_t k, uint64_t lsh_tables,
                                     uint64_t lsh_hashes, double lsh_w);
+#endif
 
   std::vector<int64_t>
   knn_lsh_opencl(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
@@ -50,11 +52,13 @@ public:
                                      sgpp::base::DataMatrix &dataset,
                                      uint32_t k, std::string configFileName);
 
+#ifdef LSHKNN_WITH_CUDA
   std::vector<int64_t>
   knn_lsh_cuda_sampling(size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
                         uint32_t input_chunk_size, uint32_t randomize_count,
                         uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w,
                         size_t rand_chunk_size = 0);
+#endif
 
   std::vector<int64_t> knn_lsh_opencl_sampling(
       size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,

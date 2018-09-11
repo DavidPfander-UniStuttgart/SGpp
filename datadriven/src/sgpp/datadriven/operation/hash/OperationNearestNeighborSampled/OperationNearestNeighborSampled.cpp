@@ -16,6 +16,7 @@ bool found;
 OperationNearestNeighborSampled::OperationNearestNeighborSampled(bool verbose)
     : verbose(verbose) {}
 
+#ifdef LSHKNN_WITH_CUDA
 std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     uint64_t lsh_tables, uint64_t lsh_hashes, double lsh_w) {
@@ -38,7 +39,9 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda(
   // std::cout << "lsh graph.size() / k = " << (graph.size() / k) << std::endl;
   return graph_converted;
 }
+#endif
 
+#ifdef LSHKNN_WITH_OPENCL
 std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     const std::string &opencl_configuration_file, uint64_t lsh_tables,
@@ -62,6 +65,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl(
   // std::cout << "lsh graph.size() / k = " << (graph.size() / k) << std::endl;
   return graph_converted;
 }
+#endif
 
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive(
     size_t dim, base::DataMatrix &dataset, uint32_t k) {
@@ -438,6 +442,7 @@ void OperationNearestNeighborSampled::write_back_chunk(
   }
 }
 
+#ifdef LSHKNN_WITH_CUDA
 std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda_sampling(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     uint32_t input_chunk_size, uint32_t randomize_count, uint64_t lsh_tables,
@@ -450,7 +455,9 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_cuda_sampling(
   return knn_sampling(dim, dataset, k, input_chunk_size, randomize_count,
                       chunk_knn, rand_chunk_size);
 }
+#endif
 
+#ifdef LSHKNN_WITH_OPENCL
 std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl_sampling(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     const std::string &opencl_configuration_file, uint32_t input_chunk_size,
@@ -464,6 +471,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_lsh_opencl_sampling(
   return knn_sampling(dim, dataset, k, input_chunk_size, randomize_count,
                       chunk_knn, rand_chunk_size);
 }
+#endif
 
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_sampling(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
