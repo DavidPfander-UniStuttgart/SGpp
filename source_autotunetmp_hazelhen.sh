@@ -8,7 +8,7 @@ export HAZEL_BASE_PATH=/zhome/academic/HLRS/ipv/ipvpfand
 
 # export PATH=/home/pfandedd/git/AutoTuneTMP/gcc_install/bin:$PATH
 export PATH=${HAZEL_BASE_PATH}/cmake/bin/:${HAZEL_BASE_PATH}/scons/:$PATH
-export LD_LIBRARY_PATH=${HAZEL_BASE_PATH}/git/OpenCL-ICD-Loader/build: #${HAZEL_BASE_PATH}/AutoTuneTMP/boost_install/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${HAZEL_BASE_PATH}/git/OpenCL-ICD-Loader/build/lib:${HAZEL_BASE_PATH}/git/SGpp/lshknn/build:${HAZEL_BASE_PATH}/git/SGpp/lib/sgpp:$LD_LIBRARY_PATH #${HAZEL_BASE_PATH}/AutoTuneTMP/boost_install/lib:$LD_LIBRARY_PATH
 # export SGPP_BASE_INCLUDE_DIR=${HAZEL_BASE_PATH}/SGPP_debug/base/src
 # export AUTOTUNETMP_INCLUDE_DIR=${HAZEL_BASE_PATH}/AutoTuneTMP/AutoTuneTMP_install_debug/include
 # export VC_INCLUDE_DIR=${HAZEL_BASE_PATH}/AutoTuneTMP/Vc_install/include
