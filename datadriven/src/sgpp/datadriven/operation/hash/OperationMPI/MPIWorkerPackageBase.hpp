@@ -33,10 +33,10 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   std::shared_ptr<base::OCLOperationConfiguration> parameters;
 
   MPI_Datatype mpi_typ;
-  int secondary_workpackage[2];
+  long secondary_workpackage[2];
   size_t size;
 
-  void divide_workpackages(int *package, T *erg) {
+  void divide_workpackages(long *package, T *erg) {
     // Divide into more work packages
     size_t packagesize = size;
     if (size == 0) {
@@ -63,8 +63,8 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
   }
 
   virtual void receive_and_send_initial_data(void) = 0;
-  virtual void begin_opencl_operation(int *workpackage) = 0;
-  virtual void finalize_opencl_operation(T *result_buffer, int *workpackage) = 0;
+  virtual void begin_opencl_operation(long *workpackage) = 0;
+  virtual void finalize_opencl_operation(T *result_buffer, long *workpackage) = 0;
 
  private:
   void augment_ocl_configuration(std::string chosen_device_name, size_t device_select) {
@@ -159,10 +159,12 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       mpi_typ = MPI_FLOAT;
     } else if (std::is_same<T, double>::value) {
       mpi_typ = MPI_DOUBLE;
+    } else if (std::is_same<T, long>::value) {
+      mpi_typ = MPI_LONG;
     } else {
       std::stringstream errorString;
       errorString << "Unsupported datatyp in class MPIWorkerPackageBase." << std::endl
-                  << "Template class needs to be int, float or double." << std::endl;
+                  << "Template class needs to be int, long, float or double." << std::endl;
       throw std::logic_error(errorString.str());
     }
     if (MPIEnviroment::get_sub_worker_count() > 0) {
@@ -252,10 +254,12 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       mpi_typ = MPI_FLOAT;
     } else if (std::is_same<T, double>::value) {
       mpi_typ = MPI_DOUBLE;
+    } else if (std::is_same<T, long>::value) {
+      mpi_typ = MPI_LONG;
     } else {
       std::stringstream errorString;
       errorString << "Unsupported datatyp in class MPIWorkerPackageBase." << std::endl
-                  << "Template class needs to be int, float or double." << std::endl;
+                  << "Template class needs to be int, long, float or double." << std::endl;
       throw std::logic_error(errorString.str());
     }
     if (MPIEnviroment::get_sub_worker_count() > 0) {
@@ -333,11 +337,11 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
     MPI_Request request[2];
     receive_and_send_initial_data();
     // Work Loop
-    int datainfo[2];
+    long datainfo[2];
     T *partial_results[2];
     partial_results[0] = NULL;
     partial_results[1] = NULL;
-    int buffersizes[2];
+    long buffersizes[2];
     buffersizes[0] = 0;
     buffersizes[1] = 0;
     bool first_package = true;
@@ -346,7 +350,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       if (!prefetching || first_package) {
         // Receive Workpackage
         MPI_Probe(0, 1, master_worker_comm, &stat);
-        MPI_Recv(datainfo, 2, MPI_INT, 0, stat.MPI_TAG, master_worker_comm, &stat);
+        MPI_Recv(datainfo, 2, MPI_LONG, 0, stat.MPI_TAG, master_worker_comm, &stat);
         if (verbose) {
           std::cout << "Received workpackage [" << datainfo[0] << "," << datainfo[1] << "] on "
                     << MPIEnviroment::get_node_rank() << std::endl;
@@ -363,12 +367,12 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
                     << std::endl;
         }
         for (int dest = 1; dest < MPIEnviroment::get_sub_worker_count() + 1; dest++)
-          MPI_Send(datainfo, 2, MPI_INT, dest, 1, sub_worker_comm);
+          MPI_Send(datainfo, 2, MPI_LONG, dest, 1, sub_worker_comm);
         break;
       } else if (datainfo[0] == -1 && datainfo[1] == -1) {
         // Receive exitpackage
         MPI_Probe(0, 1, master_worker_comm, &stat);
-        MPI_Recv(secondary_workpackage, 2, MPI_INT, 0, stat.MPI_TAG, master_worker_comm, &stat);
+        MPI_Recv(secondary_workpackage, 2, MPI_LONG, 0, stat.MPI_TAG, master_worker_comm, &stat);
         continue;
       } else {
         if (datainfo[1] * packagesize_multiplier != buffersizes[currentbuffer] ||
@@ -383,7 +387,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
           if (prefetching) {
             // Prefetch secondary workpackage
             MPI_Probe(0, 1, master_worker_comm, &stat);
-            MPI_Recv(secondary_workpackage, 2, MPI_INT, 0, stat.MPI_TAG, master_worker_comm, &stat);
+            MPI_Recv(secondary_workpackage, 2, MPI_LONG, 0, stat.MPI_TAG, master_worker_comm, &stat);
             if (verbose) {
               std::cout << "Received secondary workpackage [" << secondary_workpackage[0] << ","
                         << secondary_workpackage[1] << "] on " << MPIEnviroment::get_node_rank()
@@ -396,7 +400,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
           if (prefetching) {
             // Prefetch secondary workpackage
             MPI_Probe(0, 1, master_worker_comm, &stat);
-            MPI_Recv(secondary_workpackage, 2, MPI_INT, 0, stat.MPI_TAG, master_worker_comm, &stat);
+            MPI_Recv(secondary_workpackage, 2, MPI_LONG, 0, stat.MPI_TAG, master_worker_comm, &stat);
             if (verbose) {
               std::cout << "Received workpackage [" << secondary_workpackage[0] << ","
                         << secondary_workpackage[1] << "] on " << MPIEnviroment::get_node_rank()

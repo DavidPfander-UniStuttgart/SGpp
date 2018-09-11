@@ -28,10 +28,10 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
   std::unique_ptr<DensityOCLMultiPlatform::OperationCreateGraphOCL> op;
   std::unique_ptr<DensityOCLMultiPlatform::OperationPruneGraphOCL> op_prune;
   void receive_and_send_initial_data(void) {}
-  void begin_opencl_operation(int *workpackage) {
+  void begin_opencl_operation(long *workpackage) {
     op->begin_graph_creation(workpackage[0], workpackage[1]);
   }
-  void finalize_opencl_operation(int *result_buffer, int *workpackage) {
+  void finalize_opencl_operation(int *result_buffer, long *workpackage) {
     std::vector<int> partial_graph(workpackage[1] * packagesize_multiplier);
     op->finalize_graph_creation(partial_graph, workpackage[0], workpackage[1]);
     op_prune->prune_graph(partial_graph, workpackage[0], workpackage[1]);

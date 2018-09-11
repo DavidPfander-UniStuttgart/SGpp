@@ -26,10 +26,10 @@ class DensityRhsWorker : public MPIWorkerGridBase,
     data_matrix = new base::DataMatrix(dataset, dataset_size / dimensions, dimensions);
     if (opencl_node) op->initialize_dataset(*data_matrix);
   }
-  void begin_opencl_operation(int *workpackage) {
+  void begin_opencl_operation(long *workpackage) {
     op->start_rhs_generation(workpackage[0], workpackage[1]);
   }
-  void finalize_opencl_operation(double *result_buffer, int *workpackage) {
+  void finalize_opencl_operation(double *result_buffer, long *workpackage) {
     base::DataVector partial_rhs(workpackage[1]);
     op->finalize_rhs_generation(partial_rhs, workpackage[0], workpackage[1]);
     for (int i = 0; i < workpackage[1]; ++i) {

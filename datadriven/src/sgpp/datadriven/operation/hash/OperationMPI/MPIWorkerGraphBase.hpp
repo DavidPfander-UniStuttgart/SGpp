@@ -20,7 +20,7 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
  protected:
   sgpp::datadriven::Dataset data;
   double *dataset;
-  int dataset_size;
+  size_t dataset_size;
   int k;
   int dimensions;
   std::string dataset_filename;
