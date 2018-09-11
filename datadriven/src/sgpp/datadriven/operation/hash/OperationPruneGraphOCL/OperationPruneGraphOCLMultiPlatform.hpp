@@ -164,7 +164,7 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
   }
 
   /// Deletes all nodes and edges within areas of low density which are in the given graph chunk
-  virtual void prune_graph(std::vector<int> &graph, size_t startid = 0, size_t chunksize = 0) {
+  virtual void prune_graph(std::vector<int64_t> &graph, size_t startid = 0, size_t chunksize = 0) {
     if (verbose) std::cout << "Pruning graph for" << graph.size() << " nodes" << std::endl;
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();

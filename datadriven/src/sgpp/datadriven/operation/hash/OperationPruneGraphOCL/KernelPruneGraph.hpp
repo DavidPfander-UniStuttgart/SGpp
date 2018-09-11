@@ -43,7 +43,7 @@ class KernelPruneGraph {
   /// OpenCL buffer for the dataset
   base::OCLBufferWrapperSD<T> deviceData;
   /// OpenCL buffer for the graph
-  base::OCLBufferWrapperSD<int> deviceGraph;
+  base::OCLBufferWrapperSD<int64_t> deviceGraph;
 
   cl_kernel kernel;
   /// Source builder for the opencl source code of the kernel
@@ -103,7 +103,7 @@ class KernelPruneGraph {
   }
 
   /// Deletes nodes and edges in areas of low density
-  double prune_graph(std::vector<int> &graph, size_t startid, size_t chunksize) {
+  double prune_graph(std::vector<int64_t> &graph, size_t startid, size_t chunksize) {
     if (verbose)
       std::cout << "entering prune graph, device: " << device->deviceName << " ("
                 << device->deviceId << ")" << std::endl;
@@ -206,7 +206,7 @@ class KernelPruneGraph {
     deviceGraph.readFromBuffer();
     clFinish(device->commandQueue);
 
-    std::vector<int> &hostTemp = deviceGraph.getHostPointer();
+    std::vector<int64_t> &hostTemp = deviceGraph.getHostPointer();
     for (size_t i = 0; i < graph.size(); i++) graph[i] = hostTemp[i];
     // determine kernel execution time
     cl_ulong startTime = 0;
