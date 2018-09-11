@@ -876,11 +876,7 @@ int main(int argc, char **argv) {
         operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
             *grid, dimension, alpha, trainingData, threshold, k,
             configFileName));
-    std::vector<int> graph_unconverted(graph.begin(), graph.end());
     operation_prune->prune_graph(graph);
-    // TODO: remove after operation is converted to int64_t
-    graph = std::vector<int64_t>(graph_unconverted.begin(),
-                                 graph_unconverted.end());
 
     double last_duration_prune_graph = operation_prune->getLastDuration();
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph
