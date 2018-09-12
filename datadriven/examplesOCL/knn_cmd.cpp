@@ -208,14 +208,21 @@ int main(int argc, char **argv) {
   std::vector<int64_t> graph;
   std::chrono::time_point<std::chrono::system_clock> total_timer_start =
       std::chrono::system_clock::now();
-  if (knn_algorithm.compare("lsh") == 0) {
+  if (knn_algorithm.compare("lsh_cuda") == 0) {
 #ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
                         // anyway if
                         // this is not the case
     graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
                                 lsh_hashes, lsh_w);
 #endif
-  } else if (knn_algorithm.compare("ocl") == 0) {
+  } else if (knn_algorithm.compare("lsh_ocl") == 0) {
+#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
+                        // anyway if
+                        // this is not the case
+    graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
+                                lsh_hashes, lsh_w);
+#endif
+  } else if (knn_algorithm.compare("naive_ocl") == 0) {
 #ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
                           // anyway if
                           // this is not the case
