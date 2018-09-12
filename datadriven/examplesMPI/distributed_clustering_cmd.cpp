@@ -52,6 +52,8 @@ int main(int argc, char *argv[]) {
     std::string density_coefficients_filename = "";
     std::string pruned_knn_filename = "";
 
+    bool verbose_mult = false;
+
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
       "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
@@ -96,7 +98,10 @@ int main(int argc, char *argv[]) {
       "threshold for sparse grid function for removing edges")(
       "coarsen_threshold",
       boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
-      "for density estimation, only surpluses below threshold are coarsened");
+      "for density estimation, only surpluses below threshold are coarsened")(
+      "verbose_mult",
+      boost::program_options::value<bool>(&verbose_mult)->default_value(false),
+      "Prints times per multiplication");
 
     boost::program_options::variables_map variables_map;
     boost::program_options::parsed_options options = parse_command_line(argc, argv,
@@ -226,7 +231,7 @@ int main(int argc, char *argv[]) {
       std::cout << "Solve for alpha: " << std::endl;
       std::cout << "--------------- " << std::endl;
       sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
-                                                                       configFileName);
+                                                                       configFileName, verbose_mult);
       solver_start = std::chrono::system_clock::now();
       alpha.setAll(1.0);
       sgpp::solver::ConjugateGradients solver(1000, epsilon);
@@ -266,7 +271,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Solve for alpha: " << std::endl;
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
-                                                                         configFileName);
+                                                                         configFileName, verbose_mult);
         std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
@@ -304,7 +309,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Solve for alpha: " << std::endl;
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, lambda,
-                                                                         configFileName);
+                                                                         configFileName, verbose_mult);
         std::chrono::time_point<std::chrono::high_resolution_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
