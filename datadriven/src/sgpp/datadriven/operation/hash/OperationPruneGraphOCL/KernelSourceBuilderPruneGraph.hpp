@@ -68,8 +68,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << " *data," << std::endl
                    << this->indent[0] << "__global const " << this->floatType()
                    << " *alphas, unsigned long startid, unsigned long chunksize) {" << std::endl
-                   << this->indent[0] << "size_t index = get_global_id(0);" << std::endl
-                   << this->indent[0] << "size_t global_index = startid + get_global_id(0);"
+                   << this->indent[0] << "unsigned long index = get_global_id(0);" << std::endl
+                   << this->indent[0] << "unsigned long global_index = startid + get_global_id(0);"
                    << std::endl;
       sourceStream << this->indent[0] << "if (global_index < " << data_size
                    << " && index < chunksize) {" << std::endl;

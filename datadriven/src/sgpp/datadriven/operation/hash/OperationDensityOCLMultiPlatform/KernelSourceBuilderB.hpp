@@ -76,7 +76,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
       sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                    << ", 1, 1))) cscheme(global const int* starting_points," << std::endl
                    << "global const " << this->floatType() << "* data_points,global "
-                   << this->floatType() << "* C, private size_t startid) {" << std::endl;
+                   << this->floatType() << "* C, private unsigned long startid) {" << std::endl;
     } else {
       sourceStream << "void kernel __attribute__((reqd_work_group_size(" << local_size
                    << ", 1, 1))) cscheme("

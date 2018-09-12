@@ -145,7 +145,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     sourceStream << "__attribute__((reqd_work_group_size(" << localWorkgroupSize << ", 1, 1)))"
                  << std::endl
                  << "void connectNeighbors(__global const " << this->floatType()
-                 << " *data, __global long *neighbors, const long startid)" << std::endl
+                 << " *data, __global long *neighbors, const unsigned long startid)" << std::endl
                  << "{" << std::endl
 
                  << this->indent[0] << "long global_index = startid + get_global_id(0);"

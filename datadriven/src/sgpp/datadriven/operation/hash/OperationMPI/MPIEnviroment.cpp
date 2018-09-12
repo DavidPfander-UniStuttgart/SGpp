@@ -423,6 +423,30 @@ void MPIEnviroment::init(int argc, char *argv[], bool verbose) {
   }
 }
 
+void MPIEnviroment::connect_nodes_default(void) {
+  if (singleton_instance != NULL) {
+    if (singleton_instance->rank == 0) {
+      // Create Config
+      auto conf = createMPIConfiguration(singleton_instance->get_node_count() - 1);
+      singleton_instance->init_communicator(conf);
+      singleton_instance->init_opencl_communicator(conf);
+      singleton_instance->init_worker(0, 0);
+      singleton_instance->slave_mainloop();
+      int message[1];
+      message[0] = 6;
+      for (int i = 1; i < MPIEnviroment::get_node_count(); ++i) {
+        MPI_Send(message, 1, MPI_INT, i, 1, MPI_COMM_WORLD);
+      }
+      std::cout << "Network initialized and ready" << std::endl;
+      singleton_instance->initialized = true;
+    } else {
+      throw std::logic_error("connect_nodes should only be called on the the MPI process 0!");
+    }
+  } else {
+    throw std::logic_error("Singleton class \"MPIEnviroment\" not yet initialized!");
+  }
+}
+
 void MPIEnviroment::connect_nodes(base::OperationConfiguration conf) {
   if (singleton_instance != NULL) {
     if (singleton_instance->rank == 0) {
@@ -527,19 +551,18 @@ base::OperationConfiguration MPIEnviroment::createMPIConfiguration(int packagesi
   return conf;
 }
 
-base::OperationConfiguration MPIEnviroment::createMPIConfiguration(int packagesize,
-                                                                   int compute_nodes) {
+base::OperationConfiguration MPIEnviroment::createMPIConfiguration(int compute_nodes) {
   base::OperationConfiguration conf;
   conf.addIDAttr("PREFETCHING", true);
   conf.addIDAttr("VERBOSE", false);
-  conf.addIDAttr("PREFERED_PACKAGESIZE", static_cast<int64_t>(packagesize));
+  // conf.addIDAttr("PREFERED_PACKAGESIZE", static_cast<int64_t>(packagesize));
   std::unique_ptr<json::Node> workers(new json::DictNode);
   for (int i = 0; i < compute_nodes; ++i) {
     std::unique_ptr<json::Node> node_worker(new json::DictNode);
     node_worker->addIDAttr("VERBOSE", false);
     node_worker->addIDAttr("PREFETCHING", true);
-    node_worker->addIDAttr("OPENCL_PLATFORM", UINT64_C(0));
-    node_worker->addIDAttr("OPENCL_DEVICE", UINT64_C(0));
+    // node_worker->addIDAttr("OPENCL_PLATFORM", UINT64_C(0));
+    // node_worker->addIDAttr("OPENCL_DEVICE", UINT64_C(0));
     std::string id = std::string("WORKER") + std::to_string(i);
     workers->addAttribute(id, std::move(node_worker));
   }

@@ -69,7 +69,8 @@ int main(int argc, char *argv[]) {
               << "s" << std::endl;
   }
 
-  sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, 0.001, "MyOCLConf.cfg");
+  sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(*grid, 0.001,
+  "MyOCLConf.cfg", true);
   sgpp::base::DataVector alpha(gridsize);
   sgpp::base::DataVector result(gridsize);
   alpha.setAll(1.0);

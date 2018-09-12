@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     int number_compute_nodes = std::stoi(argv[2]);
     sgpp::base::OperationConfiguration conf =
         sgpp::datadriven::clusteringmpi::MPIEnviroment::createMPIConfiguration(
-            packagesize_master, number_compute_nodes);
+            number_compute_nodes);
     conf.serialize(argv[3]);
     return 0;
   }
