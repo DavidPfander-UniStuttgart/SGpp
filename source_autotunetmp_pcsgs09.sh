@@ -5,3 +5,4 @@ export AUTOTUNETMP_INCLUDE_DIR=/home/pfandedd/git/AutoTuneTMP/AutoTuneTMP_instal
 export VC_INCLUDE_DIR=/home/pfandedd/git/AutoTuneTMP/Vc_install/include
 export BOOST_INCLUDE_DIR=/home/pfandedd/git/AutoTuneTMP/boost_install/include
 export LD_LIBRARY_PATH=$PWD/lib/sgpp:/home/pfandedd/git/AutoTuneTMP/boost_install/lib:$LD_LIBRARY_PATH
+export LSHKNN_CXX_COMPILER=g++
