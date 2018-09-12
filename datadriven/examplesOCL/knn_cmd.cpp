@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
       "specifies number of neighbors for kNN algorithm")(
       "knn_algorithm",
       boost::program_options::value<std::string>(&knn_algorithm)
-          ->default_value("lsh"),
+          ->default_value("naive_ocl"),
       "use 'lsh_cuda' (requires liblshknn), 'lsh_ocl' (requires liblshknn), "
       "'naive_ocl', 'lsh_sampling_cuda' (requires liblshknn), "
       "'lsh_sampling_opencl' (requires liblshknn), 'naive_sampling' (requires "
@@ -209,23 +209,39 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> total_timer_start =
       std::chrono::system_clock::now();
   if (knn_algorithm.compare("lsh") == 0) {
+#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
+                        // anyway if
+                        // this is not the case
     graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
                                 lsh_hashes, lsh_w);
+#endif
   } else if (knn_algorithm.compare("ocl") == 0) {
+#ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
+                          // anyway if
+                          // this is not the case
     graph = knn_op.knn_naive_ocl(dimension, trainingData, k, configFileName);
+#endif
   } else if (knn_algorithm.compare("naive") == 0) {
     graph = knn_op.knn_naive(dimension, trainingData, k);
   } else if (knn_algorithm.compare("naive_sampling") == 0) {
     graph = knn_op.knn_naive_sampling(dimension, trainingData, k,
                                       sampling_chunk_size, sampling_randomize);
   } else if (knn_algorithm.compare("lsh_sampling_cuda") == 0) {
+#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
+                        // anyway if
+                        // this is not the case
     graph = knn_op.knn_lsh_cuda_sampling(
         dimension, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w);
+#endif
   } else if (knn_algorithm.compare("lsh_sampling_opencl") == 0) {
+#ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
+                          // anyway if
+                          // this is not the case
     graph = knn_op.knn_lsh_opencl_sampling(
         dimension, trainingData, k, configFileName, sampling_chunk_size,
         sampling_randomize, lsh_tables, lsh_hashes, lsh_w);
+#endif
   }
 
   {
