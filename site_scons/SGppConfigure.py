@@ -287,16 +287,17 @@ def checkZlib(config):
             config.env["CPPDEFINES"]["ZLIB"] = "1"
 
 def checkLSHGPU(config):
-    config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
-    config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
-    if config.env["LSHKNN_WITH_CUDA"]:
-      config.env["CPPDEFINES"]["LSHKNN_WITH_CUDA"] = "1"
-    if config.env["LSHKNN_WITH_OPENCL"]:
-      config.env["CPPDEFINES"]["LSHKNN_WITH_OPENCL"] = "1"
-    # for high-performance clustering
-    if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
-    # if not config.CheckLib("lshknn", language="C++",autoadd=0):
-        Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
+    if config.env["USE_LSHKNN"]:
+        config.env.AppendUnique(CPPPATH=[config.env["LSHKNN_INCLUDE_PATH"]])
+        config.env.AppendUnique(LIBPATH=[config.env["LSHKNN_LIBRARY_PATH"]])
+        if config.env["LSHKNN_WITH_CUDA"]:
+            config.env["CPPDEFINES"]["LSHKNN_WITH_CUDA"] = "1"
+        if config.env["LSHKNN_WITH_OPENCL"]:
+            config.env["CPPDEFINES"]["LSHKNN_WITH_OPENCL"] = "1"
+        # for high-performance clustering
+        if not config.CheckLibWithHeader("lshknn","KNNFactory.hpp", language="C++",autoadd=0):
+        # if not config.CheckLib("lshknn", language="C++",autoadd=0):
+            Helper.printErrorAndExit("Could not find liblshknn or its header 'KNNFactory.hpp'.")
 
 def checkBoostTests(config):
   # Check the availability of the boost unit test dependencies
