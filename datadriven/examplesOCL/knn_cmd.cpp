@@ -127,67 +127,67 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (knn_algorithm.compare("lsh_cuda") == 0) {
-#ifdef LSHKNN_WITH_CUDA
-    std::cout << "using lsh CUDA knn" << std::endl;
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else if (knn_algorithm.compare("lsh_ocl") == 0) {
-#ifdef LSHKNN_WITH_OPENCL
-    std::cout << "using lsh OpenCL knn" << std::endl;
+  //   if (knn_algorithm.compare("lsh_cuda") == 0) {
+  // #ifdef LSHKNN_WITH_CUDA
+  //     std::cout << "using lsh CUDA knn" << std::endl;
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else if (knn_algorithm.compare("lsh_ocl") == 0) {
+  // #ifdef LSHKNN_WITH_OPENCL
+  //     std::cout << "using lsh OpenCL knn" << std::endl;
 
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else if (knn_algorithm.compare("naive") == 0) {
-#ifdef USE_LSHKNN
-    std::cout << "using naive multicore knn" << std::endl;
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else if (knn_algorithm.compare("naive_ocl") == 0) {
-    std::cout << "using naive ocl knn" << std::endl;
-  } else if (knn_algorithm.compare("naive_sampling") == 0) {
-#ifdef USE_LSHKNN
-    std::cout << "using naive sampling knn" << std::endl;
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else if (knn_algorithm.compare("lsh_sampling_cuda") == 0) {
-#ifdef LSHKNN_WITH_CUDA
-    std::cout << "using lsh sampling CUDA knn" << std::endl;
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else if (knn_algorithm.compare("lsh_sampling_ocl") == 0) {
-#ifdef LSHKNN_WITH_OPENCL
-    std::cout << "using lsh sampling OpenCL knn" << std::endl;
-#else
-    std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
-                 "without liblshknn."
-              << std::endl;
-    return 1;
-#endif
-  } else {
-    std::cerr << "error: invalid choice for \"knn_algorithm\" supplied"
-              << std::endl;
-  }
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else if (knn_algorithm.compare("naive") == 0) {
+  // #ifdef USE_LSHKNN
+  //     std::cout << "using naive multicore knn" << std::endl;
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else if (knn_algorithm.compare("naive_ocl") == 0) {
+  //     std::cout << "using naive ocl knn" << std::endl;
+  //   } else if (knn_algorithm.compare("naive_sampling") == 0) {
+  // #ifdef USE_LSHKNN
+  //     std::cout << "using naive sampling knn" << std::endl;
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else if (knn_algorithm.compare("lsh_sampling_cuda") == 0) {
+  // #ifdef LSHKNN_WITH_CUDA
+  //     std::cout << "using lsh sampling CUDA knn" << std::endl;
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else if (knn_algorithm.compare("lsh_sampling_ocl") == 0) {
+  // #ifdef LSHKNN_WITH_OPENCL
+  //     std::cout << "using lsh sampling OpenCL knn" << std::endl;
+  // #else
+  //     std::cout << "knn algorithm requires liblshknn, but SGpp was compiled "
+  //                  "without liblshknn."
+  //               << std::endl;
+  //     return 1;
+  // #endif
+  //   } else {
+  //     std::cerr << "error: invalid choice for \"knn_algorithm\" supplied"
+  //               << std::endl;
+  //   }
 
   std::cout << "reading dataset...";
   sgpp::datadriven::Dataset dataset =
@@ -214,20 +214,24 @@ int main(int argc, char **argv) {
                         // this is not the case
     graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
                                 lsh_hashes, lsh_w);
+#else
+    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support"
+              << std::endl;
+    return 1;
 #endif
   } else if (knn_algorithm.compare("lsh_ocl") == 0) {
-#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
-                        // anyway if
-                        // this is not the case
-    graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
-                                lsh_hashes, lsh_w);
-#endif
-  } else if (knn_algorithm.compare("naive_ocl") == 0) {
 #ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
                           // anyway if
                           // this is not the case
-    graph = knn_op.knn_naive_ocl(dimension, trainingData, k, configFileName);
+    graph = knn_op.knn_lsh_opencl(dimension, trainingData, k, configFileName,
+                                  lsh_tables, lsh_hashes, lsh_w);
+#else
+    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support"
+              << std::endl;
+    return 1;
 #endif
+  } else if (knn_algorithm.compare("naive_ocl") == 0) {
+    graph = knn_op.knn_naive_ocl(dimension, trainingData, k, configFileName);
   } else if (knn_algorithm.compare("naive") == 0) {
     graph = knn_op.knn_naive(dimension, trainingData, k);
   } else if (knn_algorithm.compare("naive_sampling") == 0) {
@@ -240,6 +244,10 @@ int main(int argc, char **argv) {
     graph = knn_op.knn_lsh_cuda_sampling(
         dimension, trainingData, k, sampling_chunk_size, sampling_randomize,
         lsh_tables, lsh_hashes, lsh_w);
+#else
+    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support"
+              << std::endl;
+    return 1;
 #endif
   } else if (knn_algorithm.compare("lsh_sampling_opencl") == 0) {
 #ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
@@ -248,6 +256,10 @@ int main(int argc, char **argv) {
     graph = knn_op.knn_lsh_opencl_sampling(
         dimension, trainingData, k, configFileName, sampling_chunk_size,
         sampling_randomize, lsh_tables, lsh_hashes, lsh_w);
+#else
+    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support"
+              << std::endl;
+    return 1;
 #endif
   }
 
