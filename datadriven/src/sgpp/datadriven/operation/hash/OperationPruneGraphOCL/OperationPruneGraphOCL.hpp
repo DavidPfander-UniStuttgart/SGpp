@@ -27,7 +27,14 @@ class OperationPruneGraphOCL {
   OperationPruneGraphOCL() : last_duration_prune_graph(0.0) {}
 
   /// Deletes all nodes and edges within areas of low density which are in the given graph chunk
-  virtual void prune_graph(std::vector<int> &graph, size_t startid = 0, size_t chunksize = 0) = 0;
+  virtual void prune_graph(std::vector<int64_t> &graph, size_t startid = 0, size_t chunksize = 0) = 0;
+  virtual void prune_graph(std::vector<int> &graph, size_t startid = 0, size_t chunksize = 0) {
+    std::vector<int64_t> graph_unconverted(graph.begin(), graph.end());
+    // TODO: remove after operation is converted to int64_t
+    prune_graph(graph, startid, chunksize);
+    graph = std::vector<int>(graph_unconverted.begin(),
+                                 graph_unconverted.end());
+  }
   virtual ~OperationPruneGraphOCL(void) {}
   static void load_default_parameters(std::shared_ptr<base::OCLOperationConfiguration> parameters) {
     if (parameters->contains("INTERNAL_PRECISION") == false) {

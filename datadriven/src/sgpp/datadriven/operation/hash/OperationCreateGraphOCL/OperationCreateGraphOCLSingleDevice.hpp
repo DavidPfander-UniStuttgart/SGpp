@@ -123,7 +123,7 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
   }
 
   /// Creates part of the k nearest neighbor graph (or all of it with the default parameters)
-  void create_graph(std::vector<int> &resultVector, int startid = 0, int chunksize = 0) {
+  void create_graph(std::vector<int64_t> &resultVector, size_t startid = 0, size_t chunksize = 0) {
     if (verbose)
       std::cout << "Creating graph for " << (dataVector.size() / dims) << " datapoints"
                 << std::endl;
@@ -144,10 +144,10 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
 
     if (verbose) std::cout << "duration create graph" << elapsed_seconds.count() << std::endl;
   }
-  void begin_graph_creation(int startid, int chunksize) {
+  void begin_graph_creation(size_t startid, size_t chunksize) {
     graph_kernel->begin_graph_creation(startid, chunksize);
   }
-  void finalize_graph_creation(std::vector<int> &resultVector, int startid, int chunksize) {
+  void finalize_graph_creation(std::vector<int64_t> &resultVector, size_t startid, size_t chunksize) {
     graph_kernel->finalize_graph_creation(resultVector, startid, chunksize);
   }
 };

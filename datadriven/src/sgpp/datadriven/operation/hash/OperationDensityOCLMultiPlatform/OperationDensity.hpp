@@ -36,8 +36,8 @@ class OperationDensity : public base::OperationMatrix {
   /// Use before calling partial_mult directly
   virtual void initialize_alpha(std::vector<double> &alpha) = 0;
   /// Execute a partial (startindex to startindex+chunksize) multiplication with the density matrix
-  virtual void start_partial_mult(int start_id, int chunksize) = 0;
-  virtual void finish_partial_mult(double *result, int start_id, int chunksize) = 0;
+  virtual void start_partial_mult(size_t start_id, size_t chunksize) = 0;
+  virtual void finish_partial_mult(double *result, size_t start_id, size_t chunksize) = 0;
   /// Generates the right hand side vector for the density equation
   virtual void generateb(base::DataMatrix &dataset, sgpp::base::DataVector &b, size_t start_id = 0,
                          size_t chunksize = 0) = 0;

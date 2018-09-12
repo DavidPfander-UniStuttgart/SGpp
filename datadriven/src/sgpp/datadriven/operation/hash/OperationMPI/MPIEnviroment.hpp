@@ -108,11 +108,11 @@ class SimpleQueue {
   /// Number of all workpackages
   unsigned int packagecount;
   /// Array with for sending indices and packagesizes
-  int packageinfo[2];
+  long packageinfo[2];
   /// Stores the current starting indices for each work package
-  unsigned int *startindices;
+  long *startindices;
   /// Stores the current starting indices for each prefetched work package
-  unsigned int *secondary_indices;
+  long *secondary_indices;
   /// Start index for the entire problem chunk of this queue
   size_t startindex;
   size_t packagesize;
@@ -161,10 +161,12 @@ class SimpleQueue {
       mpi_typ = MPI_FLOAT;
     } else if (std::is_same<T, double>::value) {
       mpi_typ = MPI_DOUBLE;
+    } else if (std::is_same<T, long>::value) {
+      mpi_typ = MPI_LONG;
     } else {
       std::stringstream errorString;
       errorString << "Unsupported datatyp in class SimpleQueue." << std::endl
-                  << "Template class needs to be int, float or double." << std::endl;
+                  << "Template class needs to be int, long, float or double." << std::endl;
       throw std::logic_error(errorString.str());
     }
     send_packageindex = 0;
@@ -176,20 +178,20 @@ class SimpleQueue {
       packagesize = workitem_count;
       std::cerr << "Warning - Adjusted packagesize" << std::endl;
     } else if (packagesize > workitem_count / (commsize * 2)) {
-      packagesize = static_cast<int>(workitem_count / (commsize * 2));
+      packagesize = static_cast<long>(workitem_count / (commsize * 2));
       std::cerr << "Warning - Adjusted packagesize" << std::endl;
     }
 
     packagecount = static_cast<unsigned int>(workitem_count / packagesize);
-    startindices = new unsigned int[commsize];
-    secondary_indices = new unsigned int[commsize];
+    startindices = new long[commsize];
+    secondary_indices = new long[commsize];
     for (auto i = 0; i < commsize; ++i) {
       startindices[i] = 0;
       secondary_indices[i] = 0;
     }
 
-    packageinfo[0] = static_cast<int>(startindex);
-    packageinfo[1] = static_cast<int>(packagesize);
+    packageinfo[0] = static_cast<long>(startindex);
+    packageinfo[1] = static_cast<long>(packagesize);
 
     // Send first packages
     for (int dest = 1; dest < commsize + 1; dest++) {
@@ -242,8 +244,8 @@ class SimpleQueue {
   }
   void send_package(const int source) {
     if (send_packageindex < packagecount - 1) {
-      packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-      MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+      packageinfo[0] = static_cast<long>(startindex + send_packageindex * packagesize);
+      MPI_Send(packageinfo, 2, MPI_LONG, source, 1, comm);
       if (send_packageindex < commsize) { // univerisal init case
         startindices[source - 1] = packageinfo[0];
         secondary_indices[source - 1] = packageinfo[0]; // purely in case this is already the last package
@@ -262,14 +264,14 @@ class SimpleQueue {
     // last case
     } else if (send_packageindex == packagecount - 1) {
       // Send last package
-      packageinfo[0] = static_cast<int>(startindex + send_packageindex * packagesize);
-      packageinfo[1] = static_cast<int>(packagesize + (workitem_count) % packagesize);
+      packageinfo[0] = static_cast<long>(startindex + send_packageindex * packagesize);
+      packageinfo[1] = static_cast<long>(packagesize + (workitem_count) % packagesize);
       if (packageinfo[1] == 0) {
         if (prefetching) {
           startindices[source - 1] = secondary_indices[source - 1];
           packageinfo[0] = -1;
           packageinfo[1] = -1;
-          MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+          MPI_Send(packageinfo, 2, MPI_LONG, source, 1, comm);
         }
         send_packageindex++;
         received_packageindex++;
@@ -278,7 +280,7 @@ class SimpleQueue {
                     << "] (empty package)" << std::endl;
 
       } else {
-        MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+        MPI_Send(packageinfo, 2, MPI_LONG, source, 1, comm);
         if (prefetching) {
           startindices[source - 1] = secondary_indices[source - 1];
           secondary_indices[source - 1] = packageinfo[0];
@@ -294,7 +296,7 @@ class SimpleQueue {
         // Send empty package to avoid deadlock on clients
         packageinfo[0] = -1;
         packageinfo[1] = -1;
-        MPI_Send(packageinfo, 2, MPI_INT, source, 1, comm);
+        MPI_Send(packageinfo, 2, MPI_LONG, source, 1, comm);
       }
     }
   }

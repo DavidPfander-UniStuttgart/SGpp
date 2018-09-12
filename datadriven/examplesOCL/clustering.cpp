@@ -117,17 +117,17 @@ int main() {
   //   out << std::endl;
   // }
   // out.close();
-  std::vector<int> node_cluster_map;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-      graph, k, node_cluster_map, clusters);
-  out.open("cluster_erg.txt");
-  for (size_t datapoint : node_cluster_map) {
-    out << datapoint << " ";
-  }
-  end = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds = end - start;
-  std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-  std::cout << "finished computation at " << std::ctime(&end_time)
-            << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
+  // std::vector<int> node_cluster_map;
+  // sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
+  // sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
+  //     graph, k, node_cluster_map, clusters);
+  // out.open("cluster_erg.txt");
+  // for (size_t datapoint : node_cluster_map) {
+  //   out << datapoint << " ";
+  // }
+  // end = std::chrono::system_clock::now();
+  // std::chrono::duration<double> elapsed_seconds = end - start;
+  // std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+  // std::cout << "finished computation at " << std::ctime(&end_time)
+  //           << "elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
 }

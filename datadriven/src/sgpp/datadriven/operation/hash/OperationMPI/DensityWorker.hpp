@@ -29,10 +29,10 @@ class DensityWorker : public MPIWorkerGridBase, public MPIWorkerPackageBase<doub
     if (opencl_node) op->initialize_alpha(alpha);
     send_alpha();
   }
-  void begin_opencl_operation(int *workpackage) {
+  void begin_opencl_operation(long *workpackage) {
     op->start_partial_mult(workpackage[0], workpackage[1]);
   }
-  void finalize_opencl_operation(double *result_buffer, int *workpackage) {
+  void finalize_opencl_operation(double *result_buffer, long *workpackage) {
     op->finish_partial_mult(result_buffer, workpackage[0], workpackage[1]);
   }
 

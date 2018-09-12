@@ -876,11 +876,7 @@ int main(int argc, char **argv) {
         operation_prune(sgpp::datadriven::pruneNearestNeighborGraphConfigured(
             *grid, dimension, alpha, trainingData, threshold, k,
             configFileName));
-    std::vector<int> graph_unconverted(graph.begin(), graph.end());
-    operation_prune->prune_graph(graph_unconverted);
-    // TODO: remove after operation is converted to int64_t
-    graph = std::vector<int64_t>(graph_unconverted.begin(),
-                                 graph_unconverted.end());
+    operation_prune->prune_graph(graph);
 
     double last_duration_prune_graph = operation_prune->getLastDuration();
     std::cout << "last_duration_prune_graph: " << last_duration_prune_graph
@@ -914,7 +910,7 @@ int main(int argc, char **argv) {
 
   {
     std::cout << "Finding clusters..." << std::endl;
-    std::vector<int> node_cluster_map;
+    std::vector<int64_t> node_cluster_map;
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::
         neighborhood_list_t clusters;
 
@@ -923,10 +919,10 @@ int main(int argc, char **argv) {
     find_cluster_timer_start = std::chrono::system_clock::now();
 
     // TODO: update after conversion
-    std::vector<int32_t> graph_converted(graph.begin(), graph.end());
+    // std::vector<int32_t> graph_converted(graph.begin(), graph.end());
 
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::
-        find_clusters(graph_converted, k, node_cluster_map, clusters);
+        find_clusters(graph, k, node_cluster_map, clusters);
 
     find_cluster_timer_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> find_cluster_elapsed_seconds =

@@ -63,7 +63,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << "}" << std::endl
                    << "" << std::endl
                    << "void kernel __attribute__((reqd_work_group_size(" << local_size
-                   << ", 1, 1))) removeEdges(__global int *nodes,"
+                   << ", 1, 1))) removeEdges(__global long *nodes,"
                    << "__global const int *starting_points,__global const " << this->floatType()
                    << " *data," << std::endl
                    << this->indent[0] << "__global const " << this->floatType()
@@ -81,7 +81,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "//Calculate density" << std::endl
                    << this->indent[1] << "endwert=0;" << std::endl
-                   << this->indent[1] << "int nachbar=nodes[index* " << k << " +i];" << std::endl;
+                   << this->indent[1] << "long nachbar=nodes[index* " << k << " +i];" << std::endl;
       sourceStream << this->indent[1] << "if (nachbar < 0) {" << std::endl;
       sourceStream << this->indent[2] << "continue;" << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl;
@@ -89,7 +89,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << " ;gridpoint++)" << std::endl
                    << this->indent[1] << "{" << std::endl
                    << this->indent[2] << "wert=1;" << std::endl
-                   << this->indent[2] << "for (int dimension=0;dimension< " << dimensions
+                   << this->indent[2] << "for (long dimension=0;dimension< " << dimensions
                    << ";dimension++)" << std::endl
                    << this->indent[2] << "{" << std::endl
                    << this->indent[3] << "" << this->floatType() << " dimension_point=0;"
@@ -149,7 +149,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
 
       sourceStream
           << "void kernel __attribute__((reqd_work_group_size(" << local_size
-          << ", 1, 1))) removeEdges(__global int *nodes, __global const int *starting_points,"
+          << ", 1, 1))) removeEdges(__global long *nodes, __global const int *starting_points,"
           << std::endl;
       sourceStream << this->indent[1] << "__global const " << this->floatType()
                    << " *data, __global const " << this->floatType() << " *alphas"
@@ -183,7 +183,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
       sourceStream << this->indent[0] << "// loading neighbors into registers" << std::endl;
       sourceStream << this->indent[0] << "for (size_t cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
                    << std::endl;
-      sourceStream << this->indent[1] << "int neighbor_index;" << std::endl;
+      sourceStream << this->indent[1] << "long neighbor_index;" << std::endl;
       sourceStream << this->indent[1] << "if (get_global_id(0) < chunksize) {" << std::endl;
       sourceStream << this->indent[2] << "neighbor_index = nodes[get_global_id(0) * " << k
                    << " + cur_k];" << std::endl;

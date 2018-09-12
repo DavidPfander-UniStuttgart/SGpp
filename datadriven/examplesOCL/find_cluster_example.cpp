@@ -6,7 +6,7 @@ int main() {
   size_t k = 2;
 
   size_t node_count = 5;
-  std::vector<int> directed(node_count * k);
+  std::vector<int64_t> directed(node_count * k);
   std::fill(directed.begin(), directed.end(), -1);
   // one clusters: "0, 1, 2" and "3, 4" but "0, 1, 2" not connected to "3, 4"
   directed[0 * k + 0] = 1;
@@ -33,15 +33,15 @@ int main() {
     }
   }
 
-  std::vector<int> node_cluster_map;
-  std::vector<std::vector<int>> clusters;
+  std::vector<int64_t> node_cluster_map;
+  std::vector<std::vector<int64_t>> clusters;
   OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected, node_cluster_map,
                                                               clusters, 0);
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
 
-  for (std::vector<int> &c : clusters) {
+  for (std::vector<int64_t> &c : clusters) {
     std::cout << "member of cluster: ";
     bool first = true;
     for (int m : c) {
@@ -56,7 +56,7 @@ int main() {
   }
 
   node_count = 8;
-  directed = std::vector<int>(node_count * k);
+  directed = std::vector<int64_t>(node_count * k);
   std::fill(directed.begin(), directed.end(), -1);
   // one clusters: "0, 1, 2" and "3, 4" but "0, 1, 2" not connected to "3, 4"
   directed[0 * k + 0] = 1;
@@ -100,7 +100,7 @@ int main() {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
 
-  for (std::vector<int> &c : clusters) {
+  for (std::vector<int64_t> &c : clusters) {
     std::cout << "member of cluster: ";
     bool first = true;
     for (int m : c) {

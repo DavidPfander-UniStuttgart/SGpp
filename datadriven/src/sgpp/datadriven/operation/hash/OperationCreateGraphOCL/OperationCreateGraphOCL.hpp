@@ -35,7 +35,7 @@ class OperationCreateGraphOCL {
   // k size of the neighborhood
   // clusterList size of the cluster belonging to a specific data points???
   // overwrite ??? -> maybe to merge clusters?
-  static size_t find_neighbors(size_t index, std::vector<int> &nodes, size_t cluster, size_t k,
+  static size_t find_neighbors(size_t index, std::vector<int64_t> &nodes, size_t cluster, size_t k,
                                std::vector<size_t> &clusterList, bool overwrite = false) {
     clusterList[index] = cluster;  // assign current node to new cluster
     bool overwrite_enabled = overwrite;
@@ -87,13 +87,20 @@ class OperationCreateGraphOCL {
   OperationCreateGraphOCL() : last_duration_create_graph(0.0), acc_duration_create_graph(0.0) {}
 
   /// Pure virtual function to create the k nearest neighbor graph for some datapoints of a dataset
-  virtual void create_graph(std::vector<int> &resultVector, int startid = 0, int chunksize = 0) = 0;
-  virtual void begin_graph_creation(int startid, int chunksize) = 0;
-  virtual void finalize_graph_creation(std::vector<int> &resultVector, int startid,
-                                       int chunksize) = 0;
+  virtual void create_graph(std::vector<int64_t> &resultVector, size_t startid = 0, size_t chunksize = 0) = 0;
+  virtual void create_graph(std::vector<int> &resultVector, size_t startid = 0,
+                            size_t chunksize = 0) {
+    std::vector<int64_t> graph_unconverted(resultVector.begin(), resultVector.end());
+    create_graph(graph_unconverted, startid, chunksize);
+    resultVector = std::vector<int>(graph_unconverted.begin(),
+                                 graph_unconverted.end());
+  }
+  virtual void begin_graph_creation(size_t startid, size_t chunksize) = 0;
+  virtual void finalize_graph_creation(std::vector<int64_t> &resultVector, size_t startid,
+                                       size_t chunksize) = 0;
   /// Assign a clusterindex for each datapoint using the connected components of the graph
   // graph has k * #datapoints entries
-  static std::vector<size_t> find_clusters_recursive(std::vector<int> &graph, size_t k) {
+  static std::vector<size_t> find_clusters_recursive(std::vector<int64_t> &graph, size_t k) {
     std::vector<size_t> clusters(graph.size() / k);
     size_t cluster_count = 0;
     std::fill(clusters.begin(), clusters.end(), 0);
@@ -116,11 +123,11 @@ class OperationCreateGraphOCL {
     return clusters;
   }
 
-  using neighborhood_list_t = std::vector<std::vector<int>>;
+  using neighborhood_list_t = std::vector<std::vector<int64_t>>;
 
   // directed format: index corresponds to node, k entries per index corresponding to connected
   // nodes (edges), -1 indicates empty
-  static neighborhood_list_t make_undirected_graph(std::vector<int> directed, size_t k) {
+  static neighborhood_list_t make_undirected_graph(std::vector<int64_t> directed, size_t k) {
     size_t node_count = directed.size() / k;
     // neighborhood_list_t undirected(node_count, std::vector<int>());
     neighborhood_list_t undirected(node_count);
@@ -138,7 +145,7 @@ class OperationCreateGraphOCL {
           continue;
         }
         // assert that the index is in range
-        assert(directed[i * k + cur_k] < static_cast<int>(node_count));
+        assert(directed[i * k + cur_k] < static_cast<int64_t>(node_count));
 	assert(directed[i * k + cur_k] >= 0);
         // if (directed[i * k + cur_k] > static_cast<int>(node_count)) {
         //   std::cerr << "error: index too large! i: " << i
@@ -165,12 +172,12 @@ class OperationCreateGraphOCL {
       // not self-modifying: graph is non-reflexive
       // enumerate partners of i
       // std::cout << "i: " << i << std::endl;
-      for (int pointee : undirected[i]) {
+      for (int64_t pointee : undirected[i]) {
         bool found = false;
         // std::cout << "pointee: " << pointee << std::endl;
         // std::cout << "members: " << undirected[pointee].size() << std::endl;
-        for (int candidate : undirected[pointee]) {
-          if (candidate == static_cast<int>(i)) {
+        for (int64_t candidate : undirected[pointee]) {
+          if (candidate == static_cast<int64_t>(i)) {
             found = true;
             break;
           }
@@ -187,26 +194,26 @@ class OperationCreateGraphOCL {
   }
 
   static void get_clusters_from_undirected_graph(const neighborhood_list_t &undirected,
-                                                 std::vector<int> &node_cluster_map,
-                                                 std::vector<std::vector<int>> &clusters,
+                                                 std::vector<int64_t> &node_cluster_map,
+                                                 std::vector<std::vector<int64_t>> &clusters,
                                                  size_t cluster_size_min = 0) {
     // not yet processd set to -1, solitary set to -2
     node_cluster_map.resize(undirected.size());
     std::fill(node_cluster_map.begin(), node_cluster_map.end(), -1);
     clusters.clear();
-    int cluster_id = 0;
+    int64_t cluster_id = 0;
     for (size_t i = 0; i < undirected.size(); i++) {
       if (node_cluster_map[i] != -1) {
         // already processed
         continue;
       }
       // not yet processed, part of a new cluster (or solitary)
-      std::vector<int> cluster;
+      std::vector<int64_t> cluster;
       cluster.push_back(i);
       size_t cur_node_index = 0;
       node_cluster_map[i] = cluster_id;
       while (cur_node_index < cluster.size()) {
-        for (int neighbor_index : undirected[cluster[cur_node_index]]) {
+        for (int64_t neighbor_index : undirected[cluster[cur_node_index]]) {
           if (node_cluster_map[neighbor_index] == -1) {
             // not yet processed, enqueue
             cluster.push_back(neighbor_index);
@@ -224,15 +231,15 @@ class OperationCreateGraphOCL {
         cluster_id += 1;
       } else {
         // rejected, nodes are solitary
-        for (int member_index : cluster) {
+        for (int64_t member_index : cluster) {
           node_cluster_map[member_index] = -2;
         }
       }
     }
   }
 
-  static void find_clusters(std::vector<int> &directed_graph, size_t k,
-                            std::vector<int> &node_cluster_map, neighborhood_list_t &clusters) {
+  static void find_clusters(std::vector<int64_t> &directed_graph, size_t k,
+                            std::vector<int64_t> &node_cluster_map, neighborhood_list_t &clusters) {
     // std::vector<int> node_cluster_map;
     // std::vector<std::vector<int>> clusters;
 
