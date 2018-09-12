@@ -57,6 +57,7 @@ class MPIEnviroment {
 
  public:
   static void init(int argc, char *argv[], bool verbose = false);
+  static void connect_nodes_default(void);
   static void connect_nodes(base::OperationConfiguration conf);
   static void release(void);
   static int get_node_rank(void);
@@ -72,8 +73,7 @@ class MPIEnviroment {
                                                              int leutnant_nodes,
                                                              int packagesize_leutnants,
                                                              int slave_nodes_per_leutnant);
-  static base::OperationConfiguration createMPIConfiguration(int compute_nodes,
-                                                             int opencl_devices_per_compute_node);
+  static base::OperationConfiguration createMPIConfiguration(int opencl_devices_per_compute_node);
   /**
    * Create MPI configuration file based on a number of compute nodes their OpenCL configuration
    * file

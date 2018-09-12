@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     size_t level;
     double lambda;
     std::string configFileName;
-    std::string MPIconfigFileName;
+    std::string MPIconfigFileName = "";
     std::string cluster_file;
     uint64_t k;
     double threshold;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       "regularization for density estimation")(
       "config", boost::program_options::value<std::string>(&configFileName),
       "OpenCL and kernel configuration file")(
-      "MPIconfig", boost::program_options::value<std::string>(&MPIconfigFileName),
+      "MPIconfig", boost::program_options::value<std::string>(&MPIconfigFileName)->default_value(""),
       "MPI configuration file. Should be a json file, specifying the connections of the network")(
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
@@ -129,17 +129,17 @@ int main(int argc, char *argv[]) {
       std::cout << "datasetFileName: " << datasetFileName << std::endl;
     }
 
-    if (variables_map.count("MPIconfig") == 0) {
-      std::cerr << "error: option \"MPIconfig\" not specified" << std::endl;
-      return 1;
-    } else {
-      std::experimental::filesystem::path configFilePath(MPIconfigFileName);
-      if (!std::experimental::filesystem::exists(configFilePath)) {
-        std::cerr << "error: MPI config file does not exist: " << MPIconfigFileName << std::endl;
-        return 1;
-      }
-      std::cout << "MPI configuration file: " << MPIconfigFileName << std::endl;
-    }
+    // if (variables_map.count("MPIconfig") == 0) {
+    //   std::cerr << "error: option \"MPIconfig\" not specified" << std::endl;
+    //   return 1;
+    // } else {
+    //   std::experimental::filesystem::path configFilePath(MPIconfigFileName);
+    //   if (!std::experimental::filesystem::exists(configFilePath)) {
+    //     std::cerr << "error: MPI config file does not exist: " << MPIconfigFileName << std::endl;
+    //     return 1;
+    //   }
+    //   std::cout << "MPI configuration file: " << MPIconfigFileName << std::endl;
+    // }
 
     if (variables_map.count("config") == 0) {
       std::cerr << "error: option \"config\" not specified" << std::endl;
@@ -189,8 +189,14 @@ int main(int argc, char *argv[]) {
     // setup MPI network according to config file
     std::cout << "Setup:" << std::endl;
     std::cout << "------ " << std::endl;
-    sgpp::base::OperationConfiguration network_conf(MPIconfigFileName);
-    sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
+    if (MPIconfigFileName != "") {
+      std::cout << "Using MPI network config setting: " << MPIconfigFileName << std::endl;
+      sgpp::base::OperationConfiguration network_conf(MPIconfigFileName);
+      sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
+    } else {
+      std::cout << "Using default MPI network config setting..." << std::endl;
+      sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes_default();
+    }
 
     // Loading dataset
     long offset = 0;
