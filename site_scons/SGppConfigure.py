@@ -49,6 +49,9 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
   if config.env["COMPILER"] in ("openmpi", "mpich", "intel.mpi"):
     config.env["CPPDEFINES"]["USE_MPI"] = "1"
     config.env["USE_MPI"] = True
+  elif config.env["RUN_ON_HAZELHEN"]:
+    config.env["CPPDEFINES"]["USE_MPI"] = "1"
+    config.env["USE_MPI"] = True
   else:
     config.env["USE_MPI"] = False
 
@@ -411,10 +414,11 @@ def configureGNUCompiler(config):
   if config.env["RUN_ON_HAZELHEN"]:
     config.env["CC"] = 'CC'
     config.env["CXX"] = 'CC'
-    config.env.Append(CPPPATH = [os.environ['BOOST_ROOT'] + '/include'])
-    config.env.Append(LIBPATH = [os.environ['BOOST_ROOT'] + '/lib'])
-    config.env.Append(CPPFLAGS=["-dynamic"])
-    config.env.Append(LINKFLAGS=["-dynamic"])
+    # make sure to "export CRAYPE_LINK_TYPE=dynamic" to allow dynamic linking
+    # config.env.Append(CPPPATH = [os.environ['BOOST_ROOT'] + '/include'])
+    # config.env.Append(LIBPATH = [os.environ['BOOST_ROOT'] + '/lib'])
+    # config.env.Append(CPPFLAGS=["-dynamic"])
+    # config.env.Append(LINKFLAGS=["-dynamic"])
   if config.env["COMPILER"] == "openmpi":
     config.env["CC"] = ("mpicc")
     config.env["LINK"] = ("mpicxx")
@@ -431,6 +435,7 @@ def configureGNUCompiler(config):
     config.env["CXX"] = ("mpicxx.mpich")
     Helper.printInfo("Using mpich.")
 
+  print([config.env["CXX"], "-dumpversion"])
   versionString = subprocess.check_output([config.env["CXX"], "-dumpversion"]).strip()
   if "." not in versionString:
     versionString = subprocess.check_output([config.env["CXX"], "-dumpfullversion"]).strip()

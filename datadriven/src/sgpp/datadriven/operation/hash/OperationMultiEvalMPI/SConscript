@@ -7,5 +7,6 @@ import ModuleHelper
 
 Import("*")
 
-if env["COMPILER"].upper() == "OPENMPI" or env["COMPILER"].upper() == "MPICH":
+# if env["COMPILER"].upper() == "OPENMPI" or env["COMPILER"].upper() == "MPICH":
+if env["USE_MPI"] == 1:
   module.scanSource(".")

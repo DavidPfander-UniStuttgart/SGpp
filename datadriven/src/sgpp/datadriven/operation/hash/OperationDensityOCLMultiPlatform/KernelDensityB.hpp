@@ -11,8 +11,8 @@
 #include <sgpp/globaldef.hpp>
 
 #include <CL/cl.h>
-#include <string.h>
 #include <limits>
+#include <string.h>
 #include <string>
 #include <vector>
 
@@ -21,16 +21,19 @@
 namespace sgpp {
 namespace datadriven {
 namespace DensityOCLMultiPlatform {
-template <class T>
-class KernelDensityBInterface{
- public:
-  virtual void start_rhs_generation(size_t startid = 0, size_t chunksize = 0) = 0;
-  virtual double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t
-                                         chunksize = 0) = 0;
+template <class T> class KernelDensityBInterface {
+public:
+  virtual void start_rhs_generation(size_t startid = 0,
+                                    size_t chunksize = 0) = 0;
+  virtual double finalize_rhs_generation(std::vector<T> &result,
+                                         size_t startid = 0,
+                                         size_t chunksize = 0) = 0;
   virtual void initialize_dataset(std::vector<T> &data) = 0;
 
-  /// Adds the possible building parameters to the configuration if they do not exist yet
-  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
+  /// Adds the possible building parameters to the configuration if they do not
+  /// exist yet
+  static void
+  augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
       json::Node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -38,9 +41,10 @@ class KernelDensityBInterface{
 
         const std::string &kernelName = "cscheme";
 
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                 ? deviceNode["KERNELS"][kernelName]
-                                 : deviceNode["KERNELS"].addDictAttr(kernelName);
+        json::Node &kernelNode =
+            deviceNode["KERNELS"].contains(kernelName)
+                ? deviceNode["KERNELS"][kernelName]
+                : deviceNode["KERNELS"].addDictAttr(kernelName);
 
         if (kernelNode.contains("REUSE_SOURCE") == false) {
           kernelNode.addIDAttr("REUSE_SOURCE", false);
@@ -66,19 +70,18 @@ class KernelDensityBInterface{
           kernelNode.addIDAttr("KERNEL_LOCAL_CACHE_SIZE", UINT64_C(32));
         }
 
-	if (kernelNode.contains("KERNEL_EVAL_BLOCKING") == false) {
+        if (kernelNode.contains("KERNEL_EVAL_BLOCKING") == false) {
           kernelNode.addIDAttr("KERNEL_EVAL_BLOCKING", UINT64_C(1));
         }
       }
     }
   }
-
 };
 
 /// Class for the OpenCL density matrix vector multiplication
 template <class T, class C>
 class KernelDensityB : public KernelDensityBInterface<T> {
- private:
+private:
   /// Used opencl device
   std::shared_ptr<base::OCLDevice> device;
 
@@ -103,7 +106,8 @@ class KernelDensityB : public KernelDensityBInterface<T> {
   cl_kernel kernelB;
 
   /// Source builder for the kernel opencl source code
-  sgpp::datadriven::DensityOCLMultiPlatform::SourceBuilderB<T> kernelSourceBuilder;
+  sgpp::datadriven::DensityOCLMultiPlatform::SourceBuilderB<T>
+      kernelSourceBuilder;
   /// OpenCL manager
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
 
@@ -119,26 +123,28 @@ class KernelDensityB : public KernelDensityBInterface<T> {
   bool use_compression;
   size_t localSize;
 
- public:
+public:
   KernelDensityB(std::shared_ptr<base::OCLDevice> dev, size_t dims,
                  std::shared_ptr<base::OCLManagerMultiPlatform> manager,
                  json::Node &kernelConfiguration, std::vector<int> &points)
-      : device(dev),
-        dims(dims),
-        err(CL_SUCCESS),
-        devicePoints(device),
-        deviceData(device),
-        deviceResultData(device),
-        device_dim_zero_flags(device),
-        device_level_offsets(device),
-        device_level_packed(device),
-        device_index_packed(device),
-        kernelB(nullptr),
-        kernelSourceBuilder(kernelConfiguration, dims),
-        manager(manager),
-        deviceTimingMult(0.0),
-        use_compression(false),
+      : device(dev), dims(dims), err(CL_SUCCESS), devicePoints(device),
+        deviceData(device), deviceResultData(device),
+        device_dim_zero_flags(device), device_level_offsets(device),
+        device_level_packed(device), device_index_packed(device),
+        kernelB(nullptr), kernelSourceBuilder(kernelConfiguration, dims),
+        manager(manager), deviceTimingMult(0.0), use_compression(false),
         kernelConfiguration(kernelConfiguration) {
+
+    size_t query_size;
+    clGetDeviceInfo(dev->deviceId, CL_DEVICE_MAX_COMPUTE_UNITS, 0, nullptr,
+                    &query_size);
+    std::cout << "query_size: " << query_size << std::endl;
+
+    cl_uint max_compute_units;
+    clGetDeviceInfo(dev->deviceId, CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(cl_uint),
+                    &max_compute_units, nullptr);
+    std::cout << "max_compute_units: " << max_compute_units << std::endl;
+
     gridSize = points.size() / (2 * dims);
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
@@ -147,15 +153,19 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
       use_compression = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();
       compressed_grid<C> grid(points, dims);
-      if(!grid.check_grid_compression(points)) {
+      if (!grid.check_grid_compression(points)) {
         std::cerr << "Grid compression check failed! " << std::endl;
       } else {
         std::cerr << "Grid compression check succeded! " << std::endl;
       }
-      device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0, grid.dim_zero_flags_v.size());
-      device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0, grid.level_offsets_v.size());
-      device_level_packed.intializeTo(grid.level_packed_v, 1, 0, grid.level_packed_v.size());
-      device_index_packed.intializeTo(grid.index_packed_v, 1, 0, grid.index_packed_v.size());
+      device_dim_zero_flags.intializeTo(grid.dim_zero_flags_v, 1, 0,
+                                        grid.dim_zero_flags_v.size());
+      device_level_offsets.intializeTo(grid.level_offsets_v, 1, 0,
+                                       grid.level_offsets_v.size());
+      device_level_packed.intializeTo(grid.level_packed_v, 1, 0,
+                                      grid.level_packed_v.size());
+      device_index_packed.intializeTo(grid.index_packed_v, 1, 0,
+                                      grid.index_packed_v.size());
     }
     if (!use_compression)
       devicePoints.intializeTo(points, 1, 0, points.size());
@@ -177,24 +187,30 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     for (auto i = 0; i < local_padding; ++i) {
       data.push_back(4.0);
     }
-    if (!deviceData.isInitialized()) deviceData.intializeTo(data, 1, 0, data.size());
+    if (!deviceData.isInitialized())
+      deviceData.intializeTo(data, 1, 0, data.size());
   }
 
   /// Generates part of the right hand side density vector
   virtual void start_rhs_generation(size_t startid = 0, size_t chunksize = 0) {
     if (verbose) {
-      std::cout << "entering mult, device: " << device->deviceName << " (" << device->deviceId
-                << ")" << std::endl;
+      std::cout << "entering mult, device: " << device->deviceName << " ("
+                << device->deviceId << ")" << std::endl;
     }
 
     // Build kernel if not already done
     if (this->kernelB == nullptr) {
-      if (verbose) std::cout << "generating kernel source" << std::endl;
-      std::string program_src = kernelSourceBuilder.generateSource(dims, dataSize, gridSize);
-      // if (verbose) std::cout << "Source: " << std::endl << program_src << std::endl;
-      if (verbose) std::cout << "building kernel" << std::endl;
+      if (verbose)
+        std::cout << "generating kernel source" << std::endl;
+      std::string program_src =
+          kernelSourceBuilder.generateSource(dims, dataSize, gridSize);
+      // if (verbose) std::cout << "Source: " << std::endl << program_src <<
+      // std::endl;
+      if (verbose)
+        std::cout << "building kernel" << std::endl;
       std::cout << std::flush;
-      this->kernelB = manager->buildKernel(program_src, device, kernelConfiguration, "cscheme");
+      this->kernelB = manager->buildKernel(program_src, device,
+                                           kernelConfiguration, "cscheme");
     }
 
     size_t local_size = kernelConfiguration["LOCAL_SIZE"].getUInt();
@@ -209,7 +225,8 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     }
 
     // Load data into buffers if not already done
-    if (!deviceResultData.isInitialized() || deviceResultData.size() < chunksize + local_padding) {
+    if (!deviceResultData.isInitialized() ||
+        deviceResultData.size() < chunksize + local_padding) {
       if (chunksize == 0) {
         std::vector<T> zeros(gridSize);
         for (size_t i = 0; i < gridSize; i++) {
@@ -230,20 +247,23 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     // Set kernel arguments
     size_t argument_counter = 0;
     if (!use_compression) {
-      err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->devicePoints.getBuffer());
+      err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem),
+                           this->devicePoints.getBuffer());
       if (err != CL_SUCCESS) {
         std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+        errorString
+            << "OCL Error: Failed to create kernel arguments for device "
+            << std::endl;
         throw base::operation_exception(errorString.str());
       }
       argument_counter++;
     } else {
       err = clSetKernelArg(kernelB, argument_counter, sizeof(cl_mem),
-                                         this->device_dim_zero_flags.getBuffer());
+                           this->device_dim_zero_flags.getBuffer());
       if (err != CL_SUCCESS) {
         std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                    << ") for device " << std::endl;
+        errorString << "OCL Error: Failed to create kernel arguments (argument "
+                    << argument_counter << ") for device " << std::endl;
         throw base::operation_exception(errorString.str());
       }
       argument_counter++;
@@ -251,8 +271,8 @@ class KernelDensityB : public KernelDensityBInterface<T> {
                            this->device_level_offsets.getBuffer());
       if (err != CL_SUCCESS) {
         std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                    << ") for device " << std::endl;
+        errorString << "OCL Error: Failed to create kernel arguments (argument "
+                    << argument_counter << ") for device " << std::endl;
         throw base::operation_exception(errorString.str());
       }
       argument_counter++;
@@ -260,8 +280,8 @@ class KernelDensityB : public KernelDensityBInterface<T> {
                            this->device_level_packed.getBuffer());
       if (err != CL_SUCCESS) {
         std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                    << ") for device " << std::endl;
+        errorString << "OCL Error: Failed to create kernel arguments (argument "
+                    << argument_counter << ") for device " << std::endl;
         throw base::operation_exception(errorString.str());
       }
       argument_counter++;
@@ -269,30 +289,36 @@ class KernelDensityB : public KernelDensityBInterface<T> {
                            this->device_index_packed.getBuffer());
       if (err != CL_SUCCESS) {
         std::stringstream errorString;
-        errorString << "OCL Error: Failed to create kernel arguments (argument " << argument_counter
-                    << ") for device " << std::endl;
+        errorString << "OCL Error: Failed to create kernel arguments (argument "
+                    << argument_counter << ") for device " << std::endl;
         throw base::operation_exception(errorString.str());
       }
       argument_counter++;
     }
-    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->deviceData.getBuffer());
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem),
+                         this->deviceData.getBuffer());
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+      errorString << "OCL Error: Failed to create kernel arguments for device "
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
     argument_counter++;
-    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem), this->deviceResultData.getBuffer());
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_mem),
+                         this->deviceResultData.getBuffer());
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+      errorString << "OCL Error: Failed to create kernel arguments for device "
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
     argument_counter++;
-    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_ulong), &startid);
+    err = clSetKernelArg(this->kernelB, argument_counter, sizeof(cl_ulong),
+                         &startid);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
+      errorString << "OCL Error: Failed to create kernel arguments for device "
+                  << std::endl;
       throw base::operation_exception(errorString.str());
     }
     argument_counter++;
@@ -303,21 +329,24 @@ class KernelDensityB : public KernelDensityBInterface<T> {
 
     if (verbose) {
       std::cout << "Starting the kernel with " << globalworkrange
-                << " workitems (localSize: " << local_size << ", local_padding: " << local_padding
-                << ")" << std::endl;
+                << " workitems (localSize: " << local_size
+                << ", local_padding: " << local_padding << ")" << std::endl;
     }
 
-    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelB, 1, 0, &globalworkrange,
-                                 &local_size, 0, nullptr, &clTiming);
+    err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelB, 1, 0,
+                                 &globalworkrange, &local_size, 0, nullptr,
+                                 &clTiming);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to enqueue kernel command! Error code: " << err
-                  << std::endl;
+      errorString << "OCL Error: Failed to enqueue kernel command! Error code: "
+                  << err << std::endl;
       throw base::operation_exception(errorString.str());
     }
   }
 
-  virtual double finalize_rhs_generation(std::vector<T> &result, size_t startid = 0, size_t chunksize = 0) {
+  virtual double finalize_rhs_generation(std::vector<T> &result,
+                                         size_t startid = 0,
+                                         size_t chunksize = 0) {
     clFinish(device->commandQueue);
 
     if (verbose) {
@@ -328,32 +357,36 @@ class KernelDensityB : public KernelDensityBInterface<T> {
 
     std::vector<T> &hostTemp = deviceResultData.getHostPointer();
     if (chunksize == 0) {
-      for (size_t i = 0; i < gridSize; i++) result[i] = hostTemp[i];
+      for (size_t i = 0; i < gridSize; i++)
+        result[i] = hostTemp[i];
     } else {
-      for (size_t i = 0; i < chunksize; i++) result[i] = hostTemp[i];
+      for (size_t i = 0; i < chunksize; i++)
+        result[i] = hostTemp[i];
     }
 
     // determine kernel execution time
     cl_ulong startTime = 0;
     cl_ulong endTime = 0;
 
-    err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_START, sizeof(cl_ulong),
-                                  &startTime, nullptr);
+    err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_START,
+                                  sizeof(cl_ulong), &startTime, nullptr);
 
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to read start-time from command queue (or crash in mult)!"
+      errorString << "OCL Error: Failed to read start-time from command queue "
+                     "(or crash in mult)!"
                   << " Error code: " << err << std::endl;
       throw base::operation_exception(errorString.str());
     }
 
-    err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &endTime,
-                                  nullptr);
+    err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_END,
+                                  sizeof(cl_ulong), &endTime, nullptr);
 
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to read end-time from command queue! Error code: " << err
-                  << std::endl;
+      errorString << "OCL Error: Failed to read end-time from command queue! "
+                     "Error code: "
+                  << err << std::endl;
       throw base::operation_exception(errorString.str());
     }
 
@@ -364,7 +397,8 @@ class KernelDensityB : public KernelDensityBInterface<T> {
     time *= 1e-9;
 
     if (verbose) {
-      std::cout << "device: " << device->deviceName << " (" << device->deviceId << ") "
+      std::cout << "device: " << device->deviceName << " (" << device->deviceId
+                << ") "
                 << "duration: " << time << std::endl;
     }
 
@@ -373,6 +407,6 @@ class KernelDensityB : public KernelDensityBInterface<T> {
   }
 };
 
-}  // namespace DensityOCLMultiPlatform
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace DensityOCLMultiPlatform
+} // namespace datadriven
+} // namespace sgpp
