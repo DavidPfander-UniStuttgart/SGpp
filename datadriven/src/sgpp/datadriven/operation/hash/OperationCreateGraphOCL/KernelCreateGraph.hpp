@@ -33,7 +33,7 @@ class KernelCreateGraph {
   /// OpenCL buffer for the dataset
   base::OCLBufferWrapperSD<T> deviceData;
   /// OpenCL Buffer for the result vector
-  base::OCLBufferWrapperSD<int> deviceResultData;
+  base::OCLBufferWrapperSD<int64_t> deviceResultData;
   cl_kernel kernel;
   /// Source builder for the opencl source code of the kernel
   sgpp::datadriven::DensityOCLMultiPlatform::SourceBuilderCreateGraph<T> kernelSourceBuilder;
@@ -155,7 +155,7 @@ class KernelCreateGraph {
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
       throw base::operation_exception(errorString.str());
     }
-    err = clSetKernelArg(this->kernel, 2, sizeof(cl_uint), &startid);
+    err = clSetKernelArg(this->kernel, 2, sizeof(cl_ulong), &startid);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
       errorString << "OCL Error: Failed to create kernel arguments for device " << std::endl;
@@ -176,7 +176,7 @@ class KernelCreateGraph {
       throw base::operation_exception(errorString.str());
     }
   }
-  double finalize_graph_creation(std::vector<int> &result, size_t startid, size_t chunksize) {
+  double finalize_graph_creation(std::vector<long> &result, size_t startid, size_t chunksize) {
     clFinish(device->commandQueue);
 
     if (verbose) {
@@ -185,7 +185,7 @@ class KernelCreateGraph {
     deviceResultData.readFromBuffer();
     clFinish(device->commandQueue);
 
-    std::vector<int> &hostTemp = deviceResultData.getHostPointer();
+    std::vector<int64_t> &hostTemp = deviceResultData.getHostPointer();
 
     size_t real_count;
     if (chunksize == 0) {

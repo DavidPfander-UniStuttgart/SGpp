@@ -13,7 +13,7 @@ class OperationPrunedGraphCreationMPI : public PrunedGraphCreationWorker {
       : MPIWorkerBase("PrunedGraphCreationWorker"),
         PrunedGraphCreationWorker(grid, alpha, dataset_filename, k, treshold, ocl_conf_filename) {}
   virtual ~OperationPrunedGraphCreationMPI() {}
-  virtual void create_graph(std::vector<int> &result) {
+  virtual void create_graph(std::vector<int64_t> &result) {
     start_sub_workers();
     long datainfo[2];
     datainfo[0] = 0;

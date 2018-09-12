@@ -104,9 +104,11 @@ int main(int argc, char **argv) {
   operation_graph->create_graph(graph);
 
   std::cout << "finding clusters..." << std::endl;
-  std::vector<int> node_cluster_map;
+  // TODO remove this after final conversion
+  std::vector<int64_t> graph_converted(graph.begin(), graph.end());
+  std::vector<int64_t> node_cluster_map;
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-      graph, k, node_cluster_map, clusters);
+      graph_converted, k, node_cluster_map, clusters);
   std::cout << std::endl << "all done!" << std::endl;
 }

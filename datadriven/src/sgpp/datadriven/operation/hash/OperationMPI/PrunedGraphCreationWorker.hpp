@@ -18,7 +18,7 @@ namespace datadriven {
 namespace clusteringmpi {
 class PrunedGraphCreationWorker : public MPIWorkerGridBase,
                                   public MPIWorkerGraphBase,
-                                  public MPIWorkerPackageBase<int> {
+                                  public MPIWorkerPackageBase<long> {
  private:
   bool delete_alpha;
 
@@ -31,8 +31,8 @@ class PrunedGraphCreationWorker : public MPIWorkerGridBase,
   void begin_opencl_operation(long *workpackage) {
     op->begin_graph_creation(workpackage[0], workpackage[1]);
   }
-  void finalize_opencl_operation(int *result_buffer, long *workpackage) {
-    std::vector<int> partial_graph(workpackage[1] * packagesize_multiplier);
+  void finalize_opencl_operation(long *result_buffer, long *workpackage) {
+    std::vector<int64_t> partial_graph(workpackage[1] * packagesize_multiplier);
     op->finalize_graph_creation(partial_graph, workpackage[0], workpackage[1]);
     op_prune->prune_graph(partial_graph, workpackage[0], workpackage[1]);
     std::copy(partial_graph.begin(), partial_graph.end(), result_buffer);

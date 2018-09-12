@@ -348,11 +348,11 @@ int main(int argc, char *argv[]) {
     create_knn_start = std::chrono::system_clock::now();
     sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
         *grid, alpha, datasetFileName, k, threshold, configFileName);
-    std::vector<int> knn_graph;
+    std::vector<int64_t> knn_graph;
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();
     std::cout << std::endl << std::endl;
-    auto print_knn_graph = [&dataset, k](std::string filename, std::vector<int> &graph) {
+    auto print_knn_graph = [&dataset, k](std::string filename, std::vector<int64_t> &graph) {
       std::ofstream out_graph(filename);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {
         bool first = true;
@@ -381,7 +381,7 @@ int main(int argc, char *argv[]) {
     std::chrono::time_point<std::chrono::high_resolution_clock> find_clusters_start,
         find_clusters_end;
     find_clusters_start = std::chrono::system_clock::now();
-    std::vector<int> node_cluster_map;
+    std::vector<int64_t> node_cluster_map;
     sgpp::datadriven::DensityOCLMultiPlatform::
         OperationCreateGraphOCL::neighborhood_list_t clusters;
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
