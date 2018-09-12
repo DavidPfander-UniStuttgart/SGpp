@@ -194,7 +194,7 @@ int main(int argc, char **argv) {
       "coarsened")(
       "knn_algorithm",
       boost::program_options::value<std::string>(&knn_algorithm)
-          ->default_value("lsh"),
+          ->default_value("naive_ocl"),
       "type of kNN algorithm used, either 'lsh_cuda' (requires liblshknn), "
       "'lsh_ocl' (requires liblshknn), 'naive_ocl' or 'naive' (requires "
       "liblshknn)")(
