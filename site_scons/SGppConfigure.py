@@ -252,6 +252,7 @@ def checkOpenCL(config):
                                "can be installed to solve this issue.")
 
     config.env["CPPDEFINES"]["USE_OCL"] = "1"
+    config.env["CPPDEFINES"]["CL_TARGET_OPENCL_VERSION"] = "120"
 
 def checkDAKOTA(config):
     if config.env["USE_DAKOTA"]:
@@ -435,7 +436,6 @@ def configureGNUCompiler(config):
     config.env["CXX"] = ("mpicxx.mpich")
     Helper.printInfo("Using mpich.")
 
-  print([config.env["CXX"], "-dumpversion"])
   versionString = subprocess.check_output([config.env["CXX"], "-dumpversion"]).strip()
   if "." not in versionString:
     versionString = subprocess.check_output([config.env["CXX"], "-dumpfullversion"]).strip()
