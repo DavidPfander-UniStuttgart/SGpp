@@ -48,16 +48,22 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
   }
 
   virtual ~MPIWorkerGraphBase(void) {
-    if (delete_dataset) delete [] dataset;
+    // if (delete_dataset) delete [] dataset;
   }
 
  private:
   bool delete_dataset;
   void send_dataset() {
-    MPI_Bcast(&dataset_size, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
-    MPI_Bcast(dataset, dataset_size, MPI_DOUBLE, 0, MPIEnviroment::get_communicator());
-    MPI_Bcast(&dimensions, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
-    MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+    if (!MPIEnviroment::dataset_sent()) {
+      MPI_Bcast(&dataset_size, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+      MPI_Bcast(dataset, dataset_size, MPI_DOUBLE, 0, MPIEnviroment::get_communicator());
+      MPI_Bcast(&dimensions, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+      MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+      MPIEnviroment::data_sent();
+    } else {
+      std::cout << "Dataset should be cached" << std::endl;
+      MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_communicator());
+    }
   }
   // void load_whole_dataset(std::string filename) {
   //   data = sgpp::datadriven::ARFFTools::readARFF(filename);
@@ -80,14 +86,21 @@ class MPIWorkerGraphBase : virtual public MPIWorkerBase {
   //   dataset = datamatrix.getPointer();
   // }
   void receive_dataset(void) {
-    MPI_Status stat;
-    // Receive dataset
-    MPI_Bcast(&dataset_size, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
-    dataset = new double[dataset_size];
-    MPI_Bcast(dataset, dataset_size, MPI_DOUBLE, 0, MPIEnviroment::get_input_communicator());
-    MPI_Bcast(&dimensions, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
-    MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
-
+    if (!MPIEnviroment::dataset_received()) {
+      MPI_Status stat;
+      // Receive dataset
+      MPI_Bcast(&dataset_size, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+      dataset = new double[dataset_size]; // will get deleted once the enviroment is destroyed
+      MPI_Bcast(dataset, dataset_size, MPI_DOUBLE, 0, MPIEnviroment::get_input_communicator());
+      MPI_Bcast(&dimensions, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+      MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+      MPIEnviroment::set_dataset_cache(dataset, dataset_size, dimensions);
+    } else {
+      // get from cache
+      std::cout << "Getting dataset from enviroment cache" << std::endl;
+      MPIEnviroment::read_dataset_cache(&dataset, dataset_size, dimensions);
+      MPI_Bcast(&k, 1, MPI_INT, 0, MPIEnviroment::get_input_communicator());
+    }
   }
 };
 

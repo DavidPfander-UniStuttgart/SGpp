@@ -17,6 +17,13 @@ namespace sgpp {
 namespace datadriven {
 namespace clusteringmpi {
 
+struct Dataset {
+  double *dataset = NULL;
+  int dimensions;
+  int data_size;
+  bool dataset_set;
+};
+
 class MPIEnviroment {
  private:
   static MPIEnviroment *singleton_instance;
@@ -55,7 +62,27 @@ class MPIEnviroment {
   void init_opencl_communicator(base::OperationConfiguration conf);
   void init_worker(int workerid, int source);
 
+  Dataset data_cache;
+  bool already_send_dataset;
  public:
+  static void data_sent(void) {singleton_instance->already_send_dataset = true;}
+  static bool dataset_sent(void) {return singleton_instance->already_send_dataset;}
+  static bool dataset_received(void) {return singleton_instance->data_cache.dataset_set;}
+  static void set_dataset_cache(double *dataset, int data_size, int dimensions) {
+    singleton_instance->data_cache.dataset = dataset;
+    singleton_instance->data_cache.data_size = data_size;
+    singleton_instance->data_cache.dimensions = dimensions;
+    singleton_instance->data_cache.dataset_set = true;
+  }
+  static void read_dataset_cache(double **dataset, int & data_size, int & dimensions) {
+    if (singleton_instance->data_cache.dataset_set) {
+      *dataset = singleton_instance->data_cache.dataset;
+      data_size = singleton_instance->data_cache.data_size;
+      dimensions = singleton_instance->data_cache.dimensions;
+    } else {
+      throw std::logic_error("Trying to access invalid dataset cache!");
+    }
+  }
   static void init(int argc, char *argv[], bool verbose = false);
   static void connect_nodes_default(void);
   static void connect_nodes(base::OperationConfiguration conf);
