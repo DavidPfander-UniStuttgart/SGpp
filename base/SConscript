@@ -11,6 +11,7 @@ moduleDependencies = []
 
 additionalDependencies = []
 if env["USE_OCL"]:
+    print("USE_OCL in base is enabled!")
     additionalDependencies += ["OpenCL"]
 
 module = ModuleHelper.Module(moduleDependencies, additionalDependencies)
@@ -21,7 +22,7 @@ module.generatePythonDocstrings()
 if env["ARCH"] != "mic":
   module.buildExamples()
 
-module.runPythonTests() 
+module.runPythonTests()
 module.buildBoostTests()
 module.runBoostTests()
 module.runCpplint()
