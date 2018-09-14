@@ -14,6 +14,7 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <exception>
 
 #ifdef USE_MPI
 #include <mpi.h>
@@ -152,11 +153,7 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const
   while (!myfile.eof()) {
     std::getline(myfile, line);
     std::transform(line.begin(), line.end(), line.begin(), toupper);
-    if (line.find("@ATTRIBUTE class", 0) != line.npos) {
-    } else if (line.find("@ATTRIBUTE CLASS", 0) != line.npos) {
-    } else if (line.find("@ATTRIBUTE", 0) != line.npos) {
-      dimension++;
-    } else if (line.find("@DATA", 0) != line.npos) {
+    if (line.find("@DATA", 0) != line.npos) {
       break;
     }
     headercontent.append(line);
@@ -165,6 +162,7 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const
   headercontent.append("% DATA SET SIZE " + std::to_string(numberInstances));
   headercontent.append("\n");
   headercontent.append("@DATA " + output_filename);
+  headercontent.append("\n");
 
   // read data
   size_t dataindex = 0;
@@ -191,6 +189,63 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const
   std::ofstream hout(header_filename, std::ios::out);
   hout << headercontent;
   hout.close();
+}
+
+base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filename) {
+  // Read ARFF header file
+  std::string line;
+  std::ifstream myfile(filename.c_str());
+  size_t dimension = 0;
+  size_t numberInstances = 0;
+  std::string binary_filename = "";
+
+  if (!myfile) {
+    std::string msg = "Unable to open file: " + filename;
+    throw sgpp::base::file_exception(msg.c_str());
+  }
+
+  std::cerr << "Reading file header " << std::endl;
+  while (!myfile.eof()) {
+    std::getline(myfile, line);
+    if (line.find("@ATTRIBUTE class", 0) != line.npos) {
+    } else if (line.find("@ATTRIBUTE CLASS", 0) != line.npos) {
+    } else if (line.find("@ATTRIBUTE", 0) != line.npos) {
+      dimension++;
+    } else if (line.find("@DATA", 0) != line.npos) {
+      binary_filename = line.substr(strlen("@DATA "));
+      break;
+    } else if (line.find("% DATA SET SIZE ", 0) != line.npos) {
+      numberInstances = std::stoi(line.substr(strlen("% DATA SET SIZE ")));
+    }
+  }
+  if (binary_filename == "") {
+    throw std::logic_error("Error! No binary file given after the @DATA keyword");
+  }
+  if (numberInstances == 0){
+    throw std::logic_error("Error! Size of binary file not given in the ARFF header");
+  }
+
+  std::cerr << "Creating datamatri" << std::endl;
+  base::DataMatrix datamatrix(numberInstances,dimension);
+  std::cerr << "Open ifstream" << std::endl;
+  std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
+  if (file)
+  {
+    std::cerr << "Getting charblock datamatri" << std::endl;
+    char *memblock = (char *)datamatrix.data();
+    std::cerr << "seek it" << std::endl;
+    file.seekg (0, std::ios::beg);
+    std::cerr << "read it" << std::endl;
+    file.read (memblock, numberInstances * dimension * sizeof(double));
+    std::cerr << "close it" << std::endl;
+    file.close();
+    std::cerr << "closed" << std::endl;
+
+  } else {
+    throw(errno);
+  }
+  std::cerr << "start moving" << std::endl;
+  return std::move(datamatrix); // prohibit copying
 }
 
 void ARFFTools::readARFFSizeFromString(const std::string& content, size_t& numberInstances,

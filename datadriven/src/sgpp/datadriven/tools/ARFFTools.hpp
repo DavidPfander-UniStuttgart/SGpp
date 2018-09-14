@@ -6,6 +6,7 @@
 #ifndef ARFFTOOLS_HPP
 #define ARFFTOOLS_HPP
 
+#include <memory>
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 
@@ -57,6 +58,7 @@ class ARFFTools {
                            size_t& dimension);
   static void convert_into_binary_file(const std::string &orig_filename, const std::string
                                        &header_filename, const std::string &output_filename);
+  static base::DataMatrix read_binary_converted_ARFF(const std::string &filename);
 
   static void readARFFSizeFromString(const std::string& content,
                                      size_t& numberInstances, size_t& dimension);

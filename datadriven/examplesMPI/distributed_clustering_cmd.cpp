@@ -210,12 +210,10 @@ int main(int argc, char *argv[]) {
     std::chrono::time_point<std::chrono::system_clock> loading_data_start,
         loading_data_end;
     loading_data_start = std::chrono::system_clock::now();
-    long offset = 0;
-    sgpp::datadriven::ARFFTools::readARFFHeader(datasetFileName, offset);
-    sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
-    sgpp::base::DataMatrix &dataset = data.getData();
-    size_t dim = data.getDimension();
-    std::cout << "dataset_size: " << dataset.getNrows() << std::endl;
+    std::cerr << "Loading dataset: " <<  std::endl;
+    sgpp::base::DataMatrix dataset  = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(datasetFileName);
+    size_t dim = dataset.getNcols();
+    std::cerr << "dataset_size: " << dataset.getNrows() << std::endl;
     std::cout << "dim: " << dim << std::endl;
     loading_data_end = std::chrono::system_clock::now();
     if (verbose_timers) {
