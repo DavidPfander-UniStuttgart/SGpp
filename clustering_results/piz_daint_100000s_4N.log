@@ -1,0 +1,143 @@
+
+
+Arguments (Scenario):
+--------------------- 
+datasetFileName: /scratch/snx1600/pfandedd/datasets/gaussian_c3_size100000_dim10.arff
+OpenCL configuration file: config_ocl_float_P100.cfg
+level: 3
+lambda: 1e-06
+k: 5
+threshold: 0.7
+
+
+Setup:
+------ 
+Using default MPI network config setting...
+Network initialized and ready
+Network setup duration: 0.0453095
+Dataset load (on master) duration: 0.354431
+Grid creation (on master) duration: 0.00440213
+
+
+Create right-hand side of density equation: 
+-------------------------------------------- 
+RHS operation creation (includes grid and dataset transfers) duration: 0.0209729
+query_size: 4
+max_compute_units: 56
+Node 2: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 4: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 1: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 3: Created slave operation "DensityRHSWorker"
+rhs creation duration: 2.467s
+Solve for alpha: 
+--------------- 
+Density mult operation creation (includes grid transfer) duration: 0.00237731
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 2: Created slave operation "DensityMultiplicationWorker"
+Node 3: Created slave operation "DensityMultiplicationWorker"
+Node 4: Created slave operation "DensityMultiplicationWorker"
+query_size: 4
+max_compute_units: 56
+Node 1: Created slave operation "DensityMultiplicationWorker"
+MPI muliplication duration: 0.896691
+Starting norm of residuum: 0.00691698
+Target norm:               6.91698e-11
+MPI muliplication duration: 0.000518
+delta: 0.00496857
+MPI muliplication duration: 0.000505
+delta: 0.00264213
+MPI muliplication duration: 0.000504
+delta: 0.000730703
+MPI muliplication duration: 0.000503
+delta: 8.10564e-05
+MPI muliplication duration: 0.0005
+delta: 2.01029e-05
+MPI muliplication duration: 0.000555
+delta: 1.35581e-05
+MPI muliplication duration: 0.000503
+delta: 3.90526e-06
+MPI muliplication duration: 0.000501
+delta: 2.65875e-07
+MPI muliplication duration: 0.0005
+delta: 3.37034e-08
+MPI muliplication duration: 0.000502
+delta: 1.33526e-07
+MPI muliplication duration: 0.000501
+delta: 1.90639e-08
+MPI muliplication duration: 0.0005
+delta: 1.19843e-09
+MPI muliplication duration: 0.000499
+delta: 1.59287e-10
+MPI muliplication duration: 0.0005
+delta: 1.41016e-10
+MPI muliplication duration: 0.000499
+delta: 6.49233e-12
+Number of iterations: 15 (max. 1000)
+Final norm of residuum: 6.49233e-12
+counted_mult_calls: 16
+solver duration: 0.90556s
+
+
+Create and prune graph: 
+----------------------- 
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+KNN (create and prune) operation creation (includes cached dataset transfer) duration: 0.00267792
+unpadded_datasize: 100000 adding elements: 96 (* dims)
+unpadded_datasize: 100000 adding elements: 96 (* dims)
+unpadded_datasize: 100000 adding elements: 96 (* dims)
+unpadded_datasize: 100000 adding elements: 96 (* dims)
+Node 3: Created slave operation "PrunedGraphCreationWorker"
+Node 4: Created slave operation "PrunedGraphCreationWorker"
+Node 2: Created slave operation "PrunedGraphCreationWorker"
+Node 1: Created slave operation "PrunedGraphCreationWorker"
+create knn operation duration: 1.92004s
+Find clusters in pruned graph: 
+------------------------------ 
+find clusters duration: 0.0150666s
+detected clusters: 0
+
+
+Runtimes: 
+--------- 
+finished computation at Fri Sep 14 13:29:14 2018
+elapsed time: 5.73881s
+
+
+Finishing: 
+---------- 
+Beginning cleanup...
+Node 1 received cleanup signal...
+Node 3 received cleanup signal...
+Node 2 received cleanup signal...
+Node 4 received cleanup signal...
+Node 3 All remaining workers are now deleted!
+Node 2 All remaining workers are now deleted!
+Node 4 All remaining workers are now deleted!
+Node 1 All remaining workers are now deleted!
+Node 1: Exiting... 
+Node 4: Exiting... 
+Destroying the enviroment now!
+Cleanup done!
+Node 2: Exiting... 
+Node 3: Exiting... 
