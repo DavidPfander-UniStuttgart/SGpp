@@ -131,8 +131,66 @@ void ARFFTools::readARFFSize(const std::string& filename, size_t& numberInstance
       numberInstances++;
     }
   }
-
   myfile.close();
+}
+
+void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const std::string
+                                         &header_filename, const std::string &output_filename) {
+  std::string line;
+  std::ifstream myfile(orig_filename.c_str());
+  if (!myfile) {
+    const auto msg = "Unable to open file: " + orig_filename;
+    throw sgpp::base::file_exception(msg.c_str());
+  }
+  size_t numberInstances = 0;
+  size_t dimension = 0;
+  size_t instanceNo = 0;
+  readARFFSize(orig_filename, numberInstances, dimension);
+
+  // read header
+  std::string headercontent;
+  while (!myfile.eof()) {
+    std::getline(myfile, line);
+    std::transform(line.begin(), line.end(), line.begin(), toupper);
+    if (line.find("@ATTRIBUTE class", 0) != line.npos) {
+    } else if (line.find("@ATTRIBUTE CLASS", 0) != line.npos) {
+    } else if (line.find("@ATTRIBUTE", 0) != line.npos) {
+      dimension++;
+    } else if (line.find("@DATA", 0) != line.npos) {
+      break;
+    }
+    headercontent.append(line);
+    headercontent.append("\n");
+  }
+  headercontent.append("% DATA SET SIZE " + std::to_string(numberInstances));
+  headercontent.append("\n");
+  headercontent.append("@DATA " + output_filename);
+
+  // read data
+  size_t dataindex = 0;
+  std::vector<double> dataset(numberInstances * dimension);
+  char tmp;
+  while (!myfile.eof()) {
+    std::getline(myfile, line);
+    std::transform(line.begin(), line.end(), line.begin(), toupper);
+    std::stringstream parser(line);
+    for (size_t i = 0; i < dimension; i++, dataindex++) {
+      parser >> dataset[dataindex];
+      if (i != dimension -1 )
+        parser >> tmp;
+    }
+  }
+  myfile.close();
+
+  // write binary file
+  std::ofstream fout(output_filename, std::ios::out | std::ios::binary);
+  fout.write((char*)&dataset[0], dataset.size() * sizeof(double));
+  fout.close();
+
+  // write header file
+  std::ofstream hout(header_filename, std::ios::out);
+  hout << headercontent;
+  hout.close();
 }
 
 void ARFFTools::readARFFSizeFromString(const std::string& content, size_t& numberInstances,
