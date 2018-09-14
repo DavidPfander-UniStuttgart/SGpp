@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
 
   // Create right hand side vector
   sgpp::base::DataVector rhs(gridsize);
-  sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, filename, "MyOCLConf.cfg");
+  sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset, "MyOCLConf.cfg");
   rhs_op.generate_b(rhs);
 
   rhs_end = std::chrono::system_clock::now();

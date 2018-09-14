@@ -8,10 +8,10 @@ namespace clusteringmpi {
 
 class OperationPrunedGraphCreationMPI : public PrunedGraphCreationWorker {
  public:
-  OperationPrunedGraphCreationMPI(base::Grid &grid, base::DataVector &alpha, std::string dataset_filename,
+  OperationPrunedGraphCreationMPI(base::Grid &grid, base::DataVector &alpha, base::DataMatrix &data,
                                   int k, double treshold, std::string ocl_conf_filename)
       : MPIWorkerBase("PrunedGraphCreationWorker"),
-        PrunedGraphCreationWorker(grid, alpha, dataset_filename, k, treshold, ocl_conf_filename) {}
+        PrunedGraphCreationWorker(grid, alpha, data, k, treshold, ocl_conf_filename) {}
   virtual ~OperationPrunedGraphCreationMPI() {}
   virtual void create_graph(std::vector<int64_t> &result) {
     start_sub_workers();

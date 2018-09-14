@@ -30,13 +30,14 @@ void debugger_trap(int process_rank) {
 MPIEnviroment::MPIEnviroment(int argc, char *argv[], bool verbose)
     : numTasks(0), rank(0), verbose(verbose), initialized(false),
       initialized_worker_counter(0), communicator(MPI_COMM_NULL),
-      input_communicator(MPI_COMM_NULL), opencl_communicator(MPI_COMM_NULL)
+      input_communicator(MPI_COMM_NULL), opencl_communicator(MPI_COMM_NULL), already_send_dataset(false)
 {
   MPI_Init(&argc, &argv);
   // Gets number of tasks/processes that this program is running on
   MPI_Comm_size(MPI_COMM_WORLD, &numTasks);
   // Gets the rank (process/task number) that this program is running on
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  data_cache.dataset_set = false;
   debugger_trap(rank);
 }
 
@@ -517,7 +518,11 @@ int MPIEnviroment::get_node_count(void) {
     throw std::logic_error("Singleton class \"MPIEnviroment\" not yet initialized!");
 }
 
-MPIEnviroment::~MPIEnviroment(void) {}
+MPIEnviroment::~MPIEnviroment(void) {
+  std::cout << "Destroying the enviroment now!" << std::endl;
+  if (singleton_instance->data_cache.dataset_set)
+    delete [] singleton_instance->data_cache.dataset;
+}
 
 base::OperationConfiguration MPIEnviroment::createMPIConfiguration(int packagesize_master,
                                                                    int leutnant_nodes,
