@@ -3,6 +3,9 @@ import re
 import os
 import os.path
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 # table format
 # data size - > nodes | total dur. | dur. rhs | sum dur. density mult. | create + prune dur. | grid points
 NODES_INDEX = 0
@@ -43,13 +46,14 @@ def extract_metadata(file_name):
 def find_result_files(results_folder):
     total_files = []
     for root, dirs, files in os.walk(results_folder):
-        with_root = [os.path.join(root, file_name) for file_name in files]
+        with_root = [os.path.join(root, file_name) for file_name in files if file_name.endswith(".log")]
         total_files += with_root
     return total_files
 
 def create_plottable_timings(files):
     timing_table = {}
     for file_name in files:
+        print("file_name:", file_name)
         # nodes, dataset_size, grid_level, solver_it, dim, k = extract_metadata(file_name)
         nodes = extract_metadata(file_name)
         # print('nodes:', nodes)
@@ -57,17 +61,17 @@ def create_plottable_timings(files):
         f = open(file_name, "r")
         read_file = f.read()
 
-        m = re.search(r'dataset_size: (' + num_re + ')$', read_file);
+        m = re.search(r'dataset_size: (' + num_re + ')\n', read_file);
         dataset_size = float(m.group(1))
-        m = re.search(r'level: (' + num_re + ')$', read_file);
+        m = re.search(r'level: (' + num_re + ')\n', read_file);
         level = int(m.group(1))
-        m = re.search(r'Grid created! Number of grid points:     (' + num_re + ')$', read_file);
+        m = re.search(r'Grid created! Number of grid points:     (' + num_re + ')\n', read_file);
         grid_size = int(m.group(1))
-        m = re.search(r'counted_mult_calls: (' + num_re +')$', read_file);
+        m = re.search(r'counted_mult_calls: (' + num_re +')\n', read_file);
         solver_it = int(m.group(1))
-        m = re.search(r'dim: (' + num_re +')$', read_file);
+        m = re.search(r'dim: (' + num_re +')\n', read_file);
         dim = int(m.group(1))
-        m = re.search(r'k: (' + num_re +')$', read_file);
+        m = re.search(r'k: (' + num_re +')\n', read_file);
         k = int(m.group(1))
 
 
@@ -101,6 +105,8 @@ def create_plottable_timings(files):
         timing_table[dataset_size][SOLVER_IT_INDEX].append(solver_it)
         timing_table[dataset_size][DIM_INDEX].append(dim)
         timing_table[dataset_size][K_INDEX].append(k)
+
+
     return timing_table
 
 def timings_to_flops(timing_table):
@@ -154,3 +160,45 @@ print(timing_table)
 
 flops_table = timings_to_flops(timing_table)
 print(flops_table)
+
+
+def sort_by_node(nodes_list, other_list):
+    first, second = zip(*sorted(zip(nodes_list, other_list)))
+    return first, second
+
+for dataset_size in timing_table.keys():
+    # timing picture
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][TOT_DUR_INDEX])
+    ax.plot(first, second, label='total')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][RHS_DUR_INDEX])
+    ax.plot(first, second, label='right-hand side')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][SUM_DEN_DUR_INDEX])
+    ax.plot(first, second, label='sum density mult.')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][KNN_DUR_INDEX])
+    ax.plot(first, second, label='knn and prune')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][FIND_CLUSTER_INDEX])
+    ax.plot(first, second, label='find clusters')
+    ax.set_title("scaling duration")
+    ax.set_xlabel("nodes")
+    ax.set_ylabel("duration (s)")
+    ax.legend()
+    plt.savefig("clustering_graphs/timing_" + str(dataset_size) + "s.png")
+    plt.clf()
+    # flops picture
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    first, second = sort_by_node(flops_table[dataset_size][NODES_INDEX], flops_table[dataset_size][TOT_DUR_INDEX])
+    ax.plot(first, second, label='total')
+    first, second = sort_by_node(flops_table[dataset_size][NODES_INDEX], flops_table[dataset_size][RHS_DUR_INDEX])
+    ax.plot(first, second, label='right-hand side')
+    first, second = sort_by_node(flops_table[dataset_size][NODES_INDEX], flops_table[dataset_size][SUM_DEN_DUR_INDEX])
+    ax.plot(first, second, label='sum density mult.')
+    first, second = sort_by_node(flops_table[dataset_size][NODES_INDEX], flops_table[dataset_size][KNN_DUR_INDEX])
+    ax.plot(first, second, label='knn and prune')
+    ax.set_title("scaling flops")
+    ax.set_xlabel("nodes")
+    ax.set_ylabel("GFLOPS")
+    ax.legend()
+    plt.savefig("clustering_graphs/flops_" + str(dataset_size) + "s.png")

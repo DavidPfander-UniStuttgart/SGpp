@@ -215,6 +215,8 @@ int main(int argc, char *argv[]) {
     sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
     sgpp::base::DataMatrix &dataset = data.getData();
     size_t dim = data.getDimension();
+    std::cout << "dataset_size: " << dataset.getNrows() << std::endl;
+    std::cout << "dim: " << dim << std::endl;
     loading_data_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Dataset load (on master) duration: "
@@ -238,7 +240,7 @@ int main(int argc, char *argv[]) {
       std::cout << "Grid creation (on master) duration: "
                 << static_cast<std::chrono::duration<double>>(grid_creation_end - grid_creation_start).count() << std::endl;
     }
-    std::cerr << "Grid created! Number of grid points:     " << gridsize
+    std::cout << "Grid created! Number of grid points:     " << gridsize
               << std::endl;
     std::cout << std::endl << std::endl;
 
@@ -382,7 +384,7 @@ int main(int argc, char *argv[]) {
       }
     }
     gridsize = grid->getSize();
-    std::cerr << "Number of grid points:     " << gridsize << std::endl;
+    std::cout << "Number of grid points:     " << gridsize << std::endl;
 
     double max = alpha.max();
     double min = alpha.min();
