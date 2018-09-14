@@ -245,7 +245,7 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     throw(errno);
   }
   std::cerr << "start moving" << std::endl;
-  return std::move(datamatrix); // prohibit copying
+  return datamatrix; //should be moved (or optimized out by copy elison)
 }
 
 void ARFFTools::readARFFSizeFromString(const std::string& content, size_t& numberInstances,

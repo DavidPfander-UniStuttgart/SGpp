@@ -23,6 +23,14 @@ int main(int argc, char **argv) {
       std::cout << description << std::endl;
       return 0;
     }
+    if (variables_map.count("input_filename") == 0) {
+      std::cerr << "error: option \"input_filename\" not specified" << std::endl;
+      return 1;
+    }
+    if (variables_map.count("output_filename") == 0) {
+      std::cerr << "error: option \"output_filename\" not specified" << std::endl;
+      return 1;
+    }
 
     std::string binary_filename = output_filename + "_binary" + ".dat";
     output_filename = output_filename;
