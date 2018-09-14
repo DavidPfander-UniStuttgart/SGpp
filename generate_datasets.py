@@ -1,8 +1,15 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import random
 import numpy as np
 from itertools import chain
+
+import argparse
+
+parser = argparse.ArgumentParser(description='Create datasets.')
+# parser.add_argument('--eval_level', dest='eval_level', action='store_const')
+requiredNamed = parser.add_argument_group('required arguments')
+requiredNamed.add_argument('--output_folder', type=str, required=True)
 
 def write_arff_header(f, n_features, name, write_class=False):
     f.write("@RELATION \"" + name + "\"\n\n")
