@@ -18,8 +18,15 @@ GP_INDEX = 6
 SOLVER_IT_INDEX = 7
 DIM_INDEX = 8
 K_INDEX = 9
+LEVEL_INDEX = 10
+NETWORK_SETUP_INDEX = 11
+DATA_LOAD_INDEX = 12
+GRID_CREATE_INDEX = 13
+RHS_OPS_CREATE_INDEX = 14
+DEN_MULT_OPS_CREATE_INDEX = 15
+KNN_OPS_CREATE = 16
 
-NUM_COLS = 10
+NUM_COLS = 17
 
 results_folder = 'clustering_results'
 
@@ -62,7 +69,7 @@ def create_plottable_timings(files):
         read_file = f.read()
 
         m = re.search(r'dataset_size: (' + num_re + ')\n', read_file);
-        dataset_size = float(m.group(1))
+        dataset_size = int(m.group(1))
         m = re.search(r'level: (' + num_re + ')\n', read_file);
         level = int(m.group(1))
         m = re.search(r'Grid created! Number of grid points:     (' + num_re + ')\n', read_file);
@@ -75,22 +82,34 @@ def create_plottable_timings(files):
         k = int(m.group(1))
 
 
-        m = re.search(r'rhs creation duration: (' + num_re + ')s', read_file);
+        m = re.search(r'rhs creation duration: (' + num_re + ')s', read_file)
         rhs_duration = float(m.group(1))
-        m = re.search(r'solver duration: (' + num_re + ')s', read_file);
+        m = re.search(r'solver duration: (' + num_re + ')s', read_file)
         sum_solver_duration = float(m.group(1))
-        m = re.search(r'create knn operation duration: (' + num_re + ')s', read_file);
+        m = re.search(r'create knn operation duration: (' + num_re + ')s', read_file)
         knn_create_prune_comm_duration = float(m.group(1))
-        m = re.search(r'find clusters duration: (' + num_re + ')s', read_file);
+        m = re.search(r'find clusters duration: (' + num_re + ')s', read_file)
         find_clusters_duration = float(m.group(1))
-        m = re.search(r'elapsed time: (' + num_re + ')s', read_file);
+        m = re.search(r'elapsed time: (' + num_re + ')s', read_file)
         total_duration = float(m.group(1))
 
+        m = re.search(r"Network setup duration: " + num_re + "\n", read_file)
+        network_setup_duration = float(m.group(1))
+        m = re.search(r"Dataset load \(on master\) duration: " + num_re + "\n", read_file)
+        data_load_duration = float(m.group(1))
+        m = re.search(r"Grid creation \(on master\) duration: " + num_re + "\n", read_file)
+        grid_create_duration = float(m.group(1))
+        m = re.search(r"RHS operation creation \(includes grid and dataset transfers\) duration: " + num_re + "\n", read_file)
+        rhs_ops_create_duration = float(m.group(1))
+        m = re.search(r"Density mult operation creation \(includes grid transfer\) duration: " + num_re + "\n", read_file)
+        density_mult_ops_create_duration = float(m.group(1))
+        m = re.search(r"KNN \(create and prune\) operation creation \(includes cached dataset transfer\) duration: " + num_re + "\n", read_file)
+        knn_prune_ops_create_duration = float(m.group(1))
 
-        print("rhs_duration:", rhs_duration)
-        print("sum_solver_duration:", sum_solver_duration)
-        print("knn_create_prune_comm_duration:", knn_create_prune_comm_duration)
-        print("find_clusters_duration:", find_clusters_duration)
+        # print("rhs_duration:", rhs_duration)
+        # print("sum_solver_duration:", sum_solver_duration)
+        # print("knn_create_prune_comm_duration:", knn_create_prune_comm_duration)
+        # print("find_clusters_duration:", find_clusters_duration)
 
         if not dataset_size in timing_table:
             timing_table[dataset_size] = [[] for i in range(NUM_COLS)]
@@ -100,12 +119,19 @@ def create_plottable_timings(files):
         timing_table[dataset_size][RHS_DUR_INDEX].append(rhs_duration)
         timing_table[dataset_size][SUM_DEN_DUR_INDEX].append(sum_solver_duration)
         timing_table[dataset_size][KNN_DUR_INDEX].append(knn_create_prune_comm_duration)
-        timing_table[dataset_size][FIND_CLUSTER_INDEX].append(find_clusters_duration)
         timing_table[dataset_size][GP_INDEX].append(grid_size)
         timing_table[dataset_size][SOLVER_IT_INDEX].append(solver_it)
         timing_table[dataset_size][DIM_INDEX].append(dim)
         timing_table[dataset_size][K_INDEX].append(k)
+        timing_table[dataset_size][LEVEL_INDEX].append(level)
 
+        timing_table[dataset_size][FIND_CLUSTER_INDEX].append(find_clusters_duration)
+        timing_table[dataset_size][NETWORK_SETUP_INDEX].append(network_setup_duration)
+        timing_table[dataset_size][DATA_LOAD_INDEX].append(data_load_duration)
+        timing_table[dataset_size][GRID_CREATE_INDEX].append(grid_create_duration)
+        timing_table[dataset_size][RHS_OPS_CREATE_INDEX].append(rhs_ops_create_duration)
+        timing_table[dataset_size][DEN_MULT_OPS_CREATE_INDEX].append(density_mult_ops_create_duration)
+        timing_table[dataset_size][KNN_OPS_CREATE].append(knn_prune_ops_create_duration)
 
     return timing_table
 
@@ -123,6 +149,7 @@ def timings_to_flops(timing_table):
             solver_it = timing_table[dataset_size][SOLVER_IT_INDEX][i]
             dim = timing_table[dataset_size][DIM_INDEX][i]
             k = timing_table[dataset_size][K_INDEX][i]
+            level = timing_table[dataset_size][LEVEL_INDEX][i]
 
             print("nodes:", nodes, "total_duration:", total_duration, "rhs_duration:", rhs_duration, "sum_solver_duration:", sum_solver_duration, "knn_create_prune_comm_duration:", knn_create_prune_comm_duration, "grid_size:", grid_size, "solver_it:", solver_it, "dim:", dim, "k:", k)
 
@@ -146,10 +173,10 @@ def timings_to_flops(timing_table):
             flops_table[dataset_size][RHS_DUR_INDEX].append(rhs_flops)
             flops_table[dataset_size][SUM_DEN_DUR_INDEX].append(sum_solver_flops)
             flops_table[dataset_size][KNN_DUR_INDEX].append(knn_create_prune_comm_flops)
-            flops_table[dataset_size][FIND_CLUSTER_INDEX].append(0.0)
             flops_table[dataset_size][GP_INDEX].append(grid_size)
             flops_table[dataset_size][SOLVER_IT_INDEX].append(solver_it)
             flops_table[dataset_size][DIM_INDEX].append(dim)
+            flops_table[dataset_size][LEVEL_INDEX].append(level)
     return flops_table
 
 
@@ -167,6 +194,12 @@ def sort_by_node(nodes_list, other_list):
     return first, second
 
 for dataset_size in timing_table.keys():
+
+    grid_size = timing_table[dataset_size][GP_INDEX][0]
+    dim = timing_table[dataset_size][DIM_INDEX][0]
+    k = timing_table[dataset_size][K_INDEX][0]
+    level = timing_table[dataset_size][LEVEL_INDEX][0]
+
     # timing picture
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -178,9 +211,7 @@ for dataset_size in timing_table.keys():
     ax.plot(first, second, label='sum density mult.')
     first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][KNN_DUR_INDEX])
     ax.plot(first, second, label='knn and prune')
-    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][FIND_CLUSTER_INDEX])
-    ax.plot(first, second, label='find clusters')
-    ax.set_title("scaling duration")
+    ax.set_title("scaling duration, level: " + str(level) + ", dim: " + str(dim) + ", k: " + str(k) + ", level: " + str(level) + ", #data: " + str(dataset_size))
     ax.set_xlabel("nodes")
     ax.set_ylabel("duration (s)")
     ax.legend()
@@ -197,8 +228,33 @@ for dataset_size in timing_table.keys():
     ax.plot(first, second, label='sum density mult.')
     first, second = sort_by_node(flops_table[dataset_size][NODES_INDEX], flops_table[dataset_size][KNN_DUR_INDEX])
     ax.plot(first, second, label='knn and prune')
-    ax.set_title("scaling flops")
+    ax.set_title("scaling flops, level: " + str(level) + ", dim: " + str(dim) + ", k: " + str(k) + ", level: " + str(level) + ", #data: " + str(dataset_size))
     ax.set_xlabel("nodes")
     ax.set_ylabel("GFLOPS")
     ax.legend()
     plt.savefig("clustering_graphs/flops_" + str(dataset_size) + "s.png")
+    plt.clf()
+    # overheads picture
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][TOT_DUR_INDEX])
+    ax.plot(first, second, label='total')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][FIND_CLUSTER_INDEX])
+    ax.plot(first, second, label='find clusters')
+
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][NETWORK_SETUP_INDEX])
+    ax.plot(first, second, label='network setup')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][DATA_LOAD_INDEX])
+    ax.plot(first, second, label='dataset load (master)')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][GRID_CREATE_INDEX])
+    ax.plot(first, second, label='grid creation (master)')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][RHS_OPS_CREATE_INDEX])
+    ax.plot(first, second, label='right-hand side ops. create')
+    first, second = sort_by_node(timing_table[dataset_size][NODES_INDEX], timing_table[dataset_size][DEN_MULT_OPS_CREATE_INDEX])
+    ax.plot(first, second, label='density mult. ops. create')
+    ax.set_title("scaling flops, level: " + str(level) + ", dim: " + str(dim) + ", k: " + str(k) + ", level: " + str(level) + ", #data: " + str(dataset_size))
+    ax.set_xlabel("nodes")
+    ax.set_ylabel("GFLOPS")
+    ax.legend()
+    plt.savefig("clustering_graphs/overheads_duration_" + str(dataset_size) + "s.png")
+    plt.clf()
