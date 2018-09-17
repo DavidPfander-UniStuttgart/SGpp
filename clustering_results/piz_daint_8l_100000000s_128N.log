@@ -1,0 +1,1913 @@
+
+
+Arguments (Scenario):
+--------------------- 
+datasetFileName: /scratch/snx1600/pfandedd/datasets/gaussian_c3_size100000000_dim10
+OpenCL configuration file: config_ocl_float_P100.cfg
+level: 8
+lambda: 1e-06
+k: 5
+threshold: 0.7
+
+
+Setup:
+------ 
+Using default MPI network config setting...
+Network initialized and ready
+Network setup duration: 1.09067
+dim: 10
+Dataset load (on master) duration: 53.3407
+Grid creation (on master) duration: 6.24674
+Grid created! Number of grid points:     1862145
+
+
+Create right-hand side of density equation: 
+-------------------------------------------- 
+RHS operation creation (includes grid and dataset transfers) duration: 8.91144
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 4: Created slave operation "DensityRHSWorker"
+Node 16: Created slave operation "DensityRHSWorker"
+Node 21: Created slave operation "DensityRHSWorker"
+Node 17: Created slave operation "DensityRHSWorker"
+Node 20: Created slave operation "DensityRHSWorker"
+Node 5: Created slave operation "DensityRHSWorker"
+Node 1: Created slave operation "DensityRHSWorker"
+Node 128: Created slave operation "DensityRHSWorker"
+Node 68: Created slave operation "DensityRHSWorker"
+Node 64: Created slave operation "DensityRHSWorker"
+Node 65: Created slave operation "DensityRHSWorker"
+Node 80: Created slave operation "DensityRHSWorker"
+Node 84: Created slave operation "DensityRHSWorker"
+Node 81: Created slave operation "DensityRHSWorker"
+Node 69: Created slave operation "DensityRHSWorker"
+Node 85: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 22: Created slave operation "DensityRHSWorker"
+Node 28: Created slave operation "DensityRHSWorker"
+Node 25: Created slave operation "DensityRHSWorker"
+Node 6: Created slave operation "DensityRHSWorker"
+Node 7: Created slave operation "DensityRHSWorker"
+Node 3: Created slave operation "DensityRHSWorker"
+Node 9: Created slave operation "DensityRHSWorker"
+Node 8: Created slave operation "DensityRHSWorker"
+Node 24: Created slave operation "DensityRHSWorker"
+Node 26: Created slave operation "DensityRHSWorker"
+Node 2: Created slave operation "DensityRHSWorker"
+Node 12: Created slave operation "DensityRHSWorker"
+Node 19: Created slave operation "DensityRHSWorker"
+Node 27: Created slave operation "DensityRHSWorker"
+Node 10: Created slave operation "DensityRHSWorker"
+Node 13: Created slave operation "DensityRHSWorker"
+Node 11: Created slave operation "DensityRHSWorker"
+Node 23: Created slave operation "DensityRHSWorker"
+Node 18: Created slave operation "DensityRHSWorker"
+Node 29: Created slave operation "DensityRHSWorker"
+Node 87: Created slave operation "DensityRHSWorker"
+Node 67: Created slave operation "DensityRHSWorker"
+Node 70: Created slave operation "DensityRHSWorker"
+Node 66: Created slave operation "DensityRHSWorker"
+Node 71: Created slave operation "DensityRHSWorker"
+Node 82: Created slave operation "DensityRHSWorker"
+Node 83: Created slave operation "DensityRHSWorker"
+Node 86: Created slave operation "DensityRHSWorker"
+Node 92: Created slave operation "DensityRHSWorker"
+Node 72: Created slave operation "DensityRHSWorker"
+Node 91: Created slave operation "DensityRHSWorker"
+Node 73: Created slave operation "DensityRHSWorker"
+Node 89: Created slave operation "DensityRHSWorker"
+Node 90: Created slave operation "DensityRHSWorker"
+Node 93: Created slave operation "DensityRHSWorker"
+Node 75: Created slave operation "DensityRHSWorker"
+Node 74: Created slave operation "DensityRHSWorker"
+Node 88: Created slave operation "DensityRHSWorker"
+Node 77: Created slave operation "DensityRHSWorker"
+Node 76: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 41: Created slave operation "DensityRHSWorker"
+Node 37: Created slave operation "DensityRHSWorker"
+Node 33: Created slave operation "DensityRHSWorker"
+Node 43: Created slave operation "DensityRHSWorker"
+Node 40: Created slave operation "DensityRHSWorker"
+Node 36: Created slave operation "DensityRHSWorker"
+Node 42: Created slave operation "DensityRHSWorker"
+Node 44: Created slave operation "DensityRHSWorker"
+Node 45: Created slave operation "DensityRHSWorker"
+Node 32: Created slave operation "DensityRHSWorker"
+Node 34: Created slave operation "DensityRHSWorker"
+Node 35: Created slave operation "DensityRHSWorker"
+Node 48: Created slave operation "DensityRHSWorker"
+Node 49: Created slave operation "DensityRHSWorker"
+Node 53: Created slave operation "DensityRHSWorker"
+Node 52: Created slave operation "DensityRHSWorker"
+Node 117: Created slave operation "DensityRHSWorker"
+Node 116: Created slave operation "DensityRHSWorker"
+Node 113: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 112: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 96: Created slave operation "DensityRHSWorker"
+Node 109: Created slave operation "DensityRHSWorker"
+Node 108: Created slave operation "DensityRHSWorker"
+Node 106: Created slave operation "DensityRHSWorker"
+Node 100: Created slave operation "DensityRHSWorker"
+Node 98: Created slave operation "DensityRHSWorker"
+Node 104: Created slave operation "DensityRHSWorker"
+Node 101: Created slave operation "DensityRHSWorker"
+Node 107: Created slave operation "DensityRHSWorker"
+Node 99: Created slave operation "DensityRHSWorker"
+Node 105: Created slave operation "DensityRHSWorker"
+Node 97: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 31: Created slave operation "DensityRHSWorker"
+Node 30: Created slave operation "DensityRHSWorker"
+Node 15: Created slave operation "DensityRHSWorker"
+Node 14: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 79: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+Node 95: Created slave operation "DensityRHSWorker"
+Node 94: Created slave operation "DensityRHSWorker"
+Node 78: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 38: Created slave operation "DensityRHSWorker"
+Node 39: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 55: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 51: Created slave operation "DensityRHSWorker"
+Node 50: Created slave operation "DensityRHSWorker"
+Node 47: Created slave operation "DensityRHSWorker"
+Node 54: Created slave operation "DensityRHSWorker"
+Node 46: Created slave operation "DensityRHSWorker"
+Node 111: Created slave operation "DensityRHSWorker"
+Node 110: Created slave operation "DensityRHSWorker"
+Node 119: Created slave operation "DensityRHSWorker"
+Node 115: Created slave operation "DensityRHSWorker"
+Node 118: Created slave operation "DensityRHSWorker"
+Node 114: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 122: Created slave operation "DensityRHSWorker"
+Node 121: Created slave operation "DensityRHSWorker"
+Node 123: Created slave operation "DensityRHSWorker"
+Node 120: Created slave operation "DensityRHSWorker"
+Node 61: Created slave operation "DensityRHSWorker"
+Node 125: Created slave operation "DensityRHSWorker"
+Node 60: Created slave operation "DensityRHSWorker"
+Node 124: Created slave operation "DensityRHSWorker"
+Node 103: Created slave operation "DensityRHSWorker"
+Node 102: Created slave operation "DensityRHSWorker"
+Node 58: Created slave operation "DensityRHSWorker"
+Node 56: Created slave operation "DensityRHSWorker"
+Node 59: Created slave operation "DensityRHSWorker"
+Node 57: Created slave operation "DensityRHSWorker"
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 62: Created slave operation "DensityRHSWorker"
+Node 63: Created slave operation "DensityRHSWorker"
+Node 127: Created slave operation "DensityRHSWorker"
+Node 126: Created slave operation "DensityRHSWorker"
+rhs creation duration: 62.4168s
+Solve for alpha: 
+--------------- 
+Density mult operation creation (includes grid transfer) duration: 0.391885
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 20: Created slave operation "DensityMultiplicationWorker"
+Node 80: Created slave operation "DensityMultiplicationWorker"
+Node 21: Created slave operation "DensityMultiplicationWorker"
+Node 16: Created slave operation "DensityMultiplicationWorker"
+Node 128: Created slave operation "DensityMultiplicationWorker"
+Node 81: Created slave operation "DensityMultiplicationWorker"
+Node 4: Created slave operation "DensityMultiplicationWorker"
+Node 69: Created slave operation "DensityMultiplicationWorker"
+Node 84: Created slave operation "DensityMultiplicationWorker"
+Node 17: Created slave operation "DensityMultiplicationWorker"
+Node 68: Created slave operation "DensityMultiplicationWorker"
+Node 64: Created slave operation "DensityMultiplicationWorker"
+Node 1: Created slave operation "DensityMultiplicationWorker"
+Node 5: Created slave operation "DensityMultiplicationWorker"
+Node 85: Created slave operation "DensityMultiplicationWorker"
+Node 65: Created slave operation "DensityMultiplicationWorker"
+Node 82: Created slave operation "DensityMultiplicationWorker"
+Node 87: Created slave operation "DensityMultiplicationWorker"
+Node 86: Created slave operation "DensityMultiplicationWorker"
+Node 92: Created slave operation "DensityMultiplicationWorker"
+Node 8: Created slave operation "DensityMultiplicationWorker"
+Node 13: Created slave operation "DensityMultiplicationWorker"
+Node 72: Created slave operation "DensityMultiplicationWorker"
+Node 10: Created slave operation "DensityMultiplicationWorker"
+Node 90: Created slave operation "DensityMultiplicationWorker"
+Node 28: Created slave operation "DensityMultiplicationWorker"
+Node 93: Created slave operation "DensityMultiplicationWorker"
+Node 83: Created slave operation "DensityMultiplicationWorker"
+Node 27: Created slave operation "DensityMultiplicationWorker"
+Node 89: Created slave operation "DensityMultiplicationWorker"
+Node 74: Created slave operation "DensityMultiplicationWorker"
+Node 34: Created slave operation "DensityMultiplicationWorker"
+Node 18: Created slave operation "DensityMultiplicationWorker"
+Node 75: Created slave operation "DensityMultiplicationWorker"
+Node 66: Created slave operation "DensityMultiplicationWorker"
+Node 37: Created slave operation "DensityMultiplicationWorker"
+Node 33: Created slave operation "DensityMultiplicationWorker"
+Node 40: Created slave operation "DensityMultiplicationWorker"
+Node 23: Created slave operation "DensityMultiplicationWorker"
+Node 6: Created slave operation "DensityMultiplicationWorker"
+Node 26: Created slave operation "DensityMultiplicationWorker"
+Node 42: Created slave operation "DensityMultiplicationWorker"
+Node 19: Created slave operation "DensityMultiplicationWorker"
+Node 29: Created slave operation "DensityMultiplicationWorker"
+Node 67: Created slave operation "DensityMultiplicationWorker"
+Node 3: Created slave operation "DensityMultiplicationWorker"
+Node 9: Created slave operation "DensityMultiplicationWorker"
+Node 2: Created slave operation "DensityMultiplicationWorker"
+Node 24: Created slave operation "DensityMultiplicationWorker"
+Node 7: Created slave operation "DensityMultiplicationWorker"
+Node 73: Created slave operation "DensityMultiplicationWorker"
+Node 77: Created slave operation "DensityMultiplicationWorker"
+Node 53: Created slave operation "DensityMultiplicationWorker"
+Node 25: Created slave operation "DensityMultiplicationWorker"
+Node 116: Created slave operation "DensityMultiplicationWorker"
+Node 52: Created slave operation "DensityMultiplicationWorker"
+Node 71: Created slave operation "DensityMultiplicationWorker"
+Node 43: Created slave operation "DensityMultiplicationWorker"
+Node 11: Created slave operation "DensityMultiplicationWorker"
+Node 70: Created slave operation "DensityMultiplicationWorker"
+Node 76: Created slave operation "DensityMultiplicationWorker"
+Node 12: Created slave operation "DensityMultiplicationWorker"
+Node 36: Created slave operation "DensityMultiplicationWorker"
+Node 41: Created slave operation "DensityMultiplicationWorker"
+Node 22: Created slave operation "DensityMultiplicationWorker"
+Node 45: Created slave operation "DensityMultiplicationWorker"
+Node 113: Created slave operation "DensityMultiplicationWorker"
+Node 44: Created slave operation "DensityMultiplicationWorker"
+Node 91: Created slave operation "DensityMultiplicationWorker"
+Node 35: Created slave operation "DensityMultiplicationWorker"
+Node 49: Created slave operation "DensityMultiplicationWorker"
+Node 100: Created slave operation "DensityMultiplicationWorker"
+Node 32: Created slave operation "DensityMultiplicationWorker"
+Node 104: Created slave operation "DensityMultiplicationWorker"
+Node 97: Created slave operation "DensityMultiplicationWorker"
+Node 88: Created slave operation "DensityMultiplicationWorker"
+Node 112: Created slave operation "DensityMultiplicationWorker"
+Node 117: Created slave operation "DensityMultiplicationWorker"
+Node 94: Created slave operation "DensityMultiplicationWorker"
+Node 78: Created slave operation "DensityMultiplicationWorker"
+Node 95: Created slave operation "DensityMultiplicationWorker"
+Node 48: Created slave operation "DensityMultiplicationWorker"
+Node 39: Created slave operation "DensityMultiplicationWorker"
+Node 101: Created slave operation "DensityMultiplicationWorker"
+Node 106: Created slave operation "DensityMultiplicationWorker"
+Node 108: Created slave operation "DensityMultiplicationWorker"
+Node 98: Created slave operation "DensityMultiplicationWorker"
+Node 118: Created slave operation "DensityMultiplicationWorker"
+Node 96: Created slave operation "DensityMultiplicationWorker"
+Node 38: Created slave operation "DensityMultiplicationWorker"
+Node 15: Created slave operation "DensityMultiplicationWorker"
+Node 31: Created slave operation "DensityMultiplicationWorker"
+Node 47: Created slave operation "DensityMultiplicationWorker"
+Node 107: Created slave operation "DensityMultiplicationWorker"
+Node 109: Created slave operation "DensityMultiplicationWorker"
+Node 122: Created slave operation "DensityMultiplicationWorker"
+Node 119: Created slave operation "DensityMultiplicationWorker"
+Node 14: Created slave operation "DensityMultiplicationWorker"
+Node 105: Created slave operation "DensityMultiplicationWorker"
+Node 99: Created slave operation "DensityMultiplicationWorker"
+Node 46: Created slave operation "DensityMultiplicationWorker"
+Node 79: Created slave operation "DensityMultiplicationWorker"
+Node 103: Created slave operation "DensityMultiplicationWorker"
+Node 30: Created slave operation "DensityMultiplicationWorker"
+Node 55: Created slave operation "DensityMultiplicationWorker"
+Node 123: Created slave operation "DensityMultiplicationWorker"
+Node 115: Created slave operation "DensityMultiplicationWorker"
+Node 124: Created slave operation "DensityMultiplicationWorker"
+Node 121: Created slave operation "DensityMultiplicationWorker"
+Node 127: Created slave operation "DensityMultiplicationWorker"
+Node 50: Created slave operation "DensityMultiplicationWorker"
+Node 59: Created slave operation "DensityMultiplicationWorker"
+Node 110: Created slave operation "DensityMultiplicationWorker"
+Node 51: Created slave operation "DensityMultiplicationWorker"
+Node 111: Created slave operation "DensityMultiplicationWorker"
+Node 102: Created slave operation "DensityMultiplicationWorker"
+Node 58: Created slave operation "DensityMultiplicationWorker"
+Node 61: Created slave operation "DensityMultiplicationWorker"
+Node 56: Created slave operation "DensityMultiplicationWorker"
+Node 125: Created slave operation "DensityMultiplicationWorker"
+Node 54: Created slave operation "DensityMultiplicationWorker"
+Node 114: Created slave operation "DensityMultiplicationWorker"
+Node 60: Created slave operation "DensityMultiplicationWorker"
+Node 126: Created slave operation "DensityMultiplicationWorker"
+Node 57: Created slave operation "DensityMultiplicationWorker"
+Node 120: Created slave operation "DensityMultiplicationWorker"
+Node 63: Created slave operation "DensityMultiplicationWorker"
+Node 62: Created slave operation "DensityMultiplicationWorker"
+MPI muliplication duration: 3.58901
+Starting norm of residuum: 0.686931
+Target norm:               6.86931e-07
+MPI muliplication duration: 3.29835
+delta: 1.43904
+MPI muliplication duration: 3.28731
+delta: 0.60901
+MPI muliplication duration: 3.29035
+delta: 0.952153
+MPI muliplication duration: 3.29113
+delta: 0.340916
+MPI muliplication duration: 3.28826
+delta: 0.467407
+MPI muliplication duration: 3.28826
+delta: 1.58131
+MPI muliplication duration: 3.2871
+delta: 0.176778
+MPI muliplication duration: 3.28704
+delta: 0.188102
+MPI muliplication duration: 3.2869
+delta: 0.250116
+MPI muliplication duration: 3.28665
+delta: 0.589018
+MPI muliplication duration: 3.28633
+delta: 0.0922983
+MPI muliplication duration: 3.286
+delta: 0.303793
+MPI muliplication duration: 3.28696
+delta: 0.084686
+MPI muliplication duration: 3.2868
+delta: 0.109061
+MPI muliplication duration: 3.28663
+delta: 0.0554764
+MPI muliplication duration: 3.28784
+delta: 0.0237888
+MPI muliplication duration: 3.28631
+delta: 0.054173
+MPI muliplication duration: 3.286
+delta: 0.130488
+MPI muliplication duration: 3.2861
+delta: 0.0410291
+MPI muliplication duration: 3.28758
+delta: 0.0424309
+MPI muliplication duration: 3.2872
+delta: 0.0138731
+MPI muliplication duration: 3.28672
+delta: 0.0187538
+MPI muliplication duration: 3.28683
+delta: 0.15276
+MPI muliplication duration: 3.28849
+delta: 0.00880687
+MPI muliplication duration: 3.28642
+delta: 0.00519568
+MPI muliplication duration: 3.28662
+delta: 0.00789844
+MPI muliplication duration: 3.28859
+delta: 0.0298432
+MPI muliplication duration: 3.28618
+delta: 0.010342
+MPI muliplication duration: 3.29108
+delta: 0.00582916
+MPI muliplication duration: 3.28622
+delta: 0.00217707
+MPI muliplication duration: 3.28746
+delta: 0.00619869
+MPI muliplication duration: 3.28643
+delta: 0.00100725
+MPI muliplication duration: 3.28724
+delta: 0.00430058
+MPI muliplication duration: 3.28584
+delta: 0.000891231
+MPI muliplication duration: 3.28641
+delta: 0.00227224
+MPI muliplication duration: 3.28696
+delta: 0.00590291
+MPI muliplication duration: 3.29385
+delta: 0.000737711
+MPI muliplication duration: 3.28615
+delta: 0.000463582
+MPI muliplication duration: 3.28918
+delta: 0.00022024
+MPI muliplication duration: 3.2869
+delta: 0.00107435
+MPI muliplication duration: 3.28632
+delta: 0.000374068
+MPI muliplication duration: 3.28682
+delta: 0.000226893
+MPI muliplication duration: 3.28878
+delta: 0.000926801
+MPI muliplication duration: 3.28745
+delta: 0.000423932
+MPI muliplication duration: 3.28686
+delta: 7.27093e-05
+MPI muliplication duration: 3.28633
+delta: 0.000100368
+MPI muliplication duration: 3.29129
+delta: 5.84309e-05
+MPI muliplication duration: 3.28665
+delta: 0.000108661
+MPI muliplication duration: 3.29033
+delta: 3.68181e-05
+MPI muliplication duration: 3.2879
+delta: 4.00743e-05
+MPI muliplication duration: 3.28869
+MPI muliplication duration: 3.28616
+delta: 3.35994e-05
+MPI muliplication duration: 3.28587
+delta: 0.000138594
+MPI muliplication duration: 3.29218
+delta: 4.27052e-05
+MPI muliplication duration: 3.28868
+delta: 3.97053e-05
+MPI muliplication duration: 3.29097
+delta: 3.4555e-05
+MPI muliplication duration: 3.28976
+delta: 3.87654e-05
+MPI muliplication duration: 3.28875
+delta: 1.64261e-05
+MPI muliplication duration: 3.28708
+delta: 2.06422e-05
+MPI muliplication duration: 3.28628
+delta: 1.9978e-05
+MPI muliplication duration: 3.28585
+delta: 2.11159e-05
+MPI muliplication duration: 3.29434
+delta: 1.23555e-05
+MPI muliplication duration: 3.28785
+delta: 5.69179e-06
+MPI muliplication duration: 3.29271
+delta: 4.02848e-05
+MPI muliplication duration: 3.28662
+delta: 6.74901e-06
+MPI muliplication duration: 3.28676
+delta: 8.34142e-06
+MPI muliplication duration: 3.29449
+delta: 1.18707e-05
+MPI muliplication duration: 3.29729
+delta: 6.60646e-06
+MPI muliplication duration: 3.28659
+delta: 2.04485e-06
+MPI muliplication duration: 3.28695
+delta: 5.51618e-06
+MPI muliplication duration: 3.28619
+delta: 7.33165e-06
+MPI muliplication duration: 3.28566
+delta: 7.70249e-06
+MPI muliplication duration: 3.28678
+delta: 1.20717e-05
+MPI muliplication duration: 3.28654
+delta: 1.22595e-06
+MPI muliplication duration: 3.28684
+delta: 4.91879e-06
+MPI muliplication duration: 3.29031
+delta: 2.87368e-06
+MPI muliplication duration: 3.28583
+delta: 1.74522e-06
+MPI muliplication duration: 3.28606
+delta: 2.40736e-06
+MPI muliplication duration: 3.28633
+delta: 1.22871e-06
+MPI muliplication duration: 3.28683
+delta: 1.10139e-06
+MPI muliplication duration: 3.28595
+delta: 2.06256e-06
+MPI muliplication duration: 3.28959
+delta: 2.30816e-06
+MPI muliplication duration: 3.28703
+delta: 4.0155e-07
+Number of iterations: 82 (max. 1000)
+Final norm of residuum: 4.0155e-07
+counted_mult_calls: 84
+solver duration: 281.202s
+Number of grid points:     1862145
+
+
+Create and prune graph: 
+----------------------- 
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Getting dataset from enviroment cache
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Dataset should be cached
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+KNN (create and prune) operation creation (includes cached dataset transfer) duration: 3.8233
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+Node 8: Created slave operation "PrunedGraphCreationWorker"
+Node 39: Created slave operation "PrunedGraphCreationWorker"
+Node 33: Created slave operation "PrunedGraphCreationWorker"
+Node 74: Created slave operation "PrunedGraphCreationWorker"
+Node 93: Created slave operation "PrunedGraphCreationWorker"
+Node 89: Created slave operation "PrunedGraphCreationWorker"
+Node 128: Created slave operation "PrunedGraphCreationWorker"
+Node 13: Created slave operation "PrunedGraphCreationWorker"
+Node 83: Created slave operation "PrunedGraphCreationWorker"
+Node 42: Created slave operation "PrunedGraphCreationWorker"
+Node 28: Created slave operation "PrunedGraphCreationWorker"
+Node 90: Created slave operation "PrunedGraphCreationWorker"
+Node 69: Created slave operation "PrunedGraphCreationWorker"
+Node 40: Created slave operation "PrunedGraphCreationWorker"
+Node 72: Created slave operation "PrunedGraphCreationWorker"
+Node 94: Created slave operation "PrunedGraphCreationWorker"
+Node 82: Created slave operation "PrunedGraphCreationWorker"
+Node 92: Created slave operation "PrunedGraphCreationWorker"
+Node 104: Created slave operation "PrunedGraphCreationWorker"
+Node 84: Created slave operation "PrunedGraphCreationWorker"
+Node 47: Created slave operation "PrunedGraphCreationWorker"
+Node 10: Created slave operation "PrunedGraphCreationWorker"
+Node 20: Created slave operation "PrunedGraphCreationWorker"
+Node 34: Created slave operation "PrunedGraphCreationWorker"
+Node 118: Created slave operation "PrunedGraphCreationWorker"
+Node 16: Created slave operation "PrunedGraphCreationWorker"
+Node 100: Created slave operation "PrunedGraphCreationWorker"
+Node 80: Created slave operation "PrunedGraphCreationWorker"
+Node 116: Created slave operation "PrunedGraphCreationWorker"
+Node 95: Created slave operation "PrunedGraphCreationWorker"
+Node 21: Created slave operation "PrunedGraphCreationWorker"
+Node 97: Created slave operation "PrunedGraphCreationWorker"
+Node 86: Created slave operation "PrunedGraphCreationWorker"
+Node 38: Created slave operation "PrunedGraphCreationWorker"
+Node 81: Created slave operation "PrunedGraphCreationWorker"
+Node 46: Created slave operation "PrunedGraphCreationWorker"
+Node 58: Created slave operation "PrunedGraphCreationWorker"
+Node 122: Created slave operation "PrunedGraphCreationWorker"
+Node 27: Created slave operation "PrunedGraphCreationWorker"
+Node 52: Created slave operation "PrunedGraphCreationWorker"
+Node 59: Created slave operation "PrunedGraphCreationWorker"
+Node 53: Created slave operation "PrunedGraphCreationWorker"
+Node 4: Created slave operation "PrunedGraphCreationWorker"
+Node 55: Created slave operation "PrunedGraphCreationWorker"
+Node 78: Created slave operation "PrunedGraphCreationWorker"
+Node 87: Created slave operation "PrunedGraphCreationWorker"
+Node 37: Created slave operation "PrunedGraphCreationWorker"
+Node 120: Created slave operation "PrunedGraphCreationWorker"
+Node 57: Created slave operation "PrunedGraphCreationWorker"
+Node 119: Created slave operation "PrunedGraphCreationWorker"
+Node 127: Created slave operation "PrunedGraphCreationWorker"
+Node 124: Created slave operation "PrunedGraphCreationWorker"
+Node 30: Created slave operation "PrunedGraphCreationWorker"
+Node 17: Created slave operation "PrunedGraphCreationWorker"
+Node 41: Created slave operation "PrunedGraphCreationWorker"
+Node 14: Created slave operation "PrunedGraphCreationWorker"
+Node 31: Created slave operation "PrunedGraphCreationWorker"
+Node 24: Created slave operation "PrunedGraphCreationWorker"
+Node 50: Created slave operation "PrunedGraphCreationWorker"
+Node 117: Created slave operation "PrunedGraphCreationWorker"
+Node 101: Created slave operation "PrunedGraphCreationWorker"
+Node 67: Created slave operation "PrunedGraphCreationWorker"
+Node 29: Created slave operation "PrunedGraphCreationWorker"
+Node 71: Created slave operation "PrunedGraphCreationWorker"
+Node 3: Created slave operation "PrunedGraphCreationWorker"
+Node 2: Created slave operation "PrunedGraphCreationWorker"
+Node 76: Created slave operation "PrunedGraphCreationWorker"
+Node 107: Created slave operation "PrunedGraphCreationWorker"
+Node 96: Created slave operation "PrunedGraphCreationWorker"
+Node 26: Created slave operation "PrunedGraphCreationWorker"
+Node 19: Created slave operation "PrunedGraphCreationWorker"
+Node 18: Created slave operation "PrunedGraphCreationWorker"
+Node 112: Created slave operation "PrunedGraphCreationWorker"
+Node 108: Created slave operation "PrunedGraphCreationWorker"
+Node 7: Created slave operation "PrunedGraphCreationWorker"
+Node 111: Created slave operation "PrunedGraphCreationWorker"
+Node 66: Created slave operation "PrunedGraphCreationWorker"
+Node 23: Created slave operation "PrunedGraphCreationWorker"
+Node 44: Created slave operation "PrunedGraphCreationWorker"
+Node 35: Created slave operation "PrunedGraphCreationWorker"
+Node 75: Created slave operation "PrunedGraphCreationWorker"
+Node 68: Created slave operation "PrunedGraphCreationWorker"
+Node 43: Created slave operation "PrunedGraphCreationWorker"
+Node 5: Created slave operation "PrunedGraphCreationWorker"
+Node 102: Created slave operation "PrunedGraphCreationWorker"
+Node 77: Created slave operation "PrunedGraphCreationWorker"
+Node 73: Created slave operation "PrunedGraphCreationWorker"
+Node 25: Created slave operation "PrunedGraphCreationWorker"
+Node 45: Created slave operation "PrunedGraphCreationWorker"
+Node 36: Created slave operation "PrunedGraphCreationWorker"
+Node 56: Created slave operation "PrunedGraphCreationWorker"
+Node 62: Created slave operation "PrunedGraphCreationWorker"
+Node 49: Created slave operation "PrunedGraphCreationWorker"
+Node 1: Created slave operation "PrunedGraphCreationWorker"
+Node 15: Created slave operation "PrunedGraphCreationWorker"
+Node 64: Created slave operation "PrunedGraphCreationWorker"
+Node 11: Created slave operation "PrunedGraphCreationWorker"
+Node 98: Created slave operation "PrunedGraphCreationWorker"
+Node 9: Created slave operation "PrunedGraphCreationWorker"
+Node 115: Created slave operation "PrunedGraphCreationWorker"
+Node 123: Created slave operation "PrunedGraphCreationWorker"
+Node 63: Created slave operation "PrunedGraphCreationWorker"
+Node 113: Created slave operation "PrunedGraphCreationWorker"
+Node 6: Created slave operation "PrunedGraphCreationWorker"
+Node 61: Created slave operation "PrunedGraphCreationWorker"
+Node 109: Created slave operation "PrunedGraphCreationWorker"
+Node 79: Created slave operation "PrunedGraphCreationWorker"
+Node 12: Created slave operation "PrunedGraphCreationWorker"
+Node 106: Created slave operation "PrunedGraphCreationWorker"
+Node 51: Created slave operation "PrunedGraphCreationWorker"
+Node 48: Created slave operation "PrunedGraphCreationWorker"
+Node 85: Created slave operation "PrunedGraphCreationWorker"
+Node 99: Created slave operation "PrunedGraphCreationWorker"
+Node 105: Created slave operation "PrunedGraphCreationWorker"
+Node 32: Created slave operation "PrunedGraphCreationWorker"
+Node 114: Created slave operation "PrunedGraphCreationWorker"
+Node 103: Created slave operation "PrunedGraphCreationWorker"
+Node 65: Created slave operation "PrunedGraphCreationWorker"
+Node 91: Created slave operation "PrunedGraphCreationWorker"
+Node 60: Created slave operation "PrunedGraphCreationWorker"
+Node 121: Created slave operation "PrunedGraphCreationWorker"
+Node 70: Created slave operation "PrunedGraphCreationWorker"
+Node 88: Created slave operation "PrunedGraphCreationWorker"
+Node 110: Created slave operation "PrunedGraphCreationWorker"
+Node 22: Created slave operation "PrunedGraphCreationWorker"
+Node 54: Created slave operation "PrunedGraphCreationWorker"
+Node 125: Created slave operation "PrunedGraphCreationWorker"
+Node 126: Created slave operation "PrunedGraphCreationWorker"
+create knn operation duration: 672.883s
+Find clusters in pruned graph: 
+------------------------------ 
+find clusters duration: 202.638s
+detected clusters: 118
+
+
+Runtimes: 
+--------- 
+finished computation at Mon Sep 17 14:26:25 2018
+elapsed time: 1292.96s
+
+
+Finishing: 
+---------- 
+Node 2 received cleanup signal...
+Beginning cleanup...
+Node 13 received cleanup signal...
+Node 1 received cleanup signal...
+Node 4 received cleanup signal...
+Node 15 received cleanup signal...
+Node 9 received cleanup signal...
+Node 6 received cleanup signal...
+Node 3 received cleanup signal...
+Node 5 received cleanup signal...
+Node 17 received cleanup signal...
+Node 21 received cleanup signal...
+Node 24 received cleanup signal...
+Node 19 received cleanup signal...
+Node 7 received cleanup signal...
+Node 10 received cleanup signal...
+Node 16 received cleanup signal...
+Node 8 received cleanup signal...
+Node 11 received cleanup signal...
+Node 14 received cleanup signal...
+Node 12 received cleanup signal...
+Node 18 received cleanup signal...
+Node 23 received cleanup signal...
+Node 20 received cleanup signal...
+Node 34 received cleanup signal...
+Node 52 received cleanup signal...
+Node 22 received cleanup signal...
+Node 31 received cleanup signal...
+Node 46 received cleanup signal...
+Node 88 received cleanup signal...
+Node 79 received cleanup signal...
+Node 28 received cleanup signal...
+Node 43 received cleanup signal...
+Node 66 received cleanup signal...
+Node 84 received cleanup signal...
+Node 87 received cleanup signal...
+Node 81 received cleanup signal...
+Node 27 received cleanup signal...
+Node 30 received cleanup signal...
+Node 26 received cleanup signal...
+Node 50 received cleanup signal...
+Node 44 received cleanup signal...
+Node 59 received cleanup signal...
+Node 83 received cleanup signal...
+Node 74 received cleanup signal...
+Node 86 received cleanup signal...
+Node 77 received cleanup signal...
+Node 51 received cleanup signal...
+Node 57 received cleanup signal...
+Node 36 received cleanup signal...
+Node 48 received cleanup signal...
+Node 72 received cleanup signal...
+Node 45 received cleanup signal...
+Node 33 received cleanup signal...
+Node 55 received cleanup signal...
+Node 37 received cleanup signal...
+Node 70 received cleanup signal...
+Node 58 received cleanup signal...
+Node 76 received cleanup signal...
+Node 25 received cleanup signal...
+Node 73 received cleanup signal...
+Node 40 received cleanup signal...
+Node 67 received cleanup signal...
+Node 82 received cleanup signal...
+Node 49 received cleanup signal...
+Node 85 received cleanup signal...
+Node 61 received cleanup signal...
+Node 64 received cleanup signal...
+Node 47 received cleanup signal...
+Node 71 received cleanup signal...
+Node 68 received cleanup signal...
+Node 56 received cleanup signal...
+Node 65 received cleanup signal...
+Node 29 received cleanup signal...
+Node 38 received cleanup signal...
+Node 35 received cleanup signal...
+Node 69 received cleanup signal...
+Node 75 received cleanup signal...
+Node 42 received cleanup signal...
+Node 39 received cleanup signal...
+Node 54 received cleanup signal...
+Node 78 received cleanup signal...
+Node 63 received cleanup signal...
+Node 60 received cleanup signal...
+Node 53 received cleanup signal...
+Node 41 received cleanup signal...
+Node 32 received cleanup signal...
+Node 62 received cleanup signal...
+Node 80 received cleanup signal...
+Node 115 received cleanup signal...
+Node 121 received cleanup signal...
+Node 127 received cleanup signal...
+Node 126 received cleanup signal...
+Node 117 received cleanup signal...
+Node 93 received cleanup signal...
+Node 123 received cleanup signal...
+Node 105 received cleanup signal...
+Node 89 received cleanup signal...
+Node 122 received cleanup signal...
+Node 107 received cleanup signal...
+Node 110 received cleanup signal...
+Node 98 received cleanup signal...
+Node 99 received cleanup signal...
+Node 108 received cleanup signal...
+Node 111 received cleanup signal...
+Node 90 received cleanup signal...
+Node 96 received cleanup signal...
+Node 102 received cleanup signal...
+Node 109 received cleanup signal...
+Node 112 received cleanup signal...
+Node 97 received cleanup signal...
+Node 124 received cleanup signal...
+Node 91 received cleanup signal...
+Node 103 received cleanup signal...
+Node 118 received cleanup signal...
+Node 106 received cleanup signal...
+Node 100 received cleanup signal...
+Node 119 received cleanup signal...
+Node 116 received cleanup signal...
+Node 125 received cleanup signal...
+Node 120 received cleanup signal...
+Node 114 received cleanup signal...
+Node 128 received cleanup signal...
+Node 104 received cleanup signal...
+Node 92 received cleanup signal...
+Node 95 received cleanup signal...
+Node 101 received cleanup signal...
+Node 94 received cleanup signal...
+Node 113 received cleanup signal...
+Node 33 All remaining workers are now deleted!
+Node 72 All remaining workers are now deleted!
+Node 124 All remaining workers are now deleted!
+Node 10 All remaining workers are now deleted!
+Node 84 All remaining workers are now deleted!
+Node 27 All remaining workers are now deleted!
+Node 46 All remaining workers are now deleted!
+Node 4 All remaining workers are now deleted!
+Node 116 All remaining workers are now deleted!
+Node 51 All remaining workers are now deleted!
+Node 8 All remaining workers are now deleted!
+Node 57 All remaining workers are now deleted!
+Node 38 All remaining workers are now deleted!
+Node 58 All remaining workers are now deleted!
+Node 128 All remaining workers are now deleted!
+Node 56 All remaining workers are now deleted!
+Node 53 All remaining workers are now deleted!
+Node 89 All remaining workers are now deleted!
+Node 104 All remaining workers are now deleted!
+Node 25 All remaining workers are now deleted!
+Node 39 All remaining workers are now deleted!
+Node 88 All remaining workers are now deleted!
+Node 11 All remaining workers are now deleted!
+Node 86 All remaining workers are now deleted!
+Node 6 All remaining workers are now deleted!
+Node 71 All remaining workers are now deleted!
+Node 29 All remaining workers are now deleted!
+Node 2 All remaining workers are now deleted!
+Node 5 All remaining workers are now deleted!
+Node 9 All remaining workers are now deleted!
+Node 16 All remaining workers are now deleted!
+Node 102 All remaining workers are now deleted!
+Node 44 All remaining workers are now deleted!
+Node 107 All remaining workers are now deleted!
+Node 70 All remaining workers are now deleted!
+Node 26 All remaining workers are now deleted!
+Node 82 All remaining workers are now deleted!
+Node 106 All remaining workers are now deleted!
+Node 40 All remaining workers are now deleted!
+Node 94 All remaining workers are now deleted!
+Node 115 All remaining workers are now deleted!
+Node 85 All remaining workers are now deleted!
+Node 100 All remaining workers are now deleted!
+Node 24 All remaining workers are now deleted!
+Node 55 All remaining workers are now deleted!
+Node 98 All remaining workers are now deleted!
+Node 30 All remaining workers are now deleted!
+Node 59 All remaining workers are now deleted!
+Node 34 All remaining workers are now deleted!
+Node 31 All remaining workers are now deleted!
+Node 36 All remaining workers are now deleted!
+Node 64 All remaining workers are now deleted!
+Node 95 All remaining workers are now deleted!
+Node 17 All remaining workers are now deleted!
+Node 79 All remaining workers are now deleted!
+Node 50 All remaining workers are now deleted!
+Node 118 All remaining workers are now deleted!
+Node 28 All remaining workers are now deleted!
+Node 43 All remaining workers are now deleted!
+Node 42 All remaining workers are now deleted!
+Node 68 All remaining workers are now deleted!
+Node 99 All remaining workers are now deleted!
+Node 78 All remaining workers are now deleted!
+Node 109 All remaining workers are now deleted!
+Node 65 All remaining workers are now deleted!
+Node 61 All remaining workers are now deleted!
+Node 66 All remaining workers are now deleted!
+Node 12 All remaining workers are now deleted!
+Node 1 All remaining workers are now deleted!
+Node 52 All remaining workers are now deleted!
+Node 101 All remaining workers are now deleted!
+Node 126 All remaining workers are now deleted!
+Node 127 All remaining workers are now deleted!
+Node 74 All remaining workers are now deleted!
+Node 20 All remaining workers are now deleted!
+Node 18 All remaining workers are now deleted!
+Node 13 All remaining workers are now deleted!
+Node 23 All remaining workers are now deleted!
+Node 122 All remaining workers are now deleted!
+Node 77 All remaining workers are now deleted!
+Node 119 All remaining workers are now deleted!
+Node 69 All remaining workers are now deleted!
+Node 96 All remaining workers are now deleted!
+Node 22 All remaining workers are now deleted!
+Node 54 All remaining workers are now deleted!
+Node 3 All remaining workers are now deleted!
+Node 80 All remaining workers are now deleted!
+Node 83 All remaining workers are now deleted!
+Node 7 All remaining workers are now deleted!
+Node 47 All remaining workers are now deleted!
+Node 21 All remaining workers are now deleted!
+Node 120 All remaining workers are now deleted!
+Node 87 All remaining workers are now deleted!
+Node 67 All remaining workers are now deleted!
+Node 93 All remaining workers are now deleted!
+Node 90 All remaining workers are now deleted!
+Node 14 All remaining workers are now deleted!
+Node 15 All remaining workers are now deleted!
+Node 48 All remaining workers are now deleted!
+Node 41 All remaining workers are now deleted!
+Node 19 All remaining workers are now deleted!
+Node 97 All remaining workers are now deleted!
+Node 76 All remaining workers are now deleted!
+Node 73 All remaining workers are now deleted!
+Node 114 All remaining workers are now deleted!
+Node 75 All remaining workers are now deleted!
+Node 105 All remaining workers are now deleted!
+Node 37 All remaining workers are now deleted!
+Node 121 All remaining workers are now deleted!
+Node 103 All remaining workers are now deleted!
+Node 81 All remaining workers are now deleted!
+Node 117 All remaining workers are now deleted!
+Node 91 All remaining workers are now deleted!
+Node 45 All remaining workers are now deleted!
+Node 110 All remaining workers are now deleted!
+Node 62 All remaining workers are now deleted!
+Node 92 All remaining workers are now deleted!
+Node 35 All remaining workers are now deleted!
+Node 123 All remaining workers are now deleted!
+Node 112 All remaining workers are now deleted!
+Node 108 All remaining workers are now deleted!
+Node 49 All remaining workers are now deleted!
+Node 113 All remaining workers are now deleted!
+Node 125 All remaining workers are now deleted!
+Node 32 All remaining workers are now deleted!
+Node 63 All remaining workers are now deleted!
+Node 111 All remaining workers are now deleted!
+Node 60 All remaining workers are now deleted!
+Node 94: Exiting... 
+Node 126: Exiting... 
+Node 13: Exiting... 
+Node 63: Exiting... 
+Node 68: Exiting... 
+Node 124: Exiting... 
+Node 88: Exiting... 
+Node 53: Exiting... 
+Node 54: Exiting... 
+Node 31: Exiting... 
+Node 45: Exiting... 
+Node 37: Exiting... 
+Node 4: Exiting... 
+Node 42: Exiting... 
+Node 87: Exiting... 
+Node 12: Exiting... 
+Node 57: Exiting... 
+Node 98: Exiting... 
+Node 65: Exiting... 
+Node 10: Exiting... 
+Node 40: Exiting... 
+Node 38: Exiting... 
+Node 80: Exiting... 
+Node 43: Exiting... 
+Node 72: Exiting... 
+Node 55: Exiting... 
+Node 16: Exiting... 
+Node 86: Exiting... 
+Node 47: Exiting... 
+Node 78: Exiting... 
+Node 96: Exiting... 
+Node 84: Exiting... 
+Node 83: Exiting... 
+Node 25: Exiting... 
+Node 93: Exiting... 
+Node 58: Exiting... 
+Node 95: Exiting... 
+Node 121: Exiting... 
+Node 14: Exiting... 
+Node 77: Exiting... 
+Node 69: Exiting... 
+Node 104: Exiting... 
+Node 28: Exiting... 
+Node 105: Exiting... 
+Node 17: Exiting... 
+Node 120: Exiting... 
+Node 21: Exiting... 
+Node 107: Exiting... 
+Node 81: Exiting... 
+Node 74: Exiting... 
+Node 102: Exiting... 
+Node 70: Exiting... 
+Node 114: Exiting... 
+Node 125: Exiting... 
+Node 46: Exiting... 
+Node 2: Exiting... 
+Node 27: Exiting... 
+Node 67: Exiting... 
+Node 71: Exiting... 
+Node 66: Exiting... 
+Node 128: Exiting... 
+Node 22: Exiting... 
+Node 34: Exiting... 
+Node 29: Exiting... 
+Node 89: Exiting... 
+Node 76: Exiting... 
+Node 30: Exiting... 
+Node 15: Exiting... 
+Node 112: Exiting... 
+Node 100: Exiting... 
+Node 82: Exiting... 
+Node 99: Exiting... 
+Node 101: Exiting... 
+Node 23: Exiting... 
+Node 92: Exiting... 
+Node 116: Exiting... 
+Node 111: Exiting... 
+Node 123: Exiting... 
+Node 35: Exiting... 
+Node 48: Exiting... 
+Node 49: Exiting... 
+Node 5: Exiting... 
+Node 90: Exiting... 
+Node 20: Exiting... 
+Node 64: Exiting... 
+Node 11: Exiting... 
+Node 106: Exiting... 
+Node 50: Exiting... 
+Node 62: Exiting... 
+Node 19: Exiting... 
+Node 127: Exiting... 
+Node 97: Exiting... 
+Node 108: Exiting... 
+Node 117: Exiting... 
+Node 115: Exiting... 
+Node 56: Exiting... 
+Node 39: Exiting... 
+Node 61: Exiting... 
+Node 73: Exiting... 
+Node 18: Exiting... 
+Node 113: Exiting... 
+Node 44: Exiting... 
+Node 7: Exiting... 
+Node 103: Exiting... 
+Node 91: Exiting... 
+Node 110: Exiting... 
+Node 36: Exiting... 
+Node 79: Exiting... 
+Node 32: Exiting... 
+Node 85: Exiting... 
+Node 118: Exiting... 
+Node 75: Exiting... 
+Node 51: Exiting... 
+Node 9: Exiting... 
+Node 59: Exiting... 
+Node 52: Exiting... 
+Node 119: Exiting... 
+Node 24: Exiting... 
+Node 41: Exiting... 
+Node 26: Exiting... 
+Node 3: Exiting... 
+Node 8: Exiting... 
+Node 109: Exiting... 
+Node 122: Exiting... 
+Node 6: Exiting... 
+Node 60: Exiting... 
+Node 1: Exiting... 
+Node 33: Exiting... 
+Destroying the enviroment now!
+Cleanup done!
+ 
+Batch Job Summary Report for Job "wrap" (9634714) on daint
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-09-17T13:27:57 2018-09-17T13:27:57 2018-09-17T14:04:42 2018-09-17T14:26:32   00:21:50   00:25:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+pfandedd    d69         normal         129   30.31M joules
+----------------------------------------------------------
+gpusecs  maxgpusecs        maxmem            summem
+-------  ----------  ------------  ----------------
+ 123548      123548   14394851328     1902417805312
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx3000               2     1000000
+/scratch/snx1600            9967     1000000
+ 
