@@ -1,0 +1,301 @@
+
+
+Arguments (Scenario):
+--------------------- 
+datasetFileName: /scratch/snx1600/pfandedd/datasets/gaussian_c3_size100000000_dim10
+OpenCL configuration file: config_ocl_float_P100.cfg
+level: 8
+lambda: 1e-06
+k: 5
+threshold: 0.7
+
+
+Setup:
+------ 
+Using default MPI network config setting...
+Network initialized and ready
+Network setup duration: 0.0784612
+dim: 10
+Dataset load (on master) duration: 42.8986
+Grid creation (on master) duration: 6.08037
+Grid created! Number of grid points:     1862145
+
+
+Create right-hand side of density equation: 
+-------------------------------------------- 
+RHS operation creation (includes grid and dataset transfers) duration: 4.39548
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 2: Created slave operation "DensityRHSWorker"
+Node 1: Created slave operation "DensityRHSWorker"
+Node 3: Created slave operation "DensityRHSWorker"
+Node 4: Created slave operation "DensityRHSWorker"
+rhs creation duration: 636.134s
+Solve for alpha: 
+--------------- 
+Density mult operation creation (includes grid transfer) duration: 0.31321
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 1: Created slave operation "DensityMultiplicationWorker"
+Node 3: Created slave operation "DensityMultiplicationWorker"
+Node 4: Created slave operation "DensityMultiplicationWorker"
+Node 2: Created slave operation "DensityMultiplicationWorker"
+MPI muliplication duration: 46.7712
+Starting norm of residuum: 0.686931
+Target norm:               6.86931e-07
+MPI muliplication duration: 46.6177
+delta: 1.43904
+MPI muliplication duration: 47.0257
+delta: 0.60901
+MPI muliplication duration: 46.6156
+delta: 0.952153
+MPI muliplication duration: 46.5989
+delta: 0.340916
+MPI muliplication duration: 46.5977
+delta: 0.467407
+MPI muliplication duration: 46.6195
+delta: 1.58131
+MPI muliplication duration: 46.9986
+delta: 0.176778
+MPI muliplication duration: 47.3809
+delta: 0.188102
+MPI muliplication duration: 47.016
+delta: 0.250116
+MPI muliplication duration: 46.5967
+delta: 0.589018
+MPI muliplication duration: 46.6185
+delta: 0.0922983
+MPI muliplication duration: 46.6287
+delta: 0.303793
+MPI muliplication duration: 46.6292
+delta: 0.084686
+MPI muliplication duration: 46.6257
+delta: 0.109061
+MPI muliplication duration: 47.0106
+delta: 0.0554764
+MPI muliplication duration: 46.9963
+delta: 0.0237888
+MPI muliplication duration: 46.6423
+delta: 0.054173
+MPI muliplication duration: 46.6381
+delta: 0.130488
+MPI muliplication duration: 47.0074
+delta: 0.0410291
+MPI muliplication duration: 46.6079
+delta: 0.0424309
+MPI muliplication duration: 46.6239
+delta: 0.0138731
+MPI muliplication duration: 46.6358
+delta: 0.0187538
+MPI muliplication duration: 46.6466
+delta: 0.15276
+MPI muliplication duration: 46.6386
+delta: 0.00880687
+MPI muliplication duration: 46.617
+delta: 0.00519568
+MPI muliplication duration: 46.6166
+delta: 0.00789844
+MPI muliplication duration: 46.6153
+delta: 0.0298432
+MPI muliplication duration: 46.9986
+delta: 0.010342
+MPI muliplication duration: 46.6225
+delta: 0.00582916
+MPI muliplication duration: 47.0085
+delta: 0.00217707
+MPI muliplication duration: 47.0045
+delta: 0.00619869
+MPI muliplication duration: 46.6169
+delta: 0.00100725
+MPI muliplication duration: 46.6249
+delta: 0.00430058
+MPI muliplication duration: 47.0335
+delta: 0.000891231
+MPI muliplication duration: 46.9821
+delta: 0.00227224
+MPI muliplication duration: 46.9793
+delta: 0.00590291
+MPI muliplication duration: 47.0203
+delta: 0.000737711
+MPI muliplication duration: 46.6446
+delta: 0.000463582
+MPI muliplication duration: 46.6207
+delta: 0.00022024
+MPI muliplication duration: 46.6204
+delta: 0.00107435
+MPI muliplication duration: 46.9823
+delta: 0.000374068
+MPI muliplication duration: 46.6153
+delta: 0.000226893
+MPI muliplication duration: 46.6278
+delta: 0.000926801
+MPI muliplication duration: 46.61
+delta: 0.000423932
+MPI muliplication duration: 46.6257
+delta: 7.27093e-05
+MPI muliplication duration: 46.6371
+delta: 0.000100368
+MPI muliplication duration: 46.9817
+delta: 5.84309e-05
+MPI muliplication duration: 46.99
+delta: 0.000108661
+MPI muliplication duration: 46.6384
+delta: 3.68181e-05
+MPI muliplication duration: 47.0204
+delta: 4.00743e-05
+MPI muliplication duration: 46.6196
+MPI muliplication duration: 46.6168
+delta: 3.35994e-05
+MPI muliplication duration: 47.0124
+delta: 0.000138594
+MPI muliplication duration: 46.9807
+delta: 4.27052e-05
+MPI muliplication duration: 47.001
+delta: 3.97053e-05
+MPI muliplication duration: 46.6144
+delta: 3.4555e-05
+MPI muliplication duration: 46.6393
+delta: 3.87654e-05
+MPI muliplication duration: 47.0043
+delta: 1.64261e-05
+MPI muliplication duration: 46.6441
+delta: 2.06422e-05
+MPI muliplication duration: 46.6171
+delta: 1.9978e-05
+MPI muliplication duration: 46.6069
+delta: 2.11159e-05
+MPI muliplication duration: 46.9989
+delta: 1.23555e-05
+MPI muliplication duration: 46.6383
+delta: 5.69179e-06
+MPI muliplication duration: 46.623
+delta: 4.02848e-05
+MPI muliplication duration: 46.9717
+delta: 6.74901e-06
+MPI muliplication duration: 46.6256
+delta: 8.34142e-06
+MPI muliplication duration: 46.6181
+delta: 1.18707e-05
+MPI muliplication duration: 46.6182
+delta: 6.60646e-06
+MPI muliplication duration: 46.9855
+delta: 2.04485e-06
+MPI muliplication duration: 47.0007
+delta: 5.51618e-06
+MPI muliplication duration: 46.9969
+delta: 7.33165e-06
+MPI muliplication duration: 46.5943
+delta: 7.70249e-06
+MPI muliplication duration: 46.6194
+delta: 1.20717e-05
+MPI muliplication duration: 46.6203
+delta: 1.22595e-06
+MPI muliplication duration: 47.0289
+delta: 4.91879e-06
+MPI muliplication duration: 46.6174
+delta: 2.87368e-06
+MPI muliplication duration: 47.018
+delta: 1.74522e-06
+MPI muliplication duration: 46.9774
+delta: 2.40736e-06
+MPI muliplication duration: 46.5962
+delta: 1.22871e-06
+MPI muliplication duration: 46.9966
+delta: 1.10139e-06
+MPI muliplication duration: 46.6314
+delta: 2.06256e-06
+MPI muliplication duration: 46.6264
+delta: 2.30816e-06
+MPI muliplication duration: 46.6178
+delta: 4.0155e-07
+Number of iterations: 82 (max. 1000)
+Final norm of residuum: 4.0155e-07
+counted_mult_calls: 84
+solver duration: 3932.42s
+Number of grid points:     1862145
+
+
+Create and prune graph: 
+----------------------- 
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+Getting dataset from enviroment cache
+Dataset should be cached
+KNN (create and prune) operation creation (includes cached dataset transfer) duration: 3.58318
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+unpadded_datasize: 100000000 adding elements: 128 (* dims)
+Node 4: Created slave operation "PrunedGraphCreationWorker"
+Node 3: Created slave operation "PrunedGraphCreationWorker"
+Node 2: Created slave operation "PrunedGraphCreationWorker"
+Node 1: Created slave operation "PrunedGraphCreationWorker"
+create knn operation duration: 20449.2s
+Find clusters in pruned graph: 
+------------------------------ 
+find clusters duration: 208.164s
+detected clusters: 118
+
+
+Runtimes: 
+--------- 
+finished computation at Mon Sep 17 05:35:36 2018
+elapsed time: 25283.3s
+
+
+Finishing: 
+---------- 
+Beginning cleanup...
+Node 4 received cleanup signal...
+Node 1 received cleanup signal...
+Node 3 received cleanup signal...
+Node 2 received cleanup signal...
+Node 2 All remaining workers are now deleted!
+Node 3 All remaining workers are now deleted!
+Node 4 All remaining workers are now deleted!
+Node 1 All remaining workers are now deleted!
+Node 3: Exiting... 
+Node 1: Exiting... 
+Node 4: Exiting... 
+Node 2: Exiting... 
+Destroying the enviroment now!
+Cleanup done!
+ 
+Batch Job Summary Report for Job "wrap" (9629390) on daint
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-09-16T22:33:35 2018-09-16T22:33:35 2018-09-16T22:34:04 2018-09-17T05:35:40   07:01:36   12:00:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+pfandedd    d69         normal           5   26.44M joules
+----------------------------------------------------------
+gpusecs  maxgpusecs        maxmem            summem
+-------  ----------  ------------  ----------------
+  98904       98904   14875099136       61026074624
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx3000               2     1000000
+/scratch/snx1600            9967     1000000
+ 

@@ -1,0 +1,123 @@
+
+
+Arguments (Scenario):
+--------------------- 
+datasetFileName: /scratch/snx1600/pfandedd/datasets/gaussian_c3_size10000000_dim10
+OpenCL configuration file: config_ocl_float_P100.cfg
+level: 8
+lambda: 1e-06
+k: 5
+threshold: 0.7
+
+
+Setup:
+------ 
+Using default MPI network config setting...
+Network initialized and ready
+Network setup duration: 0.0273213
+dim: 10
+Dataset load (on master) duration: 6.69554
+Grid creation (on master) duration: 6.07254
+Grid created! Number of grid points:     1862145
+
+
+Create right-hand side of density equation: 
+-------------------------------------------- 
+RHS operation creation (includes grid and dataset transfers) duration: 0.737774
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 1: Created slave operation "DensityRHSWorker"
+Node 4: Created slave operation "DensityRHSWorker"
+Node 3: Created slave operation "DensityRHSWorker"
+Node 2: Created slave operation "DensityRHSWorker"
+rhs creation duration: 65.8382s
+Solve for alpha: 
+--------------- 
+Density mult operation creation (includes grid transfer) duration: 0.311962
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+query_size: 4
+max_compute_units: 56
+Node 3: Created slave operation "DensityMultiplicationWorker"
+Node 2: Created slave operation "DensityMultiplicationWorker"
+Node 1: Created slave operation "DensityMultiplicationWorker"
+Node 4: Created slave operation "DensityMultiplicationWorker"
+MPI muliplication duration: 46.7535
+Starting norm of residuum: 0.641028
+Target norm:               6.41028e-09
+MPI muliplication duration: 46.6286
+delta: 1.15022
+MPI muliplication duration: 47.0327
+delta: 0.503166
+MPI muliplication duration: 46.9768
+delta: 0.74917
+MPI muliplication duration: 47.001
+delta: 0.260849
+MPI muliplication duration: 46.6174
+delta: 0.354502
+MPI muliplication duration: 47.0047
+delta: 1.03492
+MPI muliplication duration: 46.6354
+delta: 0.127233
+MPI muliplication duration: 46.985
+delta: 0.133644
+MPI muliplication duration: 46.6184
+delta: 0.196861
+MPI muliplication duration: 46.9769
+delta: 0.374462
+MPI muliplication duration: 46.6222
+delta: 0.0595373
+MPI muliplication duration: 46.6215
+delta: 0.207656
+MPI muliplication duration: 46.6265
+delta: 0.0594097
+MPI muliplication duration: 46.6378
+delta: 0.107421
+MPI muliplication duration: 46.6249
+delta: 0.0323194
+MPI muliplication duration: 46.6252
+delta: 0.0157848
+MPI muliplication duration: 46.6185
+delta: 0.0347835
+MPI muliplication duration: 46.651
+delta: 0.120228
+MPI muliplication duration: 46.6137
+delta: 0.0154649
+MPI muliplication duration: 46.6433
+delta: 0.0268973
+MPI muliplication duration: 46.6195
+delta: 0.0109273
+MPI muliplication duration: 46.9765
+delta: 0.0119355
+ 
+Batch Job Summary Report for Job "wrap" (9617223) on daint
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-09-15T13:06:26 2018-09-15T13:06:26 2018-09-15T13:06:26 2018-09-15T13:26:36   00:20:10   00:20:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+pfandedd    d69         normal           5    1.06M joules
+----------------------------------------------------------
+gpusecs  maxgpusecs        maxmem            summem
+-------  ----------  ------------  ----------------
+   4712        4712    2030043136        9645850624
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx3000               2     1000000
+/scratch/snx1600             251     1000000
+ 
