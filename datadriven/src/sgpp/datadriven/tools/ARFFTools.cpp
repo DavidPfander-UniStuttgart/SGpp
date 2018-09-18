@@ -5,6 +5,7 @@
 
 #include <sgpp/base/exception/file_exception.hpp>
 #include <sgpp/datadriven/tools/ARFFTools.hpp>
+#include <experimental/filesystem>
 
 #include <sgpp/globaldef.hpp>
 
@@ -135,8 +136,14 @@ void ARFFTools::readARFFSize(const std::string& filename, size_t& numberInstance
   myfile.close();
 }
 
-void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const std::string
-                                         &header_filename, const std::string &output_filename) {
+void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::string
+                                         &header_filename) {
+  std::experimental::filesystem::path binary_filepath(header_filename);
+  std::string binary_filename = binary_filepath.filename().replace_extension("");
+  binary_filename.append("_binary_data.bin");
+  binary_filepath.replace_filename(binary_filename);
+
+
   std::string line;
   std::ifstream myfile(orig_filename.c_str());
   if (!myfile) {
@@ -161,7 +168,7 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const
   }
   headercontent.append("% DATA SET SIZE " + std::to_string(numberInstances));
   headercontent.append("\n");
-  headercontent.append("@DATA " + output_filename);
+  headercontent.append("@DATA - written in file (has to be in the same folder) " + binary_filename);
   headercontent.append("\n");
 
   // read data
@@ -181,7 +188,8 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, const
   myfile.close();
 
   // write binary file
-  std::ofstream fout(output_filename, std::ios::out | std::ios::binary);
+  binary_filename = binary_filepath.string();
+  std::ofstream fout(binary_filename, std::ios::out | std::ios::binary);
   fout.write((char*)&dataset[0], dataset.size() * sizeof(double));
   fout.close();
 
@@ -197,14 +205,13 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
   std::ifstream myfile(filename.c_str());
   size_t dimension = 0;
   size_t numberInstances = 0;
-  std::string binary_filename = "";
 
   if (!myfile) {
     std::string msg = "Unable to open file: " + filename;
     throw sgpp::base::file_exception(msg.c_str());
   }
 
-  std::cerr << "Reading file header " << std::endl;
+  std::cerr << "Now reading header file:" << filename << std::endl;
   while (!myfile.eof()) {
     std::getline(myfile, line);
     if (line.find("@ATTRIBUTE class", 0) != line.npos) {
@@ -212,39 +219,34 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     } else if (line.find("@ATTRIBUTE", 0) != line.npos) {
       dimension++;
     } else if (line.find("@DATA", 0) != line.npos) {
-      binary_filename = line.substr(strlen("@DATA "));
       break;
     } else if (line.find("% DATA SET SIZE ", 0) != line.npos) {
       numberInstances = std::stoi(line.substr(strlen("% DATA SET SIZE ")));
     }
   }
-  if (binary_filename == "") {
-    throw std::logic_error("Error! No binary file given after the @DATA keyword");
-  }
   if (numberInstances == 0){
     throw std::logic_error("Error! Size of binary file not given in the ARFF header");
   }
 
-  std::cerr << "Creating datamatri" << std::endl;
   base::DataMatrix datamatrix(numberInstances,dimension);
-  std::cerr << "Open ifstream" << std::endl;
+  //
+  std::experimental::filesystem::path binary_filepath(filename);
+  std::string binary_filename = binary_filepath.filename().replace_extension("");
+  binary_filename.append("_binary_data.bin");
+  binary_filepath.replace_filename(binary_filename);
+  binary_filename = binary_filepath.string();
+  std::cerr << "Now reading binary data: " << binary_filename << std::endl;
   std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
   if (file)
   {
-    std::cerr << "Getting charblock datamatri" << std::endl;
     char *memblock = (char *)datamatrix.data();
-    std::cerr << "seek it" << std::endl;
     file.seekg (0, std::ios::beg);
-    std::cerr << "read it" << std::endl;
     file.read (memblock, numberInstances * dimension * sizeof(double));
-    std::cerr << "close it" << std::endl;
     file.close();
-    std::cerr << "closed" << std::endl;
 
   } else {
     throw(errno);
   }
-  std::cerr << "start moving" << std::endl;
   return datamatrix; //should be moved (or optimized out by copy elison)
 }
 

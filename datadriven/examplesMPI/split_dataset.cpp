@@ -1,4 +1,3 @@
-#include <experimental/filesystem>
 #include <boost/program_options.hpp>
 #include <iostream>
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
@@ -31,9 +30,6 @@ int main(int argc, char **argv) {
       std::cerr << "error: option \"output_filename\" not specified" << std::endl;
       return 1;
     }
-
-    std::string binary_filename = output_filename + "_binary" + ".dat";
-    output_filename = output_filename;
-    sgpp::datadriven::ARFFTools::convert_into_binary_file(orig_filename, output_filename, binary_filename);
+    sgpp::datadriven::ARFFTools::convert_into_binary_file(orig_filename, output_filename);
   }
 }
