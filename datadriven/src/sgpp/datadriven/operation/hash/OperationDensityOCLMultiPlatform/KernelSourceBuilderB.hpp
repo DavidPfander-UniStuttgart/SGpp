@@ -104,7 +104,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
           sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
                        << std::endl;
 
-          sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+          sourceStream << this->indent[0] << "if (startid + get_global_id(0) < " << grid_points << ") {"
                        << std::endl;
           sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
                        << std::endl;
@@ -191,7 +191,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
                        << std::endl;
           sourceStream << this->indent[0] << this->floatType() << " grid_level_2[" << dimensions << "];"
                        << std::endl;
-          sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+          sourceStream << this->indent[0] << "if (startid + get_global_id(0) < " << grid_points << ") {"
                        << std::endl;
           sourceStream << this->indent[1] << "for (int d = 0; d < " << dimensions << "; d++) {"
                        << std::endl;
@@ -222,7 +222,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
             sourceStream << this->indent[0] << "__private " << compression_type << " point_index_packed = 0;"
                          << std::endl;
 
-            sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+            sourceStream << this->indent[0] << "if (startid + get_global_id(0) < " << grid_points << ") {"
                          << std::endl;
             sourceStream << this->indent[1] << "point_dim_zero_flags = dim_zero_flags_v[gridindex];"
                          << std::endl;
@@ -359,7 +359,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
         sourceStream << this->indent[0] << "}" << std::endl;
         sourceStream << this->indent[0] << "result /= " << data_points << ".0" << this->constSuffix()
                      << ";" << std::endl;
-        sourceStream << this->indent[0] << "if (get_global_id(0) < " << grid_points << ") {"
+        sourceStream << this->indent[0] << "if (startid + get_global_id(0) < " << grid_points << ") {"
                      << std::endl;
         sourceStream << this->indent[1] << "C[get_global_id(0)] = result;" << std::endl;
         sourceStream << this->indent[0] << "}" << std::endl;
