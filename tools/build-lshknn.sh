@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 
 # - to be run from project root directory
 # - only source proper sourceme-*.sh files (e.g. for the argon machines)
