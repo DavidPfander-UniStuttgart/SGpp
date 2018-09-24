@@ -17,6 +17,10 @@
 #include <cstring>
 #include <exception>
 
+#ifdef ZLIB
+#include <zlib.h>
+#endif
+
 #ifdef USE_MPI
 #include <mpi.h>
 #endif
@@ -24,6 +28,14 @@
 namespace sgpp {
 namespace datadriven {
 
+unsigned long binary_file_size(const std::string &filename) {
+  // just quickly get the file size in bytes
+  FILE *file = fopen(filename.c_str(), "rb");
+  fseek(file, 0, SEEK_END);
+  unsigned long size = ftell(file);
+  fclose(file);
+  return size;
+}
 Dataset ARFFTools::readARFF(const std::string& filename, bool hasTargets) {
   // TODO(fuchsgruber): No idea if this arff interface really can handle data without classes
   std::string line;
@@ -137,11 +149,12 @@ void ARFFTools::readARFFSize(const std::string& filename, size_t& numberInstance
 }
 
 void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::string
-                                         &header_filename) {
+                                         &header_filename, bool compressed) {
   std::experimental::filesystem::path binary_filepath(header_filename);
   std::string binary_filename = binary_filepath.filename().replace_extension("");
   binary_filename.append("_binary_data.bin");
   binary_filepath.replace_filename(binary_filename);
+  binary_filename = binary_filepath.string();
 
 
   std::string line;
@@ -168,8 +181,6 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
   }
   headercontent.append("% DATA SET SIZE " + std::to_string(numberInstances));
   headercontent.append("\n");
-  headercontent.append("@DATA - written in file (has to be in the same folder) " + binary_filename);
-  headercontent.append("\n");
 
   // read data
   size_t dataindex = 0;
@@ -188,11 +199,36 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
   myfile.close();
 
   // write binary file
-  binary_filename = binary_filepath.string();
-  std::ofstream fout(binary_filename, std::ios::out | std::ios::binary);
-  fout.write((char*)&dataset[0], dataset.size() * sizeof(double));
-  fout.close();
+  if (!compressed) {
+    std::ofstream fout(binary_filename, std::ios::out | std::ios::binary);
+    fout.write((char*)&dataset[0], dataset.size() * sizeof(double));
+    fout.close();
+  } else {
+#ifdef ZLIB
+    std::cout << "Using gzip compression..." << std::endl;
+    gzFile outfile = gzopen(binary_filename.c_str(), "wb");
+    gzwrite(outfile,(char*)&dataset[0], dataset.size() * sizeof(double));
+    gzclose(outfile);
+    numberInstances = binary_file_size(binary_filename);
+    std::cout << "Original size: " << dataset.size() * sizeof(double) << std::endl;
+    std::cout << "Compressed size: " << numberInstances << std::endl;
+    std::cout << "Compression factor: "
+              << (1.0 - static_cast<double>(numberInstances) / (dataset.size() * sizeof(double))) * 100.0
+              << "%" << std::endl;
+#else
+    const std::string msg = "Trying to create compressed file without zlib enabled! Build with USE_ZLIB=1";
+    throw sgpp::base::file_exception(msg.c_str());
+#endif
+  }
 
+
+  // Append rest of the required information to the header
+  if (compressed) {
+    headercontent.append("% COMPRESSED DATA SET SIZE " + std::to_string(numberInstances));
+    headercontent.append("\n");
+  }
+  headercontent.append("@DATA - written in file (has to be in the same folder) " + binary_filename);
+  headercontent.append("\n");
   // write header file
   std::ofstream hout(header_filename, std::ios::out);
   hout << headercontent;
@@ -212,6 +248,8 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
   }
 
   std::cerr << "Now reading header file:" << filename << std::endl;
+  bool compressed = false;
+  size_t byte_size = 0;
   while (!myfile.eof()) {
     std::getline(myfile, line);
     if (line.find("@ATTRIBUTE class", 0) != line.npos) {
@@ -221,31 +259,62 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     } else if (line.find("@DATA", 0) != line.npos) {
       break;
     } else if (line.find("% DATA SET SIZE ", 0) != line.npos) {
-      numberInstances = std::stoi(line.substr(strlen("% DATA SET SIZE ")));
+      numberInstances = std::stol(line.substr(strlen("% DATA SET SIZE ")));
+    } else if (line.find("% COMPRESSED DATA SET SIZE ", 0) != line.npos) {
+#ifdef ZLIB
+      byte_size = std::stol(line.substr(strlen("% COMPRESSED DATA SET SIZE ")));
+      compressed = true;
+#else
+      const std::string msg = std::string("ERROR! Target dataset is compressed but ") +
+                              std::string("SG++ was built without USE_ZLIB=1");
+      throw sgpp::base::file_exception(msg.c_str());
+#endif
     }
   }
   if (numberInstances == 0){
-    throw std::logic_error("Error! Size of binary file not given in the ARFF header");
+    const std::string msg = std::string("ERROR! No data set ") +
+                            std::string("size specified in ") + filename;
+    throw sgpp::base::file_exception(msg.c_str());
   }
 
+
   base::DataMatrix datamatrix(numberInstances,dimension);
-  //
   std::experimental::filesystem::path binary_filepath(filename);
   std::string binary_filename = binary_filepath.filename().replace_extension("");
   binary_filename.append("_binary_data.bin");
   binary_filepath.replace_filename(binary_filename);
   binary_filename = binary_filepath.string();
-  std::cerr << "Now reading binary data: " << binary_filename << std::endl;
-  std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
-  if (file)
-  {
-    char *memblock = (char *)datamatrix.data();
-    file.seekg (0, std::ios::beg);
-    file.read (memblock, numberInstances * dimension * sizeof(double));
-    file.close();
 
+  if (!compressed) {
+    std::cerr << "Now reading binary data: " << binary_filename << std::endl;
+    std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
+    if (file)
+    {
+      char *memblock = (char *)datamatrix.data();
+      file.seekg (0, std::ios::beg);
+      file.read (memblock, numberInstances * dimension * sizeof(double));
+      file.close();
+
+    } else {
+      throw(errno);
+    }
   } else {
-    throw(errno);
+#ifdef ZLIB
+    std::cerr << "Now reading compressed binary data: " << binary_filename << std::endl;
+    char *memblock = (char *)datamatrix.data();
+    gzFile file = gzopen(binary_filename.c_str(), "rb");
+    if (!file) {
+      const std::string msg = std::string("ERROR! Could not open binary file ") +
+                              binary_filename;
+      throw sgpp::base::file_exception(msg.c_str());
+    }
+    gzread (file, memblock, numberInstances * dimension * sizeof(double));
+    gzclose(file);
+#else
+    const std::string msg = std::string("ERROR! Target dataset is compressed but ") +
+                            std::string("SG++ was built without USE_ZLIB=1");
+    throw sgpp::base::file_exception(msg.c_str());
+#endif
   }
   return datamatrix; //should be moved (or optimized out by copy elison)
 }
