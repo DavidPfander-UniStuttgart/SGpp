@@ -1,10 +1,14 @@
 #include "OperationNearestNeighborSampled.hpp"
 #include "KNNFactory.hpp"
+#ifdef LSHKNN_WITH_OPENCL
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
+#endif
 #include "sgpp/globaldef.hpp"
 #include <algorithm>
 #include <cassert>
 #include <random>
+#include <memory>
+#include <chrono>
 
 namespace sgpp {
 namespace datadriven {
@@ -583,6 +587,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_sampling(
   return final_graph;
 } // namespace datadriven
 
+#ifdef USE_OCL
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_ocl(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     std::string configFileName) {
@@ -600,6 +605,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_ocl(
   std::vector<int64_t> converted_graph(graph.begin(), graph.end());
   return converted_graph;
 }
+#endif
 
 double OperationNearestNeighborSampled::get_last_duration() {
   return last_duration_s;
