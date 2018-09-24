@@ -59,7 +59,8 @@ if (env["ARCH"].lower() == "avx2"):
     module.buildExamples("examplesAVX")
 if env["USE_HPX"]:
     module.buildExamples("examplesHPX")
-
+if env["USE_AUTOTUNE_TMP"]:
+    module.buildExamples("examplesAutoTuneTMP")
 
 module.runPythonTests()
 module.buildBoostTests()

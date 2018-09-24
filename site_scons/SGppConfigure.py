@@ -104,6 +104,7 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
     checkDoxygen(config)
     checkDot(config)
   checkOpenCL(config)
+  checkAutoTuneTMP(config)
   checkZlib(config)
   checkLSHGPU(config)
   checkGSL(config)
@@ -210,11 +211,6 @@ def checkOpenCL(config):
   config.env.AppendUnique(CPPPATH=[config.env["BOOST_INCLUDE_PATH"]])
   config.env.AppendUnique(LIBPATH=[config.env["BOOST_LIBRARY_PATH"]])
 
-  config.env.AppendUnique(CPPPATH=[config.env["AUTOTUNETMP_INCLUDE_PATH"]])
-  config.env.AppendUnique(CPPPATH=[config.env["CPPJIT_INCLUDE_PATH"]])
-  config.env.AppendUnique(CPPPATH=[config.env["VC_INCLUDE_PATH"]])
-  config.env.AppendUnique(LIBS="dl")
-
   if config.env["USE_OCL"]:
     if "OCL_INCLUDE_PATH" in config.env["ENV"]:
       config.env.AppendUnique(CPPPATH=[config.env["ENV"]["OCL_INCLUDE_PATH"]])
@@ -254,6 +250,28 @@ def checkOpenCL(config):
     config.env["CPPDEFINES"]["USE_OCL"] = "1"
     config.env["CPPDEFINES"]["CL_TARGET_OPENCL_VERSION"] = "120"
 
+def checkAutoTuneTMP(config):
+
+  if not config.env["USE_OCL"]:
+    Helper.printErrorAndExit("USE_AUTOTUNE_TMP requires OpenCL (USE_OCL=1)")
+
+  if config.env["USE_AUTOTUNE_TMP"]:
+    if not config.CheckLib("libdl", language="c++", autoadd=0):
+      Helper.printErrorAndExit("libdl not found, but required for CPPJIT (AutoTuneTMP)")
+    config.env.AppendUnique(LIBS="dl")
+
+    config.env.AppendUnique(CPPPATH=[config.env["VC_INCLUDE_PATH"]])
+    if not config.CheckCXXHeader("Vc/Vc"):
+      Helper.printErrorAndExit("Vc/Vc not found, but required for Vc (AutoTuneTMP)")
+
+    config.env.AppendUnique(CPPPATH=[config.env["CPPJIT_INCLUDE_PATH"]])
+    if not config.CheckCXXHeader("cppjit/cppjit.hpp"):
+      Helper.printErrorAndExit("cppjit.hpp not found, but required for CPPJIT (AutoTuneTMP)")
+
+    config.env.AppendUnique(CPPPATH=[config.env["AUTOTUNETMP_INCLUDE_PATH"]])
+    if not config.CheckCXXHeader("autotune/autotune.hpp"):
+      Helper.printErrorAndExit("autotune.hpp not found, but required for AutoTuneTMP")
+
 def checkDAKOTA(config):
     if config.env["USE_DAKOTA"]:
         if not config.CheckCXXHeader("pecos_global_defs.hpp"):
@@ -268,7 +286,7 @@ def checkGSL(config):
   if config.env["USE_GSL"]:
     config.env.AppendUnique(CPPPATH=[config.env["GSL_INCLUDE_PATH"]])
     if "GSL_LIBRARY_PATH" in config.env:
-	  config.env.AppendUnique(LIBPATH=[config.env["GSL_LIBRARY_PATH"]])
+      config.env.AppendUnique(LIBPATH=[config.env["GSL_LIBRARY_PATH"]])
 
     if not config.CheckCXXHeader("gsl/gsl_version.h"):
       Helper.printErrorAndExit("gsl/gsl_version.h not found, but required for GSL")
@@ -502,10 +520,16 @@ def configureGNUCompiler(config):
   elif config.env["ARCH"] == "avx2":
     config.env.AppendUnique(CPPFLAGS=["-mavx2"])
     config.env.AppendUnique(CPPFLAGS=["-mfma"])
+    config.env.AppendUnique(CPPFLAGS=["-mbmi"])
+    config.env.AppendUnique(CPPFLAGS=["-mbmi2"])
+    config.env.AppendUnique(CPPFLAGS=["-mlzcnt"])
   elif config.env["ARCH"] == "avx512":
     config.env.AppendUnique(CPPFLAGS=["-mavx512f"])
     config.env.AppendUnique(CPPFLAGS=["-mavx512cd"])
     config.env.AppendUnique(CPPFLAGS=["-mfma"])
+    config.env.AppendUnique(CPPFLAGS=["-mbmi"])
+    config.env.AppendUnique(CPPFLAGS=["-mbmi2"])
+    config.env.AppendUnique(CPPFLAGS=["-mlzcnt"])
   elif config.env["ARCH"] == "native":
     config.env.AppendUnique(CPPFLAGS=["-march=native", "-mtune=native"])
   else:

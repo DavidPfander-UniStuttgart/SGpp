@@ -145,6 +145,7 @@ vars.Add(BoolVariable("LSHKNN_WITH_CUDA", "States whether lshknn was compiled wi
 vars.Add(BoolVariable("LSHKNN_WITH_OPENCL", "States whether lshknn was compiled with OpenCL support", False))
 vars.Add("BOOST_INCLUDE_PATH", "Set path to the Boost header files", "/usr/include")
 vars.Add("BOOST_LIBRARY_PATH", "Set path to the Boost library", None)
+vars.Add(BoolVariable("USE_AUTOTUNE_TMP", "Enable AutoTuneTMP, might need to set AUTOTUNETMP_INCLUDE_PATH", True))
 vars.Add("AUTOTUNETMP_INCLUDE_PATH", "Set path to the AutoTuneTMP header files", "")
 vars.Add("CPPJIT_INCLUDE_PATH", "Set path to the CPPJIT header files", "")
 vars.Add("VC_INCLUDE_PATH", "Set path to the Vc header files", "")
