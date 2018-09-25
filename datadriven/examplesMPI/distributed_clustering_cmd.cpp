@@ -31,7 +31,8 @@ int main(int argc, char *argv[]) {
   {
     // Only rank 0 in here
 
-    std::string datasetFileName;
+    std::string datasetFileName = "";
+    std::string binary_header_filename = "";
     size_t level;
     double lambda;
     std::string configFileName;
@@ -56,6 +57,8 @@ int main(int argc, char *argv[]) {
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
         "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
+        "training data set as an arff file")(
+        "binary_header_filename", boost::program_options::value<std::string>(&binary_header_filename),
         "training data set as an arff file")(
         "level", boost::program_options::value<size_t>(&level)->default_value(4),
         "level of the sparse grid used for density estimation")(
@@ -116,16 +119,31 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
-    if (variables_map.count("datasetFileName") == 0) {
-      std::cerr << "error: option \"datasetFileName\" not specified" << std::endl;
+    if (variables_map.count("datasetFileName") == 0 &&
+        variables_map.count("binary_header_filename") == 0) {
+      std::cerr << "error: neither option \"datasetFileName\" is specified " << std::endl;
+      std::cerr << "nor is the option \"binary_header_filename\"" << std::endl;
       return 1;
-    } else {
+    } else if (variables_map.count("datasetFileName") != 0 &&
+               variables_map.count("binary_header_filename") == 0) {
       std::experimental::filesystem::path datasetFilePath(datasetFileName);
       if (!std::experimental::filesystem::exists(datasetFilePath)) {
         std::cerr << "error: dataset file does not exist: " << datasetFileName << std::endl;
         return 1;
       }
       std::cout << "datasetFileName: " << datasetFileName << std::endl;
+    } else if (variables_map.count("datasetFileName") == 0 &&
+               variables_map.count("binary_header_filename") != 0) {
+      std::experimental::filesystem::path datasetFilePath(binary_header_filename);
+      if (!std::experimental::filesystem::exists(datasetFilePath)) {
+        std::cerr << "error: dataset file does not exist: " << binary_header_filename << std::endl;
+        return 1;
+      }
+      std::cout << "binary_header_filename: " << binary_header_filename << std::endl;
+    } else {
+      std::cerr << "error: Both options \"datasetFileName\" and " << std::endl;
+      std::cerr << "binary_header_filename\" are specified! Use only one. " << std::endl;
+      return 1;
     }
 
     // if (variables_map.count("MPIconfig") == 0) {
@@ -210,9 +228,19 @@ int main(int argc, char *argv[]) {
     std::chrono::time_point<std::chrono::system_clock> loading_data_start,
         loading_data_end;
     loading_data_start = std::chrono::system_clock::now();
-    std::cerr << "Loading dataset: " <<  std::endl;
-    sgpp::base::DataMatrix dataset  = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(datasetFileName);
-    size_t dim = dataset.getNcols();
+    sgpp::base::DataMatrix dataset;
+    size_t dim = 0;
+    if (variables_map.count("binary_header_filename") != 0) {
+    std::cerr << "Loading binary dataset: " <<  std::endl;
+      dataset  = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(binary_header_filename);
+      dim = dataset.getNcols();
+    }
+    else if (variables_map.count("datasetFileName") != 0) {
+      std::cerr << "Loading ARFF dataset: " <<  std::endl;
+      sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
+      dataset  = data.getData();
+      dim = dataset.getNcols();
+    }
     std::cerr << "dataset_size: " << dataset.getNrows() << std::endl;
     std::cout << "dim: " << dim << std::endl;
     loading_data_end = std::chrono::system_clock::now();

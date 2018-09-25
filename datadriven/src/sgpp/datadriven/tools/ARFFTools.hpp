@@ -56,8 +56,8 @@ class ARFFTools {
    */
   static void readARFFSize(const std::string& filename, size_t& numberInstances,
                            size_t& dimension);
-  static void convert_into_binary_file(const std::string &orig_filename, const std::string
-                                       &header_filename, const std::string &output_filename);
+  static void convert_into_binary_file(const std::string &orig_filename, std::string
+                                       &header_filename, bool compressed);
   static base::DataMatrix read_binary_converted_ARFF(const std::string &filename);
 
   static void readARFFSizeFromString(const std::string& content,
