@@ -162,7 +162,6 @@ def doConfigure(env, moduleFolders, languageWrapperFolders):
       Helper.printErrorAndExit("hpx/include/actions.hpp not found, but required for HPX")
 
   # add filesystem library in GCC 7 (not needed in 8)
-  # config.env.AppendUnique(CPPFLAGS="-lstdc++fs")
   config.env.Append(LIBS=["-lstdc++fs"])
 
   env = config.Finish()
