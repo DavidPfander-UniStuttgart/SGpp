@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
     std::cerr << "error: option \"repetitions\" not specified" << std::endl;
     return 1;
   }
-  
+
   std::string hostname;
   if (const char* hostname_ptr = std::getenv("HOSTNAME")) {
     hostname = hostname_ptr;
@@ -154,6 +154,7 @@ int main(int argc, char** argv) {
   std::cout << "starting tuning" << std::endl;
 
   for (size_t r = 0; r < repetitions; r += 1) {
+    std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
     std::string full_scenario_prefix(scenarioName + "_host_" + hostname + "_tuner_" + tuner_name +
                                      "_t_" + std::to_string(dataset.getNumberInstances()) + "s_" +
                                      std::to_string(gridStorage.getSize()) + "g_" +

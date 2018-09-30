@@ -4,6 +4,7 @@
 // sgpp.sparsegrids.org
 
 #include <boost/program_options.hpp>
+#include <cstdlib>
 #include <experimental/filesystem>
 #include <random>
 #include <string>
@@ -39,12 +40,25 @@ void doAllRefinements(sgpp::base::AdaptivityConfiguration& adaptConfig, sgpp::ba
 int main(int argc, char** argv) {
   std::string datasetFileName;
   std::string OpenCLConfigFile;
+  std::string scenarioName;
+  std::string tunerName;
+  uint32_t level;
+  uint32_t repetitions;
 
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
+      "OpenCLConfigFile", boost::program_options::value<std::string>(&OpenCLConfigFile),
+      "the file name of the OpenCL configuration file")(
       "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
-      "training data set as an arff or binary-arff file");
+      "training data set as an arff or binary-arff file")(
+      "scenarioName", boost::program_options::value<std::string>(&scenarioName),
+      "used as the name of the created measurement files of the tuner")(
+      "level", boost::program_options::value<uint32_t>(&level), "level of the sparse grid")(
+      "tuner_name", boost::program_options::value<std::string>(&tunerName),
+      "name of the auto tuning algorithm to be used")(
+      "repetitions", boost::program_options::value<uint32_t>(&repetitions),
+      "how often the tuning is to be repeated");
 
   boost::program_options::variables_map variables_map;
 
@@ -80,10 +94,33 @@ int main(int argc, char** argv) {
     std::cout << "OpenCLConfigFile: " << OpenCLConfigFile << std::endl;
   }
 
+  if (variables_map.count("scenarioName") == 0) {
+    std::cerr << "error: option \"scenarioName\" not specified" << std::endl;
+    return 1;
+  } else {
+    std::cout << "scenarioName: " << scenarioName << std::endl;
+  }
+  if (variables_map.count("level") == 0) {
+    std::cerr << "error: option \"level\" not specified" << std::endl;
+    return 1;
+  }
+  if (variables_map.count("repetitions") == 0) {
+    std::cerr << "error: option \"repetitions\" not specified" << std::endl;
+    return 1;
+  }
+
+  std::string hostname;
+  if (const char* hostname_ptr = std::getenv("HOSTNAME")) {
+    hostname = hostname_ptr;
+    std::cout << "hostname: " << hostname << std::endl;
+  } else {
+    std::cerr << "error: could not query hostname from environment" << std::endl;
+    return 1;
+  }
+
   // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
   // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-
-  uint32_t level = 5;
+  // uint32_t level = 5;
 
   sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -141,7 +178,14 @@ int main(int argc, char** argv) {
   std::cout << "preparing operation for refined grid" << std::endl;
   eval.prepare();
 
-  std::cout << "starting tuning" << std::endl;
-
-  eval.tune_mult(alpha, dataSizeVectorResult);
+  std::cout << "starting tuning..." << std::endl;
+  for (size_t r = 0; r < repetitions; r += 1) {
+    std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
+    std::string full_scenario_prefix(scenarioName + "_host_" + hostname + "_tuner_" + tunerName +
+                                     "_t_" + std::to_string(dataset.getNumberInstances()) + "s_" +
+                                     std::to_string(gridStorage.getSize()) + "g_" +
+                                     std::to_string(level) + "l_" + std::to_string(dim) + "d_" +
+                                     std::to_string(r) + "r");
+    eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix, tunerName);
+  }
 }

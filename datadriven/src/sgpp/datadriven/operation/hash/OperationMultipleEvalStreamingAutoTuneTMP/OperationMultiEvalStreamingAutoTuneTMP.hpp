@@ -275,6 +275,8 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
       autotune::streaming_mult_kernel.set_parameter_values(optimal_parameters_randomizable);
       autotune::streaming_mult_kernel.create_parameter_file();
       autotune::streaming_mult_kernel.compile();
+    } else {
+      throw "error: tuner not implemented!";
     }
 
     if (tuner_name.compare("monte_carlo") != 0) {
@@ -296,29 +298,29 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
     const double_v one = 1.0;
     const double_v zero = 0.0;
 
-    // #pragma omp parallel for
-    //     for (size_t j = 0; j < grid_size; j += double_v::size()) {
-    //       double_v result_temp = 0.0;
-    //       for (size_t i = 0; i < source.size(); i++) {
-    //         double_v evalNd = source[i];
+// #pragma omp parallel for
+//     for (size_t j = 0; j < grid_size; j += double_v::size()) {
+//       double_v result_temp = 0.0;
+//       for (size_t i = 0; i < source.size(); i++) {
+//         double_v evalNd = source[i];
 
-    //         for (size_t d = 0; d < dims; d++) {
-    //           // 2^l * x - i (level_list_SoA stores 2^l, not l)
-    //           double_v level_dim = double_v(&level_list_SoA[d * grid_size + j],
-    //           Vc::flags::element_aligned);
-    //           double_v index_dim = double_v(&index_list_SoA[d * grid_size + j],
-    //           Vc::flags::element_aligned);
-    //           // TODO: non-SoA probably faster
-    //           double_v data_dim = dataset_SoA[d * dataset_size + i];
-    //           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
-    //           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
-    //           evalNd *= eval1d;                                      // 1 FLOPS
-    //         }
-    //         result_temp += evalNd;  // total: 6d + 1
-    //       }
-    //       // #pragma omp atomic
-    //       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
-    //     }
+//         for (size_t d = 0; d < dims; d++) {
+//           // 2^l * x - i (level_list_SoA stores 2^l, not l)
+//           double_v level_dim = double_v(&level_list_SoA[d * grid_size + j],
+//           Vc::flags::element_aligned);
+//           double_v index_dim = double_v(&index_list_SoA[d * grid_size + j],
+//           Vc::flags::element_aligned);
+//           // TODO: non-SoA probably faster
+//           double_v data_dim = dataset_SoA[d * dataset_size + i];
+//           double_v temp = level_dim * data_dim - index_dim;      // 2 FLOPS
+//           double_v eval1d = Vc::max(one - Vc::abs(temp), zero);  // 3 FLOPS
+//           evalNd *= eval1d;                                      // 1 FLOPS
+//         }
+//         result_temp += evalNd;  // total: 6d + 1
+//       }
+//       // #pragma omp atomic
+//       result_temp.memstore(&result_padded[j], Vc::flags::element_aligned);
+//     }
 
 #pragma omp parallel for schedule(static)
     for (size_t j = 0; j < grid_size; j += double_v::size()) {

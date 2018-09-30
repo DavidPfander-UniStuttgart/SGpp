@@ -6,17 +6,17 @@
 #include <iostream>
 #include <string>
 
+#include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/datadriven/application/MetaLearner.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
-#include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 
 int main(int argc, char** argv) {
   //  int maxLevel = 9;
-  int maxLevel = 8;
+  int maxLevel = 9;
 
   // std::string fileName = "debugging.arff";
   //  std::string fileName = "DR5_train_larger.arff";
-  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  std::string fileName = "../datasets/datasets_diss/DR5/DR5_nowarnings_less05_train.arff";
   //  std::string fileName = "friedman_4d_large.arff";
   //  std::string fileName = "friedman2_90000.arff";
   //  std::string fileName = "bigger.arff";
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 
   //    sgpp::base::OCLOperationConfiguration parameters("tunedParameters.cfg");
   // sgpp::base::OCLOperationConfiguration parameters("vgpu2_whole.cfg");
-    sgpp::base::OCLOperationConfiguration parameters("platformDouble.cfg");
+  sgpp::base::OCLOperationConfiguration parameters("single_precision_platform.cfg");
 
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
