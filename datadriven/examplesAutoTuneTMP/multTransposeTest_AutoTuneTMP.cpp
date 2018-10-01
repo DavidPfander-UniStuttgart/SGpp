@@ -6,6 +6,8 @@
 #include <random>
 #include <string>
 
+#include <boost/program_options.hpp>
+#include <experimental/filesystem>
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
 #include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
@@ -15,7 +17,6 @@
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingAutoTuneTMP/OperationMultiEvalStreamingAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
-#include "sgpp/globaldef.hpp"
 
 #include "Vc/Vc"
 
@@ -39,7 +40,37 @@ void doAllRefinements(sgpp::base::AdaptivityConfiguration& adaptConfig, sgpp::ba
 }
 
 int main(int argc, char** argv) {
-  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  std::string datasetFileName;
+
+  boost::program_options::options_description description("Allowed options");
+
+  description.add_options()("help", "display help")(
+      "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
+      "training data set as an arff or binary-arff file");
+
+  boost::program_options::variables_map variables_map;
+
+  boost::program_options::parsed_options options = parse_command_line(argc, argv, description);
+  boost::program_options::store(options, variables_map);
+  boost::program_options::notify(variables_map);
+
+  if (variables_map.count("help")) {
+    std::cout << description << std::endl;
+    return 0;
+  }
+  if (variables_map.count("datasetFileName") == 0) {
+    std::cerr << "error: option \"datasetFileName\" not specified" << std::endl;
+    return 1;
+  } else {
+    std::experimental::filesystem::path datasetFilePath(datasetFileName);
+    if (!std::experimental::filesystem::exists(datasetFilePath)) {
+      std::cerr << "error: dataset file does not exist: " << datasetFileName << std::endl;
+      return 1;
+    }
+    std::cout << "datasetFileName: " << datasetFileName << std::endl;
+  }
+
+  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
 
   uint32_t level = 5;
@@ -52,19 +83,19 @@ int main(int argc, char** argv) {
   adaptConfig.threshold_ = 0.0;
 
   sgpp::datadriven::ARFFTools arffTools;
-  sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
+  sgpp::datadriven::Dataset dataset = arffTools.readARFF(datasetFileName);
 
   sgpp::base::DataMatrix& trainingData = dataset.getData();
 
   size_t dim = dataset.getDimension();
 
-  bool modLinear = false;
+  // bool modLinear = false;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
-  if (modLinear) {
-    grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));
-  } else {
-    grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createLinearGrid(dim));
-  }
+  // if (modLinear) {
+  //   grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));
+  // } else {
+  grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createLinearGrid(dim));
+  // }
 
   sgpp::base::GridStorage& gridStorage = grid->getStorage();
   std::cout << "dimensionality:        " << gridStorage.getDimension() << std::endl;

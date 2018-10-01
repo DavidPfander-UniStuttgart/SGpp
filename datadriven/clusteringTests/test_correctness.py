@@ -139,8 +139,8 @@ if __name__ == '__main__':
     # Iterate over dataset dimensions
     dataset_arg = "--datasetFileName=dataset-tmp/input-data.arff"
     dataset_convert_arg = "--input_filename=dataset-tmp/input-data.arff"
-    dataset_binary_arg = "--datasetFileName=dataset-tmp/binary-input-data"
-    dataset_convert_binary_arg = "--output_filename=dataset-tmp/binary-input-data"
+    dataset_binary_arg = "--binary_header_filename=dataset-tmp/binary-input-data.arff"
+    dataset_convert_binary_arg = "--output_filename=dataset-tmp/binary-input-data.arff"
     for dim in range(args.dimension_args[0], args.dimension_args[2], args.dimension_args[1]):
         # Iterate over dataset size
         for size in range(args.size_args[0], args.size_args[2], args.size_args[1]):
@@ -201,7 +201,6 @@ if __name__ == '__main__':
                             if not mpi_config_name.endswith(".cfg"):
                                 continue
                             mpiconf_arg = "--MPIconfig=" + args.mpi_config_folder + mpi_config_name
-                            print("Starting test with MPI conf ", mpiconf_arg, "...")
                             number_mpi_processes = "-n " + str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name))
                             if os.path.exists("mpi-results/raw-clusters.txt"):
@@ -214,8 +213,9 @@ if __name__ == '__main__':
                                 subprocess.run(["rm", "mpi-results/pruned-knn.txt"])
                             subprocess.run(["../examplesMPI/split_dataset",
                                             dataset_convert_arg,
-                                            dataset_convert_binary_arg],
+                                            dataset_convert_binary_arg, "--compression=true"],
                                            stdout=subprocess.PIPE)
+                            print("Starting test with MPI conf ", mpiconf_arg, "...")
                             start = time.time()
                             subprocess.run(["mpirun", "-n", str(get_number_mpi_nodes(\
                                                    args.mpi_config_folder + mpi_config_name)),

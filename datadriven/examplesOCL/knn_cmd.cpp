@@ -3,15 +3,15 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "sgpp/datadriven/operation/hash/OperationNearestNeighborSampled/OperationNearestNeighborSampled.hpp"
-#include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include <boost/program_options.hpp>
 #include <experimental/filesystem>
 #include <fstream>
 #include <iostream>
+#include "sgpp/datadriven/operation/hash/OperationNearestNeighborSampled/OperationNearestNeighborSampled.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OperationCreateGraphOCL.hpp"
+#include "sgpp/datadriven/tools/ARFFTools.hpp"
 
 int main(int argc, char **argv) {
-
   std::string datasetFileName;
   uint64_t k;
 
@@ -34,30 +34,24 @@ int main(int argc, char **argv) {
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
-      "datasetFileName",
-      boost::program_options::value<std::string>(&datasetFileName),
+      "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
       "training data set as an arff file")(
       "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
       "specifies number of neighbors for kNN algorithm")(
       "knn_algorithm",
-      boost::program_options::value<std::string>(&knn_algorithm)
-          ->default_value("naive_ocl"),
+      boost::program_options::value<std::string>(&knn_algorithm)->default_value("naive_ocl"),
       "use 'lsh_cuda' (requires liblshknn), 'lsh_ocl' (requires liblshknn), "
       "'naive_ocl', 'lsh_sampling_cuda' (requires liblshknn), "
       "'lsh_sampling_opencl' (requires liblshknn), 'naive_sampling' (requires "
       "liblshknn) or 'naive' multicore (requires liblshknn)"
-      "algorithm")(
-      "lsh_tables",
-      boost::program_options::value<uint64_t>(&lsh_tables)->default_value(10),
-      "number of hash tables for lsh knn")(
-      "lsh_hashes",
-      boost::program_options::value<uint64_t>(&lsh_hashes)->default_value(10),
+      "algorithm")("lsh_tables",
+                   boost::program_options::value<uint64_t>(&lsh_tables)->default_value(10),
+                   "number of hash tables for lsh knn")(
+      "lsh_hashes", boost::program_options::value<uint64_t>(&lsh_hashes)->default_value(10),
       "number of hash functions used by lsh knn")(
-      "lsh_w",
-      boost::program_options::value<double>(&lsh_w)->default_value(1.0),
+      "lsh_w", boost::program_options::value<double>(&lsh_w)->default_value(1.0),
       "number of segments for hash functions used by lsh knn")(
-      "write_knn_graph",
-      boost::program_options::value<std::string>(&write_knn_graph),
+      "write_knn_graph", boost::program_options::value<std::string>(&write_knn_graph),
       "write the knn graph calculated to a csv-file")(
       "compare_knn_csv_file_name",
       boost::program_options::value<std::string>(&compare_knn_csv_file_name),
@@ -65,23 +59,19 @@ int main(int argc, char **argv) {
       "config", boost::program_options::value<std::string>(&configFileName),
       "OpenCL and kernel configuration file")(
       "sampling_chunk_size",
-      boost::program_options::value<uint64_t>(&sampling_chunk_size)
-          ->default_value(0),
+      boost::program_options::value<uint64_t>(&sampling_chunk_size)->default_value(0),
       "size of the chunk for sampling of dataset for knn")(
       "sampling_randomize",
-      boost::program_options::value<uint64_t>(&sampling_randomize)
-          ->default_value(1),
+      boost::program_options::value<uint64_t>(&sampling_randomize)->default_value(1),
       "how often the dataset is shuffled when using sampling knn")(
       "sampling_rand_chunk_size",
-      boost::program_options::value<uint64_t>(&sampling_rand_chunk_size)
-          ->default_value(0),
+      boost::program_options::value<uint64_t>(&sampling_rand_chunk_size)->default_value(0),
       "enable chunk-level randomization for sampling knn version by setting to "
       "> 0");
 
   boost::program_options::variables_map variables_map;
 
-  boost::program_options::parsed_options options =
-      parse_command_line(argc, argv, description);
+  boost::program_options::parsed_options options = parse_command_line(argc, argv, description);
   boost::program_options::store(options, variables_map);
   boost::program_options::notify(variables_map);
 
@@ -96,8 +86,7 @@ int main(int argc, char **argv) {
   } else {
     std::experimental::filesystem::path datasetFilePath(datasetFileName);
     if (!std::experimental::filesystem::exists(datasetFilePath)) {
-      std::cerr << "error: dataset file does not exist: " << datasetFileName
-                << std::endl;
+      std::cerr << "error: dataset file does not exist: " << datasetFileName << std::endl;
       return 1;
     }
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
@@ -109,8 +98,7 @@ int main(int argc, char **argv) {
   } else {
     std::experimental::filesystem::path configFilePath(configFileName);
     if (!std::experimental::filesystem::exists(configFilePath)) {
-      std::cerr << "error: config file does not exist: " << configFileName
-                << std::endl;
+      std::cerr << "error: config file does not exist: " << configFileName << std::endl;
       return 1;
     }
 
@@ -118,11 +106,10 @@ int main(int argc, char **argv) {
   }
 
   if (variables_map.count("compare_knn_csv_file_name") > 0) {
-    std::experimental::filesystem::path configFilePath(
-        compare_knn_csv_file_name);
+    std::experimental::filesystem::path configFilePath(compare_knn_csv_file_name);
     if (!std::experimental::filesystem::exists(compare_knn_csv_file_name)) {
-      std::cerr << "error: compare knn csv file does not exist: "
-                << compare_knn_csv_file_name << std::endl;
+      std::cerr << "error: compare knn csv file does not exist: " << compare_knn_csv_file_name
+                << std::endl;
       return 1;
     }
   }
@@ -190,8 +177,7 @@ int main(int argc, char **argv) {
   //   }
 
   std::cout << "reading dataset...";
-  sgpp::datadriven::Dataset dataset =
-      sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
+  sgpp::datadriven::Dataset dataset = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
   std::cout << "done" << std::endl;
 
   size_t dimension = dataset.getDimension();
@@ -209,25 +195,22 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> total_timer_start =
       std::chrono::system_clock::now();
   if (knn_algorithm.compare("lsh_cuda") == 0) {
-#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
-                        // anyway if
-                        // this is not the case
-    graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables,
-                                lsh_hashes, lsh_w);
+#ifdef LSHKNN_WITH_CUDA  // purely for the compiler - program exits earlier
+                         // anyway if
+                         // this is not the case
+    graph = knn_op.knn_lsh_cuda(dimension, trainingData, k, lsh_tables, lsh_hashes, lsh_w);
 #else
-    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support"
-              << std::endl;
+    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support" << std::endl;
     return 1;
 #endif
   } else if (knn_algorithm.compare("lsh_ocl") == 0) {
-#ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
-                          // anyway if
-                          // this is not the case
-    graph = knn_op.knn_lsh_opencl(dimension, trainingData, k, configFileName,
-                                  lsh_tables, lsh_hashes, lsh_w);
+#ifdef LSHKNN_WITH_OPENCL  // purely for the compiler - program exits earlier
+                           // anyway if
+                           // this is not the case
+    graph = knn_op.knn_lsh_opencl(dimension, trainingData, k, configFileName, lsh_tables,
+                                  lsh_hashes, lsh_w);
 #else
-    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support"
-              << std::endl;
+    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support" << std::endl;
     return 1;
 #endif
   } else if (knn_algorithm.compare("naive_ocl") == 0) {
@@ -235,30 +218,27 @@ int main(int argc, char **argv) {
   } else if (knn_algorithm.compare("naive") == 0) {
     graph = knn_op.knn_naive(dimension, trainingData, k);
   } else if (knn_algorithm.compare("naive_sampling") == 0) {
-    graph = knn_op.knn_naive_sampling(dimension, trainingData, k,
-                                      sampling_chunk_size, sampling_randomize);
+    graph = knn_op.knn_naive_sampling(dimension, trainingData, k, sampling_chunk_size,
+                                      sampling_randomize);
   } else if (knn_algorithm.compare("lsh_sampling_cuda") == 0) {
-#ifdef LSHKNN_WITH_CUDA // purely for the compiler - program exits earlier
-                        // anyway if
-                        // this is not the case
-    graph = knn_op.knn_lsh_cuda_sampling(
-        dimension, trainingData, k, sampling_chunk_size, sampling_randomize,
-        lsh_tables, lsh_hashes, lsh_w);
+#ifdef LSHKNN_WITH_CUDA  // purely for the compiler - program exits earlier
+                         // anyway if
+                         // this is not the case
+    graph = knn_op.knn_lsh_cuda_sampling(dimension, trainingData, k, sampling_chunk_size,
+                                         sampling_randomize, lsh_tables, lsh_hashes, lsh_w);
 #else
-    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support"
-              << std::endl;
+    std::cerr << "error: knn_algorithm requires liblshknn with CUDA support" << std::endl;
     return 1;
 #endif
   } else if (knn_algorithm.compare("lsh_sampling_opencl") == 0) {
-#ifdef LSHKNN_WITH_OPENCL // purely for the compiler - program exits earlier
-                          // anyway if
-                          // this is not the case
-    graph = knn_op.knn_lsh_opencl_sampling(
-        dimension, trainingData, k, configFileName, sampling_chunk_size,
-        sampling_randomize, lsh_tables, lsh_hashes, lsh_w);
+#ifdef LSHKNN_WITH_OPENCL  // purely for the compiler - program exits earlier
+                           // anyway if
+                           // this is not the case
+    graph = knn_op.knn_lsh_opencl_sampling(dimension, trainingData, k, configFileName,
+                                           sampling_chunk_size, sampling_randomize, lsh_tables,
+                                           lsh_hashes, lsh_w);
 #else
-    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support"
-              << std::endl;
+    std::cerr << "error: knn_algorithm requires liblshknn with OpenCL support" << std::endl;
     return 1;
 #endif
   }
@@ -280,19 +260,18 @@ int main(int argc, char **argv) {
   }
 
   if (variables_map.count("compare_knn_csv_file_name") > 0) {
-    std::cout << "comparing knn result to reference result from "
-              << compare_knn_csv_file_name << std::endl;
+    std::cout << "comparing knn result to reference result from " << compare_knn_csv_file_name
+              << std::endl;
 
-    std::vector<int64_t> neighbors_reference =
-        knn_op.read_csv(compare_knn_csv_file_name);
+    std::vector<int64_t> neighbors_reference = knn_op.read_csv(compare_knn_csv_file_name);
 
     std::vector<int64_t> graph_converted(graph.begin(), graph.end());
-    double acc_assigned = knn_op.test_accuracy(
-        neighbors_reference, graph_converted, trainingData.getNrows(), k);
+    double acc_assigned =
+        knn_op.test_accuracy(neighbors_reference, graph_converted, trainingData.getNrows(), k);
     double acc_distance = knn_op.test_distance_accuracy(
-        trainingData, neighbors_reference, graph_converted,
-        trainingData.getNrows(), dimension, k);
+        trainingData, neighbors_reference, graph_converted, trainingData.getNrows(), dimension, k);
     std::cout << "knn correctly assigned: " << acc_assigned << std::endl;
     std::cout << "knn distance error: " << acc_distance << std::endl;
   }
+
 }

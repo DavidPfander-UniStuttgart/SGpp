@@ -3,11 +3,11 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include <boost/program_options.hpp>
+#include <cstdlib>
+#include <experimental/filesystem>
 #include <random>
 #include <string>
-
-#include <boost/program_options.hpp>
-#include <experimental/filesystem>
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
 #include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
@@ -40,14 +40,25 @@ void doAllRefinements(sgpp::base::AdaptivityConfiguration& adaptConfig, sgpp::ba
 int main(int argc, char** argv) {
   std::string datasetFileName;
   std::string OpenCLConfigFile;
+  std::string scenarioName;
+  std::string tunerName;
+  uint32_t level;
+  uint32_t repetitions;
 
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
+      "OpenCLConfigFile", boost::program_options::value<std::string>(&OpenCLConfigFile),
+      "the file name of the OpenCL configuration file")(
       "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
       "training data set as an arff or binary-arff file")(
-      "OpenCLConfigFile", boost::program_options::value<std::string>(&OpenCLConfigFile),
-      "the file name of the OpenCL configuration file");
+      "scenarioName", boost::program_options::value<std::string>(&scenarioName),
+      "used as the name of the created measurement files of the tuner")(
+      "level", boost::program_options::value<uint32_t>(&level), "level of the sparse grid")(
+      "tuner_name", boost::program_options::value<std::string>(&tunerName),
+      "name of the auto tuning algorithm to be used")(
+      "repetitions", boost::program_options::value<uint32_t>(&repetitions),
+      "how often the tuning is to be repeated");
 
   boost::program_options::variables_map variables_map;
 
@@ -70,7 +81,6 @@ int main(int argc, char** argv) {
     }
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
   }
-
   if (variables_map.count("OpenCLConfigFile") == 0) {
     std::cerr << "error: option \"OpenCLConfigFile\" not specified" << std::endl;
     return 1;
@@ -84,21 +94,33 @@ int main(int argc, char** argv) {
     std::cout << "OpenCLConfigFile: " << OpenCLConfigFile << std::endl;
   }
 
-  /*    sgpp::base::OCLOperationConfiguration parameters;
-   parameters.readFromFile("StreamingOCL.cfg");
-   std::cout << "internal precision: " << parameters.get("INTERNAL_PRECISION")
-   << std::endl;*/
+  if (variables_map.count("scenarioName") == 0) {
+    std::cerr << "error: option \"scenarioName\" not specified" << std::endl;
+    return 1;
+  } else {
+    std::cout << "scenarioName: " << scenarioName << std::endl;
+  }
+  if (variables_map.count("level") == 0) {
+    std::cerr << "error: option \"level\" not specified" << std::endl;
+    return 1;
+  }
+  if (variables_map.count("repetitions") == 0) {
+    std::cerr << "error: option \"repetitions\" not specified" << std::endl;
+    return 1;
+  }
 
-  //  std::string fileName = "friedman2_90000.arff";
-  //  std::string fileName = "debugging.arff";
-  //  std::string fileName = "debugging.arff";
-  //  std::string fileName = "friedman2_4d_300000.arff";
+  std::string hostname;
+  if (const char* hostname_ptr = std::getenv("HOSTNAME")) {
+    hostname = hostname_ptr;
+    std::cout << "hostname: " << hostname << std::endl;
+  } else {
+    std::cerr << "error: could not query hostname from environment" << std::endl;
+    return 1;
+  }
+
+  // std::string fileName = "datasets/ripley/ripleyGarcke.train.arff";
   // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
-  //  std::string fileName = "friedman_10d.arff";
-  //  std::string fileName = "DR5_train.arff";
-  //  std::string fileName = "debugging_small.arff";
-
-  uint32_t level = 5;
+  // uint32_t level = 5;
 
   sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -109,10 +131,6 @@ int main(int argc, char** argv) {
 
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       std::make_shared<sgpp::base::OCLOperationConfiguration>(OpenCLConfigFile);
-
-  // sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-  //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-  //     sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(datasetFileName);
@@ -145,14 +163,6 @@ int main(int argc, char** argv) {
     alpha[i] = static_cast<double>(i) + 1.0;
   }
 
-  // std::cout << "creating operation with unrefined grid" << std::endl;
-  // std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
-  //     std::unique_ptr<sgpp::base::OperationMultipleEval>(
-  //         sgpp::op_factory::createOperationMultipleEval(*grid, trainingData, configuration));
-
-  // std::shared_ptr<sgpp::base::OCLManagerMultiPlatform> manager =
-  //     std::make_shared<sgpp::base::OCLManagerMultiPlatform>();
-
   sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
       OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP<double>
           eval(*grid, trainingData, parameters);
@@ -168,56 +178,14 @@ int main(int argc, char** argv) {
   std::cout << "preparing operation for refined grid" << std::endl;
   eval.prepare();
 
-  std::cout << "calculating result" << std::endl;
-
-  for (size_t i = 0; i < 1; i++) {
-    std::cout << "repeated mult: " << i << std::endl;
-    eval.mult(alpha, dataSizeVectorResult);
+  std::cout << "starting tuning..." << std::endl;
+  for (size_t r = 0; r < repetitions; r += 1) {
+    std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
+    std::string full_scenario_prefix(scenarioName + "_host_" + hostname + "_tuner_" + tunerName +
+                                     "_t_" + std::to_string(dataset.getNumberInstances()) + "s_" +
+                                     std::to_string(gridStorage.getSize()) + "g_" +
+                                     std::to_string(level) + "l_" + std::to_string(dim) + "d_" +
+                                     std::to_string(r) + "r");
+    eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix, tunerName);
   }
-
-  std::cout << "duration: " << eval.getDuration() << std::endl;
-
-  //    sgpp::base::DataVector alpha2(gridStorage.getSize());
-  //    alpha2.setAll(0.0);
-  //
-  //    eval->multTranspose(dataSizeVectorResult, alpha2);
-
-  std::cout << "calculating comparison values..." << std::endl;
-
-  std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
-      std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
-
-  sgpp::base::DataVector dataSizeVectorResultCompare(dataset.getNumberInstances());
-  dataSizeVectorResultCompare.setAll(0.0);
-
-  evalCompare->mult(alpha, dataSizeVectorResultCompare);
-
-  std::cout << "reference duration: " << evalCompare->getDuration() << std::endl;
-
-  double mse = 0.0;
-
-  double largestDifferenceMine = 0.0;
-  double largestDifferenceReference = 0.0;
-  double largestDifference = 0.0;
-
-  for (size_t i = 0; i < dataSizeVectorResultCompare.getSize(); i++) {
-    double difference = std::abs(dataSizeVectorResult[i] - dataSizeVectorResultCompare[i]);
-    if (difference > largestDifference) {
-      largestDifference = difference;
-      largestDifferenceMine = dataSizeVectorResult[i];
-      largestDifferenceReference = dataSizeVectorResultCompare[i];
-    }
-
-    // std::cout << "difference: " << difference << " mine: " << dataSizeVectorResult[i]
-    //           << " ref: " << dataSizeVectorResultCompare[i] << std::endl;
-
-    mse += difference * difference;
-  }
-
-  std::cout << "largestDifference: " << largestDifference << " mine: " << largestDifferenceMine
-            << " ref: " << largestDifferenceReference << std::endl;
-
-  mse = mse / static_cast<double>(dataSizeVectorResultCompare.getSize());
-  std::cout << "mse: " << mse << std::endl;
 }

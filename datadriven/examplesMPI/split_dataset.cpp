@@ -1,4 +1,3 @@
-#include <experimental/filesystem>
 #include <boost/program_options.hpp>
 #include <iostream>
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
@@ -6,6 +5,7 @@
 int main(int argc, char **argv) {
   std::string orig_filename = "";
   std::string output_filename = "";
+  bool compressed;
   boost::program_options::options_description description("Allowed options");
   description.add_options()("help", "display help")(
       "input_filename",
@@ -13,7 +13,10 @@ int main(int argc, char **argv) {
       "Path and filename to the ARFF dataset that is to be converted to binary.")(
       "output_filename",
       boost::program_options::value<std::string>(&output_filename),
-      "Output dataset filename without extension (contains header <output_filename>.txt and binary data <filename_output>_bindata)");
+      "Output dataset filename without extension (contains header <output_filename>.txt and binary data <filename_output>_bindata)")(
+      "compression",
+      boost::program_options::value<bool>(&compressed),
+      "Should compression be used? (true false)");
   {
     boost::program_options::variables_map variables_map;
     boost::program_options::parsed_options options = parse_command_line(argc, argv, description);
@@ -31,9 +34,10 @@ int main(int argc, char **argv) {
       std::cerr << "error: option \"output_filename\" not specified" << std::endl;
       return 1;
     }
-
-    std::string binary_filename = output_filename + "_binary" + ".dat";
-    output_filename = output_filename;
-    sgpp::datadriven::ARFFTools::convert_into_binary_file(orig_filename, output_filename, binary_filename);
+    if (variables_map.count("compression") == 0) {
+      std::cerr << "error: option \"compression\" not specified (true false)" << std::endl;
+      return 1;
+    }
+    sgpp::datadriven::ARFFTools::convert_into_binary_file(orig_filename, output_filename, compressed);
   }
 }

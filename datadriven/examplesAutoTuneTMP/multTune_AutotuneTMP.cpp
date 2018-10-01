@@ -47,6 +47,7 @@ int main(int argc, char** argv) {
   }
 
   uint32_t level = 6;
+  std::string tuner_name{"bruteforce"};
 
   sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -100,7 +101,7 @@ int main(int argc, char** argv) {
 
   std::cout << "tuning mult..." << std::endl;
 
-  eval.tune_mult(alpha, dataSizeVectorResult, scenario_name);
+  eval.tune_mult(alpha, dataSizeVectorResult, scenario_name, tuner_name);
 
   //    sgpp::base::DataVector alpha2(gridStorage.getSize());
   //    alpha2.setAll(0.0);

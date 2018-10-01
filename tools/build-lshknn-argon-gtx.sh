@@ -1,6 +1,5 @@
 #!/bin/bash
 set -x
-set -e
 
 # - to be run from project root directory
 # - only source proper sourceme-*.sh files (e.g. for the argon machines)
@@ -21,6 +20,6 @@ export PATH=$PWD/cmake/bin:$PATH
 echo "cmake version: `cmake --version`"
 mkdir -p build
 cd build
-cmake -DCMAKE_CXX_COMPILER=${LSHKNN_CXX_COMPILER} -DCMAKE_CUDA_HOST_COMPILER=${LSHKNN_CXX_COMPILER} -DCMAKE_CUDA_COMPILER=${LSHKNN_CMAKE_CUDA_COMPILER} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DWITH_CUDA=${LSHKNN_WITH_CUDA} -DWITH_OPENCL=${LSHKNN_WITH_OPENCL}  ../
+cmake -DCMAKE_CXX_COMPILER=${LSHKNN_CXX_COMPILER} -DCMAKE_CUDA_HOST_COMPILER=${LSHKNN_CXX_COMPILER} -DCMAKE_CUDA_COMPILER=${LSHKNN_CMAKE_CUDA_COMPILER} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DWITH_CUDA=ON -DWITH_OPENCL=ON  ../
 make -j VERBOSE=1
 cd ../..

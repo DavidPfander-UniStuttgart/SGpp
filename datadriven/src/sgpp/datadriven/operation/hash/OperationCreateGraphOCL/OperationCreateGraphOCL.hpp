@@ -87,13 +87,13 @@ class OperationCreateGraphOCL {
   OperationCreateGraphOCL() : last_duration_create_graph(0.0), acc_duration_create_graph(0.0) {}
 
   /// Pure virtual function to create the k nearest neighbor graph for some datapoints of a dataset
-  virtual void create_graph(std::vector<int64_t> &resultVector, size_t startid = 0, size_t chunksize = 0) = 0;
+  virtual void create_graph(std::vector<int64_t> &resultVector, size_t startid = 0,
+                            size_t chunksize = 0) = 0;
   virtual void create_graph(std::vector<int> &resultVector, size_t startid = 0,
                             size_t chunksize = 0) {
     std::vector<int64_t> graph_unconverted(resultVector.begin(), resultVector.end());
     create_graph(graph_unconverted, startid, chunksize);
-    resultVector = std::vector<int>(graph_unconverted.begin(),
-                                 graph_unconverted.end());
+    resultVector = std::vector<int>(graph_unconverted.begin(), graph_unconverted.end());
   }
   virtual void begin_graph_creation(size_t startid, size_t chunksize) = 0;
   virtual void finalize_graph_creation(std::vector<int64_t> &resultVector, size_t startid,
@@ -145,8 +145,8 @@ class OperationCreateGraphOCL {
           continue;
         }
         // assert that the index is in range
-        assert(directed[i * k + cur_k] < static_cast<int64_t>(node_count));
-	assert(directed[i * k + cur_k] >= 0);
+        // assert(directed[i * k + cur_k] < static_cast<int64_t>(node_count));
+        // assert(directed[i * k + cur_k] >= 0);
         // if (directed[i * k + cur_k] > static_cast<int>(node_count)) {
         //   std::cerr << "error: index too large! i: " << i
         //             << " neighbor: " << directed[i * k + cur_k] << std::endl;
@@ -249,6 +249,73 @@ class OperationCreateGraphOCL {
     OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected_graph, node_cluster_map,
                                                                 clusters, 2);
   }
+
+  // TODO: incomplete
+  // static void find_clusters_merging(std::vector<int64_t> &directed_graph, size_t k,
+  //                                   std::vector<std::forward_list<int64_t>> &clusters_ret) {
+  //   size_t dataset_size = directed_graph.size() / k;
+  //   std::vector<int64_t> visited(dataset_size, -1);  // contains cluster_id
+  //   std::vector<std::forward_list<int64_t>> partial_clusters;
+  //   // index of vector is cluster id, inner vector is list of clusters to be added
+  //   // to this cluster -> list empty, part of the final result
+  //   std::vector<std::vector<int64_t>> merged_into;
+  //   std::vector<std::vector<int64_t>> own_target;
+  //   std::vector<std::forward_list<int64_t>> final_clusters;
+
+  //   for (size_t dataset_index = 0; dataset_index < dataset_size; dataset_index += 1) {
+  //     // already encountered by a previous iteration
+  //     if (visited[dataset_index] != -1) {
+  //       continue;
+  //     }
+  //     std::forward_list<int64_t> partial_cluster;
+  //     partial_cluster.push_back(dataset_index);
+  //     size_t cluster_id = partial_cluster.size();
+  //     merged_into.push_back{};  // a new empty vector
+  //     size_t rec_index = 0;
+  //     int merge_target = -1;
+  //     while (rec_index < partial_cluster.size()) {
+  //       visited[rec_index] = cluster_id;
+  //       // add all non-visited neighbors to recursion
+  //       for (size_t j = 0; j < k; j += 1) {
+  //         size_t neighbor_index = directed_graph[rec_index * k + j];
+  //         size_t visited_state = visited[neighbor_index];
+  //         if (visited_state == -1) {
+  //           partial_cluster.push_back(neighbor_index);
+  //         } else if (visited_state == cluster_id) {
+  //           // already visited in this partial cluster run, nothing to do
+  //         } else {
+  //           // part of a different cluster, need to remember to merge
+  //           if (merge_target == -1) {
+  //             merge_target = visited_state;
+  //           } else if (visited_state < merge_target) {
+  //             merge_target = visited_state;
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     if (merge_target != -1) {
+  //       // - a merge needs to be done
+  //       // - always merge into cluster with lower id
+  //       // - every cluster specifies at most 1 merge
+  //       if (visited_state < cluster_id) {
+  //         merged_into[visited_state].push_back(cluster_id);
+  //       } else {
+  //         // implied ">", else cluster_id = max(all cluster_ids)
+  //         // (this is only possible in the parallelized case)
+  //         merged_into[cluster_id].push_back(visited_state);
+  //       }
+  //     }
+  //     // all partial clusters have been created, now consolidate merge list
+  //     for (size_t i = 0; i < partial_clusters.size() i += 1) {
+
+  //     }
+
+  //     partial_clusters.push_back(partial_cluster);
+  //   }
+
+  //   return final_clusters;
+  // }
 
   virtual ~OperationCreateGraphOCL(void) {}
 

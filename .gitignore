@@ -117,3 +117,7 @@ GSYMS
 GTAGS
 custom.py
 gmon.out
+
+cppjit_tmp
+lshknn
+detectedPlatform.cfg

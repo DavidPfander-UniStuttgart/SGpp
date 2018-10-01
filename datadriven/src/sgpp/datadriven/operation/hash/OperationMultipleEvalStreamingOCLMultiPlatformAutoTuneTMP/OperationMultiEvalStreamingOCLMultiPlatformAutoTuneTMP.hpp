@@ -26,6 +26,8 @@
 #include "autotune/parameter.hpp"
 #include "autotune/tuners/bruteforce.hpp"
 #include "autotune/tuners/countable_set.hpp"
+#include "autotune/tuners/line_search.hpp"
+#include "autotune/tuners/neighborhood_search.hpp"
 
 AUTOTUNE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &, sgpp::base::DataVector &),
                             mult_with_tuning)
@@ -70,6 +72,9 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
   autotune::countable_set autotune_parameters_mult;
   autotune::countable_set autotune_parameters_multTranspose;
 
+  // has to be enabled during tuning (recompile needed to propagate changed parameters)
+  bool always_recompile;
+
  public:
   /**
    * Creates a new instance of the OperationMultiEvalStreamingOCLMultiPlatform class.
@@ -87,8 +92,10 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
   OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP(
       base::Grid &grid, base::DataMatrix &dataset,
       std::shared_ptr<base::OCLOperationConfiguration> parameters)
-      : OperationMultipleEval(grid, dataset), duration(-1.0) {
-    this->dims = dataset.getNcols();  // be aware of transpose!
+      : OperationMultipleEval(grid, dataset),
+        dims(dataset.getNcols()),
+        duration(-1.0),
+        always_recompile(true) {
     this->verbose = (*parameters)["VERBOSE"].getBool();
     this->ocl_parameters_mult = std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
         std::shared_ptr<base::OperationConfiguration>(parameters->clone()));
@@ -130,6 +137,7 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
           // apply parameters to kernel by re-instantiating
           // notice: of course, this is quite expensive
           // TODO: improve this for more precise tuner runs
+
           sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
               sgpp::datadriven::OperationMultipleEvalType::STREAMING,
               sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, *(this->ocl_parameters_mult));
@@ -268,19 +276,44 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
     // eval->prepare();
   }
 
-  void tune_mult(base::DataVector &alpha, base::DataVector &result) {
-    autotune::tuners::bruteforce tuner(autotune::mult_with_tuning, autotune_parameters_mult);
-    tuner.set_write_measurement("mult_bruteforce");
-    tuner.set_verbose(true);
+  void tune_mult(base::DataVector &alpha, base::DataVector &result,
+                 const std::string &scenario_name, const std::string &tuner_name) {
+    // autotune::tuners::bruteforce tuner(autotune::mult_with_tuning, autotune_parameters_mult);
+    // tuner.set_write_measurement(scenario_name);
+    // tuner.set_verbose(true);
 
-    autotune::countable_set optimal_parameters = tuner.tune(alpha, result);
+    autotune::countable_set optimal_parameters;
+    if (tuner_name.compare("bruteforce") == 0) {
+      autotune::tuners::bruteforce tuner(autotune::mult_with_tuning, autotune_parameters_mult);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else if (tuner_name.compare("line_search") == 0) {
+      autotune::tuners::line_search tuner(autotune::mult_with_tuning, autotune_parameters_mult,
+                                          10 * autotune_parameters_mult.size());
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else if (tuner_name.compare("neighborhood_search") == 0) {
+      autotune::tuners::neighborhood_search tuner(autotune::mult_with_tuning,
+                                                  autotune_parameters_mult, 100);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else {
+      throw "error: tuner not implemented!";
+    }
     autotune::mult_with_tuning.set_parameter_values(optimal_parameters);
   }
 
-  void tune_multTranspose(base::DataVector &alpha, base::DataVector &result) {
+  void tune_multTranspose(base::DataVector &alpha, base::DataVector &result,
+                          const std::string &scenario_name, const std::string &tuner_name) {
     autotune::tuners::bruteforce tuner(autotune::mult_with_tuning,
                                        autotune_parameters_multTranspose);
-    tuner.set_write_measurement("multTranspose_bruteforce");
+    tuner.set_write_measurement(scenario_name);
     tuner.set_verbose(true);
 
     autotune::countable_set optimal_parameters = tuner.tune(alpha, result);
