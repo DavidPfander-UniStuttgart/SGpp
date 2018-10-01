@@ -182,7 +182,8 @@ int main(int argc, char** argv) {
   for (size_t r = 0; r < repetitions; r += 1) {
     std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
     std::string full_scenario_prefix(scenarioName + "_host_" + hostname + "_tuner_" + tunerName +
-                                     "_t_" + std::to_string(dataset.getNumberInstances()) + "s_" +
+                                     "_t_" + (*parameters)["INTERNAL_PRECISION"].get() + "_" +
+                                     std::to_string(dataset.getNumberInstances()) + "s_" +
                                      std::to_string(gridStorage.getSize()) + "g_" +
                                      std::to_string(level) + "l_" + std::to_string(dim) + "d_" +
                                      std::to_string(r) + "r");
