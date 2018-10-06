@@ -44,6 +44,7 @@ int main(int argc, char** argv) {
   std::string tunerName;
   uint32_t level;
   uint32_t repetitions;
+  bool trans;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -58,7 +59,9 @@ int main(int argc, char** argv) {
       "tuner_name", boost::program_options::value<std::string>(&tunerName),
       "name of the auto tuning algorithm to be used")(
       "repetitions", boost::program_options::value<uint32_t>(&repetitions),
-      "how often the tuning is to be repeated");
+      "how often the tuning is to be repeated")(
+      "trans", boost::program_options::value<bool>(&trans)->default_value(false),
+      "tune the transposed mult kernel instead of the standard one");
 
   boost::program_options::variables_map variables_map;
 
@@ -181,12 +184,21 @@ int main(int argc, char** argv) {
   std::cout << "starting tuning..." << std::endl;
   for (size_t r = 0; r < repetitions; r += 1) {
     std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
-    std::string full_scenario_prefix(scenarioName + "_host_" + hostname + "_tuner_" + tunerName +
-                                     "_t_" + (*parameters)["INTERNAL_PRECISION"].get() + "_" +
-                                     std::to_string(dataset.getNumberInstances()) + "s_" +
-                                     std::to_string(gridStorage.getSize()) + "g_" +
-                                     std::to_string(level) + "l_" + std::to_string(dim) + "d_" +
-                                     std::to_string(r) + "r");
-    eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix, tunerName);
+    std::string algorithm_to_tune("mult");
+    if (trans) {
+      algorithm_to_tune = "multTrans";
+    }
+
+    std::string full_scenario_prefix(
+        scenarioName + +"_" + algorithm_to_tune + "_host_" + hostname + "_tuner_" + tunerName +
+        "_t_" + (*parameters)["INTERNAL_PRECISION"].get() + "_" +
+        std::to_string(dataset.getNumberInstances()) + "s_" +
+        std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) + "l_" +
+        std::to_string(dim) + "d_" + std::to_string(r) + "r");
+    if (!trans) {
+      eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix, tunerName);
+    } else {
+      eval.tune_multTranspose(alpha, dataSizeVectorResult, full_scenario_prefix, tunerName);
+    }
   }
 }

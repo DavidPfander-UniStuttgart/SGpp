@@ -5,10 +5,14 @@ set -e
 
 source source_autotunetmp_generic.sh
 
-./datadriven/examplesOCL/detectPlatform --precision float --file_name config_single.cfg
+./datadriven/examplesOCL/detectPlatform --precision float --file_name config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 6 --scenarioName tune_mult_AutoTuneTMP_OCL --tuner_name bruteforce --repetitions 5 --OpenCLConfigFile config_single.cfg
-./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 6 --scenarioName tune_mult_AutoTuneTMP_OCL --tuner_name line_search --repetitions 5 --OpenCLConfigFile config_single.cfg
-./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 6 --scenarioName tune_mult_AutoTuneTMP_OCL --tuner_name neighborhood_search --repetitions 5 --OpenCLConfigFile config_single.cfg
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name bruteforce --repetitions 5 --OpenCLConfigFile config_single.cfg
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name line_search --repetitions 5 --OpenCLConfigFile config_single.cfg
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name neighborhood_search --repetitions 5 --OpenCLConfigFile config_single.cfg
+mv AutoTuneTMP_regression_mult_host_${HOSTNAME}_* ${ALL_DATA_REPO_ROOT_PATH}/sparse_grids/regression/
 
-mv tune_mult_AutoTuneTMP_OCL_host_${HOSTNAME}_* ${ALL_DATA_REPO_ROOT_PATH}/sparse_grids/regression/
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --trans true --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name bruteforce --repetitions 5 --OpenCLConfigFile config_single.cfg
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --trans true --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name line_search --repetitions 1 --OpenCLConfigFile config_single.cfg
+./datadriven/examplesAutoTuneTMP/tune_mult_AutoTuneTMP_OCL --trans true --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --level 8 --scenarioName AutoTuneTMP_regression --tuner_name neighborhood_search --repetitions 5 --OpenCLConfigFile config_single.cfg
+mv AutoTuneTMP_regression_multTrans_host_${HOSTNAME}_* ${ALL_DATA_REPO_ROOT_PATH}/sparse_grids/regression/
