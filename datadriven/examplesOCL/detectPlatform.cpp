@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
   }
 
   if (variables_map.count("remove_unselected")) {
-    for (const std::string &p_name : (*configuration)["PLATFORMS"].keys()) {
+    auto platform_names = (*configuration)["PLATFORMS"].keys();
+    for (const std::string &p_name : platform_names) {
       auto &p = (*configuration)["PLATFORMS"][p_name];
       bool has_select = false;
       for (const std::string &d_name : p["DEVICES"].keys()) {
