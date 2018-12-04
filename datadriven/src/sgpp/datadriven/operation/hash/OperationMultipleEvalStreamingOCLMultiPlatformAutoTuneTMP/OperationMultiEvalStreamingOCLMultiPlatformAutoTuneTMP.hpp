@@ -167,15 +167,16 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
                                              ? deviceNode["KERNELS"][kernelName]
                                              : deviceNode["KERNELS"].addDictAttr(kernelName);
                 // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
-                std::cout << "parameter name: " << p.first << " value: " << p.second << std::endl;
+                // std::cout << "parameter name: " << p.first << " value: " << p.second <<
+                // std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
                 kernelNode.replaceTextAttr("VERBOSE", "true");
               }
             }
           }
-          std::stringstream ss;
-          this->ocl_parameters_mult->serialize(ss, 0);
-          std::cout << ss.str() << std::endl;
+          // std::stringstream ss;
+          // this->ocl_parameters_mult->serialize(ss, 0);
+          // std::cout << ss.str() << std::endl;
         });
     autotune::mult_with_tuning.set_verbose(true);
 

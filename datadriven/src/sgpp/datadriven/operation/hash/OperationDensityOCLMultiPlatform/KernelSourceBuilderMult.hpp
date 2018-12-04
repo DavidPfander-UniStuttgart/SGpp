@@ -382,7 +382,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       output << this->indent[3] << "zellenintegral*=sum;" << std::endl;
     } else {
       output << this->indent[3] << "zellenintegral_blocked[j]*=sum;" << std::endl;
-      output << this->indent[2] << "}" << std::endl; // CHANGED: correct?
+      output << this->indent[2] << "}" << std::endl;  // CHANGED: correct?
     }
     output << this->indent[2] << "}" << std::endl;
     // Update cell integral with missing factors
@@ -482,7 +482,10 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     }
 
     // These two options are not compatible
-    if (preprocess_positions) use_level_cache = false;
+    if (use_level_cache && preprocess_positions) {
+      throw;
+    }
+    // if (preprocess_positions) use_level_cache = false;
     // }
     // if (kernelConfiguration.contains("UNROLL_DIM")) {
     unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
