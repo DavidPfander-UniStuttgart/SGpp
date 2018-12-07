@@ -1,6 +1,10 @@
-#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OperationCreateGraphOCL.hpp"
+// #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OperationCreateGraphOCL.hpp"
 
-using namespace sgpp::datadriven::DensityOCLMultiPlatform;
+#include <iostream>
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/DetectComponents.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/DetectComponentsRecursive.hpp"
+
+// using namespace sgpp::datadriven::DensityOCLMultiPlatform;
 
 int main() {
   size_t k = 2;
@@ -24,8 +28,8 @@ int main() {
   directed[4 * k + 0] = 2;
   directed[4 * k + 1] = 3;
 
-  OperationCreateGraphOCL::neighborhood_list_t undirected =
-      OperationCreateGraphOCL::make_undirected_graph(directed, k);
+  sgpp::datadriven::clustering::neighborhood_list_t undirected =
+      sgpp::datadriven::clustering::make_undirected_graph(directed, k);
 
   for (size_t i = 0; i < node_count; i++) {
     for (size_t neighbor : undirected[i]) {
@@ -35,8 +39,8 @@ int main() {
 
   std::vector<int64_t> node_cluster_map;
   std::vector<std::vector<int64_t>> clusters;
-  OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected, node_cluster_map,
-                                                              clusters, 0);
+  sgpp::datadriven::clustering::get_clusters_from_undirected_graph(undirected, node_cluster_map,
+                                                                   clusters, 0);
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
@@ -83,7 +87,7 @@ int main() {
   directed[7 * k + 0] = -1;
   directed[7 * k + 1] = -1;
 
-  undirected = OperationCreateGraphOCL::make_undirected_graph(directed, k);
+  undirected = sgpp::datadriven::clustering::make_undirected_graph(directed, k);
 
   for (size_t i = 0; i < node_count; i++) {
     for (int neighbor : undirected[i]) {
@@ -94,8 +98,8 @@ int main() {
     }
   }
 
-  OperationCreateGraphOCL::get_clusters_from_undirected_graph(undirected, node_cluster_map,
-                                                              clusters, 2);
+  sgpp::datadriven::clustering::get_clusters_from_undirected_graph(undirected, node_cluster_map,
+                                                                   clusters, 2);
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << node_cluster_map[i] << std::endl;
   }
@@ -115,7 +119,7 @@ int main() {
   }
 
   std::vector<size_t> reference_cluster_map =
-      OperationCreateGraphOCL::find_clusters_recursive(directed, k);
+      sgpp::datadriven::clustering::find_clusters_recursive(directed, k);
 
   for (size_t i = 0; i < node_count; i++) {
     std::cout << "n: " << i << " belongs to cluster: " << reference_cluster_map[i] << std::endl;
