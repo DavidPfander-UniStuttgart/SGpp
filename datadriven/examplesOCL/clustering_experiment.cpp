@@ -262,11 +262,27 @@ int main() {
   //   // clustering::print_labeled(labeled_datapoints2);
   // }
 
-  std::vector<size_t> labeled_datapoints;
+  // std::vector<size_t> labeled_datapoints;
+  // {
+  //   time_point start = high_resolution_clock::now();
+  //   std::vector<std::set<int64_t>> all_clusters;
+  //   sgpp::datadriven::clustering::connected_components(graph, k, labeled_datapoints,
+  //   all_clusters);
+  //   time_point end = high_resolution_clock::now();
+  //   double duration_s_avr = std::chrono::duration<double>(end - start).count();
+  //   std::cout << "duration new: " << duration_s_avr << std::endl;
+  //   std::cout << "num_clusters: " << all_clusters.size() << std::endl;
+  //   // clustering::print_connected_components(all_clusters);
+  //   // std::cout << "cc map:" << std::endl;
+  //   // clustering::print_labeled(labeled_datapoints);
+  // }
+
+  std::vector<int64_t> labeled_datapoints;
   {
     time_point start = high_resolution_clock::now();
-    std::vector<std::set<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components(graph, k, labeled_datapoints, all_clusters);
+    std::vector<std::vector<int64_t>> all_clusters;
+    sgpp::datadriven::clustering::connected_components_no_set(graph, k, labeled_datapoints,
+                                                              all_clusters);
     time_point end = high_resolution_clock::now();
     double duration_s_avr = std::chrono::duration<double>(end - start).count();
     std::cout << "duration new: " << duration_s_avr << std::endl;
