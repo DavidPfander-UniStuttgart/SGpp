@@ -17,6 +17,7 @@
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 
 #include <boost/program_options.hpp>
 #include <chrono>
@@ -503,7 +504,7 @@ int main(int argc, char *argv[]) {
                      .count()
               << "s" << std::endl;
     // Output ergs
-    std::cout << "detected clusters: " << clusters.size() << std::endl;
+    std::cout << "detected clusters: " << all_clusters.size() << std::endl;
     if (cluster_file != "") {
       std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {
