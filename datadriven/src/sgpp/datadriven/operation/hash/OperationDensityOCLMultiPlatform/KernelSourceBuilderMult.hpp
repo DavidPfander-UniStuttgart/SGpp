@@ -50,6 +50,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   bool use_compression_streaming;
   bool use_compression_register;
   std::string compression_type;
+  std::string float_suffix_symbol;
 
   /// Generate the opencl code to save the fixed gridpoint of a workitem to the local memory
   std::string save_from_global_to_private(size_t dimensions) {
@@ -279,9 +280,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
       } else {
         // Calculate h
         if (level_func2 == std::string("l_2"))
-          output << this->indent[3] << "h = 1.0 / (" << level_func2 << ");" << std::endl;
+          output << this->indent[3] << "h = 1.0" << float_suffix_symbol << " / (" << level_func2 << ");" << std::endl;
         else
-          output << this->indent[3] << "h = 1.0 / (1 << " << level_func2 << ");" << std::endl;
+          output << this->indent[3] << "h = 1.0" << float_suffix_symbol << " / (1 << " << level_func2 << ");" << std::endl;
       }
       // Calculate u
       if (level_func1 == std::string("l_2"))
@@ -294,9 +295,9 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         output << this->indent[3] << "umid = u * h * (" << index_func2 << ") - " << index_func1
                << ";" << std::endl;
         output << this->indent[3] << "umid = fabs(umid);" << std::endl;
-        output << this->indent[3] << "umid = 1.0-umid;" << std::endl;
+        output << this->indent[3] << "umid = 1.0" << float_suffix_symbol << "-umid;" << std::endl;
         if (!use_fabs_instead_of_fmax)
-          output << this->indent[3] << "umid = fmax(umid,0.0);" << std::endl;
+          output << this->indent[3] << "umid = fmax(umid,0.0" << float_suffix_symbol << ");" << std::endl;
         else
           output << this->indent[3] << "umid = (umid + fabs(umid));" << std::endl;
         // Add integral to result sum
@@ -309,32 +310,32 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
         output << this->indent[3] << "umid = u * h * (" << index_func2 << ") - " << index_func1
                << ";" << std::endl;
         output << this->indent[3] << "umid = fabs(umid);" << std::endl;
-        output << this->indent[3] << "umid = 1.0-umid;" << std::endl;
+        output << this->indent[3] << "umid = 1.0" << float_suffix_symbol << "-umid;" << std::endl;
         if (!use_fabs_instead_of_fmax)
-          output << this->indent[3] << "umid = fmax(umid,0.0);" << std::endl;
+          output << this->indent[3] << "umid = fmax(umid,0.0" << float_suffix_symbol << ");" << std::endl;
         else
           output << this->indent[3] << "umid = (umid + fabs(umid));" << std::endl;
         output << this->indent[3] << "uright = u*h*(" << index_func2 << " + 1) - " << index_func1
                << ";" << std::endl;
         output << this->indent[3] << "uright = fabs(uright);" << std::endl;
-        output << this->indent[3] << "uright = 1.0-uright;" << std::endl;
+        output << this->indent[3] << "uright = 1.0" << float_suffix_symbol << "-uright;" << std::endl;
         if (!use_fabs_instead_of_fmax)
-          output << this->indent[3] << "uright = fmax(uright,0.0);" << std::endl;
+          output << this->indent[3] << "uright = fmax(uright,0.0" << float_suffix_symbol << ");" << std::endl;
         else
           output << this->indent[3] << "uright = (uright + fabs(uright));" << std::endl;
         output << this->indent[3] << "uleft = u*h*(" << index_func2 << " - 1) - " << index_func1
                << ";" << std::endl;
         output << this->indent[3] << "uleft = fabs(uleft);" << std::endl;
-        output << this->indent[3] << "uleft = 1.0-uleft;" << std::endl;
+        output << this->indent[3] << "uleft = 1.0" << float_suffix_symbol << "-uleft;" << std::endl;
         if (!use_fabs_instead_of_fmax)
-          output << this->indent[3] << "uleft = fmax(uleft,0.0);" << std::endl;
+          output << this->indent[3] << "uleft = fmax(uleft,0.0" << float_suffix_symbol << ");" << std::endl;
         else
           output << this->indent[3] << "uleft = (uleft + fabs(uleft));" << std::endl;
         // Add integral to result sum
         if (i == 0)
-          output << this->indent[3] << "sum = h/3.0*(umid + uleft + uright);" << std::endl;
+          output << this->indent[3] << "sum = h/3.0" << float_suffix_symbol << "*(umid + uleft + uright);" << std::endl;
         else
-          output << this->indent[3] << "sum += h/3.0*(umid + uleft + uright);" << std::endl;
+          output << this->indent[3] << "sum += h/3.0" << float_suffix_symbol << "*(umid + uleft + uright);" << std::endl;
       }
       // Swap aliases
       std::string level_func_tmp = level_func2;
@@ -351,14 +352,14 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
           // Use ternary operator to multiply with 1/3
           if (use_compression_fixed)
             output << this->indent[3] << "sum *= " << level_func2 << " == "
-                   << "decompressed_level ? 1.0/3.0 : 1.0;" << std::endl;
+                   << "decompressed_level ? 1.0" << float_suffix_symbol << "/3.0" << float_suffix_symbol << " : 1.0" << float_suffix_symbol << ";" << std::endl;
           else
             output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
-                   << "? 1.0/3.0 : 1.0;" << std::endl;
+                   << "? 1.0" << float_suffix_symbol << "/3.0" << float_suffix_symbol << " : 1.0" << float_suffix_symbol << ";" << std::endl;
         } else {
           // Use ternary operator to multiply with 2/3
           output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
-                 << " ? 2.0/3.0 : 1.0;" << std::endl;
+                 << " ? 2.0" << float_suffix_symbol << "/3.0" << float_suffix_symbol << " : 1.0" << float_suffix_symbol << ";" << std::endl;
         }
       } else {
         // decrement counter of same levels by one if the two levels do not match
@@ -369,7 +370,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     } else if (!use_implicit_zero) {
       if (!do_not_use_ternary) {
         output << this->indent[3] << "sum *= " << level_func2 << " == " << level_func1
-               << " ? 2.0 : 1.0;" << std::endl;
+               << " ? 2.0" << float_suffix_symbol << " : 1.0" << float_suffix_symbol << ";" << std::endl;
       } else {
         // decrement counter of same levels by one if the two levels do not match
         output << this->indent[3] << "same_levels -= min((int)(abs(level_local[(local_index + j)*"
@@ -490,6 +491,11 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     // if (kernelConfiguration.contains("UNROLL_DIM")) {
     unroll_dim = kernelConfiguration["UNROLL_DIM"].getBool();
     // }
+    if (this->floatType() == "float") {
+      float_suffix_symbol = 'f';
+    } else {
+      float_suffix_symbol = "";
+    }
   }
 
   /// Generates the opencl source code for the density matrix-vector multiplication
@@ -539,22 +545,22 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     sourceStream << this->indent[0] << "__private int local_id = get_local_id(0);" << std::endl;
     sourceStream << save_from_global_to_private(dimensions);
     sourceStream << this->indent[0] << "__private int teiler = 0;" << std::endl;
-    sourceStream << this->indent[0] << "__private " << this->floatType() << " h = 1.0 / 3.0;"
+    sourceStream << this->indent[0] << "__private " << this->floatType() << " h = 1.0" << float_suffix_symbol << " / 3.0" << float_suffix_symbol << ";"
                  << std::endl;
-    sourceStream << this->indent[0] << "__private " << this->floatType() << " umid = 0.0;"
+    sourceStream << this->indent[0] << "__private " << this->floatType() << " umid = 0.0" << float_suffix_symbol << ";"
                  << std::endl;
     if (!use_less) {
-      sourceStream << this->indent[0] << "__private " << this->floatType() << " uright = 0.0;"
+      sourceStream << this->indent[0] << "__private " << this->floatType() << " uright = 0.0" << float_suffix_symbol << ";"
                    << std::endl;
-      sourceStream << this->indent[0] << "__private " << this->floatType() << " uleft = 0.0;"
+      sourceStream << this->indent[0] << "__private " << this->floatType() << " uleft = 0.0" << float_suffix_symbol << ";"
                    << std::endl;
     }
-    sourceStream << this->indent[0] << "__private " << this->floatType() << " sum = 0.0;"
+    sourceStream << this->indent[0] << "__private " << this->floatType() << " sum = 0.0" << float_suffix_symbol << ";"
                  << std::endl;
     sourceStream << this->indent[0] << "__private int u= 0;" << std::endl;
     for (size_t block = 0; block < dataBlockSize; block++)
       sourceStream << this->indent[0] << this->floatType() << " gesamtint_block" << block
-                   << " = 0.0;" << std::endl;
+                   << " = 0.0" << float_suffix_symbol << ";" << std::endl;
     // Store points in local memory
     if (useLocalMemory && !preprocess_positions) {
       if (!use_compression_streaming) {
@@ -633,7 +639,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " hs_local["
                    << localCacheSize * dimensions << "];" << std::endl
-                   << this->indent[0] << "__local int hinverses_local["
+                   << this->indent[0] << "__local " << this->floatType() << "  hinverses_local["
                    << localCacheSize * dimensions << "];" << std::endl
                    << this->indent[0] << "__local " << this->floatType() << " alpha_local["
                    << localCacheSize << "];" << std::endl;
@@ -647,7 +653,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                    << std::endl;
       // get hs inverse
       sourceStream << this->indent[2] << "hinverses_local[local_id * " << dimensions
-                   << " + j] = hs_inverses[group * " << localCacheSize * dimensions
+                   << " + j] = (" << this->floatType() << ")hs_inverses[group * " << localCacheSize * dimensions
                    << " + local_id*" << dimensions << " + j];" << std::endl;
       // get hs
       sourceStream << this->indent[2] << "hs_local[local_id * " << dimensions
@@ -711,7 +717,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
     // Generate body for each element in the block
     for (size_t block = 0; block < dataBlockSize; block++) {
       if (preprocess_positions) {
-        sourceStream << " zellenintegral = 1.0;" << std::endl;
+        sourceStream << " zellenintegral = 1.0" << float_suffix_symbol << ";" << std::endl;
         if (!unroll_dim) {
           // Loop over all dimensions
           sourceStream << this->indent[2] << "for(private int dim = 0;dim< " << dimensions
@@ -721,28 +727,27 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                        << " distance = fabs(point_positions_block" << block << "[dim] - "
                        << "positions_local[i * " << dimensions << " + dim]);" << std::endl;
           // Calculate first integral (level_point < level_local)
-          sourceStream << this->indent[2] << "sum = 1.0 - distance * point_hinverses_block" << block
+          sourceStream << this->indent[2] << "sum = 1.0" << float_suffix_symbol << " - distance * point_hinverses_block" << block
                        << "[dim]; " << std::endl;
           sourceStream << this->indent[2] << "sum *= hs_local[i *" << dimensions << " + dim]; "
                        << std::endl;
-          sourceStream << this->indent[2] << "sum = max(sum, (" << this->floatType() << ") 0.0); "
+          sourceStream << this->indent[2] << "sum = max(sum, 0.0" << float_suffix_symbol << "); "
                        << std::endl;
           // Calculate second integral (level_point > level_local)
-          sourceStream << this->indent[2] << "sum += max((" << this->floatType()
-                       << ")(point_hs_block" << block << "[dim] * (1.0 - hinverses_local[i * "
-                       << dimensions << " + dim] * distance)), (" << this->floatType() << ")0.0);"
+          sourceStream << this->indent[2] << "sum += max((point_hs_block" << block << "[dim] * (1.0"
+                       << float_suffix_symbol << " - hinverses_local[i * "
+                       << dimensions << " + dim] * distance)), 0.0" << float_suffix_symbol << ");"
                        << std::endl;
           // Update cell integral
           if (this->floatType().compare("double") == 0) {
-            sourceStream << this->indent[3] << "zellenintegral*=sum*select((" << this->floatType()
-                         << " )1.0,"
-                         << " (" << this->floatType() << " )h, (long)(point_hinverses_block"
+            sourceStream << this->indent[3] << "zellenintegral*=sum*select(1.0"
+                         << float_suffix_symbol << ","
+                         << " h, (long)(point_hinverses_block"
                          << block << "[dim] == hinverses_local[i * " << dimensions << " + dim]));"
                          << std::endl;
           } else {
-            sourceStream << this->indent[3] << "zellenintegral*=sum*select((" << this->floatType()
-                         << " )1.0,"
-                         << " (" << this->floatType() << " )h, (uint)(point_hinverses_block"
+            sourceStream << this->indent[3] << "zellenintegral*=sum*select(1.0" << float_suffix_symbol << ","
+                         << " h, (uint)(point_hinverses_block"
                          << block << "[dim] == hinverses_local[i * " << dimensions << " + dim]));"
                          << std::endl;
           }
@@ -754,29 +759,28 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
                          << dim << " = fabs(point_positions_block" << block << "[" << dim << "] - "
                          << "positions_local_dim" << dim << "[i]);" << std::endl;
             // Calculate first integral (level_point < level_local)
-            sourceStream << this->indent[2] << "sum = 1.0 - distance_dim" << dim
+            sourceStream << this->indent[2] << "sum = 1.0" << float_suffix_symbol << " - distance_dim" << dim
                          << " * point_hinverses_block" << block << "[" << dim << "]; " << std::endl;
             sourceStream << this->indent[2] << "sum *= hs_local_dim" << dim << "[i]; " << std::endl;
-            sourceStream << this->indent[2] << "sum = max(sum, (" << this->floatType() << ")0.0); "
+            sourceStream << this->indent[2] << "sum = max(sum, 0.0" << float_suffix_symbol << "); "
                          << std::endl;
             // Calculate second integral (level_point > level_local)
-            sourceStream << this->indent[2] << "sum += max((" << this->floatType()
-                         << ")(point_hs_block" << block << "[" << dim
-                         << "] * (1.0 - hinverses_local_dim" << dim << "[i] * distance_dim" << dim
-                         << ")), (" << this->floatType() << ")0.0);" << std::endl;
+            sourceStream << this->indent[2] << "sum += max((point_hs_block" << block << "[" << dim
+                         << "] * (1.0" << float_suffix_symbol << " - hinverses_local_dim" << dim << "[i] * distance_dim" << dim
+                         << ")), 0.0" << float_suffix_symbol << ");" << std::endl;
             // Update cell integral
             if (this->floatType().compare("double") == 0) {
-              sourceStream << this->indent[3] << "zellenintegral*=sum*select((" << this->floatType()
-                           << " )1.0,"
-                           << " (" << this->floatType() << " )h, (long)(point_hinverses_block"
+              sourceStream << this->indent[3] << "zellenintegral*=sum*select(1.0"
+                           << float_suffix_symbol <<","
+                           << " h, (long)(point_hinverses_block"
                            << "[" << dim << "] == hinverses_local_dim" << dim << "[i]));"
                            << std::endl;
             } else {
-              sourceStream << this->indent[3] << "zellenintegral*=sum*select((" << this->floatType()
-                           << " )1.0,"
-                           << " (" << this->floatType() << " )h, (uint)(point_hinverses_block"
-                           << "[" << dim << "] == hinverses_local_dim" << dim << "[i]));"
-                           << std::endl;
+                sourceStream << this->indent[3]
+                             << "zellenintegral*=sum*select(1.0"<< float_suffix_symbol << ","
+                             << " h, (uint)(point_hinverses_block"
+                             << "[" << dim << "] == hinverses_local_dim" << dim << "[i]));"
+                             << std::endl;
             }
           }
         }
