@@ -105,12 +105,11 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
     autotune::fixed_set_parameter<int64_t> p1("LOCAL_SIZE", {64, 128, 256});
     autotune::fixed_set_parameter<bool> p2("KERNEL_USE_LOCAL_MEMORY", {true, false});
     autotune::fixed_set_parameter<std::string> p3("KERNEL_STORE_DATA", {"array"}, false);
-    autotune::fixed_set_parameter<int64_t> p4("KERNEL_MAX_DIM_UNROLL", {1, 10});
-    autotune::fixed_set_parameter<int64_t> p5("KERNEL_DATA_BLOCK_SIZE", {1, 2, 4});
-    // autotune::fixed_set_parameter p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {1, 2, 4});
-    autotune::fixed_set_parameter<int64_t> p7("KERNEL_SCHEDULE_SIZE", {102400});
-    autotune::fixed_set_parameter<int64_t> p8("KERNEL_PREFETCH_SIZE", {32, 64, 128});
-    // autotune::fixed_set_parameter p9("KERNEL_TRANS_PREFETCH_SIZE", {32, 64, 128});
+    autotune::fixed_set_parameter<int64_t> p4("KERNEL_MAX_DIM_UNROLL", {1, 2, 4, 10});
+    autotune::fixed_set_parameter<int64_t> p5("KERNEL_DATA_BLOCK_SIZE", {1, 2, 4, 8});
+
+    autotune::fixed_set_parameter<int64_t> p7("KERNEL_SCHEDULE_SIZE", {1024000});
+    autotune::fixed_set_parameter<int64_t> p8("KERNEL_PREFETCH_SIZE", {16, 32, 64, 128});
 
     autotune_parameters_mult.add_parameter(p1);
     autotune_parameters_mult.add_parameter(p2);
@@ -122,15 +121,18 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
     autotune_parameters_mult.add_parameter(p8);
     // autotune_parameters_mult.add_parameter(p9);
 
+    autotune::fixed_set_parameter<int64_t> p6("KERNEL_TRANS_GRID_BLOCK_SIZE", {1, 2, 4, 8});
+    autotune::fixed_set_parameter<int64_t> p9("KERNEL_TRANS_PREFETCH_SIZE", {16, 32, 64, 128});
+
     autotune_parameters_multTranspose.add_parameter(p1);
     autotune_parameters_multTranspose.add_parameter(p2);
     autotune_parameters_multTranspose.add_parameter(p3);
     autotune_parameters_multTranspose.add_parameter(p4);
-    autotune_parameters_multTranspose.add_parameter(p5);
-    // autotune_parameters_multTranspose.add_parameter(p6);
+    // autotune_parameters_multTranspose.add_parameter(p5);
+    autotune_parameters_multTranspose.add_parameter(p6);
     autotune_parameters_multTranspose.add_parameter(p7);
-    autotune_parameters_multTranspose.add_parameter(p8);
-    // autotune_parameters_multTranspose.add_parameter(p9);
+    // autotune_parameters_multTranspose.add_parameter(p8);
+    autotune_parameters_multTranspose.add_parameter(p9);
 
     autotune::mult_with_tuning.set_kernel_functor(
         [this](base::DataVector &alpha, base::DataVector &result) {
@@ -165,15 +167,16 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
                                              ? deviceNode["KERNELS"][kernelName]
                                              : deviceNode["KERNELS"].addDictAttr(kernelName);
                 // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
-                std::cout << "parameter name: " << p.first << " value: " << p.second << std::endl;
+                // std::cout << "parameter name: " << p.first << " value: " << p.second <<
+                // std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
                 kernelNode.replaceTextAttr("VERBOSE", "true");
               }
             }
           }
-          std::stringstream ss;
-          this->ocl_parameters_mult->serialize(ss, 0);
-          std::cout << ss.str() << std::endl;
+          // std::stringstream ss;
+          // this->ocl_parameters_mult->serialize(ss, 0);
+          // std::cout << ss.str() << std::endl;
         });
     autotune::mult_with_tuning.set_verbose(true);
 
@@ -194,7 +197,7 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
         });
 
     autotune::mult_transpose_with_tuning.set_kernel_duration_functor(
-        [this]() { return this->eval_mult->getDuration(); });
+        [this]() { return this->eval_multTranspose->getDuration(); });
 
     autotune::mult_transpose_with_tuning.set_create_parameter_file_functor(
         [this](autotune::parameter_value_set &parameter_values) {
@@ -311,12 +314,32 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
 
   void tune_multTranspose(base::DataVector &alpha, base::DataVector &result,
                           const std::string &scenario_name, const std::string &tuner_name) {
-    autotune::tuners::bruteforce tuner(autotune::mult_with_tuning,
-                                       autotune_parameters_multTranspose);
-    tuner.set_write_measurement(scenario_name);
-    tuner.set_verbose(true);
-
-    autotune::countable_set optimal_parameters = tuner.tune(alpha, result);
+    autotune::countable_set optimal_parameters;
+    if (tuner_name.compare("bruteforce") == 0) {
+      autotune::tuners::bruteforce tuner(autotune::mult_transpose_with_tuning,
+                                         autotune_parameters_multTranspose);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else if (tuner_name.compare("line_search") == 0) {
+      autotune::tuners::line_search tuner(autotune::mult_transpose_with_tuning,
+                                          autotune_parameters_multTranspose,
+                                          10 * autotune_parameters_multTranspose.size());
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else if (tuner_name.compare("neighborhood_search") == 0) {
+      autotune::tuners::neighborhood_search tuner(autotune::mult_transpose_with_tuning,
+                                                  autotune_parameters_multTranspose, 100);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      // tuner.setup_test(test_result);
+      optimal_parameters = tuner.tune(alpha, result);
+    } else {
+      throw "error: tuner not implemented!";
+    }
     autotune::mult_transpose_with_tuning.set_parameter_values(optimal_parameters);
   }
 };

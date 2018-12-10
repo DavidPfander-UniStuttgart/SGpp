@@ -30,15 +30,25 @@ base::OperationMultipleEval* createStreamingOCLMultiPlatformConfigured(
     parameters = manager->getConfiguration();
   }
 
+  // std::cout << "before augment" << std::endl;
+  // parameters->serialize(std::cout, 0);
+
   StreamingOCLMultiPlatform::Configuration::augmentDefaultParameters(*parameters);
 
-  //    std::string &firstPlatformName = (*parameters)["PLATFORMS"].keys()[0];
-  //    std::string &firstDeviceName =
-  //    (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"].keys()[0];
-  //    json::Node &deviceNode =
-  //    (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"][firstDeviceName];
-  //    json::Node &firstDeviceConfig =
-  //    deviceNode["[StreamingOCLMultiPlatform::Configuration::getKernelName()];
+  // std::cout << "after augment" << std::endl;
+  // parameters->serialize(std::cout, 0);
+
+  // std::string& firstPlatformName = (*parameters)["PLATFORMS"].keys()[0];
+  // std::string& firstDeviceName =
+  // (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"].keys()[0]; json::Node& deviceNode =
+  //     (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"][firstDeviceName];
+  // json::Node& firstDeviceConfig =
+  //     deviceNode["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
+  // auto keys = firstDeviceConfig.keys();
+  // for (auto key : keys) {
+  //   std::cout << "key: " << key << " v: " << firstDeviceConfig[key].get() << std::endl;
+  // }
+
   //  std::cout << "INTERNAL_PRECISION: " << (*parameters)["INTERNAL_PRECISION"].get() << std::endl;
   if ((*parameters)["INTERNAL_PRECISION"].get().compare("float") == 0) {
     return new datadriven::StreamingOCLMultiPlatform::OperationMultiEvalStreamingOCLMultiPlatform<
