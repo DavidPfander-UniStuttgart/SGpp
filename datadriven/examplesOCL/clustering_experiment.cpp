@@ -174,7 +174,7 @@ int main() {
   constexpr size_t cc_size = 1000000;  // recursive can only do up to 10^4
   std::cout << "num datapoints: " << (num_cc * cc_size) << std::endl;
 
-  constexpr size_t k = 2;
+  constexpr size_t k = 5;
 
   // // merge two
   // constexpr size_t N = 4;
