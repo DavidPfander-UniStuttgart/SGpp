@@ -281,8 +281,7 @@ int main() {
   {
     time_point start = high_resolution_clock::now();
     std::vector<std::vector<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components_no_set(graph, k, labeled_datapoints,
-                                                              all_clusters);
+    sgpp::datadriven::clustering::connected_components(graph, k, labeled_datapoints, all_clusters);
     time_point end = high_resolution_clock::now();
     double duration_s_avr = std::chrono::duration<double>(end - start).count();
     std::cout << "duration new: " << duration_s_avr << std::endl;
