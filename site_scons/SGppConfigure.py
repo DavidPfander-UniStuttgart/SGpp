@@ -251,10 +251,10 @@ def checkOpenCL(config):
 
 def checkAutoTuneTMP(config):
 
-  if not config.env["USE_OCL"]:
-    Helper.printErrorAndExit("USE_AUTOTUNE_TMP requires OpenCL (USE_OCL=1)")
+  if config.env["USE_AUTOTUNETMP"]:
+    if not config.env["USE_OCL"]:
+      Helper.printErrorAndExit("USE_AUTOTUNETMP requires OpenCL (USE_OCL=1)")
 
-  if config.env["USE_AUTOTUNE_TMP"]:
     if not config.CheckLib("libdl", language="c++", autoadd=0):
       Helper.printErrorAndExit("libdl not found, but required for CPPJIT (AutoTuneTMP)")
     config.env.AppendUnique(LIBS="dl")

@@ -59,7 +59,7 @@ if (env["ARCH"].lower() == "avx2"):
     module.buildExamples("examplesAVX")
 if env["USE_HPX"]:
     module.buildExamples("examplesHPX")
-if env["USE_AUTOTUNE_TMP"]:
+if env["USE_AUTOTUNETMP"]:
   #  , additionalExampleDependencies=["-lstdc++fs"]
   module.buildExamples("examplesAutoTuneTMP",
                        additionalExampleDependencies=["boost_program_options",

@@ -486,10 +486,8 @@ int main(int argc, char *argv[]) {
         find_clusters_end;
     find_clusters_start = std::chrono::system_clock::now();
     std::vector<int64_t> node_cluster_map;
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t
-        clusters;
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-        knn_graph, k, node_cluster_map, clusters);
+    sgpp::datadriven::clustering::neighborhood_list_t clusters;
+    sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, clusters);
     find_clusters_end = std::chrono::system_clock::now();
     std::cout << "find clusters duration: "
               << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start).count()
