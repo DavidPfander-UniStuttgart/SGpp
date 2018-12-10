@@ -30,7 +30,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
 
   /// Generates the whole opencl kernel code used for the pruning of a graph
   std::string generateSource(size_t dimensions, size_t data_size, size_t gridSize, size_t k,
-                             real_type threshold) {
+                             real_type threshold_numeric) {
+    std::string threshold = std::to_string(threshold_numeric) + this->constSuffix();
     if (kernelConfiguration.contains("REUSE_SOURCE")) {
       if (kernelConfiguration["REUSE_SOURCE"].getBool()) {
         return this->reuseSource("DensityOCLMultiPlatform_prune_graph.cl");
@@ -105,7 +106,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[2] << "}" << std::endl
                    << this->indent[2] << "endwert+=wert*alphas[gridpoint];" << std::endl
                    << this->indent[1] << "}" << std::endl
-                   << this->indent[1] << "if (endwert< " << threshold << " )" << std::endl
+                   << this->indent[1] << "if (fmax(endwert, 0.0" << this->constSuffix() << ") < " << threshold << " )" << std::endl
                    << this->indent[1] << "{" << std::endl
                    << this->indent[2] << "nodes[ " << k << " *index + i] = -2;" << std::endl
                    << this->indent[1] << "}" << std::endl
@@ -126,7 +127,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << this->indent[1] << "}" << std::endl
                    << this->indent[1] << "endwert+=wert*alphas[gridpoint];" << std::endl
                    << this->indent[0] << "}" << std::endl
-                   << this->indent[0] << "if (endwert< " << threshold << " )" << std::endl
+                   << this->indent[0] << "if (fmax(endwert, 0.0" << this->constSuffix() << ") < " << threshold << " )" << std::endl
                    << this->indent[0] << "{" << std::endl
                    << this->indent[1] << "for (int i = 0; i <  " << k << " ; i++)" << std::endl
                    << this->indent[1] << "{" << std::endl
@@ -277,12 +278,8 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
 
       sourceStream << this->indent[0] << "if (get_global_id(0) < chunksize) {" << std::endl;
       sourceStream << this->indent[0] << "// point itself below density?" << std::endl;
-      if (threshold > 0.0)
-        sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
-                     << this->constSuffix() << ") {" << std::endl;
-      else // Suffix does not work with 0
-        sourceStream << this->indent[0] << "if (evals[" << k << "] < " << threshold
-                     << ") {" << std::endl;
+      sourceStream << this->indent[0] << "if (fmax(evals[" << k << "], 0.0" << this->constSuffix() << ") < " << threshold
+                      << ") {" << std::endl;
       sourceStream << this->indent[1] << "// invalidate all neighbors, point now isolated"
                    << std::endl;
       sourceStream << this->indent[1] << "for (int cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
@@ -295,11 +292,7 @@ class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> 
                    << std::endl;
       sourceStream << this->indent[1] << "for (size_t cur_k = 0; cur_k < " << k << "; cur_k += 1) {"
                    << std::endl;
-      if (threshold > 0.0)
-        sourceStream << this->indent[2] << "if (evals[cur_k] < " << threshold << this->constSuffix()
-                     << ") {" << std::endl;
-      else // Suffix does not work with 0
-        sourceStream << this->indent[2] << "if (evals[cur_k] < " << threshold
+      sourceStream << this->indent[2] << "if (fmax(evals[cur_k], 0.0" << this->constSuffix() << ") < " << threshold
                      << ") {" << std::endl;
       sourceStream << this->indent[3] << "nodes[get_global_id(0) * " << k << " + cur_k] = -2;"
                    << std::endl;

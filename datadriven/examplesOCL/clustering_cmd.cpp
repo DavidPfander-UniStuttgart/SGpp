@@ -33,6 +33,7 @@
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include "sgpp/globaldef.hpp"
 #include "sgpp/solver/sle/ConjugateGradients.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 
 double testAccuracy(const std::vector<int> correct, const std::vector<int> result, const int size,
                     const int k) {
@@ -825,8 +826,6 @@ int main(int argc, char **argv) {
 
   {
     std::cout << "Finding clusters..." << std::endl;
-    std::vector<int64_t> node_cluster_map;
-    sgpp::datadriven::clustering::neighborhood_list_t clusters;
 
     std::chrono::time_point<std::chrono::system_clock> find_cluster_timer_start;
     std::chrono::time_point<std::chrono::system_clock> find_cluster_timer_stop;
@@ -835,15 +834,23 @@ int main(int argc, char **argv) {
     // TODO: update after conversion
     // std::vector<int32_t> graph_converted(graph.begin(), graph.end());
 
-    sgpp::datadriven::clustering::find_clusters(graph, k, node_cluster_map, clusters);
+    std::vector<int64_t> node_cluster_map;
+    std::vector<std::vector<int64_t>> clusters;    
+    // sgpp::datadriven::clustering::find_clusters(graph, k, node_cluster_map, clusters);
 
+    sgpp::datadriven::clustering::connected_components(graph, k, node_cluster_map,
+                                                       clusters);    
     find_cluster_timer_stop = std::chrono::system_clock::now();
+
     std::chrono::duration<double> find_cluster_elapsed_seconds =
         find_cluster_timer_stop - find_cluster_timer_start;
     std::cout << "find_cluster_duration_total: " << find_cluster_elapsed_seconds.count()
               << std::endl;
 
     std::cout << "detected clusters: " << clusters.size() << std::endl;
+    for (size_t i = 0; i < clusters.size(); i += 1) {
+        std::cout << "size cluster i: " << i << " -> " << clusters[i].size() << std::endl;
+    }    
 
     if (write_cluster_map) {
       std::ofstream out_cluster_map(std::string("results/") + scenario_name + "_cluster_map.csv");

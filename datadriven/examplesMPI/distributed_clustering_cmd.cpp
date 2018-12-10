@@ -496,8 +496,7 @@ int main(int argc, char *argv[]) {
     std::vector<std::vector<int64_t>> all_clusters;
     sgpp::datadriven::clustering::connected_components(knn_graph, k, node_cluster_map,
                                                        all_clusters);
-    // sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-    //     knn_graph, k, node_cluster_map, clusters);
+    // sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, all_clusters);
     find_clusters_end = std::chrono::system_clock::now();
     std::cout << "find clusters duration: "
               << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start)
@@ -505,6 +504,9 @@ int main(int argc, char *argv[]) {
               << "s" << std::endl;
     // Output ergs
     std::cout << "detected clusters: " << all_clusters.size() << std::endl;
+    for (size_t i = 0; i < all_clusters.size(); i += 1) {
+      std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
+    }
     if (cluster_file != "") {
       std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {

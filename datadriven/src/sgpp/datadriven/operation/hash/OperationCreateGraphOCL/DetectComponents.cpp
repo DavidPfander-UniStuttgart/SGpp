@@ -12,7 +12,7 @@ neighborhood_list_t make_undirected_graph(std::vector<int64_t> &directed, size_t
   // neighborhood_list_t undirected(node_count, std::vector<int>());
   neighborhood_list_t undirected(node_count);
 // add directed edges
-#pragma omp parallel for
+// #pragma omp parallel for
   for (size_t i = 0; i < node_count; i += 1) {
     for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
       if (directed[i * k + cur_k] == -1) {
