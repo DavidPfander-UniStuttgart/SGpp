@@ -17,6 +17,7 @@
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 
 #include <boost/program_options.hpp>
 #include <chrono>
@@ -58,7 +59,8 @@ int main(int argc, char *argv[]) {
     description.add_options()("help", "display help")(
         "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
         "training data set as an arff file")(
-        "binary_header_filename", boost::program_options::value<std::string>(&binary_header_filename),
+        "binary_header_filename",
+        boost::program_options::value<std::string>(&binary_header_filename),
         "training data set as an arff file")(
         "level", boost::program_options::value<size_t>(&level)->default_value(4),
         "level of the sparse grid used for density estimation")(
@@ -102,8 +104,7 @@ int main(int argc, char *argv[]) {
         boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
         "for density estimation, only surpluses below threshold are coarsened")(
         "verbose_timers",
-        boost::program_options::value<bool>(&verbose_timers)
-            ->default_value(false),
+        boost::program_options::value<bool>(&verbose_timers)->default_value(false),
         "Prints times per multiplication");
 
     boost::program_options::variables_map variables_map;
@@ -205,8 +206,7 @@ int main(int argc, char *argv[]) {
     global_start = std::chrono::system_clock::now();
 
     // setup MPI network according to config file
-    std::chrono::time_point<std::chrono::system_clock> setup_network_start,
-        setup_network_end;
+    std::chrono::time_point<std::chrono::system_clock> setup_network_start, setup_network_end;
     setup_network_start = std::chrono::system_clock::now();
     std::cout << "Setup:" << std::endl;
     std::cout << "------ " << std::endl;
@@ -221,24 +221,25 @@ int main(int argc, char *argv[]) {
     setup_network_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Network setup duration: "
-          << static_cast<std::chrono::duration<double>>(setup_network_end - setup_network_start).count() << std::endl;
+                << static_cast<std::chrono::duration<double>>(setup_network_end -
+                                                              setup_network_start)
+                       .count()
+                << std::endl;
     }
 
     // Loading dataset
-    std::chrono::time_point<std::chrono::system_clock> loading_data_start,
-        loading_data_end;
+    std::chrono::time_point<std::chrono::system_clock> loading_data_start, loading_data_end;
     loading_data_start = std::chrono::system_clock::now();
     sgpp::base::DataMatrix dataset;
     size_t dim = 0;
     if (variables_map.count("binary_header_filename") != 0) {
-    std::cerr << "Loading binary dataset: " <<  std::endl;
-      dataset  = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(binary_header_filename);
+      std::cerr << "Loading binary dataset: " << std::endl;
+      dataset = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(binary_header_filename);
       dim = dataset.getNcols();
-    }
-    else if (variables_map.count("datasetFileName") != 0) {
-      std::cerr << "Loading ARFF dataset: " <<  std::endl;
+    } else if (variables_map.count("datasetFileName") != 0) {
+      std::cerr << "Loading ARFF dataset: " << std::endl;
       sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
-      dataset  = data.getData();
+      dataset = data.getData();
       dim = dataset.getNcols();
     }
     std::cerr << "dataset_size: " << dataset.getNrows() << std::endl;
@@ -246,12 +247,13 @@ int main(int argc, char *argv[]) {
     loading_data_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Dataset load (on master) duration: "
-                << static_cast<std::chrono::duration<double>>(loading_data_end - loading_data_start).count() << std::endl;
+                << static_cast<std::chrono::duration<double>>(loading_data_end - loading_data_start)
+                       .count()
+                << std::endl;
     }
 
     // Create Grid
-    std::chrono::time_point<std::chrono::system_clock> grid_creation_start,
-        grid_creation_end;
+    std::chrono::time_point<std::chrono::system_clock> grid_creation_start, grid_creation_end;
     grid_creation_start = std::chrono::system_clock::now();
     sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(dim);
     sgpp::base::GridGenerator &gridGen = grid->getGenerator();
@@ -264,10 +266,12 @@ int main(int argc, char *argv[]) {
     grid_creation_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Grid creation (on master) duration: "
-                << static_cast<std::chrono::duration<double>>(grid_creation_end - grid_creation_start).count() << std::endl;
+                << static_cast<std::chrono::duration<double>>(grid_creation_end -
+                                                              grid_creation_start)
+                       .count()
+                << std::endl;
     }
-    std::cout << "Grid created! Number of grid points:     " << gridsize
-              << std::endl;
+    std::cout << "Grid created! Number of grid points:     " << gridsize << std::endl;
     std::cout << std::endl << std::endl;
 
     std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -275,15 +279,17 @@ int main(int argc, char *argv[]) {
     {
       std::cout << "Create right-hand side of density equation: " << std::endl;
       std::cout << "-------------------------------------------- " << std::endl;
-      std::chrono::time_point<std::chrono::system_clock> rhs_op_creation_start,
-          rhs_op_creation_end;
+      std::chrono::time_point<std::chrono::system_clock> rhs_op_creation_start, rhs_op_creation_end;
       rhs_op_creation_start = std::chrono::system_clock::now();
-      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(
-          *grid, dataset, configFileName);
+      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                     configFileName);
       rhs_op_creation_end = std::chrono::system_clock::now();
       if (verbose_timers) {
         std::cout << "RHS operation creation (includes grid and dataset transfers) duration: "
-                  << static_cast<std::chrono::duration<double>>(rhs_op_creation_end - rhs_op_creation_start).count() << std::endl;
+                  << static_cast<std::chrono::duration<double>>(rhs_op_creation_end -
+                                                                rhs_op_creation_start)
+                         .count()
+                  << std::endl;
       }
       // Create right hand side vector
       std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -291,8 +297,8 @@ int main(int argc, char *argv[]) {
       rhs_op.generate_b(rhs);
       rhs_end = std::chrono::system_clock::now();
       std::cout << "rhs creation duration: "
-                << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count()
-                << "s" << std::endl;
+                << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count() << "s"
+                << std::endl;
       // std::cout << std::endl << std::endl;
 
       // Solve for alpha vector via CG solver
@@ -306,7 +312,10 @@ int main(int argc, char *argv[]) {
       mult_op_creation_end = std::chrono::system_clock::now();
       if (verbose_timers) {
         std::cout << "Density mult operation creation (includes grid transfer) duration: "
-                  << static_cast<std::chrono::duration<double>>(mult_op_creation_end - mult_op_creation_start).count() << std::endl;
+                  << static_cast<std::chrono::duration<double>>(mult_op_creation_end -
+                                                                mult_op_creation_start)
+                         .count()
+                  << std::endl;
       }
       solver_start = std::chrono::system_clock::now();
       alpha.setAll(1.0);
@@ -345,25 +354,23 @@ int main(int argc, char *argv[]) {
         rhs_op.generate_b(rhs);
         rhs_end = std::chrono::system_clock::now();
         std::cout << "rhs creation duration: "
-                  << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count()
-                  << "s" << std::endl;
+                  << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count() << "s"
+                  << std::endl;
 
         // Solve for alpha vector via CG solver
         std::cout << "Solve for alpha: " << std::endl;
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(
             *grid, lambda, configFileName, verbose_timers);
-        std::chrono::time_point<std::chrono::system_clock>
-            solver_start, solver_end;
+        std::chrono::time_point<std::chrono::system_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
         sgpp::solver::ConjugateGradients solver(1000, epsilon);
         solver.solve(mult_op, alpha, rhs, false, true);
         solver_end = std::chrono::system_clock::now();
-        std::cout
-            << "solver duration: "
-            << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
-            << "s" << std::endl;
+        std::cout << "solver duration: "
+                  << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
+                  << "s" << std::endl;
       }
       if (coarsening_points > 0) {
         size_t grid_size_before_coarsen = grid->getSize();
@@ -396,17 +403,15 @@ int main(int argc, char *argv[]) {
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(
             *grid, lambda, configFileName, verbose_timers);
-        std::chrono::time_point<std::chrono::system_clock>
-            solver_start, solver_end;
+        std::chrono::time_point<std::chrono::system_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
         sgpp::solver::ConjugateGradients solver(1000, epsilon);
         solver.solve(mult_op, alpha, rhs, false, true);
         solver_end = std::chrono::system_clock::now();
-        std::cout
-            << "solver duration: "
-            << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
-            << "s" << std::endl;
+        std::cout << "solver duration: "
+                  << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
+                  << "s" << std::endl;
       }
     }
     gridsize = grid->getSize();
@@ -437,25 +442,28 @@ int main(int argc, char *argv[]) {
     // Create and prune knn graph
     std::cout << "Create and prune graph: " << std::endl;
     std::cout << "----------------------- " << std::endl;
-    std::chrono::time_point<std::chrono::system_clock> knn_op_creation_start,
-        knn_op_creation_end;
+    std::chrono::time_point<std::chrono::system_clock> knn_op_creation_start, knn_op_creation_end;
     knn_op_creation_start = std::chrono::system_clock::now();
     sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
         *grid, alpha, dataset, k, threshold, configFileName);
     knn_op_creation_end = std::chrono::system_clock::now();
     if (verbose_timers) {
-      std::cout << "KNN (create and prune) operation creation (includes cached dataset transfer) duration: "
-                << static_cast<std::chrono::duration<double>>(knn_op_creation_end - knn_op_creation_start).count() << std::endl;
+      std::cout << "KNN (create and prune) operation creation (includes cached dataset transfer) "
+                   "duration: "
+                << static_cast<std::chrono::duration<double>>(knn_op_creation_end -
+                                                              knn_op_creation_start)
+                       .count()
+                << std::endl;
     }
-    std::chrono::time_point<std::chrono::system_clock>
-        create_knn_start, create_knn_end;
+    std::chrono::time_point<std::chrono::system_clock> create_knn_start, create_knn_end;
     create_knn_start = std::chrono::system_clock::now();
     std::vector<int64_t> knn_graph;
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();
-    std::cout << "create knn operation duration: "
-              << static_cast<std::chrono::duration<double>>(create_knn_end - create_knn_start).count()
-              << "s" << std::endl;
+    std::cout
+        << "create knn operation duration: "
+        << static_cast<std::chrono::duration<double>>(create_knn_end - create_knn_start).count()
+        << "s" << std::endl;
     auto print_knn_graph = [&dataset, k](std::string filename, std::vector<int64_t> &graph) {
       std::ofstream out_graph(filename);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {
@@ -482,20 +490,23 @@ int main(int argc, char *argv[]) {
 
     std::cout << "Find clusters in pruned graph: " << std::endl;
     std::cout << "------------------------------ " << std::endl;
-    std::chrono::time_point<std::chrono::system_clock> find_clusters_start,
-        find_clusters_end;
+    std::chrono::time_point<std::chrono::system_clock> find_clusters_start, find_clusters_end;
     find_clusters_start = std::chrono::system_clock::now();
     std::vector<int64_t> node_cluster_map;
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t
-        clusters;
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-        knn_graph, k, node_cluster_map, clusters);
+    std::vector<std::vector<int64_t>> all_clusters;
+    sgpp::datadriven::clustering::connected_components(knn_graph, k, node_cluster_map,
+                                                       all_clusters);
+    // sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, all_clusters);
     find_clusters_end = std::chrono::system_clock::now();
     std::cout << "find clusters duration: "
-              << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start).count()
+              << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start)
+                     .count()
               << "s" << std::endl;
     // Output ergs
-    std::cout << "detected clusters: " << clusters.size() << std::endl;
+    std::cout << "detected clusters: " << all_clusters.size() << std::endl;
+    for (size_t i = 0; i < all_clusters.size(); i += 1) {
+      std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
+    }
     if (cluster_file != "") {
       std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {

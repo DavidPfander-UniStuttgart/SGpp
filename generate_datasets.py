@@ -65,10 +65,9 @@ def generate_dataset(dimensions, clusters, setsize, abweichung, rauschensize, cl
       continue_search = 1
       while continue_search:
          center[:] = []
-         if counter == 50:
-            # print "in here"
-            abweichung = abweichung * 0.9
-            counter = 0
+         if counter == 100:
+             print "error: could not generate cluster centers"
+             raise SystemExit
          for dimension in range(0, dimensions):
             center.append(random.random())
          #check point
@@ -122,14 +121,16 @@ def generate_dataset(dimensions, clusters, setsize, abweichung, rauschensize, cl
 # dimensions, clusters, setsize, abweichung, rauschensize
 clusters=3
 abweichung = 0.12
-clusters_distance = 3 # required distance between cluster centers, criterion dis < c_dis * abw
-noise_percent = 0.18
+clusters_distance = 10 # required distance between cluster centers, criterion dis < c_dis * abw
+noise_percent = 0.0
 # for dim in range(2, 11, 2):
 for dim in range(10, 11, 2):
     # for dataset_size in [1E7, 1E8, 1E9]:
-    for dataset_size in [int(1E7)]:
+    for dataset_size in [int(100000)]:
     # for dataset_size in chain([200], range(20000, 110000, 20000), range(200000, 1100000, 200000)):
-      file_name = "datasets/gaussian_c" + str(clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
+      file_name = "paper_datasets/gaussian_c" + str(clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
+      if noise_percent > 0.0:
+          file_name += "_noise"
       print "creating " + file_name + ".arff"
       noise = int(noise_percent * dataset_size)
       dataset1, Y1, centers = generate_dataset(dim, clusters, dataset_size, abweichung, noise, clusters_distance)

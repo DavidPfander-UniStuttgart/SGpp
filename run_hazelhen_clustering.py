@@ -16,8 +16,8 @@ lambda_value = 1E-6
 threshold = 0.7
 epsilon = 1E-3
 
-nodes_start= 16
-nodes_end=16
+nodes_start= 64
+nodes_end=64
 
 
 for dataset_size in dataset_sizes:
@@ -25,7 +25,7 @@ for dataset_size in dataset_sizes:
     # for nodes in range(nodes_start, nodes_end):
 
     # originally set to 25000 for l8 and 32 nodes
-    seconds_total_smallest_no_of_nodes = 50000 # 1h
+    seconds_total_smallest_no_of_nodes = 25000
     
     while nodes <= nodes_end:
         minutes_total, seconds = divmod(seconds_total_smallest_no_of_nodes, 60)

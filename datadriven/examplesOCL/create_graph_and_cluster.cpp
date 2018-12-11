@@ -19,6 +19,7 @@
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/OpFactory.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 #include "sgpp/datadriven/operation/hash/OperationDensityMultiplicationAVX/OperationDensityMultiplicationAVX.hpp"
 #include "sgpp/datadriven/operation/hash/OperationDensityOCLMultiPlatform/OpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/OperationPruneGraphOCL/OpFactory.hpp"
@@ -107,8 +108,10 @@ int main(int argc, char **argv) {
   // TODO remove this after final conversion
   std::vector<int64_t> graph_converted(graph.begin(), graph.end());
   std::vector<int64_t> node_cluster_map;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::neighborhood_list_t clusters;
-  sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::find_clusters(
-      graph_converted, k, node_cluster_map, clusters);
+  // sgpp::datadriven::clustering::neighborhood_list_t clusters;
+  // sgpp::datadriven::clustering::find_clusters(graph_converted, k, node_cluster_map, clusters);
+  std::vector<std::vector<int64_t>> clusters;
+  sgpp::datadriven::clustering::connected_components(graph_converted, k, node_cluster_map, clusters);  
+  std::cout << "num clusters: " << clusters.size() << std::endl;
   std::cout << std::endl << "all done!" << std::endl;
 }
