@@ -587,7 +587,7 @@ std::vector<int64_t> OperationNearestNeighborSampled::knn_sampling(
   return final_graph;
 } // namespace datadriven
 
-#ifdef USE_OCL
+#if USE_OCL == 1
 std::vector<int64_t> OperationNearestNeighborSampled::knn_naive_ocl(
     size_t dim, sgpp::base::DataMatrix &dataset, uint32_t k,
     std::string configFileName) {
