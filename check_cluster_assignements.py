@@ -108,7 +108,7 @@ def count_correct_cluster_hits(correct_output, actual_output, print_detailed_hit
                     print("Size of reference cluster ", ID, " is not greater than 0. This should not happen! Exiting ...")
                     sys.exit(1)
                 percentage = round(hits[ID] / sizes[ID] * 100.0, 4)
-                print("Reference cluster ", ID, " hitrate is ", hits[ID], " hits out of ", sizes[ID],
+                print("Reference cluster ", ID, " hit rate is ", hits[ID], " hits out of ", sizes[ID],
                       " data points => ", percentage, "%")
         percentage = 100.0
         if sizes[-1] > 0: #noise can be zero
@@ -122,18 +122,18 @@ if __name__ == '__main__':
     data point in a given file with the correct assignement given by a reference file. It will\
     output the overall correct hits and the hits per cluster.')
     parser.add_argument('--reference_cluster_assignement', type=str, required=True,
-                        help='File containing the reference clustering assignement (assumed to\
+                        help='[filename] File containing the reference clustering assignement (assumed to\
                         be the correct result).')
     parser.add_argument('--cluster_assignement', type=str, required=True,
-                        help='File containing the clustering assignement output of the\
+                        help='[filename] File containing the clustering assignement output of the\
                         datamining application.')
     parser.add_argument('--print_cluster_threshold', type=int, required=False, default=20,
-                        help='Do not print clusters containing less data points than this \
+                        help=' [int] Do not print clusters containing less data points than this \
                         threshold. Instead they will be summarized as one entry. ')
     parser.add_argument('--print_hitrate_per_cluster', type=str, required=False, default=True,
-                        help='Prints the hitrate per cluster (including the noise)')
+                        help=' [boolean] Prints the hit rate per cluster (including the noise)')
     parser.add_argument('--print_ID_mapping', type=str, required=False, default=True,
-                        help='Prints how the cluster IDs of the reference file are mapped onto \
+                        help=' [boolean] Prints how the cluster IDs of the reference file are mapped onto \
                         the cluster IDs of the other file. For example, cluster 1 could be \
                         recognized as cluster 3 in the datamining algorithm, thus we would \
                         print the mapping 1 : 3')
@@ -166,5 +166,5 @@ if __name__ == '__main__':
     # Human readable form
     percentage = round(counter_correct/ reference_assignement.shape[0] * 100.0, 4)
     print("------------------------------------------------------------------")
-    print("Overall hitrate is ", counter_correct, " hits out of ",
+    print("Overall hit rate is ", counter_correct, " hits out of ",
     reference_assignement.shape[0], " data points  => ", percentage, "%")
