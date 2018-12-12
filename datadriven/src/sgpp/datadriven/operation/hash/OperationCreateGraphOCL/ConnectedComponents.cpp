@@ -16,7 +16,7 @@ size_t global_cluster_id;
 void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &map,
                           const int64_t N, const int64_t k, const size_t start_index,
                           std::vector<std::vector<int64_t>> &all_clusters) {
-  bool has_neighbor = false;  // true if at least one neighbor exists
+  bool has_neighbor = false; // true if at least one neighbor exists
   for (size_t cur_k = 0; cur_k < static_cast<size_t>(k); cur_k += 1) {
     int64_t cur_neighbor = directed[start_index * k + cur_k];
     if (cur_neighbor >= 0) {
@@ -24,6 +24,8 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     }
   }
   if (!has_neighbor) {
+    // so that removed nodes can be identified during cluster matching
+    map[start_index] = -2;
     return;
   }
 
