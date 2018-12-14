@@ -1582,7 +1582,32 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_APPROX", true);
       kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
+    }
+  }
+  operation_graph = std::make_unique<
+    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+        dataset, 2, manager, parameters, k);
+  // Test graph kernel
+  operation_graph->create_graph(graph);
+  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
+    BOOST_CHECK(graph_approx_result[i] == graph[i]);
+  }
+
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation..." << std::endl;
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
       kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
     }
   }
   operation_graph = std::make_unique<
