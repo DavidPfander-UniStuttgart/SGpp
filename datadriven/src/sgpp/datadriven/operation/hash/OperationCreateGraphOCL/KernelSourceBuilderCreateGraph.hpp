@@ -36,6 +36,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   bool use_approx;
   /// Number of bins used for the approximation if use_approx is true
   size_t approxRegCount;
+  /// should the dimension loop be blocked?
+  size_t dataBlockSize;
 
   /// Writes the source code for initialization of the k neighbor registers
   std::string init_k_registers(size_t k) {
@@ -82,6 +84,25 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       }*/
     return output.str();
   }
+  /// TODO - write function that generates dimension loop - either blocking or non blocking
+  std::string calculate_distance(size_t dimensions) {
+    std::stringstream output;
+    // TODO base case
+    if (dataBlockSize > 1)
+      output << this->indent[2] << "dist = 0.0;" << std::endl
+                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+                   << std::endl;
+      if (localWorkgroupSize != approxRegCount) {
+        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
+                     << dimensions << " ])" << std::endl
+                     << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
+                     << dimensions << " ]);" << std::endl;
+        output << this->indent[2] << "}" << std::endl;
+      }
+    // TODO blocked case
+    // TODO blocked case without even dimensions
+    return output.str();
+  }
   /// Writes the source code for copying the current datapoint to private memory
   std::string save_from_global_to_private(size_t dimensions) {
     std::stringstream output;
@@ -105,7 +126,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
 
  public:
   SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims)
-      : kernelConfiguration(kernelConfiguration), dims(dims), use_select(false), use_approx(false) {
+      : kernelConfiguration(kernelConfiguration), dims(dims), use_select(false),
+        use_approx(false), dataBlockSize(1) {
     localWorkgroupSize = 128;
     if (kernelConfiguration.contains("LOCAL_SIZE"))
       localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
@@ -124,6 +146,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     }
     if (kernelConfiguration.contains("APPROX_REG_COUNT"))
       approxRegCount = kernelConfiguration["APPROX_REG_COUNT"].getUInt();
+    if (kernelConfiguration.contains("KERNEL_DATA_BLOCKING_SIZE"))
+      dataBlockSize = kernelConfiguration["KERNEL_DATA_BLOCKING_SIZE"].getUInt();
   }
 
   /// Generates the whole opencl kernel code for the creation of a k nearest neighbor graph
@@ -194,6 +218,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
                      << "; i++, chunkindex++) {" << std::endl;
       }
+      // TODO f symbol einbauen
+      // TODO dimension blocking einbauen
       sourceStream << this->indent[2] << "dist = 0.0;" << std::endl
                    << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl;
@@ -253,7 +279,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "dist_reg[min_index] = " << dims << ".0"
                    << this->constSuffix() << ";" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl;
-    } else if (useLocalMemory) {
+    } else if (useLocalMemory) { // no use approx
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
                    << local_cache_size * dimensions << "];" << std::endl
                    << this->indent[0] << "for (long group = 0; group < "
@@ -272,6 +298,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
                    << std::endl
                    << this->indent[2] << "dist = 0.0;" << std::endl
+          // TODO insert dimension blocking
                    << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl
                    << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
@@ -298,6 +325,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                    << this->indent[1] << "if (i != global_index) {" << std::endl
                    << "//get distance to current point" << std::endl
                    << this->indent[2] << "dist = 0.0;" << std::endl
+          // TODO insert dimension blocking
                    << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
                    << std::endl
                    << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
