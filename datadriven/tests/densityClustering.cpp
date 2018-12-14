@@ -1505,7 +1505,8 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
 
 BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   // Load correct results for comparison
-  std::vector<int> graph_optimal_result;
+  std::vector<int64_t> graph_optimal_result;
+  std::vector<int64_t> graph_approx_result;
   std::ifstream graph_in("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt");
   if (graph_in) {
     int value;
@@ -1514,6 +1515,14 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     BOOST_THROW_EXCEPTION(std::runtime_error("knn graph result file is missing!"));
   }
   graph_in.close();
+  std::ifstream approx_in("datadriven/tests/data/clustering_test_data/approx.txt");
+  if (approx_in) {
+    int value;
+    while (approx_in >> value) graph_approx_result.push_back(value);
+  } else {
+    BOOST_THROW_EXCEPTION(std::runtime_error("knn graph approx result file is missing!"));
+  }
+  approx_in.close();
 
   // Create OCL configuration
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
@@ -1561,7 +1570,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
 
-  std::cout << "Testing default knn graph kernel with local memory..." << std::endl;
+  std::cout << "Testing approx knn graph kernel with local memory..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -1571,8 +1580,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-      // kernelNode.replaceIDAttr("USE_APPROX", true);
-      // kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
       kernelNode.replaceIDAttr("WRITE_SOURCE", true);
     }
   }
@@ -1582,7 +1591,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   // Test graph kernel
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
+    BOOST_CHECK(graph_approx_result[i] == graph[i]);
   }
 
   // std::cout << "Testing default knn graph kernel with local memory and select statements..."
