@@ -67,12 +67,13 @@ void connected_components(std::vector<int64_t> &directed,
   // join_clusters.size()
   // << std::endl;
   //   std::cout << "start_index: " << start_index << std::endl;
-  for (int64_t i : cluster_indices) {
-    if (i > 1000000 || i < 0) {
-      std::cout << "start_index: " << start_index << " neg: " << i << std::endl;
-    }
-    // std::cout << i << " ";
-  }
+  // for (int64_t i : cluster_indices) {
+  //   if (i > 1000000 || i < 0) {
+  //     std::cout << "start_index: " << start_index << " neg: " << i <<
+  //     std::endl;
+  //   }
+  //   // std::cout << i << " ";
+  // }
   // std::cout << std::endl;
   // }
 
@@ -94,8 +95,10 @@ void connected_components(std::vector<int64_t> &directed,
   }
   if (join_clusters.size() > 0) {
     // insert partial cluster into joined cluster
-    // std::cout << "cluster_id: " << cluster_id << std::endl;
     auto &append_cluster = all_clusters[cluster_id];
+    // std::cout << "merge into c_id: " << cluster_id
+    //           << " cur part. c_size: " << cluster_indices.size()
+    //           << " merge c_size: " << append_cluster.size() << std::endl;
     append_cluster.insert(append_cluster.begin(), cluster_indices.begin(),
                           cluster_indices.end());
   } else {
