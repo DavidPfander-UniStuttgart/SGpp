@@ -18,7 +18,7 @@ using time_point = std::chrono::high_resolution_clock::time_point;
 namespace util {
 void write_vector(const std::vector<int64_t> &v, const std::string &file_name) {
   std::ofstream ofs(file_name, std::ios::out | std::ofstream::binary);
-  std::ostream_iterator<int64_t> osi{ofs, " "};  // " " separator
+  std::ostream_iterator<int64_t> osi{ofs, " "}; // " " separator
   std::copy(v.begin(), v.end(), osi);
 }
 
@@ -31,20 +31,19 @@ std::vector<int64_t> read_vector(const std::string &file_name) {
   return v;
 }
 
-template <typename T>
-struct random_int {
- private:
-  std::random_device rd;  // to seed
+template <typename T> struct random_int {
+private:
+  std::random_device rd; // to seed
   std::default_random_engine generator;
   std::uniform_int_distribution<int64_t> distribution;
 
- public:
+public:
   random_int(T left, T right) : generator(rd()), distribution(left, right) {}
 
   T operator()() { return distribution(generator); }
 };
 
-}  // namespace util
+} // namespace util
 
 namespace clustering {
 
@@ -75,7 +74,8 @@ void randomize_graph_consistently(neighborhood_list_t &graph, size_t k_outer) {
     size_t second_index = r();
     std::swap(origin_map[first_index], origin_map[second_index]);
     for (size_t k = 0; k < k_outer; k += 1) {
-      std::swap(graph[first_index * k_outer + k], graph[second_index * k_outer + k]);
+      std::swap(graph[first_index * k_outer + k],
+                graph[second_index * k_outer + k]);
     }
   }
   std::vector<size_t> map(N);
@@ -91,7 +91,8 @@ void randomize_graph_consistently(neighborhood_list_t &graph, size_t k_outer) {
 }
 
 // first neighbor is used to connect, others are randomized
-neighborhood_list_t create_connect_component(size_t start_index, size_t cc_size, size_t k_outer) {
+neighborhood_list_t create_connect_component(size_t start_index, size_t cc_size,
+                                             size_t k_outer) {
   util::random_int<int64_t> r(start_index, start_index + cc_size - 1);
   neighborhood_list_t cc(cc_size * k_outer);
   for (size_t n = 0; n < cc_size; n += 1) {
@@ -103,19 +104,27 @@ neighborhood_list_t create_connect_component(size_t start_index, size_t cc_size,
   }
   for (size_t n = 0; n < cc_size; n += 1) {
     for (size_t k = 1; k < k_outer; k += 1) {
-      cc[n * k_outer + k] = r();
+      while (true) {
+        int64_t candidate = r();
+        if (candidate != start_index + n) {
+          cc[n * k_outer + k] = candidate;
+          break;
+        }
+      }
     }
   }
   return cc;
 }
 
 // disadvantage: always can reach whole cluster from every node of the cluster
-neighborhood_list_t create_connected_graph(size_t num_cc, size_t cc_size, size_t k_outer,
+neighborhood_list_t create_connected_graph(size_t num_cc, size_t cc_size,
+                                           size_t k_outer,
                                            bool randomize = true) {
   neighborhood_list_t graph;
   size_t start_index = 0;
   for (size_t i = 0; i < num_cc; i += 1) {
-    neighborhood_list_t cc = create_connect_component(start_index, cc_size, k_outer);
+    neighborhood_list_t cc =
+        create_connect_component(start_index, cc_size, k_outer);
     graph.insert(graph.end(), cc.begin(), cc.end());
     start_index += cc_size;
   }
@@ -144,7 +153,8 @@ void print_graph(const neighborhood_list_t graph, const size_t k) {
 template <typename T>
 void print_labeled(const std::vector<T> &labeled_datapoints) {
   for (size_t i = 0; i < labeled_datapoints.size(); i += 1) {
-    std::cout << "i: " << i << " -> c_id: " << labeled_datapoints[i] << std::endl;
+    std::cout << "i: " << i << " -> c_id: " << labeled_datapoints[i]
+              << std::endl;
   }
 }
 
@@ -165,14 +175,15 @@ void print_connected_components(std::vector<std::set<int64_t>> &all_clusters) {
   }
 }
 
-}  // namespace clustering
+} // namespace clustering
 
 int main() {
   // constexpr size_t N = 100000;
 
-  constexpr size_t num_cc = 100;
-  constexpr size_t cc_size = 1000000;  // recursive can only do up to 10^4
-  std::cout << "num datapoints: " << (num_cc * cc_size) << std::endl;
+  constexpr int64_t num_cc = 100;
+  constexpr int64_t cc_size = 100; // recursive can only do up to 10^4
+  constexpr int64_t num_datapoints = num_cc * cc_size;
+  std::cout << "num datapoints: " << num_datapoints << std::endl;
 
   constexpr size_t k = 5;
 
@@ -208,7 +219,8 @@ int main() {
   // graph[6 * k + 0] = 2;
   // graph[6 * k + 1] = 3;
 
-  // clustering::neighborhood_list_t graph = clustering::create_random_graph(N, k);
+  // clustering::neighborhood_list_t graph = clustering::create_random_graph(N,
+  // k);
   clustering::neighborhood_list_t graph =
       clustering::create_connected_graph(num_cc, cc_size, k, true);
   // clustering::print_graph(graph, k);
@@ -224,10 +236,12 @@ int main() {
   // std::vector<size_t> labeled_datapoints;
   // {
   //   time_point start = high_resolution_clock::now();
-  //   labeled_datapoints = sgpp::datadriven::clustering::find_clusters_recursive(graph, k);
+  //   labeled_datapoints =
+  //   sgpp::datadriven::clustering::find_clusters_recursive(graph, k);
   //   time_point end = high_resolution_clock::now();
-  //   double duration_s_avr = std::chrono::duration<double>(end - start).count();
-  //   std::cout << "duration simple: " << duration_s_avr << std::endl;
+  //   double duration_s_avr = std::chrono::duration<double>(end -
+  //   start).count(); std::cout << "duration simple: " << duration_s_avr <<
+  //   std::endl;
   //   // std::cout << "recursive fcc:" << std::endl;
   //   // clustering::print_labeled(labeled_datapoints);
   // }
@@ -237,24 +251,28 @@ int main() {
   //   std::vector<int64_t> labeled_datapoints_unconverted;
   //   std::vector<std::vector<int64_t>> clusters;
   //   time_point start = high_resolution_clock::now();
-  //   // sgpp::datadriven::clustering::find_clusters(graph, k, labeled_datapoints_unconverted,
+  //   // sgpp::datadriven::clustering::find_clusters(graph, k,
+  //   labeled_datapoints_unconverted,
   //   // clusters);
   //   sgpp::datadriven::clustering::neighborhood_list_t undirected_graph =
   //       sgpp::datadriven::clustering::make_undirected_graph(graph, k);
   //   time_point end = high_resolution_clock::now();
-  //   double duration_undirected_s = std::chrono::duration<double>(end - start).count();
-  //   std::cout << "duration improved make_undirected_graph: " << duration_undirected_s <<
-  //   std::endl; start = high_resolution_clock::now();
+  //   double duration_undirected_s = std::chrono::duration<double>(end -
+  //   start).count(); std::cout << "duration improved make_undirected_graph: "
+  //   << duration_undirected_s << std::endl; start =
+  //   high_resolution_clock::now();
   //   sgpp::datadriven::clustering::get_clusters_from_undirected_graph(
   //       undirected_graph, labeled_datapoints_unconverted, clusters, 2);
   //   end = high_resolution_clock::now();
-  //   double duration_detect_s = std::chrono::duration<double>(end - start).count();
-  //   std::cout << "duration improved get_clusters_from_undirected_graph: " << duration_detect_s
+  //   double duration_detect_s = std::chrono::duration<double>(end -
+  //   start).count(); std::cout << "duration improved
+  //   get_clusters_from_undirected_graph: " << duration_detect_s
   //             << std::endl;
 
   //   labeled_datapoints2.resize(labeled_datapoints_unconverted.size());
   //   for (size_t i = 0; i < labeled_datapoints_unconverted.size(); i += 1) {
-  //     labeled_datapoints2[i] = static_cast<size_t>(labeled_datapoints_unconverted[i] + 1);
+  //     labeled_datapoints2[i] =
+  //     static_cast<size_t>(labeled_datapoints_unconverted[i] + 1);
   //   }
   //   std::cout << "clusters improved: " << clusters.size() << std::endl;
   //   // std::cout << "duration improved: " << duration_s_avr << std::endl;
@@ -266,22 +284,23 @@ int main() {
   // {
   //   time_point start = high_resolution_clock::now();
   //   std::vector<std::set<int64_t>> all_clusters;
-  //   sgpp::datadriven::clustering::connected_components(graph, k, labeled_datapoints,
-  //   all_clusters);
-  //   time_point end = high_resolution_clock::now();
-  //   double duration_s_avr = std::chrono::duration<double>(end - start).count();
-  //   std::cout << "duration new: " << duration_s_avr << std::endl;
-  //   std::cout << "num_clusters: " << all_clusters.size() << std::endl;
+  //   sgpp::datadriven::clustering::connected_components(graph, k,
+  //   labeled_datapoints, all_clusters); time_point end =
+  //   high_resolution_clock::now(); double duration_s_avr =
+  //   std::chrono::duration<double>(end - start).count(); std::cout <<
+  //   "duration new: " << duration_s_avr << std::endl; std::cout <<
+  //   "num_clusters: " << all_clusters.size() << std::endl;
   //   // clustering::print_connected_components(all_clusters);
   //   // std::cout << "cc map:" << std::endl;
   //   // clustering::print_labeled(labeled_datapoints);
   // }
 
-  std::vector<int64_t> labeled_datapoints;
+  std::vector<int64_t> node_cluster_map;
   {
     time_point start = high_resolution_clock::now();
     std::vector<std::vector<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components(graph, k, labeled_datapoints, all_clusters);
+    sgpp::datadriven::clustering::connected_components(
+        graph, k, node_cluster_map, all_clusters);
     time_point end = high_resolution_clock::now();
     double duration_s_avr = std::chrono::duration<double>(end - start).count();
     std::cout << "duration new: " << duration_s_avr << std::endl;
@@ -289,6 +308,58 @@ int main() {
     // clustering::print_connected_components(all_clusters);
     // std::cout << "cc map:" << std::endl;
     // clustering::print_labeled(labeled_datapoints);
+
+    int64_t sum_datapoints = 0;
+    for (size_t i = 0; i < all_clusters.size(); i += 1) {
+      std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size()
+                << std::endl;
+      sum_datapoints += all_clusters[i].size();
+    }
+    std::cout << "datapoints in clusters: " << sum_datapoints << std::endl;
+
+    double score =
+        static_cast<double>(
+            num_cc -
+            std::min(num_cc, std::abs(num_cc - static_cast<int64_t>(
+                                                   all_clusters.size())))) *
+        (static_cast<double>(sum_datapoints) /
+         static_cast<double>(num_datapoints));
+    std::cout << "score: " << score << std::endl;
+
+    for (size_t i = 0; i < all_clusters.size(); i += 1) {
+      for (size_t j = 0; j < all_clusters[j].size(); j += 1) {
+        for (size_t ii = 0; ii < all_clusters.size(); ii += 1) {
+          for (size_t jj = 0; jj < all_clusters[ii].size(); jj += 1) {
+            if (!(i == ii && j == jj)) {
+              int64_t first_index = all_clusters[i][j];
+              int64_t second_index = all_clusters[ii][jj];
+              if (first_index == second_index) {
+                // if (first_index > 1000000) {
+                std::cout << "dup cl i: " << i << " j: " << j << " ii: " << ii
+                          << " jj: " << jj << " index: " << second_index
+                          << std::endl;
+
+                if (second_index >= 0 && second_index < 1000000) {
+                  std::cout
+                      << "node_cluster_map: " << node_cluster_map[second_index]
+                      << " index neighbors: ";
+                  for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
+                    if (cur_k > 0) {
+                      std::cout << ", ";
+                    }
+                    std::cout << graph[second_index * k + cur_k];
+                  }
+                  std::cout << std::endl;
+                } else {
+                  std::cout << "error: index out of range" << std::endl;
+                }
+              }
+              // }
+            }
+          }
+        }
+      }
+    }
   }
 
   // bool is_equal =
@@ -302,8 +373,9 @@ int main() {
 
   // {
   //   // std::vector<std::vector<int64_t>> clusters;
-  //   std::vector<int64_t> labeled_datapoints = clustering::find_clusters_distributed(graph, k);
-  //   std::cout << "distributed:" << std::endl;
+  //   std::vector<int64_t> labeled_datapoints =
+  //   clustering::find_clusters_distributed(graph, k); std::cout <<
+  //   "distributed:" << std::endl;
   //   clustering::print_labeled(labeled_datapoints);
   // }
 

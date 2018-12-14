@@ -1,11 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name="clustering experiments xeon gold"
 #SBATCH --nodelist=argon-gtx
+#SBATCH --gres=gpu:1
 #SBATCH --exclusive
 
 echo "starting"
 echo `hostname`
 echo srun `srun hostname`
-cd /home/pfandedd/git/SGpp_PASC18
+cd /data/sgs/pfandedd/DissertationCodeGTX/SGpp
+
 srun ./argon_gold_run.sh
 

@@ -1,0 +1,1 @@
+mpirun ./datadriven/examplesMPI/distributed_clustering_cmd  --MPIconfig GTXConf8.cfg --config config_ocl_float_gtx1080ti.cfg --datasetFileName final_paper_datasets/gaussian_c100_size1000000_dim10.arff --k 5 --lambda 1E-2 --epsilon 1E-10 --threshold 0.1 --level 7
