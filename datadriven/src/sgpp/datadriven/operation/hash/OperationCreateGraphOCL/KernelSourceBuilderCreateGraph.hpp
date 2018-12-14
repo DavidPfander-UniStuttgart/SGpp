@@ -68,7 +68,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       for (size_t i = 1; i < k; i++) {
         if (use_select) {
           output << this->indent[2] << "min_index = select(min_index, " << i
-                 << ", k_dists[min_index] < k_dists[" << i << "]);" << std::endl;
+                 << "l, (long) (k_dists[min_index] < k_dists[" << i << "]));" << std::endl;
         } else {
           output << this->indent[2] << "if (k_dists[min_index] < k_dists[" << i << "])"
                  << std::endl;

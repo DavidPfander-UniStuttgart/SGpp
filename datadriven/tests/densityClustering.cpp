@@ -1535,7 +1535,8 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
         dataset, 2, manager, parameters, k);
   // Test graph kernel
-  std::vector<int> graph(dataset.getNrows() * k);
+  std::cout << "Testing default knn graph kernel ..." << std::endl;
+  std::vector<int64_t> graph(dataset.getNrows() * k);
   operation_graph->create_graph(graph);
   for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
@@ -1568,7 +1569,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       const std::string &kernelName = "connectNeighbors";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      // kernelNode.replaceIDAttr("USE_APPROX", true);
+      // kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
     }
   }
   operation_graph = std::make_unique<
@@ -1580,31 +1585,31 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     BOOST_CHECK(graph_optimal_result[i] == graph[i]);
   }
 
-  std::cout << "Testing default knn graph kernel with local memory and select statements..."
-            << std::endl;
-  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
-    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
-      const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
-      kernelNode.replaceIDAttr("USE_SELECT", false);
-      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-    }
-  }
-  operation_graph = std::make_unique<
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-        dataset, 2, manager, parameters, k);
-  // Test graph kernel
-  operation_graph->create_graph(graph);
-  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
-  }
+  // std::cout << "Testing default knn graph kernel with local memory and select statements..."
+  //           << std::endl;
+  // for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+  //   json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+  //   for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+  //     json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+  //     const std::string &kernelName = "connectNeighbors";
+  //     json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+  //     kernelNode.replaceIDAttr("USE_SELECT", false);
+  //     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+  //   }
+  // }
+  // operation_graph = std::make_unique<
+  //   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+  //       dataset, 2, manager, parameters, k);
+  // // Test graph kernel
+  // operation_graph->create_graph(graph);
+  // for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
+  //   BOOST_CHECK(graph_optimal_result[i] == graph[i]);
+  // }
 }
 
 BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   // Load input
-  std::vector<int> graph;
+  std::vector<int64_t> graph;
   std::ifstream graph_in("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt");
   if (graph_in) {
     int value;
@@ -1615,7 +1620,7 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   graph_in.close();
 
   // Load optimal results for comparison
-  std::vector<int> graph_optimal_result;
+  std::vector<int64_t> graph_optimal_result;
   std::ifstream graph_result(
       "datadriven/tests/data/clustering_test_data/graph_pruned_erg_dim2_depth11.txt");
   if (graph_result) {
