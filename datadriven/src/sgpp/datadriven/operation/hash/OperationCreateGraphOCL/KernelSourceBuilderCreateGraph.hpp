@@ -47,13 +47,6 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
            << std::endl;
     output << this->indent[0] << "for (int i = 0; i < " << k << "; i++)" << std::endl;
     output << this->indent[1] << "k_dists[i] = 4.0;" << std::endl;
-    /*for (size_t i = 0; i < k; i++) {
-      output << this->indent[0] << "int k_register" << i << " = " << i << "; " << std::endl;
-      }
-      for (size_t i = 0; i < k; i++) {
-      output << this->indent[0] << this->floatType()
-      << " dist_k" << i << " = 4.0;" << std::endl;
-      }*/
     return output.str();
   }
   /// Writes the source code for finding the current maximum of all neighbors
@@ -76,19 +69,13 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         }
       }
     }
-    // Enables vectorization but slows kernel down (longer ifs...)
-    /*for (size_t i = 0; i < k; i++) {
-      output << this->indent[2] << "if (maxdist < k_dists[" << i << "]) {" << std::endl;
-      output << this->indent[3] << "maxindex  = " << i << "; " << std::endl;
-      output << this->indent[3] << "maxdist  = k_dists["  << i << "]; }" << std::endl;
-      }*/
     return output.str();
   }
   /// TODO - write function that generates dimension loop - either blocking or non blocking
   std::string calculate_distance(size_t dimensions) {
     std::stringstream output;
     // base case - no blocking
-    if (dataBlockSize == 1) {
+    if (dataBlockSize == 1 || dimensions % 2 == 1) {
       // we have to differentiate between approx and non approx due to variable name differences
       if (use_approx) { // base case for blocking
         output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl
@@ -99,40 +86,87 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << dimensions << " ])" << std::endl
                  << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
                  << dimensions << " ]);" << std::endl;
-          output << this->indent[2] << "}" << std::endl;
         } else { // in this case we have no chunkindex loop
           output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
                  << dimensions << " ])" << std::endl
                  << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
                  << " ]);" << std::endl;
-          output << this->indent[2] << "}" << std::endl;
         }
+        output << this->indent[2] << "}" << std::endl;
       } else { // no use approx, we need to calc the distance for the real knn
+        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+        output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
+               << std::endl;
         if (useLocalMemory) {
-          output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-          output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
-                 << std::endl
-                 << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
                  << " ])" << std::endl
                  << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                 << " ]);" << std::endl
-                 << this->indent[2] << "}" << std::endl;
+                 << " ]);" << std::endl;
         } else { // using global arrays for this one
-          output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-          output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
-                 << std::endl
-                 << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+          output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
                  << " ])" << std::endl
                  << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
-                 << std::endl
-                 << this->indent[2] << "}" << std::endl;
+                 << std::endl;
         }
+        output << this->indent[2] << "}" << std::endl;
       }
-    } else {
-      throw "nope";
+      // TODO blocked case
+    } else if (dimensions % 2 == 0) {
+      if (use_approx) { // base case for blocking
+        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+        output << this->indent[2] << "dist2 = 0.0" << this->constSuffix() << ";" << std::endl
+               << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+=2) {"
+               << std::endl;
+        if (localWorkgroupSize != approxRegCount) {
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
+                 << dimensions << " ]);" << std::endl;
+          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + (chunkindex) * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + (chunkindex)* "
+                 << dimensions << " ]);" << std::endl;
+        } else { // in this case we have no chunkindex loop
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                 << " ]);" << std::endl;
+          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + i* " << dimensions
+                 << " ]);" << std::endl;
+        }
+        output << this->indent[2] << "}" << std::endl;
+        output << this->indent[2] << "dist += dist2;" << std::endl;
+      } else { // no use approx, we need to calc the distance for the real knn
+        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+        output << this->indent[2] << "dist2 = 0.0" << this->constSuffix() << ";" << std::endl;
+        output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+=2) {"
+               << std::endl;
+        if (useLocalMemory) {
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                 << " ]);" << std::endl;
+          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + i * "
+                 <<  dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + i* " << dimensions
+                 << " ]);" << std::endl;
+        } else { // using global arrays for this one
+          output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
+                 << std::endl;
+          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data[j + 1 + i* " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + 1] - data[j + 1 + i* " << dimensions << " ]);"
+                 << std::endl;
+        }
+        output << this->indent[2] << "}" << std::endl;
+        output << this->indent[2] << "dist += dist2;" << std::endl;
+      }
+      // TODO blocked case without even dimensions
     }
-    // TODO blocked case
-    // TODO blocked case without even dimensions
     return output.str();
   }
   /// Writes the source code for copying the current datapoint to private memory
@@ -211,8 +245,13 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     if (!use_approx) {
       sourceStream << init_k_registers(k) << std::endl;
     }
-    sourceStream << save_from_global_to_private(dimensions) << this->indent[0] << "__private "
+    sourceStream << save_from_global_to_private(dimensions);
+    sourceStream << this->indent[0] << "__private "
                  << this->floatType() << " dist = 0.0;" << std::endl;
+    if (dataBlockSize == 2) {
+        sourceStream << this->indent[0] << "__private "
+                    << this->floatType() << " dist2 = 0.0;" << std::endl;
+    }
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
                    << local_cache_size * dimensions << "];" << std::endl

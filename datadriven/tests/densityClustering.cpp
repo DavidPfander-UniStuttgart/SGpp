@@ -1619,6 +1619,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
     BOOST_CHECK(graph_approx_result[i] == graph[i]);
   }
 
+  // TODO reactivate once this variant works again
   // std::cout << "Testing default knn graph kernel with local memory and select statements..."
   //           << std::endl;
   // for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
