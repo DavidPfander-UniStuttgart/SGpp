@@ -87,18 +87,50 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   /// TODO - write function that generates dimension loop - either blocking or non blocking
   std::string calculate_distance(size_t dimensions) {
     std::stringstream output;
-    // TODO base case
-    if (dataBlockSize > 1)
-      output << this->indent[2] << "dist = 0.0;" << std::endl
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-                   << std::endl;
-      if (localWorkgroupSize != approxRegCount) {
-        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
-                     << dimensions << " ])" << std::endl
-                     << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
-                     << dimensions << " ]);" << std::endl;
-        output << this->indent[2] << "}" << std::endl;
+    // base case - no blocking
+    if (dataBlockSize == 1) {
+      // we have to differentiate between approx and non approx due to variable name differences
+      if (use_approx) { // base case for blocking
+        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl
+               << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
+               << std::endl;
+        if (localWorkgroupSize != approxRegCount) {
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
+                 << dimensions << " ]);" << std::endl;
+          output << this->indent[2] << "}" << std::endl;
+        } else { // in this case we have no chunkindex loop
+          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                 << " ]);" << std::endl;
+          output << this->indent[2] << "}" << std::endl;
+        }
+      } else { // no use approx, we need to calc the distance for the real knn
+        if (useLocalMemory) {
+          output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+          output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
+                 << std::endl
+                 << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+                 << " ]);" << std::endl
+                 << this->indent[2] << "}" << std::endl;
+        } else { // using global arrays for this one
+          output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+          output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
+                 << std::endl
+                 << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
+                 << std::endl
+                 << this->indent[2] << "}" << std::endl;
+        }
       }
+    } else {
+      throw "nope";
+    }
     // TODO blocked case
     // TODO blocked case without even dimensions
     return output.str();
@@ -218,29 +250,16 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
                      << "; i++, chunkindex++) {" << std::endl;
       }
-      // TODO f symbol einbauen
-      // TODO dimension blocking einbauen
-      sourceStream << this->indent[2] << "dist = 0.0;" << std::endl
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-                   << std::endl;
+      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      // the distance between two points
       if (localWorkgroupSize != approxRegCount) {
-        sourceStream << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
-                     << dimensions << " ])" << std::endl
-                     << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
-                     << dimensions << " ]);" << std::endl;
-        sourceStream << this->indent[2] << "}" << std::endl
-                     << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
+        sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
                      << local_cache_size << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group * " << local_cache_size
                      << " + chunkindex;" << std::endl;
       } else {
-        sourceStream << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
-                     << dimensions << " ])" << std::endl
-                     << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                     << " ]);" << std::endl;
-        sourceStream << this->indent[2] << "}" << std::endl
-                     << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
+        sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
                      << local_cache_size << " != global_index) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group;" << std::endl;
@@ -296,18 +315,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
-                   << std::endl
-                   << this->indent[2] << "dist = 0.0;" << std::endl
-          // TODO insert dimension blocking
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-                   << std::endl
-                   << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
-                   << " ])" << std::endl
-                   << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                   << " ]);" << std::endl
-                   << this->indent[2] << "}" << std::endl
+                   << std::endl;
 
-                   << this->indent[2] << "long min_index = 0;" << std::endl
+      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      // the distance between two points
+      sourceStream << this->indent[2] << "long min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]
                    << "if (dist < k_dists[min_index] && i + group * " << local_cache_size
                    << " != global_index) {" << std::endl
@@ -323,17 +335,10 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[0] << "for (long i = 0; i <    " << data_size << "; i++) {"
                    << std::endl
                    << this->indent[1] << "if (i != global_index) {" << std::endl
-                   << "//get distance to current point" << std::endl
-                   << this->indent[2] << "dist = 0.0;" << std::endl
-          // TODO insert dimension blocking
-                   << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-                   << std::endl
-                   << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
-                   << " ])" << std::endl
-                   << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
-                   << std::endl
-                   << this->indent[2] << "}" << std::endl
-                   << this->indent[2] << "long min_index = 0;" << std::endl
+                   << "//get distance to current point" << std::endl;
+      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      // the distance between two points
+      sourceStream << this->indent[2] << "long min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]
                    << "if (dist < k_dists[min_index]) {" << std::endl
                    << this->indent[3] << "k_reg[min_index] = i;" << std::endl
