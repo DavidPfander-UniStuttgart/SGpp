@@ -1708,7 +1708,6 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   std::cout << "Testing approx knn graph kernel with 3 unrolled dist calculation [dim 10]..." << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
-  // TODO reactivate once this variant works again
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -1722,13 +1721,58 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
     }
   }
-  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
             << std::endl;
   run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
-  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
             << std::endl;
   run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
-  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
+
+  // testing with unrolled dim loop
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
+    }
+  }
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim3]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim10]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
+
+  // testing with unrolled dim loop
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 3l);
+    }
+  }
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop 3 [dim3]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop 3 [dim10]..."
             << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
 }
