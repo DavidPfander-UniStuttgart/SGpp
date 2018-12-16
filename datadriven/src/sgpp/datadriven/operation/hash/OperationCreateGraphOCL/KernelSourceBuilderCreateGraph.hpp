@@ -71,14 +71,15 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     }
     return output.str();
   }
+
   std::string calculate_distance(size_t dimensions) {
     std::stringstream output;
-    if (use_approx) { // base case for blocking
+    if (use_approx) {
       output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
       }
-      output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+="
+      output << this->indent[2] << "for (int j = 0; j < " << dimensions - (dimensions % dataBlockSize) << " ; j+="
              << dataBlockSize << ") {" << std::endl;
       if (localWorkgroupSize != approxRegCount) {
         output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
@@ -91,6 +92,21 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << dimensions << " ])" << std::endl
                  << this->indent[3] << "* (datapoint[j + " << block - 1
                  << "] - data_local[j + " << block - 1 << " + (chunkindex)* "
+                 << dimensions << " ]);" << std::endl;
+        }
+        output << this->indent[2] << "}" << std::endl;
+        // handle everything that is leftover from the dimension
+        int startid = dimensions - (dimensions % dataBlockSize);
+        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+          std::string accu = "dist";
+          if (block != 1) { // different naming in this case for dist
+            accu = std::string("dist") + std::to_string(block);
+          }
+          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + (chunkindex) * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + (chunkindex)* "
                  << dimensions << " ]);" << std::endl;
         }
       } else { // in this case we have no chunkindex loop
@@ -106,8 +122,9 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << "] - data_local[j + " << block - 1 << " + i* " << dimensions
                  << " ]);" << std::endl;
         }
+        output << this->indent[2] << "}" << std::endl;
+        // handle everything that is leftover from the dimension
       }
-      output << this->indent[2] << "}" << std::endl;
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
       }
@@ -131,6 +148,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << "] - data_local[j + " << block - 1 << " + i* " << dimensions
                  << " ]);" << std::endl;
         }
+        output << this->indent[2] << "}" << std::endl;
+        // handle everything that is leftover from the dimension
       } else { // using global arrays for this one
         output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
                << " ])" << std::endl
@@ -144,8 +163,9 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                  << "] - data[j + " << block - 1 << " + i* " << dimensions << " ]);"
                  << std::endl;
         }
+        output << this->indent[2] << "}" << std::endl;
+        // handle everything that is leftover from the dimension
       }
-      output << this->indent[2] << "}" << std::endl;
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
       }
@@ -232,8 +252,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     sourceStream << this->indent[0] << "__private "
                  << this->floatType() << " dist = 0.0;" << std::endl;
     if (dataBlockSize == 2) {
-        sourceStream << this->indent[0] << "__private "
-                    << this->floatType() << " dist2 = 0.0;" << std::endl;
+      sourceStream << this->indent[0] << "__private "
+                   << this->floatType() << " dist2 = 0.0;" << std::endl;
     }
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
