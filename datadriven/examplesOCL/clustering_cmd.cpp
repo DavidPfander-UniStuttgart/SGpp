@@ -123,7 +123,7 @@ using namespace sgpp;
 
 int main(int argc, char **argv) {
   std::string datasetFileName;
-    std::string binary_header_filename = "";
+  std::string binary_header_filename;
   size_t eval_grid_level;
   size_t level;
   double lambda;
@@ -320,8 +320,7 @@ int main(int argc, char **argv) {
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
   } else if (variables_map.count("datasetFileName") == 0 &&
              variables_map.count("binary_header_filename") != 0) {
-    std::experimental::filesystem::path datasetFilePath(
-        binary_header_filename);
+    std::experimental::filesystem::path datasetFilePath(binary_header_filename);
     if (!std::experimental::filesystem::exists(datasetFilePath)) {
       std::cerr << "error: dataset file does not exist: "
                 << binary_header_filename << std::endl;
@@ -335,6 +334,19 @@ int main(int argc, char **argv) {
               << std::endl;
     return 1;
   }
+
+  // if (variables_map.count("datasetFileName") == 0) {
+  //   std::cerr << "error: option \"datasetFileName\" not specified" <<
+  //   std::endl; return 1;
+  // } else {
+  //   std::experimental::filesystem::path datasetFilePath(datasetFileName);
+  //   if (!std::experimental::filesystem::exists(datasetFilePath)) {
+  //     std::cerr << "error: dataset file does not exist: " << datasetFileName
+  //               << std::endl;
+  //     return 1;
+  //   }
+  //   std::cout << "datasetFileName: " << datasetFileName << std::endl;
+  // }
 
   // if (variables_map.count("eval_grid_level") == 0) {
   //   std::cerr << "error: option \"eval_grid_level\" not specified" <<
@@ -460,9 +472,16 @@ int main(int argc, char **argv) {
   std::chrono::time_point<std::chrono::system_clock> total_timer_start =
       std::chrono::system_clock::now();
 
-  // read dataset
-  sgpp::base::DataMatrix trainingData;
-  size_t dimension = 0;
+  // Loading dataset
+  std::cout << "reading dataset...";
+  size_t dimension;
+
+  std::chrono::time_point<std::chrono::system_clock> loading_data_start,
+      loading_data_end;
+  loading_data_start = std::chrono::system_clock::now();
+
+  base::DataMatrix trainingData;
+  size_t dim = 0;
   if (variables_map.count("binary_header_filename") != 0) {
     std::cerr << "Loading binary dataset: " << std::endl;
     trainingData = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(
@@ -470,19 +489,29 @@ int main(int argc, char **argv) {
     dimension = trainingData.getNcols();
   } else if (variables_map.count("datasetFileName") != 0) {
     std::cerr << "Loading ARFF dataset: " << std::endl;
-    sgpp::datadriven::Dataset data =
+    sgpp::datadriven::Dataset dataset =
         sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
-    trainingData = data.getData();
-    dimension = trainingData.getNcols();
+    trainingData = std::move(dataset.getData());
+    dimension = dataset.getDimension();
   }
-  std::cout << "done" << std::endl;
+
+  loading_data_end = std::chrono::system_clock::now();
+  std::cout << "Dataset load duration: "
+            << static_cast<std::chrono::duration<double>>(loading_data_end -
+                                                          loading_data_start)
+                   .count()
+            << std::endl;
+
+  std::cout << "dimension: " << dimension << std::endl;
+  std::cout << "data points: " << trainingData.getNrows() << std::endl;
+  // // read dataset
+
+  // datadriven::Dataset dataset =
+  //     datadriven::ARFFTools::readARFF(datasetFileName);
+  // std::cout << "done" << std::endl;
 
   std::chrono::time_point<std::chrono::system_clock>
       total_timer_start_without_disk = std::chrono::system_clock::now();
-
-  std::cout << "dimension: " << dimension << std::endl;
-
-  std::cout << "data points: " << trainingData.getNrows() << std::endl;
 
   // create grid
   std::unique_ptr<base::Grid> grid(base::Grid::createLinearGrid(dimension));
@@ -866,7 +895,7 @@ int main(int argc, char **argv) {
                 << "s" << std::endl;
 
       double ops_create_graph =
-          static_cast<double>(std::pow(trainingData.getNrows(), 2) * 4 *
+          static_cast<double>(std::pow(trainingData.getNrows(), 2) * 3 *
                               dimension) *
           1E-9;
       std::cout << "ops_create_graph: " << ops_create_graph << " GOps"
@@ -1029,40 +1058,39 @@ int main(int argc, char **argv) {
     //   }
     // }
 
-    for (size_t i = 0; i < clusters.size(); i += 1) {
-      for (size_t j = 0; j < clusters[j].size(); j += 1) {
-        for (size_t ii = 0; ii < clusters.size(); ii += 1) {
-          for (size_t jj = 0; jj < clusters[ii].size(); jj += 1) {
-            if (!(i == ii && j == jj)) {
-              int64_t first_index = clusters[i][j];
-              int64_t second_index = clusters[ii][jj];
-              if (first_index == second_index) {
-                // if (first_index > 1000000) {
-                std::cout << "dup cl i: " << i << " j: " << j << " ii: " << ii
-                          << " jj: " << jj << " index: " << second_index
-                          << std::endl;
+    // std::cout << "clusters:" << std::endl;
+    // for (size_t i = 0; i < clusters.size(); i += 1) {
+    //   std::cout << "c_i: " << i << " -> ";
+    //   for (size_t j = 0; j < clusters[i].size(); j += 1) {
+    //     int64_t other_index = clusters[i][j];
+    //     if (j > 0) {
+    //       std::cout << ", ";
+    //     }
+    //     std::cout << other_index;
+    //   }
+    //   std::cout << std::endl;
+    // }
 
-                if (second_index >= 0 && second_index < 1000000) {
-                  std::cout
-                      << "node_cluster_map: " << node_cluster_map[second_index]
-                      << " index neighbors: ";
-                  for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
-                    if (cur_k > 0) {
-                      std::cout << ", ";
-                    }
-                    std::cout << graph[second_index * k + cur_k];
-                  }
-                  std::cout << std::endl;
-                } else {
-                  std::cout << "error: index out of range" << std::endl;
-                }
-              }
-              // }
-            }
-          }
-        }
-      }
-    }
+    // for (int64_t data_index = 0; data_index < trainingData.getNrows();
+    //      data_index += 1) {
+    //   // std::cout << "data_index: " << data_index
+    //   //           << " map: " << node_cluster_map[data_index] << " -> ";
+    //   uint64_t counter = 0;
+    //   for (size_t i = 0; i < clusters.size(); i += 1) {
+    //     for (size_t j = 0; j < clusters[i].size(); j += 1) {
+    //       int64_t other_index = clusters[i][j];
+    //       if (data_index == other_index) {
+    //         counter += 1;
+    //         // std::cout << "(" << i << ", " << j << ") ";
+    //       }
+    //     }
+    //   }
+    //   if (counter > 1 || counter == 0) {
+    //     std::cout << "data_index: " << data_index
+    //               << " map: " << node_cluster_map[data_index] << " -> ";
+    //     std::cout << std::endl;
+    //   }
+    // }
 
     if (write_cluster_map) {
       std::ofstream out_cluster_map(std::string("results/") + scenario_name +
