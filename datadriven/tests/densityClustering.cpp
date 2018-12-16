@@ -1709,26 +1709,28 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
   // TODO reactivate once this variant works again
-  // std::cout << "Testing default knn graph kernel with local memory and select statements..."
-  //           << std::endl;
-  // for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-  //   json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
-  //   for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-  //     json::Node &deviceNode = platformNode["DEVICES"][deviceName];
-  //     const std::string &kernelName = "connectNeighbors";
-  //     json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
-  //     kernelNode.replaceIDAttr("USE_SELECT", false);
-  //     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
-  //   }
-  // }
-  // operation_graph = std::make_unique<
-  //   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-  //       dataset, 2, manager, parameters, k);
-  // // Test graph kernel
-  // operation_graph->create_graph(graph);
-  // for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-  //   BOOST_CHECK(graph_optimal_result_dim2[i] == graph[i]);
-  // }
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
+    }
+  }
+  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory and select statements [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
 }
 
 BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {

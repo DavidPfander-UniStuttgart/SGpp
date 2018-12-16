@@ -341,11 +341,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       if (localWorkgroupSize == approxRegCount) {
-        sourceStream << this->indent[1] << "for (long i = 0 ; i < " << approxRegCount << "; i++) {"
+        sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount << "; i++) {"
                      << std::endl;
       } else {
-        sourceStream << this->indent[2] << "long chunkindex = 0;" << std::endl;
-        sourceStream << this->indent[1] << "for (long chunk = 0 ; chunk < "
+        sourceStream << this->indent[2] << "int chunkindex = 0;" << std::endl;
+        sourceStream << this->indent[1] << "for (int chunk = 0 ; chunk < "
                      << local_cache_size / approxRegCount << "; chunk++) {" << std::endl;
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
                      << "; i++, chunkindex++) {" << std::endl;
@@ -402,7 +402,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
                    << local_cache_size * dimensions << "];" << std::endl
                    << this->indent[0] << "for (long group = 0; group < "
-                   << problem_size / localWorkgroupSize << "; group++) {" << std::endl;
+                   << problem_size / local_cache_size << "; group++) {" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
       sourceStream << this->indent[1] << "if (get_local_id(0) < " << local_cache_size << ") {"
                    << std::endl;
@@ -414,16 +414,16 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[2] << "}" << std::endl;
       sourceStream << this->indent[1] << "}" << std::endl;
       sourceStream << this->indent[1] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
-      sourceStream << this->indent[1] << "for (int i = 0 ; i < " << localWorkgroupSize << "; i++) {"
+      sourceStream << this->indent[1] << "for (int i = 0 ; i < " << local_cache_size << "; i++) {"
                    << std::endl;
 
       sourceStream << calculate_distance(dimensions); // writes the source code to calculate
       // the distance between two points
-      sourceStream << this->indent[2] << "long min_index = 0;" << std::endl
+      sourceStream << this->indent[2] << "int min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]
                    << "if (dist < k_dists[min_index] && i + group * " << local_cache_size
                    << " != global_index) {" << std::endl
-                   << this->indent[3] << "k_reg[min_index] = i + group * " << localWorkgroupSize
+                   << this->indent[3] << "k_reg[min_index] = i + group * " << local_cache_size
                    << ";" << std::endl
                    << this->indent[3] << "k_dists[min_index] = dist;" << std::endl
                    << this->indent[2] << "}" << std::endl
