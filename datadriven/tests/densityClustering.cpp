@@ -1509,6 +1509,9 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   std::vector<int64_t> graph_approx_result_dim2;
   std::vector<int64_t> graph_approx_result_dim3;
   std::vector<int64_t> graph_approx_result_dim10;
+  std::vector<int64_t> graph_approx32_result_dim2;
+  std::vector<int64_t> graph_approx32_result_dim3;
+  std::vector<int64_t> graph_approx32_result_dim10;
 
   // helper loader function
   auto load_reference = [](const std::string reference_filename, std::vector<int64_t> &target_graph) {
@@ -1532,6 +1535,12 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim3.txt", graph_approx_result_dim3);
   // load dim 10 approximate reference result
   load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim10.txt", graph_approx_result_dim10);
+  // load dim 2 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim2.txt", graph_approx32_result_dim2);
+  // load dim 3 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim3.txt", graph_approx32_result_dim3);
+  // load dim 10 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim10.txt", graph_approx32_result_dim10);
 
   // Load dataset for test scenario
   sgpp::datadriven::Dataset data_dim2 = sgpp::datadriven::ARFFTools::readARFF(
@@ -1606,6 +1615,29 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   std::cout << "Testing approx knn graph kernel with local memory [dim 10]..." << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
+  // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 32l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_approx32_result_dim2);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx32_result_dim3);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx32_result_dim10);
+
   // Testing approximate KNN kernel with unrolled dist (2)
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
@@ -1628,6 +1660,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
   std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
 
   // TODO reactivate once this variant works again
   // std::cout << "Testing default knn graph kernel with local memory and select statements..."
