@@ -123,6 +123,7 @@ using namespace sgpp;
 
 int main(int argc, char **argv) {
   std::string datasetFileName;
+    std::string binary_header_filename = "";
   size_t eval_grid_level;
   size_t level;
   double lambda;
@@ -167,6 +168,9 @@ int main(int argc, char **argv) {
   description.add_options()("help", "display help")(
       "datasetFileName",
       boost::program_options::value<std::string>(&datasetFileName),
+      "training data set as an arff file")(
+      "binary_header_filename",
+      boost::program_options::value<std::string>(&binary_header_filename),
       "training data set as an arff file")(
       "density_eval_full_grid_level",
       boost::program_options::value<size_t>(&eval_grid_level)->default_value(2),
@@ -299,10 +303,14 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  if (variables_map.count("datasetFileName") == 0) {
-    std::cerr << "error: option \"datasetFileName\" not specified" << std::endl;
+  if (variables_map.count("datasetFileName") == 0 &&
+      variables_map.count("binary_header_filename") == 0) {
+    std::cerr << "error: neither option \"datasetFileName\" is specified "
+              << std::endl;
+    std::cerr << "nor is the option \"binary_header_filename\"" << std::endl;
     return 1;
-  } else {
+  } else if (variables_map.count("datasetFileName") != 0 &&
+             variables_map.count("binary_header_filename") == 0) {
     std::experimental::filesystem::path datasetFilePath(datasetFileName);
     if (!std::experimental::filesystem::exists(datasetFilePath)) {
       std::cerr << "error: dataset file does not exist: " << datasetFileName
@@ -310,6 +318,22 @@ int main(int argc, char **argv) {
       return 1;
     }
     std::cout << "datasetFileName: " << datasetFileName << std::endl;
+  } else if (variables_map.count("datasetFileName") == 0 &&
+             variables_map.count("binary_header_filename") != 0) {
+    std::experimental::filesystem::path datasetFilePath(
+        binary_header_filename);
+    if (!std::experimental::filesystem::exists(datasetFilePath)) {
+      std::cerr << "error: dataset file does not exist: "
+                << binary_header_filename << std::endl;
+      return 1;
+    }
+    std::cout << "binary_header_filename: " << binary_header_filename
+              << std::endl;
+  } else {
+    std::cerr << "error: Both options \"datasetFileName\" and " << std::endl;
+    std::cerr << "binary_header_filename\" are specified! Use only one. "
+              << std::endl;
+    return 1;
   }
 
   // if (variables_map.count("eval_grid_level") == 0) {
@@ -437,18 +461,27 @@ int main(int argc, char **argv) {
       std::chrono::system_clock::now();
 
   // read dataset
-  std::cout << "reading dataset...";
-  datadriven::Dataset dataset =
-      datadriven::ARFFTools::readARFF(datasetFileName);
+  sgpp::base::DataMatrix trainingData;
+  size_t dimension = 0;
+  if (variables_map.count("binary_header_filename") != 0) {
+    std::cerr << "Loading binary dataset: " << std::endl;
+    trainingData = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(
+        binary_header_filename);
+    dimension = trainingData.getNcols();
+  } else if (variables_map.count("datasetFileName") != 0) {
+    std::cerr << "Loading ARFF dataset: " << std::endl;
+    sgpp::datadriven::Dataset data =
+        sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
+    trainingData = data.getData();
+    dimension = trainingData.getNcols();
+  }
   std::cout << "done" << std::endl;
 
   std::chrono::time_point<std::chrono::system_clock>
       total_timer_start_without_disk = std::chrono::system_clock::now();
 
-  size_t dimension = dataset.getDimension();
   std::cout << "dimension: " << dimension << std::endl;
 
-  base::DataMatrix &trainingData = dataset.getData();
   std::cout << "data points: " << trainingData.getNrows() << std::endl;
 
   // create grid
