@@ -71,101 +71,84 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     }
     return output.str();
   }
-  /// TODO - write function that generates dimension loop - either blocking or non blocking
   std::string calculate_distance(size_t dimensions) {
     std::stringstream output;
-    // base case - no blocking
-    if (dataBlockSize == 1 || dimensions % 2 == 1) {
-      // we have to differentiate between approx and non approx due to variable name differences
-      if (use_approx) { // base case for blocking
-        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl
-               << this->indent[2] << "for (int j = 0; j <     " << dimensions << " ; j++) {"
-               << std::endl;
-        if (localWorkgroupSize != approxRegCount) {
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
-                 << dimensions << " ]);" << std::endl;
-        } else { // in this case we have no chunkindex loop
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                 << " ]);" << std::endl;
-        }
-        output << this->indent[2] << "}" << std::endl;
-      } else { // no use approx, we need to calc the distance for the real knn
-        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-        output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j++) {"
-               << std::endl;
-        if (useLocalMemory) {
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
-                 << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                 << " ]);" << std::endl;
-        } else { // using global arrays for this one
-          output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
-                 << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
-                 << std::endl;
-        }
-        output << this->indent[2] << "}" << std::endl;
+    if (use_approx) { // base case for blocking
+      output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+      for (int block = 2; block < dataBlockSize + 1; block++) {
+        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
       }
-      // TODO blocked case
-    } else if (dimensions % 2 == 0) {
-      if (use_approx) { // base case for blocking
-        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-        output << this->indent[2] << "dist2 = 0.0" << this->constSuffix() << ";" << std::endl
-               << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+=2) {"
-               << std::endl;
-        if (localWorkgroupSize != approxRegCount) {
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
+      output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+="
+             << dataBlockSize << ") {" << std::endl;
+      if (localWorkgroupSize != approxRegCount) {
+        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
+               << dimensions << " ])" << std::endl
+               << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
+               << dimensions << " ]);" << std::endl;
+        for (int block = 2; block < dataBlockSize + 1; block++) {
+          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + (chunkindex) * "
                  << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
+                 << this->indent[3] << "* (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + (chunkindex)* "
                  << dimensions << " ]);" << std::endl;
-          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + (chunkindex) * "
+        }
+      } else { // in this case we have no chunkindex loop
+        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
+               << dimensions << " ])" << std::endl
+               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+               << " ]);" << std::endl;
+        for (int block = 2; block < dataBlockSize + 1; block++) {
+          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + i * "
                  << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + (chunkindex)* "
-                 << dimensions << " ]);" << std::endl;
-        } else { // in this case we have no chunkindex loop
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                 << " ]);" << std::endl;
-          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + i* " << dimensions
+                 << this->indent[3] << "* (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + i* " << dimensions
                  << " ]);" << std::endl;
         }
-        output << this->indent[2] << "}" << std::endl;
-        output << this->indent[2] << "dist += dist2;" << std::endl;
-      } else { // no use approx, we need to calc the distance for the real knn
-        output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-        output << this->indent[2] << "dist2 = 0.0" << this->constSuffix() << ";" << std::endl;
-        output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+=2) {"
-               << std::endl;
-        if (useLocalMemory) {
-          output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
-                 << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-                 << " ]);" << std::endl;
-          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data_local[j + 1 + i * "
+      }
+      output << this->indent[2] << "}" << std::endl;
+      for (int block = 2; block < dataBlockSize + 1; block++) {
+        output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
+      }
+    } else { // no use approx, we need to calc the distance for the real knn
+      output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
+      for (int block = 2; block < dataBlockSize + 1; block++) {
+        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
+      }
+      output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+="
+             << dataBlockSize << ") {" << std::endl;
+      if (useLocalMemory) {
+        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+               << " ])" << std::endl
+               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+               << " ]);" << std::endl;
+        for (int block = 2; block < dataBlockSize + 1; block++) {
+          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + i * "
                  <<  dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + 1] - data_local[j + 1 + i* " << dimensions
+                 << this->indent[3] << "* (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + i* " << dimensions
                  << " ]);" << std::endl;
-        } else { // using global arrays for this one
-          output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+        }
+      } else { // using global arrays for this one
+        output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
+               << " ])" << std::endl
+               << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
+               << std::endl;
+        for (int block = 2; block < dataBlockSize + 1; block++) {
+          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
+                 << "] - data[j + " << block - 1 << " + i* " << dimensions
                  << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
-                 << std::endl;
-          output << this->indent[3] << "dist2 += (datapoint[j + 1] - data[j + 1 + i* " << dimensions
-                 << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + 1] - data[j + 1 + i* " << dimensions << " ]);"
+                 << this->indent[3] << "* (datapoint[j + " << block - 1
+                 << "] - data[j + " << block - 1 << " + i* " << dimensions << " ]);"
                  << std::endl;
         }
-        output << this->indent[2] << "}" << std::endl;
-        output << this->indent[2] << "dist += dist2;" << std::endl;
       }
-      // TODO blocked case without even dimensions
+      output << this->indent[2] << "}" << std::endl;
+      for (int block = 2; block < dataBlockSize + 1; block++) {
+        output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
+      }
     }
     return output.str();
   }

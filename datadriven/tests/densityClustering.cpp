@@ -1622,8 +1622,12 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
     }
   }
-  std::cout << "Testing approx knn graph kernel with unrolled dist calculation..." << std::endl;
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 2]..." << std::endl;
   run_knn_test_case(parameters, data_dim2, graph_approx_result_dim2);
+  // std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 3]..." << std::endl;
+  // run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  // std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
+  // run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
   // TODO reactivate once this variant works again
   // std::cout << "Testing default knn graph kernel with local memory and select statements..."
