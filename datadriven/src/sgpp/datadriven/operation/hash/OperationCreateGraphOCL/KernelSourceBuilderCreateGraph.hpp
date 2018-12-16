@@ -27,7 +27,6 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   size_t localWorkgroupSize;
   /// Using local memory?
   bool useLocalMemory;
-  // size_t dataBlockSize;
   // size_t transGridBlockSize;
   // uint64_t maxDimUnroll;
   /// Use select statements instead of if branches? Configuration parameter is USE_SELECT
@@ -270,9 +269,21 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
 
     std::stringstream sourceStream;
     uint64_t local_cache_size = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
+
+    // Check whether it is a valid configuration
     if (use_approx && local_cache_size < approxRegCount) {
       std::string error = std::string("Error: Number of bins (APPROX_REG_COUNT) cannot be ") +
                           std::string("larger than the local cache size (KERNEL_LOCAL_CACHE_SIZE)!");
+      throw error.c_str();
+    }
+    if (use_approx && local_cache_size % approxRegCount != 0) {
+      std::string error = std::string("Error: Cachesize (KERNEL_LOCAL_CACHE_SIZE) is not ") +
+                          std::string("evenly divisible by bin number (APPROX_REG_COUNT).");
+      throw error.c_str();
+    }
+    if (dataBlockSize < 1 || dataBlockSize > dimensions) {
+      std::string error = std::string("Error: dataBlockSize (KERNEL_DATA_BLOCKING_SIZE) is not ") +
+                          std::string("within valid range (1 to dimensions)");
       throw error.c_str();
     }
 
@@ -296,10 +307,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     }
     sourceStream << save_from_global_to_private(dimensions);
     sourceStream << this->indent[0] << "__private "
-                 << this->floatType() << " dist = 0.0;" << std::endl;
-    if (dataBlockSize == 2) {
+                 << this->floatType() << " dist = 0.0" << this->constSuffix() << ";" << std::endl;
+    for (int block = 2; block < dataBlockSize + 1; block++) {
       sourceStream << this->indent[0] << "__private "
-                   << this->floatType() << " dist2 = 0.0;" << std::endl;
+                   << this->floatType() << " dist" << block << " = 0.0"
+                   << this->constSuffix() << ";" << std::endl;
     }
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["

@@ -1687,6 +1687,26 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
+  // Testing approximate KNN kernel with unrolled dist (3)
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 3l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with 3 unrolled dist calculation [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  std::cout << "Testing approx knn graph kernel with 3 unrolled dist calculation [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
   // TODO reactivate once this variant works again
   // std::cout << "Testing default knn graph kernel with local memory and select statements..."
