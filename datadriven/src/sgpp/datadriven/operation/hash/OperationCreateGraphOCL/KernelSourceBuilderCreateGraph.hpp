@@ -124,16 +124,31 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
+        int startid = dimensions - (dimensions % dataBlockSize);
+        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+          std::string accu = "dist";
+          if (block != 1) { // different naming in this case for dist
+            accu = std::string("dist") + std::to_string(block);
+          }
+          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + i* "
+                 << dimensions << " ]);" << std::endl;
+        }
       }
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
       }
+
     } else { // no use approx, we need to calc the distance for the real knn
+
       output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
       }
-      output << this->indent[2] << "for (int j = 0; j < " << dimensions << " ; j+="
+      output << this->indent[2] << "for (int j = 0; j < " << dimensions - (dimensions % dataBlockSize) << " ; j+="
              << dataBlockSize << ") {" << std::endl;
       if (useLocalMemory) {
         output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
@@ -150,6 +165,19 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
+        int startid = dimensions - (dimensions % dataBlockSize);
+        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+          std::string accu = "dist";
+          if (block != 1) { // different naming in this case for dist
+            accu = std::string("dist") + std::to_string(block);
+          }
+          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + i* "
+                 << dimensions << " ]);" << std::endl;
+        }
       } else { // using global arrays for this one
         output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
                << " ])" << std::endl
@@ -165,6 +193,19 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
+        int startid = dimensions - (dimensions % dataBlockSize);
+        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+          std::string accu = "dist";
+          if (block != 1) { // different naming in this case for dist
+            accu = std::string("dist") + std::to_string(block);
+          }
+          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
+                 << "] - data[" << startid + block - 1 << " + i * "
+                 << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1
+                 << "] - data[" << startid + block - 1 << " + i* "
+                 << dimensions << " ]);" << std::endl;
+        }
       }
       for (int block = 2; block < dataBlockSize + 1; block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
@@ -229,6 +270,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
 
     std::stringstream sourceStream;
     uint64_t local_cache_size = kernelConfiguration["KERNEL_LOCAL_CACHE_SIZE"].getUInt();
+    if (use_approx && local_cache_size < approxRegCount) {
+      std::string error = std::string("Error: Number of bins (APPROX_REG_COUNT) cannot be ") +
+                          std::string("larger than the local cache size (KERNEL_LOCAL_CACHE_SIZE)!");
+      throw error.c_str();
+    }
 
     if (this->floatType().compare("double") == 0) {
       sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl << std::endl;
