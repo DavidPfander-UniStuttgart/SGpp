@@ -1506,6 +1506,8 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
 BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   // Reference results
   std::vector<int64_t> graph_optimal_result_dim2;
+  std::vector<int64_t> graph_optimal_result_dim3;
+  std::vector<int64_t> graph_optimal_result_dim10;
   std::vector<int64_t> graph_approx_result_dim2;
   std::vector<int64_t> graph_approx_result_dim3;
   std::vector<int64_t> graph_approx_result_dim10;
@@ -1529,6 +1531,10 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // load dim 2 reference result
   load_reference("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt", graph_optimal_result_dim2);
+  // load dim 3 reference result
+  load_reference("datadriven/tests/data/clustering_test_data/knn_dim3.txt", graph_optimal_result_dim3);
+  // load dim 10 reference result
+  load_reference("datadriven/tests/data/clustering_test_data/knn_dim10.txt", graph_optimal_result_dim10);
   // load dim 2 approximate reference result
   load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim2.txt", graph_approx_result_dim2);
   // load dim 3 approximate reference result
@@ -1591,6 +1597,26 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   }
   std::cout << "Testing default knn graph kernel with select statements..." << std::endl;
   run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+
+  // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
+    }
+  }
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
 
 
   // Testing approximate KNN kernel
