@@ -1504,44 +1504,88 @@ BOOST_AUTO_TEST_CASE(DensityAlphaSolver) {
 
 
 BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
-  // Load correct results for comparison
-  std::vector<int> graph_optimal_result;
-  std::ifstream graph_in("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt");
-  if (graph_in) {
-    int value;
-    while (graph_in >> value) graph_optimal_result.push_back(value);
-  } else {
-    BOOST_THROW_EXCEPTION(std::runtime_error("knn graph result file is missing!"));
-  }
-  graph_in.close();
+  // Reference results
+  std::vector<int64_t> graph_optimal_result_dim2;
+  std::vector<int64_t> graph_optimal_result_dim3;
+  std::vector<int64_t> graph_optimal_result_dim10;
+  std::vector<int64_t> graph_approx_result_dim2;
+  std::vector<int64_t> graph_approx_result_dim3;
+  std::vector<int64_t> graph_approx_result_dim10;
+  std::vector<int64_t> graph_approx32_result_dim2;
+  std::vector<int64_t> graph_approx32_result_dim3;
+  std::vector<int64_t> graph_approx32_result_dim10;
 
-  // Create OCL configuration
+  // helper loader function
+  auto load_reference = [](const std::string reference_filename, std::vector<int64_t> &target_graph) {
+    std::ifstream graph_in(reference_filename);
+    if (graph_in) {
+      int value;
+      while (graph_in >> value) target_graph.push_back(value);
+    } else {
+      std::string error_message = std::string("Error! Reference file ") +
+      reference_filename + std::string(" is missing!");
+      BOOST_THROW_EXCEPTION(std::runtime_error(error_message));
+    }
+    graph_in.close();
+  };
+
+  // load dim 2 reference result
+  load_reference("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt", graph_optimal_result_dim2);
+  // load dim 3 reference result
+  load_reference("datadriven/tests/data/clustering_test_data/knn_dim3.txt", graph_optimal_result_dim3);
+  // load dim 10 reference result
+  load_reference("datadriven/tests/data/clustering_test_data/knn_dim10.txt", graph_optimal_result_dim10);
+  // load dim 2 approximate reference result
+  load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim2.txt", graph_approx_result_dim2);
+  // load dim 3 approximate reference result
+  load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim3.txt", graph_approx_result_dim3);
+  // load dim 10 approximate reference result
+  load_reference("datadriven/tests/data/clustering_test_data/approx_knn_dim10.txt", graph_approx_result_dim10);
+  // load dim 2 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim2.txt", graph_approx32_result_dim2);
+  // load dim 3 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim3.txt", graph_approx32_result_dim3);
+  // load dim 10 approximate reference result with full bins
+  load_reference("datadriven/tests/data/clustering_test_data/approx32_knn_dim10.txt", graph_approx32_result_dim10);
+
+  // Load dataset for test scenario
+  sgpp::datadriven::Dataset data_dim2 = sgpp::datadriven::ARFFTools::readARFF(
+      "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
+  sgpp::datadriven::Dataset data_dim3 = sgpp::datadriven::ARFFTools::readARFF(
+      "datadriven/tests/data/clustering_test_data/knn_graph_test_dim3.arff");
+  sgpp::datadriven::Dataset data_dim10 = sgpp::datadriven::ARFFTools::readARFF(
+      "datadriven/tests/data/clustering_test_data/knn_graph_test_dim10.arff");
+
+  // Create OCL configuration,  manager
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       getConfigurationDefaultsSingleDevice();
   sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCL::load_default_parameters(
       parameters);
-
-  // Create OpenCL Manager
   auto manager = std::make_shared<sgpp::base::OCLManagerMultiPlatform>(parameters);
-
-  // Load dataset for test scenario
-  sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(
-      "datadriven/tests/data/clustering_test_data/clustering_testdataset_dim2.arff");
-  sgpp::base::DataMatrix &dataset = data.getData();
-
-  // Create operation
   size_t k = 8;
-  auto operation_graph = std::make_unique<
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-        dataset, 2, manager, parameters, k);
-  // Test graph kernel
-  std::vector<int> graph(dataset.getNrows() * k);
-  operation_graph->create_graph(graph);
-  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
-  }
 
-  std::cout << "Testing default knn graph kernel with select statements..." << std::endl;
+  auto run_knn_test_case = [&manager, k](auto parameters, auto dataset, auto reference_graph) {
+    auto operation_graph = std::make_unique<
+        sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
+            dataset.getData(), dataset.getDimension(), manager, parameters, k);
+    // Test graph kernel
+    std::vector<int64_t> graph(dataset.getData().getNrows() * k);
+    operation_graph->create_graph(graph);
+    for (size_t i = 0; i < dataset.getData().getNrows() * k; ++i) {
+        BOOST_CHECK(reference_graph[i] == graph[i]);
+        if (reference_graph[i] != graph[i]) {
+          std::cout << "Actual result at position " << i << " : " << graph[i] << std::endl;
+          std::cout << "Reference file at position " << i << " : " << reference_graph[i] << std::endl;
+        }
+    }
+  };
+
+  // Testing default kernel
+  std::cout << "Testing default knn graph kernel ..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+
+
+  // Testing kernel with select
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -1551,16 +1595,10 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("USE_SELECT", true);
     }
   }
-  operation_graph = std::make_unique<
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-        dataset, 2, manager, parameters, k);
-  // Test graph kernel
-  operation_graph->create_graph(graph);
-  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
-  }
+  std::cout << "Testing default knn graph kernel with select statements..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
 
-  std::cout << "Testing default knn graph kernel with local memory..." << std::endl;
+  // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -1568,20 +1606,132 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       const std::string &kernelName = "connectNeighbors";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
-      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
     }
   }
-  operation_graph = std::make_unique<
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-        dataset, 2, manager, parameters, k);
-  // Test graph kernel
-  operation_graph->create_graph(graph);
-  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
-  }
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
 
-  std::cout << "Testing default knn graph kernel with local memory and select statements..."
+
+  // Testing approximate KNN kernel
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with local memory [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_approx_result_dim2);
+  std::cout << "Testing approx knn graph kernel with local memory [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  std::cout << "Testing approx knn graph kernel with local memory [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
+  // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 32l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_approx32_result_dim2);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx32_result_dim3);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation and max bins [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx32_result_dim10);
+
+  // Testing approximate KNN kernel with unrolled dist (2)
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_approx_result_dim2);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  std::cout << "Testing approx knn graph kernel with unrolled dist calculation [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
+  // Testing approximate KNN kernel with unrolled dist (3)
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("WRITE_SOURCE", true);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 3l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with 3 unrolled dist calculation [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  std::cout << "Testing approx knn graph kernel with 3 unrolled dist calculation [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
+    }
+  }
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
             << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
+
+  // testing with unrolled dim loop
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
@@ -1589,22 +1739,47 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       const std::string &kernelName = "connectNeighbors";
       json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
     }
   }
-  operation_graph = std::make_unique<
-    sgpp::datadriven::DensityOCLMultiPlatform::OperationCreateGraphOCLSingleDevice<double>>(
-        dataset, 2, manager, parameters, k);
-  // Test graph kernel
-  operation_graph->create_graph(graph);
-  for (size_t i = 0; i < dataset.getNrows() * k; ++i) {
-    BOOST_CHECK(graph_optimal_result[i] == graph[i]);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim2]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_optimal_result_dim2);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim3]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop [dim10]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
+
+  // testing with unrolled dim loop
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("USE_APPROX", false);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 3l);
+    }
   }
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop 3 [dim3]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_optimal_result_dim3);
+  std::cout << "Testing default knn graph kernel with local memory and blocked dimension loop 3 [dim10]..."
+            << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_optimal_result_dim10);
 }
 
 BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   // Load input
-  std::vector<int> graph;
+  std::vector<int64_t> graph;
   std::ifstream graph_in("datadriven/tests/data/clustering_test_data/graph_erg_dim2_depth11.txt");
   if (graph_in) {
     int value;
@@ -1615,7 +1790,7 @@ BOOST_AUTO_TEST_CASE(KNNPruneGraphOpenCL) {
   graph_in.close();
 
   // Load optimal results for comparison
-  std::vector<int> graph_optimal_result;
+  std::vector<int64_t> graph_optimal_result;
   std::ifstream graph_result(
       "datadriven/tests/data/clustering_test_data/graph_pruned_erg_dim2_depth11.txt");
   if (graph_result) {
