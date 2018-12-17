@@ -441,7 +441,7 @@ int main(int argc, char **argv) {
 
   std::cout << "dimension: " << dimension << std::endl;
   std::cout << "data points: " << trainingData.getNrows() << std::endl;
-  if (trainingData.getNrows()) {
+  if (trainingData.getNrows() == 0) {
     std::cerr << "error: dataset is empty" << std::endl;
     return 1;
   }
