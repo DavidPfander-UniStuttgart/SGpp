@@ -140,14 +140,14 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
    return dataset, cluster_ret, centers
 
 # dimensions, clusters, setsize, abweichung, rauschensize
-num_clusters=100
+num_clusters=5
 abweichung = 0.05
 clusters_distance = 6 # required distance between cluster centers, criterion dis < c_dis * abw
 # noise_percent = 0.02
 # for dim in range(2, 11, 2):
 for dim in range(10, 11, 2):
     for noise_percent in [0.0, 0.02]:
-        for dataset_size in [10000000, 100000000]:
+        for dataset_size in [1000000]:
         # for dataset_size in [100]:
             # for dataset_size in chain([200], range(20000, 110000, 20000), range(200000, 1100000, 200000)):
           file_name = "final_paper_datasets/gaussian_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
