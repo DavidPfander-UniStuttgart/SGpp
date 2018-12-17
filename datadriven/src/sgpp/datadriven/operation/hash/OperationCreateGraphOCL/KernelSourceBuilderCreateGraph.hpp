@@ -37,6 +37,8 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   size_t approxRegCount;
   /// should the dimension loop be blocked?
   size_t dataBlockSize;
+  /// Allow reflexive edges in approx knn?
+  bool allow_reflexive;
 
   /// Writes the source code for initialization of the k neighbor registers
   std::string init_k_registers(size_t k) {
@@ -236,7 +238,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
  public:
   SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims)
       : kernelConfiguration(kernelConfiguration), dims(dims), use_select(false),
-        use_approx(false), dataBlockSize(1) {
+        use_approx(false), allow_reflexive(true), dataBlockSize(1) {
     localWorkgroupSize = 128;
     if (kernelConfiguration.contains("LOCAL_SIZE"))
       localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
@@ -251,6 +253,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     if (kernelConfiguration.contains("USE_APPROX")) {
       if (kernelConfiguration["USE_APPROX"].getBool()) {
         use_approx = true;
+      }
+    }
+    if (kernelConfiguration.contains("ALLOW_REFLEXIVE")) {
+      if (!kernelConfiguration["ALLOW_REFLEXIVE"].getBool()) {
+        allow_reflexive = false;
       }
     }
     if (kernelConfiguration.contains("APPROX_REG_COUNT"))
@@ -353,13 +360,23 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << calculate_distance(dimensions); // writes the source code to calculate
       // the distance between two points
       if (localWorkgroupSize != approxRegCount) {
-        sourceStream << this->indent[2] << "if (dist < dist_reg[i]) {" << std::endl
-                     << this->indent[3] << "dist_reg[i] = dist;" << std::endl
+        if (allow_reflexive) {
+          sourceStream << this->indent[2] << "if (dist < dist_reg[i]) {" << std::endl;
+        } else {
+          sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
+                       << local_cache_size << " != global_index) {" << std::endl;
+        }
+        sourceStream << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group * " << local_cache_size
                      << " + chunkindex;" << std::endl;
       } else {
-        sourceStream << this->indent[2] << "if (dist < dist_reg[i]  {" << std::endl
-                     << this->indent[3] << "dist_reg[i] = dist;" << std::endl
+        if (allow_reflexive) {
+          sourceStream << this->indent[2] << "if (dist < dist_reg[i]  {" << std::endl;
+        } else {
+          sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
+                       << local_cache_size << " != global_index) {" << std::endl;
+        }
+        sourceStream << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group;" << std::endl;
       }
       sourceStream << this->indent[2] << "}" << std::endl << this->indent[1] << "}" << std::endl;

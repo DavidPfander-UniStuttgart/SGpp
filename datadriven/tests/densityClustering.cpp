@@ -1630,6 +1630,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("ALLOW_REFLEXIVE", false);
       kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
     }
@@ -1640,6 +1641,30 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
   std::cout << "Testing approx knn graph kernel with local memory [dim 10]..." << std::endl;
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
+  // Testing approximate KNN kernel with reflexive edges
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = "connectNeighbors";
+      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      kernelNode.replaceIDAttr("USE_SELECT", false);
+      kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
+      kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
+      kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("ALLOW_REFLEXIVE", true);
+      kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
+      kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 1l);
+    }
+  }
+  std::cout << "Testing approx knn graph kernel with local memory and reflexive edges [dim 2]..." << std::endl;
+  run_knn_test_case(parameters, data_dim2, graph_approx_result_dim2);
+  std::cout << "Testing approx knn graph kernel with local memory and reflexive edges [dim 3]..." << std::endl;
+  run_knn_test_case(parameters, data_dim3, graph_approx_result_dim3);
+  std::cout << "Testing approx knn graph kernel with local memory and reflexive edges [dim 10]..." << std::endl;
+  run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
+
 
   // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
@@ -1652,6 +1677,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("ALLOW_REFLEXIVE", false);
       kernelNode.replaceIDAttr("APPROX_REG_COUNT", 32l);
       kernelNode.replaceIDAttr("WRITE_SOURCE", true);
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
@@ -1675,6 +1701,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("ALLOW_REFLEXIVE", false);
       kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
       kernelNode.replaceIDAttr("WRITE_SOURCE", true);
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 2l);
@@ -1698,6 +1725,7 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_APPROX", true);
+      kernelNode.replaceIDAttr("ALLOW_REFLEXIVE", false);
       kernelNode.replaceIDAttr("APPROX_REG_COUNT", 16l);
       kernelNode.replaceIDAttr("WRITE_SOURCE", true);
       kernelNode.replaceIDAttr("KERNEL_DATA_BLOCKING_SIZE", 3l);
