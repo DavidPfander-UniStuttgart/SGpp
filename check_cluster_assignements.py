@@ -88,7 +88,7 @@ def count_correct_cluster_hits(correct_output, actual_output, print_detailed_hit
         for d in to_remove_list:
             del bins[d] # but we can delete in this loop
 
-    if print_ID_mapping:
+    if print_ID_assignement:
         print("------------------------------------------------------------------")
         print("Mapping from reference cluster ID to detected cluster ID:")
         print(correct_assignements)
