@@ -353,14 +353,12 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << calculate_distance(dimensions); // writes the source code to calculate
       // the distance between two points
       if (localWorkgroupSize != approxRegCount) {
-        sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && chunkindex + group * "
-                     << local_cache_size << " != global_index) {" << std::endl
+        sourceStream << this->indent[2] << "if (dist < dist_reg[i]) {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group * " << local_cache_size
                      << " + chunkindex;" << std::endl;
       } else {
-        sourceStream << this->indent[2] << "if (dist <= dist_reg[i] && i + group * "
-                     << local_cache_size << " != global_index) {" << std::endl
+        sourceStream << this->indent[2] << "if (dist < dist_reg[i]  {" << std::endl
                      << this->indent[3] << "dist_reg[i] = dist;" << std::endl
                      << this->indent[3] << "index_reg[i] = group;" << std::endl;
       }
