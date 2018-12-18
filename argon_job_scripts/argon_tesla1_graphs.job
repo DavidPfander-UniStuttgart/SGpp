@@ -13,4 +13,4 @@ echo "starting"
 srun echo `hostname`
 
 cd /data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp
-srun ./argon_job_scripts/argon_tesla1_graph_run.sh
+srun ./argon_job_scripts/argon_tesla1_graphs_run.sh
