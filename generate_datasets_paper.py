@@ -77,7 +77,7 @@ def normalize(dataset, centers, dimensions):
             # col[i] = (col[i]+0.1)*0.8
         centers[:, dimension] = col
 
-def generate_dataset(dimensions, num_clusters, setsize, std_deviation, num_noise, clusters_distance, cutoff_radius):
+def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, clusters_distance, cutoff_radius):
     #generate centers
     centers = np.zeros(shape=(num_clusters, dimensions))
     for cluster in range(0, num_clusters):
@@ -99,7 +99,7 @@ def generate_dataset(dimensions, num_clusters, setsize, std_deviation, num_noise
                 for dimension in range(0, dimensions):
                     distance = distance + (center[dimension] - c[dimension])**2
                 distance = math.sqrt(distance) # ** 0.5
-                if distance < clusters_distance * std_deviation:
+                if distance < clusters_distance * deviation:
                     continue_search = 1
                     break
             counter = counter +1
@@ -123,14 +123,19 @@ def generate_dataset(dimensions, num_clusters, setsize, std_deviation, num_noise
         i = 0
         while i < cluster_size:
         # for i in range(0, cluster_size):
-            for dimension in range(0, dimensions):
-                dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], std_deviation)
+            if dataset_type == "gaussian":
+                for dimension in range(0, dimensions):
+                    dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], deviation)
+            elif dataset_type == "hypercube":
+                for dimension in range(0, dimensions):
+                    dataset[currentsize, dimension] = random.uniform(centers[cluster][dimension] - deviation, centers[cluster][dimension] + deviation)
+
             dist = 0.0
             for dimension in range(0, dimensions):
                 temp = dataset[currentsize, dimension] - centers[cluster][dimension]
                 dist += temp * temp
             dist = math.sqrt(dist)
-            if dist > cutoff_radius * std_deviation:
+            if dist > cutoff_radius * deviation:
                 continue
             cluster_ret[currentsize] = cluster + 1
             currentsize = currentsize + 1
@@ -141,8 +146,13 @@ def generate_dataset(dimensions, num_clusters, setsize, std_deviation, num_noise
     # cluster size does not divide setsize, fill up last cluster
     print("currentsize:", currentsize, "setsize:", setsize)
     while currentsize < setsize:
-        for dimension in range(0, dimensions):
-            dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], std_deviation)
+        if dataset_type == "gaussian":
+            for dimension in range(0, dimensions):
+                dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], deviation)
+        elif dataset_type == "hypercube":
+            for dimension in range(0, dimensions):
+                dataset[currentsize, dimension] = random.uniform(centers[cluster][dimension] - deviation, centers[cluster][dimension] + deviation)
+
         cluster_ret[currentsize] = num_clusters
         currentsize = currentsize + 1
 
@@ -200,48 +210,22 @@ def add_noise(dimensions, setsize, num_noise, dataset1, Y1):
 
     return dataset, cluster_ret
 
-# dimensions, clusters, setsize, std_deviation, noise_percent
+# dimensions, clusters, setsize, deviation, noise_percent
 np.set_printoptions(precision=3)
 num_clusters=100
-std_deviation = 0.05
-clusters_distance = 8 # unit: standard deviation
-cutoff_radius = 4 # unit: standard deviation
-# noise_percent = 0.02
-# for dim in range(2, 11, 2):
-# for dim in range(2, 3, 2):
-# for dim in [3, 5, 10]:
-for dim in [10]:
-    # for noise_percent in [0.0, 0.02]:
-    for noise_percent in [0.02]:
-        for dataset_size in [100000]:
-            file_name = "final_paper_datasets/gaussian_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
-            # if noise_percent > 0.0:
-            #     file_name += "_noise"
+deviation = 0.05
+clusters_distance = 7 # unit: standard deviation
+cutoff_radius = 3 # unit: standard deviation
+noise_percent = 0.02
+# dataset_type = "gaussian" # 'gaussian' or 'hypercube'
+for dim in [5, 10]:
+    for dataset_size in [100000]:
+        for dataset_type in ["gaussian", "hypercube"]:
+            file_name = "final_paper_datasets/" + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
             print("creating " + file_name + ".arff")
             # always create dataset without noise first
-            dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, std_deviation, 0, clusters_distance, cutoff_radius)
-
+            dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, deviation, 0, clusters_distance, cutoff_radius)
             write_all_arffs(dim, file_name, dataset1, Y1, centers)
-
-            # f = open(file_name + ".arff", "w")
-            # write_arff_header(f, dim, file_name, False)
-            # write_csv(f, dim, dataset1)
-
-            # f = open(file_name + "_class.arff", "w")
-            # for i in range(len(Y1)):
-            #     f.write(str(Y1[i]) + "\n")
-            # f.close()
-
-            # f = open(file_name + "_centers.arff", "w")
-            # # write_arff_header(f, dim, file_name)
-            # for center in centers:
-            #     for d in range(dim):
-            #         if (d > 0):
-            #             f.write(", ")
-            #         f.write(str(center[d]))
-            #     f.write("\n")
-            # f.close()
-
             num_noise = int(noise_percent * dataset_size)
             assert((num_noise > 0) or (noise_percent == 0))
             if num_noise > 0:
