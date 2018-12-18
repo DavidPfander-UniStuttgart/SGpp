@@ -393,6 +393,10 @@ std::shared_ptr<OCLOperationConfiguration> getConfigurationDefaultsSingleDevice(
   bool firstDevice = true;
   std::vector<std::string> platformNames = (*parameters)["PLATFORMS"].keys();
   for (std::string& platformName : platformNames) {
+    // if (platformName.compare("Intel(R) OpenCL HD Graphics") == 0) {
+    //   (*parameters)["PLATFORMS"][platformName].erase();
+    //   continue;
+    // }
     if (firstPlatform) {
       firstPlatform = false;
     } else {
