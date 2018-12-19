@@ -29,6 +29,8 @@ if __name__ == '__main__':
                         threshold. Instead they will be summarized as one entry. ')
     parser.add_argument('--file_prefix', type=str, required=True,
                         help=' [filename] File prefix for the clustering_cmd output files.')
+    parser.add_argument('--initial_knn_file', type=str, required=False, default="",
+                        help=' [filename] File that contains the KNN for the current dataset')
     parser.add_argument('--lambda_list', nargs='+', help='Lambda values that will be tested', required=True)
     parser.add_argument('--threshold_list', nargs='+', help='Threshold values that will be tested', required=True)
     args = parser.parse_args()
@@ -48,6 +50,8 @@ if __name__ == '__main__':
     prefix_arg = "--file_prefix=" + str(args.file_prefix)
     k_arg = "--k=" + str(args.k)
     reuse_graph_arg = ""
+    if args.initial_knn_file != "":
+        reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
     reuse_grid_arg = ""
     reuse_coef_arg = ""
     results = []
