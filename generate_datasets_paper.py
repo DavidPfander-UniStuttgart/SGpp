@@ -219,8 +219,8 @@ cutoff_radius = 3 # unit: standard deviation
 noise_percent = 0.02
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
 for dim in [5, 10]:
-    for dataset_size in [100000]:
-        for dataset_type in ["gaussian", "hypercube"]:
+    for dataset_size in [1000000, 10000000, 100000000]:
+        for dataset_type in ["gaussian"]: # , "hypercube"
             file_name = "final_paper_datasets/" + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
             print("creating " + file_name + ".arff")
             # always create dataset without noise first
