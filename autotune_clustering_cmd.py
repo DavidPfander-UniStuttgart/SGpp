@@ -7,6 +7,7 @@ import numpy as np
 import json
 import time
 import filecmp
+import sys
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Autotunes the clustering parameter lambda and\
@@ -30,7 +31,14 @@ if __name__ == '__main__':
     parser.add_argument('--file_prefix', type=str, required=True,
                         help=' [filename] File prefix for the clustering_cmd output files.')
     parser.add_argument('--initial_knn_file', type=str, required=False, default="",
-                        help=' [filename] File that contains the KNN for the current dataset')
+                        help=' [filename] File that contains the KNN for the current dataset.\
+    If non is given it will be calculated in the first iteration!')
+    parser.add_argument('--initial_density_grid_file', type=str, required=False, default="",
+                        help=' [filename] File that contains the grid informations.\
+    If non is given it will be calculated when needed!')
+    parser.add_argument('--initial_density_coef_file', type=str, required=False, default="",
+                        help=' [filename] File that contains the density coefficients.\
+    If non is given the coefficients will be calculated when needed!')
     parser.add_argument('--lambda_list', nargs='+', help='Lambda values that will be tested', required=True)
     parser.add_argument('--threshold_list', nargs='+', help='Threshold values that will be tested', required=True)
     args = parser.parse_args()
@@ -50,15 +58,33 @@ if __name__ == '__main__':
     prefix_arg = "--file_prefix=" + str(args.file_prefix)
     k_arg = "--k=" + str(args.k)
     reuse_graph_arg = ""
-    if args.initial_knn_file != "":
-        reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
     reuse_grid_arg = ""
     reuse_coef_arg = ""
+    if args.initial_knn_file != "":
+        reuse_graph_arg = "--reuse_knn_graph=" + args.initial_knn_file
+    if args.initial_density_grid_file != "":
+        reuse_grid_arg = "--reuse_density_grid=" + args.initial_density_grid_file
+        if len(args.lambda_list) is not 1:
+            print("Error! More than one lambda specified. A range of lambdas only work without\
+ an initial density/grid file!")
+            print("Length of lambda list: ", len(args.lambda_list))
+            sys.exit(1)
+    if args.initial_density_coef_file != "":
+        reuse_coef_arg = "--reuse_density_coef=" + args.initial_density_coef_file
+        if len(args.lambda_list) is not 1:
+            print("Error! More than one lambda specified. A range of lambdas only work without\
+ an initial density/grid file!")
+            print("Length of lambda list: ", len(args.lambda_list))
+            sys.exit(1)
+
     results = []
     crashed = []
     for lambda_value in args.lambda_list:
-        reuse_grid_arg = ""
-        reuse_coef_arg = "" # dont reuse coefficients with new lambda
+        # dont reuse coefficients with new lambda
+        if args.initial_density_grid_file == "":
+            reuse_grid_arg = ""
+        if args.initial_density_coef_file == "":
+            reuse_coef_arg = ""
         lambda_arg = "--lambda=" + str(lambda_value)
         for threshold_value in args.threshold_list:
             threshold_arg = "--threshold=" + str(threshold_value)
@@ -90,9 +116,13 @@ if __name__ == '__main__':
                     print("------------------------------------------------------------------")
                 print("Finished! Correct assignements: ", counter_correct,
                       " => Overall hitrate is: ", percentage, "%")
-                reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
-                reuse_grid_arg = "--reuse_density_grid=" + args.file_prefix + "_density_grid.serialized"
-                reuse_coef_arg = "--reuse_density_coef=" + args.file_prefix + "_density_coef.serialized"
+                if args.initial_knn_file == "":
+                    reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
+
+                if args.initial_density_grid_file == "":
+                    reuse_grid_arg = "--reuse_density_grid=" + args.file_prefix + "_density_grid.serialized"
+                if args.initial_density_coef_file == "":
+                    reuse_coef_arg = "--reuse_density_coef=" + args.file_prefix + "_density_coef.serialized"
             else:
                 print("==> Crashed with this configuration! <==")
                 crashed.append((lambda_value, threshold_value))
@@ -103,7 +133,8 @@ if __name__ == '__main__':
     print("Results for different parameters:")
     for result in sorted_results:
         print("-> Hitrate ", result[0], " % with lambda ", result[1][0], " and threshold ", result[1][1])
-    print("==================================================================")
-    print("Crashed scenarios:")
-    for result in crashed:
-        print("-> Crashed with lambda ", result[0], " and threshold ", result[1])
+    if len(crashed) > 0:
+        print("==================================================================")
+        print("Crashed scenarios:")
+        for result in crashed:
+            print("-> Crashed with lambda ", result[0], " and threshold ", result[1])
