@@ -22,7 +22,7 @@ def count_correct_cluster_hits(correct_output, actual_output, verbose,
     found_sizes[-2] = 0 # if even we have no removed data points we want the bin to exist to avoid ifs
     for i in range(0, actual_output.shape[0]):
         found_sizes[actual_output[i]] =  found_sizes[actual_output[i]] + 1
-    if verbose:
+    if verbose is True:
         print("------------------------------------------------------------------")
         print("Datamining algorithm found ", found_cluster_ids.size - 1, " differenct cluster IDs:")
     sum_skipped_clusters = 0
@@ -31,13 +31,14 @@ def count_correct_cluster_hits(correct_output, actual_output, verbose,
         # ignore removed data points
         if ID != -2:
             if found_sizes[ID] >= print_cluster_threshold:
-                if verbose:
+                if verbose is True:
                     print("Size of detected cluster with ID ", (int)(ID), ": ", found_sizes[ID])
             else:
                 sum_skipped_clusters = sum_skipped_clusters + 1
                 sum_skipped_datapoints = sum_skipped_datapoints + found_sizes[ID]
-    print("Number of removed data points: ", found_sizes[-2])
-    if sum_skipped_datapoints > 0:
+    if verbose is True:
+        print("Number of removed data points: ", found_sizes[-2])
+    if sum_skipped_datapoints > 0 and verbose is True:
         print("(Ommited output of ", sum_skipped_clusters, " small clusters containing a ",
               "total of ", sum_skipped_datapoints, " data points. A cluster needs to have at least ",
               print_cluster_threshold, " to be printed (--print_cluster_threshold).)")
@@ -95,12 +96,12 @@ def count_correct_cluster_hits(correct_output, actual_output, verbose,
             for d in to_remove_list:
                 del bins[d] # but we can delete in this loop
 
-    if verbose:
+    if verbose is True:
         print("------------------------------------------------------------------")
         print("Mapping from reference cluster ID to detected cluster ID:")
         print(correct_assignements)
 
-    if verbose:
+    if verbose is True:
         # Get size of clusters from reference file to output percentage of hits
         sizes = {}
         for ID in cluster_ids:
@@ -137,7 +138,7 @@ if __name__ == '__main__':
     parser.add_argument('--print_cluster_threshold', type=int, required=False, default=20,
                         help=' [int] Do not print clusters containing less data points than this \
                         threshold. Instead they will be summarized as one entry. ')
-    parser.add_argument('--verbose', type=bool, required=False, default=True,
+    parser.add_argument('--verbose', type=str, required=False, default=True,
                         help=' [boolean] Print verbose analysis instead of just the overall hitrate)')
     args = parser.parse_args()
     reference_file = args.reference_cluster_assignement

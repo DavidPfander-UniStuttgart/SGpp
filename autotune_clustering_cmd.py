@@ -22,7 +22,7 @@ if __name__ == '__main__':
                         help=' [filename] OpenCL configuration file.')
     parser.add_argument('--k', type=int, required=True,
                         help=' [int] Number of considered neighbors for the KNN algorithm.')
-    parser.add_argument('--verbose', type=bool, required=False, default=True,
+    parser.add_argument('--verbose', type=str, required=True,
                         help=' [boolean] Print verbose analysis instead of just the overall hitrate)')
     parser.add_argument('--print_cluster_threshold', type=int, required=False, default=20,
                         help=' [int] Do not print clusters containing less data points than this \
@@ -66,10 +66,11 @@ if __name__ == '__main__':
                                    "--write_all", reuse_graph_arg, reuse_grid_arg, reuse_coef_arg,
                                    "--knn_algorithm=naive_ocl", prefix_arg],
                                   stdout=subprocess.PIPE)
-            print("datadriven/examplesOCL/clustering_cmd", dataset_arg, k_arg,
-                                   config_arg, level_arg, "--epsilon=0.001", threshold_arg, lambda_arg,
-                                   "--write_all", reuse_graph_arg, reuse_grid_arg, reuse_coef_arg,
-                                   "--knn_algorithm=naive_ocl", prefix_arg, sep=' ')
+            if args.verbose is True:
+                print("datadriven/examplesOCL/clustering_cmd", dataset_arg, k_arg,
+                                    config_arg, level_arg, "--epsilon=0.001", threshold_arg, lambda_arg,
+                                    "--write_all", reuse_graph_arg, reuse_grid_arg, reuse_coef_arg,
+                                    "--knn_algorithm=naive_ocl", prefix_arg, sep=' ')
             if ret is 0:
                 results_file = args.file_prefix + str("_cluster_map.csv")
                 if not os.path.exists(results_file):
@@ -81,9 +82,10 @@ if __name__ == '__main__':
                 # Human readable form
                 percentage = round(counter_correct/ reference_assignement.shape[0] * 100.0, 4)
                 results.append((percentage, (lambda_value, threshold_value)))
-                if args.verbose:
+                if args.verbose is True:
                     print("------------------------------------------------------------------")
-                print("Finished! Correct assignements: ", counter_correct, " => Overall hitrate is: ", percentage)
+                print("Finished! Correct assignements: ", counter_correct,
+                      " => Overall hitrate is: ", percentage, "%")
                 reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
                 reuse_grid_arg = "--reuse_density_grid=" + args.file_prefix + "_density_grid.serialized"
                 reuse_coef_arg = "--reuse_density_coef=" + args.file_prefix + "_density_coef.serialized"
@@ -96,7 +98,7 @@ if __name__ == '__main__':
     print("==================================================================")
     print("Results for different parameters:")
     for result in sorted_results:
-        print("-> Hitrate ", result[0], " %% with lambda ", result[1][0], " and threshold ", result[1][1])
+        print("-> Hitrate ", result[0], " % with lambda ", result[1][0], " and threshold ", result[1][1])
     print("==================================================================")
     print("Crashed scenarios:")
     for result in crashed:
