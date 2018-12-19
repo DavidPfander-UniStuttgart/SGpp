@@ -86,6 +86,8 @@ BOOST_AUTO_TEST_CASE(naive_sampling_gaussian_multiple_chunks) {
   }
 }
 
+#ifdef LSHKNN_WITH_CUDA
+
 BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_single_chunk) {
 
   for (size_t dim = 2; dim <= 8; dim += 2) {
@@ -305,6 +307,8 @@ BOOST_AUTO_TEST_CASE(lsh_sampling_gaussian_multiple_chunks_randomize_chunk) {
   }
 }
 
+#endif
+
 BOOST_AUTO_TEST_SUITE_END()
 
 struct StaticDataFixture {
@@ -345,6 +349,7 @@ BOOST_AUTO_TEST_CASE(knn_naive) {
   BOOST_CHECK(err_distance_acc < 1E-10);
 }
 
+#ifdef LSHKNN_WITH_CUDA
 BOOST_AUTO_TEST_CASE(knn_lsh) {
 
   sgpp::datadriven::OperationNearestNeighborSampled knn_op;
@@ -364,6 +369,7 @@ BOOST_AUTO_TEST_CASE(knn_lsh) {
   BOOST_CHECK(err_acc > 0.9);
   BOOST_CHECK(err_distance_acc < 1E-1);
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(randomize_and_undo) {
 
@@ -474,6 +480,7 @@ BOOST_AUTO_TEST_CASE(knn_naive_sampling_two_chunks) {
   BOOST_CHECK(err_distance_acc < 1E-1);
 }
 
+#ifdef LSHKNN_WITH_CUDA
 BOOST_AUTO_TEST_CASE(knn_lsh_sampling_two_chunks) {
 
   sampling_randomize = 10;
@@ -506,6 +513,7 @@ BOOST_AUTO_TEST_CASE(knn_lsh_sampling_two_chunks) {
   BOOST_CHECK(err_acc > 0.9);
   BOOST_CHECK(err_distance_acc < 1E-1);
 }
+#endif
 
 BOOST_AUTO_TEST_CASE(knn_naive_sampling_one_chunk) {
 

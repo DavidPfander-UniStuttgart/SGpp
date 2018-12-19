@@ -138,7 +138,7 @@ int main(int argc, char **argv) {
 
   bool record_timings;
   int64_t print_cluster_sizes;
-  std::string scenario_prefix;  // path and prefix of file name
+  std::string file_prefix;  // path and prefix of file name
   int64_t target_clusters;
   std::string reuse_density_grid;
   std::string reuse_density_coef;
@@ -188,7 +188,7 @@ int main(int argc, char **argv) {
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "threshold", boost::program_options::value<double>(&threshold)->default_value(-99999.0),
       "threshold for sparse grid function for removing edges")(
-      "scenario_prefix", boost::program_options::value<std::string>(&scenario_prefix),
+      "file_prefix", boost::program_options::value<std::string>(&file_prefix),
       "name for the current run, used when files are written")(
       "refinement_steps",
       boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
@@ -269,8 +269,8 @@ int main(int argc, char **argv) {
 
   if (write_all || write_knn_graph || write_pruned_knn_graph || write_rhs || write_cluster_map ||
       write_density_grid) {
-    if (scenario_prefix.compare("") == 0) {
-      std::cerr << "error: cannot write results (write_*-options) without \"scenario_prefix\""
+    if (file_prefix.compare("") == 0) {
+      std::cerr << "error: cannot write results (write_*-options) without \"file_prefix\""
                 << std::endl;
       return 1;
     }
@@ -372,13 +372,12 @@ int main(int argc, char **argv) {
 
   std::ofstream result_timings;
   if (record_timings) {
-    std::cout << "output scenario prefix: " << scenario_prefix << std::endl;
-    std::string result_timings_file_name(scenario_prefix + "_result_timings.csv");
+    std::string result_timings_file_name(file_prefix + "_result_timings.csv");
     std::experimental::filesystem::path result_timings_path(result_timings_file_name);
     if (std::experimental::filesystem::exists(result_timings_path)) {
-      result_timings.open(scenario_prefix + "_result_timings.csv", std::ios::out | std::ios::app);
+      result_timings.open(file_prefix + "_result_timings.csv", std::ios::out | std::ios::app);
     } else {
-      result_timings.open(scenario_prefix + "_result_timings.csv", std::ios::out);
+      result_timings.open(file_prefix + "_result_timings.csv", std::ios::out);
       result_timings << "dataset; grid_level; lambda; threshold; k; config; "
                         "refine_steps; "
                         "refine_points; coarsen_points; coarsen_threshold; "
@@ -413,7 +412,7 @@ int main(int argc, char **argv) {
       std::chrono::system_clock::now();
 
   // Loading dataset
-  std::cout << "reading dataset...";
+  std::cout << "reading dataset..." << std::endl;
   size_t dimension = 0;
 
   std::chrono::time_point<std::chrono::system_clock> loading_data_start, loading_data_end;
@@ -421,11 +420,11 @@ int main(int argc, char **argv) {
 
   base::DataMatrix trainingData;
   if (variables_map.count("binary_header_filename") != 0) {
-    std::cerr << "Loading binary dataset: " << std::endl;
+    std::cout << "info: binary dataset" << std::endl;
     trainingData = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(binary_header_filename);
     dimension = trainingData.getNcols();
   } else if (variables_map.count("datasetFileName") != 0) {
-    std::cerr << "Loading ARFF dataset: " << std::endl;
+    std::cout << "info: ARFF dataset" << std::endl;
     sgpp::datadriven::Dataset dataset = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
     trainingData = std::move(dataset.getData());
     dimension = dataset.getDimension();
@@ -446,6 +445,16 @@ int main(int argc, char **argv) {
     return 1;
   }
   // // read dataset
+  std::cout << "printing first two datapoints:" << std::endl;
+  for (size_t i = 0; i < 2; i += 1) {
+    for (size_t d = 0; d < dimension; d += 1) {
+      if (d > 0) {
+        std::cout << ", ";
+      }
+      std::cout << trainingData[i * dimension + d];
+    }
+    std::cout << std::endl;
+  }
 
   // datadriven::Dataset dataset =
   //     datadriven::ARFFTools::readARFF(datasetFileName);
@@ -487,7 +496,7 @@ int main(int argc, char **argv) {
     density_timer_start = std::chrono::system_clock::now();
     auto solver = std::make_unique<solver::ConjugateGradients>(1000, epsilon);
 
-    base::DataVector alpha(grid->getSize());
+    alpha.resize(grid->getSize());
     alpha.setAll(0.0);
     base::DataVector b(grid->getSize(), 0.0);
 
@@ -642,7 +651,7 @@ int main(int argc, char **argv) {
 
     // Output final rhs values
     if (write_rhs) {
-      std::ofstream out_rhs(scenario_prefix + "_rhs.csv");
+      std::ofstream out_rhs(file_prefix + "_rhs.csv");
       for (size_t i = 0; i < grid->getSize(); i += 1) {
         out_rhs << b[i] << std::endl;
       }
@@ -650,16 +659,16 @@ int main(int argc, char **argv) {
     }
     // Output final coefficients
     if (write_density_grid) {
-      alpha.toFile(scenario_prefix + "_density_coef.serialized");
+      alpha.toFile(file_prefix + "_density_coef.serialized");
 
-      std::ofstream out_grid(scenario_prefix + "_density_grid.serialized");
+      std::ofstream out_grid(file_prefix + "_density_grid.serialized");
       grid->serialize(out_grid);
     }
   }
 
   double max = alpha.max();
   double min = alpha.min();
-  std::cout << "surplus min:" << min << " max: " << max << std::endl;
+  std::cout << "surplus min: " << min << " max: " << max << std::endl;
 
   if (write_evaluated_density_full_grid) {
     std::cout << "Creating regular grid to evaluate sparse grid density "
@@ -724,7 +733,7 @@ int main(int argc, char **argv) {
     std::cout << "Evaluating at evaluation grid points" << std::endl;
     eval->mult(alpha, results);
 
-    std::ofstream out_density(scenario_prefix + std::string("_density_eval.csv"));
+    std::ofstream out_density(file_prefix + std::string("_density_eval.csv"));
     out_density.precision(20);
     for (size_t eval_index = 0; eval_index < evaluationPoints.getNrows(); eval_index += 1) {
       for (size_t d = 0; d < dimension; d += 1) {
@@ -797,7 +806,7 @@ int main(int argc, char **argv) {
     }
 
     if (write_knn_graph) {
-      knn_op.write_graph_file(scenario_prefix + "_graph.csv", graph, k);
+      knn_op.write_graph_file(file_prefix + "_graph.csv", graph, k);
     }
 
     if (variables_map.count("compare_knn_csv_file_name") > 0) {
@@ -856,7 +865,7 @@ int main(int argc, char **argv) {
     result_timings << last_duration_prune_graph << "; " << flops_prune_graph << "; ";
 
     if (write_pruned_knn_graph) {
-      print_knn_graph(scenario_prefix + "_graph_pruned.csv", graph);
+      print_knn_graph(file_prefix + "_graph_pruned.csv", graph);
     }
   }
 
@@ -916,7 +925,7 @@ int main(int argc, char **argv) {
     // }
 
     if (write_cluster_map) {
-      std::ofstream out_cluster_map(scenario_prefix + "_cluster_map.csv");
+      std::ofstream out_cluster_map(file_prefix + "_cluster_map.csv");
       for (size_t i = 0; i < trainingData.getNrows(); ++i) {
         out_cluster_map << node_cluster_map[i] << std::endl;
       }
