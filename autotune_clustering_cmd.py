@@ -27,6 +27,8 @@ if __name__ == '__main__':
     parser.add_argument('--print_cluster_threshold', type=int, required=False, default=20,
                         help=' [int] Do not print clusters containing less data points than this \
                         threshold. Instead they will be summarized as one entry. ')
+    parser.add_argument('--file_prefix', type=str, required=True,
+                        help=' [filename] File prefix for the clustering_cmd output files.')
     parser.add_argument('--lambda_list', nargs='+', help='Lambda values that will be tested', required=True)
     parser.add_argument('--threshold_list', nargs='+', help='Threshold values that will be tested', required=True)
     args = parser.parse_args()
@@ -43,6 +45,7 @@ if __name__ == '__main__':
     dataset_arg = "--datasetFileName=" + args.dataset
     config_arg = "--config=" + args.config
     level_arg = "--level=" + str(args.grid_level)
+    prefix_arg = "--file_prefix=" + str(args.file_prefix)
     k_arg = "--k=" + str(args.k)
     reuse_graph_arg = ""
     reuse_grid_arg = ""
@@ -61,14 +64,14 @@ if __name__ == '__main__':
             ret = subprocess.call(["datadriven/examplesOCL/clustering_cmd", dataset_arg, k_arg,
                                    config_arg, level_arg, "--epsilon=0.001", threshold_arg, lambda_arg,
                                    "--write_all", reuse_graph_arg, reuse_grid_arg, reuse_coef_arg,
-                                   "--knn_algorithm=naive_ocl", "--file_prefix=test"],
+                                   "--knn_algorithm=naive_ocl", prefix_arg],
                                   stdout=subprocess.PIPE)
             print("datadriven/examplesOCL/clustering_cmd", dataset_arg, k_arg,
                                    config_arg, level_arg, "--epsilon=0.001", threshold_arg, lambda_arg,
                                    "--write_all", reuse_graph_arg, reuse_grid_arg, reuse_coef_arg,
-                                   "--knn_algorithm=naive_ocl", "--file_prefix=test", sep=' ')
+                                   "--knn_algorithm=naive_ocl", prefix_arg, sep=' ')
             if ret is 0:
-                results_file = "test_cluster_map.csv"
+                results_file = args.file_prefix + str("_cluster_map.csv")
                 if not os.path.exists(results_file):
                     print("Error! File", results_file, " does not exist. Exiting...")
                     sys.exit(1)
@@ -81,9 +84,9 @@ if __name__ == '__main__':
                 if args.verbose:
                     print("------------------------------------------------------------------")
                 print("Finished! Correct assignements: ", counter_correct, " => Overall hitrate is: ", percentage)
-                reuse_graph_arg = "--reuse_knn_graph=test_graph.csv"
-                reuse_grid_arg = "--reuse_density_grid=test_density_grid.serialized"
-                reuse_coef_arg = "--reuse_density_coef=test_density_coef.serialized"
+                reuse_graph_arg = "--reuse_knn_graph=" + args.file_prefix + "_graph.csv"
+                reuse_grid_arg = "--reuse_density_grid=" + args.file_prefix + "_density_grid.serialized"
+                reuse_coef_arg = "--reuse_density_coef=" + args.file_prefix + "_density_coef.serialized"
             else:
                 print("==> Crashed with this configuration! <==")
                 crashed.append((lambda_value, threshold_value))
