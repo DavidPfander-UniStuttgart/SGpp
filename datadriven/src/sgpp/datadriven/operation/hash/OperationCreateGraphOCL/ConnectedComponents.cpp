@@ -12,11 +12,13 @@ namespace clustering {
 namespace detail {
 
 int64_t global_cluster_id;
+uint64_t merges;
 
-void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &map,
-                          const int64_t N, const int64_t k, const int64_t start_index,
+void connected_components(std::vector<int64_t> &directed,
+                          std::vector<int64_t> &map, const int64_t N,
+                          const int64_t k, const int64_t start_index,
                           std::vector<std::vector<int64_t>> &all_clusters) {
-  bool has_neighbor = false;  // true if at least one neighbor exists
+  bool has_neighbor = false; // true if at least one neighbor exists
   for (size_t cur_k = 0; cur_k < static_cast<size_t>(k); cur_k += 1) {
     int64_t cur_neighbor = directed[start_index * k + cur_k];
     // assert(cur_neighbor != start_index);
@@ -48,7 +50,8 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
       int64_t cur_neighbor_cluster_id = map[cur_neighbor];
       if (cur_neighbor_cluster_id == 0) {
         cluster_indices.push_back(cur_neighbor);
-        map[cur_neighbor] = -10;  // mark as visited, but not assigned, avoids dups
+        map[cur_neighbor] =
+            -10; // mark as visited, but not assigned, avoids dups
         stack.push_back(cur_neighbor);
       } else {
         // might be of the visited category
@@ -60,8 +63,8 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     }
   }
   // if (cluster_indices.size() == 1) {
-  // 	std::cout << "cluster_indices.size(): " << cluster_indices.size() <<
-  // std::endl; 	std::cout << "join_clusters.size(): " <<
+  // std::cout << "cluster_indices.size(): " << cluster_indices.size() <<
+  // std::endl; std::cout << "join_clusters.size(): " <<
   // join_clusters.size()
   // << std::endl;
   //   std::cout << "start_index: " << start_index << std::endl;
@@ -92,12 +95,14 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     map[node_index] = cluster_id;
   }
   if (join_clusters.size() > 0) {
+    merges += 1;
     // insert partial cluster into joined cluster
     auto &append_cluster = all_clusters[cluster_id];
     // std::cout << "merge into c_id: " << cluster_id
     //           << " cur part. c_size: " << cluster_indices.size()
     //           << " merge c_size: " << append_cluster.size() << std::endl;
-    append_cluster.insert(append_cluster.begin(), cluster_indices.begin(), cluster_indices.end());
+    append_cluster.insert(append_cluster.begin(), cluster_indices.begin(),
+                          cluster_indices.end());
   } else {
     assert(cluster_id == all_clusters.size());
     all_clusters.push_back(std::move(cluster_indices));
@@ -121,19 +126,21 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     // capacity!
     all_clusters[other_cluster_id] = std::vector<int64_t>();
   }
-}  // namespace detail
+} // namespace detail
 
-}  // namespace detail
+} // namespace detail
 
 void connected_components(std::vector<int64_t> &directed, const int64_t k,
                           std::vector<int64_t> &map,
                           std::vector<std::vector<int64_t>> &all_clusters) {
   const int64_t N = directed.size() / k;
   detail::global_cluster_id = 1;
+  detail::merges = 0;
   map.resize(N);
   std::fill(map.begin(), map.end(), 0);
   all_clusters.clear();
-  all_clusters.emplace_back();  // add empty first dummy set for reserved cluster_id
+  all_clusters
+      .emplace_back(); // add empty first dummy set for reserved cluster_id
   for (int64_t i = 0; i < N; i += 1) {
     if (map[i] == 0) {
       detail::connected_components(directed, map, N, k, i, all_clusters);
@@ -146,6 +153,7 @@ void connected_components(std::vector<int64_t> &directed, const int64_t k,
     }
   }
   std::swap(all_clusters, all_clusters_trimmed);
+  std::cout << "connected_components merges: " << detail::merges << std::endl;
   // for (size_t i = 0; i < all_clusters.size(); i += 1) {
   //   auto &cluster_indices = all_clusters[i];
   //   for (int64_t ii : cluster_indices) {
@@ -157,6 +165,6 @@ void connected_components(std::vector<int64_t> &directed, const int64_t k,
   // }
 }
 
-}  // namespace clustering
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace clustering
+} // namespace datadriven
+} // namespace sgpp
