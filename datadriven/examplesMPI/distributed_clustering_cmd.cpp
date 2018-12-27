@@ -376,6 +376,7 @@ int main(int argc, char *argv[]) {
                 << "s" << std::endl;
     }
     for (size_t i = 0; i < refinement_steps; i++) {
+      std::cout << "refinement_steps: " << refinement_steps << std::endl;
       if (refinement_points > 0) {
         sgpp::base::SurplusRefinementFunctor refine_func(alpha,
                                                          refinement_points);
@@ -393,6 +394,9 @@ int main(int argc, char *argv[]) {
         for (size_t j = old_size; j < alpha.getSize(); j++) {
           rhs[j] = 0.0;
         }
+
+        std::cout << "grid points after refinement: " << grid->getSize()
+                  << std::endl;
 
         // Create right hand side vector
         std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -436,7 +440,8 @@ int main(int argc, char *argv[]) {
         gridGen.coarsen(coarsen_func, alpha);
 
         size_t grid_size_after_coarsen = grid->getSize();
-        std::cout << "coarsen: removed "
+        std::cout << "grid points after coarsen: " << grid_size_after_coarsen
+                  << ", removed "
                   << (grid_size_before_coarsen - grid_size_after_coarsen)
                   << " grid points" << std::endl;
 
@@ -594,9 +599,9 @@ int main(int argc, char *argv[]) {
               target_clusters -
               std::min(target_clusters,
                        std::abs(target_clusters -
-                                static_cast<int64_t>(clusters.size())))) *
+                                static_cast<int64_t>(all_clusters.size())))) *
           (static_cast<double>(sum_datapoints) /
-           static_cast<double>(trainingData.getNrows()));
+           static_cast<double>(dataset.getNrows()));
       std::cout << "score: " << score << std::endl;
     }
 
