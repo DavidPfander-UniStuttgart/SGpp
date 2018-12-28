@@ -34,9 +34,8 @@ threshold_start = 0.0
 threshold_stop = 1000.0
 
 thresholds_initial = np.linspace(threshold_start, threshold_stop, threshold_intervals)
-threshold_step = thresholds_initial[1] - thresholds_initial[0]
 # threshold_intervals = 5.0
-threshold_step_min = 1.0
+threshold_step_min = 100.0 # change back
 
 
 print(thresholds_initial)
@@ -52,7 +51,7 @@ dim=10
 noise="_noise"
 # level=4
 level_map = {int(1E6): 7, int(1E7): 8}
-lambda_value=1E-6
+# lambda_value=1E-6
 k=6
 epsilon=1E-3
 
@@ -69,9 +68,10 @@ for dataset_size in [1E6, 1E7]:
     overall_best_lambda_value = -1
     overall_best_threshold = -1
     for lambda_value in [1E-5, 1E-6, 1E-7]:
-        thresholds = thresholds_initial
+        thresholds = list(thresholds_initial)
         best_threshold = thresholds[0]
         best_score = -1.0
+        threshold_step = thresholds_initial[1] - thresholds_initial[0]
         # do bisection
         while threshold_step > threshold_step_min:
             print("thresholds:", thresholds, "threshold_step:", threshold_step)
@@ -98,9 +98,4 @@ for dataset_size in [1E6, 1E7]:
             overall_best_lambda_value = lambda_value
 
     print("overall_best_score:", overall_best_score, "overall_best_threshold:", overall_best_threshold, "overall_best_lambda_value:", overall_best_lambda_value)
-
-
-# print(s)
-
-
-f_log.close()
+    f_log.close()
