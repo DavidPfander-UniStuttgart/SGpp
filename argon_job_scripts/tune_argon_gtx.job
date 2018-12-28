@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=9
 #SBATCH --exclusive
 #SBATCH -o slurm.%N.%j.out # STDOUT
-#SBATCH -e slurm.%N.%j.err # STDERR
+#SBATCH -e slurm.%N.%j.out # STDERR
 #SBATCH --workdir="/home/pfandedd"
 
 echo "starting"

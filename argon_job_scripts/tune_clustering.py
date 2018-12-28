@@ -14,31 +14,29 @@ def execute(cmd):
     return out, err
 
 def evaluate(cmd, f_log):
-    print(cmd)
+    f_log.write("\n--------------- CMD -----------------\n")
+    f_log.write(cmd)
     out, err = execute(cmd)
-
-    # print(out)
-    # print(err)
-    s = out.decode('ascii')
-    # print("---------------- OUTPUT -----------------")
-    # print(s)
-    # print("-----------------------------------------")
-    # print("---------------- ERROR -----------------")
-    # print(err.decode('ascii'))
-    # print("-----------------------------------------")
-    detected_clusters=int(re.search(r"detected clusters: (.*?)\n", s).group(1))
-    datapoints_clusters=int(re.search(r"datapoints in clusters: (.*?)\n", s).group(1))
-    score=float(re.search(r"score: (.*?)\n", s).group(1))
+    o = out.decode('ascii')
+    e = err.decode('ascii')
+    f_log.write("\n---------------- OUTPUT -----------------\n")
+    f_log.write(o)
+    f_log.write("\n---------------- ERROR ------------------\n")
+    f_log.write(e)
+    detected_clusters=int(re.search(r"detected clusters: (.*?)\n", o).group(1))
+    datapoints_clusters=int(re.search(r"datapoints in clusters: (.*?)\n", o).group(1))
+    score=float(re.search(r"score: (.*?)\n", o).group(1))
     if use_distributed_clustering:
-        elapsed_time=float(re.search(r"elapsed time: (.*?)s\n", s).group(1))
+        elapsed_time=float(re.search(r"elapsed time: (.*?)s\n", o).group(1))
     else:
-        elapsed_time=float(re.search(r"total_duration: (.*?)\n", s).group(1))
-    print("detected_clusters:", detected_clusters)
-    print("datapoints_clusters:", datapoints_clusters)
-    print("score:", score)
-    print("elapsed_time:", elapsed_time)
-    f_log.write(s)
-    f_log.write("\n----- END RUN -----\n")
+        elapsed_time=float(re.search(r"total_duration: (.*?)\n", o).group(1))
+    f_log.write("\n--------------- SUMMARY -----------------\n")
+    f_log.write("detected_clusters: " + str(detected_clusters) + "\n")
+    f_log.write("datapoints_clusters: " + str(datapoints_clusters) + "\n")
+    f_log.write("score: " + str(score) + "\n")
+    f_log.write("elapsed_time: " + str(elapsed_time) + "\n")
+    f_log.write("\n--------------- END RUN -----------------\n")
+    f_log.flush()
     return score, detected_clusters, datapoints_clusters
 
 # files contain cluster assignments
@@ -99,12 +97,21 @@ k=6
 epsilon=1E-3
 
 datapoints_clusters_min = 0.75 * dataset_size
-use_distributed_clustering = True
+use_distributed_clustering_map = {"argon-gtx": True, "argon-tesla2": False, "argon-tesla1": False}
+use_distributed_clustering = use_distributed_clustering_map[hostname]
 
 for dataset_size in [1E6, 1E7]:
     dataset_size = int(dataset_size)
     level = level_map[dataset_size]
-    f_log = open("tune_clustering_" + str(dataset_size) + "s" + str(noise) + ".log", "w")
+    logfile_name = "tune_clustering_" + str(dataset_size) + "s" + str(noise) + ".log"
+    print("logfile_name:", logfile_name)
+    f_log = open(logfile_name, "w")
+    resultsfile_name = "tune_clustering_results_" + str(dataset_size) + "s" + str(noise) + ".csv"
+    print("resultsfile_name:", resultsfile_name)
+    f_results = open(resultsfile_name, "w")
+    f_results.write("lambda_value, threshold, percent_correct\n")
+
+
 
     if use_distributed_clustering:
         cmd_pattern = "mpirun.openmpi -n {num_tasks} ./datadriven/examplesMPI/distributed_clustering_cmd --config {config} --MPIconfig {mpi_config} --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise} --level={level} --lambda={lambda_value} --k {k} --epsilon {epsilon} --threshold {threshold} --print_cluster_sizes 1 --target_clusters {num_clusters} --write_cluster_map gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_cluster_map.csv  >> tune_precision_{dim}d_{dataset_size}s.log 2>tune_precision_{dim}d_{dataset_size}s_error.log"
@@ -121,22 +128,25 @@ for dataset_size in [1E6, 1E7]:
         threshold_step = thresholds_initial[1] - thresholds_initial[0]
         # do bisection
         while threshold_step > threshold_step_min:
-            print("thresholds:", thresholds, "threshold_step:", threshold_step)
+            f_log.write("thresholds:" + str(thresholds) + "threshold_step:" + str(threshold_step) + "\n")
             for threshold in thresholds:
                 cmd = cmd_pattern.format(num_tasks=num_tasks, config=config, mpi_config=mpi_config, num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise, level=level, lambda_value=lambda_value, k=k, epsilon=epsilon, threshold=threshold)
                 score, detected_clusters, datapoints_clusters = evaluate(cmd, f_log)
                 # early abort if too many data points are pruned
                 if datapoints_clusters < datapoints_clusters_min:
-                    print("datapoints_clusters too low")
+                    f_log.write("datapoints_clusters too low\n")
                     break
                 results_file = "gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_cluster_map.csv".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
                 reference_file = "../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_class.arff".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
                 percent_correct = check_assignment(reference_file, results_file)
+                f_results.write(str(lambda_value) + "," + str(threshold) + "," + str(percent_correct) + "\n")
+                print("attempt lambda:", lambda_value, "threshold:", threshold, "percent_correct:", percent_correct)
+                f_results.flush()
 
                 if percent_correct > best_score:
                     best_score = percent_correct
                     best_threshold = threshold
-                    print("-> new best_score:", best_score, "new best_threshold:", best_threshold)
+                    f_log.write("-> new best_score:" + str(best_score) + "new best_threshold:" + str(best_threshold) + "\n")
 
 
             threshold_start = max(best_threshold - threshold_step, 0.0)
@@ -149,5 +159,6 @@ for dataset_size in [1E6, 1E7]:
             overall_best_threshold = best_threshold
             overall_best_lambda_value = lambda_value
 
-    print("overall_best_score:", overall_best_score, "overall_best_threshold:", overall_best_threshold, "overall_best_lambda_value:", overall_best_lambda_value)
+    f_log.write("overall_best_score:" + str(overall_best_score) + "overall_best_threshold:" + str(overall_best_threshold) + "overall_best_lambda_value:" + str(overall_best_lambda_value) + "\n")
     f_log.close()
+    f_results.close()
