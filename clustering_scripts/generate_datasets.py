@@ -109,8 +109,9 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
    while currentsize < setsize:
       for dimension in range(0, dimensions):
           dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], abweichung)
-      currentsize = currentsize + 1
       cluster_ret[currentsize] = num_clusters
+      currentsize = currentsize + 1
+
    print("create rauschen")
    for i in range(0, rauschensize):
       for dimension in range(0, dimensions):
