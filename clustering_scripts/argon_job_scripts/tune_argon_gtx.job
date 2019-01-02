@@ -14,4 +14,4 @@ srun echo `hostname`
 
 cd /data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp
 source source_autotunetmp_generic.sh
-python3 ./argon_job_scripts/tune_clustering.py
+python3 ./clustering_scripts/argon_job_scripts/tune_clustering.py
