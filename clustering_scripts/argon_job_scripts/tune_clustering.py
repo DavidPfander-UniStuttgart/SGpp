@@ -7,6 +7,7 @@ import numpy as np
 import check_cluster_assignements
 import socket
 import os
+import math
 
 def execute(cmd):
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -68,14 +69,15 @@ def check_assignment(reference_file, results_file):
 
 threshold_intervals = 10.0
 threshold_start = 0.0
-threshold_stop = 1000.0
-
+threshold_stop = 1500.0
 thresholds_initial = np.linspace(threshold_start, threshold_stop, threshold_intervals)
 # threshold_intervals = 5.0
-threshold_step_min = 1.0
+threshold_step_min = 10.0
 
-
-print(thresholds_initial)
+lambda_intervals = 5
+lambda_initial=1E-8
+# lambda_initials = [1E-4, 1E-5, 1E-6, 1E-7, 1E-8]
+lambda_iterations = int(3) # how many descents
 
 target_score=0.98
 
@@ -83,7 +85,7 @@ num_tasks=9
 
 hostname=socket.gethostname()
 print("hostname:", hostname)
-config_map={"argon-gtx": "config_ocl_float_gtx1080ti.cfg", "argon-tesla2": "config_ocl_float_QuadroGP100.cfg", "argon-tesla1": "config_ocl_float_P100.cfg"}
+config_map={"argon-gtx": "config_ocl_float_gtx1080ti.cfg", "argon-tesla2": "config_ocl_float_QuadroGP100.cfg", "argon-tesla1": "config_ocl_float_P100.cfg", "pcsgs09": "config_ocl_float_i76700k.cfg"}
 config = config_map[hostname]
 mpi_config="argon_job_scripts/GTXConf8.cfg"
 num_clusters=100
@@ -97,7 +99,7 @@ k=6
 epsilon=1E-3
 
 datapoints_clusters_min = 0.75 * dataset_size
-use_distributed_clustering_map = {"argon-gtx": True, "argon-tesla2": False, "argon-tesla1": False}
+use_distributed_clustering_map = {"argon-gtx": True, "argon-tesla2": False, "argon-tesla1": False, "pcsgs09": False}
 use_distributed_clustering = use_distributed_clustering_map[hostname]
 
 for dataset_size in [1E6, 1E7]:
@@ -121,43 +123,71 @@ for dataset_size in [1E6, 1E7]:
     overall_best_score = -1
     overall_best_lambda_value = -1
     overall_best_threshold = -1
-    for lambda_value in [1E-5, 1E-6, 1E-7]:
-        thresholds = list(thresholds_initial)
-        best_threshold = thresholds[0]
-        best_score = -1.0
-        threshold_step = thresholds_initial[1] - thresholds_initial[0]
-        # do bisection
-        while threshold_step > threshold_step_min:
-            f_log.write("thresholds:" + str(thresholds) + "threshold_step:" + str(threshold_step) + "\n")
-            for threshold in thresholds:
-                cmd = cmd_pattern.format(num_tasks=num_tasks, config=config, mpi_config=mpi_config, num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise, level=level, lambda_value=lambda_value, k=k, epsilon=epsilon, threshold=threshold)
-                score, detected_clusters, datapoints_clusters = evaluate(cmd, f_log)
-                # early abort if too many data points are pruned
-                if datapoints_clusters < datapoints_clusters_min:
-                    f_log.write("datapoints_clusters too low\n")
-                    break
-                results_file = "gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_cluster_map.csv".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
-                reference_file = "../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_class.arff".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
-                percent_correct = check_assignment(reference_file, results_file)
-                f_results.write(str(lambda_value) + "," + str(threshold) + "," + str(percent_correct) + "\n")
-                print("attempt lambda:", lambda_value, "threshold:", threshold, "percent_correct:", percent_correct)
-                f_results.flush()
 
-                if percent_correct > best_score:
-                    best_score = percent_correct
-                    best_threshold = threshold
-                    f_log.write("-> new best_score:" + str(best_score) + "new best_threshold:" + str(best_threshold) + "\n")
+    # lambda_values = list(lambda_initials)
+    lambda_start_lower = lambda_initial
+    lambda_factor = 10.0
+    lambda_iteration = 0
+
+    # for lambda_value in [1E-4, 1E-5, 1E-6, 1E-7, 1E-8]:
+    while lambda_iteration < lambda_iterations:
+        print("lambda_factor:", lambda_factor, "lambda_start_lower:", lambda_start_lower)
+        print("overall_best_lambda_value:", overall_best_lambda_value)
+        lambda_values = [lambda_start_lower * lambda_factor**i for i in range(0, lambda_intervals)]
+        if lambda_iteration > 0:
+            # cut of left-most, right-most and middle value, as those have already been investigated
+            # print("lambda_values unpruned:", lambda_values)
+            middle_index = len(lambda_values) // 2 + 1
+            lambda_values = lambda_values[1:-1]
+        print("lambda_values:", lambda_values)
+
+        for lambda_value in lambda_values:
+            ########################## threshold #################################
+            thresholds = list(thresholds_initial)
+            best_threshold = thresholds[0]
+            best_score = -1.0
+            threshold_step = thresholds_initial[1] - thresholds_initial[0]
+            # do bisection
+            while threshold_step > threshold_step_min:
+                f_log.write("thresholds:" + str(thresholds) + ", threshold_step:" + str(threshold_step) + "\n")
+                for threshold in thresholds:
+                    cmd = cmd_pattern.format(num_tasks=num_tasks, config=config, mpi_config=mpi_config, num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise, level=level, lambda_value=lambda_value, k=k, epsilon=epsilon, threshold=threshold)
+                    score, detected_clusters, datapoints_clusters = evaluate(cmd, f_log)
+                    # early abort if too many data points are pruned
+                    if datapoints_clusters < datapoints_clusters_min:
+                        f_log.write("datapoints_clusters too low\n")
+                        break
+                    results_file = "gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_cluster_map.csv".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
+                    reference_file = "../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise}_class.arff".format(num_clusters=num_clusters, dataset_size=dataset_size, dim=dim, noise=noise)
+                    percent_correct = check_assignment(reference_file, results_file)
+                    f_results.write(str(lambda_value) + "," + str(threshold) + "," + str(percent_correct) + "\n")
+                    f_log.write("attempt lambda:", lambda_value, "threshold:", threshold, "percent_correct:", percent_correct)
+                    f_results.flush()
+                    percent_correct = 0.1
+
+                    if percent_correct > best_score:
+                        best_score = percent_correct
+                        best_threshold = threshold
+                        f_log.write("-> new best_score:" + str(best_score) + "new best_threshold:" + str(best_threshold) + "\n")
 
 
-            threshold_start = max(best_threshold - threshold_step, 0.0)
-            threshold_stop = best_threshold + threshold_step
-            # remove first and last -> already evaluated
-            thresholds = np.linspace(threshold_start, threshold_stop , threshold_intervals)[1:-1]
-            threshold_step = thresholds[1] - thresholds[0]
-        if best_score > overall_best_score:
-            overall_best_score = best_score
-            overall_best_threshold = best_threshold
-            overall_best_lambda_value = lambda_value
+                threshold_start = max(best_threshold - threshold_step, 0.0)
+                threshold_stop = best_threshold + threshold_step
+                # remove first and last -> already evaluated
+                thresholds = np.linspace(threshold_start, threshold_stop , threshold_intervals)[1:-1]
+                threshold_step = thresholds[1] - thresholds[0]
+            ########################### end threshold #############################
+            if best_score > overall_best_score:
+                overall_best_score = best_score
+                overall_best_threshold = best_threshold
+                overall_best_lambda_value = lambda_value
+
+
+        lambda_iteration += 1
+        lambda_start_lower = overall_best_lambda_value / lambda_factor
+        lambda_start_upper = overall_best_lambda_value * lambda_factor
+        lambda_factor = (lambda_start_upper / lambda_start_lower) **( 1.0/float(lambda_intervals - 1))
+
 
     f_log.write("overall_best_score:" + str(overall_best_score) + "overall_best_threshold:" + str(overall_best_threshold) + "overall_best_lambda_value:" + str(overall_best_lambda_value) + "\n")
     f_log.close()
