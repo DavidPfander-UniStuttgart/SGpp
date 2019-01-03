@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
 
     bool verbose_timers = false;
     int64_t print_cluster_sizes;
+    int64_t target_clusters;
 
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
@@ -125,7 +126,11 @@ int main(int argc, char *argv[]) {
         "print_cluster_sizes",
         boost::program_options::value<int64_t>(&print_cluster_sizes)
             ->default_value(0),
-        "print the cluster sizes to stdout, value is min cluster size");
+        "print the cluster sizes to stdout, value is min cluster size")(
+        "target_clusters",
+        boost::program_options::value<int64_t>(&target_clusters)
+            ->default_value(0),
+        "for calculating clustering score if value > 0 is given");
 
     boost::program_options::variables_map variables_map;
     boost::program_options::parsed_options options =
@@ -371,6 +376,7 @@ int main(int argc, char *argv[]) {
                 << "s" << std::endl;
     }
     for (size_t i = 0; i < refinement_steps; i++) {
+      std::cout << "refinement_steps: " << refinement_steps << std::endl;
       if (refinement_points > 0) {
         sgpp::base::SurplusRefinementFunctor refine_func(alpha,
                                                          refinement_points);
@@ -388,6 +394,9 @@ int main(int argc, char *argv[]) {
         for (size_t j = old_size; j < alpha.getSize(); j++) {
           rhs[j] = 0.0;
         }
+
+        std::cout << "grid points after refinement: " << grid->getSize()
+                  << std::endl;
 
         // Create right hand side vector
         std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -431,7 +440,8 @@ int main(int argc, char *argv[]) {
         gridGen.coarsen(coarsen_func, alpha);
 
         size_t grid_size_after_coarsen = grid->getSize();
-        std::cout << "coarsen: removed "
+        std::cout << "grid points after coarsen: " << grid_size_after_coarsen
+                  << ", removed "
                   << (grid_size_before_coarsen - grid_size_after_coarsen)
                   << " grid points" << std::endl;
 
@@ -576,12 +586,25 @@ int main(int argc, char *argv[]) {
     for (size_t i = 0; i < all_clusters.size(); i += 1) {
       if (print_cluster_sizes > 0 &&
           static_cast<int64_t>(all_clusters[i].size()) > print_cluster_sizes) {
-        std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
+        std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size()
+                  << std::endl;
       }
       sum_datapoints += all_clusters[i].size();
     }
     std::cout << "datapoints in clusters: " << sum_datapoints << std::endl;
-    
+
+    if (target_clusters > 0) {
+      double score =
+          static_cast<double>(
+              target_clusters -
+              std::min(target_clusters,
+                       std::abs(target_clusters -
+                                static_cast<int64_t>(all_clusters.size())))) *
+          (static_cast<double>(sum_datapoints) /
+           static_cast<double>(dataset.getNrows()));
+      std::cout << "score: " << score << std::endl;
+    }
+
     if (cluster_file != "") {
       std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {
