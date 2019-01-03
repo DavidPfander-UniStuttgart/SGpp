@@ -4,16 +4,16 @@ import subprocess, shlex
 
 # dataset_sizes = [10000000, 100000000]
 # dataset_sizes = [10000, 100000]
-dataset_sizes=[100000000]
+dataset_sizes=[1000000]
 
 # master node is added automatically
 config_file="config_ocl_float_hazelhen.cfg"
 # config_file = "config_ocl_float_XeonE31585v5.cfg"
 dim = 10
 # dataset_file = "datasets/gaussian_c3_size" + str(dataset_size) + "_dim" + str(dim) + ".arff"
-level = 8
+level = 7
 lambda_value = 1E-6
-threshold = 0.7
+threshold = 950.0
 epsilon = 1E-3
 
 nodes_start= 64
@@ -26,7 +26,7 @@ for dataset_size in dataset_sizes:
 
     # originally set to 25000 for l8 and 32 nodes
     seconds_total_smallest_no_of_nodes = 25000
-    
+
     while nodes <= nodes_end:
         minutes_total, seconds = divmod(seconds_total_smallest_no_of_nodes, 60)
         hours, minutes = divmod(minutes_total, 60)
