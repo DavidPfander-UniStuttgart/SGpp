@@ -1,5 +1,7 @@
 #include "DetectComponents.hpp"
+#include <omp.h>
 #include <cassert>
+#include <iostream>
 
 namespace sgpp {
 namespace datadriven {
@@ -11,8 +13,10 @@ neighborhood_list_t make_undirected_graph(std::vector<int64_t> &directed, size_t
   size_t node_count = directed.size() / k;
   // neighborhood_list_t undirected(node_count, std::vector<int>());
   neighborhood_list_t undirected(node_count);
-// add directed edges
-// #pragma omp parallel for
+  // add directed edges
+  int64_t dir_edges = 0;
+
+#pragma omp parallel for
   for (size_t i = 0; i < node_count; i += 1) {
     for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
       if (directed[i * k + cur_k] == -1) {
@@ -22,28 +26,58 @@ neighborhood_list_t make_undirected_graph(std::vector<int64_t> &directed, size_t
         continue;
       }
       undirected[i].push_back(directed[i * k + cur_k]);
+      dir_edges += 1;
     }
     // std::cout << std::endl;
   }
 
+  int64_t undir_edges = 0;
+
   // add reversed edge direction (if not already there)
-  for (size_t i = 0; i < node_count; i += 1) {
-    // not self-modifying: graph is non-reflexive
-    // enumerate partners of i
-    for (int64_t pointee : undirected[i]) {
-      bool found = false;
-      for (int64_t candidate : undirected[pointee]) {
-        if (candidate == static_cast<int64_t>(i)) {
-          found = true;
-          break;
+  int num_threads = omp_get_num_threads();
+  int64_t segment_size = node_count / num_threads;
+#pragma omp parallel
+  {
+    int tid = omp_get_thread_num();
+
+    int64_t segment_start = segment_size * tid;
+    int64_t segment_end;
+    if (tid < num_threads - 1) {
+      // not last thread
+      segment_end = segment_size * (tid + 1);
+    } else {
+      // remainder assigned to last thread
+      segment_end = node_count;
+    }
+
+    // all threads iterate this
+    for (size_t i = 0; i < node_count; i += 1) {
+      // not self-modifying: graph is non-reflexive
+      // enumerate partners of i
+      for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
+        int64_t pointee = directed[i * k + cur_k];
+        if (pointee < 0) {
+          continue;
         }
-      }
-      if (!found) {
-        // not in neighbor list -> add
-        undirected[pointee].push_back(i);
+        if (pointee < segment_start || pointee >= segment_end) {
+          continue;
+        }
+        bool found = false;
+        for (size_t cur_k_n = 0; cur_k_n < k; cur_k_n += 1) {
+          if (directed[pointee * k + cur_k_n] == static_cast<int64_t>(i)) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          // not in neighbor list -> add
+          undirected[pointee].push_back(i);
+          undir_edges += 1;
+        }
       }
     }
   }
+  std::cout << "dir_edges: " << dir_edges << " undir_edges: " << undir_edges << std::endl;
   return undirected;
 }
 
