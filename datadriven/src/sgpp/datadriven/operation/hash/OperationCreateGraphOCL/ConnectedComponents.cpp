@@ -1,4 +1,5 @@
 #include "ConnectedComponents.hpp"
+#include "KInverseExtension.hpp"
 
 #include <cassert>
 #include <deque>
@@ -14,11 +15,10 @@ namespace detail {
 int64_t global_cluster_id;
 uint64_t merges;
 
-void connected_components(std::vector<int64_t> &directed,
-                          std::vector<int64_t> &map, const int64_t N,
-                          const int64_t k, const int64_t start_index,
+void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &map,
+                          const int64_t N, const int64_t k, const int64_t start_index,
                           std::vector<std::vector<int64_t>> &all_clusters) {
-  bool has_neighbor = false; // true if at least one neighbor exists
+  bool has_neighbor = false;  // true if at least one neighbor exists
   for (size_t cur_k = 0; cur_k < static_cast<size_t>(k); cur_k += 1) {
     int64_t cur_neighbor = directed[start_index * k + cur_k];
     // assert(cur_neighbor != start_index);
@@ -50,8 +50,7 @@ void connected_components(std::vector<int64_t> &directed,
       int64_t cur_neighbor_cluster_id = map[cur_neighbor];
       if (cur_neighbor_cluster_id == 0) {
         cluster_indices.push_back(cur_neighbor);
-        map[cur_neighbor] =
-            -10; // mark as visited, but not assigned, avoids dups
+        map[cur_neighbor] = -10;  // mark as visited, but not assigned, avoids dups
         stack.push_back(cur_neighbor);
       } else {
         // might be of the visited category
@@ -101,10 +100,9 @@ void connected_components(std::vector<int64_t> &directed,
     // std::cout << "merge into c_id: " << cluster_id
     //           << " cur part. c_size: " << cluster_indices.size()
     //           << " merge c_size: " << append_cluster.size() << std::endl;
-    append_cluster.insert(append_cluster.begin(), cluster_indices.begin(),
-                          cluster_indices.end());
+    append_cluster.insert(append_cluster.begin(), cluster_indices.begin(), cluster_indices.end());
   } else {
-    assert(cluster_id == all_clusters.size());
+    // assert(cluster_id == all_clusters.size());
     all_clusters.push_back(std::move(cluster_indices));
   }
   // reassign all other clusters, expect for the one everyone joins with
@@ -126,21 +124,26 @@ void connected_components(std::vector<int64_t> &directed,
     // capacity!
     all_clusters[other_cluster_id] = std::vector<int64_t>();
   }
-} // namespace detail
+}  // namespace detail
 
-} // namespace detail
+}  // namespace detail
 
-void connected_components(std::vector<int64_t> &directed, const int64_t k,
-                          std::vector<int64_t> &map,
-                          std::vector<std::vector<int64_t>> &all_clusters) {
+void connected_components(std::vector<int64_t> &directed, int64_t k, std::vector<int64_t> &map,
+                          std::vector<std::vector<int64_t>> &all_clusters,
+                          const size_t k_extension_factor) {
   const int64_t N = directed.size() / k;
+
+  if (k_extension_factor > 1) {
+    directed = k_inverse_extension(directed, k, k_extension_factor);
+    k = k * k_extension_factor;
+  }
+
   detail::global_cluster_id = 1;
   detail::merges = 0;
   map.resize(N);
   std::fill(map.begin(), map.end(), 0);
   all_clusters.clear();
-  all_clusters
-      .emplace_back(); // add empty first dummy set for reserved cluster_id
+  all_clusters.emplace_back();  // add empty first dummy set for reserved cluster_id
   for (int64_t i = 0; i < N; i += 1) {
     if (map[i] == 0) {
       detail::connected_components(directed, map, N, k, i, all_clusters);
@@ -165,6 +168,6 @@ void connected_components(std::vector<int64_t> &directed, const int64_t k,
   // }
 }
 
-} // namespace clustering
-} // namespace datadriven
-} // namespace sgpp
+}  // namespace clustering
+}  // namespace datadriven
+}  // namespace sgpp

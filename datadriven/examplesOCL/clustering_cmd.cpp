@@ -145,6 +145,7 @@ int main(int argc, char **argv) {
   std::string reuse_knn_graph;
   std::string compare_knn_csv_file_name;
   double epsilon;
+  int connected_components_k_factor;
 
   size_t refinement_steps;
   size_t refinement_points;
@@ -246,7 +247,11 @@ int main(int argc, char **argv) {
       "for calculating clustering score if value > 0 is given")(
       "print_cluster_sizes",
       boost::program_options::value<int64_t>(&print_cluster_sizes)->default_value(0),
-      "print the cluster sizes to stdout, value is min cluster size");
+      "print the cluster sizes to stdout, value is min cluster size")
+      ("connected_components_k_factor",
+      boost::program_options::value<int64_t>(&connected_components_k_factor)->default_value(1),
+      "add some additional entries (a factor of k) to the kNN graph to reduce the number of merges required")
+      ;
 
   boost::program_options::variables_map variables_map;
 
@@ -881,7 +886,7 @@ int main(int argc, char **argv) {
     // sgpp::datadriven::clustering::find_clusters(graph, k, node_cluster_map,
     // clusters);
 
-    sgpp::datadriven::clustering::connected_components(graph, k, node_cluster_map, clusters);
+    sgpp::datadriven::clustering::connected_components(graph, k, node_cluster_map, clusters, connected_components_k_factor);
 
     find_cluster_timer_stop = std::chrono::system_clock::now();
 
