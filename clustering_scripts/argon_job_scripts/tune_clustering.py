@@ -170,7 +170,7 @@ for dataset_size in [1E6, 1E7]:
                     if percent_correct > best_percent_correct:
                         best_percent_correct = percent_correct
                         best_threshold = threshold
-                        f_log.write("-> new best_percent_correct:" + str(best_percent_correct) + "new best_threshold:" + str(best_threshold) + "\n")
+                        f_log.write("-> new best_percent_correct:" + str(best_percent_correct) + ", new best_threshold:" + str(best_threshold) + "\n")
                         f_log.flush()
 
 

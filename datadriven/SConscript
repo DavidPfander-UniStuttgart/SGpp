@@ -26,7 +26,7 @@ if env["USE_CGAL"]:
 if env["USE_LSHKNN"]:
   additionalDependencies += ["lshknn"]
 
-additionalBoostTestDependencies = ["z"]
+additionalBoostTestDependencies = ["z", "numa"]
 performanceTestFlag = "COMPILE_BOOST_PERFORMANCE_TESTS"
 performanceTestRunFlag = "RUN_BOOST_PERFORMANCE_TESTS"
 
