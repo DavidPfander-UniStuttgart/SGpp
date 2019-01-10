@@ -181,7 +181,7 @@ int main() {
   // constexpr size_t N = 100000;
 
   constexpr int64_t num_cc = 100;
-  constexpr int64_t cc_size = 100; // recursive can only do up to 10^4
+  constexpr int64_t cc_size = 1000000; // recursive can only do up to 10^4
   constexpr int64_t num_datapoints = num_cc * cc_size;
   std::cout << "num datapoints: " << num_datapoints << std::endl;
 
@@ -246,39 +246,40 @@ int main() {
   //   // clustering::print_labeled(labeled_datapoints);
   // }
 
-  // std::vector<size_t> labeled_datapoints2;
-  // {
-  //   std::vector<int64_t> labeled_datapoints_unconverted;
-  //   std::vector<std::vector<int64_t>> clusters;
-  //   time_point start = high_resolution_clock::now();
-  //   // sgpp::datadriven::clustering::find_clusters(graph, k,
-  //   labeled_datapoints_unconverted,
-  //   // clusters);
-  //   sgpp::datadriven::clustering::neighborhood_list_t undirected_graph =
-  //       sgpp::datadriven::clustering::make_undirected_graph(graph, k);
-  //   time_point end = high_resolution_clock::now();
-  //   double duration_undirected_s = std::chrono::duration<double>(end -
-  //   start).count(); std::cout << "duration improved make_undirected_graph: "
-  //   << duration_undirected_s << std::endl; start =
-  //   high_resolution_clock::now();
-  //   sgpp::datadriven::clustering::get_clusters_from_undirected_graph(
-  //       undirected_graph, labeled_datapoints_unconverted, clusters, 2);
-  //   end = high_resolution_clock::now();
-  //   double duration_detect_s = std::chrono::duration<double>(end -
-  //   start).count(); std::cout << "duration improved
-  //   get_clusters_from_undirected_graph: " << duration_detect_s
-  //             << std::endl;
+  std::vector<size_t> labeled_datapoints2;
+  {
+    std::vector<int64_t> labeled_datapoints_unconverted;
+    std::vector<std::vector<int64_t>> clusters;
+    time_point start = high_resolution_clock::now();
+    // sgpp::datadriven::clustering::find_clusters(graph, k,
+    // labeled_datapoints_unconverted,
+    // clusters);
+    sgpp::datadriven::clustering::neighborhood_list_t undirected_graph =
+        sgpp::datadriven::clustering::make_undirected_graph(graph, k);
+    time_point end = high_resolution_clock::now();
+    double duration_undirected_s =
+        std::chrono::duration<double>(end - start).count();
+    std::cout << "duration improved make_undirected_graph: "
+              << duration_undirected_s << std::endl;
+    start = high_resolution_clock::now();
+    sgpp::datadriven::clustering::get_clusters_from_undirected_graph(
+        undirected_graph, labeled_datapoints_unconverted, clusters, 2);
+    end = high_resolution_clock::now();
+    double duration_detect_s =
+        std::chrono::duration<double>(end - start).count();
+    std::cout << "duration improved get_clusters_from_undirected_graph: "
+              << duration_detect_s << std::endl;
 
-  //   labeled_datapoints2.resize(labeled_datapoints_unconverted.size());
-  //   for (size_t i = 0; i < labeled_datapoints_unconverted.size(); i += 1) {
-  //     labeled_datapoints2[i] =
-  //     static_cast<size_t>(labeled_datapoints_unconverted[i] + 1);
-  //   }
-  //   std::cout << "clusters improved: " << clusters.size() << std::endl;
-  //   // std::cout << "duration improved: " << duration_s_avr << std::endl;
-  //   // std::cout << "improved:" << std::endl;
-  //   // clustering::print_labeled(labeled_datapoints2);
-  // }
+    labeled_datapoints2.resize(labeled_datapoints_unconverted.size());
+    for (size_t i = 0; i < labeled_datapoints_unconverted.size(); i += 1) {
+      labeled_datapoints2[i] =
+          static_cast<size_t>(labeled_datapoints_unconverted[i] + 1);
+    }
+    std::cout << "clusters improved: " << clusters.size() << std::endl;
+    // std::cout << "duration improved: " << duration_s_avr << std::endl;
+    // std::cout << "improved:" << std::endl;
+    // clustering::print_labeled(labeled_datapoints2);
+  }
 
   // std::vector<size_t> labeled_datapoints;
   // {
@@ -295,72 +296,76 @@ int main() {
   //   // clustering::print_labeled(labeled_datapoints);
   // }
 
-  std::vector<int64_t> node_cluster_map;
-  {
-    time_point start = high_resolution_clock::now();
-    std::vector<std::vector<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components(
-        graph, k, node_cluster_map, all_clusters);
-    time_point end = high_resolution_clock::now();
-    double duration_s_avr = std::chrono::duration<double>(end - start).count();
-    std::cout << "duration new: " << duration_s_avr << std::endl;
-    std::cout << "num_clusters: " << all_clusters.size() << std::endl;
-    // clustering::print_connected_components(all_clusters);
-    // std::cout << "cc map:" << std::endl;
-    // clustering::print_labeled(labeled_datapoints);
+  // std::vector<int64_t> node_cluster_map;
+  // {
+  //   time_point start = high_resolution_clock::now();
+  //   std::vector<std::vector<int64_t>> all_clusters;
+  //   sgpp::datadriven::clustering::connected_components(
+  //       graph, k, node_cluster_map, all_clusters);
+  //   time_point end = high_resolution_clock::now();
+  //   double duration_s_avr = std::chrono::duration<double>(end -
+  //   start).count(); std::cout << "duration new: " << duration_s_avr <<
+  //   std::endl; std::cout << "num_clusters: " << all_clusters.size() <<
+  //   std::endl;
+  //   // clustering::print_connected_components(all_clusters);
+  //   // std::cout << "cc map:" << std::endl;
+  //   // clustering::print_labeled(labeled_datapoints);
 
-    int64_t sum_datapoints = 0;
-    for (size_t i = 0; i < all_clusters.size(); i += 1) {
-      std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size()
-                << std::endl;
-      sum_datapoints += all_clusters[i].size();
-    }
-    std::cout << "datapoints in clusters: " << sum_datapoints << std::endl;
+  //   int64_t sum_datapoints = 0;
+  //   for (size_t i = 0; i < all_clusters.size(); i += 1) {
+  //     std::cout << "size cluster i: " << i << " -> " <<
+  //     all_clusters[i].size()
+  //               << std::endl;
+  //     sum_datapoints += all_clusters[i].size();
+  //   }
+  //   std::cout << "datapoints in clusters: " << sum_datapoints << std::endl;
 
-    double score =
-        static_cast<double>(
-            num_cc -
-            std::min(num_cc, std::abs(num_cc - static_cast<int64_t>(
-                                                   all_clusters.size())))) *
-        (static_cast<double>(sum_datapoints) /
-         static_cast<double>(num_datapoints));
-    std::cout << "score: " << score << std::endl;
+  //   double score =
+  //       static_cast<double>(
+  //           num_cc -
+  //           std::min(num_cc, std::abs(num_cc - static_cast<int64_t>(
+  //                                                  all_clusters.size())))) *
+  //       (static_cast<double>(sum_datapoints) /
+  //        static_cast<double>(num_datapoints));
+  //   std::cout << "score: " << score << std::endl;
 
-    for (size_t i = 0; i < all_clusters.size(); i += 1) {
-      for (size_t j = 0; j < all_clusters[j].size(); j += 1) {
-        for (size_t ii = 0; ii < all_clusters.size(); ii += 1) {
-          for (size_t jj = 0; jj < all_clusters[ii].size(); jj += 1) {
-            if (!(i == ii && j == jj)) {
-              int64_t first_index = all_clusters[i][j];
-              int64_t second_index = all_clusters[ii][jj];
-              if (first_index == second_index) {
-                // if (first_index > 1000000) {
-                std::cout << "dup cl i: " << i << " j: " << j << " ii: " << ii
-                          << " jj: " << jj << " index: " << second_index
-                          << std::endl;
+  //   // for (size_t i = 0; i < all_clusters.size(); i += 1) {
+  //   //   for (size_t j = 0; j < all_clusters[j].size(); j += 1) {
+  //   //     for (size_t ii = 0; ii < all_clusters.size(); ii += 1) {
+  //   //       for (size_t jj = 0; jj < all_clusters[ii].size(); jj += 1) {
+  //   //         if (!(i == ii && j == jj)) {
+  //   //           int64_t first_index = all_clusters[i][j];
+  //   //           int64_t second_index = all_clusters[ii][jj];
+  //   //           if (first_index == second_index) {
+  //   //             // if (first_index > 1000000) {
+  //   //             std::cout << "dup cl i: " << i << " j: " << j << " ii: "
+  //   << ii
+  //   //                       << " jj: " << jj << " index: " << second_index
+  //   //                       << std::endl;
 
-                if (second_index >= 0 && second_index < 1000000) {
-                  std::cout
-                      << "node_cluster_map: " << node_cluster_map[second_index]
-                      << " index neighbors: ";
-                  for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
-                    if (cur_k > 0) {
-                      std::cout << ", ";
-                    }
-                    std::cout << graph[second_index * k + cur_k];
-                  }
-                  std::cout << std::endl;
-                } else {
-                  std::cout << "error: index out of range" << std::endl;
-                }
-              }
-              // }
-            }
-          }
-        }
-      }
-    }
-  }
+  //   //             if (second_index >= 0 && second_index < 1000000) {
+  //   //               std::cout
+  //   //                   << "node_cluster_map: " <<
+  //   node_cluster_map[second_index]
+  //   //                   << " index neighbors: ";
+  //   //               for (size_t cur_k = 0; cur_k < k; cur_k += 1) {
+  //   //                 if (cur_k > 0) {
+  //   //                   std::cout << ", ";
+  //   //                 }
+  //   //                 std::cout << graph[second_index * k + cur_k];
+  //   //               }
+  //   //               std::cout << std::endl;
+  //   //             } else {
+  //   //               std::cout << "error: index out of range" << std::endl;
+  //   //             }
+  //   //           }
+  //   //           // }
+  //   //         }
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // }
+  // }
 
   // bool is_equal =
   //     std::equal(labeled_datapoints.begin(), labeled_datapoints.end(),

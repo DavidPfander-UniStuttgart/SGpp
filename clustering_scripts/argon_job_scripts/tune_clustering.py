@@ -79,7 +79,7 @@ lambda_initial=1E-8
 # lambda_initials = [1E-4, 1E-5, 1E-6, 1E-7, 1E-8]
 lambda_iterations = int(3) # how many descents
 
-target_score=0.98
+# target_score=0.98
 
 num_tasks=9
 
@@ -120,7 +120,7 @@ for dataset_size in [1E6, 1E7]:
     else: # clustering_cmd
         cmd_pattern = "./datadriven/examplesOCL/clustering_cmd --config {config} --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise} --level={level} --lambda={lambda_value} --k {k} --epsilon {epsilon} --threshold {threshold} --print_cluster_sizes 1 --target_clusters {num_clusters} --write_cluster_map --file_prefix gaussian_c{num_clusters}_size{dataset_size}_dim{dim}{noise} >> tune_precision_{dim}d_{dataset_size}s.log 2>tune_precision_{dim}d_{dataset_size}s_error.log"
 
-    overall_best_score = -1
+    overall_best_percent_correct = -1
     overall_best_lambda_value = -1
     overall_best_threshold = -1
 
@@ -139,13 +139,13 @@ for dataset_size in [1E6, 1E7]:
             # print("lambda_values unpruned:", lambda_values)
             middle_index = len(lambda_values) // 2 + 1
             lambda_values = lambda_values[1:-1]
-        print("lambda_values:", lambda_values)
+        f_log.write("lambda_values:" + str(lambda_values) + "\n")
 
         for lambda_value in lambda_values:
             ########################## threshold #################################
             thresholds = list(thresholds_initial)
             best_threshold = thresholds[0]
-            best_score = -1.0
+            best_percent_correct = -1.0
             threshold_step = thresholds_initial[1] - thresholds_initial[0]
             # do bisection
             while threshold_step > threshold_step_min:
@@ -164,15 +164,13 @@ for dataset_size in [1E6, 1E7]:
                     percent_correct = check_assignment(reference_file, results_file)
                     f_results.write(str(lambda_value) + "," + str(threshold) + "," + str(percent_correct) + "\n")
                     f_results.flush()
-                    f_log.write("attempt lambda: " + str(lambda_value) + " threshold: " + str(threshold) + " percent_correct: " + str(percent_correct))
+                    f_log.write("attempt lambda: " + str(lambda_value) + " threshold: " + str(threshold) + " percent_correct: " + str(percent_correct) + "\n")
                     f_log.flush()
 
-                    percent_correct = 0.1
-
-                    if percent_correct > best_score:
-                        best_score = percent_correct
+                    if percent_correct > best_percent_correct:
+                        best_percent_correct = percent_correct
                         best_threshold = threshold
-                        f_log.write("-> new best_score:" + str(best_score) + "new best_threshold:" + str(best_threshold) + "\n")
+                        f_log.write("-> new best_percent_correct:" + str(best_percent_correct) + ", new best_threshold:" + str(best_threshold) + "\n")
                         f_log.flush()
 
 
@@ -182,10 +180,12 @@ for dataset_size in [1E6, 1E7]:
                 thresholds = np.linspace(threshold_start, threshold_stop , threshold_intervals)[1:-1]
                 threshold_step = thresholds[1] - thresholds[0]
             ########################### end threshold #############################
-            if best_score > overall_best_score:
-                overall_best_score = best_score
+            if best_percent_correct > overall_best_percent_correct:
+                overall_best_percent_correct = best_percent_correct
                 overall_best_threshold = best_threshold
                 overall_best_lambda_value = lambda_value
+                f_log.write("-> new overall_best_percent_correct:" + str(overall_best_percent_correct) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + ", new best_threshold:" + str(overall_best_threshold) + "\n")
+                f_log.flush()
 
 
         lambda_iteration += 1
@@ -194,6 +194,6 @@ for dataset_size in [1E6, 1E7]:
         lambda_factor = (lambda_start_upper / lambda_start_lower) **( 1.0/float(lambda_intervals - 1))
 
 
-    f_log.write("overall_best_score: " + str(overall_best_score) + " overall_best_threshold: " + str(overall_best_threshold) + " overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
+    f_log.write("final overall_best_percent_correct: " + str(overall_best_percent_correct) + ", overall_best_threshold: " + str(overall_best_threshold) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
     f_log.close()
     f_results.close()

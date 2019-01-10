@@ -4,6 +4,12 @@
 // sgpp.sparsegrids.org
 #include <unistd.h>
 
+#include <sgpp/base/datatypes/DataMatrix.hpp>
+#include <sgpp/base/datatypes/DataVector.hpp>
+#include <sgpp/base/grid/Grid.hpp>
+#include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
+#include <sgpp/globaldef.hpp>
+#include <sgpp/solver/sle/ConjugateGradients.hpp>
 #include "sgpp/base/grid/generation/GridGenerator.hpp"
 #include "sgpp/base/grid/generation/functors/SurplusCoarseningFunctor.hpp"
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
@@ -12,12 +18,6 @@
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
-#include <sgpp/base/datatypes/DataMatrix.hpp>
-#include <sgpp/base/datatypes/DataVector.hpp>
-#include <sgpp/base/grid/Grid.hpp>
-#include <sgpp/datadriven/operation/hash/OperationMPI/MPIEnviroment.hpp>
-#include <sgpp/globaldef.hpp>
-#include <sgpp/solver/sle/ConjugateGradients.hpp>
 
 #include <boost/program_options.hpp>
 #include <chrono>
@@ -59,82 +59,64 @@ int main(int argc, char *argv[]) {
 
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
-        "datasetFileName",
-        boost::program_options::value<std::string>(&datasetFileName),
+        "datasetFileName", boost::program_options::value<std::string>(&datasetFileName),
         "training data set as an arff file")(
         "binary_header_filename",
         boost::program_options::value<std::string>(&binary_header_filename),
         "training data set as an arff file")(
-        "level",
-        boost::program_options::value<size_t>(&level)->default_value(4),
+        "level", boost::program_options::value<size_t>(&level)->default_value(4),
         "level of the sparse grid used for density estimation")(
-        "lambda",
-        boost::program_options::value<double>(&lambda)->default_value(0.000001),
+        "lambda", boost::program_options::value<double>(&lambda)->default_value(0.000001),
         "regularization for density estimation")(
         "config", boost::program_options::value<std::string>(&configFileName),
         "OpenCL and kernel configuration file")(
         "MPIconfig",
-        boost::program_options::value<std::string>(&MPIconfigFileName)
-            ->default_value(""),
+        boost::program_options::value<std::string>(&MPIconfigFileName)->default_value(""),
         "MPI configuration file. Should be a json file, specifying the "
-        "connections of the network")(
-        "k", boost::program_options::value<uint64_t>(&k)->default_value(5),
-        "specifies number of neighbors for kNN algorithm")(
+        "connections of the network")("k",
+                                      boost::program_options::value<uint64_t>(&k)->default_value(5),
+                                      "specifies number of neighbors for kNN algorithm")(
         "write_cluster_map",
-        boost::program_options::value<std::string>(&cluster_file)
-            ->default_value(""),
+        boost::program_options::value<std::string>(&cluster_file)->default_value(""),
         "Output file for the detected clusters. None if empty.")(
         "refinement_steps",
-        boost::program_options::value<uint64_t>(&refinement_steps)
-            ->default_value(0),
+        boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
         "number of refinment steps for density estimation")(
         "refinement_points",
-        boost::program_options::value<uint64_t>(&refinement_points)
-            ->default_value(0),
+        boost::program_options::value<uint64_t>(&refinement_points)->default_value(0),
         "number of points to refinement during density estimation")(
         "coarsen_points",
-        boost::program_options::value<uint64_t>(&coarsening_points)
-            ->default_value(0),
+        boost::program_options::value<uint64_t>(&coarsening_points)->default_value(0),
         "number of points to coarsen during density estimation")(
-        "rhs_erg_file",
-        boost::program_options::value<std::string>(&rhs_erg_filename),
+        "rhs_erg_file", boost::program_options::value<std::string>(&rhs_erg_filename),
         "Filename where the final rhs values will be written.")(
         "write_density_coef",
-        boost::program_options::value<std::string>(
-            &density_coefficients_filename),
+        boost::program_options::value<std::string>(&density_coefficients_filename),
         "Filename where the final grid coefficients for the density "
         "function "
-        "will be written.")(
-        "write_pruned_knn_graph",
-        boost::program_options::value<std::string>(&pruned_knn_filename),
-        "Filename for the pruned knn graph")(
-        "epsilon",
-        boost::program_options::value<double>(&epsilon)->default_value(0.0001),
+        "will be written.")("write_pruned_knn_graph",
+                            boost::program_options::value<std::string>(&pruned_knn_filename),
+                            "Filename for the pruned knn graph")(
+        "epsilon", boost::program_options::value<double>(&epsilon)->default_value(0.0001),
         "Exit criteria for the solver. Usually ranges from 0.001 to "
-        "0.0001.")(
-        "threshold",
-        boost::program_options::value<double>(&threshold)->default_value(0.0),
-        "threshold for sparse grid function for removing edges")(
+        "0.0001.")("threshold",
+                   boost::program_options::value<double>(&threshold)->default_value(0.0),
+                   "threshold for sparse grid function for removing edges")(
         "coarsen_threshold",
-        boost::program_options::value<double>(&coarsening_threshold)
-            ->default_value(1000.0),
+        boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
         "for density estimation, only surpluses below threshold are "
         "coarsened")("verbose_timers",
-                     boost::program_options::value<bool>(&verbose_timers)
-                         ->default_value(false),
+                     boost::program_options::value<bool>(&verbose_timers)->default_value(false),
                      "Prints times per multiplication")(
         "print_cluster_sizes",
-        boost::program_options::value<int64_t>(&print_cluster_sizes)
-            ->default_value(0),
+        boost::program_options::value<int64_t>(&print_cluster_sizes)->default_value(0),
         "print the cluster sizes to stdout, value is min cluster size")(
         "target_clusters",
-        boost::program_options::value<int64_t>(&target_clusters)
-            ->default_value(0),
+        boost::program_options::value<int64_t>(&target_clusters)->default_value(0),
         "for calculating clustering score if value > 0 is given");
 
     boost::program_options::variables_map variables_map;
-    boost::program_options::parsed_options options =
-        parse_command_line(argc, argv, description);
+    boost::program_options::parsed_options options = parse_command_line(argc, argv, description);
     boost::program_options::store(options, variables_map);
     boost::program_options::notify(variables_map);
 
@@ -148,34 +130,28 @@ int main(int argc, char *argv[]) {
 
     if (variables_map.count("datasetFileName") == 0 &&
         variables_map.count("binary_header_filename") == 0) {
-      std::cerr << "error: neither option \"datasetFileName\" is specified "
-                << std::endl;
+      std::cerr << "error: neither option \"datasetFileName\" is specified " << std::endl;
       std::cerr << "nor is the option \"binary_header_filename\"" << std::endl;
       return 1;
     } else if (variables_map.count("datasetFileName") != 0 &&
                variables_map.count("binary_header_filename") == 0) {
       std::experimental::filesystem::path datasetFilePath(datasetFileName);
       if (!std::experimental::filesystem::exists(datasetFilePath)) {
-        std::cerr << "error: dataset file does not exist: " << datasetFileName
-                  << std::endl;
+        std::cerr << "error: dataset file does not exist: " << datasetFileName << std::endl;
         return 1;
       }
       std::cout << "datasetFileName: " << datasetFileName << std::endl;
     } else if (variables_map.count("datasetFileName") == 0 &&
                variables_map.count("binary_header_filename") != 0) {
-      std::experimental::filesystem::path datasetFilePath(
-          binary_header_filename);
+      std::experimental::filesystem::path datasetFilePath(binary_header_filename);
       if (!std::experimental::filesystem::exists(datasetFilePath)) {
-        std::cerr << "error: dataset file does not exist: "
-                  << binary_header_filename << std::endl;
+        std::cerr << "error: dataset file does not exist: " << binary_header_filename << std::endl;
         return 1;
       }
-      std::cout << "binary_header_filename: " << binary_header_filename
-                << std::endl;
+      std::cout << "binary_header_filename: " << binary_header_filename << std::endl;
     } else {
       std::cerr << "error: Both options \"datasetFileName\" and " << std::endl;
-      std::cerr << "binary_header_filename\" are specified! Use only one. "
-                << std::endl;
+      std::cerr << "binary_header_filename\" are specified! Use only one. " << std::endl;
       return 1;
     }
 
@@ -198,8 +174,7 @@ int main(int argc, char *argv[]) {
     } else {
       std::experimental::filesystem::path configFilePath(configFileName);
       if (!std::experimental::filesystem::exists(configFilePath)) {
-        std::cerr << "error: config file does not exist: " << configFileName
-                  << std::endl;
+        std::cerr << "error: config file does not exist: " << configFileName << std::endl;
         return 1;
       }
       std::cout << "OpenCL configuration file: " << configFileName << std::endl;
@@ -239,17 +214,14 @@ int main(int argc, char *argv[]) {
     global_start = std::chrono::system_clock::now();
 
     // setup MPI network according to config file
-    std::chrono::time_point<std::chrono::system_clock> setup_network_start,
-        setup_network_end;
+    std::chrono::time_point<std::chrono::system_clock> setup_network_start, setup_network_end;
     setup_network_start = std::chrono::system_clock::now();
     std::cout << "Setup:" << std::endl;
     std::cout << "------ " << std::endl;
     if (MPIconfigFileName != "") {
-      std::cout << "Using MPI network config setting: " << MPIconfigFileName
-                << std::endl;
+      std::cout << "Using MPI network config setting: " << MPIconfigFileName << std::endl;
       sgpp::base::OperationConfiguration network_conf(MPIconfigFileName);
-      sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(
-          network_conf);
+      sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes(network_conf);
     } else {
       std::cout << "Using default MPI network config setting..." << std::endl;
       sgpp::datadriven::clusteringmpi::MPIEnviroment::connect_nodes_default();
@@ -257,27 +229,24 @@ int main(int argc, char *argv[]) {
     setup_network_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Network setup duration: "
-                << static_cast<std::chrono::duration<double>>(
-                       setup_network_end - setup_network_start)
+                << static_cast<std::chrono::duration<double>>(setup_network_end -
+                                                              setup_network_start)
                        .count()
                 << std::endl;
     }
 
     // Loading dataset
-    std::chrono::time_point<std::chrono::system_clock> loading_data_start,
-        loading_data_end;
+    std::chrono::time_point<std::chrono::system_clock> loading_data_start, loading_data_end;
     loading_data_start = std::chrono::system_clock::now();
     sgpp::base::DataMatrix dataset;
     size_t dim = 0;
     if (variables_map.count("binary_header_filename") != 0) {
       std::cerr << "Loading binary dataset: " << std::endl;
-      dataset = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(
-          binary_header_filename);
+      dataset = sgpp::datadriven::ARFFTools::read_binary_converted_ARFF(binary_header_filename);
       dim = dataset.getNcols();
     } else if (variables_map.count("datasetFileName") != 0) {
       std::cerr << "Loading ARFF dataset: " << std::endl;
-      sgpp::datadriven::Dataset data =
-          sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
+      sgpp::datadriven::Dataset data = sgpp::datadriven::ARFFTools::readARFF(datasetFileName);
       dataset = data.getData();
       dim = dataset.getNcols();
     }
@@ -286,15 +255,13 @@ int main(int argc, char *argv[]) {
     loading_data_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Dataset load (on master) duration: "
-                << static_cast<std::chrono::duration<double>>(
-                       loading_data_end - loading_data_start)
+                << static_cast<std::chrono::duration<double>>(loading_data_end - loading_data_start)
                        .count()
                 << std::endl;
     }
 
     // Create Grid
-    std::chrono::time_point<std::chrono::system_clock> grid_creation_start,
-        grid_creation_end;
+    std::chrono::time_point<std::chrono::system_clock> grid_creation_start, grid_creation_end;
     grid_creation_start = std::chrono::system_clock::now();
     sgpp::base::Grid *grid = sgpp::base::Grid::createLinearGrid(dim);
     sgpp::base::GridGenerator &gridGen = grid->getGenerator();
@@ -307,13 +274,12 @@ int main(int argc, char *argv[]) {
     grid_creation_end = std::chrono::system_clock::now();
     if (verbose_timers) {
       std::cout << "Grid creation (on master) duration: "
-                << static_cast<std::chrono::duration<double>>(
-                       grid_creation_end - grid_creation_start)
+                << static_cast<std::chrono::duration<double>>(grid_creation_end -
+                                                              grid_creation_start)
                        .count()
                 << std::endl;
     }
-    std::cout << "Grid created! Number of grid points:     " << gridsize
-              << std::endl;
+    std::cout << "Grid created! Number of grid points:     " << gridsize << std::endl;
     std::cout << std::endl << std::endl;
 
     std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -321,17 +287,16 @@ int main(int argc, char *argv[]) {
     {
       std::cout << "Create right-hand side of density equation: " << std::endl;
       std::cout << "-------------------------------------------- " << std::endl;
-      std::chrono::time_point<std::chrono::system_clock> rhs_op_creation_start,
-          rhs_op_creation_end;
+      std::chrono::time_point<std::chrono::system_clock> rhs_op_creation_start, rhs_op_creation_end;
       rhs_op_creation_start = std::chrono::system_clock::now();
-      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(
-          *grid, dataset, configFileName);
+      sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                     configFileName);
       rhs_op_creation_end = std::chrono::system_clock::now();
       if (verbose_timers) {
         std::cout << "RHS operation creation (includes grid and dataset "
                      "transfers) duration: "
-                  << static_cast<std::chrono::duration<double>>(
-                         rhs_op_creation_end - rhs_op_creation_start)
+                  << static_cast<std::chrono::duration<double>>(rhs_op_creation_end -
+                                                                rhs_op_creation_start)
                          .count()
                   << std::endl;
       }
@@ -341,10 +306,8 @@ int main(int argc, char *argv[]) {
       rhs_op.generate_b(rhs);
       rhs_end = std::chrono::system_clock::now();
       std::cout << "rhs creation duration: "
-                << static_cast<std::chrono::duration<double>>(rhs_end -
-                                                              rhs_start)
-                       .count()
-                << "s" << std::endl;
+                << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count() << "s"
+                << std::endl;
       // std::cout << std::endl << std::endl;
 
       // Solve for alpha vector via CG solver
@@ -359,8 +322,8 @@ int main(int argc, char *argv[]) {
       if (verbose_timers) {
         std::cout << "Density mult operation creation (includes grid transfer) "
                      "duration: "
-                  << static_cast<std::chrono::duration<double>>(
-                         mult_op_creation_end - mult_op_creation_start)
+                  << static_cast<std::chrono::duration<double>>(mult_op_creation_end -
+                                                                mult_op_creation_start)
                          .count()
                   << std::endl;
       }
@@ -370,16 +333,13 @@ int main(int argc, char *argv[]) {
       solver.solve(mult_op, alpha, rhs, false, true);
       solver_end = std::chrono::system_clock::now();
       std::cout << "solver duration: "
-                << static_cast<std::chrono::duration<double>>(solver_end -
-                                                              solver_start)
-                       .count()
+                << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
                 << "s" << std::endl;
     }
     for (size_t i = 0; i < refinement_steps; i++) {
       std::cout << "refinement_steps: " << refinement_steps << std::endl;
       if (refinement_points > 0) {
-        sgpp::base::SurplusRefinementFunctor refine_func(alpha,
-                                                         refinement_points);
+        sgpp::base::SurplusRefinementFunctor refine_func(alpha, refinement_points);
         gridGen.refine(refine_func);
         size_t old_size = alpha.getSize();
 
@@ -395,55 +355,46 @@ int main(int argc, char *argv[]) {
           rhs[j] = 0.0;
         }
 
-        std::cout << "grid points after refinement: " << grid->getSize()
-                  << std::endl;
+        std::cout << "grid points after refinement: " << grid->getSize() << std::endl;
 
         // Create right hand side vector
         std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
         rhs_start = std::chrono::system_clock::now();
-        std::cout << "Create right-hand side of density equation: "
-                  << std::endl;
-        std::cout << "-------------------------------------------- "
-                  << std::endl;
-        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(
-            *grid, dataset, configFileName);
+        std::cout << "Create right-hand side of density equation: " << std::endl;
+        std::cout << "-------------------------------------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                       configFileName);
         rhs_op.generate_b(rhs);
         rhs_end = std::chrono::system_clock::now();
         std::cout << "rhs creation duration: "
-                  << static_cast<std::chrono::duration<double>>(rhs_end -
-                                                                rhs_start)
-                         .count()
-                  << "s" << std::endl;
+                  << static_cast<std::chrono::duration<double>>(rhs_end - rhs_start).count() << "s"
+                  << std::endl;
 
         // Solve for alpha vector via CG solver
         std::cout << "Solve for alpha: " << std::endl;
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(
             *grid, lambda, configFileName, verbose_timers);
-        std::chrono::time_point<std::chrono::system_clock> solver_start,
-            solver_end;
+        std::chrono::time_point<std::chrono::system_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
         sgpp::solver::ConjugateGradients solver(1000, epsilon);
         solver.solve(mult_op, alpha, rhs, false, true);
         solver_end = std::chrono::system_clock::now();
         std::cout << "solver duration: "
-                  << static_cast<std::chrono::duration<double>>(solver_end -
-                                                                solver_start)
-                         .count()
+                  << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
                   << "s" << std::endl;
       }
       if (coarsening_points > 0) {
         size_t grid_size_before_coarsen = grid->getSize();
-        sgpp::base::SurplusCoarseningFunctor coarsen_func(
-            alpha, coarsening_points, coarsening_threshold);
+        sgpp::base::SurplusCoarseningFunctor coarsen_func(alpha, coarsening_points,
+                                                          coarsening_threshold);
         gridGen.coarsen(coarsen_func, alpha);
 
         size_t grid_size_after_coarsen = grid->getSize();
-        std::cout << "grid points after coarsen: " << grid_size_after_coarsen
-                  << ", removed "
-                  << (grid_size_before_coarsen - grid_size_after_coarsen)
-                  << " grid points" << std::endl;
+        std::cout << "grid points after coarsen: " << grid_size_after_coarsen << ", removed "
+                  << (grid_size_before_coarsen - grid_size_after_coarsen) << " grid points"
+                  << std::endl;
 
         // adjust alpha to coarsen grid
         alpha.resize(grid->getSize());
@@ -453,12 +404,10 @@ int main(int argc, char *argv[]) {
 
         // Create right hand side vector
         rhs_start = std::chrono::system_clock::now();
-        std::cout << "Create right-hand side of density equation: "
-                  << std::endl;
-        std::cout << "-------------------------------------------- "
-                  << std::endl;
-        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(
-            *grid, dataset, configFileName);
+        std::cout << "Create right-hand side of density equation: " << std::endl;
+        std::cout << "-------------------------------------------- " << std::endl;
+        sgpp::datadriven::clusteringmpi::OperationDensityRhsMPI rhs_op(*grid, dataset,
+                                                                       configFileName);
         rhs_op.generate_b(rhs);
         rhs_end = std::chrono::system_clock::now();
         std::cout << std::endl << std::endl;
@@ -468,17 +417,14 @@ int main(int argc, char *argv[]) {
         std::cout << "--------------- " << std::endl;
         sgpp::datadriven::clusteringmpi::OperationDensityMultMPI mult_op(
             *grid, lambda, configFileName, verbose_timers);
-        std::chrono::time_point<std::chrono::system_clock> solver_start,
-            solver_end;
+        std::chrono::time_point<std::chrono::system_clock> solver_start, solver_end;
         solver_start = std::chrono::system_clock::now();
         alpha.setAll(1.0);
         sgpp::solver::ConjugateGradients solver(1000, epsilon);
         solver.solve(mult_op, alpha, rhs, false, true);
         solver_end = std::chrono::system_clock::now();
         std::cout << "solver duration: "
-                  << static_cast<std::chrono::duration<double>>(solver_end -
-                                                                solver_start)
-                         .count()
+                  << static_cast<std::chrono::duration<double>>(solver_end - solver_start).count()
                   << "s" << std::endl;
       }
     }
@@ -512,8 +458,7 @@ int main(int argc, char *argv[]) {
     // Create and prune knn graph
     std::cout << "Create and prune graph: " << std::endl;
     std::cout << "----------------------- " << std::endl;
-    std::chrono::time_point<std::chrono::system_clock> knn_op_creation_start,
-        knn_op_creation_end;
+    std::chrono::time_point<std::chrono::system_clock> knn_op_creation_start, knn_op_creation_end;
     knn_op_creation_start = std::chrono::system_clock::now();
     sgpp::datadriven::clusteringmpi::OperationPrunedGraphCreationMPI graph_op(
         *grid, alpha, dataset, k, threshold, configFileName);
@@ -522,24 +467,21 @@ int main(int argc, char *argv[]) {
       std::cout << "KNN (create and prune) operation creation (includes cached "
                    "dataset transfer) "
                    "duration: "
-                << static_cast<std::chrono::duration<double>>(
-                       knn_op_creation_end - knn_op_creation_start)
+                << static_cast<std::chrono::duration<double>>(knn_op_creation_end -
+                                                              knn_op_creation_start)
                        .count()
                 << std::endl;
     }
-    std::chrono::time_point<std::chrono::system_clock> create_knn_start,
-        create_knn_end;
+    std::chrono::time_point<std::chrono::system_clock> create_knn_start, create_knn_end;
     create_knn_start = std::chrono::system_clock::now();
     std::vector<int64_t> knn_graph;
     graph_op.create_graph(knn_graph);
     create_knn_end = std::chrono::system_clock::now();
-    std::cout << "create knn operation duration: "
-              << static_cast<std::chrono::duration<double>>(create_knn_end -
-                                                            create_knn_start)
-                     .count()
-              << "s" << std::endl;
-    auto print_knn_graph = [&dataset, k](std::string filename,
-                                         std::vector<int64_t> &graph) {
+    std::cout
+        << "create knn operation duration: "
+        << static_cast<std::chrono::duration<double>>(create_knn_end - create_knn_start).count()
+        << "s" << std::endl;
+    auto print_knn_graph = [&dataset, k](std::string filename, std::vector<int64_t> &graph) {
       std::ofstream out_graph(filename);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {
         bool first = true;
@@ -565,19 +507,16 @@ int main(int argc, char *argv[]) {
 
     std::cout << "Find clusters in pruned graph: " << std::endl;
     std::cout << "------------------------------ " << std::endl;
-    std::chrono::time_point<std::chrono::system_clock> find_clusters_start,
-        find_clusters_end;
+    std::chrono::time_point<std::chrono::system_clock> find_clusters_start, find_clusters_end;
     find_clusters_start = std::chrono::system_clock::now();
     std::vector<int64_t> node_cluster_map;
     std::vector<std::vector<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components(
-        knn_graph, k, node_cluster_map, all_clusters);
-    // sgpp::datadriven::clustering::find_clusters(knn_graph, k,
-    // node_cluster_map, all_clusters);
+    // sgpp::datadriven::clustering::connected_components(
+    //     knn_graph, k, node_cluster_map, all_clusters);
+    sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, all_clusters);
     find_clusters_end = std::chrono::system_clock::now();
     std::cout << "find clusters duration: "
-              << static_cast<std::chrono::duration<double>>(find_clusters_end -
-                                                            find_clusters_start)
+              << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start)
                      .count()
               << "s" << std::endl;
     // Output ergs
@@ -586,8 +525,7 @@ int main(int argc, char *argv[]) {
     for (size_t i = 0; i < all_clusters.size(); i += 1) {
       if (print_cluster_sizes > 0 &&
           static_cast<int64_t>(all_clusters[i].size()) > print_cluster_sizes) {
-        std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size()
-                  << std::endl;
+        std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
       }
       sum_datapoints += all_clusters[i].size();
     }
@@ -598,10 +536,8 @@ int main(int argc, char *argv[]) {
           static_cast<double>(
               target_clusters -
               std::min(target_clusters,
-                       std::abs(target_clusters -
-                                static_cast<int64_t>(all_clusters.size())))) *
-          (static_cast<double>(sum_datapoints) /
-           static_cast<double>(dataset.getNrows()));
+                       std::abs(target_clusters - static_cast<int64_t>(all_clusters.size())))) *
+          (static_cast<double>(sum_datapoints) / static_cast<double>(dataset.getNrows()));
       std::cout << "score: " << score << std::endl;
     }
 
