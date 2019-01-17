@@ -377,6 +377,7 @@ int main(int argc, char **argv) {
     std::cout << "using naive ocl knn" << std::endl;
   } else {
     std::cerr << "error: invalid choice for \"knn_algorithm\" supplied" << std::endl;
+    return 1;
   }
 
   std::ofstream result_timings;
@@ -668,6 +669,20 @@ int main(int argc, char **argv) {
     }
     // Output final coefficients
     if (write_density_grid) {
+      std::ofstream out_grid_coord(file_prefix + "_grid_coord.csv");
+      auto &storage = grid->getStorage();
+      for (size_t i = 0; i < grid->getSize(); i++) {
+        sgpp::base::HashGridPoint point = storage.getPoint(i);
+        for (size_t d = 0; d < dimension; d++) {
+          if (d > 0) {
+            out_grid_coord << ", ";
+          }
+          out_grid_coord << storage.getCoordinate(point, d);
+        }
+        out_grid_coord << std::endl;
+      }
+      out_grid_coord.close();
+
       alpha.toFile(file_prefix + "_density_coef.serialized");
 
       std::ofstream out_grid(file_prefix + "_density_grid.serialized");

@@ -18,9 +18,10 @@ parser = argparse.ArgumentParser(description='Create graphs.')
 # parser.add_argument('--eval_level', dest='eval_level', action='store_const')
 requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument('--eval_grid_level', type=int, required=True)
-requiredNamed.add_argument('--scenario_name', required=True)
+requiredNamed.add_argument('--file_prefix', required=True)
 requiredNamed.add_argument('--dataset_name', required=True)
 requiredNamed.add_argument('--knn_algorithm', required=True) # 'lsh' or 'naive'
+requiredNamed.add_argument('--results_folder', required=True)
 
 parser.add_argument('--use_unpruned_graph', default=False, action='store_true')
 parser.add_argument('--dont_display_grid', default=False, action='store_true')
@@ -28,6 +29,8 @@ parser.add_argument('--dont_display_knn', default=False, action='store_true')
 parser.add_argument('--dont_display_data', default=False, action='store_true')
 parser.add_argument('--dont_display_density', default=False, action='store_true')
 args = parser.parse_args()
+
+show_titles=False
 
 # read-in dataset
 f = open(args.dataset_name, 'r')
@@ -44,7 +47,7 @@ X_dataset = [float(row[0]) for row in content]
 Y_dataset = [float(row[1]) for row in content]
 
 # read-in grid points
-f = open("results/" + args.scenario_name + "_grid_coord.csv", 'r')
+f = open(args.results_folder + args.file_prefix + "_grid_coord.csv", 'r')
 reader = csv.reader(f)
 content = [] # [row for row in reader]
 for c in reader:
@@ -53,7 +56,7 @@ X_grid = [float(row[0]) for row in content]
 Y_grid = [float(row[1]) for row in content]
 
 # read-in full-grid-evaluated density function
-f = open("results/" + args.scenario_name + '_density_eval.csv', 'r')
+f = open(args.results_folder + args.file_prefix + '_density_eval.csv', 'r')
 reader = csv.reader(f)
 content = [row for row in reader]
 
@@ -95,7 +98,7 @@ for r in range(eval_dim_grid_points):
 
 
 # read-in dataset
-f = open("results/" + args.scenario_name + "_graph_" + args.knn_algorithm + ".csv", 'r')
+f = open(args.results_folder + args.file_prefix + "_graph.csv", 'r')
 reader = csv.reader(f)
 neighborhood_list = [[int(i) for i in row] for row in reader]
 # print(neighborhood_list)
@@ -103,6 +106,8 @@ graph_edges = []
 for l_index in range(len(neighborhood_list)):
     # print(len(neighborhood_list[l_index]))
     for n_index in neighborhood_list[l_index]:
+        if l_index == n_index:
+            continue
         # print("from: " + str(l_index) + " -> " + str(n_index))
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
@@ -110,13 +115,18 @@ for l_index in range(len(neighborhood_list)):
 graph_edges_collection = LineCollection(graph_edges, linewidths=(1), colors = ['k'], linestyle='solid') # 'xkcd:black'
 
 # read-in pruned dataset
-f = open("results/" + args.scenario_name + "_graph_pruned.csv", 'r')
+f = open(args.results_folder + args.file_prefix + "_graph_pruned.csv", 'r')
 reader = csv.reader(f)
 pruned_neighborhood_list = [[int(i) for i in row] for row in reader]
 # print(neighborhood_list)
 pruned_graph_edges = []
 for l_index in range(len(pruned_neighborhood_list)):
+    # print(pruned_neighborhood_list[l_index])
     for n_index in pruned_neighborhood_list[l_index]:
+        if l_index == n_index:
+            continue
+        if n_index < 0:
+            continue
         # print("from: " + str(l_index) + " -> " + str(n_index))
 
         line = [[X_dataset[l_index], Y_dataset[l_index]], [X_dataset[n_index], Y_dataset[n_index]]]
@@ -162,37 +172,46 @@ if not args.dont_display_knn:
 if args.dont_display_knn:
     if args.dont_display_grid:
         if args.dont_display_data:
-            plt.title("Sparse grid density estimation")
-            fig.savefig("graphs/" + args.scenario_name + "_density_only.eps", dpi=300)
+            if show_titles:
+                plt.title("Sparse grid density estimation")
+            fig.savefig(args.results_folder + args.file_prefix + "_density_only.eps", dpi=300)
         else:
             if args.dont_display_density:
                 # fig.set_size_inches(6, 5)
-                plt.title("Dataset to be clustered")
-                fig.savefig("graphs/" + args.scenario_name + "_data_only.eps", dpi=300)
+                if show_titles:
+                    plt.title("Dataset to be clustered")
+                fig.savefig(args.results_folder + args.file_prefix + "_data_only.eps", dpi=300)
             else:
-                plt.title("Density estimation from dataset")
-                fig.savefig("graphs/" + args.scenario_name + "_density.eps", dpi=300)
+                if show_titles:
+                    plt.title("Density estimation from dataset")
+                fig.savefig(args.results_folder + args.file_prefix + "_density.eps", dpi=300)
     else:
         if args.dont_display_data:
-            plt.title("Grid points spanning density estimation")
-            fig.savefig("graphs/" + args.scenario_name + "_density_with_grid_no_data.eps", dpi=300)
+            if show_titles:
+                plt.title("Grid points spanning density estimation")
+            fig.savefig(args.results_folder + args.file_prefix + "_density_with_grid_no_data.eps", dpi=300)
         else:
-            plt.title("Density estimation from dataset with supporting grid points")
-            fig.savefig("graphs/" + args.scenario_name + "_density_with_grid.eps", dpi=300)
+            if show_titles:
+                plt.title("Density estimation from dataset with supporting grid points")
+            fig.savefig(args.results_folder + args.file_prefix + "_density_with_grid.eps", dpi=300)
 else:
     if args.use_unpruned_graph:
         if args.dont_display_grid:
-            plt.title("k-nearest-neighbors graph for dataset")
-            fig.savefig("graphs/" + args.scenario_name + "_unpruned.eps", dpi=300)
+            if show_titles:
+                plt.title("k-nearest-neighbors graph for dataset")
+            fig.savefig(args.results_folder + args.file_prefix + "_unpruned.eps", dpi=300)
         else:
-            plt.title("k-nearest-neighbors graph for dataset with supporting grid")
-            fig.savefig("graphs/" + args.scenario_name + "_unpruned_with_grid.eps", dpi=300)
+            if show_titles:
+                plt.title("k-nearest-neighbors graph for dataset with supporting grid")
+            fig.savefig(args.results_folder + args.file_prefix + "_unpruned_with_grid.eps", dpi=300)
     else:
         if args.dont_display_grid:
-            plt.title("Pruned k-nearest-neighbors graph")
-            fig.savefig("graphs/" + args.scenario_name + "_pruned.eps", dpi=300)
+            if show_titles:
+                plt.title("Pruned k-nearest-neighbors graph")
+            fig.savefig(args.results_folder + args.file_prefix + "_pruned.eps", dpi=300)
         else:
-            plt.title("Pruned k-nearest-neighbors graph with supporting grid")
-            fig.savefig("graphs/" + args.scenario_name + "_pruned_with_grid.eps", dpi=300)
+            if show_titles:
+                plt.title("Pruned k-nearest-neighbors graph with supporting grid")
+            fig.savefig(args.results_folder + args.file_prefix + "_pruned_with_grid.eps", dpi=300)
 
 plt.close()
