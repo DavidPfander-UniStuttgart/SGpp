@@ -105,7 +105,7 @@ thresholds_initial = np.linspace(threshold_start, threshold_stop, threshold_inte
 # threshold_intervals = 5.0
 threshold_step_min = 10.0
 
-lambda_intervals = 5
+lambda_intervals = 3
 lambda_initial=1E-7
 # lambda_initials = [1E-4, 1E-5, 1E-6, 1E-7, 1E-8]
 lambda_iterations = int(3) # how many descents
@@ -119,12 +119,12 @@ print("hostname:", hostname)
 config_map={"argon-gtx": "OCL_configs/config_ocl_float_gtx1080ti.cfg", "argon-tesla2": "OCL_configs/config_ocl_float_QuadroGP100.cfg", "argon-tesla1": "OCL_configs/config_ocl_float_P100.cfg", "pcsgs09": "OCL_configs/config_ocl_float_i76700k.cfg"}
 config = config_map[hostname]
 mpi_config="clustering_scripts/argon_job_scripts/GTXConf8.cfg"
-num_clusters=10
+num_clusters=100
 # dataset_size=int(1E6)
 dim=10
 noise="_noise"
 # level=4
-clusters_size_level_map = {(10, int(1E6)): 6, (100, int(1E6)): 7, (10, int(1E7)): 7, (100, int(1E7)): 8}
+clusters_size_level_map = {(10, int(1E6)): 6, (100, int(1E6)): 6, (10, int(1E7)): 7, (100, int(1E7)): 7}
 # lambda_value=1E-6
 k=6
 epsilon=1E-2
@@ -138,10 +138,10 @@ for dataset_size in [1E7]: # , 1E7
     datapoints_clusters_min = int(0.75 * dataset_size)
     is_first_overall = True
     level = clusters_size_level_map[(num_clusters, dataset_size)]
-    logfile_name = "tune_clustering_" + str(dataset_size) + "s_" + str(num_clusters) + "c" + str(noise) + ".log"
+    logfile_name = "tune_clustering_" + str(dataset_size) + "s_" + str(num_clusters) + "c" + str(noise) + "_" + str(level) + "l" + ".log"
     print("logfile_name:", logfile_name)
     f_log = open(logfile_name, "w")
-    resultsfile_name = "tune_clustering_results_" + str(dataset_size) + "s_"+ str(num_clusters) + "c" + str(noise) + ".csv"
+    resultsfile_name = "tune_clustering_results_" + str(dataset_size) + "s_"+ str(num_clusters) + "c" + str(noise) + "_" + str(level) + "l" + ".csv"
     print("resultsfile_name:", resultsfile_name)
     f_results = open(resultsfile_name, "w")
     f_results.write("lambda_value, threshold, percent_correct, ARI, duration, iterations\n")
@@ -160,6 +160,7 @@ for dataset_size in [1E7]: # , 1E7
         f_log.write("lambda_factor: " + str(lambda_factor) + " lambda_start_lower:" + str(lambda_start_lower) + " overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
         f_log.flush()
         lambda_values = list(reversed([lambda_start_lower * lambda_factor**i for i in range(0, lambda_intervals)]))
+        print(lambda_values)
         if lambda_iteration > 0:
             # cut of left-most, right-most and middle value, as those have already been investigated
             # print("lambda_values unpruned:", lambda_values)
