@@ -133,7 +133,7 @@ use_distributed_clustering_map = {"argon-gtx": False, "argon-tesla2": False, "ar
 use_distributed_clustering = use_distributed_clustering_map[hostname]
 
 
-for dataset_size in [1E7]: # , 1E7
+for dataset_size in [1E6]: # , 1E7
     dataset_size = int(dataset_size)
     datapoints_clusters_min = int(0.75 * dataset_size)
     is_first_overall = True
@@ -146,7 +146,7 @@ for dataset_size in [1E7]: # , 1E7
     f_results = open(resultsfile_name, "w")
     f_results.write("lambda_value, threshold, percent_correct, ARI, duration, iterations\n")
 
-    overall_best_percent_correct = -1
+    overall_best_ARI = -1
     overall_best_lambda_value = -1
     overall_best_threshold = -1
 
@@ -173,7 +173,7 @@ for dataset_size in [1E7]: # , 1E7
             ########################## threshold #################################
             thresholds = list(thresholds_initial)
             best_threshold = thresholds[0]
-            best_percent_correct = -1.0
+            best_ARI = -1.0
             threshold_step = thresholds_initial[1] - thresholds_initial[0]
             # do bisection
             while threshold_step > threshold_step_min:
@@ -213,10 +213,10 @@ for dataset_size in [1E7]: # , 1E7
                     f_log.write("attempt lambda: " + str(lambda_value) + " threshold: " + str(threshold) + " percent_correct: " + str(percent_correct) + " ARI: " + str(ARI) + "\n")
                     f_log.flush()
 
-                    if percent_correct > best_percent_correct:
-                        best_percent_correct = percent_correct
+                    if ARI > best_ARI:
+                        best_ARI = ARI
                         best_threshold = threshold
-                        f_log.write("-> new best_percent_correct:" + str(best_percent_correct) + ", new best_threshold:" + str(best_threshold) + "\n")
+                        f_log.write("-> new best_ARI:" + str(best_ARI) + ", new best_threshold:" + str(best_threshold) + "\n")
                         f_log.flush()
 
                     # early abort if too many data points are pruned
@@ -231,11 +231,11 @@ for dataset_size in [1E7]: # , 1E7
                 thresholds = np.linspace(threshold_start, threshold_stop , threshold_intervals)[1:-1]
                 threshold_step = thresholds[1] - thresholds[0]
             ########################### end threshold #############################
-            if best_percent_correct > overall_best_percent_correct:
-                overall_best_percent_correct = best_percent_correct
+            if best_ARI > overall_best_ARI:
+                overall_best_ARI = best_ARI
                 overall_best_threshold = best_threshold
                 overall_best_lambda_value = lambda_value
-                f_log.write("-> new overall_best_percent_correct:" + str(overall_best_percent_correct) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + ", new best_threshold:" + str(overall_best_threshold) + "\n")
+                f_log.write("-> new overall_best_ARI:" + str(overall_best_ARI) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + ", new best_threshold:" + str(overall_best_threshold) + "\n")
                 f_log.flush()
 
 
@@ -245,6 +245,6 @@ for dataset_size in [1E7]: # , 1E7
         lambda_factor = (lambda_start_upper / lambda_start_lower) **( 1.0/float(lambda_intervals - 1))
 
 
-    f_log.write("final overall_best_percent_correct: " + str(overall_best_percent_correct) + ", overall_best_threshold: " + str(overall_best_threshold) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
+    f_log.write("final overall_best_ARI: " + str(overall_best_ARI) + ", overall_best_threshold: " + str(overall_best_threshold) + ", overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
     f_log.close()
     f_results.close()
