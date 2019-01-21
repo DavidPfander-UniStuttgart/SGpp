@@ -129,7 +129,7 @@ clusters_size_level_map = {(10, int(1E6)): 6, (100, int(1E6)): 7, (10, int(1E7))
 k=6
 epsilon=1E-2
 
-use_distributed_clustering_map = {"argon-gtx": True, "argon-tesla2": False, "argon-tesla1": False, "pcsgs09": False}
+use_distributed_clustering_map = {"argon-gtx": False, "argon-tesla2": False, "argon-tesla1": False, "pcsgs09": False}
 use_distributed_clustering = use_distributed_clustering_map[hostname]
 
 
