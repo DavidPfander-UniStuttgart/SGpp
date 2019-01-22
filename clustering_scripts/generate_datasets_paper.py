@@ -212,7 +212,7 @@ def add_noise(dimensions, setsize, num_noise, dataset1, Y1):
 
 # dimensions, clusters, setsize, deviation, noise_percent
 np.set_printoptions(precision=3)
-num_clusters=10
+num_clusters=50
 deviation = 0.05
 clusters_distance = 7 # unit: standard deviation
 cutoff_radius = 3 # unit: standard deviation
@@ -220,7 +220,7 @@ noise_percent = 0.02
 datasets_folder='datasets_WPDM18/'
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
 for dim in [10]: # [5, 10]
-    for dataset_size in [10000000]: # [1000000, 10000000, 100000000]
+    for dataset_size in [int(1E6), int(1E7)]: # [1000000, 10000000, 100000000]
         for dataset_type in ["gaussian"]: # , "hypercube"
             file_name = datasets_folder + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
             print("creating " + file_name + ".arff")

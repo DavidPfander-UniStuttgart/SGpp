@@ -124,7 +124,7 @@ num_clusters=100
 dim=10
 noise="_noise"
 # level=4
-clusters_size_level_map = {(10, int(1E6)): 6, (100, int(1E6)): 6, (10, int(1E7)): 7, (100, int(1E7)): 7}
+clusters_size_level_map = {(10, int(1E6)): 6, (100, int(1E6)): 7, (10, int(1E7)): 7, (100, int(1E7)): 8}
 # lambda_value=1E-6
 k=6
 epsilon=1E-2
@@ -160,13 +160,13 @@ for dataset_size in [1E6]: # , 1E7
         f_log.write("lambda_factor: " + str(lambda_factor) + " lambda_start_lower:" + str(lambda_start_lower) + " overall_best_lambda_value: " + str(overall_best_lambda_value) + "\n")
         f_log.flush()
         lambda_values = list(reversed([lambda_start_lower * lambda_factor**i for i in range(0, lambda_intervals)]))
-        print(lambda_values)
         if lambda_iteration > 0:
             # cut of left-most, right-most and middle value, as those have already been investigated
             # print("lambda_values unpruned:", lambda_values)
             middle_index = len(lambda_values) // 2 + 1
             lambda_values = lambda_values[1:-1]
         f_log.write("lambda_values:" + str(lambda_values) + "\n")
+        print(lambda_values)
 
         for lambda_value in lambda_values:
             is_first_lambda = True
@@ -177,6 +177,7 @@ for dataset_size in [1E6]: # , 1E7
             threshold_step = thresholds_initial[1] - thresholds_initial[0]
             # do bisection
             while threshold_step > threshold_step_min:
+                print(thresholds)
                 f_log.write("thresholds:" + str(thresholds) + ", threshold_step:" + str(threshold_step) + "\n")
                 f_log.flush()
                 for threshold in thresholds:
