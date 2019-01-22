@@ -3,11 +3,12 @@
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import common
-plt.figure(figsize=(4,3))
+# plt.figure(figsize=(4,3))
 # plt.title("Estimated density for varied regularization")
-plt.tight_layout()
+# plt.tight_layout()
 
 # # x = [0.5, 0.25, 0.75, 0.125, 0.375, 0.625, 0.875]
 # # y = [0.393036, 3.45267, 6.87863, -0.861596, -0.959676, -0.615335, -0.517254]
@@ -60,19 +61,44 @@ plt.tight_layout()
 #     for row in reader:
 #         print(', '.join(row))
 
-fig, ax = plt.subplots(figsize=[0.9*4,0.9*3])
-df_dataset = pd.read_csv('results_WPDM18/tiny.arff', names=['x'], skiprows=4)
-print(df_dataset)
-# print()
-ax.scatter(df_dataset['x'], [0 for i in range(len(df_dataset['x']))], c='k', s=common.markersize_scatter, label="dataset")
+for lambda_value in ['1_0', '0_5', '0_1', '0_05', '0_01']: # , '1_0', '0_2' , '0_05' '1_0',
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    df_dataset = pd.read_csv('results_WPDM18/tiny_2d.arff', names=['x', 'y'], skiprows=4)
+    print(df_dataset)
+    # print()
+    # , [0 for i in range(len(df_dataset['x']))] # s=common.markersize_scatter,
+    ax.scatter(df_dataset['x'], df_dataset['y'], [0.0 for i in range(len(df_dataset['x']))],  c='k', label="dataset")
+    ax.set_xlim((0.0, 1.0))
+    ax.set_ylim((0.0, 1.0))
+    # ax.set_zlim((0.0, 1.0))
 
-lambda_values = ['0_05', '0_2', '1_0'] # , '0_001' '0_0001'
-for lambda_value in lambda_values:
-    df = pd.read_csv('results_WPDM18/lambda_experiments_tiny_' + lambda_value + '_density_eval.csv', names=['x', 'y'])
+
+    # lambda_values = ['0_05', '0_2', '1_0'] # , '0_001' '0_0001'
+    # for lambda_value in lambda_values:
+    level=4
+    gp_1d= 2**level + 1
+    df = pd.read_csv('results_WPDM18/lambda_experiments_tiny_2d_' + lambda_value + '_density_eval.csv', names=['x', 'y', 'z'])
     # print(df)
-    ax.plot(df['x'], df['y'], label="$\lambda = " + lambda_value.replace('_', '.') + "$")
-ax.set_xlabel("Domain $[0, 1]$")
-ax.set_ylabel("Estimated density")
-ax.legend()
-plt.savefig("results_WPDM18/density1d_lambda.eps")
-# plt.show()
+    # X, Y = np.meshgrid(df['x'], df['y'])
+    X = np.array(df['x']).reshape((gp_1d, gp_1d))
+    Y = np.array(df['y']).reshape((gp_1d, gp_1d))
+    Z = np.array(df['z']).reshape((gp_1d, gp_1d))
+
+    surf = ax.plot_surface(X, Y, Z, label="$\lambda = " + lambda_value.replace('_', '.') + "$", alpha=0.3) # , cmap=plt.cm.jet , antialiased=True
+    surf._facecolors2d=surf._facecolors3d
+    surf._edgecolors2d=surf._edgecolors3d
+    # ax.set_zlim3d(df['z'].min(), df['z'].max())
+    # ax.patch.set_alpha(0.5)
+    # ax.plot_trisurf(df['x'], df['y'], df['z'])
+    # ax.set_xlabel("Domain $[0, 1]$")
+    # ax.set_ylabel("Domain $[0, 1]$");
+    ax.set_xlabel("x")
+    ax.set_ylabel("y");
+    # ax.set_zlabel("Estimated density")
+    ax.legend()
+    ax.set_zlim3d(0.0, 10.0)
+    plt.savefig("results_WPDM18/density2d_lambda_" + lambda_value + ".pdf", transparent=True)
+
+# plt.savefig("results_WPDM18/density2d_lambda.pdf", transparent=True)
+    # plt.show()
