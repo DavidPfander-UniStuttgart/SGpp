@@ -1,0 +1,279 @@
+binary_header_filename: /lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_hazelhen.cfg
+k: 6
+threshold: 1167
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Now reading header file:/lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c10_size10000000_dim10_noise
+Now reading binary data: /lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c10_size10000000_dim10_noise_binary_data.bin
+Dataset load duration: 1.6706
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration:2.18843s
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+KHR ICD trace at /zhome/academic/HLRS/ipv/ipvpfand/git/OpenCL-ICD-Loader/icd.c:68: attempting to add vendor /zhome/academic/HLRS/ipv/ipvpfand/intel_opencl/intel/opencl-1.2-6.4.0.37/lib64/libintelocl.so...
+KHR ICD trace at /zhome/academic/HLRS/ipv/ipvpfand/git/OpenCL-ICD-Loader/icd.c:194: successfully added vendor /zhome/academic/HLRS/ipv/ipvpfand/intel_opencl/intel/opencl-1.2-6.4.0.37/lib64/libintelocl.so with suffix INTEL
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+device name: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz
+query_size: 4
+max_compute_units: 48
+Calculating right-hand side
+starting rhs kernel methode! datasize: 397825
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <cscheme> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+duration generate b ocl: 210.175
+last_duration_generate_b: 210.175s
+ops_generate_b: 247527
+flops_generate_b: 1177.72 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+generating kernel source
+building kernel
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <multdensity> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.4542
+duration mult ocl: 35.889
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.5279
+duration mult ocl: 23.5305
+delta: 0.425137
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6195
+duration mult ocl: 23.6221
+delta: 0.250401
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6074
+duration mult ocl: 23.61
+delta: 0.118028
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6282
+duration mult ocl: 23.6309
+delta: 0.0368358
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.758
+duration mult ocl: 23.7606
+delta: 0.0239938
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.7612
+duration mult ocl: 23.7638
+delta: 0.0439443
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6362
+duration mult ocl: 23.6388
+delta: 0.00567049
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.641
+duration mult ocl: 23.6436
+delta: 0.00146212
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.645
+duration mult ocl: 23.6476
+delta: 0.000768857
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.8762
+duration mult ocl: 23.8787
+delta: 0.000935642
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6729
+duration mult ocl: 23.6756
+delta: 0.000672481
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.649
+duration mult ocl: 23.6519
+delta: 0.000136831
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.8122
+duration mult ocl: 23.8149
+delta: 9.42028e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6721
+duration mult ocl: 23.675
+delta: 1.52375e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6665
+duration mult ocl: 23.6691
+delta: 1.37768e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x10000b8b108) duration: 23.6744
+duration mult ocl: 23.6769
+delta: 2.30643e-06
+Number of iterations: 16 (max. 1000)
+Final norm of residuum: 2.30643e-06
+counted_mult_calls: 17
+acc_duration_density: 414.779s
+act_it: 17
+ops_density: 382051 GOps
+flops_density: 921.095 GFLOPS
+density_duration_total: 625.924s
+surplus min: -171.486 max: 1265.74
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <connectNeighbors> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+last_duration_create_graph: 3647.9s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 855.616 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <removeEdges> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+last_duration_prune_graph: 1392.56s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 1264.64 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 7.02421s
+detected clusters: 31
+size cluster i: 0 -> 1000091
+size cluster i: 1 -> 1000020
+size cluster i: 2 -> 1000057
+size cluster i: 3 -> 1000014
+size cluster i: 4 -> 1000021
+size cluster i: 5 -> 1000011
+size cluster i: 6 -> 1000023
+size cluster i: 7 -> 1000011
+size cluster i: 8 -> 1000012
+size cluster i: 9 -> 1000028
+size cluster i: 10 -> 6
+size cluster i: 11 -> 8
+size cluster i: 12 -> 3
+size cluster i: 13 -> 4
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 4
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 4
+size cluster i: 20 -> 3
+size cluster i: 21 -> 2
+size cluster i: 22 -> 6
+size cluster i: 23 -> 3
+size cluster i: 24 -> 4
+size cluster i: 25 -> 4
+size cluster i: 26 -> 3
+size cluster i: 27 -> 4
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 3
+datapoints in clusters: 10000362
+score: 0
+total_duration_without_disk: 5677.38
+total_duration: 5679.05
+
+all done!
+Application 2573555 resources: utime ~270485s, stime ~18s, Rss ~2628640, inblocks ~0, outblocks ~0
