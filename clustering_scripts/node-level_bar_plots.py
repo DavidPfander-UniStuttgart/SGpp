@@ -13,12 +13,13 @@ devices = ['P100', 'w8100', 'hazelhen']
 device_names = ['P100', 'W8100', '2xE5-2680v3']
 kernel_index=['generate_b_dur', 'density_dur', 'density_single_it_dur', 'create_graph_dur', 'prune_graph_dur']
 flops_kernel_index=['generate_b_flops', 'density_flops', 'create_graph_flops', 'prune_graph_flops']
-kernel_names={'generate_b_dur': 'density right-hand side', 'density_dur': 'dens. matrix-vector (sum)', 'density_single_it_dur': 'dens. matrix-vector mult. (1 it.)', 'create_graph_dur': 'create graph', 'prune_graph_dur': 'prune graph'}
+kernel_names={'generate_b_dur': 'dens. right-hand side', 'density_dur': 'sum density mult.', 'density_single_it_dur': 'dens. matrix-vector mult. (1 it.)', 'create_graph_dur': 'create graph', 'prune_graph_dur': 'prune graph'}
 runs = ["0", "1", "2", "3"]
 
 num_re = r'(\d+(?:\.\d*)?)'
 
 def create_bar_plot(dataset_size, num_clusters, lambda_value, level):
+    print("dataset_size:", dataset_size, "num_clusters:", num_clusters, "lambda_value:", lambda_value, "level:", level)
     df = pd.DataFrame(np.zeros(shape=(len(kernel_index), len(device_names))), columns=device_names, index=kernel_index, dtype=float)
 
     df_flops = pd.DataFrame(np.zeros(shape=(len(flops_kernel_index), len(device_names))), columns=device_names, index=flops_kernel_index, dtype=float)
@@ -32,7 +33,7 @@ def create_bar_plot(dataset_size, num_clusters, lambda_value, level):
         # print(col_df)
         for j in range(len(runs)):
             file_name = results_folder + devices[i] + "_perf_quality_" + str(dataset_size) + "s_" + str(num_clusters) + "c_" + str(lambda_value) + "lam_" + str(level) + "l_run" + runs[j] + ".log"
-            print(file_name)
+            # print(file_name)
             f = open(file_name, 'r')
             content = f.read()
 
@@ -69,14 +70,23 @@ def create_bar_plot(dataset_size, num_clusters, lambda_value, level):
         df_flops[device_names[i]] = flops_col_df
 
     df = df / float(len(runs))
+
+    for i in range(len(devices)):
+        print("device: ", device_names[i], "sum:", df[device_names[i]].sum())
+        outer_runtime = df[device_names[i]].sum()
+        for j in range(len(devices)):
+            if i == j:
+                continue
+            print(device_names[i], " speedup vs. ", device_names[j], " = ", df[device_names[j]].sum() / outer_runtime)
+
     # print(df)
     df.to_csv(results_folder + "node-level_runtime_" + str(dataset_size) + "s_" + str(num_clusters) + "c_" + str(lambda_value) + "lam_" + str(level) + "l.csv")
     df = df.T
 
-    # print(df)
+    print(df)
 
     df_flops = df_flops / float(len(runs))
-    print(df_flops)
+    # print(df_flops)
 
     # matplotlib.rcParams['axes.prop_cycle'] = matplotlib.cycler(color=['b', 'g', 'r', 'c', 'm', 'y', 'k'])
     # matplotlib.rcParams['axes.color_cycle'] = ['r', 'k', 'c']
