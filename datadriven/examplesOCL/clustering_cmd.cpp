@@ -148,6 +148,7 @@ int main(int argc, char **argv) {
   std::string reuse_knn_graph;
   std::string compare_knn_csv_file_name;
   double epsilon;
+  int64_t max_iterations;
   // int64_t connected_components_k_factor;
 
   size_t refinement_steps;
@@ -194,6 +195,9 @@ int main(int argc, char **argv) {
       "epsilon",
       boost::program_options::value<double>(&epsilon)->default_value(0.0001),
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
+      "max_iterations",
+      boost::program_options::value<int64_t>(&max_iterations)->default_value(1000),
+      "The maximum number of CG iterations for the density estimation solver.")(
       "threshold",
       boost::program_options::value<double>(&threshold)
           ->default_value(-99999.0),
@@ -562,7 +566,7 @@ int main(int argc, char **argv) {
     std::chrono::time_point<std::chrono::system_clock> density_timer_start;
     std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
     density_timer_start = std::chrono::system_clock::now();
-    auto solver = std::make_unique<solver::ConjugateGradients>(1000, epsilon);
+    auto solver = std::make_unique<solver::ConjugateGradients>(max_iterations, epsilon);
 
     alpha.resize(grid->getSize());
     alpha.setAll(0.0);
