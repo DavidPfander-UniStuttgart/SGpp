@@ -1,4 +1,5 @@
 #include "ConnectedComponents.hpp"
+#include "KInverseExtension.hpp"
 
 #include <cassert>
 #include <deque>
@@ -11,15 +12,17 @@ namespace clustering {
 
 namespace detail {
 
-size_t global_cluster_id;
+int64_t global_cluster_id;
+uint64_t merges;
 
 void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &map,
-                          const int64_t N, const int64_t k, const size_t start_index,
+                          const int64_t N, const int64_t k, const int64_t start_index,
                           std::vector<std::vector<int64_t>> &all_clusters) {
-  bool has_neighbor = false; // true if at least one neighbor exists
+  bool has_neighbor = false;  // true if at least one neighbor exists
   for (size_t cur_k = 0; cur_k < static_cast<size_t>(k); cur_k += 1) {
     int64_t cur_neighbor = directed[start_index * k + cur_k];
-    if (cur_neighbor >= 0) {
+    // assert(cur_neighbor != start_index);
+    if (cur_neighbor >= 0 && cur_neighbor != start_index) {
       has_neighbor = true;
     }
   }
@@ -29,19 +32,20 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     return;
   }
 
-  std::deque<size_t> stack;
+  std::deque<int64_t> stack;
   stack.push_back(start_index);
+  map[start_index] = -10;
   std::vector<int64_t> cluster_indices;
   std::set<int64_t> join_clusters;
   cluster_indices.push_back(start_index);
   while (stack.size() > 0) {
-    size_t cur_index = stack.front();
+    int64_t cur_index = stack.front();
 
     stack.pop_front();
     for (size_t cur_k = 0; cur_k < static_cast<size_t>(k); cur_k += 1) {
       int64_t cur_neighbor = directed[cur_index * k + cur_k];
       if (cur_neighbor < 0) {
-	continue;
+        continue;
       }
       int64_t cur_neighbor_cluster_id = map[cur_neighbor];
       if (cur_neighbor_cluster_id == 0) {
@@ -57,24 +61,32 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
       }
     }
   }
-  std::cout << "cluster_indices.size(): " << cluster_indices.size() << std::endl;
-  if (cluster_indices.size() == 1) {
-    std::cout << "start_index: " << start_index << std::endl;
-    for (int64_t i: cluster_indices) {
-      std::cout << i << " ";
-    }
-    std::cout << std::endl;
-  }
+  // if (cluster_indices.size() == 1) {
+  // std::cout << "cluster_indices.size(): " << cluster_indices.size() <<
+  // std::endl; std::cout << "join_clusters.size(): " <<
+  // join_clusters.size()
+  // << std::endl;
+  //   std::cout << "start_index: " << start_index << std::endl;
+  // for (int64_t i : cluster_indices) {
+  //   if (i > 1000000 || i < 0) {
+  //     std::cout << "start_index: " << start_index << " neg: " << i <<
+  //     std::endl;
+  //   }
+  //   // std::cout << i << " ";
+  // }
+  // std::cout << std::endl;
+  // }
 
-  // now know the new partial cluster and whether to join it and with which clusters
-  // next step: figure out cluster_id
+  // now know the new partial cluster and whether to join it and with which
+  // clusters next step: figure out cluster_id
   int64_t cluster_id = global_cluster_id;
   if (join_clusters.size() == 0) {
     // is a new cluster
     global_cluster_id += 1;
   } else {
-    // always use the lowest cluster_id, could avoid this operation by using the first cluster_id
-    // cluster_id = std::min_element(join_clusters.begin(), join_clusters.end());
+    // always use the lowest cluster_id, could avoid this operation by using the
+    // first cluster_id cluster_id = std::min_element(join_clusters.begin(),
+    // join_clusters.end());
     cluster_id = *(join_clusters.begin());
   }
   // now assign yourself to the cluster_id
@@ -82,12 +94,15 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     map[node_index] = cluster_id;
   }
   if (join_clusters.size() > 0) {
+    merges += 1;
     // insert partial cluster into joined cluster
-    // std::cout << "cluster_id: " << cluster_id << std::endl;
     auto &append_cluster = all_clusters[cluster_id];
+    // std::cout << "merge into c_id: " << cluster_id
+    //           << " cur part. c_size: " << cluster_indices.size()
+    //           << " merge c_size: " << append_cluster.size() << std::endl;
     append_cluster.insert(append_cluster.begin(), cluster_indices.begin(), cluster_indices.end());
   } else {
-    assert(cluster_id == all_clusters.size());
+    // assert(cluster_id == all_clusters.size());
     all_clusters.push_back(std::move(cluster_indices));
   }
   // reassign all other clusters, expect for the one everyone joins with
@@ -105,18 +120,26 @@ void connected_components(std::vector<int64_t> &directed, std::vector<int64_t> &
     append_cluster.insert(append_cluster.end(), other_cluster_indices.begin(),
                           other_cluster_indices.end());
     // mark (partial) cluster as dead
-    // all_clusters[other_cluster_id].clear(); // clear does not reduce capacity!
+    // all_clusters[other_cluster_id].clear(); // clear does not reduce
+    // capacity!
     all_clusters[other_cluster_id] = std::vector<int64_t>();
   }
-}
+}  // namespace detail
 
 }  // namespace detail
 
-void connected_components(std::vector<int64_t> &directed, const int64_t k,
-                          std::vector<int64_t> &map,
-                          std::vector<std::vector<int64_t>> &all_clusters) {
+void connected_components(std::vector<int64_t> &directed, int64_t k, std::vector<int64_t> &map,
+                          std::vector<std::vector<int64_t>> &all_clusters,
+                          const size_t k_extension_factor) {
   const int64_t N = directed.size() / k;
+
+  if (k_extension_factor > 1) {
+    directed = k_inverse_extension(directed, k, k_extension_factor);
+    k = k * k_extension_factor;
+  }
+
   detail::global_cluster_id = 1;
+  detail::merges = 0;
   map.resize(N);
   std::fill(map.begin(), map.end(), 0);
   all_clusters.clear();
@@ -133,6 +156,16 @@ void connected_components(std::vector<int64_t> &directed, const int64_t k,
     }
   }
   std::swap(all_clusters, all_clusters_trimmed);
+  std::cout << "connected_components merges: " << detail::merges << std::endl;
+  // for (size_t i = 0; i < all_clusters.size(); i += 1) {
+  //   auto &cluster_indices = all_clusters[i];
+  //   for (int64_t ii : cluster_indices) {
+  //     if (ii > 1000000 || ii < 0) {
+  //       std::cout << "222 neg: " << ii << " cluster: " << i << std::endl;
+  //     }
+  //     // std::cout << i << " ";
+  //   }
+  // }
 }
 
 }  // namespace clustering

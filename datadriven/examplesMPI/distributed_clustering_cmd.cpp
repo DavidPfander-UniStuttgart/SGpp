@@ -13,11 +13,11 @@
 #include "sgpp/base/grid/generation/GridGenerator.hpp"
 #include "sgpp/base/grid/generation/functors/SurplusCoarseningFunctor.hpp"
 #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
+#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityMultMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationDensityRhsMPI.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMPI/OperationPrunedGraphCreationMPI.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
-#include "sgpp/datadriven/operation/hash/OperationCreateGraphOCL/ConnectedComponents.hpp"
 
 #include <boost/program_options.hpp>
 #include <chrono>
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     uint64_t k;
     double threshold;
 
-    std::string scenario_name;
+    // std::string scenario_name;
     size_t refinement_steps;
     size_t refinement_points;
     size_t coarsening_points;
@@ -54,6 +54,8 @@ int main(int argc, char *argv[]) {
     std::string pruned_knn_filename = "";
 
     bool verbose_timers = false;
+    int64_t print_cluster_sizes;
+    int64_t target_clusters;
 
     boost::program_options::options_description description("Allowed options");
     description.add_options()("help", "display help")(
@@ -74,11 +76,9 @@ int main(int argc, char *argv[]) {
         "connections of the network")("k",
                                       boost::program_options::value<uint64_t>(&k)->default_value(5),
                                       "specifies number of neighbors for kNN algorithm")(
-        "cluster_file",
+        "write_cluster_map",
         boost::program_options::value<std::string>(&cluster_file)->default_value(""),
         "Output file for the detected clusters. None if empty.")(
-        "write_graphs", boost::program_options::value<std::string>(&scenario_name),
-        "output the clustering steps into files")(
         "refinement_steps",
         boost::program_options::value<uint64_t>(&refinement_steps)->default_value(0),
         "number of refinment steps for density estimation")(
@@ -90,22 +90,30 @@ int main(int argc, char *argv[]) {
         "number of points to coarsen during density estimation")(
         "rhs_erg_file", boost::program_options::value<std::string>(&rhs_erg_filename),
         "Filename where the final rhs values will be written.")(
-        "density_coefficients_file",
+        "write_density_coef",
         boost::program_options::value<std::string>(&density_coefficients_filename),
-        "Filename where the final grid coefficients for the density function "
-        "will be written.")("pruned_knn_file",
+        "Filename where the final grid coefficients for the density "
+        "function "
+        "will be written.")("write_pruned_knn_graph",
                             boost::program_options::value<std::string>(&pruned_knn_filename),
                             "Filename for the pruned knn graph")(
         "epsilon", boost::program_options::value<double>(&epsilon)->default_value(0.0001),
-        "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
-        "threshold", boost::program_options::value<double>(&threshold)->default_value(0.0),
-        "threshold for sparse grid function for removing edges")(
+        "Exit criteria for the solver. Usually ranges from 0.001 to "
+        "0.0001.")("threshold",
+                   boost::program_options::value<double>(&threshold)->default_value(0.0),
+                   "threshold for sparse grid function for removing edges")(
         "coarsen_threshold",
         boost::program_options::value<double>(&coarsening_threshold)->default_value(1000.0),
-        "for density estimation, only surpluses below threshold are coarsened")(
-        "verbose_timers",
-        boost::program_options::value<bool>(&verbose_timers)->default_value(false),
-        "Prints times per multiplication");
+        "for density estimation, only surpluses below threshold are "
+        "coarsened")("verbose_timers",
+                     boost::program_options::value<bool>(&verbose_timers)->default_value(false),
+                     "Prints times per multiplication")(
+        "print_cluster_sizes",
+        boost::program_options::value<int64_t>(&print_cluster_sizes)->default_value(0),
+        "print the cluster sizes to stdout, value is min cluster size")(
+        "target_clusters",
+        boost::program_options::value<int64_t>(&target_clusters)->default_value(0),
+        "for calculating clustering score if value > 0 is given");
 
     boost::program_options::variables_map variables_map;
     boost::program_options::parsed_options options = parse_command_line(argc, argv, description);
@@ -285,7 +293,8 @@ int main(int argc, char *argv[]) {
                                                                      configFileName);
       rhs_op_creation_end = std::chrono::system_clock::now();
       if (verbose_timers) {
-        std::cout << "RHS operation creation (includes grid and dataset transfers) duration: "
+        std::cout << "RHS operation creation (includes grid and dataset "
+                     "transfers) duration: "
                   << static_cast<std::chrono::duration<double>>(rhs_op_creation_end -
                                                                 rhs_op_creation_start)
                          .count()
@@ -311,7 +320,8 @@ int main(int argc, char *argv[]) {
           *grid, lambda, configFileName, verbose_timers);
       mult_op_creation_end = std::chrono::system_clock::now();
       if (verbose_timers) {
-        std::cout << "Density mult operation creation (includes grid transfer) duration: "
+        std::cout << "Density mult operation creation (includes grid transfer) "
+                     "duration: "
                   << static_cast<std::chrono::duration<double>>(mult_op_creation_end -
                                                                 mult_op_creation_start)
                          .count()
@@ -327,6 +337,7 @@ int main(int argc, char *argv[]) {
                 << "s" << std::endl;
     }
     for (size_t i = 0; i < refinement_steps; i++) {
+      std::cout << "refinement_steps: " << refinement_steps << std::endl;
       if (refinement_points > 0) {
         sgpp::base::SurplusRefinementFunctor refine_func(alpha, refinement_points);
         gridGen.refine(refine_func);
@@ -343,6 +354,8 @@ int main(int argc, char *argv[]) {
         for (size_t j = old_size; j < alpha.getSize(); j++) {
           rhs[j] = 0.0;
         }
+
+        std::cout << "grid points after refinement: " << grid->getSize() << std::endl;
 
         // Create right hand side vector
         std::chrono::time_point<std::chrono::system_clock> rhs_start, rhs_end;
@@ -379,8 +392,9 @@ int main(int argc, char *argv[]) {
         gridGen.coarsen(coarsen_func, alpha);
 
         size_t grid_size_after_coarsen = grid->getSize();
-        std::cout << "coarsen: removed " << (grid_size_before_coarsen - grid_size_after_coarsen)
-                  << " grid points" << std::endl;
+        std::cout << "grid points after coarsen: " << grid_size_after_coarsen << ", removed "
+                  << (grid_size_before_coarsen - grid_size_after_coarsen) << " grid points"
+                  << std::endl;
 
         // adjust alpha to coarsen grid
         alpha.resize(grid->getSize());
@@ -419,8 +433,10 @@ int main(int argc, char *argv[]) {
 
     double max = alpha.max();
     double min = alpha.min();
-    for (size_t i = 0; i < gridsize; i++) alpha[i] = alpha[i] * 1.0 / (max - min);
-    std::cout << std::endl << std::endl;
+    std::cout << "alpha min: " << min << " max: " << max << std::endl;
+    // for (size_t i = 0; i < gridsize; i++)
+    //   alpha[i] = alpha[i] * 1.0 / (max - min);
+    // std::cout << std::endl << std::endl;
 
     // Output final rhs values
     if (rhs_erg_filename != "") {
@@ -448,7 +464,8 @@ int main(int argc, char *argv[]) {
         *grid, alpha, dataset, k, threshold, configFileName);
     knn_op_creation_end = std::chrono::system_clock::now();
     if (verbose_timers) {
-      std::cout << "KNN (create and prune) operation creation (includes cached dataset transfer) "
+      std::cout << "KNN (create and prune) operation creation (includes cached "
+                   "dataset transfer) "
                    "duration: "
                 << static_cast<std::chrono::duration<double>>(knn_op_creation_end -
                                                               knn_op_creation_start)
@@ -494,9 +511,9 @@ int main(int argc, char *argv[]) {
     find_clusters_start = std::chrono::system_clock::now();
     std::vector<int64_t> node_cluster_map;
     std::vector<std::vector<int64_t>> all_clusters;
-    sgpp::datadriven::clustering::connected_components(knn_graph, k, node_cluster_map,
-                                                       all_clusters);
-    // sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, all_clusters);
+    // sgpp::datadriven::clustering::connected_components(
+    //     knn_graph, k, node_cluster_map, all_clusters);
+    sgpp::datadriven::clustering::find_clusters(knn_graph, k, node_cluster_map, all_clusters);
     find_clusters_end = std::chrono::system_clock::now();
     std::cout << "find clusters duration: "
               << static_cast<std::chrono::duration<double>>(find_clusters_end - find_clusters_start)
@@ -504,9 +521,26 @@ int main(int argc, char *argv[]) {
               << "s" << std::endl;
     // Output ergs
     std::cout << "detected clusters: " << all_clusters.size() << std::endl;
+    int64_t sum_datapoints = 0;
     for (size_t i = 0; i < all_clusters.size(); i += 1) {
-      std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
+      if (print_cluster_sizes > 0 &&
+          static_cast<int64_t>(all_clusters[i].size()) > print_cluster_sizes) {
+        std::cout << "size cluster i: " << i << " -> " << all_clusters[i].size() << std::endl;
+      }
+      sum_datapoints += all_clusters[i].size();
     }
+    std::cout << "datapoints in clusters: " << sum_datapoints << std::endl;
+
+    if (target_clusters > 0) {
+      double score =
+          static_cast<double>(
+              target_clusters -
+              std::min(target_clusters,
+                       std::abs(target_clusters - static_cast<int64_t>(all_clusters.size())))) *
+          (static_cast<double>(sum_datapoints) / static_cast<double>(dataset.getNrows()));
+      std::cout << "score: " << score << std::endl;
+    }
+
     if (cluster_file != "") {
       std::ofstream out_cluster_map(cluster_file);
       for (size_t i = 0; i < dataset.getNrows(); ++i) {

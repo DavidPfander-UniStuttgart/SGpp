@@ -1,0 +1,117 @@
+binary_header_filename: datasets_WPDM18//gaussian_c10_size1000000_dim10_noise
+level: 6
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_w8100.cfg
+k: 6
+threshold: 667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Now reading header file:datasets_WPDM18//gaussian_c10_size1000000_dim10_noise
+Now reading binary data: datasets_WPDM18//gaussian_c10_size1000000_dim10_noise_binary_data.bin
+Dataset load duration: 0.0798393
+dimension: 10
+data points: 1020000
+printing first two datapoints:
+0.455971, 0.23104, 0.415448, 0.559524, 0.392029, 0.727333, 0.26555, 0.729712, 0.177172, 0.525939
+0.655281, 0.58152, 0.642507, 0.802767, 0.463711, 0.26669, 0.224731, 0.236338, 0.730016, 0.626458
+initial grid created, grid points: 77505
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+device name: Hawaii
+query_size: 4
+max_compute_units: 40
+Calculating right-hand side
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_generate_b: 2.06846s
+ops_generate_b: 4822.36
+flops_generate_b: 2331.37 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+Starting norm of residuum: 0.062259
+Target norm:               6.2259e-06
+delta: 0.16298
+delta: 0.0427114
+delta: 0.0477793
+delta: 0.00824798
+delta: 0.00467008
+delta: 0.00193174
+delta: 0.00080481
+delta: 0.000177016
+delta: 8.50375e-05
+delta: 1.4787e-05
+delta: 5.72492e-05
+delta: 2.11317e-06
+Number of iterations: 12 (max. 1000)
+Final norm of residuum: 2.11317e-06
+counted_mult_calls: 13
+acc_duration_density: 5.96615s
+act_it: 13
+ops_density: 11089 GOps
+flops_density: 1858.65 GFLOPS
+density_duration_total: 8.31407
+surplus min: -199.266 max: 1278.72
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+unpadded_datasize: 1020000 adding elements: 32 (* dims)
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_create_graph: 21.4276s
+ops_create_graph: 31212 GOps
+flops_create_graph: 1456.63 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_prune_graph: 18.8983s
+ops_prune_graph: 34309.9 GOps
+flops_prune_graph: 1815.5 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.854594
+detected clusters: 11
+size cluster i: 0 -> 100006
+size cluster i: 1 -> 99247
+size cluster i: 2 -> 100018
+size cluster i: 3 -> 100004
+size cluster i: 4 -> 100003
+size cluster i: 5 -> 98213
+size cluster i: 6 -> 100003
+size cluster i: 7 -> 99943
+size cluster i: 8 -> 100006
+size cluster i: 9 -> 100004
+size cluster i: 10 -> 2
+datapoints in clusters: 997449
+score: 8.80102
+total_duration_without_disk: 50.1093
+total_duration: 50.1892
+
+all done!

@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --job-name="clustering experiments"
+#SBATCH --nodelist=argon-tesla1
+#SBATCH --gres=gpu:1
+#SBATCH --exclusive
+#SBATCH -o slurm.%N.%j.out # STDOUT
+#SBATCH -e slurm.%N.%j.err # STDERR
+#SBATCH --workdir="/home/pfandedd"
+
+echo "starting"
+srun echo `hostname`
+
+cd /data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp
+srun ./argon_job_scripts/argon_P100_run.sh

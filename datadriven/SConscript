@@ -12,7 +12,7 @@ Import("*")
 
 moduleDependencies = ["sgppoptimization", "sgpppde", "sgppsolver", "sgppbase"]
 
-additionalDependencies = []
+additionalDependencies = ["numa"]
 additionalBoostTestDependencies = []
 
 if env["USE_ZLIB"]:

@@ -1,0 +1,297 @@
+binary_header_filename: datasets_WPDM18//gaussian_c100_size1000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_w8100.cfg
+k: 6
+threshold: 1056
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Now reading header file:datasets_WPDM18//gaussian_c100_size1000000_dim10_noise
+Now reading binary data: datasets_WPDM18//gaussian_c100_size1000000_dim10_noise_binary_data.bin
+Dataset load duration: 0.0820142
+dimension: 10
+data points: 1020000
+printing first two datapoints:
+0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
+0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
+initial grid created, grid points: 397825
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+device name: Hawaii
+query_size: 4
+max_compute_units: 40
+Calculating right-hand side
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_generate_b: 9.35185s
+ops_generate_b: 24752.7
+flops_generate_b: 2646.82 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+Starting norm of residuum: 0.0440302
+Target norm:               4.40302e-06
+delta: 0.0228199
+delta: 0.0544764
+delta: 0.0444728
+delta: 0.0319131
+delta: 0.037821
+delta: 0.0605496
+delta: 0.0361718
+delta: 0.026919
+delta: 0.0394675
+delta: 0.0164603
+delta: 0.0803348
+delta: 0.0581463
+delta: 0.0217544
+delta: 0.0095855
+delta: 0.0140812
+delta: 0.0659471
+delta: 0.0129258
+delta: 0.0129555
+delta: 0.0295382
+delta: 0.0224528
+delta: 0.00649013
+delta: 0.0539346
+delta: 0.0101397
+delta: 0.0218599
+delta: 0.00514102
+delta: 0.0123756
+delta: 0.0344917
+delta: 0.00437028
+delta: 0.0126399
+delta: 0.00325872
+delta: 0.00327691
+delta: 0.00539169
+delta: 0.00231909
+delta: 0.00439549
+delta: 0.00693834
+delta: 0.00295403
+delta: 0.00771163
+delta: 0.00238897
+delta: 0.00195731
+delta: 0.00111425
+delta: 0.00558726
+delta: 0.00121194
+delta: 0.00155473
+delta: 0.0030302
+delta: 0.00056454
+delta: 0.00234429
+delta: 0.00223922
+delta: 0.000568232
+delta: 0.00205024
+delta: 0.000527533
+delta: 0.00361958
+delta: 0.000560114
+delta: 0.00214935
+delta: 0.00039032
+delta: 0.00220741
+delta: 0.00179936
+delta: 0.000124754
+delta: 0.000606907
+delta: 0.000353356
+delta: 0.000508564
+delta: 0.000529834
+delta: 0.000255071
+delta: 0.00152813
+delta: 0.000149359
+delta: 0.000239134
+delta: 0.00141507
+delta: 0.000140002
+delta: 9.0556e-05
+delta: 0.000225076
+delta: 0.000372988
+delta: 0.000103821
+delta: 0.000331427
+delta: 4.9972e-05
+delta: 0.000332429
+delta: 6.09122e-05
+delta: 9.74886e-05
+delta: 0.000184764
+delta: 0.000201969
+delta: 5.01209e-05
+delta: 0.000136794
+delta: 0.000193453
+delta: 5.48072e-05
+delta: 4.09853e-05
+delta: 4.5522e-05
+delta: 0.000477378
+delta: 5.05047e-05
+delta: 6.61082e-05
+delta: 2.29815e-05
+delta: 0.000156145
+delta: 4.80326e-05
+delta: 1.15186e-05
+delta: 0.000111248
+delta: 7.24711e-06
+delta: 9.20197e-05
+delta: 1.03176e-05
+delta: 5.13548e-05
+delta: 2.82306e-05
+delta: 9.42142e-06
+delta: 1.22649e-05
+delta: 1.24724e-05
+delta: 2.48379e-05
+delta: 2.35428e-05
+delta: 9.02343e-06
+delta: 2.01689e-05
+delta: 3.13417e-06
+Number of iterations: 105 (max. 1000)
+Final norm of residuum: 3.13417e-06
+counted_mult_calls: 108
+acc_duration_density: 1241.26s
+act_it: 108
+ops_density: 2.42715e+06 GOps
+flops_density: 1955.4 GFLOPS
+density_duration_total: 1252.15
+surplus min: -2853.11 max: 8141.09
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+unpadded_datasize: 1020000 adding elements: 32 (* dims)
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_create_graph: 21.8096s
+ops_create_graph: 31212 GOps
+flops_create_graph: 1431.11 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_w8100.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "Hawaii"
+OCL Info: using device, name: "Hawaii"
+building with optimization flags:  -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_prune_graph: 97.2433s
+ops_prune_graph: 176109 GOps
+flops_prune_graph: 1811.02 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.853013
+detected clusters: 98
+size cluster i: 0 -> 10004
+size cluster i: 1 -> 9976
+size cluster i: 2 -> 20003
+size cluster i: 3 -> 10000
+size cluster i: 4 -> 10000
+size cluster i: 5 -> 10001
+size cluster i: 6 -> 10000
+size cluster i: 7 -> 10000
+size cluster i: 8 -> 10000
+size cluster i: 9 -> 10003
+size cluster i: 10 -> 10000
+size cluster i: 11 -> 10001
+size cluster i: 12 -> 10005
+size cluster i: 13 -> 10001
+size cluster i: 14 -> 10000
+size cluster i: 15 -> 10000
+size cluster i: 16 -> 10001
+size cluster i: 17 -> 20001
+size cluster i: 18 -> 10002
+size cluster i: 19 -> 10000
+size cluster i: 20 -> 10000
+size cluster i: 21 -> 10001
+size cluster i: 22 -> 10002
+size cluster i: 23 -> 10003
+size cluster i: 24 -> 20004
+size cluster i: 25 -> 10003
+size cluster i: 26 -> 10001
+size cluster i: 27 -> 10001
+size cluster i: 28 -> 10002
+size cluster i: 29 -> 10001
+size cluster i: 30 -> 9362
+size cluster i: 31 -> 20007
+size cluster i: 32 -> 10005
+size cluster i: 33 -> 10001
+size cluster i: 34 -> 10000
+size cluster i: 35 -> 10001
+size cluster i: 36 -> 10002
+size cluster i: 37 -> 10001
+size cluster i: 38 -> 10001
+size cluster i: 39 -> 10004
+size cluster i: 40 -> 10001
+size cluster i: 41 -> 9523
+size cluster i: 42 -> 10003
+size cluster i: 43 -> 10002
+size cluster i: 44 -> 10000
+size cluster i: 45 -> 9269
+size cluster i: 46 -> 10001
+size cluster i: 47 -> 20004
+size cluster i: 48 -> 10001
+size cluster i: 49 -> 10002
+size cluster i: 50 -> 10001
+size cluster i: 51 -> 10001
+size cluster i: 52 -> 10001
+size cluster i: 53 -> 10002
+size cluster i: 54 -> 10001
+size cluster i: 55 -> 10003
+size cluster i: 56 -> 10001
+size cluster i: 57 -> 10001
+size cluster i: 58 -> 10001
+size cluster i: 59 -> 10000
+size cluster i: 60 -> 10001
+size cluster i: 61 -> 10005
+size cluster i: 62 -> 10003
+size cluster i: 63 -> 10000
+size cluster i: 64 -> 10003
+size cluster i: 65 -> 10001
+size cluster i: 66 -> 10001
+size cluster i: 67 -> 10007
+size cluster i: 68 -> 10003
+size cluster i: 69 -> 10003
+size cluster i: 70 -> 10001
+size cluster i: 71 -> 10002
+size cluster i: 72 -> 10001
+size cluster i: 73 -> 10000
+size cluster i: 74 -> 10002
+size cluster i: 75 -> 10001
+size cluster i: 76 -> 10003
+size cluster i: 77 -> 10000
+size cluster i: 78 -> 10000
+size cluster i: 79 -> 10000
+size cluster i: 80 -> 10003
+size cluster i: 81 -> 10000
+size cluster i: 82 -> 10003
+size cluster i: 83 -> 10001
+size cluster i: 84 -> 10004
+size cluster i: 85 -> 10000
+size cluster i: 86 -> 10000
+size cluster i: 87 -> 10001
+size cluster i: 88 -> 10001
+size cluster i: 89 -> 10000
+size cluster i: 90 -> 5792
+size cluster i: 91 -> 10002
+size cluster i: 92 -> 9993
+size cluster i: 93 -> 9769
+size cluster i: 94 -> 10000
+size cluster i: 95 -> 2
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+datapoints in clusters: 993830
+score: 95.4856
+total_duration_without_disk: 1373.99
+total_duration: 1374.07
+
+all done!

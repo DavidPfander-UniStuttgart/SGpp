@@ -1,0 +1,953 @@
+binary_header_filename: /lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c100_size1000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_hazelhen.cfg
+k: 6
+threshold: 1056
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Now reading header file:/lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c100_size1000000_dim10_noise
+Now reading binary data: /lustre/cray/ws8/ws/ipvpfand-SGppClustering/datasets_WPDM18//gaussian_c100_size1000000_dim10_noise_binary_data.bin
+Dataset load duration: 0.202259
+dimension: 10
+data points: 1020000
+printing first two datapoints:
+0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
+0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
+initial grid created, grid points: 397825
+grid create duration:1.59087s
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+KHR ICD trace at /zhome/academic/HLRS/ipv/ipvpfand/git/OpenCL-ICD-Loader/icd.c:68: attempting to add vendor /zhome/academic/HLRS/ipv/ipvpfand/intel_opencl/intel/opencl-1.2-6.4.0.37/lib64/libintelocl.so...
+KHR ICD trace at /zhome/academic/HLRS/ipv/ipvpfand/git/OpenCL-ICD-Loader/icd.c:194: successfully added vendor /zhome/academic/HLRS/ipv/ipvpfand/intel_opencl/intel/opencl-1.2-6.4.0.37/lib64/libintelocl.so with suffix INTEL
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+device name: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz
+query_size: 4
+max_compute_units: 48
+Calculating right-hand side
+starting rhs kernel methode! datasize: 397825
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <cscheme> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+duration generate b ocl: 21.5589
+last_duration_generate_b: 21.5589s
+ops_generate_b: 24752.7
+flops_generate_b: 1148.14 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+generating kernel source
+building kernel
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <multdensity> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4706
+duration mult ocl: 31.9872
+Starting norm of residuum: 0.0440302
+Target norm:               4.40302e-06
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4742
+duration mult ocl: 23.4769
+delta: 0.0228199
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5429
+duration mult ocl: 23.5456
+delta: 0.0544764
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5394
+duration mult ocl: 23.5421
+delta: 0.0444728
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5939
+duration mult ocl: 23.5967
+delta: 0.0319131
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5459
+duration mult ocl: 23.5486
+delta: 0.037821
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6045
+duration mult ocl: 23.607
+delta: 0.060561
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5668
+duration mult ocl: 23.5697
+delta: 0.0361677
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5646
+duration mult ocl: 23.5674
+delta: 0.0269189
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5954
+duration mult ocl: 23.5982
+delta: 0.0394676
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6014
+duration mult ocl: 23.6044
+delta: 0.0164612
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5692
+duration mult ocl: 23.5718
+delta: 0.0791791
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7651
+duration mult ocl: 23.7678
+delta: 0.0586064
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6163
+duration mult ocl: 23.6191
+delta: 0.0217751
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5817
+duration mult ocl: 23.5845
+delta: 0.00958548
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7818
+duration mult ocl: 23.7844
+delta: 0.0140623
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7469
+duration mult ocl: 23.7496
+delta: 0.0473457
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5662
+duration mult ocl: 23.5691
+delta: 0.0140218
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.603
+duration mult ocl: 23.6061
+delta: 0.0131307
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.2508
+duration mult ocl: 23.2535
+delta: 0.0298722
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5902
+duration mult ocl: 23.593
+delta: 0.0217568
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6429
+duration mult ocl: 23.6458
+delta: 0.0060956
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6138
+duration mult ocl: 23.6166
+delta: 0.106062
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5722
+duration mult ocl: 23.5751
+delta: 0.0102686
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.565
+duration mult ocl: 23.5676
+delta: 0.0218643
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5786
+duration mult ocl: 23.5815
+delta: 0.00517192
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6124
+duration mult ocl: 23.6151
+delta: 0.0101306
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6127
+duration mult ocl: 23.6155
+delta: 0.0604075
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7312
+duration mult ocl: 23.7342
+delta: 0.00510983
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5823
+duration mult ocl: 23.5849
+delta: 0.00926427
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5834
+duration mult ocl: 23.5861
+delta: 0.00325465
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5706
+duration mult ocl: 23.5733
+delta: 0.00210241
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6092
+duration mult ocl: 23.612
+delta: 0.060468
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5356
+duration mult ocl: 23.5382
+delta: 0.00226421
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5748
+duration mult ocl: 23.5774
+delta: 0.0046667
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5217
+duration mult ocl: 23.5246
+delta: 0.0123536
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4451
+duration mult ocl: 23.4478
+delta: 0.00195227
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6118
+duration mult ocl: 23.6146
+delta: 0.017426
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5988
+duration mult ocl: 23.6014
+delta: 0.00262618
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4611
+duration mult ocl: 23.4637
+delta: 0.00196172
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7436
+duration mult ocl: 23.7462
+delta: 0.0011118
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6243
+duration mult ocl: 23.6269
+delta: 0.00116808
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5637
+duration mult ocl: 23.5665
+delta: 0.00477718
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5907
+duration mult ocl: 23.5936
+delta: 0.00177267
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4345
+duration mult ocl: 23.4375
+delta: 0.0071137
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6035
+duration mult ocl: 23.6062
+delta: 0.000500335
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5543
+duration mult ocl: 23.5569
+delta: 0.00118574
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5419
+duration mult ocl: 23.5445
+delta: 0.00213166
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5561
+duration mult ocl: 23.5588
+delta: 0.000792379
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5951
+duration mult ocl: 23.5979
+delta: 0.00192308
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5819
+duration mult ocl: 23.5845
+delta: 0.000607433
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5707
+duration mult ocl: 23.5734
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6095
+duration mult ocl: 23.6123
+delta: 0.00114729
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5696
+duration mult ocl: 23.5722
+delta: 0.000560484
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6164
+duration mult ocl: 23.6195
+delta: 0.0093812
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6008
+duration mult ocl: 23.6037
+delta: 0.000414912
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.1667
+duration mult ocl: 23.1695
+delta: 0.000894076
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5786
+duration mult ocl: 23.5813
+delta: 0.0001451
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5694
+duration mult ocl: 23.5724
+delta: 0.00105366
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4573
+duration mult ocl: 23.4602
+delta: 0.000372371
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5683
+duration mult ocl: 23.571
+delta: 0.000490297
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5976
+duration mult ocl: 23.6004
+delta: 0.000407755
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5498
+duration mult ocl: 23.5526
+delta: 0.00017765
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5159
+duration mult ocl: 23.5185
+delta: 0.000611416
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5878
+duration mult ocl: 23.5904
+delta: 0.000382796
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.3065
+duration mult ocl: 23.3091
+delta: 0.000150961
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.254
+duration mult ocl: 23.2568
+delta: 0.000350071
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.2701
+duration mult ocl: 23.2728
+delta: 0.00020198
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6247
+duration mult ocl: 23.6275
+delta: 8.76956e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5552
+duration mult ocl: 23.5578
+delta: 0.000494181
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5577
+duration mult ocl: 23.5605
+delta: 7.26245e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5871
+duration mult ocl: 23.5898
+delta: 0.000381469
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5608
+duration mult ocl: 23.5638
+delta: 4.58478e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.4793
+duration mult ocl: 23.4819
+delta: 0.000319316
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6386
+duration mult ocl: 23.6413
+delta: 0.000455971
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7741
+duration mult ocl: 23.7773
+delta: 7.7066e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5977
+duration mult ocl: 23.6004
+delta: 8.64659e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6211
+duration mult ocl: 23.6236
+delta: 4.92461e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6387
+duration mult ocl: 23.6413
+delta: 9.40773e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6358
+duration mult ocl: 23.6385
+delta: 0.000347634
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6043
+duration mult ocl: 23.6069
+delta: 6.7566e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6379
+duration mult ocl: 23.6405
+delta: 7.48435e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6304
+duration mult ocl: 23.6331
+delta: 4.62308e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6354
+duration mult ocl: 23.6382
+delta: 3.31919e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7848
+duration mult ocl: 23.7876
+delta: 0.000580375
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7666
+duration mult ocl: 23.7693
+delta: 2.71205e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6327
+duration mult ocl: 23.6356
+delta: 4.05764e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6432
+duration mult ocl: 23.6461
+delta: 3.65993e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6467
+duration mult ocl: 23.6492
+delta: 5.44279e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7515
+duration mult ocl: 23.7541
+delta: 3.92013e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7842
+duration mult ocl: 23.7872
+delta: 1.86289e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6188
+duration mult ocl: 23.6215
+delta: 7.07658e-06
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5888
+duration mult ocl: 23.5914
+delta: 4.27637e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.606
+duration mult ocl: 23.6088
+delta: 1.09612e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7928
+duration mult ocl: 23.796
+delta: 2.82284e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7734
+duration mult ocl: 23.7762
+delta: 7.32257e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6286
+duration mult ocl: 23.6314
+delta: 2.12353e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6276
+duration mult ocl: 23.6303
+delta: 5.72257e-06
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6762
+duration mult ocl: 23.6789
+delta: 1.44348e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6043
+duration mult ocl: 23.607
+delta: 0.000199463
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.7712
+duration mult ocl: 23.7739
+delta: 5.45245e-06
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6444
+duration mult ocl: 23.647
+delta: 1.28113e-05
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.6076
+duration mult ocl: 23.6104
+starting multiplication with 397825 entries
+entering mult, device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08)
+Starting the kernel with 397952items
+Finished kernel execution
+device: Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz (0x1001710ac08) duration: 23.5814
+duration mult ocl: 23.5844
+delta: 4.40034e-06
+Number of iterations: 101 (max. 1000)
+Final norm of residuum: 4.40034e-06
+counted_mult_calls: 104
+acc_duration_density: 2462.08s
+act_it: 104
+ops_density: 2.33725e+06 GOps
+flops_density: 949.299 GFLOPS
+density_duration_total: 2484.54s
+surplus min: -2853.03 max: 8140.52
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+unpadded_datasize: 1020000 adding elements: 32 (* dims)
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <connectNeighbors> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+last_duration_create_graph: 38.4308s
+ops_create_graph: 31212 GOps
+flops_create_graph: 812.16 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_hazelhen.cfg
+OCL Info: 1 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: using platform, name: "Intel(R) OpenCL"
+OCL Info: detected device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+OCL Info: using device, name: "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz"
+building with optimization flags: -cl-denorms-are-zero -cl-fast-relaxed-math
+--- Begin Build Log ---
+Compilation started
+Compilation done
+Linking started
+Linking done
+Device build started
+Device build done
+Kernel <removeEdges> was successfully vectorized (8)
+Done.
+--- End Build Log ---
+last_duration_prune_graph: 141.178s
+ops_prune_graph: 176109 GOps
+flops_prune_graph: 1247.43 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.467629s
+detected clusters: 98
+size cluster i: 0 -> 10004
+size cluster i: 1 -> 9976
+size cluster i: 2 -> 20003
+size cluster i: 3 -> 10000
+size cluster i: 4 -> 10000
+size cluster i: 5 -> 10001
+size cluster i: 6 -> 10000
+size cluster i: 7 -> 10000
+size cluster i: 8 -> 10000
+size cluster i: 9 -> 10003
+size cluster i: 10 -> 10000
+size cluster i: 11 -> 10001
+size cluster i: 12 -> 10005
+size cluster i: 13 -> 10001
+size cluster i: 14 -> 10000
+size cluster i: 15 -> 10000
+size cluster i: 16 -> 10001
+size cluster i: 17 -> 20001
+size cluster i: 18 -> 10002
+size cluster i: 19 -> 10000
+size cluster i: 20 -> 10000
+size cluster i: 21 -> 10001
+size cluster i: 22 -> 10002
+size cluster i: 23 -> 10003
+size cluster i: 24 -> 20004
+size cluster i: 25 -> 10003
+size cluster i: 26 -> 10001
+size cluster i: 27 -> 10001
+size cluster i: 28 -> 10002
+size cluster i: 29 -> 10001
+size cluster i: 30 -> 9362
+size cluster i: 31 -> 20007
+size cluster i: 32 -> 10005
+size cluster i: 33 -> 10001
+size cluster i: 34 -> 10000
+size cluster i: 35 -> 10001
+size cluster i: 36 -> 10002
+size cluster i: 37 -> 10001
+size cluster i: 38 -> 10001
+size cluster i: 39 -> 10004
+size cluster i: 40 -> 10001
+size cluster i: 41 -> 9523
+size cluster i: 42 -> 10003
+size cluster i: 43 -> 10002
+size cluster i: 44 -> 10000
+size cluster i: 45 -> 9270
+size cluster i: 46 -> 10001
+size cluster i: 47 -> 20004
+size cluster i: 48 -> 10001
+size cluster i: 49 -> 10002
+size cluster i: 50 -> 10001
+size cluster i: 51 -> 10001
+size cluster i: 52 -> 10001
+size cluster i: 53 -> 10002
+size cluster i: 54 -> 10001
+size cluster i: 55 -> 10003
+size cluster i: 56 -> 10001
+size cluster i: 57 -> 10001
+size cluster i: 58 -> 10001
+size cluster i: 59 -> 10000
+size cluster i: 60 -> 10001
+size cluster i: 61 -> 10005
+size cluster i: 62 -> 10003
+size cluster i: 63 -> 10000
+size cluster i: 64 -> 10003
+size cluster i: 65 -> 10001
+size cluster i: 66 -> 10001
+size cluster i: 67 -> 10007
+size cluster i: 68 -> 10003
+size cluster i: 69 -> 10003
+size cluster i: 70 -> 10001
+size cluster i: 71 -> 10002
+size cluster i: 72 -> 10001
+size cluster i: 73 -> 10000
+size cluster i: 74 -> 10002
+size cluster i: 75 -> 10001
+size cluster i: 76 -> 10003
+size cluster i: 77 -> 10000
+size cluster i: 78 -> 10000
+size cluster i: 79 -> 10000
+size cluster i: 80 -> 10003
+size cluster i: 81 -> 10000
+size cluster i: 82 -> 10003
+size cluster i: 83 -> 10001
+size cluster i: 84 -> 10004
+size cluster i: 85 -> 10000
+size cluster i: 86 -> 10000
+size cluster i: 87 -> 10001
+size cluster i: 88 -> 10001
+size cluster i: 89 -> 10000
+size cluster i: 90 -> 5794
+size cluster i: 91 -> 10002
+size cluster i: 92 -> 9993
+size cluster i: 93 -> 9769
+size cluster i: 94 -> 10000
+size cluster i: 95 -> 2
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+datapoints in clusters: 993833
+score: 95.4859
+total_duration_without_disk: 2666.51
+total_duration: 2666.71
+
+all done!
+Application 2572800 resources: utime ~125857s, stime ~23s, Rss ~398956, inblocks ~0, outblocks ~0

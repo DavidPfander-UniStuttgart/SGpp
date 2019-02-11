@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --job-name="clustering experiments"
+#SBATCH --nodelist=argon-gtx
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --exclusive
+#SBATCH -o slurm.%N.%j.out # STDOUT
+#SBATCH -e slurm.%N.%j.err # STDERR
+#SBATCH --workdir="/home/pfandedd"
+
+echo "starting"
+srun echo `hostname`
+
+cd /data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp
+srun ./argon_gtx_graphs_run.sh

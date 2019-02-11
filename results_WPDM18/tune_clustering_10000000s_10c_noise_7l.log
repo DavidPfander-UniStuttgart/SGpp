@@ -1,0 +1,3934 @@
+lambda_factor: 10.0 lambda_start_lower:1e-07 overall_best_lambda_value: -1
+lambda_values:<list_reverseiterator object at 0x7ffa91536e48>
+thresholds:[0.0, 166.66666666666666, 333.33333333333331, 500.0, 666.66666666666663, 833.33333333333326, 1000.0, 1166.6666666666665, 1333.3333333333333, 1500.0], threshold_step:166.666666667
+is_first_overall: True
+is_first_lambda: True
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=0.001 --k 6 --epsilon 0.01 --threshold 166.66666666666666 --print_cluster_sizes 1 --target_clusters 10 --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 166.667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.25813
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration:1.46223s
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+device name: Tesla P100-PCIE-16GB
+query_size: 4
+max_compute_units: 56
+Calculating right-hand side
+last_duration_generate_b: 54.0384s
+ops_generate_b: 247527
+flops_generate_b: 4580.57 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.0145327
+delta: 0.000166999
+delta: 2.09575e-06
+Number of iterations: 3 (max. 1000)
+Final norm of residuum: 2.09575e-06
+counted_mult_calls: 4
+acc_duration_density: 22.0371s
+act_it: 4
+ops_density: 89894.4 GOps
+flops_density: 4079.22 GFLOPS
+density_duration_total: 79.5578s
+surplus min: -1.17605 max: 18.7091
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+last_duration_create_graph: 570.22s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 5473.67 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.89s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.65 GFLOPS
+write pruned knn graph duration:10.8865s
+Finding clusters...
+find_cluster_duration_total: 9.80516s
+detected clusters: 94
+size cluster i: 0 -> 1000000
+size cluster i: 1 -> 387553
+size cluster i: 2 -> 131418
+size cluster i: 3 -> 2
+size cluster i: 4 -> 2
+size cluster i: 5 -> 263
+size cluster i: 6 -> 3
+size cluster i: 7 -> 3
+size cluster i: 8 -> 2
+size cluster i: 9 -> 2
+size cluster i: 10 -> 2
+size cluster i: 11 -> 2
+size cluster i: 12 -> 2
+size cluster i: 13 -> 3
+size cluster i: 14 -> 2
+size cluster i: 15 -> 5
+size cluster i: 16 -> 4
+size cluster i: 17 -> 2
+size cluster i: 18 -> 4
+size cluster i: 19 -> 2
+size cluster i: 20 -> 4
+size cluster i: 21 -> 2
+size cluster i: 22 -> 2
+size cluster i: 23 -> 2
+size cluster i: 24 -> 3
+size cluster i: 25 -> 8
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 4
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 3
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 2
+size cluster i: 37 -> 2
+size cluster i: 38 -> 4
+size cluster i: 39 -> 3
+size cluster i: 40 -> 2
+size cluster i: 41 -> 3
+size cluster i: 42 -> 4
+size cluster i: 43 -> 2
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 3
+size cluster i: 47 -> 2
+size cluster i: 48 -> 2
+size cluster i: 49 -> 3
+size cluster i: 50 -> 2
+size cluster i: 51 -> 2
+size cluster i: 52 -> 2
+size cluster i: 53 -> 2
+size cluster i: 54 -> 2
+size cluster i: 55 -> 5
+size cluster i: 56 -> 2
+size cluster i: 57 -> 2
+size cluster i: 58 -> 2
+size cluster i: 59 -> 3
+size cluster i: 60 -> 2
+size cluster i: 61 -> 3
+size cluster i: 62 -> 2
+size cluster i: 63 -> 3
+size cluster i: 64 -> 3
+size cluster i: 65 -> 2
+size cluster i: 66 -> 3
+size cluster i: 67 -> 2
+size cluster i: 68 -> 3
+size cluster i: 69 -> 2
+size cluster i: 70 -> 3
+size cluster i: 71 -> 2
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 2
+size cluster i: 75 -> 3
+size cluster i: 76 -> 4
+size cluster i: 77 -> 2
+size cluster i: 78 -> 2
+size cluster i: 79 -> 2
+size cluster i: 80 -> 2
+size cluster i: 81 -> 4
+size cluster i: 82 -> 2
+size cluster i: 83 -> 2
+size cluster i: 84 -> 2
+size cluster i: 85 -> 2
+size cluster i: 86 -> 2
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 2
+size cluster i: 90 -> 3
+size cluster i: 91 -> 2
+size cluster i: 92 -> 2
+size cluster i: 93 -> 2
+datapoints in clusters: 1519460
+score: 0
+write cluster map duration:10.2568s
+total_duration_without_disk: 1036.04
+total_duration: 1037.29
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 94
+datapoints_clusters: 1519460
+total_dur: 1042.51136
+
+--------------- END RUN -----------------
+attempt lambda: 0.001 threshold: 166.666666667 percent_correct: 0.16855235294117646 ARI: 0.054376965142827784
+-> new best_percent_correct:0.16855235294117646, new best_threshold:166.666666667
+datapoints_clusters too low, aborting threshold testing
+thresholds:[  37.03703704   74.07407407  111.11111111  148.14814815  185.18518519
+  222.22222222  259.25925926  296.2962963 ], threshold_step:37.037037037
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=0.001 --k 6 --epsilon 0.01 --threshold 37.03703703703704 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 37.037
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.22833
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.3126s
+surplus min: -1.17605 max: 18.7091
+reusing knn graph
+loading graph (reuse) duration:53.088s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.753s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.89 GFLOPS
+write pruned knn graph duration:15.4719s
+Finding clusters...
+find_cluster_duration_total: 9.69508s
+detected clusters: 114
+size cluster i: 0 -> 10001840
+size cluster i: 1 -> 5
+size cluster i: 2 -> 7
+size cluster i: 3 -> 2
+size cluster i: 4 -> 2
+size cluster i: 5 -> 5
+size cluster i: 6 -> 10
+size cluster i: 7 -> 4
+size cluster i: 8 -> 4
+size cluster i: 9 -> 9
+size cluster i: 10 -> 5
+size cluster i: 11 -> 3
+size cluster i: 12 -> 4
+size cluster i: 13 -> 4
+size cluster i: 14 -> 3
+size cluster i: 15 -> 4
+size cluster i: 16 -> 3
+size cluster i: 17 -> 4
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 2
+size cluster i: 21 -> 3
+size cluster i: 22 -> 5
+size cluster i: 23 -> 6
+size cluster i: 24 -> 4
+size cluster i: 25 -> 3
+size cluster i: 26 -> 3
+size cluster i: 27 -> 4
+size cluster i: 28 -> 5
+size cluster i: 29 -> 6
+size cluster i: 30 -> 3
+size cluster i: 31 -> 8
+size cluster i: 32 -> 2
+size cluster i: 33 -> 4
+size cluster i: 34 -> 2
+size cluster i: 35 -> 3
+size cluster i: 36 -> 3
+size cluster i: 37 -> 5
+size cluster i: 38 -> 3
+size cluster i: 39 -> 4
+size cluster i: 40 -> 2
+size cluster i: 41 -> 7
+size cluster i: 42 -> 5
+size cluster i: 43 -> 3
+size cluster i: 44 -> 2
+size cluster i: 45 -> 4
+size cluster i: 46 -> 5
+size cluster i: 47 -> 5
+size cluster i: 48 -> 2
+size cluster i: 49 -> 7
+size cluster i: 50 -> 3
+size cluster i: 51 -> 6
+size cluster i: 52 -> 3
+size cluster i: 53 -> 4
+size cluster i: 54 -> 11
+size cluster i: 55 -> 2
+size cluster i: 56 -> 3
+size cluster i: 57 -> 8
+size cluster i: 58 -> 3
+size cluster i: 59 -> 3
+size cluster i: 60 -> 7
+size cluster i: 61 -> 4
+size cluster i: 62 -> 2
+size cluster i: 63 -> 2
+size cluster i: 64 -> 2
+size cluster i: 65 -> 5
+size cluster i: 66 -> 2
+size cluster i: 67 -> 2
+size cluster i: 68 -> 3
+size cluster i: 69 -> 5
+size cluster i: 70 -> 2
+size cluster i: 71 -> 2
+size cluster i: 72 -> 3
+size cluster i: 73 -> 3
+size cluster i: 74 -> 3
+size cluster i: 75 -> 2
+size cluster i: 76 -> 2
+size cluster i: 77 -> 2
+size cluster i: 78 -> 3
+size cluster i: 79 -> 3
+size cluster i: 80 -> 4
+size cluster i: 81 -> 2
+size cluster i: 82 -> 2
+size cluster i: 83 -> 4
+size cluster i: 84 -> 3
+size cluster i: 85 -> 3
+size cluster i: 86 -> 2
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 4
+size cluster i: 90 -> 3
+size cluster i: 91 -> 3
+size cluster i: 92 -> 4
+size cluster i: 93 -> 2
+size cluster i: 94 -> 3
+size cluster i: 95 -> 2
+size cluster i: 96 -> 3
+size cluster i: 97 -> 3
+size cluster i: 98 -> 6
+size cluster i: 99 -> 2
+size cluster i: 100 -> 3
+size cluster i: 101 -> 3
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 2
+size cluster i: 105 -> 2
+size cluster i: 106 -> 2
+size cluster i: 107 -> 2
+size cluster i: 108 -> 3
+size cluster i: 109 -> 2
+size cluster i: 110 -> 2
+size cluster i: 111 -> 4
+size cluster i: 112 -> 2
+size cluster i: 113 -> 3
+datapoints in clusters: 10002241
+score: 0
+write cluster map duration:10.2135s
+total_duration_without_disk: 422.195
+total_duration: 423.423
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 114
+datapoints_clusters: 10002241
+total_dur: 338.44808
+
+--------------- END RUN -----------------
+attempt lambda: 0.001 threshold: 37.037037037 percent_correct: 0.11734196078431372 ARI: 0.008360491080568393
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=0.001 --k 6 --epsilon 0.01 --threshold 74.07407407407408 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 74.0741
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.24768
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30142s
+surplus min: -1.17605 max: 18.7091
+reusing knn graph
+loading graph (reuse) duration:52.8885s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.837s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5355.51 GFLOPS
+write pruned knn graph duration:14.6258s
+Finding clusters...
+find_cluster_duration_total: 11.9896s
+detected clusters: 113
+size cluster i: 0 -> 2748837
+size cluster i: 1 -> 899306
+size cluster i: 2 -> 1000017
+size cluster i: 3 -> 999413
+size cluster i: 4 -> 610973
+size cluster i: 5 -> 556299
+size cluster i: 6 -> 430216
+size cluster i: 7 -> 456331
+size cluster i: 8 -> 5
+size cluster i: 9 -> 2
+size cluster i: 10 -> 3
+size cluster i: 11 -> 3
+size cluster i: 12 -> 4
+size cluster i: 13 -> 2
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 5
+size cluster i: 21 -> 2
+size cluster i: 22 -> 2
+size cluster i: 23 -> 2
+size cluster i: 24 -> 4
+size cluster i: 25 -> 3
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 2
+size cluster i: 37 -> 3
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 2
+size cluster i: 41 -> 2
+size cluster i: 42 -> 2
+size cluster i: 43 -> 2
+size cluster i: 44 -> 4
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 2
+size cluster i: 48 -> 2
+size cluster i: 49 -> 2
+size cluster i: 50 -> 2
+size cluster i: 51 -> 3
+size cluster i: 52 -> 2
+size cluster i: 53 -> 2
+size cluster i: 54 -> 2
+size cluster i: 55 -> 2
+size cluster i: 56 -> 3
+size cluster i: 57 -> 3
+size cluster i: 58 -> 4
+size cluster i: 59 -> 2
+size cluster i: 60 -> 2
+size cluster i: 61 -> 5
+size cluster i: 62 -> 2
+size cluster i: 63 -> 3
+size cluster i: 64 -> 2
+size cluster i: 65 -> 2
+size cluster i: 66 -> 2
+size cluster i: 67 -> 2
+size cluster i: 68 -> 2
+size cluster i: 69 -> 2
+size cluster i: 70 -> 2
+size cluster i: 71 -> 2
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 3
+size cluster i: 77 -> 2
+size cluster i: 78 -> 2
+size cluster i: 79 -> 2
+size cluster i: 80 -> 2
+size cluster i: 81 -> 2
+size cluster i: 82 -> 2
+size cluster i: 83 -> 2
+size cluster i: 84 -> 2
+size cluster i: 85 -> 2
+size cluster i: 86 -> 2
+size cluster i: 87 -> 3
+size cluster i: 88 -> 2
+size cluster i: 89 -> 2
+size cluster i: 90 -> 2
+size cluster i: 91 -> 2
+size cluster i: 92 -> 2
+size cluster i: 93 -> 2
+size cluster i: 94 -> 2
+size cluster i: 95 -> 3
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+size cluster i: 98 -> 2
+size cluster i: 99 -> 2
+size cluster i: 100 -> 2
+size cluster i: 101 -> 2
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 2
+size cluster i: 105 -> 2
+size cluster i: 106 -> 2
+size cluster i: 107 -> 2
+size cluster i: 108 -> 2
+size cluster i: 109 -> 2
+size cluster i: 110 -> 2
+size cluster i: 111 -> 2
+size cluster i: 112 -> 2
+datapoints in clusters: 7701631
+score: 0
+write cluster map duration:10.5451s
+total_duration_without_disk: 423.868
+total_duration: 425.116
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 113
+datapoints_clusters: 7701631
+total_dur: 340.8266
+
+--------------- END RUN -----------------
+attempt lambda: 0.001 threshold: 74.0740740741 percent_correct: 0.6031754901960784 ARI: 0.47878605366580096
+-> new best_percent_correct:0.6031754901960784, new best_threshold:74.0740740741
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=0.001 --k 6 --epsilon 0.01 --threshold 111.11111111111111 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 111.111
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.22271
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30045s
+surplus min: -1.17605 max: 18.7091
+reusing knn graph
+loading graph (reuse) duration:52.562s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.795s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.21 GFLOPS
+write pruned knn graph duration:12.1866s
+Finding clusters...
+find_cluster_duration_total: 8.88631s
+detected clusters: 226
+size cluster i: 0 -> 1000010
+size cluster i: 1 -> 992738
+size cluster i: 2 -> 127139
+size cluster i: 3 -> 963311
+size cluster i: 4 -> 705710
+size cluster i: 5 -> 20165
+size cluster i: 6 -> 4957
+size cluster i: 7 -> 1398
+size cluster i: 8 -> 2
+size cluster i: 9 -> 2
+size cluster i: 10 -> 2
+size cluster i: 11 -> 5
+size cluster i: 12 -> 2
+size cluster i: 13 -> 3
+size cluster i: 14 -> 11
+size cluster i: 15 -> 7
+size cluster i: 16 -> 29
+size cluster i: 17 -> 2
+size cluster i: 18 -> 2
+size cluster i: 19 -> 2
+size cluster i: 20 -> 3
+size cluster i: 21 -> 4
+size cluster i: 22 -> 2
+size cluster i: 23 -> 4
+size cluster i: 24 -> 6
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 3
+size cluster i: 28 -> 2
+size cluster i: 29 -> 3
+size cluster i: 30 -> 2
+size cluster i: 31 -> 3
+size cluster i: 32 -> 2
+size cluster i: 33 -> 17
+size cluster i: 34 -> 3
+size cluster i: 35 -> 3
+size cluster i: 36 -> 2
+size cluster i: 37 -> 2
+size cluster i: 38 -> 4
+size cluster i: 39 -> 8
+size cluster i: 40 -> 4
+size cluster i: 41 -> 2
+size cluster i: 42 -> 3
+size cluster i: 43 -> 2
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 3
+size cluster i: 47 -> 2
+size cluster i: 48 -> 3
+size cluster i: 49 -> 3
+size cluster i: 50 -> 2
+size cluster i: 51 -> 2
+size cluster i: 52 -> 6
+size cluster i: 53 -> 4
+size cluster i: 54 -> 4
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+size cluster i: 57 -> 3
+size cluster i: 58 -> 3
+size cluster i: 59 -> 9
+size cluster i: 60 -> 3
+size cluster i: 61 -> 2
+size cluster i: 62 -> 2
+size cluster i: 63 -> 4
+size cluster i: 64 -> 4
+size cluster i: 65 -> 5
+size cluster i: 66 -> 4
+size cluster i: 67 -> 4
+size cluster i: 68 -> 6
+size cluster i: 69 -> 2
+size cluster i: 70 -> 2
+size cluster i: 71 -> 3
+size cluster i: 72 -> 2
+size cluster i: 73 -> 6
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 2
+size cluster i: 77 -> 4
+size cluster i: 78 -> 2
+size cluster i: 79 -> 2
+size cluster i: 80 -> 2
+size cluster i: 81 -> 4
+size cluster i: 82 -> 2
+size cluster i: 83 -> 2
+size cluster i: 84 -> 3
+size cluster i: 85 -> 4
+size cluster i: 86 -> 2
+size cluster i: 87 -> 2
+size cluster i: 88 -> 3
+size cluster i: 89 -> 2
+size cluster i: 90 -> 3
+size cluster i: 91 -> 2
+size cluster i: 92 -> 2
+size cluster i: 93 -> 2
+size cluster i: 94 -> 2
+size cluster i: 95 -> 3
+size cluster i: 96 -> 3
+size cluster i: 97 -> 2
+size cluster i: 98 -> 2
+size cluster i: 99 -> 2
+size cluster i: 100 -> 2
+size cluster i: 101 -> 3
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 6
+size cluster i: 105 -> 2
+size cluster i: 106 -> 3
+size cluster i: 107 -> 3
+size cluster i: 108 -> 2
+size cluster i: 109 -> 3
+size cluster i: 110 -> 2
+size cluster i: 111 -> 5
+size cluster i: 112 -> 4
+size cluster i: 113 -> 3
+size cluster i: 114 -> 2
+size cluster i: 115 -> 2
+size cluster i: 116 -> 3
+size cluster i: 117 -> 3
+size cluster i: 118 -> 2
+size cluster i: 119 -> 2
+size cluster i: 120 -> 3
+size cluster i: 121 -> 2
+size cluster i: 122 -> 2
+size cluster i: 123 -> 2
+size cluster i: 124 -> 3
+size cluster i: 125 -> 2
+size cluster i: 126 -> 2
+size cluster i: 127 -> 2
+size cluster i: 128 -> 3
+size cluster i: 129 -> 2
+size cluster i: 130 -> 4
+size cluster i: 131 -> 2
+size cluster i: 132 -> 3
+size cluster i: 133 -> 2
+size cluster i: 134 -> 2
+size cluster i: 135 -> 3
+size cluster i: 136 -> 3
+size cluster i: 137 -> 2
+size cluster i: 138 -> 4
+size cluster i: 139 -> 2
+size cluster i: 140 -> 3
+size cluster i: 141 -> 2
+size cluster i: 142 -> 2
+size cluster i: 143 -> 2
+size cluster i: 144 -> 3
+size cluster i: 145 -> 2
+size cluster i: 146 -> 3
+size cluster i: 147 -> 2
+size cluster i: 148 -> 2
+size cluster i: 149 -> 3
+size cluster i: 150 -> 2
+size cluster i: 151 -> 5
+size cluster i: 152 -> 4
+size cluster i: 153 -> 2
+size cluster i: 154 -> 2
+size cluster i: 155 -> 2
+size cluster i: 156 -> 10
+size cluster i: 157 -> 4
+size cluster i: 158 -> 3
+size cluster i: 159 -> 5
+size cluster i: 160 -> 2
+size cluster i: 161 -> 3
+size cluster i: 162 -> 2
+size cluster i: 163 -> 2
+size cluster i: 164 -> 2
+size cluster i: 165 -> 2
+size cluster i: 166 -> 2
+size cluster i: 167 -> 4
+size cluster i: 168 -> 2
+size cluster i: 169 -> 2
+size cluster i: 170 -> 2
+size cluster i: 171 -> 4
+size cluster i: 172 -> 3
+size cluster i: 173 -> 3
+size cluster i: 174 -> 2
+size cluster i: 175 -> 2
+size cluster i: 176 -> 2
+size cluster i: 177 -> 2
+size cluster i: 178 -> 2
+size cluster i: 179 -> 2
+size cluster i: 180 -> 2
+size cluster i: 181 -> 2
+size cluster i: 182 -> 3
+size cluster i: 183 -> 2
+size cluster i: 184 -> 2
+size cluster i: 185 -> 2
+size cluster i: 186 -> 3
+size cluster i: 187 -> 2
+size cluster i: 188 -> 2
+size cluster i: 189 -> 3
+size cluster i: 190 -> 3
+size cluster i: 191 -> 3
+size cluster i: 192 -> 2
+size cluster i: 193 -> 2
+size cluster i: 194 -> 3
+size cluster i: 195 -> 5
+size cluster i: 196 -> 2
+size cluster i: 197 -> 2
+size cluster i: 198 -> 3
+size cluster i: 199 -> 2
+size cluster i: 200 -> 3
+size cluster i: 201 -> 2
+size cluster i: 202 -> 2
+size cluster i: 203 -> 3
+size cluster i: 204 -> 3
+size cluster i: 205 -> 2
+size cluster i: 206 -> 2
+size cluster i: 207 -> 2
+size cluster i: 208 -> 2
+size cluster i: 209 -> 2
+size cluster i: 210 -> 2
+size cluster i: 211 -> 2
+size cluster i: 212 -> 2
+size cluster i: 213 -> 2
+size cluster i: 214 -> 2
+size cluster i: 215 -> 2
+size cluster i: 216 -> 2
+size cluster i: 217 -> 2
+size cluster i: 218 -> 3
+size cluster i: 219 -> 2
+size cluster i: 220 -> 2
+size cluster i: 221 -> 2
+size cluster i: 222 -> 2
+size cluster i: 223 -> 2
+size cluster i: 224 -> 2
+size cluster i: 225 -> 2
+datapoints in clusters: 3816071
+score: 0
+write cluster map duration:10.3528s
+total_duration_without_disk: 417.988
+total_duration: 419.211
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 226
+datapoints_clusters: 3816071
+total_dur: 337.68131
+
+--------------- END RUN -----------------
+attempt lambda: 0.001 threshold: 111.111111111 percent_correct: 0.3936703921568627 ARI: 0.21886350587780268
+datapoints_clusters too low, aborting threshold testing
+-> new overall_best_percent_correct:0.6031754901960784, overall_best_lambda_value: 0.001, new best_threshold:74.0740740741
+thresholds:[0.0, 166.66666666666666, 333.33333333333331, 500.0, 666.66666666666663, 833.33333333333326, 1000.0, 1166.6666666666665, 1333.3333333333333, 1500.0], threshold_step:166.666666667
+is_first_overall: False
+is_first_lambda: True
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 166.66666666666666 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 166.667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.24505
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration:1.46982s
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+device name: Tesla P100-PCIE-16GB
+query_size: 4
+max_compute_units: 56
+Calculating right-hand side
+last_duration_generate_b: 53.9799s
+ops_generate_b: 247527
+flops_generate_b: 4585.54 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.216662
+delta: 0.0273888
+delta: 0.00405823
+delta: 0.000240534
+delta: 4.73731e-05
+delta: 1.65185e-05
+delta: 1.12437e-06
+Number of iterations: 7 (max. 1000)
+Final norm of residuum: 1.12437e-06
+counted_mult_calls: 8
+acc_duration_density: 43.8801s
+act_it: 8
+ops_density: 179789 GOps
+flops_density: 4097.27 GFLOPS
+density_duration_total: 101.339s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:53.1464s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.476s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5361.41 GFLOPS
+write pruned knn graph duration:15.3266s
+Finding clusters...
+find_cluster_duration_total: 12.1942s
+detected clusters: 157
+size cluster i: 0 -> 7001782
+size cluster i: 1 -> 3000451
+size cluster i: 2 -> 6
+size cluster i: 3 -> 9
+size cluster i: 4 -> 6
+size cluster i: 5 -> 2
+size cluster i: 6 -> 6
+size cluster i: 7 -> 3
+size cluster i: 8 -> 2
+size cluster i: 9 -> 5
+size cluster i: 10 -> 6
+size cluster i: 11 -> 5
+size cluster i: 12 -> 3
+size cluster i: 13 -> 5
+size cluster i: 14 -> 5
+size cluster i: 15 -> 3
+size cluster i: 16 -> 5
+size cluster i: 17 -> 11
+size cluster i: 18 -> 6
+size cluster i: 19 -> 6
+size cluster i: 20 -> 5
+size cluster i: 21 -> 2
+size cluster i: 22 -> 4
+size cluster i: 23 -> 2
+size cluster i: 24 -> 3
+size cluster i: 25 -> 3
+size cluster i: 26 -> 7
+size cluster i: 27 -> 4
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 10
+size cluster i: 31 -> 2
+size cluster i: 32 -> 3
+size cluster i: 33 -> 3
+size cluster i: 34 -> 4
+size cluster i: 35 -> 4
+size cluster i: 36 -> 2
+size cluster i: 37 -> 6
+size cluster i: 38 -> 5
+size cluster i: 39 -> 3
+size cluster i: 40 -> 3
+size cluster i: 41 -> 3
+size cluster i: 42 -> 2
+size cluster i: 43 -> 5
+size cluster i: 44 -> 6
+size cluster i: 45 -> 3
+size cluster i: 46 -> 4
+size cluster i: 47 -> 7
+size cluster i: 48 -> 2
+size cluster i: 49 -> 3
+size cluster i: 50 -> 3
+size cluster i: 51 -> 7
+size cluster i: 52 -> 5
+size cluster i: 53 -> 3
+size cluster i: 54 -> 3
+size cluster i: 55 -> 7
+size cluster i: 56 -> 2
+size cluster i: 57 -> 4
+size cluster i: 58 -> 5
+size cluster i: 59 -> 4
+size cluster i: 60 -> 4
+size cluster i: 61 -> 4
+size cluster i: 62 -> 2
+size cluster i: 63 -> 2
+size cluster i: 64 -> 3
+size cluster i: 65 -> 3
+size cluster i: 66 -> 2
+size cluster i: 67 -> 4
+size cluster i: 68 -> 3
+size cluster i: 69 -> 4
+size cluster i: 70 -> 2
+size cluster i: 71 -> 2
+size cluster i: 72 -> 4
+size cluster i: 73 -> 2
+size cluster i: 74 -> 3
+size cluster i: 75 -> 12
+size cluster i: 76 -> 5
+size cluster i: 77 -> 4
+size cluster i: 78 -> 3
+size cluster i: 79 -> 3
+size cluster i: 80 -> 4
+size cluster i: 81 -> 3
+size cluster i: 82 -> 2
+size cluster i: 83 -> 4
+size cluster i: 84 -> 8
+size cluster i: 85 -> 5
+size cluster i: 86 -> 2
+size cluster i: 87 -> 7
+size cluster i: 88 -> 2
+size cluster i: 89 -> 2
+size cluster i: 90 -> 3
+size cluster i: 91 -> 2
+size cluster i: 92 -> 2
+size cluster i: 93 -> 4
+size cluster i: 94 -> 4
+size cluster i: 95 -> 3
+size cluster i: 96 -> 3
+size cluster i: 97 -> 2
+size cluster i: 98 -> 4
+size cluster i: 99 -> 3
+size cluster i: 100 -> 9
+size cluster i: 101 -> 3
+size cluster i: 102 -> 3
+size cluster i: 103 -> 6
+size cluster i: 104 -> 2
+size cluster i: 105 -> 4
+size cluster i: 106 -> 2
+size cluster i: 107 -> 2
+size cluster i: 108 -> 2
+size cluster i: 109 -> 4
+size cluster i: 110 -> 2
+size cluster i: 111 -> 4
+size cluster i: 112 -> 2
+size cluster i: 113 -> 4
+size cluster i: 114 -> 2
+size cluster i: 115 -> 2
+size cluster i: 116 -> 2
+size cluster i: 117 -> 4
+size cluster i: 118 -> 3
+size cluster i: 119 -> 4
+size cluster i: 120 -> 2
+size cluster i: 121 -> 2
+size cluster i: 122 -> 2
+size cluster i: 123 -> 2
+size cluster i: 124 -> 2
+size cluster i: 125 -> 2
+size cluster i: 126 -> 2
+size cluster i: 127 -> 4
+size cluster i: 128 -> 2
+size cluster i: 129 -> 2
+size cluster i: 130 -> 4
+size cluster i: 131 -> 3
+size cluster i: 132 -> 2
+size cluster i: 133 -> 2
+size cluster i: 134 -> 2
+size cluster i: 135 -> 5
+size cluster i: 136 -> 2
+size cluster i: 137 -> 3
+size cluster i: 138 -> 3
+size cluster i: 139 -> 2
+size cluster i: 140 -> 2
+size cluster i: 141 -> 2
+size cluster i: 142 -> 2
+size cluster i: 143 -> 4
+size cluster i: 144 -> 2
+size cluster i: 145 -> 3
+size cluster i: 146 -> 2
+size cluster i: 147 -> 2
+size cluster i: 148 -> 2
+size cluster i: 149 -> 2
+size cluster i: 150 -> 2
+size cluster i: 151 -> 3
+size cluster i: 152 -> 3
+size cluster i: 153 -> 3
+size cluster i: 154 -> 2
+size cluster i: 155 -> 2
+size cluster i: 156 -> 2
+datapoints in clusters: 10002780
+score: 0
+write cluster map duration:10.257s
+total_duration_without_disk: 529.556
+total_duration: 530.801
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 157
+datapoints_clusters: 10002780
+total_dur: 495.9891
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 166.666666667 percent_correct: 0.21541372549019608 ARI: 0.15590263888586603
+-> new best_percent_correct:0.21541372549019608, new best_threshold:166.666666667
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 333.3333333333333 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 333.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.17172
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.31648s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:53.4778s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.891s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.64 GFLOPS
+write pruned knn graph duration:15.3881s
+Finding clusters...
+find_cluster_duration_total: 9.50156s
+detected clusters: 24
+size cluster i: 0 -> 3000135
+size cluster i: 1 -> 1000005
+size cluster i: 2 -> 1000035
+size cluster i: 3 -> 999162
+size cluster i: 4 -> 994242
+size cluster i: 5 -> 1000013
+size cluster i: 6 -> 996573
+size cluster i: 7 -> 995034
+size cluster i: 8 -> 3
+size cluster i: 9 -> 7
+size cluster i: 10 -> 4
+size cluster i: 11 -> 3
+size cluster i: 12 -> 2
+size cluster i: 13 -> 4
+size cluster i: 14 -> 3
+size cluster i: 15 -> 2
+size cluster i: 16 -> 3
+size cluster i: 17 -> 3
+size cluster i: 18 -> 3
+size cluster i: 19 -> 4
+size cluster i: 20 -> 2
+size cluster i: 21 -> 2
+size cluster i: 22 -> 2
+size cluster i: 23 -> 3
+datapoints in clusters: 9985249
+score: 0
+write cluster map duration:10.2589s
+total_duration_without_disk: 422.63
+total_duration: 423.802
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 24
+datapoints_clusters: 9985249
+total_dur: 338.39256
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 333.333333333 percent_correct: 0.8024235294117648 ARI: 0.7371247719034182
+-> new best_percent_correct:0.8024235294117648, new best_threshold:333.333333333
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 500.0 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23549
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.29656s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.9805s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.907s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.38 GFLOPS
+write pruned knn graph duration:14.7636s
+Finding clusters...
+find_cluster_duration_total: 10.8839s
+detected clusters: 48
+size cluster i: 0 -> 1000026
+size cluster i: 1 -> 990435
+size cluster i: 2 -> 1000005
+size cluster i: 3 -> 934293
+size cluster i: 4 -> 793108
+size cluster i: 5 -> 735533
+size cluster i: 6 -> 1000004
+size cluster i: 7 -> 758087
+size cluster i: 8 -> 748074
+size cluster i: 9 -> 1000005
+size cluster i: 10 -> 2
+size cluster i: 11 -> 2
+size cluster i: 12 -> 3
+size cluster i: 13 -> 3
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 3
+size cluster i: 21 -> 2
+size cluster i: 22 -> 3
+size cluster i: 23 -> 3
+size cluster i: 24 -> 2
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 2
+size cluster i: 37 -> 2
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 2
+size cluster i: 41 -> 2
+size cluster i: 42 -> 2
+size cluster i: 43 -> 2
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 2
+datapoints in clusters: 8959652
+score: 0
+write cluster map duration:10.2518s
+total_duration_without_disk: 422.942
+total_duration: 424.178
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 48
+datapoints_clusters: 8959652
+total_dur: 339.79089999999997
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 500.0 percent_correct: 0.8979888235294118 ARI: 0.8397914525325851
+-> new best_percent_correct:0.8979888235294118, new best_threshold:500.0
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 666.6666666666666 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 666.667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.24633
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30525s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.4242s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.803s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.07 GFLOPS
+write pruned knn graph duration:13.3444s
+Finding clusters...
+find_cluster_duration_total: 9.02221s
+detected clusters: 262
+size cluster i: 0 -> 1000008
+size cluster i: 1 -> 769634
+size cluster i: 2 -> 999999
+size cluster i: 3 -> 987625
+size cluster i: 4 -> 999513
+size cluster i: 5 -> 206422
+size cluster i: 6 -> 188372
+size cluster i: 7 -> 179477
+size cluster i: 8 -> 479205
+size cluster i: 9 -> 173199
+size cluster i: 10 -> 2
+size cluster i: 11 -> 3
+size cluster i: 12 -> 4
+size cluster i: 13 -> 3
+size cluster i: 14 -> 3
+size cluster i: 15 -> 3
+size cluster i: 16 -> 3
+size cluster i: 17 -> 3
+size cluster i: 18 -> 2
+size cluster i: 19 -> 2
+size cluster i: 20 -> 2
+size cluster i: 21 -> 3
+size cluster i: 22 -> 3
+size cluster i: 23 -> 3
+size cluster i: 24 -> 3
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 3
+size cluster i: 31 -> 2
+size cluster i: 32 -> 3
+size cluster i: 33 -> 2
+size cluster i: 34 -> 6
+size cluster i: 35 -> 2
+size cluster i: 36 -> 3
+size cluster i: 37 -> 3
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 2
+size cluster i: 41 -> 5
+size cluster i: 42 -> 2
+size cluster i: 43 -> 3
+size cluster i: 44 -> 4
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 3
+size cluster i: 48 -> 4
+size cluster i: 49 -> 2
+size cluster i: 50 -> 2
+size cluster i: 51 -> 2
+size cluster i: 52 -> 2
+size cluster i: 53 -> 2
+size cluster i: 54 -> 3
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+size cluster i: 57 -> 4
+size cluster i: 58 -> 2
+size cluster i: 59 -> 5
+size cluster i: 60 -> 3
+size cluster i: 61 -> 2
+size cluster i: 62 -> 3
+size cluster i: 63 -> 2
+size cluster i: 64 -> 4
+size cluster i: 65 -> 2
+size cluster i: 66 -> 3
+size cluster i: 67 -> 2
+size cluster i: 68 -> 2
+size cluster i: 69 -> 2
+size cluster i: 70 -> 2
+size cluster i: 71 -> 6
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 2
+size cluster i: 77 -> 2
+size cluster i: 78 -> 2
+size cluster i: 79 -> 3
+size cluster i: 80 -> 2
+size cluster i: 81 -> 2
+size cluster i: 82 -> 3
+size cluster i: 83 -> 2
+size cluster i: 84 -> 2
+size cluster i: 85 -> 2
+size cluster i: 86 -> 2
+size cluster i: 87 -> 3
+size cluster i: 88 -> 2
+size cluster i: 89 -> 2
+size cluster i: 90 -> 2
+size cluster i: 91 -> 2
+size cluster i: 92 -> 2
+size cluster i: 93 -> 2
+size cluster i: 94 -> 2
+size cluster i: 95 -> 4
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+size cluster i: 98 -> 2
+size cluster i: 99 -> 2
+size cluster i: 100 -> 2
+size cluster i: 101 -> 3
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 3
+size cluster i: 105 -> 2
+size cluster i: 106 -> 2
+size cluster i: 107 -> 6
+size cluster i: 108 -> 2
+size cluster i: 109 -> 2
+size cluster i: 110 -> 2
+size cluster i: 111 -> 2
+size cluster i: 112 -> 2
+size cluster i: 113 -> 2
+size cluster i: 114 -> 3
+size cluster i: 115 -> 2
+size cluster i: 116 -> 2
+size cluster i: 117 -> 5
+size cluster i: 118 -> 3
+size cluster i: 119 -> 2
+size cluster i: 120 -> 2
+size cluster i: 121 -> 2
+size cluster i: 122 -> 2
+size cluster i: 123 -> 2
+size cluster i: 124 -> 2
+size cluster i: 125 -> 2
+size cluster i: 126 -> 3
+size cluster i: 127 -> 3
+size cluster i: 128 -> 2
+size cluster i: 129 -> 2
+size cluster i: 130 -> 2
+size cluster i: 131 -> 2
+size cluster i: 132 -> 2
+size cluster i: 133 -> 3
+size cluster i: 134 -> 2
+size cluster i: 135 -> 2
+size cluster i: 136 -> 2
+size cluster i: 137 -> 2
+size cluster i: 138 -> 2
+size cluster i: 139 -> 2
+size cluster i: 140 -> 2
+size cluster i: 141 -> 3
+size cluster i: 142 -> 2
+size cluster i: 143 -> 2
+size cluster i: 144 -> 2
+size cluster i: 145 -> 2
+size cluster i: 146 -> 3
+size cluster i: 147 -> 2
+size cluster i: 148 -> 3
+size cluster i: 149 -> 2
+size cluster i: 150 -> 4
+size cluster i: 151 -> 4
+size cluster i: 152 -> 2
+size cluster i: 153 -> 3
+size cluster i: 154 -> 2
+size cluster i: 155 -> 2
+size cluster i: 156 -> 3
+size cluster i: 157 -> 2
+size cluster i: 158 -> 2
+size cluster i: 159 -> 2
+size cluster i: 160 -> 3
+size cluster i: 161 -> 2
+size cluster i: 162 -> 2
+size cluster i: 163 -> 3
+size cluster i: 164 -> 2
+size cluster i: 165 -> 3
+size cluster i: 166 -> 2
+size cluster i: 167 -> 2
+size cluster i: 168 -> 2
+size cluster i: 169 -> 2
+size cluster i: 170 -> 2
+size cluster i: 171 -> 2
+size cluster i: 172 -> 2
+size cluster i: 173 -> 2
+size cluster i: 174 -> 2
+size cluster i: 175 -> 2
+size cluster i: 176 -> 4
+size cluster i: 177 -> 2
+size cluster i: 178 -> 3
+size cluster i: 179 -> 6
+size cluster i: 180 -> 2
+size cluster i: 181 -> 2
+size cluster i: 182 -> 3
+size cluster i: 183 -> 2
+size cluster i: 184 -> 2
+size cluster i: 185 -> 2
+size cluster i: 186 -> 3
+size cluster i: 187 -> 2
+size cluster i: 188 -> 2
+size cluster i: 189 -> 2
+size cluster i: 190 -> 3
+size cluster i: 191 -> 2
+size cluster i: 192 -> 2
+size cluster i: 193 -> 2
+size cluster i: 194 -> 2
+size cluster i: 195 -> 2
+size cluster i: 196 -> 2
+size cluster i: 197 -> 2
+size cluster i: 198 -> 2
+size cluster i: 199 -> 2
+size cluster i: 200 -> 2
+size cluster i: 201 -> 2
+size cluster i: 202 -> 3
+size cluster i: 203 -> 2
+size cluster i: 204 -> 2
+size cluster i: 205 -> 2
+size cluster i: 206 -> 2
+size cluster i: 207 -> 2
+size cluster i: 208 -> 2
+size cluster i: 209 -> 2
+size cluster i: 210 -> 2
+size cluster i: 211 -> 2
+size cluster i: 212 -> 2
+size cluster i: 213 -> 2
+size cluster i: 214 -> 2
+size cluster i: 215 -> 2
+size cluster i: 216 -> 2
+size cluster i: 217 -> 2
+size cluster i: 218 -> 2
+size cluster i: 219 -> 2
+size cluster i: 220 -> 2
+size cluster i: 221 -> 2
+size cluster i: 222 -> 2
+size cluster i: 223 -> 2
+size cluster i: 224 -> 2
+size cluster i: 225 -> 2
+size cluster i: 226 -> 2
+size cluster i: 227 -> 2
+size cluster i: 228 -> 2
+size cluster i: 229 -> 2
+size cluster i: 230 -> 3
+size cluster i: 231 -> 2
+size cluster i: 232 -> 2
+size cluster i: 233 -> 2
+size cluster i: 234 -> 2
+size cluster i: 235 -> 3
+size cluster i: 236 -> 2
+size cluster i: 237 -> 2
+size cluster i: 238 -> 2
+size cluster i: 239 -> 4
+size cluster i: 240 -> 2
+size cluster i: 241 -> 2
+size cluster i: 242 -> 2
+size cluster i: 243 -> 2
+size cluster i: 244 -> 2
+size cluster i: 245 -> 2
+size cluster i: 246 -> 2
+size cluster i: 247 -> 2
+size cluster i: 248 -> 2
+size cluster i: 249 -> 2
+size cluster i: 250 -> 3
+size cluster i: 251 -> 2
+size cluster i: 252 -> 2
+size cluster i: 253 -> 2
+size cluster i: 254 -> 2
+size cluster i: 255 -> 2
+size cluster i: 256 -> 2
+size cluster i: 257 -> 2
+size cluster i: 258 -> 2
+size cluster i: 259 -> 2
+size cluster i: 260 -> 2
+size cluster i: 261 -> 2
+datapoints in clusters: 5984049
+score: 0
+write cluster map duration:10.2945s
+total_duration_without_disk: 418.965
+total_duration: 420.211
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 262
+datapoints_clusters: 5984049
+total_dur: 337.82520999999997
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 666.666666667 percent_correct: 0.6062192156862745 ARI: 0.40566957636918094
+datapoints_clusters too low, aborting threshold testing
+thresholds:[ 370.37037037  407.40740741  444.44444444  481.48148148  518.51851852
+  555.55555556  592.59259259  629.62962963], threshold_step:37.037037037
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 370.3703703703704 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 370.37
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.41791
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.34596s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.8405s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.94s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5353.83 GFLOPS
+write pruned knn graph duration:15.8023s
+Finding clusters...
+find_cluster_duration_total: 9.5712s
+detected clusters: 14
+size cluster i: 0 -> 2999764
+size cluster i: 1 -> 1000003
+size cluster i: 2 -> 1000024
+size cluster i: 3 -> 992898
+size cluster i: 4 -> 978400
+size cluster i: 5 -> 1000010
+size cluster i: 6 -> 984076
+size cluster i: 7 -> 980082
+size cluster i: 8 -> 5
+size cluster i: 9 -> 2
+size cluster i: 10 -> 3
+size cluster i: 11 -> 3
+size cluster i: 12 -> 3
+size cluster i: 13 -> 2
+datapoints in clusters: 9935275
+score: 5.84428
+write cluster map duration:10.2846s
+total_duration_without_disk: 422.576
+total_duration: 423.994
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 14
+datapoints_clusters: 9935275
+total_dur: 338.5112
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 370.37037037 percent_correct: 0.7975763725490196 ARI: 0.7312352734121699
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 407.40740740740745 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 407.407
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.2338
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.29831s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.2992s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.878s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.85 GFLOPS
+write pruned knn graph duration:15.4895s
+Finding clusters...
+find_cluster_duration_total: 9.57023s
+detected clusters: 16
+size cluster i: 0 -> 2996724
+size cluster i: 1 -> 999959
+size cluster i: 2 -> 1000015
+size cluster i: 3 -> 971293
+size cluster i: 4 -> 942590
+size cluster i: 5 -> 1000008
+size cluster i: 6 -> 953426
+size cluster i: 7 -> 946534
+size cluster i: 8 -> 4
+size cluster i: 9 -> 5
+size cluster i: 10 -> 3
+size cluster i: 11 -> 2
+size cluster i: 12 -> 2
+size cluster i: 13 -> 3
+size cluster i: 14 -> 2
+size cluster i: 15 -> 3
+datapoints in clusters: 9810573
+score: 3.84728
+write cluster map duration:10.315s
+total_duration_without_disk: 421.546
+total_duration: 422.78
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 16
+datapoints_clusters: 9810573
+total_dur: 338.44822999999997
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 407.407407407 percent_correct: 0.7856543137254902 ARI: 0.7166533744087695
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 444.44444444444446 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 444.444
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.21113
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30125s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.3706s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.79s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.28 GFLOPS
+write pruned knn graph duration:15.4132s
+Finding clusters...
+find_cluster_duration_total: 9.63821s
+detected clusters: 22
+size cluster i: 0 -> 2000052
+size cluster i: 1 -> 999171
+size cluster i: 2 -> 1000012
+size cluster i: 3 -> 984845
+size cluster i: 4 -> 924106
+size cluster i: 5 -> 880158
+size cluster i: 6 -> 1000007
+size cluster i: 7 -> 897208
+size cluster i: 8 -> 887134
+size cluster i: 9 -> 2
+size cluster i: 10 -> 2
+size cluster i: 11 -> 2
+size cluster i: 12 -> 2
+size cluster i: 13 -> 2
+size cluster i: 14 -> 3
+size cluster i: 15 -> 2
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 2
+size cluster i: 19 -> 3
+size cluster i: 20 -> 2
+size cluster i: 21 -> 2
+datapoints in clusters: 9572721
+score: 0
+write cluster map duration:10.2877s
+total_duration_without_disk: 421.533
+total_duration: 422.745
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 22
+datapoints_clusters: 9572721
+total_dur: 338.42821000000004
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 444.444444444 percent_correct: 0.8600522549019608 ARI: 0.8412552669669446
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 481.4814814814815 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 481.481
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23764
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30816s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:53.0669s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.817s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5355.84 GFLOPS
+write pruned knn graph duration:15.0711s
+Finding clusters...
+find_cluster_duration_total: 9.8597s
+detected clusters: 34
+size cluster i: 0 -> 1000033
+size cluster i: 1 -> 995103
+size cluster i: 2 -> 1000008
+size cluster i: 3 -> 956664
+size cluster i: 4 -> 845173
+size cluster i: 5 -> 790384
+size cluster i: 6 -> 1000006
+size cluster i: 7 -> 811642
+size cluster i: 8 -> 800693
+size cluster i: 9 -> 1000005
+size cluster i: 10 -> 2
+size cluster i: 11 -> 3
+size cluster i: 12 -> 2
+size cluster i: 13 -> 2
+size cluster i: 14 -> 2
+size cluster i: 15 -> 4
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 5
+size cluster i: 21 -> 2
+size cluster i: 22 -> 2
+size cluster i: 23 -> 2
+size cluster i: 24 -> 2
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+datapoints in clusters: 9199766
+score: 0
+write cluster map duration:10.358s
+total_duration_without_disk: 421.906
+total_duration: 423.144
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 34
+datapoints_clusters: 9199766
+total_dur: 338.6767
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 481.481481481 percent_correct: 0.9215295098039216 ARI: 0.8801590064186784
+-> new best_percent_correct:0.9215295098039216, new best_threshold:481.481481481
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 518.5185185185185 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 518.519
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23923
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.33066s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:53.0221s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.81s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5355.96 GFLOPS
+write pruned knn graph duration:14.7203s
+Finding clusters...
+find_cluster_duration_total: 9.86049s
+detected clusters: 57
+size cluster i: 0 -> 1000022
+size cluster i: 1 -> 982971
+size cluster i: 2 -> 1000004
+size cluster i: 3 -> 905532
+size cluster i: 4 -> 675781
+size cluster i: 5 -> 1000000
+size cluster i: 6 -> 698274
+size cluster i: 7 -> 689732
+size cluster i: 8 -> 733837
+size cluster i: 9 -> 1000005
+size cluster i: 10 -> 2
+size cluster i: 11 -> 3
+size cluster i: 12 -> 3
+size cluster i: 13 -> 2
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 2
+size cluster i: 19 -> 2
+size cluster i: 20 -> 2
+size cluster i: 21 -> 2
+size cluster i: 22 -> 2
+size cluster i: 23 -> 2
+size cluster i: 24 -> 2
+size cluster i: 25 -> 2
+size cluster i: 26 -> 3
+size cluster i: 27 -> 3
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 3
+size cluster i: 37 -> 2
+size cluster i: 38 -> 2
+size cluster i: 39 -> 5
+size cluster i: 40 -> 2
+size cluster i: 41 -> 2
+size cluster i: 42 -> 2
+size cluster i: 43 -> 2
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 2
+size cluster i: 48 -> 2
+size cluster i: 49 -> 2
+size cluster i: 50 -> 2
+size cluster i: 51 -> 2
+size cluster i: 52 -> 2
+size cluster i: 53 -> 2
+size cluster i: 54 -> 2
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+datapoints in clusters: 8686260
+score: 0
+write cluster map duration:10.3122s
+total_duration_without_disk: 421.846
+total_duration: 423.085
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 57
+datapoints_clusters: 8686260
+total_dur: 338.67049000000003
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 518.518518519 percent_correct: 0.8711849019607844 ARI: 0.792606606865387
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.22028
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.3107s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.346s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.754s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.86 GFLOPS
+write pruned knn graph duration:14.313s
+Finding clusters...
+find_cluster_duration_total: 9.93634s
+detected clusters: 87
+size cluster i: 0 -> 1000015
+size cluster i: 1 -> 957489
+size cluster i: 2 -> 1000003
+size cluster i: 3 -> 827855
+size cluster i: 4 -> 999890
+size cluster i: 5 -> 565118
+size cluster i: 6 -> 600778
+size cluster i: 7 -> 560564
+size cluster i: 8 -> 1000001
+size cluster i: 9 -> 544301
+size cluster i: 10 -> 3
+size cluster i: 11 -> 2
+size cluster i: 12 -> 3
+size cluster i: 13 -> 2
+size cluster i: 14 -> 2
+size cluster i: 15 -> 5
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 4
+size cluster i: 21 -> 3
+size cluster i: 22 -> 2
+size cluster i: 23 -> 4
+size cluster i: 24 -> 2
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 3
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 3
+size cluster i: 37 -> 2
+size cluster i: 38 -> 3
+size cluster i: 39 -> 2
+size cluster i: 40 -> 3
+size cluster i: 41 -> 4
+size cluster i: 42 -> 4
+size cluster i: 43 -> 2
+size cluster i: 44 -> 3
+size cluster i: 45 -> 3
+size cluster i: 46 -> 2
+size cluster i: 47 -> 2
+size cluster i: 48 -> 3
+size cluster i: 49 -> 2
+size cluster i: 50 -> 3
+size cluster i: 51 -> 2
+size cluster i: 52 -> 2
+size cluster i: 53 -> 3
+size cluster i: 54 -> 2
+size cluster i: 55 -> 4
+size cluster i: 56 -> 2
+size cluster i: 57 -> 2
+size cluster i: 58 -> 2
+size cluster i: 59 -> 2
+size cluster i: 60 -> 2
+size cluster i: 61 -> 2
+size cluster i: 62 -> 2
+size cluster i: 63 -> 2
+size cluster i: 64 -> 2
+size cluster i: 65 -> 2
+size cluster i: 66 -> 2
+size cluster i: 67 -> 2
+size cluster i: 68 -> 3
+size cluster i: 69 -> 2
+size cluster i: 70 -> 3
+size cluster i: 71 -> 2
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 2
+size cluster i: 77 -> 3
+size cluster i: 78 -> 2
+size cluster i: 79 -> 2
+size cluster i: 80 -> 2
+size cluster i: 81 -> 2
+size cluster i: 82 -> 2
+size cluster i: 83 -> 2
+size cluster i: 84 -> 2
+size cluster i: 85 -> 2
+size cluster i: 86 -> 2
+datapoints in clusters: 8056197
+score: 0
+write cluster map duration:10.2775s
+total_duration_without_disk: 420.839
+total_duration: 422.06
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 87
+datapoints_clusters: 8056197
+total_dur: 338.69034
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 555.555555556 percent_correct: 0.8094088235294118 ARI: 0.6840115396108685
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-05 --k 6 --epsilon 0.01 --threshold 592.5925925925926 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 0.0001
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 592.593
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.2366
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30127s
+surplus min: -13.7308 max: 170.685
+reusing knn graph
+loading graph (reuse) duration:52.7057s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.884s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.74 GFLOPS
+write pruned knn graph duration:14.154s
+Finding clusters...
+find_cluster_duration_total: 9.53661s
+detected clusters: 164
+size cluster i: 0 -> 1000014
+size cluster i: 1 -> 914273
+size cluster i: 2 -> 1000002
+size cluster i: 3 -> 999063
+size cluster i: 4 -> 458481
+size cluster i: 5 -> 425934
+size cluster i: 6 -> 999998
+size cluster i: 7 -> 425831
+size cluster i: 8 -> 725476
+size cluster i: 9 -> 408852
+size cluster i: 10 -> 2
+size cluster i: 11 -> 3
+size cluster i: 12 -> 2
+size cluster i: 13 -> 2
+size cluster i: 14 -> 3
+size cluster i: 15 -> 4
+size cluster i: 16 -> 3
+size cluster i: 17 -> 2
+size cluster i: 18 -> 2
+size cluster i: 19 -> 2
+size cluster i: 20 -> 2
+size cluster i: 21 -> 3
+size cluster i: 22 -> 3
+size cluster i: 23 -> 2
+size cluster i: 24 -> 2
+size cluster i: 25 -> 2
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 2
+size cluster i: 36 -> 3
+size cluster i: 37 -> 2
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 2
+size cluster i: 41 -> 2
+size cluster i: 42 -> 4
+size cluster i: 43 -> 3
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 2
+size cluster i: 48 -> 2
+size cluster i: 49 -> 3
+size cluster i: 50 -> 2
+size cluster i: 51 -> 2
+size cluster i: 52 -> 3
+size cluster i: 53 -> 2
+size cluster i: 54 -> 2
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+size cluster i: 57 -> 2
+size cluster i: 58 -> 2
+size cluster i: 59 -> 2
+size cluster i: 60 -> 2
+size cluster i: 61 -> 3
+size cluster i: 62 -> 2
+size cluster i: 63 -> 2
+size cluster i: 64 -> 2
+size cluster i: 65 -> 2
+size cluster i: 66 -> 2
+size cluster i: 67 -> 3
+size cluster i: 68 -> 2
+size cluster i: 69 -> 2
+size cluster i: 70 -> 2
+size cluster i: 71 -> 2
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 2
+size cluster i: 77 -> 2
+size cluster i: 78 -> 2
+size cluster i: 79 -> 3
+size cluster i: 80 -> 2
+size cluster i: 81 -> 2
+size cluster i: 82 -> 2
+size cluster i: 83 -> 2
+size cluster i: 84 -> 2
+size cluster i: 85 -> 2
+size cluster i: 86 -> 2
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 2
+size cluster i: 90 -> 2
+size cluster i: 91 -> 4
+size cluster i: 92 -> 2
+size cluster i: 93 -> 3
+size cluster i: 94 -> 2
+size cluster i: 95 -> 2
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+size cluster i: 98 -> 3
+size cluster i: 99 -> 2
+size cluster i: 100 -> 2
+size cluster i: 101 -> 2
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 2
+size cluster i: 105 -> 2
+size cluster i: 106 -> 3
+size cluster i: 107 -> 2
+size cluster i: 108 -> 2
+size cluster i: 109 -> 3
+size cluster i: 110 -> 2
+size cluster i: 111 -> 2
+size cluster i: 112 -> 2
+size cluster i: 113 -> 2
+size cluster i: 114 -> 2
+size cluster i: 115 -> 2
+size cluster i: 116 -> 3
+size cluster i: 117 -> 2
+size cluster i: 118 -> 2
+size cluster i: 119 -> 2
+size cluster i: 120 -> 3
+size cluster i: 121 -> 2
+size cluster i: 122 -> 2
+size cluster i: 123 -> 2
+size cluster i: 124 -> 3
+size cluster i: 125 -> 2
+size cluster i: 126 -> 2
+size cluster i: 127 -> 2
+size cluster i: 128 -> 2
+size cluster i: 129 -> 2
+size cluster i: 130 -> 2
+size cluster i: 131 -> 2
+size cluster i: 132 -> 2
+size cluster i: 133 -> 3
+size cluster i: 134 -> 2
+size cluster i: 135 -> 3
+size cluster i: 136 -> 2
+size cluster i: 137 -> 3
+size cluster i: 138 -> 2
+size cluster i: 139 -> 2
+size cluster i: 140 -> 2
+size cluster i: 141 -> 2
+size cluster i: 142 -> 2
+size cluster i: 143 -> 2
+size cluster i: 144 -> 2
+size cluster i: 145 -> 2
+size cluster i: 146 -> 2
+size cluster i: 147 -> 3
+size cluster i: 148 -> 2
+size cluster i: 149 -> 2
+size cluster i: 150 -> 2
+size cluster i: 151 -> 2
+size cluster i: 152 -> 2
+size cluster i: 153 -> 2
+size cluster i: 154 -> 3
+size cluster i: 155 -> 2
+size cluster i: 156 -> 2
+size cluster i: 157 -> 2
+size cluster i: 158 -> 2
+size cluster i: 159 -> 2
+size cluster i: 160 -> 2
+size cluster i: 161 -> 2
+size cluster i: 162 -> 2
+size cluster i: 163 -> 2
+datapoints in clusters: 7358262
+score: 0
+write cluster map duration:10.4057s
+total_duration_without_disk: 420.782
+total_duration: 422.018
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 164
+datapoints_clusters: 7358262
+total_dur: 338.42061
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-05 threshold: 592.592592593 percent_correct: 0.7409696078431373 ARI: 0.5732517340774679
+datapoints_clusters too low, aborting threshold testing
+-> new overall_best_percent_correct:0.9215295098039216, overall_best_lambda_value: 9.999999999999999e-05, new best_threshold:481.481481481
+thresholds:[0.0, 166.66666666666666, 333.33333333333331, 500.0, 666.66666666666663, 833.33333333333326, 1000.0, 1166.6666666666665, 1333.3333333333333, 1500.0], threshold_step:166.666666667
+is_first_overall: False
+is_first_lambda: True
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 166.66666666666666 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 166.667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.24702
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration:1.47806s
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+device name: Tesla P100-PCIE-16GB
+query_size: 4
+max_compute_units: 56
+Calculating right-hand side
+last_duration_generate_b: 54.0424s
+ops_generate_b: 247527
+flops_generate_b: 4580.23 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.425137
+delta: 0.250401
+delta: 0.118028
+delta: 0.0368358
+delta: 0.0239943
+delta: 0.0439434
+delta: 0.00567048
+delta: 0.00146212
+delta: 0.000768761
+delta: 0.000935635
+delta: 0.000672558
+delta: 0.000136829
+delta: 9.42034e-05
+delta: 1.52157e-05
+delta: 1.37946e-05
+delta: 2.30563e-06
+Number of iterations: 16 (max. 1000)
+Final norm of residuum: 2.30563e-06
+counted_mult_calls: 17
+acc_duration_density: 93.5098s
+act_it: 17
+ops_density: 382051 GOps
+flops_density: 4085.68 GFLOPS
+density_duration_total: 150.929s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.9947s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.454s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5361.77 GFLOPS
+write pruned knn graph duration:15.4529s
+Finding clusters...
+find_cluster_duration_total: 9.56992s
+detected clusters: 405
+size cluster i: 0 -> 10014638
+size cluster i: 1 -> 6
+size cluster i: 2 -> 2
+size cluster i: 3 -> 5
+size cluster i: 4 -> 2
+size cluster i: 5 -> 6
+size cluster i: 6 -> 6
+size cluster i: 7 -> 3
+size cluster i: 8 -> 3
+size cluster i: 9 -> 21
+size cluster i: 10 -> 3
+size cluster i: 11 -> 3
+size cluster i: 12 -> 2
+size cluster i: 13 -> 7
+size cluster i: 14 -> 3
+size cluster i: 15 -> 3
+size cluster i: 16 -> 3
+size cluster i: 17 -> 22
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 4
+size cluster i: 21 -> 4
+size cluster i: 22 -> 2
+size cluster i: 23 -> 5
+size cluster i: 24 -> 2
+size cluster i: 25 -> 4
+size cluster i: 26 -> 8
+size cluster i: 27 -> 3
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 2
+size cluster i: 31 -> 3
+size cluster i: 32 -> 4
+size cluster i: 33 -> 9
+size cluster i: 34 -> 3
+size cluster i: 35 -> 4
+size cluster i: 36 -> 2
+size cluster i: 37 -> 2
+size cluster i: 38 -> 5
+size cluster i: 39 -> 3
+size cluster i: 40 -> 4
+size cluster i: 41 -> 3
+size cluster i: 42 -> 4
+size cluster i: 43 -> 2
+size cluster i: 44 -> 3
+size cluster i: 45 -> 2
+size cluster i: 46 -> 4
+size cluster i: 47 -> 3
+size cluster i: 48 -> 6
+size cluster i: 49 -> 4
+size cluster i: 50 -> 4
+size cluster i: 51 -> 4
+size cluster i: 52 -> 8
+size cluster i: 53 -> 2
+size cluster i: 54 -> 2
+size cluster i: 55 -> 4
+size cluster i: 56 -> 2
+size cluster i: 57 -> 3
+size cluster i: 58 -> 2
+size cluster i: 59 -> 5
+size cluster i: 60 -> 5
+size cluster i: 61 -> 7
+size cluster i: 62 -> 2
+size cluster i: 63 -> 3
+size cluster i: 64 -> 9
+size cluster i: 65 -> 3
+size cluster i: 66 -> 6
+size cluster i: 67 -> 3
+size cluster i: 68 -> 3
+size cluster i: 69 -> 4
+size cluster i: 70 -> 2
+size cluster i: 71 -> 5
+size cluster i: 72 -> 4
+size cluster i: 73 -> 11
+size cluster i: 74 -> 2
+size cluster i: 75 -> 2
+size cluster i: 76 -> 4
+size cluster i: 77 -> 3
+size cluster i: 78 -> 7
+size cluster i: 79 -> 3
+size cluster i: 80 -> 2
+size cluster i: 81 -> 7
+size cluster i: 82 -> 3
+size cluster i: 83 -> 2
+size cluster i: 84 -> 4
+size cluster i: 85 -> 2
+size cluster i: 86 -> 3
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 6
+size cluster i: 90 -> 3
+size cluster i: 91 -> 3
+size cluster i: 92 -> 4
+size cluster i: 93 -> 7
+size cluster i: 94 -> 2
+size cluster i: 95 -> 4
+size cluster i: 96 -> 2
+size cluster i: 97 -> 3
+size cluster i: 98 -> 5
+size cluster i: 99 -> 2
+size cluster i: 100 -> 2
+size cluster i: 101 -> 5
+size cluster i: 102 -> 6
+size cluster i: 103 -> 2
+size cluster i: 104 -> 2
+size cluster i: 105 -> 2
+size cluster i: 106 -> 3
+size cluster i: 107 -> 4
+size cluster i: 108 -> 3
+size cluster i: 109 -> 3
+size cluster i: 110 -> 4
+size cluster i: 111 -> 3
+size cluster i: 112 -> 2
+size cluster i: 113 -> 4
+size cluster i: 114 -> 2
+size cluster i: 115 -> 3
+size cluster i: 116 -> 8
+size cluster i: 117 -> 3
+size cluster i: 118 -> 7
+size cluster i: 119 -> 4
+size cluster i: 120 -> 2
+size cluster i: 121 -> 10
+size cluster i: 122 -> 4
+size cluster i: 123 -> 2
+size cluster i: 124 -> 5
+size cluster i: 125 -> 2
+size cluster i: 126 -> 3
+size cluster i: 127 -> 3
+size cluster i: 128 -> 5
+size cluster i: 129 -> 3
+size cluster i: 130 -> 10
+size cluster i: 131 -> 5
+size cluster i: 132 -> 2
+size cluster i: 133 -> 4
+size cluster i: 134 -> 3
+size cluster i: 135 -> 2
+size cluster i: 136 -> 2
+size cluster i: 137 -> 10
+size cluster i: 138 -> 2
+size cluster i: 139 -> 3
+size cluster i: 140 -> 3
+size cluster i: 141 -> 3
+size cluster i: 142 -> 3
+size cluster i: 143 -> 2
+size cluster i: 144 -> 3
+size cluster i: 145 -> 4
+size cluster i: 146 -> 4
+size cluster i: 147 -> 2
+size cluster i: 148 -> 4
+size cluster i: 149 -> 4
+size cluster i: 150 -> 4
+size cluster i: 151 -> 3
+size cluster i: 152 -> 4
+size cluster i: 153 -> 2
+size cluster i: 154 -> 3
+size cluster i: 155 -> 2
+size cluster i: 156 -> 2
+size cluster i: 157 -> 3
+size cluster i: 158 -> 3
+size cluster i: 159 -> 2
+size cluster i: 160 -> 3
+size cluster i: 161 -> 3
+size cluster i: 162 -> 2
+size cluster i: 163 -> 7
+size cluster i: 164 -> 2
+size cluster i: 165 -> 4
+size cluster i: 166 -> 4
+size cluster i: 167 -> 4
+size cluster i: 168 -> 5
+size cluster i: 169 -> 5
+size cluster i: 170 -> 3
+size cluster i: 171 -> 2
+size cluster i: 172 -> 4
+size cluster i: 173 -> 13
+size cluster i: 174 -> 4
+size cluster i: 175 -> 2
+size cluster i: 176 -> 3
+size cluster i: 177 -> 3
+size cluster i: 178 -> 10
+size cluster i: 179 -> 2
+size cluster i: 180 -> 6
+size cluster i: 181 -> 5
+size cluster i: 182 -> 2
+size cluster i: 183 -> 5
+size cluster i: 184 -> 5
+size cluster i: 185 -> 2
+size cluster i: 186 -> 2
+size cluster i: 187 -> 3
+size cluster i: 188 -> 4
+size cluster i: 189 -> 2
+size cluster i: 190 -> 4
+size cluster i: 191 -> 3
+size cluster i: 192 -> 3
+size cluster i: 193 -> 3
+size cluster i: 194 -> 2
+size cluster i: 195 -> 6
+size cluster i: 196 -> 2
+size cluster i: 197 -> 4
+size cluster i: 198 -> 3
+size cluster i: 199 -> 3
+size cluster i: 200 -> 3
+size cluster i: 201 -> 2
+size cluster i: 202 -> 2
+size cluster i: 203 -> 8
+size cluster i: 204 -> 7
+size cluster i: 205 -> 3
+size cluster i: 206 -> 2
+size cluster i: 207 -> 5
+size cluster i: 208 -> 6
+size cluster i: 209 -> 3
+size cluster i: 210 -> 2
+size cluster i: 211 -> 4
+size cluster i: 212 -> 3
+size cluster i: 213 -> 4
+size cluster i: 214 -> 2
+size cluster i: 215 -> 3
+size cluster i: 216 -> 2
+size cluster i: 217 -> 2
+size cluster i: 218 -> 3
+size cluster i: 219 -> 3
+size cluster i: 220 -> 2
+size cluster i: 221 -> 2
+size cluster i: 222 -> 2
+size cluster i: 223 -> 2
+size cluster i: 224 -> 4
+size cluster i: 225 -> 2
+size cluster i: 226 -> 3
+size cluster i: 227 -> 4
+size cluster i: 228 -> 5
+size cluster i: 229 -> 4
+size cluster i: 230 -> 3
+size cluster i: 231 -> 8
+size cluster i: 232 -> 3
+size cluster i: 233 -> 3
+size cluster i: 234 -> 4
+size cluster i: 235 -> 2
+size cluster i: 236 -> 2
+size cluster i: 237 -> 2
+size cluster i: 238 -> 12
+size cluster i: 239 -> 3
+size cluster i: 240 -> 4
+size cluster i: 241 -> 2
+size cluster i: 242 -> 4
+size cluster i: 243 -> 3
+size cluster i: 244 -> 3
+size cluster i: 245 -> 2
+size cluster i: 246 -> 4
+size cluster i: 247 -> 2
+size cluster i: 248 -> 2
+size cluster i: 249 -> 16
+size cluster i: 250 -> 4
+size cluster i: 251 -> 3
+size cluster i: 252 -> 3
+size cluster i: 253 -> 2
+size cluster i: 254 -> 6
+size cluster i: 255 -> 3
+size cluster i: 256 -> 3
+size cluster i: 257 -> 2
+size cluster i: 258 -> 6
+size cluster i: 259 -> 8
+size cluster i: 260 -> 4
+size cluster i: 261 -> 2
+size cluster i: 262 -> 3
+size cluster i: 263 -> 3
+size cluster i: 264 -> 2
+size cluster i: 265 -> 2
+size cluster i: 266 -> 5
+size cluster i: 267 -> 3
+size cluster i: 268 -> 2
+size cluster i: 269 -> 4
+size cluster i: 270 -> 4
+size cluster i: 271 -> 2
+size cluster i: 272 -> 8
+size cluster i: 273 -> 4
+size cluster i: 274 -> 2
+size cluster i: 275 -> 2
+size cluster i: 276 -> 4
+size cluster i: 277 -> 3
+size cluster i: 278 -> 4
+size cluster i: 279 -> 2
+size cluster i: 280 -> 4
+size cluster i: 281 -> 4
+size cluster i: 282 -> 3
+size cluster i: 283 -> 3
+size cluster i: 284 -> 2
+size cluster i: 285 -> 3
+size cluster i: 286 -> 3
+size cluster i: 287 -> 2
+size cluster i: 288 -> 3
+size cluster i: 289 -> 2
+size cluster i: 290 -> 6
+size cluster i: 291 -> 2
+size cluster i: 292 -> 2
+size cluster i: 293 -> 6
+size cluster i: 294 -> 3
+size cluster i: 295 -> 2
+size cluster i: 296 -> 2
+size cluster i: 297 -> 3
+size cluster i: 298 -> 5
+size cluster i: 299 -> 4
+size cluster i: 300 -> 3
+size cluster i: 301 -> 2
+size cluster i: 302 -> 2
+size cluster i: 303 -> 2
+size cluster i: 304 -> 3
+size cluster i: 305 -> 2
+size cluster i: 306 -> 5
+size cluster i: 307 -> 2
+size cluster i: 308 -> 2
+size cluster i: 309 -> 2
+size cluster i: 310 -> 2
+size cluster i: 311 -> 4
+size cluster i: 312 -> 2
+size cluster i: 313 -> 2
+size cluster i: 314 -> 5
+size cluster i: 315 -> 5
+size cluster i: 316 -> 3
+size cluster i: 317 -> 3
+size cluster i: 318 -> 2
+size cluster i: 319 -> 2
+size cluster i: 320 -> 4
+size cluster i: 321 -> 2
+size cluster i: 322 -> 2
+size cluster i: 323 -> 3
+size cluster i: 324 -> 3
+size cluster i: 325 -> 2
+size cluster i: 326 -> 3
+size cluster i: 327 -> 2
+size cluster i: 328 -> 4
+size cluster i: 329 -> 2
+size cluster i: 330 -> 3
+size cluster i: 331 -> 2
+size cluster i: 332 -> 3
+size cluster i: 333 -> 3
+size cluster i: 334 -> 2
+size cluster i: 335 -> 2
+size cluster i: 336 -> 2
+size cluster i: 337 -> 3
+size cluster i: 338 -> 2
+size cluster i: 339 -> 2
+size cluster i: 340 -> 2
+size cluster i: 341 -> 2
+size cluster i: 342 -> 5
+size cluster i: 343 -> 2
+size cluster i: 344 -> 4
+size cluster i: 345 -> 4
+size cluster i: 346 -> 3
+size cluster i: 347 -> 3
+size cluster i: 348 -> 2
+size cluster i: 349 -> 3
+size cluster i: 350 -> 3
+size cluster i: 351 -> 2
+size cluster i: 352 -> 2
+size cluster i: 353 -> 2
+size cluster i: 354 -> 2
+size cluster i: 355 -> 3
+size cluster i: 356 -> 2
+size cluster i: 357 -> 4
+size cluster i: 358 -> 2
+size cluster i: 359 -> 2
+size cluster i: 360 -> 3
+size cluster i: 361 -> 2
+size cluster i: 362 -> 3
+size cluster i: 363 -> 3
+size cluster i: 364 -> 2
+size cluster i: 365 -> 2
+size cluster i: 366 -> 3
+size cluster i: 367 -> 2
+size cluster i: 368 -> 3
+size cluster i: 369 -> 3
+size cluster i: 370 -> 2
+size cluster i: 371 -> 4
+size cluster i: 372 -> 3
+size cluster i: 373 -> 2
+size cluster i: 374 -> 2
+size cluster i: 375 -> 2
+size cluster i: 376 -> 3
+size cluster i: 377 -> 3
+size cluster i: 378 -> 2
+size cluster i: 379 -> 2
+size cluster i: 380 -> 2
+size cluster i: 381 -> 3
+size cluster i: 382 -> 2
+size cluster i: 383 -> 2
+size cluster i: 384 -> 2
+size cluster i: 385 -> 3
+size cluster i: 386 -> 2
+size cluster i: 387 -> 2
+size cluster i: 388 -> 2
+size cluster i: 389 -> 2
+size cluster i: 390 -> 3
+size cluster i: 391 -> 2
+size cluster i: 392 -> 3
+size cluster i: 393 -> 3
+size cluster i: 394 -> 2
+size cluster i: 395 -> 2
+size cluster i: 396 -> 2
+size cluster i: 397 -> 2
+size cluster i: 398 -> 3
+size cluster i: 399 -> 2
+size cluster i: 400 -> 2
+size cluster i: 401 -> 2
+size cluster i: 402 -> 2
+size cluster i: 403 -> 2
+size cluster i: 404 -> 2
+datapoints in clusters: 10016030
+score: 0
+write cluster map duration:10.2661s
+total_duration_without_disk: 576.507
+total_duration: 577.754
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 405
+datapoints_clusters: 10016030
+total_dur: 542.9953200000001
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 166.666666667 percent_correct: 0.11607549019607843 ARI: 0.007744448434462308
+-> new best_percent_correct:0.11607549019607843, new best_threshold:166.666666667
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 333.3333333333333 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 333.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.22211
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30917s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.8878s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.478s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5361.37 GFLOPS
+write pruned knn graph duration:15.4024s
+Finding clusters...
+find_cluster_duration_total: 11.7389s
+detected clusters: 301
+size cluster i: 0 -> 10005514
+size cluster i: 1 -> 4
+size cluster i: 2 -> 4
+size cluster i: 3 -> 3
+size cluster i: 4 -> 6
+size cluster i: 5 -> 2
+size cluster i: 6 -> 2
+size cluster i: 7 -> 3
+size cluster i: 8 -> 3
+size cluster i: 9 -> 3
+size cluster i: 10 -> 3
+size cluster i: 11 -> 8
+size cluster i: 12 -> 3
+size cluster i: 13 -> 2
+size cluster i: 14 -> 7
+size cluster i: 15 -> 2
+size cluster i: 16 -> 9
+size cluster i: 17 -> 12
+size cluster i: 18 -> 3
+size cluster i: 19 -> 5
+size cluster i: 20 -> 3
+size cluster i: 21 -> 11
+size cluster i: 22 -> 4
+size cluster i: 23 -> 5
+size cluster i: 24 -> 4
+size cluster i: 25 -> 7
+size cluster i: 26 -> 5
+size cluster i: 27 -> 6
+size cluster i: 28 -> 2
+size cluster i: 29 -> 3
+size cluster i: 30 -> 2
+size cluster i: 31 -> 4
+size cluster i: 32 -> 2
+size cluster i: 33 -> 3
+size cluster i: 34 -> 2
+size cluster i: 35 -> 4
+size cluster i: 36 -> 2
+size cluster i: 37 -> 6
+size cluster i: 38 -> 14
+size cluster i: 39 -> 8
+size cluster i: 40 -> 6
+size cluster i: 41 -> 10
+size cluster i: 42 -> 6
+size cluster i: 43 -> 5
+size cluster i: 44 -> 4
+size cluster i: 45 -> 5
+size cluster i: 46 -> 3
+size cluster i: 47 -> 2
+size cluster i: 48 -> 8
+size cluster i: 49 -> 5
+size cluster i: 50 -> 2
+size cluster i: 51 -> 5
+size cluster i: 52 -> 3
+size cluster i: 53 -> 9
+size cluster i: 54 -> 2
+size cluster i: 55 -> 2
+size cluster i: 56 -> 4
+size cluster i: 57 -> 4
+size cluster i: 58 -> 2
+size cluster i: 59 -> 6
+size cluster i: 60 -> 4
+size cluster i: 61 -> 3
+size cluster i: 62 -> 7
+size cluster i: 63 -> 7
+size cluster i: 64 -> 3
+size cluster i: 65 -> 6
+size cluster i: 66 -> 2
+size cluster i: 67 -> 2
+size cluster i: 68 -> 4
+size cluster i: 69 -> 4
+size cluster i: 70 -> 4
+size cluster i: 71 -> 3
+size cluster i: 72 -> 5
+size cluster i: 73 -> 4
+size cluster i: 74 -> 4
+size cluster i: 75 -> 4
+size cluster i: 76 -> 6
+size cluster i: 77 -> 5
+size cluster i: 78 -> 2
+size cluster i: 79 -> 3
+size cluster i: 80 -> 4
+size cluster i: 81 -> 16
+size cluster i: 82 -> 5
+size cluster i: 83 -> 2
+size cluster i: 84 -> 4
+size cluster i: 85 -> 3
+size cluster i: 86 -> 4
+size cluster i: 87 -> 6
+size cluster i: 88 -> 10
+size cluster i: 89 -> 3
+size cluster i: 90 -> 4
+size cluster i: 91 -> 4
+size cluster i: 92 -> 6
+size cluster i: 93 -> 3
+size cluster i: 94 -> 3
+size cluster i: 95 -> 3
+size cluster i: 96 -> 2
+size cluster i: 97 -> 12
+size cluster i: 98 -> 19
+size cluster i: 99 -> 2
+size cluster i: 100 -> 7
+size cluster i: 101 -> 2
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 2
+size cluster i: 105 -> 10
+size cluster i: 106 -> 2
+size cluster i: 107 -> 2
+size cluster i: 108 -> 3
+size cluster i: 109 -> 3
+size cluster i: 110 -> 3
+size cluster i: 111 -> 3
+size cluster i: 112 -> 4
+size cluster i: 113 -> 3
+size cluster i: 114 -> 2
+size cluster i: 115 -> 2
+size cluster i: 116 -> 2
+size cluster i: 117 -> 8
+size cluster i: 118 -> 2
+size cluster i: 119 -> 2
+size cluster i: 120 -> 4
+size cluster i: 121 -> 4
+size cluster i: 122 -> 4
+size cluster i: 123 -> 4
+size cluster i: 124 -> 3
+size cluster i: 125 -> 3
+size cluster i: 126 -> 3
+size cluster i: 127 -> 5
+size cluster i: 128 -> 2
+size cluster i: 129 -> 5
+size cluster i: 130 -> 4
+size cluster i: 131 -> 4
+size cluster i: 132 -> 2
+size cluster i: 133 -> 2
+size cluster i: 134 -> 2
+size cluster i: 135 -> 5
+size cluster i: 136 -> 4
+size cluster i: 137 -> 5
+size cluster i: 138 -> 3
+size cluster i: 139 -> 3
+size cluster i: 140 -> 5
+size cluster i: 141 -> 5
+size cluster i: 142 -> 3
+size cluster i: 143 -> 7
+size cluster i: 144 -> 2
+size cluster i: 145 -> 4
+size cluster i: 146 -> 5
+size cluster i: 147 -> 5
+size cluster i: 148 -> 2
+size cluster i: 149 -> 2
+size cluster i: 150 -> 7
+size cluster i: 151 -> 3
+size cluster i: 152 -> 2
+size cluster i: 153 -> 5
+size cluster i: 154 -> 4
+size cluster i: 155 -> 2
+size cluster i: 156 -> 2
+size cluster i: 157 -> 10
+size cluster i: 158 -> 5
+size cluster i: 159 -> 2
+size cluster i: 160 -> 12
+size cluster i: 161 -> 2
+size cluster i: 162 -> 4
+size cluster i: 163 -> 3
+size cluster i: 164 -> 2
+size cluster i: 165 -> 4
+size cluster i: 166 -> 4
+size cluster i: 167 -> 2
+size cluster i: 168 -> 3
+size cluster i: 169 -> 3
+size cluster i: 170 -> 3
+size cluster i: 171 -> 2
+size cluster i: 172 -> 2
+size cluster i: 173 -> 2
+size cluster i: 174 -> 3
+size cluster i: 175 -> 7
+size cluster i: 176 -> 2
+size cluster i: 177 -> 2
+size cluster i: 178 -> 3
+size cluster i: 179 -> 3
+size cluster i: 180 -> 7
+size cluster i: 181 -> 2
+size cluster i: 182 -> 2
+size cluster i: 183 -> 2
+size cluster i: 184 -> 5
+size cluster i: 185 -> 2
+size cluster i: 186 -> 4
+size cluster i: 187 -> 5
+size cluster i: 188 -> 7
+size cluster i: 189 -> 2
+size cluster i: 190 -> 2
+size cluster i: 191 -> 2
+size cluster i: 192 -> 3
+size cluster i: 193 -> 3
+size cluster i: 194 -> 3
+size cluster i: 195 -> 2
+size cluster i: 196 -> 2
+size cluster i: 197 -> 2
+size cluster i: 198 -> 3
+size cluster i: 199 -> 5
+size cluster i: 200 -> 2
+size cluster i: 201 -> 2
+size cluster i: 202 -> 4
+size cluster i: 203 -> 4
+size cluster i: 204 -> 2
+size cluster i: 205 -> 3
+size cluster i: 206 -> 3
+size cluster i: 207 -> 2
+size cluster i: 208 -> 3
+size cluster i: 209 -> 2
+size cluster i: 210 -> 6
+size cluster i: 211 -> 4
+size cluster i: 212 -> 3
+size cluster i: 213 -> 6
+size cluster i: 214 -> 2
+size cluster i: 215 -> 2
+size cluster i: 216 -> 2
+size cluster i: 217 -> 4
+size cluster i: 218 -> 3
+size cluster i: 219 -> 2
+size cluster i: 220 -> 4
+size cluster i: 221 -> 5
+size cluster i: 222 -> 5
+size cluster i: 223 -> 2
+size cluster i: 224 -> 3
+size cluster i: 225 -> 5
+size cluster i: 226 -> 4
+size cluster i: 227 -> 3
+size cluster i: 228 -> 3
+size cluster i: 229 -> 2
+size cluster i: 230 -> 2
+size cluster i: 231 -> 3
+size cluster i: 232 -> 3
+size cluster i: 233 -> 3
+size cluster i: 234 -> 2
+size cluster i: 235 -> 2
+size cluster i: 236 -> 5
+size cluster i: 237 -> 2
+size cluster i: 238 -> 5
+size cluster i: 239 -> 2
+size cluster i: 240 -> 2
+size cluster i: 241 -> 2
+size cluster i: 242 -> 2
+size cluster i: 243 -> 2
+size cluster i: 244 -> 2
+size cluster i: 245 -> 4
+size cluster i: 246 -> 2
+size cluster i: 247 -> 3
+size cluster i: 248 -> 2
+size cluster i: 249 -> 2
+size cluster i: 250 -> 3
+size cluster i: 251 -> 2
+size cluster i: 252 -> 2
+size cluster i: 253 -> 2
+size cluster i: 254 -> 3
+size cluster i: 255 -> 3
+size cluster i: 256 -> 2
+size cluster i: 257 -> 2
+size cluster i: 258 -> 3
+size cluster i: 259 -> 3
+size cluster i: 260 -> 2
+size cluster i: 261 -> 2
+size cluster i: 262 -> 2
+size cluster i: 263 -> 3
+size cluster i: 264 -> 2
+size cluster i: 265 -> 3
+size cluster i: 266 -> 3
+size cluster i: 267 -> 2
+size cluster i: 268 -> 2
+size cluster i: 269 -> 2
+size cluster i: 270 -> 3
+size cluster i: 271 -> 2
+size cluster i: 272 -> 2
+size cluster i: 273 -> 2
+size cluster i: 274 -> 2
+size cluster i: 275 -> 2
+size cluster i: 276 -> 2
+size cluster i: 277 -> 2
+size cluster i: 278 -> 3
+size cluster i: 279 -> 2
+size cluster i: 280 -> 3
+size cluster i: 281 -> 2
+size cluster i: 282 -> 3
+size cluster i: 283 -> 2
+size cluster i: 284 -> 2
+size cluster i: 285 -> 2
+size cluster i: 286 -> 2
+size cluster i: 287 -> 2
+size cluster i: 288 -> 3
+size cluster i: 289 -> 2
+size cluster i: 290 -> 2
+size cluster i: 291 -> 2
+size cluster i: 292 -> 2
+size cluster i: 293 -> 2
+size cluster i: 294 -> 2
+size cluster i: 295 -> 3
+size cluster i: 296 -> 2
+size cluster i: 297 -> 2
+size cluster i: 298 -> 2
+size cluster i: 299 -> 2
+size cluster i: 300 -> 2
+datapoints in clusters: 10006602
+score: 0
+write cluster map duration:10.2421s
+total_duration_without_disk: 423.942
+total_duration: 425.164
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 301
+datapoints_clusters: 10006602
+total_dur: 340.2169
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 333.333333333 percent_correct: 0.11699980392156863 ARI: 0.008211493307071122
+-> new best_percent_correct:0.11699980392156863, new best_threshold:333.333333333
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 500.0 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23519
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.3001s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.9693s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.489s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5361.19 GFLOPS
+write pruned knn graph duration:15.4169s
+Finding clusters...
+find_cluster_duration_total: 9.02268s
+detected clusters: 211
+size cluster i: 0 -> 9002249
+size cluster i: 1 -> 1000163
+size cluster i: 2 -> 2
+size cluster i: 3 -> 5
+size cluster i: 4 -> 6
+size cluster i: 5 -> 8
+size cluster i: 6 -> 4
+size cluster i: 7 -> 5
+size cluster i: 8 -> 2
+size cluster i: 9 -> 3
+size cluster i: 10 -> 10
+size cluster i: 11 -> 3
+size cluster i: 12 -> 4
+size cluster i: 13 -> 12
+size cluster i: 14 -> 4
+size cluster i: 15 -> 4
+size cluster i: 16 -> 5
+size cluster i: 17 -> 4
+size cluster i: 18 -> 5
+size cluster i: 19 -> 3
+size cluster i: 20 -> 6
+size cluster i: 21 -> 4
+size cluster i: 22 -> 5
+size cluster i: 23 -> 11
+size cluster i: 24 -> 11
+size cluster i: 25 -> 3
+size cluster i: 26 -> 4
+size cluster i: 27 -> 5
+size cluster i: 28 -> 2
+size cluster i: 29 -> 5
+size cluster i: 30 -> 4
+size cluster i: 31 -> 3
+size cluster i: 32 -> 3
+size cluster i: 33 -> 2
+size cluster i: 34 -> 3
+size cluster i: 35 -> 6
+size cluster i: 36 -> 4
+size cluster i: 37 -> 2
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 5
+size cluster i: 41 -> 3
+size cluster i: 42 -> 10
+size cluster i: 43 -> 7
+size cluster i: 44 -> 3
+size cluster i: 45 -> 2
+size cluster i: 46 -> 4
+size cluster i: 47 -> 2
+size cluster i: 48 -> 2
+size cluster i: 49 -> 3
+size cluster i: 50 -> 5
+size cluster i: 51 -> 3
+size cluster i: 52 -> 3
+size cluster i: 53 -> 2
+size cluster i: 54 -> 6
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+size cluster i: 57 -> 2
+size cluster i: 58 -> 5
+size cluster i: 59 -> 2
+size cluster i: 60 -> 4
+size cluster i: 61 -> 3
+size cluster i: 62 -> 4
+size cluster i: 63 -> 2
+size cluster i: 64 -> 6
+size cluster i: 65 -> 5
+size cluster i: 66 -> 4
+size cluster i: 67 -> 4
+size cluster i: 68 -> 5
+size cluster i: 69 -> 6
+size cluster i: 70 -> 5
+size cluster i: 71 -> 6
+size cluster i: 72 -> 2
+size cluster i: 73 -> 2
+size cluster i: 74 -> 3
+size cluster i: 75 -> 5
+size cluster i: 76 -> 6
+size cluster i: 77 -> 4
+size cluster i: 78 -> 7
+size cluster i: 79 -> 3
+size cluster i: 80 -> 2
+size cluster i: 81 -> 2
+size cluster i: 82 -> 3
+size cluster i: 83 -> 2
+size cluster i: 84 -> 3
+size cluster i: 85 -> 4
+size cluster i: 86 -> 5
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 3
+size cluster i: 90 -> 3
+size cluster i: 91 -> 4
+size cluster i: 92 -> 3
+size cluster i: 93 -> 2
+size cluster i: 94 -> 2
+size cluster i: 95 -> 3
+size cluster i: 96 -> 6
+size cluster i: 97 -> 4
+size cluster i: 98 -> 3
+size cluster i: 99 -> 8
+size cluster i: 100 -> 2
+size cluster i: 101 -> 4
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 3
+size cluster i: 105 -> 2
+size cluster i: 106 -> 2
+size cluster i: 107 -> 5
+size cluster i: 108 -> 12
+size cluster i: 109 -> 2
+size cluster i: 110 -> 5
+size cluster i: 111 -> 3
+size cluster i: 112 -> 2
+size cluster i: 113 -> 2
+size cluster i: 114 -> 3
+size cluster i: 115 -> 5
+size cluster i: 116 -> 2
+size cluster i: 117 -> 3
+size cluster i: 118 -> 6
+size cluster i: 119 -> 2
+size cluster i: 120 -> 2
+size cluster i: 121 -> 6
+size cluster i: 122 -> 2
+size cluster i: 123 -> 2
+size cluster i: 124 -> 6
+size cluster i: 125 -> 3
+size cluster i: 126 -> 8
+size cluster i: 127 -> 2
+size cluster i: 128 -> 2
+size cluster i: 129 -> 4
+size cluster i: 130 -> 4
+size cluster i: 131 -> 4
+size cluster i: 132 -> 4
+size cluster i: 133 -> 2
+size cluster i: 134 -> 2
+size cluster i: 135 -> 4
+size cluster i: 136 -> 3
+size cluster i: 137 -> 4
+size cluster i: 138 -> 2
+size cluster i: 139 -> 3
+size cluster i: 140 -> 3
+size cluster i: 141 -> 2
+size cluster i: 142 -> 4
+size cluster i: 143 -> 2
+size cluster i: 144 -> 4
+size cluster i: 145 -> 2
+size cluster i: 146 -> 3
+size cluster i: 147 -> 3
+size cluster i: 148 -> 3
+size cluster i: 149 -> 2
+size cluster i: 150 -> 2
+size cluster i: 151 -> 2
+size cluster i: 152 -> 4
+size cluster i: 153 -> 3
+size cluster i: 154 -> 3
+size cluster i: 155 -> 2
+size cluster i: 156 -> 2
+size cluster i: 157 -> 7
+size cluster i: 158 -> 4
+size cluster i: 159 -> 3
+size cluster i: 160 -> 3
+size cluster i: 161 -> 3
+size cluster i: 162 -> 6
+size cluster i: 163 -> 4
+size cluster i: 164 -> 2
+size cluster i: 165 -> 3
+size cluster i: 166 -> 3
+size cluster i: 167 -> 2
+size cluster i: 168 -> 4
+size cluster i: 169 -> 3
+size cluster i: 170 -> 3
+size cluster i: 171 -> 3
+size cluster i: 172 -> 3
+size cluster i: 173 -> 4
+size cluster i: 174 -> 2
+size cluster i: 175 -> 4
+size cluster i: 176 -> 5
+size cluster i: 177 -> 2
+size cluster i: 178 -> 2
+size cluster i: 179 -> 3
+size cluster i: 180 -> 4
+size cluster i: 181 -> 2
+size cluster i: 182 -> 4
+size cluster i: 183 -> 2
+size cluster i: 184 -> 2
+size cluster i: 185 -> 2
+size cluster i: 186 -> 4
+size cluster i: 187 -> 3
+size cluster i: 188 -> 3
+size cluster i: 189 -> 2
+size cluster i: 190 -> 4
+size cluster i: 191 -> 2
+size cluster i: 192 -> 3
+size cluster i: 193 -> 2
+size cluster i: 194 -> 2
+size cluster i: 195 -> 3
+size cluster i: 196 -> 2
+size cluster i: 197 -> 3
+size cluster i: 198 -> 2
+size cluster i: 199 -> 2
+size cluster i: 200 -> 3
+size cluster i: 201 -> 3
+size cluster i: 202 -> 3
+size cluster i: 203 -> 2
+size cluster i: 204 -> 2
+size cluster i: 205 -> 3
+size cluster i: 206 -> 2
+size cluster i: 207 -> 3
+size cluster i: 208 -> 2
+size cluster i: 209 -> 2
+size cluster i: 210 -> 2
+datapoints in clusters: 10003155
+score: 0
+write cluster map duration:10.2159s
+total_duration_without_disk: 421.156
+total_duration: 422.391
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 211
+datapoints_clusters: 10003155
+total_dur: 337.51167999999996
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 500.0 percent_correct: 0.21537696078431373 ARI: 0.055532749556067
+-> new best_percent_correct:0.21537696078431373, new best_threshold:500.0
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 666.6666666666666 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 666.667
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23996
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.29525s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.8849s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.49s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5361.17 GFLOPS
+write pruned knn graph duration:15.4374s
+Finding clusters...
+find_cluster_duration_total: 10.3504s
+detected clusters: 125
+size cluster i: 0 -> 3000525
+size cluster i: 1 -> 1000106
+size cluster i: 2 -> 3000356
+size cluster i: 3 -> 2000220
+size cluster i: 4 -> 1000060
+size cluster i: 5 -> 4
+size cluster i: 6 -> 2
+size cluster i: 7 -> 2
+size cluster i: 8 -> 6
+size cluster i: 9 -> 3
+size cluster i: 10 -> 5
+size cluster i: 11 -> 3
+size cluster i: 12 -> 2
+size cluster i: 13 -> 2
+size cluster i: 14 -> 5
+size cluster i: 15 -> 2
+size cluster i: 16 -> 5
+size cluster i: 17 -> 9
+size cluster i: 18 -> 4
+size cluster i: 19 -> 3
+size cluster i: 20 -> 3
+size cluster i: 21 -> 2
+size cluster i: 22 -> 4
+size cluster i: 23 -> 4
+size cluster i: 24 -> 5
+size cluster i: 25 -> 19
+size cluster i: 26 -> 5
+size cluster i: 27 -> 5
+size cluster i: 28 -> 4
+size cluster i: 29 -> 6
+size cluster i: 30 -> 5
+size cluster i: 31 -> 2
+size cluster i: 32 -> 2
+size cluster i: 33 -> 4
+size cluster i: 34 -> 5
+size cluster i: 35 -> 5
+size cluster i: 36 -> 3
+size cluster i: 37 -> 3
+size cluster i: 38 -> 4
+size cluster i: 39 -> 6
+size cluster i: 40 -> 3
+size cluster i: 41 -> 3
+size cluster i: 42 -> 3
+size cluster i: 43 -> 2
+size cluster i: 44 -> 2
+size cluster i: 45 -> 2
+size cluster i: 46 -> 2
+size cluster i: 47 -> 3
+size cluster i: 48 -> 5
+size cluster i: 49 -> 4
+size cluster i: 50 -> 4
+size cluster i: 51 -> 3
+size cluster i: 52 -> 2
+size cluster i: 53 -> 4
+size cluster i: 54 -> 4
+size cluster i: 55 -> 3
+size cluster i: 56 -> 4
+size cluster i: 57 -> 6
+size cluster i: 58 -> 2
+size cluster i: 59 -> 2
+size cluster i: 60 -> 2
+size cluster i: 61 -> 3
+size cluster i: 62 -> 7
+size cluster i: 63 -> 4
+size cluster i: 64 -> 8
+size cluster i: 65 -> 3
+size cluster i: 66 -> 2
+size cluster i: 67 -> 2
+size cluster i: 68 -> 3
+size cluster i: 69 -> 3
+size cluster i: 70 -> 2
+size cluster i: 71 -> 3
+size cluster i: 72 -> 3
+size cluster i: 73 -> 3
+size cluster i: 74 -> 5
+size cluster i: 75 -> 4
+size cluster i: 76 -> 2
+size cluster i: 77 -> 2
+size cluster i: 78 -> 4
+size cluster i: 79 -> 8
+size cluster i: 80 -> 3
+size cluster i: 81 -> 3
+size cluster i: 82 -> 2
+size cluster i: 83 -> 3
+size cluster i: 84 -> 3
+size cluster i: 85 -> 2
+size cluster i: 86 -> 6
+size cluster i: 87 -> 2
+size cluster i: 88 -> 2
+size cluster i: 89 -> 4
+size cluster i: 90 -> 2
+size cluster i: 91 -> 2
+size cluster i: 92 -> 3
+size cluster i: 93 -> 2
+size cluster i: 94 -> 2
+size cluster i: 95 -> 4
+size cluster i: 96 -> 4
+size cluster i: 97 -> 2
+size cluster i: 98 -> 2
+size cluster i: 99 -> 2
+size cluster i: 100 -> 4
+size cluster i: 101 -> 2
+size cluster i: 102 -> 2
+size cluster i: 103 -> 2
+size cluster i: 104 -> 4
+size cluster i: 105 -> 2
+size cluster i: 106 -> 2
+size cluster i: 107 -> 2
+size cluster i: 108 -> 3
+size cluster i: 109 -> 3
+size cluster i: 110 -> 2
+size cluster i: 111 -> 3
+size cluster i: 112 -> 3
+size cluster i: 113 -> 3
+size cluster i: 114 -> 3
+size cluster i: 115 -> 2
+size cluster i: 116 -> 6
+size cluster i: 117 -> 2
+size cluster i: 118 -> 3
+size cluster i: 119 -> 2
+size cluster i: 120 -> 2
+size cluster i: 121 -> 2
+size cluster i: 122 -> 4
+size cluster i: 123 -> 2
+size cluster i: 124 -> 2
+datapoints in clusters: 10001678
+score: 0
+write cluster map duration:10.3495s
+total_duration_without_disk: 422.817
+total_duration: 424.057
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 125
+datapoints_clusters: 10001678
+total_dur: 338.8404
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 666.666666667 percent_correct: 0.5096394117647058 ARI: 0.5242923879352022
+-> new best_percent_correct:0.5096394117647058, new best_threshold:666.666666667
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.21545
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.3027s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:53.3159s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.872s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5354.95 GFLOPS
+write pruned knn graph duration:15.7385s
+Finding clusters...
+find_cluster_duration_total: 9.76346s
+detected clusters: 73
+size cluster i: 0 -> 3000311
+size cluster i: 1 -> 1000059
+size cluster i: 2 -> 2000153
+size cluster i: 3 -> 2000137
+size cluster i: 4 -> 1000042
+size cluster i: 5 -> 1000031
+size cluster i: 6 -> 4
+size cluster i: 7 -> 6
+size cluster i: 8 -> 5
+size cluster i: 9 -> 2
+size cluster i: 10 -> 3
+size cluster i: 11 -> 2
+size cluster i: 12 -> 3
+size cluster i: 13 -> 4
+size cluster i: 14 -> 4
+size cluster i: 15 -> 13
+size cluster i: 16 -> 2
+size cluster i: 17 -> 5
+size cluster i: 18 -> 5
+size cluster i: 19 -> 4
+size cluster i: 20 -> 7
+size cluster i: 21 -> 2
+size cluster i: 22 -> 5
+size cluster i: 23 -> 4
+size cluster i: 24 -> 6
+size cluster i: 25 -> 3
+size cluster i: 26 -> 8
+size cluster i: 27 -> 3
+size cluster i: 28 -> 4
+size cluster i: 29 -> 3
+size cluster i: 30 -> 3
+size cluster i: 31 -> 4
+size cluster i: 32 -> 3
+size cluster i: 33 -> 3
+size cluster i: 34 -> 4
+size cluster i: 35 -> 3
+size cluster i: 36 -> 3
+size cluster i: 37 -> 7
+size cluster i: 38 -> 2
+size cluster i: 39 -> 2
+size cluster i: 40 -> 3
+size cluster i: 41 -> 3
+size cluster i: 42 -> 3
+size cluster i: 43 -> 3
+size cluster i: 44 -> 2
+size cluster i: 45 -> 3
+size cluster i: 46 -> 3
+size cluster i: 47 -> 3
+size cluster i: 48 -> 3
+size cluster i: 49 -> 2
+size cluster i: 50 -> 3
+size cluster i: 51 -> 2
+size cluster i: 52 -> 3
+size cluster i: 53 -> 4
+size cluster i: 54 -> 2
+size cluster i: 55 -> 2
+size cluster i: 56 -> 2
+size cluster i: 57 -> 3
+size cluster i: 58 -> 2
+size cluster i: 59 -> 3
+size cluster i: 60 -> 3
+size cluster i: 61 -> 4
+size cluster i: 62 -> 6
+size cluster i: 63 -> 3
+size cluster i: 64 -> 2
+size cluster i: 65 -> 3
+size cluster i: 66 -> 5
+size cluster i: 67 -> 2
+size cluster i: 68 -> 4
+size cluster i: 69 -> 3
+size cluster i: 70 -> 2
+size cluster i: 71 -> 2
+size cluster i: 72 -> 3
+datapoints in clusters: 10000970
+score: 0
+write cluster map duration:10.2557s
+total_duration_without_disk: 422.981
+total_duration: 424.197
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 73
+datapoints_clusters: 10000970
+total_dur: 338.63546
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 833.333333333 percent_correct: 0.6077480392156863 ARI: 0.6183922517046131
+-> new best_percent_correct:0.6077480392156863, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1000.0 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 1000
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23578
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.30521s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.2531s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.824s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5355.73 GFLOPS
+write pruned knn graph duration:15.662s
+Finding clusters...
+find_cluster_duration_total: 9.09685s
+detected clusters: 42
+size cluster i: 0 -> 3000202
+size cluster i: 1 -> 1000036
+size cluster i: 2 -> 1000083
+size cluster i: 3 -> 2000082
+size cluster i: 4 -> 1000018
+size cluster i: 5 -> 1000014
+size cluster i: 6 -> 1000019
+size cluster i: 7 -> 5
+size cluster i: 8 -> 2
+size cluster i: 9 -> 3
+size cluster i: 10 -> 13
+size cluster i: 11 -> 7
+size cluster i: 12 -> 4
+size cluster i: 13 -> 2
+size cluster i: 14 -> 2
+size cluster i: 15 -> 3
+size cluster i: 16 -> 2
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 2
+size cluster i: 20 -> 2
+size cluster i: 21 -> 2
+size cluster i: 22 -> 3
+size cluster i: 23 -> 3
+size cluster i: 24 -> 3
+size cluster i: 25 -> 3
+size cluster i: 26 -> 2
+size cluster i: 27 -> 2
+size cluster i: 28 -> 3
+size cluster i: 29 -> 2
+size cluster i: 30 -> 5
+size cluster i: 31 -> 5
+size cluster i: 32 -> 3
+size cluster i: 33 -> 2
+size cluster i: 34 -> 2
+size cluster i: 35 -> 5
+size cluster i: 36 -> 2
+size cluster i: 37 -> 3
+size cluster i: 38 -> 4
+size cluster i: 39 -> 3
+size cluster i: 40 -> 3
+size cluster i: 41 -> 2
+datapoints in clusters: 10000568
+score: 0
+write cluster map duration:10.2112s
+total_duration_without_disk: 421.485
+total_duration: 422.721
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 42
+datapoints_clusters: 10000568
+total_dur: 337.92085000000003
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 1000.0 percent_correct: 0.7058266666666667 ARI: 0.6747051586609486
+-> new best_percent_correct:0.7058266666666667, new best_threshold:1000.0
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1166.6666666666665 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+---------------- OUTPUT -----------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_P100.cfg
+k: 6
+threshold: 1166.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23007
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration:1.29842s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration:52.3036s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_P100.cfg
+last_duration_prune_graph: 328.795s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 5356.2 GFLOPS
+write pruned knn graph duration:15.6926s
+Finding clusters...
+find_cluster_duration_total: 9.60724s
+detected clusters: 31
+size cluster i: 0 -> 1000091
+size cluster i: 1 -> 1000020
+size cluster i: 2 -> 1000057
+size cluster i: 3 -> 1000014
+size cluster i: 4 -> 1000021
+size cluster i: 5 -> 1000011
+size cluster i: 6 -> 1000023
+size cluster i: 7 -> 1000011
+size cluster i: 8 -> 1000012
+size cluster i: 9 -> 1000028
+size cluster i: 10 -> 6
+size cluster i: 11 -> 8
+size cluster i: 12 -> 3
+size cluster i: 13 -> 4
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 4
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 4
+size cluster i: 20 -> 3
+size cluster i: 21 -> 2
+size cluster i: 22 -> 6
+size cluster i: 23 -> 3
+size cluster i: 24 -> 4
+size cluster i: 25 -> 4
+size cluster i: 26 -> 3
+size cluster i: 27 -> 4
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 3
+datapoints in clusters: 10000362
+score: 0
+write cluster map duration:10.2238s
+total_duration_without_disk: 421.727
+total_duration: 422.957
+
+all done!
+
+---------------- ERROR ------------------
+Now reading header file:../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+Now reading binary data: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise_binary_data.bin
+
+--------------- SUMMARY -----------------
+detected_clusters: 31
+datapoints_clusters: 10000362
+total_dur: 338.40224
+
+--------------- END RUN -----------------
+attempt lambda: 9.999999999999999e-06 threshold: 1166.66666667 percent_correct: 0.9999645098039216 ARI: 0.9999602782953493
+-> new best_percent_correct:0.9999645098039216, new best_threshold:1166.66666667
+is_first_overall: False
+is_first_lambda: False
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_P100.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1333.3333333333333 --print_cluster_sizes 1 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
