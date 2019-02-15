@@ -247,7 +247,6 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     throw sgpp::base::file_exception(msg.c_str());
   }
 
-  std::cerr << "Now reading header file:" << filename << std::endl;
   bool compressed = false;
   size_t byte_size = 0;
   while (!myfile.eof()) {
@@ -286,7 +285,6 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
   binary_filename = binary_filepath.string();
 
   if (!compressed) {
-    std::cerr << "Now reading binary data: " << binary_filename << std::endl;
     std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
     if (file)
     {
@@ -300,7 +298,7 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     }
   } else {
 #ifdef ZLIB
-    std::cerr << "Now reading compressed binary data: " << binary_filename << std::endl;
+    std::cout << "Now reading compressed binary data: " << binary_filename << std::endl;
     char *memblock = (char *)datamatrix.data();
     gzFile file = gzopen(binary_filename.c_str(), "rb");
     if (!file) {

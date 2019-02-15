@@ -36,6 +36,46 @@
 #include "sgpp/globaldef.hpp"
 #include "sgpp/solver/sle/ConjugateGradients.hpp"
 
+#include <sgpp/base/grid/generation/functors/CoarseningFunctor.hpp>
+namespace sgpp {
+namespace base {
+class DensityBCoarseningFunctor : public CoarseningFunctor {
+protected:
+  DataVector &b;
+  double threshold;
+
+public:
+  /**
+   * Constructor.
+   *
+   * @param alpha DataVector that is basis for coarsening decisions. The i-th
+   * entry corresponds to the i-th grid point.
+   * @param threshold The absolute value of the entries have to be less or equal
+   * than the threshold to be considered for coarsening
+   */
+  DensityBCoarseningFunctor(DataVector &b, double threshold = 0.0)
+      : b(b), threshold(threshold) {}
+
+  ~DensityBCoarseningFunctor() override {}
+
+  double operator()(GridStorage &storage, size_t seq) override {
+    return b[seq]; // sums of hat functions are positive
+  }
+
+  double start() const override { return 1.0; }
+
+  size_t getRemovementsNum() const override {
+    // interface does not allow for infinity
+    // TODO: stupid implementation, buffer of that size is allocated
+    return 100000;
+  }
+
+  double getCoarseningThreshold() const override { return this->threshold; }
+};
+
+} // namespace base
+} // namespace sgpp
+
 // namespace util {
 // std::vector<int64_t> read_vector(const std::string &file_name) {
 //   std::vector<int64_t> v;
@@ -151,6 +191,9 @@ int main(int argc, char **argv) {
   int64_t max_iterations;
   // int64_t connected_components_k_factor;
 
+  // for right-hand side coarsening
+  bool b_coarsening;
+  double b_coarsening_threshold;
   size_t refinement_steps;
   size_t refinement_points;
   size_t coarsening_points;
@@ -196,7 +239,8 @@ int main(int argc, char **argv) {
       boost::program_options::value<double>(&epsilon)->default_value(0.0001),
       "Exit criteria for the solver. Usually ranges from 0.001 to 0.0001.")(
       "max_iterations",
-      boost::program_options::value<int64_t>(&max_iterations)->default_value(1000),
+      boost::program_options::value<int64_t>(&max_iterations)
+          ->default_value(1000),
       "The maximum number of CG iterations for the density estimation solver.")(
       "threshold",
       boost::program_options::value<double>(&threshold)
@@ -277,7 +321,16 @@ int main(int argc, char **argv) {
       "print_cluster_sizes",
       boost::program_options::value<int64_t>(&print_cluster_sizes)
           ->default_value(0),
-      "print the cluster sizes to stdout, value is min cluster size")
+      "print the cluster sizes to stdout, value is min cluster size")(
+      "b_coarsening",
+      boost::program_options::value<bool>(&b_coarsening)->default_value(false),
+      "for density estimation, use the vector for cheap support-based "
+      "coarsening")(
+      "b_coarsening_threshold",
+      boost::program_options::value<double>(&b_coarsening_threshold)
+          ->default_value(0.0),
+      "for density estimation, prune if per grid points sum is <= given "
+      "threshold")
       // (
       // "connected_components_k_factor",
       // boost::program_options::value<int64_t>(&connected_components_k_factor)->default_value(1),
@@ -445,7 +498,7 @@ int main(int argc, char **argv) {
                    << coarsening_points << "; " << coarsening_threshold << "; ";
   }
 
-  //   size_t refinement_steps;
+  // size_t refinement_steps;
   // size_t refinement_points;
   // size_t coarsening_points;
   // double coarsening_threshold;
@@ -537,7 +590,7 @@ int main(int argc, char **argv) {
     reuse_grid_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> reuse_grid_seconds =
         reuse_grid_stop - reuse_grid_start;
-    std::cout << "loading density grid (reuse) duration:"
+    std::cout << "loading density grid (reuse) duration: "
               << reuse_grid_seconds.count() << "s" << std::endl;
 
     // for (size_t i = 0; i < grid->getSize(); ++i) {
@@ -555,6 +608,7 @@ int main(int argc, char **argv) {
               << std::endl;
 
     alpha.resize(grid->getSize());
+    alpha.setAll(0.0);
 
     grid_create_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> grid_create_seconds =
@@ -566,59 +620,79 @@ int main(int argc, char **argv) {
     std::chrono::time_point<std::chrono::system_clock> density_timer_start;
     std::chrono::time_point<std::chrono::system_clock> density_timer_stop;
     density_timer_start = std::chrono::system_clock::now();
-    auto solver = std::make_unique<solver::ConjugateGradients>(max_iterations, epsilon);
+    auto solver =
+        std::make_unique<solver::ConjugateGradients>(max_iterations, epsilon);
 
-    alpha.resize(grid->getSize());
-    alpha.setAll(0.0);
+    // alpha.resize(grid->getSize());
+    // alpha.setAll(0.0);
     base::DataVector b(grid->getSize(), 0.0);
 
-    // create density calculator
-    {
-      std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
-          operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
-              *grid, dimension, lambda, configFileName));
+    // // create density calculator
+    // {
+    //   std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
+    //       operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
+    //           *grid, dimension, lambda, configFileName));
 
-      std::cout << "Calculating right-hand side" << std::endl;
+    //   std::cout << "Calculating right-hand side" << std::endl;
 
-      operation_mult->generateb(trainingData, b);
+    //   operation_mult->generateb(trainingData, b);
 
-      double last_duration_generate_b = operation_mult->getLastDurationB();
-      std::cout << "last_duration_generate_b: " << last_duration_generate_b
-                << "s" << std::endl;
-      double ops_generate_b =
-          static_cast<double>(grid->getSize() * trainingData.getNrows() *
-                              (6 * dimension + 1)) *
-          1E-9;
-      std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
-      double flops_generate_b = ops_generate_b / last_duration_generate_b;
-      std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
-                << std::endl;
+    //   double last_duration_generate_b = operation_mult->getLastDurationB();
+    //   std::cout << "last_duration_generate_b: " << last_duration_generate_b
+    //             << "s" << std::endl;
+    //   double ops_generate_b =
+    //       static_cast<double>(grid->getSize() * trainingData.getNrows() *
+    //                           (6 * dimension + 1)) *
+    //       1E-9;
+    //   std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+    //   double flops_generate_b = ops_generate_b / last_duration_generate_b;
+    //   std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
+    //             << std::endl;
 
-      result_timings << last_duration_generate_b << "; " << flops_generate_b
-                     << "; ";
+    //   result_timings << last_duration_generate_b << "; " << flops_generate_b
+    //                  << "; ";
 
-      std::cout << "Solving density SLE" << std::endl;
-      solver->solve(*operation_mult, alpha, b, false, true);
+    //   std::cout << "Solving density SLE" << std::endl;
+    //   solver->solve(*operation_mult, alpha, b, false, true);
 
-      double acc_duration_density = operation_mult->getAccDurationDensityMult();
-      std::cout << "acc_duration_density: " << acc_duration_density << "s"
-                << std::endl;
+    //   double acc_duration_density =
+    //   operation_mult->getAccDurationDensityMult(); std::cout <<
+    //   "acc_duration_density: " << acc_duration_density << "s"
+    //             << std::endl;
 
-      size_t iterations = solver->getNumberIterations();
-      size_t act_it = iterations + 1 + (iterations / 50);
-      std::cout << "act_it: " << act_it << std::endl;
-      double ops_density = static_cast<double>(std::pow(grid->getSize(), 2) *
-                                               act_it * (14 * dimension + 2)) *
-                           1E-9;
-      std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
-      double flops_density = ops_density / acc_duration_density;
-      std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
+    //   size_t iterations = solver->getNumberIterations();
+    //   size_t act_it = iterations + 1 + (iterations / 50);
+    //   std::cout << "act_it: " << act_it << std::endl;
+    //   double ops_density = static_cast<double>(std::pow(grid->getSize(), 2) *
+    //                                            act_it * (14 * dimension + 2))
+    //                                            *
+    //                        1E-9;
+    //   std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+    //   double flops_density = ops_density / acc_duration_density;
+    //   std::cout << "flops_density: " << flops_density << " GFLOPS" <<
+    //   std::endl;
 
-      result_timings << acc_duration_density << "; " << flops_density << "; ";
-    }
+    //   result_timings << acc_duration_density << "; " << flops_density << ";
+    //   ";
+    // }
+
+    // add one to at least run the density estimation once
+    refinement_steps += 1;
 
     for (size_t i = 0; i < refinement_steps; i++) {
-      if (refinement_points > 0) {
+
+      if (coarsening_points > 0 && i > 0 && i < refinement_steps - 1) {
+        size_t grid_size_before_coarsen = grid->getSize();
+        sgpp::base::SurplusCoarseningFunctor coarsen_func(
+            alpha, coarsening_points, coarsening_threshold);
+        grid_generator.coarsen(coarsen_func, alpha);
+
+        size_t grid_size_after_coarsen = grid->getSize();
+        std::cout << "coarsen: removed "
+                  << (grid_size_before_coarsen - grid_size_after_coarsen)
+                  << " grid points" << std::endl;
+      }
+      if (refinement_points > 0 && i > 0) {
         sgpp::base::SurplusRefinementFunctor refine_func(alpha,
                                                          refinement_points);
         grid_generator.refine(refine_func);
@@ -635,110 +709,133 @@ int main(int argc, char **argv) {
         for (size_t j = old_size; j < alpha.getSize(); j++) {
           b[j] = 0.0;
         }
-
-        std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
-            operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
-                *grid, dimension, lambda, configFileName));
-
-        operation_mult->generateb(trainingData, b);
-
-        double last_duration_generate_b = operation_mult->getLastDurationB();
-        std::cout << "last_duration_generate_b: " << last_duration_generate_b
-                  << "s" << std::endl;
-        double ops_generate_b =
-            static_cast<double>(grid->getSize() * trainingData.getNrows() *
-                                (6 * dimension + 1)) *
-            1E-9;
-        std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
-        double flops_generate_b = ops_generate_b / last_duration_generate_b;
-        std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
-                  << std::endl;
-
-        std::cout << "Solving density SLE" << std::endl;
-        solver->solve(*operation_mult, alpha, b, false, true);
-
-        std::cout << "Grid points after refinement step: " << grid->getSize()
-                  << std::endl;
-
-        size_t iterations = solver->getNumberIterations();
-        size_t act_it = iterations + 1 + (iterations / 50);
-        std::cout << "act_it: " << act_it << std::endl;
-
-        double acc_duration_density =
-            operation_mult->getAccDurationDensityMult();
-        std::cout << "acc_duration_density: " << acc_duration_density << "s"
-                  << std::endl;
-        double ops_density =
-            static_cast<double>(std::pow(grid->getSize(), 2) * act_it *
-                                (14 * dimension + 2)) *
-            1E-9;
-        std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
-        double flops_density = ops_density / acc_duration_density;
-        std::cout << "flops_density: " << flops_density << " GFLOPS"
-                  << std::endl;
       }
 
-      if (coarsening_points > 0) {
-        size_t grid_size_before_coarsen = grid->getSize();
-        sgpp::base::SurplusCoarseningFunctor coarsen_func(
-            alpha, coarsening_points, coarsening_threshold);
-        grid_generator.coarsen(coarsen_func, alpha);
+      std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
+          operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
+              *grid, dimension, lambda, configFileName));
 
-        size_t grid_size_after_coarsen = grid->getSize();
-        std::cout << "coarsen: removed "
-                  << (grid_size_before_coarsen - grid_size_after_coarsen)
-                  << " grid points" << std::endl;
+      operation_mult->generateb(trainingData, b);
 
-        // adjust alpha to coarsen grid
+      double last_duration_generate_b = operation_mult->getLastDurationB();
+      std::cout << "last_duration_generate_b: " << last_duration_generate_b
+                << "s" << std::endl;
+      double ops_generate_b =
+          static_cast<double>(grid->getSize() * trainingData.getNrows() *
+                              (6 * dimension + 1)) *
+          1E-9;
+      std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+      double flops_generate_b = ops_generate_b / last_duration_generate_b;
+      std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
+                << std::endl;
+
+      if (i == 0) {
+        result_timings << last_duration_generate_b << "; " << flops_generate_b
+                       << "; ";
+      }
+
+      if (b_coarsening && i == 0) {
+        size_t old_size = alpha.getSize();
+        sgpp::base::DensityBCoarseningFunctor b_coarsen_functor(
+            b, b_coarsening_threshold);
+        grid_generator.coarsen(b_coarsen_functor, b);
         alpha.resize(grid->getSize());
-
-        std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
-            operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
+        std::cout << "b-based coarsening: removed "
+                  << (old_size - grid->getSize()) << " grid points"
+                  << std::endl;
+        operation_mult = std::unique_ptr<
+            datadriven::DensityOCLMultiPlatform::OperationDensity>(
+            datadriven::createDensityOCLMultiPlatformConfigured(
                 *grid, dimension, lambda, configFileName));
-
-        // regenerate b with coarsen grid
-        b.resize(grid->getSize());
-
-        // TODO: remove this?
-        operation_mult->generateb(trainingData, b);
-
-        double last_duration_generate_b = operation_mult->getLastDurationB();
-        std::cout << "last_duration_generate_b: " << last_duration_generate_b
-                  << "s" << std::endl;
-        double ops_generate_b =
-            static_cast<double>(grid->getSize() * trainingData.getNrows() *
-                                (6 * dimension + 1)) *
-            1E-9;
-        std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
-        double flops_generate_b = ops_generate_b / last_duration_generate_b;
-        std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
-                  << std::endl;
-
-        std::cout << "Solving density SLE" << std::endl;
-        solver->solve(*operation_mult, alpha, b, false, true);
-
-        std::cout << "Grid points after coarsening step: " << grid->getSize()
-                  << std::endl;
-
-        size_t iterations = solver->getNumberIterations();
-        size_t act_it = iterations + 1 + (iterations / 50);
-        std::cout << "act_it: " << act_it << std::endl;
-
-        double acc_duration_density =
-            operation_mult->getAccDurationDensityMult();
-        std::cout << "acc_duration_density: " << acc_duration_density << "s"
-                  << std::endl;
-
-        double ops_density =
-            static_cast<double>(std::pow(grid->getSize(), 2) * act_it *
-                                (14 * dimension + 2)) *
-            1E-9;
-
-        std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
-        double flops_density = ops_density / acc_duration_density;
-        std::cout << "flops_density: " << flops_density << " GFLOPS"
-                  << std::endl;
       }
+
+      std::cout << "Solving density SLE" << std::endl;
+      solver->solve(*operation_mult, alpha, b, false, true);
+
+      std::cout << "Grid points after refinement step: " << grid->getSize()
+                << std::endl;
+
+      size_t iterations = solver->getNumberIterations();
+      size_t act_it = iterations + 1 + (iterations / 50);
+      std::cout << "act_it: " << act_it << std::endl;
+
+      double acc_duration_density = operation_mult->getAccDurationDensityMult();
+      std::cout << "acc_duration_density: " << acc_duration_density << "s"
+                << std::endl;
+      double ops_density = static_cast<double>(std::pow(grid->getSize(), 2) *
+                                               act_it * (14 * dimension + 2)) *
+                           1E-9;
+      std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+      double flops_density = ops_density / acc_duration_density;
+      std::cout << "flops_density: " << flops_density << " GFLOPS" << std::endl;
+
+      if (i == 0) {
+        result_timings << acc_duration_density << "; " << flops_density << "; ";
+      }
+      // }
+
+      // if (coarsening_points > 0 && i > 0 && i < refinement_steps - 1) {
+      //   size_t grid_size_before_coarsen = grid->getSize();
+      //   sgpp::base::SurplusCoarseningFunctor coarsen_func(
+      //       alpha, coarsening_points, coarsening_threshold);
+      //   grid_generator.coarsen(coarsen_func, alpha);
+
+      //   size_t grid_size_after_coarsen = grid->getSize();
+      //   std::cout << "coarsen: removed "
+      //             << (grid_size_before_coarsen - grid_size_after_coarsen)
+      //             << " grid points" << std::endl;
+
+      //   // adjust alpha to coarsen grid
+      //   alpha.resize(grid->getSize());
+
+      //   std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
+      //       operation_mult(datadriven::createDensityOCLMultiPlatformConfigured(
+      //           *grid, dimension, lambda, configFileName));
+
+      //   // regenerate b with coarsen grid
+      //   b.resize(grid->getSize());
+
+      //   // TODO: remove this?
+      //   operation_mult->generateb(trainingData, b);
+
+      //   double last_duration_generate_b = operation_mult->getLastDurationB();
+      //   std::cout << "last_duration_generate_b: " << last_duration_generate_b
+      //             << "s" << std::endl;
+      //   double ops_generate_b =
+      //       static_cast<double>(grid->getSize() * trainingData.getNrows() *
+      //                           (6 * dimension + 1)) *
+      //       1E-9;
+      //   std::cout << "ops_generate_b: " << ops_generate_b << std::endl;
+      //   double flops_generate_b = ops_generate_b / last_duration_generate_b;
+      //   std::cout << "flops_generate_b: " << flops_generate_b << " GFLOPS"
+      //             << std::endl;
+
+      //   std::cout << "Solving density SLE" << std::endl;
+      //   solver->solve(*operation_mult, alpha, b, false, true);
+
+      //   std::cout << "Grid points after coarsening step: " << grid->getSize()
+      //             << std::endl;
+
+      //   size_t iterations = solver->getNumberIterations();
+      //   size_t act_it = iterations + 1 + (iterations / 50);
+      //   std::cout << "act_it: " << act_it << std::endl;
+
+      //   double acc_duration_density =
+      //   operation_mult->getAccDurationDensityMult(); std::cout <<
+      //   "acc_duration_density: " << acc_duration_density << "s"
+      //             << std::endl;
+
+      //   double ops_density = static_cast<double>(std::pow(grid->getSize(), 2)
+      //   *
+      //                                            act_it * (14 * dimension +
+      //                                            2)) *
+      //                        1E-9;
+
+      //   std::cout << "ops_density: " << ops_density << " GOps" << std::endl;
+      //   double flops_density = ops_density / acc_duration_density;
+      //   std::cout << "flops_density: " << flops_density << " GFLOPS" <<
+      //   std::endl;
+      // }
     }
     density_timer_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> density_elapsed_seconds =
@@ -874,7 +971,7 @@ int main(int argc, char **argv) {
     reuse_graph_stop = std::chrono::system_clock::now();
     std::chrono::duration<double> reuse_graph_seconds =
         reuse_graph_stop - reuse_graph_start;
-    std::cout << "loading graph (reuse) duration:"
+    std::cout << "loading graph (reuse) duration: "
               << reuse_graph_seconds.count() << "s" << std::endl;
   } else {
     std::cout << "Starting graph creation..." << std::endl;
