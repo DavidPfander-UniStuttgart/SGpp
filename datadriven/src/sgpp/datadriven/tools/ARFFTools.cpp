@@ -3,19 +3,19 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include <experimental/filesystem>
 #include <sgpp/base/exception/file_exception.hpp>
 #include <sgpp/datadriven/tools/ARFFTools.hpp>
-#include <experimental/filesystem>
 
 #include <sgpp/globaldef.hpp>
 
 #include <algorithm>
+#include <cstring>
+#include <exception>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <cstring>
-#include <exception>
 
 #ifdef ZLIB
 #include <zlib.h>
@@ -28,9 +28,9 @@
 namespace sgpp {
 namespace datadriven {
 
-unsigned long binary_file_size(const std::string &filename) {
+unsigned long binary_file_size(const std::string& filename) {
   // just quickly get the file size in bytes
-  FILE *file = fopen(filename.c_str(), "rb");
+  FILE* file = fopen(filename.c_str(), "rb");
   fseek(file, 0, SEEK_END);
   unsigned long size = ftell(file);
   fclose(file);
@@ -57,8 +57,7 @@ Dataset ARFFTools::readARFF(const std::string& filename, bool hasTargets) {
     std::transform(line.begin(), line.end(), line.begin(), toupper);
 
     if (dataReached && !line.empty()) {
-      if (hasTargets)
-        writeNewClass(line, dataset.getTargets(), instanceNo);
+      if (hasTargets) writeNewClass(line, dataset.getTargets(), instanceNo);
       writeNewTrainingDataEntry(line, dataset.getData(), instanceNo);
       instanceNo++;
     }
@@ -72,7 +71,7 @@ Dataset ARFFTools::readARFF(const std::string& filename, bool hasTargets) {
 
   return dataset;
 }
-std::string ARFFTools::readARFFHeader(const std::string &filename, long &offset) {
+std::string ARFFTools::readARFFHeader(const std::string& filename, long& offset) {
   std::string line;
   std::string result;
   std::ifstream myfile(filename.c_str());
@@ -80,14 +79,11 @@ std::string ARFFTools::readARFFHeader(const std::string &filename, long &offset)
     const auto msg = "Unable to open file: " + filename;
     throw sgpp::base::file_exception(msg.c_str());
   }
-  bool dataReached = false;
   while (!myfile.eof()) {
     std::getline(myfile, line);
     std::transform(line.begin(), line.end(), line.begin(), toupper);
-    bool reached_data =
-        (line.find("@DATA", 0) != line.npos);
+    bool reached_data = (line.find("@DATA", 0) != line.npos);
     if (reached_data) {
-      dataReached = true;
       offset = result.size() * sizeof(char);
       break;
     } else {
@@ -100,11 +96,10 @@ std::string ARFFTools::readARFFHeader(const std::string &filename, long &offset)
 }
 
 #ifdef USE_MPI
-Dataset ARFFTools::distributed_readARFF(const std::string& filename, const int offset, const
-                                        int number_instances, const int dimensions) {
-
+Dataset ARFFTools::distributed_readARFF(const std::string& filename, const int offset,
+                                        const int number_instances, const int dimensions) {
   Dataset dataset(number_instances, dimensions);
-  double *raw_pointer = dataset.getData().data();
+  double* raw_pointer = dataset.getData().data();
   MPI_File fh;
   MPI_Status stat;
   MPI_File_open(MPI_COMM_WORLD, filename.c_str(), MPI_MODE_RDONLY, MPI_INFO_NULL, &fh);
@@ -148,14 +143,13 @@ void ARFFTools::readARFFSize(const std::string& filename, size_t& numberInstance
   myfile.close();
 }
 
-void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::string
-                                         &header_filename, bool compressed) {
+void ARFFTools::convert_into_binary_file(const std::string& orig_filename,
+                                         std::string& header_filename, bool compressed) {
   std::experimental::filesystem::path binary_filepath(header_filename);
   std::string binary_filename = binary_filepath.filename().replace_extension("");
   binary_filename.append("_binary_data.bin");
   binary_filepath.replace_filename(binary_filename);
   binary_filename = binary_filepath.string();
-
 
   std::string line;
   std::ifstream myfile(orig_filename.c_str());
@@ -165,7 +159,6 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
   }
   size_t numberInstances = 0;
   size_t dimension = 0;
-  size_t instanceNo = 0;
   readARFFSize(orig_filename, numberInstances, dimension);
 
   // read header
@@ -192,8 +185,7 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
     std::stringstream parser(line);
     for (size_t i = 0; i < dimension; i++, dataindex++) {
       parser >> dataset[dataindex];
-      if (i != dimension -1 )
-        parser >> tmp;
+      if (i != dimension - 1) parser >> tmp;
     }
   }
   myfile.close();
@@ -207,20 +199,21 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
 #ifdef ZLIB
     std::cout << "Using gzip compression..." << std::endl;
     gzFile outfile = gzopen(binary_filename.c_str(), "wb");
-    gzwrite(outfile,(char*)&dataset[0], dataset.size() * sizeof(double));
+    gzwrite(outfile, (char*)&dataset[0], dataset.size() * sizeof(double));
     gzclose(outfile);
     numberInstances = binary_file_size(binary_filename);
     std::cout << "Original size: " << dataset.size() * sizeof(double) << std::endl;
     std::cout << "Compressed size: " << numberInstances << std::endl;
     std::cout << "Compression factor: "
-              << (1.0 - static_cast<double>(numberInstances) / (dataset.size() * sizeof(double))) * 100.0
+              << (1.0 - static_cast<double>(numberInstances) / (dataset.size() * sizeof(double))) *
+                     100.0
               << "%" << std::endl;
 #else
-    const std::string msg = "Trying to create compressed file without zlib enabled! Build with USE_ZLIB=1";
+    const std::string msg =
+        "Trying to create compressed file without zlib enabled! Build with USE_ZLIB=1";
     throw sgpp::base::file_exception(msg.c_str());
 #endif
   }
-
 
   // Append rest of the required information to the header
   if (compressed) {
@@ -235,7 +228,7 @@ void ARFFTools::convert_into_binary_file(const std::string &orig_filename, std::
   hout.close();
 }
 
-base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filename) {
+base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string& filename) {
   // Read ARFF header file
   std::string line;
   std::ifstream myfile(filename.c_str());
@@ -248,7 +241,9 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
   }
 
   bool compressed = false;
-  size_t byte_size = 0;
+  // #ifdef ZLIB
+  //   size_t byte_size = 0;
+  // #endif
   while (!myfile.eof()) {
     std::getline(myfile, line);
     if (line.find("@ATTRIBUTE class", 0) != line.npos) {
@@ -261,7 +256,7 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
       numberInstances = std::stol(line.substr(strlen("% DATA SET SIZE ")));
     } else if (line.find("% COMPRESSED DATA SET SIZE ", 0) != line.npos) {
 #ifdef ZLIB
-      byte_size = std::stol(line.substr(strlen("% COMPRESSED DATA SET SIZE ")));
+      // byte_size = std::stol(line.substr(strlen("% COMPRESSED DATA SET SIZE ")));
       compressed = true;
 #else
       const std::string msg = std::string("ERROR! Target dataset is compressed but ") +
@@ -270,14 +265,13 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
 #endif
     }
   }
-  if (numberInstances == 0){
-    const std::string msg = std::string("ERROR! No data set ") +
-                            std::string("size specified in ") + filename;
+  if (numberInstances == 0) {
+    const std::string msg =
+        std::string("ERROR! No data set ") + std::string("size specified in ") + filename;
     throw sgpp::base::file_exception(msg.c_str());
   }
 
-
-  base::DataMatrix datamatrix(numberInstances,dimension);
+  base::DataMatrix datamatrix(numberInstances, dimension);
   std::experimental::filesystem::path binary_filepath(filename);
   std::string binary_filename = binary_filepath.filename().replace_extension("");
   binary_filename.append("_binary_data.bin");
@@ -286,11 +280,10 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
 
   if (!compressed) {
     std::ifstream file(binary_filename, std::ios::in | std::ios::binary);
-    if (file)
-    {
-      char *memblock = (char *)datamatrix.data();
-      file.seekg (0, std::ios::beg);
-      file.read (memblock, numberInstances * dimension * sizeof(double));
+    if (file) {
+      char* memblock = (char*)datamatrix.data();
+      file.seekg(0, std::ios::beg);
+      file.read(memblock, numberInstances * dimension * sizeof(double));
       file.close();
 
     } else {
@@ -299,14 +292,13 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
   } else {
 #ifdef ZLIB
     std::cout << "Now reading compressed binary data: " << binary_filename << std::endl;
-    char *memblock = (char *)datamatrix.data();
+    char* memblock = (char*)datamatrix.data();
     gzFile file = gzopen(binary_filename.c_str(), "rb");
     if (!file) {
-      const std::string msg = std::string("ERROR! Could not open binary file ") +
-                              binary_filename;
+      const std::string msg = std::string("ERROR! Could not open binary file ") + binary_filename;
       throw sgpp::base::file_exception(msg.c_str());
     }
-    gzread (file, memblock, numberInstances * dimension * sizeof(double));
+    gzread(file, memblock, numberInstances * dimension * sizeof(double));
     gzclose(file);
 #else
     const std::string msg = std::string("ERROR! Target dataset is compressed but ") +
@@ -314,7 +306,7 @@ base::DataMatrix ARFFTools::read_binary_converted_ARFF(const std::string &filena
     throw sgpp::base::file_exception(msg.c_str());
 #endif
   }
-  return datamatrix; //should be moved (or optimized out by copy elison)
+  return datamatrix;  // should be moved (or optimized out by copy elison)
 }
 
 void ARFFTools::readARFFSizeFromString(const std::string& content, size_t& numberInstances,
@@ -358,8 +350,7 @@ Dataset ARFFTools::readARFFFromString(const std::string& content, bool hasTarget
     std::transform(line.begin(), line.end(), line.begin(), toupper);
 
     if (dataReached && !line.empty()) {
-      if (hasTargets)
-        writeNewClass(line, dataset.getTargets(), instanceNo);
+      if (hasTargets) writeNewClass(line, dataset.getTargets(), instanceNo);
       writeNewTrainingDataEntry(line, dataset.getData(), instanceNo);
       instanceNo++;
     }
