@@ -1,0 +1,1 @@
+./clustering_scripts/check_ARI.py --reference_cluster_assignment datasets_WPDM18/gaussian_c100_size1000000_dim10_noise_class.arff --cluster_assignment data_ref_testing_cluster_map.csv
