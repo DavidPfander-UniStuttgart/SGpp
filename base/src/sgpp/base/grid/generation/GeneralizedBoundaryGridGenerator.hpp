@@ -50,9 +50,10 @@ class GeneralizedBoundaryGridGenerator : public GridGenerator {
   void refine(RefinementFunctor& func, std::vector<size_t>* addedPoints = 0) override {}
   size_t getNumberOfRefinablePoints() override {
     return 0;
-  };
+  }
 
   void coarsen(CoarseningFunctor& func, DataVector& alpha) override {}
+  void coarsen(UnlimitedCoarseningFunctor& func, DataVector& alpha) override {}
   void coarsenNFirstOnly(CoarseningFunctor& func, DataVector& alpha,
                          size_t numFirstOnly) override {}
   size_t getNumberOfRemovablePoints() override {

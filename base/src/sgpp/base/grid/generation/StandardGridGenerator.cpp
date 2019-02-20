@@ -90,6 +90,11 @@ void StandardGridGenerator::coarsen(CoarseningFunctor& func, DataVector& alpha) 
   coarsen.free_coarsen(this->storage, func, alpha);
 }
 
+void StandardGridGenerator::coarsen(UnlimitedCoarseningFunctor& func, DataVector& alpha) {
+  HashCoarsening coarsen;
+  coarsen.free_coarsen(this->storage, func, alpha);
+}
+
 void StandardGridGenerator::coarsenNFirstOnly(CoarseningFunctor& func, DataVector& alpha,
                                               size_t numFirstOnly) {
   HashCoarsening coarsen;

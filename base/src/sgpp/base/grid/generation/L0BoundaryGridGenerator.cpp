@@ -56,6 +56,11 @@ void L0BoundaryGridGenerator::coarsen(CoarseningFunctor& func,
   coarsen.free_coarsen(this->storage, func, alpha);
 }
 
+void L0BoundaryGridGenerator::coarsen(UnlimitedCoarseningFunctor& func, DataVector& alpha) {
+  HashCoarsening coarsen;
+  coarsen.free_coarsen(this->storage, func, alpha);
+}
+
 void L0BoundaryGridGenerator::coarsenNFirstOnly(CoarseningFunctor& func,
     DataVector& alpha, size_t numFirstOnly) {
   HashCoarsening coarsen;

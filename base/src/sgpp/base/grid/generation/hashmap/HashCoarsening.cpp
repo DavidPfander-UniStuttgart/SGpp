@@ -147,6 +147,46 @@ void HashCoarsening::free_coarsen(GridStorage& storage,
 }
 
 
+void HashCoarsening::free_coarsen(GridStorage& storage,
+                                  UnlimitedCoarseningFunctor& functor,
+                                  DataVector& alpha) {
+  // check if the grid has any points
+  if (storage.getSize() == 0) {
+    throw generation_exception("storage empty");
+  }
+
+  // iteratively remove leafs until no more leafs to remove are detected
+  while (true){
+    std::vector<size_t> to_remove;
+
+    size_t grid_size = storage.getSize();
+    for (size_t z = 0; z < grid_size; z += 1) {
+      GridPoint& point = storage.getPoint(z);
+
+      if (point.isLeaf()) {
+        bool shall_remove = functor(storage, z);
+
+        if (shall_remove) {
+            to_remove.push_back(z);
+        }
+      }
+    }
+
+    if (to_remove.size() == 0) {
+        break;
+    }
+
+    // For some reason HashGridStorage expects a std::list and not a vector D:
+    std::list<size_t> removedPointsList(to_remove.begin(),
+                                        to_remove.end());
+    std::vector<size_t> remainingIndex = storage.deletePoints(removedPointsList);
+
+    // Drop Elements from DataVector
+    alpha.restructure(remainingIndex);
+  }
+}
+
+
 size_t HashCoarsening::getNumberOfRemovablePoints(GridStorage& storage) {
   size_t counter = 0;
 

@@ -50,6 +50,7 @@ class BoundaryGridGenerator : public GridGenerator {
   size_t getNumberOfRefinablePoints() override;
 
   void coarsen(CoarseningFunctor& func, DataVector& alpha) override;
+  void coarsen(UnlimitedCoarseningFunctor& func, DataVector& alpha) override;
   void coarsenNFirstOnly(CoarseningFunctor& func, DataVector& alpha,
                          size_t numFirstOnly) override;
   size_t getNumberOfRemovablePoints() override;

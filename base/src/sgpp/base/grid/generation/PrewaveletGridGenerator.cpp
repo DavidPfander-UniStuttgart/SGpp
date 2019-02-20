@@ -254,6 +254,12 @@ void PrewaveletGridGenerator::coarsen(CoarseningFunctor& func,
   coarsen.free_coarsen(this->storage, func, alpha);
 }
 
+void PrewaveletGridGenerator::coarsen(UnlimitedCoarseningFunctor& func,
+                                      DataVector& alpha) {
+  HashCoarsening coarsen;
+  coarsen.free_coarsen(this->storage, func, alpha);
+}
+
 void PrewaveletGridGenerator::coarsenNFirstOnly(CoarseningFunctor& func,
     DataVector& alpha, size_t numFirstOnly) {
   HashCoarsening coarsen;

@@ -71,6 +71,12 @@ void PeriodicGridGenerator::coarsen(CoarseningFunctor& func,
     "PeriodicGridGenerator::coarsen is not implemented");
 }
 
+void PeriodicGridGenerator::coarsen(UnlimitedCoarseningFunctor& func,
+                                    DataVector& alpha) {
+  throw generation_exception(
+    "PeriodicGridGenerator::coarsen is not implemented");
+}
+
 void PeriodicGridGenerator::coarsenNFirstOnly(CoarseningFunctor& func,
     DataVector& alpha, size_t numFirstOnly) {
   throw generation_exception(

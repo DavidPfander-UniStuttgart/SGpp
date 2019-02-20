@@ -7,6 +7,7 @@
 #define GRIDGENERATOR_HPP
 
 #include <sgpp/base/grid/generation/functors/CoarseningFunctor.hpp>
+#include <sgpp/base/grid/generation/functors/UnlimitedCoarseningFunctor.hpp>
 #include <sgpp/base/grid/generation/functors/RefinementFunctor.hpp>
 
 #include <sgpp/base/datatypes/DataVector.hpp>
@@ -142,6 +143,14 @@ class GridGenerator {
    * @param alpha Pointer to DataVector containing the grid's coefficients
    */
   virtual void coarsen(CoarseningFunctor& func, DataVector& alpha) = 0;
+
+  /**
+   * Coarsens a  grid according to the settings of the CoarseningFunctor func.
+   *
+   * @param func pointer to coarsening functor
+   * @param alpha Pointer to DataVector containing the grid's coefficients
+   */
+    virtual void coarsen(UnlimitedCoarseningFunctor& func, DataVector& alpha) = 0;    
 
   /**
    * Coarsens a  grid according to the settings of the CoarseningFunctor func.
