@@ -4,32 +4,29 @@ namespace sgpp {
 namespace datadriven {
 
 class spatial_refinement {
-private:
+ private:
   int64_t dim;
   int64_t max_level;
   int64_t min_support;
-  const std::vector<double> &unfilted_data;
+  std::vector<double> data;
 
   int64_t entries;
   std::vector<std::vector<int64_t>> levels;
   std::vector<std::vector<int64_t>> indices;
-  // std::set<std::pair<std::vector<int64_t>, std::vector<int64_t>>> visited;
   int64_t num_visited;
 
   std::vector<double> bound_left;
   std::vector<double> bound_right;
-  // std::vector<double> data_point;
 
   std::vector<int64_t> child_l;
   std::vector<int64_t> child_i;
 
-  int64_t regular_accept_level = 6;
+  int64_t regular_accept_level = 1;
 
   enum class direction { left, right };
 
-  void child_d_dir(std::vector<int64_t> &l, std::vector<int64_t> &i,
-                   std::vector<int64_t> &child_l, std::vector<int64_t> &child_i,
-                   int64_t d, direction dir) {
+  void child_d_dir(std::vector<int64_t> &l, std::vector<int64_t> &i, std::vector<int64_t> &child_l,
+                   std::vector<int64_t> &child_i, int64_t d, direction dir) {
     child_l = l;
     child_i = i;
     child_l[d] += 1;
@@ -38,7 +35,7 @@ private:
     } else if (dir == direction::right) {
       child_i[d] = 2 * child_i[d] + 1;
     } else {
-      throw; // never
+      throw;  // never
     }
   }
 
@@ -46,159 +43,86 @@ private:
                         std::vector<double> &neighbor, direction dir) {
     if (dir == direction::left) {
       for (int64_t d = 0; d < dim; d += 1) {
-        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) *
-                      static_cast<double>(i[d] - 1ll);
+        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d] - 1ll);
       }
     } else if (dir == direction::right) {
       for (int64_t d = 0; d < dim; d += 1) {
-        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) *
-                      static_cast<double>(i[d] + 1ll);
+        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d] + 1ll);
       }
     } else {
-      throw; // never
+      throw;  // never
     }
   }
 
-  bool has_support(std::vector<double> &bound_left,
-                   std::vector<double> &bound_right,
-                   const std::vector<double> &data, size_t data_index) {
-    // bool sup = true;
-    for (int64_t d = 0; d < dim; d += 1) {
-      if (data[data_index * dim + d] < bound_left[d] ||
-          data[data_index * dim + d] > bound_right[d]) {
-        return false;
-        // sup = false;
-      }
-    }
-    // return sup;
-    return true;
-  }
-
-  bool has_support(std::vector<double> &bound_left,
-                   std::vector<double> &bound_right,
-                   const std::vector<double> &data, size_t data_index,
-                   size_t changed_dim) {
-    if (data[data_index * dim + changed_dim] < bound_left[changed_dim] ||
-        data[data_index * dim + changed_dim] > bound_right[changed_dim]) {
+  bool has_support(std::vector<double> &bound_left, std::vector<double> &bound_right,
+                   size_t data_index, size_t changed_dim) {
+    if (data[changed_dim * entries + data_index] < bound_left[changed_dim] ||
+        data[changed_dim * entries + data_index] > bound_right[changed_dim]) {
       return false;
     }
     return true;
   }
 
-  // std::vector<double> __attribute__((noinline))
   std::vector<size_t> __attribute__((noinline))
-  filter(const std::vector<double> &data,
-         const std::vector<size_t> &cur_indices, std::vector<int64_t> &cur_l,
+  filter(const std::vector<size_t> &cur_indices, std::vector<int64_t> &cur_l,
          std::vector<int64_t> &cur_i, size_t changed_dim) {
-    // std::vector<double> filtered_dataset;
-    // filtered_dataset.reserve(data.size());
-    const size_t cur_entries = data.size() / dim;
     std::vector<size_t> filtered_indices;
-    filtered_indices.reserve(cur_entries);
-    // for (int64_t i = 0; i < cur_entries; i += 1) {
+    filtered_indices.reserve(cur_indices.size());
     for (size_t i : cur_indices) {
-      if (has_support(bound_left, bound_right, data, i, changed_dim)) {
+      if (has_support(bound_left, bound_right, i, changed_dim)) {
         filtered_indices.push_back(i);
-        // for (int64_t d = 0; d < dim; d += 1) {
-        //   filtered_dataset.push_back(data[i * dim + d]);
-        // }
       }
     }
-    // return filtered_dataset;
     return filtered_indices;
+  }
+
+  int64_t __attribute__((noinline))
+  verify_support(const std::vector<size_t> &cur_indices, std::vector<int64_t> &cur_l,
+                 std::vector<int64_t> &cur_i, size_t changed_dim) {
+    int64_t num_support = 0;
+    for (size_t i : cur_indices) {
+      if (has_support(bound_left, bound_right, i, changed_dim)) {
+        num_support += 1;
+      }
+    }
+    return num_support;
   }
 
   // N * m data points accessed (~memory operations)
   void refine_impl(std::vector<int64_t> cur_l, std::vector<int64_t> cur_i,
-                   const std::vector<double> &data,
-                   const std::vector<size_t> &cur_indices, int64_t sum_l,
-                   size_t changed_dim) {
+                   const std::vector<size_t> &cur_indices, int64_t sum_l, size_t changed_dim) {
     // already visited?
     num_visited += 1;
     if (num_visited % 1000 == 0) {
       std::cout << "num_visited: " << num_visited << std::endl;
     }
 
-    // // max_level reached?
-    // int64_t sum_l = 0;
-    // for (int64_t d = 0; d < dim; d += 1) {
-    //   sum_l += cur_l[d];
-    // }
-    // if (sum_l > max_level + dim - 1) {
-    //   std::cerr << "ERROR: should not reach!!!" << std::endl;
-    //   return;
-    // }
-    // validate that the current grid point has enough grid points on its
-    // support
-
     neighbor_pos_dir(cur_l, cur_i, bound_left, direction::left);
     neighbor_pos_dir(cur_l, cur_i, bound_right, direction::right);
 
-    // std::cout << "---------- l, i, n_left, n_right, data points
-    // -----------"
-    //           << std::endl;
     // print_level(cur_l);
     // print_index(cur_i);
     // print_pos(bound_left);
     // print_pos(bound_right);
 
     bool use_filtered = false;
-    // std::vector<double> filtered_dataset;
     std::vector<size_t> filtered_indices;
     if (sum_l > regular_accept_level + dim - 1) {
       // std::cout << "slow point" << std::endl;
       // int64_t cur_entries = data.size() / dim;
       use_filtered = true;
-      // filtered_dataset = filter(data, cur_indices, cur_l, cur_i,
-      // changed_dim);
-      filtered_indices = filter(data, cur_indices, cur_l, cur_i, changed_dim);
-      // int64_t num_support = filtered_dataset.size();
+      filtered_indices = filter(cur_indices, cur_l, cur_i, changed_dim);
       int64_t num_support = filtered_indices.size();
-
-      // filtered_dataset.reserve(data.size());
-
-      // for (int64_t i = 0; i < cur_entries; i += 1) {
-      //   if (has_support(bound_left, bound_right, data, i)) {
-      //     num_support += 1;
-      //     for (int64_t d = 0; d < dim; d += 1) {
-      //       filtered_dataset.push_back(data[i * dim + d]);
-      //     }
-      //   }
-      //   // if (num_support > min_support) {
-      //   //   break;
-      //   // }
-      // }
 
       // std::cout << "num_support: " << num_support << std::endl;
       if (num_support < min_support) {
         return;
       }
 
-      // std::cout << "filtered_dataset.size(): " << filtered_dataset.size()
-      //           << " data.size(): " << data.size()
-      //           << " diff: " << (data.size() - filtered_dataset.size())
-      //           << std::endl;
-
-      // // needs to live on the stack
-      // std::vector<double> filtered_dataset;
-      // bool use_filtered = false;
-      // if (num_support < 0.5 * data.size()) {
-      //   use_filtered = true;
-      //   for (int64_t i = 0; i < cur_entries; i += 1) {
-      //     for (int64_t d = 0; d < dim; d += 1) {
-      //       data_point[d] = data[i * dim + d];
-      //     }
-      //     if (has_support(bound_left, bound_right, data_point)) {
-      //       for (int64_t d = 0; d < dim; d += 1) {
-      //         filtered_dataset.push_back(data[i * dim + d]);
-      //       }
-      //     }
-      //   }
-      // }
+      // std::cout << "filtered_indices.size(): " << filtered_indices.size()
+      //           << " cur_indices.size(): " << cur_indices.size()
+      //           << " diff: " << (cur_indices.size() - filtered_indices.size()) << std::endl;
     }
-    // else {
-    //   std::cout << "fast point" << std::endl;
-    // }
 
     levels.push_back(cur_l);
     indices.push_back(cur_i);
@@ -212,17 +136,15 @@ private:
       for (int64_t d = 0; d < dim; d += 1) {
         child_d_dir(cur_l, cur_i, child_l, child_i, d, direction::left);
         if (use_filtered) {
-          // refine_impl(child_l, child_i, filtered_dataset, sum_l + 1, d);
-          refine_impl(child_l, child_i, data, filtered_indices, sum_l + 1, d);
+          refine_impl(child_l, child_i, filtered_indices, sum_l + 1, d);
         } else {
-          refine_impl(child_l, child_i, data, cur_indices, sum_l + 1, d);
+          refine_impl(child_l, child_i, cur_indices, sum_l + 1, d);
         }
         child_d_dir(cur_l, cur_i, child_l, child_i, d, direction::right);
         if (use_filtered) {
-          // refine_impl(child_l, child_i, filtered_dataset, sum_l + 1, d);
-          refine_impl(child_l, child_i, data, filtered_indices, sum_l + 1, d);
+          refine_impl(child_l, child_i, filtered_indices, sum_l + 1, d);
         } else {
-          refine_impl(child_l, child_i, data, cur_indices, sum_l + 1, d);
+          refine_impl(child_l, child_i, cur_indices, sum_l + 1, d);
         }
         if (cur_l[d] != 1) {
           break;
@@ -231,26 +153,37 @@ private:
     }
   }
 
-public:
+ public:
   spatial_refinement(int64_t dim, int64_t max_level, int64_t min_support,
                      const std::vector<double> &data)
-      : dim(dim), max_level(max_level), min_support(min_support),
-        unfilted_data(data), num_visited(0), bound_left(dim),
-        bound_right(dim), // data_point(dim),
-        child_l(dim), child_i(dim) {
+      : dim(dim),
+        max_level(max_level),
+        min_support(min_support),
+        num_visited(0),
+        bound_left(dim),
+        bound_right(dim),
+        child_l(dim),
+        child_i(dim) {
     entries = data.size() / dim;
+    this->data.resize(data.size());
+    // convert data to SoA
+    for (int64_t i = 0; i < entries; i += 1) {
+      for (int64_t d = 0; d < dim; d += 1) {
+        this->data[d * entries + i] = data[i * dim + d];
+      }
+    }
   }
 
   void refine() {
     levels.clear();
     indices.clear();
-    std::vector<size_t> unfiltered_indices(unfilted_data.size() / dim);
+    std::vector<size_t> unfiltered_indices(entries);
     for (size_t i = 0; i < unfiltered_indices.size(); i += 1) {
       unfiltered_indices[i] = i;
     }
     std::vector<int64_t> l(dim, 1);
     std::vector<int64_t> i(dim, 1);
-    refine_impl(l, i, unfilted_data, unfiltered_indices, dim, 0);
+    refine_impl(l, i, unfiltered_indices, dim, 0);
   }
 
   std::vector<std::vector<int64_t>> &get_levels() { return levels; }
@@ -287,12 +220,11 @@ public:
     std::cout << ")" << std::endl;
   }
 
-  static void to_pos(const std::vector<int64_t> &l,
-                     const std::vector<int64_t> &i, std::vector<double> &pos) {
+  static void to_pos(const std::vector<int64_t> &l, const std::vector<int64_t> &i,
+                     std::vector<double> &pos) {
     int64_t dim = l.size();
     for (int64_t d = 0; d < dim; d += 1) {
-      pos[d] =
-          std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d]);
+      pos[d] = std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d]);
     }
   }
 
@@ -325,5 +257,5 @@ public:
   }
 };
 
-} // namespace datadriven
-} // namespace sgpp
+}  // namespace datadriven
+}  // namespace sgpp
