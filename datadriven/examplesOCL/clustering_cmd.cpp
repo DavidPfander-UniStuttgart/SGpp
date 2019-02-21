@@ -556,6 +556,7 @@ int main(int argc, char **argv) {
     } else {
       sgpp::datadriven::spatial_refinement_blocked ref(
           dimension, level, datadriven_refinement_min_support, trainingData);
+      ref.set_OCL(true);
       ref.refine();
       std::vector<int64_t> &ls = ref.get_levels();
       std::vector<int64_t> &is = ref.get_indices();

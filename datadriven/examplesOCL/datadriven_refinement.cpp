@@ -488,10 +488,9 @@ int main(void) {
     }
     grid_storage.insert(p);
   }
-  std::cout << "grid->getSize(): " << grid->getSize() << std::endl;
 
   if (ls.size() > 0) {
-    std::cout << "final number of grid points created: " << ls.size() << std::endl;
+    std::cout << "final number of grid points created: " << (ls.size() / dim) << std::endl;
     sgpp::datadriven::spatial_refinement::write_grid_positions(grid_file_name, dataset_file_name,
                                                                ls, is);
   } else {

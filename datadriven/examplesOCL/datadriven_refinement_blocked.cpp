@@ -23,16 +23,16 @@ int main(void) {
 
   std::cout << "dim: " << dim << " entries: " << entries << std::endl;
 
-  int64_t max_level = 6;
+  int64_t max_level = 11;
   int64_t min_support = 50;
   std::string grid_file_name("refined_grid.csv");
 
   sgpp::datadriven::spatial_refinement_blocked ref(dim, max_level, min_support, data);
+  ref.set_OCL(true);
   ref.refine();
 
   std::vector<int64_t> &ls = ref.get_levels();
   std::vector<int64_t> &is = ref.get_indices();
-  std::cout << "ls.size(): " << ls.size() << std::endl;
 
   std::unique_ptr<sgpp::base::Grid> grid =
       std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createLinearGrid(dim));
@@ -45,10 +45,9 @@ int main(void) {
     }
     grid_storage.insert(p);
   }
-  std::cout << "grid->getSize(): " << grid->getSize() << std::endl;
 
   if (ls.size() > 0) {
-    std::cout << "final number of grid points created: " << ls.size() << std::endl;
+    std::cout << "final number of grid points created: " << (ls.size() / dim) << std::endl;
     sgpp::datadriven::spatial_refinement_blocked::write_grid_positions(dim, grid_file_name,
                                                                        dataset_file_name, ls, is);
   } else {
