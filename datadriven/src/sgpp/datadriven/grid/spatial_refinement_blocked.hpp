@@ -10,7 +10,7 @@
 namespace sgpp::datadriven {
 
 class spatial_refinement_blocked {
- private:
+private:
   int64_t dim;
   int64_t max_level;
   int64_t min_support;
@@ -32,10 +32,12 @@ class spatial_refinement_blocked {
 
 #if USE_OCL == 1
   bool use_ocl = false;
+  std::string ocl_config_file_name;
 #endif
 
   inline void child_d_dir(std::vector<int64_t> &l, std::vector<int64_t> &i,
-                          std::vector<int64_t> &child_l, std::vector<int64_t> &child_i, int64_t d,
+                          std::vector<int64_t> &child_l,
+                          std::vector<int64_t> &child_i, int64_t d,
                           direction dir) {
     child_l = l;
     child_i = i;
@@ -45,7 +47,7 @@ class spatial_refinement_blocked {
     } else if (dir == direction::right) {
       child_i[d] = 2 * child_i[d] + 1;
     } else {
-      throw;  // never
+      throw; // never
     }
   }
 
@@ -53,14 +55,16 @@ class spatial_refinement_blocked {
                                std::vector<double> &neighbor, direction dir) {
     if (dir == direction::left) {
       for (int64_t d = 0; d < dim; d += 1) {
-        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d] - 1ll);
+        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) *
+                      static_cast<double>(i[d] - 1ll);
       }
     } else if (dir == direction::right) {
       for (int64_t d = 0; d < dim; d += 1) {
-        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) * static_cast<double>(i[d] + 1ll);
+        neighbor[d] = std::pow(2.0, static_cast<double>(-l[d])) *
+                      static_cast<double>(i[d] + 1ll);
       }
     } else {
-      throw;  // never
+      throw; // never
     }
   }
 
@@ -76,8 +80,9 @@ class spatial_refinement_blocked {
 
   void refine_impl();
 
- public:
-  spatial_refinement_blocked(int64_t dim, int64_t max_level, int64_t min_support,
+public:
+  spatial_refinement_blocked(int64_t dim, int64_t max_level,
+                             int64_t min_support,
                              const std::vector<double> &data);
   void refine();
   std::vector<int64_t> &get_levels();
@@ -85,14 +90,19 @@ class spatial_refinement_blocked {
   void print_level(std::vector<int64_t> l);
   void print_index(std::vector<int64_t> i);
   void print_pos(std::vector<double> pos);
-  static void write_grid_positions(int64_t dim, const std::string &grid_file_name,
-                                   const std::string &dataset_file_name, std::vector<int64_t> &ls,
+  static void write_grid_positions(int64_t dim,
+                                   const std::string &grid_file_name,
+                                   const std::string &dataset_file_name,
+                                   std::vector<int64_t> &ls,
                                    std::vector<int64_t> &is);
 
 #if USE_OCL == 1
-  void set_OCL(bool use_ocl = true) { this->use_ocl = use_ocl; }
+  inline void enable_OCL(const std::string &ocl_config_file_name) {
+    this->use_ocl = true;
+    this->ocl_config_file_name = ocl_config_file_name;
+  }
 #endif
 
-};  // namespace datadriven
+}; // namespace datadriven
 
-}  // namespace sgpp::datadriven
+} // namespace sgpp::datadriven

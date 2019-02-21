@@ -141,9 +141,8 @@ void dict_node::parseAttributes(std::vector<token>::iterator &stream_it,
         this->attributes[attributeName] = std::move(attributeNode);
         state = State::COMMAFINISH;
       } else {
-        throw json_exception((*stream_it),
-                             "expected attribute value type "
-                             "(string, id, list or dict)");
+        throw json_exception((*stream_it), "expected attribute value type "
+                                           "(string, id, list or dict)");
       }
     } else if (state == State::COMMAFINISH) {
       if ((*stream_it).type == token_type::COMMA) {
@@ -155,10 +154,10 @@ void dict_node::parseAttributes(std::vector<token>::iterator &stream_it,
         throw json_exception((*stream_it), "expected \",\" or \"}\"");
       }
     }
-  }  // namespace json
+  } // namespace json
 
   throw json_exception("unexpected end-of-file");
-}  // namespace json
+} // namespace json
 
 node &dict_node::operator[](const std::string &key) {
   if (this->attributes.count(key) == 0) {
@@ -183,7 +182,8 @@ void dict_node::serialize(std::ostream &outFile, size_t indentWidth) {
     }
 
     outFile << attrIndentation << "\"" << key << "\": ";
-    this->attributes[key]->serialize(outFile, indentWidth + node::SERIALIZE_INDENT);
+    this->attributes[key]->serialize(outFile,
+                                     indentWidth + node::SERIALIZE_INDENT);
   }
 
   outFile << std::endl << indentation << "}";
@@ -200,7 +200,8 @@ void dict_node::addAttribute(const std::string &name, std::unique_ptr<node> n) {
   if (n->parent != nullptr) {
     throw json_exception("addAttribute(): attribute was already added");
   } else if (this->attributes.count(name) > 0) {
-    throw json_exception("addAttribute(): attribute with same name already exists");
+    throw json_exception(
+        "addAttribute(): attribute with same name already exists");
   }
 
   n->parent = this;
@@ -234,7 +235,8 @@ std::unique_ptr<node> dict_node::removeAttribute(const std::string name) {
 }
 
 // returns the node to which the attribute was added
-node &dict_node::addTextAttr(const std::string &name, const std::string &value) {
+node &dict_node::addTextAttr(const std::string &name,
+                             const std::string &value) {
   auto textNode = std::unique_ptr<text_node>(new text_node());
   textNode->set(value);
   this->addAttribute(name, std::move(textNode));
@@ -292,7 +294,7 @@ node &dict_node::addIDAttr(const std::string &name, const bool &value) {
 // returns created dict node
 node &dict_node::addDictAttr(const std::string &name) {
   auto dictNode = std::unique_ptr<dict_node>(new dict_node());
-  auto &reference = *dictNode;  // because dictNode will be invalidated
+  auto &reference = *dictNode; // because dictNode will be invalidated
   this->addAttribute(name, std::move(dictNode));
   return reference;
 }
@@ -300,7 +302,7 @@ node &dict_node::addDictAttr(const std::string &name) {
 // returns created list node
 node &dict_node::addListAttr(const std::string &name) {
   auto listNode = std::unique_ptr<list_node>(new list_node());
-  auto &reference = *listNode;  // because listNode will be invalidated
+  auto &reference = *listNode; // because listNode will be invalidated
   this->addAttribute(name, std::move(listNode));
   return reference;
 }
@@ -308,7 +310,8 @@ node &dict_node::addListAttr(const std::string &name) {
 // returns the node to which the attribute was added
 // replaces a node, adds a new node, if the node does not exist,
 // the old node is deleted
-node &dict_node::replaceTextAttr(const std::string &name, const std::string &value) {
+node &dict_node::replaceTextAttr(const std::string &name,
+                                 const std::string &value) {
   if (this->attributes.count(name) > 0) {
     this->removeAttribute(name);
   }
@@ -320,7 +323,8 @@ node &dict_node::replaceTextAttr(const std::string &name, const std::string &val
 // returns the node to which the attribute was added
 // replaces a node, adds a new node, if the node does not exist,
 // the old node is deleted
-node &dict_node::replaceIDAttr(const std::string &name, const std::string &value) {
+node &dict_node::replaceIDAttr(const std::string &name,
+                               const std::string &value) {
   if (this->attributes.count(name) > 0) {
     this->removeAttribute(name);
   }
@@ -432,4 +436,4 @@ std::unique_ptr<node> dict_node::erase(node &n) {
 
 std::vector<std::string> &dict_node::keys() { return this->keyOrder; }
 
-}  // namespace json
+} // namespace json
