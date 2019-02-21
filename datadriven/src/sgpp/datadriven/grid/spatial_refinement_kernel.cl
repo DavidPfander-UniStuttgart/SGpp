@@ -8,7 +8,7 @@ __kernel void verify_support(__global double *data, const long data_size,
   double bound_left[DIM];
   for (int d = 0; d < DIM; d += 1) {
     bound_left[d] = pow(2.0, (double)(-schedule_level[gid * DIM + d])) *
-                    (double)(schedule_index[gid * DIM + d] - 1ll);
+                    (double)(schedule_index[gid * DIM + d] - 1l);
     // if (gid == 0) {
     //   printf("d: %i, schedule_level: %li, schedule_index: %li, left: %f\n", d,
     //          schedule_level[gid * DIM + d], schedule_index[gid * DIM + d], bound_left[d]);
@@ -17,7 +17,7 @@ __kernel void verify_support(__global double *data, const long data_size,
   double bound_right[DIM];
   for (int d = 0; d < DIM; d += 1) {
     bound_right[d] = pow(2.0, (double)(-schedule_level[gid * DIM + d])) *
-                     (double)(schedule_index[gid * DIM + d] + 1ll);
+                     (double)(schedule_index[gid * DIM + d] + 1l);
     // if (gid == 0) {
     //   printf("d: %i, schedule_level: %li, schedule_index: %li, right: %f\n", d,
     //          schedule_level[gid * DIM + d], schedule_index[gid * DIM + d], bound_right[d]);

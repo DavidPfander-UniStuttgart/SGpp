@@ -129,10 +129,7 @@ void manager_t::build_kernel(
         std::cout << "--- Build Log ---" << std::endl << buffer << std::endl;
       }
 
-      std::stringstream errorString;
-      errorString << "OCL Error: OpenCL build error. Error code: " << err
-                  << std::endl;
-      throw manager_error(errorString.str());
+      check(err, "OCL Error: OpenCL build error");
     }
 
     for (size_t i = 0; i < platform.deviceIds.size(); i++) {
@@ -215,12 +212,7 @@ cl_kernel manager_t::build_kernel(const std::string &source, device_t &device,
   }
 
   // report the error if the build failed
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString << "OCL Error: OpenCL build error. Error code: " << err
-                << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, "OCL Error: OpenCL build error");
 
   cl_kernel kernel = clCreateKernel(program, kernel_name.c_str(), &err);
   check(err, "failed to create kernel");
@@ -240,13 +232,7 @@ void manager_t::configure(bool useConfiguration) {
   cl_uint platformCount;
   err = clGetPlatformIDs(0, nullptr, &platformCount);
 
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString
-        << "OCL Error: Unable to get number of OpenCL platforms. Error Code: "
-        << err << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, "OCL Error: Unable to get number of OpenCL platforms");
 
   if (verbose) {
     std::cout << "OCL Info: " << platformCount
@@ -257,12 +243,7 @@ void manager_t::configure(bool useConfiguration) {
   std::vector<cl_platform_id> platformIds(platformCount);
   err = clGetPlatformIDs(platformCount, platformIds.data(), nullptr);
 
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString << "OCL Error: Unable to get Platform ID. Error Code: " << err
-                << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, "OCL Error: Unable to get Platform ID");
 
   for (size_t i = 0; i < platformCount; i++) {
     this->configure_platform(platformIds[i], parameters, useConfiguration);
@@ -278,15 +259,11 @@ void manager_t::configure_platform(cl_platform_id platformId,
   err = clGetPlatformInfo(platformId, CL_PLATFORM_NAME, 128 * sizeof(char),
                           platformName, nullptr);
 
-  if (CL_SUCCESS != err) {
-    std::stringstream errorString;
-    errorString << "OCL Error: can't get platform name!" << std::endl;
-    throw manager_error(errorString.str());
-  } else {
-    if (verbose) {
-      std::cout << "OCL Info: detected platform, name: \"" << platformName
-                << "\"" << std::endl;
-    }
+  check(err, "OCL Error: can't get platform name");
+
+  if (verbose) {
+    std::cout << "OCL Info: detected platform, name: \"" << platformName << "\""
+              << std::endl;
   }
 
   if (verbose) {
@@ -294,14 +271,9 @@ void manager_t::configure_platform(cl_platform_id platformId,
     err = clGetPlatformInfo(platformId, CL_PLATFORM_VENDOR, 128 * sizeof(char),
                             vendor_name, nullptr);
 
-    if (CL_SUCCESS != err) {
-      std::stringstream errorString;
-      errorString << "OCL Error: Can't get platform vendor!" << std::endl;
-      throw manager_error(errorString.str());
-    } else {
-      std::cout << "OCL Info: detected platform vendor name: \"" << vendor_name
-                << "\"" << std::endl;
-    }
+    check(err, "OCL Error: Can't get platform vendor");
+    std::cout << "OCL Info: detected platform vendor name: \"" << vendor_name
+              << "\"" << std::endl;
   }
 
   if (useConfiguration) {
@@ -331,12 +303,7 @@ void manager_t::configure_platform(cl_platform_id platformId,
   err = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_ALL, 0, nullptr,
                        &currentPlatformDevices);
 
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString << "OCL Error: Unable to get device count. Error Code: " << err
-                << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, "OCL Error: Unable to get device count");
 
   if (verbose) {
     std::cout << "OCL Info: platform device count: " << currentPlatformDevices
@@ -348,12 +315,8 @@ void manager_t::configure_platform(cl_platform_id platformId,
                        (cl_uint)currentPlatformDevices, deviceIds.data(),
                        nullptr);
 
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString << "OCL Error: Unable to get device id for platform \""
-                << platformName << "\". Error Code: " << err << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, std::string("OCL Error: Unable to get device id for platform ") +
+                 platformName);
 
   std::vector<cl_device_id> filteredDeviceIds;
 
@@ -395,12 +358,7 @@ void manager_t::configure_device(cl_device_id deviceId, json::node &devicesNode,
   err = clGetDeviceInfo(deviceId, CL_DEVICE_NAME, 128 * sizeof(char),
                         &deviceName, nullptr);
 
-  if (err != CL_SUCCESS) {
-    std::stringstream errorString;
-    errorString << "OCL Error: Failed to read the device name for device: "
-                << deviceId << std::endl;
-    throw manager_error(errorString.str());
-  }
+  check(err, "OCL Error: Failed to read the device name");
 
   if (verbose) {
     std::cout << "OCL Info: detected device, name: \"" << deviceName << "\""
