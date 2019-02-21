@@ -33,13 +33,13 @@ class KernelDensityBInterface {
   /// exist yet
   static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      json::node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
         const std::string &kernelName = "cscheme";
 
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                      ? deviceNode["KERNELS"][kernelName]
                                      : deviceNode["KERNELS"].addDictAttr(kernelName);
 
@@ -117,12 +117,12 @@ class KernelDensityB : public KernelDensityBInterface<T> {
   size_t localSize;
 
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
  public:
   KernelDensityB(std::shared_ptr<base::OCLDevice> dev, size_t dims,
                  std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                 json::Node &kernelConfiguration, std::vector<int> &points)
+                 json::node &kernelConfiguration, std::vector<int> &points)
       : device(dev),
         dims(dims),
         err(CL_SUCCESS),

@@ -404,7 +404,7 @@ std::shared_ptr<OCLOperationConfiguration> getConfigurationDefaultsSingleDevice(
       continue;
     }
 
-    json::Node& platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node& platformNode = (*parameters)["PLATFORMS"][platformName];
 
     std::vector<std::string> deviceNames = platformNode["DEVICES"].keys();
     for (std::string& deviceName : deviceNames) {
@@ -416,7 +416,7 @@ std::shared_ptr<OCLOperationConfiguration> getConfigurationDefaultsSingleDevice(
       }
 
       // make sure there is only a single device of the selected device
-      json::Node& deviceNode = platformNode["DEVICES"][deviceName];
+      json::node& deviceNode = platformNode["DEVICES"][deviceName];
       deviceNode.addIDAttr("COUNT", UINT64_C(1));
     }
   }

@@ -91,10 +91,10 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       throw base::operation_exception(errorString.str());
     }
     auto device = devices[0];
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
-    json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    json::node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    json::node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
 
     if (!secondKernelConfig.contains("USE_COMPRESSION_FIXED")) {
       bKernel = std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager,
@@ -175,10 +175,10 @@ class OperationDensityOCLMultiPlatform : public OperationDensity {
       throw base::operation_exception(errorString.str());
     }
     auto device = devices[0];
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
-    json::Node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
+    json::node &firstKernelConfig = deviceNode["KERNELS"]["multdensity"];
+    json::node &secondKernelConfig = deviceNode["KERNELS"]["cscheme"];
 
     if (!secondKernelConfig.contains("USE_COMPRESSION_FIXED")) {
       bKernel = std::make_unique<KernelDensityB<T, uint64_t>>(device, dims, manager,

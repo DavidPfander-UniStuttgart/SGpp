@@ -8,7 +8,8 @@
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include <sgpp/base/operation/hash/OperationMatrix.hpp>
-#include <sgpp/base/tools/json/JSON.hpp>
+#include <sgpp/base/tools/json/json.hpp>
+#include <sgpp/base/tools/json/json_exception.hpp>
 #include <sgpp/datadriven/application/DensityEstimator.hpp>
 
 #include <sgpp/base/grid/Grid.hpp>
@@ -28,7 +29,7 @@ namespace datadriven {
 // --------------------------------------------------------------------------
 class LearnerSGDE;
 
-class LearnerSGDEConfiguration : public json::JSON {
+class LearnerSGDEConfiguration : public json::json {
   friend class LearnerSGDE;
 
  public:

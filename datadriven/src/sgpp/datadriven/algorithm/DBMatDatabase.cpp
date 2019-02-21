@@ -7,8 +7,8 @@
 
 #include <sgpp/datadriven/datamining/configuration/MatrixDecompositionTypeParser.hpp>
 #include <sgpp/datadriven/datamining/configuration/GeneralGridTypeParser.hpp>
-#include <sgpp/base/tools/json/JSON.hpp>
-#include <sgpp/base/tools/json/DictNode.hpp>
+#include <sgpp/base/tools/json/json.hpp>
+#include <sgpp/base/tools/json/dict_node.hpp>
 #include <sgpp/base/tools/json/json_exception.hpp>
 #include <sgpp/base/exception/data_exception.hpp>
 #include <sgpp/datadriven/algorithm/DBMatOfflineFactory.hpp>
@@ -32,10 +32,10 @@ const std::string keyFilepath = "filepath";
 
 DBMatDatabase::DBMatDatabase(const std::string& filepath) {
   databaseFilepath = filepath;
-  databaseRoot = std::make_unique<json::JSON>(filepath);
+  databaseRoot = std::make_unique<json::json>(filepath);
   // Get the root node of the database (list)
   if (databaseRoot->contains("database")) {
-    database = (json::ListNode*)(&(*databaseRoot)["database"]);
+    database = (json::list_node*)(&(*databaseRoot)["database"]);
   } else {
     std::cout << "DBMatDatabase: json database is ill formated (does not contain key \"database\")!"
         << std::endl;
@@ -64,7 +64,7 @@ std::string& DBMatDatabase::getDataMatrix(
     throw sgpp::base::data_exception("Database does not contain any entry matching the "
         "decomposition");
   } else {
-    json::DictNode* entry = (json::DictNode*)(&((*database)[entry_index]));
+    json::dict_node* entry = (json::dict_node*)(&((*database)[entry_index]));
     std::string& filepath = (*entry)[keyFilepath].get();
     return filepath;
   }
@@ -80,19 +80,19 @@ void DBMatDatabase::putDataMatrix(sgpp::base::GeneralGridConfiguration& gridConf
       densityEstimationConfig);
   if (entry_index < 0) {
     // Create a new list node in the json object
-    json::DictNode& entry = (json::DictNode&)(database->addDictValue());
+    json::dict_node& entry = (json::dict_node&)(database->addDictValue());
     // Add a grid configuration entry
-    json::DictNode& gridConfigEntry = (json::DictNode&)(entry.addDictAttr(keyGridConfiguration));
+    json::dict_node& gridConfigEntry = (json::dict_node&)(entry.addDictAttr(keyGridConfiguration));
     gridConfigEntry.addTextAttr(keyGridType, sgpp::datadriven::GeneralGridTypeParser::toString(
         gridConfig.generalType_));
     gridConfigEntry.addIDAttr(keyGridDimension, (uint64_t)gridConfig.dim_);
     gridConfigEntry.addIDAttr(keyGridLevel, (int64_t)gridConfig.level_);
     // Add a regularization configuration entry
-    json::DictNode& regularizationConfigEntry = (json::DictNode&)(entry.addDictAttr(
+    json::dict_node& regularizationConfigEntry = (json::dict_node&)(entry.addDictAttr(
         keyRegularizationConfiguration));
     regularizationConfigEntry.addIDAttr(keyRegularizationStrength, regularizationConfig.lambda_);
     // Add a density estimation configuration entry
-    json::DictNode& densityEstimationConfigEntry = (json::DictNode&)(entry.addDictAttr(
+    json::dict_node& densityEstimationConfigEntry = (json::dict_node&)(entry.addDictAttr(
         keyDensityEstimationConfiguration));
     densityEstimationConfigEntry.addTextAttr(keyDecompositionType,
         sgpp::datadriven::MatrixDecompositionTypeParser::toString(
@@ -106,7 +106,7 @@ void DBMatDatabase::putDataMatrix(sgpp::base::GeneralGridConfiguration& gridConf
   } else {
     // Update only if overwriteEntry is set to true
     if (overwriteEntry) {
-      json::DictNode* entry = (json::DictNode*)(&((*database)[entry_index]));
+      json::dict_node* entry = (json::dict_node*)(&((*database)[entry_index]));
       entry->replaceTextAttr(keyFilepath, filepath);
       databaseRoot->serialize(databaseFilepath);
       std::cout << "Updated matrix decomposition to \"" << filepath << "\" in database"
@@ -117,7 +117,7 @@ void DBMatDatabase::putDataMatrix(sgpp::base::GeneralGridConfiguration& gridConf
   }
 }
 
-bool DBMatDatabase::gridConfigurationMatches(json::DictNode *node,
+bool DBMatDatabase::gridConfigurationMatches(json::dict_node *node,
       sgpp::base::GeneralGridConfiguration& gridConfig, size_t entry_num) {
   // Check if grid general type matches
   sgpp::base::GeneralGridType gridType;
@@ -148,7 +148,7 @@ bool DBMatDatabase::gridConfigurationMatches(json::DictNode *node,
   if (node->contains(keyGridLevel)) {
     // Combi grids contain a level vector of size d
     if (gridType == sgpp::base::GeneralGridType::ComponentGrid) {
-      json::ListNode* entryLevelVector = (json::ListNode*)(&(*node)[keyGridLevel]);
+      json::list_node* entryLevelVector = (json::list_node*)(&(*node)[keyGridLevel]);
       if (entryLevelVector->size() != gridConfig.dim_) {
         std::cout << "DBMatDatabase: database entry # " << entry_num <<
             ": \"" << keyGridLevel << "\" size does not match \"" << keyGridDimension <<
@@ -165,7 +165,7 @@ bool DBMatDatabase::gridConfigurationMatches(json::DictNode *node,
         throw sgpp::base::data_exception(what.c_str());
       }
       for (size_t i = 0; i < gridConfig.dim_; i++) {
-        json::Node* indexLevelNode = (json::Node*)(&((*entryLevelVector)[i]));
+        json::node* indexLevelNode = (json::node*)(&((*entryLevelVector)[i]));
         if (indexLevelNode->getInt() != combiGridConfig.levels.at(i)) {
           return false;
         }
@@ -186,7 +186,7 @@ bool DBMatDatabase::gridConfigurationMatches(json::DictNode *node,
   return true;
 }
 
-bool DBMatDatabase::regularizationConfigurationMatches(json::DictNode *node,
+bool DBMatDatabase::regularizationConfigurationMatches(json::dict_node *node,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig, size_t entry_num) {
   // Check if the reguluarization strength matches
   if (node->contains(keyRegularizationStrength)) {
@@ -202,7 +202,7 @@ bool DBMatDatabase::regularizationConfigurationMatches(json::DictNode *node,
   return true;
 }
 
-bool DBMatDatabase::densityEstimationConfigurationMatches(json::DictNode *node,
+bool DBMatDatabase::densityEstimationConfigurationMatches(json::dict_node *node,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig, size_t entry_num) {
   // Check if the decomposition type matches
   if (node->contains(keyDecompositionType)) {
@@ -228,10 +228,10 @@ int DBMatDatabase::entryIndexByConfiguration(
     sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig) {
   // Scan the entire database
   for (size_t i = 0; i < database->size(); i++) {
-    json::DictNode* entry = (json::DictNode*)(&((*database)[i]));
+    json::dict_node* entry = (json::dict_node*)(&((*database)[i]));
     // Check if the entry matches the grid configuration
     if (entry->contains(keyGridConfiguration)) {
-      json::DictNode *gridConfigNode = (json::DictNode*)(&(*entry)[keyGridConfiguration]);
+      json::dict_node *gridConfigNode = (json::dict_node*)(&(*entry)[keyGridConfiguration]);
       if (!gridConfigurationMatches(gridConfigNode, gridConfig, i)) continue;
     } else {
       std::cout << "DBMatDatabase: database entry # " << i << " does not contain a " <<
@@ -240,8 +240,8 @@ int DBMatDatabase::entryIndexByConfiguration(
     }
     // Check if the entry matches the regularization configuration
     if (entry->contains(keyRegularizationConfiguration)) {
-      json::DictNode *regularizationConfigNode =
-          (json::DictNode*)(&(*entry)[keyRegularizationConfiguration]);
+      json::dict_node *regularizationConfigNode =
+          (json::dict_node*)(&(*entry)[keyRegularizationConfiguration]);
       if (!regularizationConfigurationMatches(regularizationConfigNode, regularizationConfig, i))
         continue;
     } else {
@@ -251,8 +251,8 @@ int DBMatDatabase::entryIndexByConfiguration(
     }
     // Check if the entry matches the density estimation configuration
     if (entry->contains(keyDensityEstimationConfiguration)) {
-      json::DictNode *densityEstimationConfiNode =
-          (json::DictNode*)(&(*entry)[keyDensityEstimationConfiguration]);
+      json::dict_node *densityEstimationConfiNode =
+          (json::dict_node*)(&(*entry)[keyDensityEstimationConfiguration]);
       if (!densityEstimationConfigurationMatches(densityEstimationConfiNode,
           densityEstimationConfig, i))
         continue;

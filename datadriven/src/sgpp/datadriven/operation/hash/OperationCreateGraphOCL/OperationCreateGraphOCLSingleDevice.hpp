@@ -71,9 +71,9 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
       throw base::operation_exception(errorString.str());
     }
     auto device = devices[0];
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &configuration = deviceNode["KERNELS"]["connectNeighbors"];
+    json::node &configuration = deviceNode["KERNELS"]["connectNeighbors"];
     graph_kernel =
         std::make_shared<KernelCreateGraph<T>>(device, dims, k, dataVector, manager, configuration);
     if (deviceNode["KERNELS"]["connectNeighbors"]["VERBOSE"].getBool()) verbose = true;
@@ -109,9 +109,9 @@ class OperationCreateGraphOCLSingleDevice : public OperationCreateGraphOCL {
       throw base::operation_exception(errorString.str());
     }
     auto device = devices[0];
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &configuration = deviceNode["KERNELS"]["connectNeighbors"];
+    json::node &configuration = deviceNode["KERNELS"]["connectNeighbors"];
     graph_kernel =
         std::make_shared<KernelCreateGraph<T>>(device, dims, k, dataVector, manager, configuration);
     if (deviceNode["KERNELS"]["connectNeighbors"]["VERBOSE"].getBool()) verbose = true;

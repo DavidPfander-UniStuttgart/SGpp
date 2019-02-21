@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <sgpp/base/tools/json/JSON.hpp>
+#include <sgpp/base/tools/json/json.hpp>
 #include <sgpp/globaldef.hpp>
 
 #include <map>
@@ -15,7 +15,7 @@
 namespace sgpp {
 namespace base {
 
-class OperationConfiguration : public json::JSON {
+class OperationConfiguration : public json::json {
  public:
   OperationConfiguration();
 

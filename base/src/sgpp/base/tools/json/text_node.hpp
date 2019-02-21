@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <sgpp/base/tools/json/Node.hpp>
+#include "node.hpp"
 
 #include <fstream>
 #include <string>
@@ -13,7 +13,7 @@
 
 namespace json {
 
-class TextNode : public Node {
+class text_node : public node {
  private:
   std::string value;
 
@@ -29,13 +29,14 @@ class TextNode : public Node {
   void setupInternalType();
 
  public:
-  TextNode();
+  text_node();
 
-  TextNode& operator=(const TextNode& right) = default;
+  text_node& operator=(const text_node& right) = default;
 
-  Node& operator=(const Node& right) override;
+  node& operator=(const node& right) override;
 
-  void parse(std::vector<Token>& stream) override;
+  void parse(std::vector<token>::iterator& stream_it,
+             std::vector<token>::iterator& stream_end) override;
 
   void serialize(std::ostream& outFile, size_t indentWidth) override;
 
@@ -61,7 +62,7 @@ class TextNode : public Node {
 
   size_t size() override;
 
-  Node* clone() override;
+  node* clone() override;
 };
 
 }  // namespace json

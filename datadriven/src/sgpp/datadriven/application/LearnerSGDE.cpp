@@ -47,10 +47,10 @@ namespace sgpp {
 namespace datadriven {
 
 // --------------------------------------------------------------------------------------------
-LearnerSGDEConfiguration::LearnerSGDEConfiguration() : json::JSON() { initConfig(); }
+LearnerSGDEConfiguration::LearnerSGDEConfiguration() : json::json() { initConfig(); }
 
 LearnerSGDEConfiguration::LearnerSGDEConfiguration(const std::string& fileName)
-    : json::JSON(fileName) {
+    : json::json(fileName) {
   initConfig();
   // initialize structs from file
   // configure grid
@@ -102,7 +102,7 @@ LearnerSGDEConfiguration::LearnerSGDEConfiguration(const std::string& fileName)
       crossvalidationConfig.seed_ = static_cast<int>((*this)["crossValidation_seed"].getInt());
     if (this->contains("crossValidation_silent"))
       crossvalidationConfig.silent_ = (*this)["crossValidation_silent"].getBool();
-  } catch (json::json_exception& e) {
+  } catch (::json::json_exception& e) {
     std::cout << e.what() << std::endl;
   }
 }

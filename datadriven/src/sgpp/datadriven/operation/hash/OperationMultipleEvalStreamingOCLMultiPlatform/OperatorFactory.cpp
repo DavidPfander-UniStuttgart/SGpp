@@ -40,9 +40,9 @@ base::OperationMultipleEval* createStreamingOCLMultiPlatformConfigured(
 
   // std::string& firstPlatformName = (*parameters)["PLATFORMS"].keys()[0];
   // std::string& firstDeviceName =
-  // (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"].keys()[0]; json::Node& deviceNode =
+  // (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"].keys()[0]; json::node& deviceNode =
   //     (*parameters)["PLATFORMS"][firstPlatformName]["DEVICES"][firstDeviceName];
-  // json::Node& firstDeviceConfig =
+  // json::node& firstDeviceConfig =
   //     deviceNode["KERNELS"][StreamingOCLMultiPlatform::Configuration::getKernelName()];
   // auto keys = firstDeviceConfig.keys();
   // for (auto key : keys) {

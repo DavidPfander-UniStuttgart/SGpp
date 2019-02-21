@@ -86,7 +86,7 @@ protected:
   std::vector<StreamingOCLMultiPlatform::KernelMultTranspose<T>>
       multTransposeKernels;
 
-  //  json::Node &configuration;
+  //  json::node &configuration;
 
   bool verbose;
 
@@ -159,11 +159,11 @@ public:
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"]
           [StreamingOCLMultiPlatform::Configuration::getKernelName()];
       // std::cout << "adding new multKernels..." << std::endl;
@@ -466,11 +466,11 @@ private:
   size_t calculateCommonDatasetPadding() {
     size_t commonPaddingRequiredment = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"]
           [StreamingOCLMultiPlatform::Configuration::getKernelName()];
 
@@ -490,11 +490,11 @@ private:
   size_t calculateCommonGridPadding() {
     size_t commonPaddingRequirement = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"]
           [StreamingOCLMultiPlatform::Configuration::getKernelName()];
 

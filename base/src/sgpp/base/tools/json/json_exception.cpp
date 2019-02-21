@@ -3,31 +3,31 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include <sgpp/base/tools/json/json_exception.hpp>
+#include "json_exception.hpp"
 
-#include <string>
 #include <sstream>
+#include <string>
 
 namespace json {
 
-json_exception::json_exception(Token& token, const std::string& message) {
+json_exception::json_exception(token &t, const std::string &message) {
   std::stringstream messageStream;
-  messageStream << "error: (line: " << token.lineNumber << ", char: " <<
-                token.charNumber << ") at \"" << token.value
+  messageStream << "error: (line: " << t.lineNumber
+                << ", char: " << t.charNumber << ") at \"" << t.value
                 << "\": ";
   messageStream << message;
   this->message = messageStream.str();
 }
 
-json_exception::json_exception(const std::string& message) {
+json_exception::json_exception(const std::string &message) {
   std::stringstream messageStream;
   messageStream << "error: ";
   messageStream << message;
   this->message = messageStream.str();
 }
 
-const char* json_exception::what() const throw() {
+const char *json_exception::what() const throw() {
   return this->message.c_str();
 }
 
-}  // namespace json
+} // namespace json

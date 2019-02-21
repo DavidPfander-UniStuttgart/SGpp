@@ -43,7 +43,7 @@ class KernelCreateGraph {
   double deviceTimingMult;
   bool verbose;
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   size_t localSize;
   /// Host side buffer for the dataset
   std::vector<T> &data;
@@ -54,7 +54,7 @@ class KernelCreateGraph {
  public:
   KernelCreateGraph(std::shared_ptr<base::OCLDevice> dev, size_t dims, size_t k,
                     std::vector<T> &data, std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                    json::Node &kernelConfiguration)
+                    json::node &kernelConfiguration)
       : device(dev),
         dims(dims),
         k(k),
@@ -241,13 +241,13 @@ class KernelCreateGraph {
   /// Adds all possible building parameters to the configuration if they do not exist yet
   static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      json::node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
         const std::string &kernelName = "connectNeighbors";
 
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                      ? deviceNode["KERNELS"][kernelName]
                                      : deviceNode["KERNELS"].addDictAttr(kernelName);
 

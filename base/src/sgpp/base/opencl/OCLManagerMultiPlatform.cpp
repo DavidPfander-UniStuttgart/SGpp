@@ -147,7 +147,7 @@ void OCLManagerMultiPlatform::buildKernel(
 
 cl_kernel OCLManagerMultiPlatform::buildKernel(const std::string &source,
                                                std::shared_ptr<OCLDevice> device,
-                                               json::Node &kernelConfiguration,
+                                               json::node &kernelConfiguration,
                                                const std::string &kernelName) {
   cl_int err;
 
@@ -292,7 +292,7 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
     }
   } else {
     // creating new configuration
-    json::Node &platformNode = (*parameters)["PLATFORMS"].addDictAttr(platformName);
+    json::node &platformNode = (*parameters)["PLATFORMS"].addDictAttr(platformName);
     platformNode.addDictAttr("DEVICES");
   }
 
@@ -300,7 +300,7 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
     std::cout << "OCL Info: using platform, name: \"" << platformName << "\"" << std::endl;
   }
 
-  json::Node &devicesNode = (*parameters)["PLATFORMS"][platformName]["DEVICES"];
+  json::node &devicesNode = (*parameters)["PLATFORMS"][platformName]["DEVICES"];
 
   uint32_t currentPlatformDevices;
   // get the number of devices
@@ -349,7 +349,7 @@ void OCLManagerMultiPlatform::configurePlatform(cl_platform_id platformId,
   }
 }
 
-void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node &devicesNode,
+void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::node &devicesNode,
                                               std::vector<cl_device_id> &filteredDeviceIds,
                                               std::vector<std::string> &filteredDeviceNames,
                                               std::map<std::string, size_t> &countLimitMap,
@@ -378,7 +378,7 @@ void OCLManagerMultiPlatform::configureDevice(cl_device_id deviceId, json::Node 
     }
   } else {
     if (!devicesNode.contains(deviceName)) {
-      json::Node &deviceNode = devicesNode.addDictAttr(deviceName);
+      json::node &deviceNode = devicesNode.addDictAttr(deviceName);
       deviceNode.addDictAttr("KERNELS");
     }
   }

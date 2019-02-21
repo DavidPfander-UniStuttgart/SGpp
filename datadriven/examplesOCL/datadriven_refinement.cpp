@@ -11,7 +11,7 @@
 #include "sgpp/base/grid/storage/hashmap/HashGridPoint.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 
-#include "spatial_refinement.hpp"
+#include "sgpp/datadriven/grid/spatial_refinement.hpp"
 
 // // read into vector of size rows*cols
 // class csv_reader {

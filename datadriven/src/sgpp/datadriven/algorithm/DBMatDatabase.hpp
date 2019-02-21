@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <sgpp/base/tools/json/JSON.hpp>
-#include <sgpp/base/tools/json/ListNode.hpp>
+#include <sgpp/base/tools/json/json.hpp>
+#include <sgpp/base/tools/json/list_node.hpp>
 #include <sgpp/datadriven/algorithm/DBMatOffline.hpp>
 #include <sgpp/datadriven/algorithm/DBMatOfflineFactory.hpp>
 
@@ -83,13 +83,13 @@ class DBMatDatabase{
   /**
    * Root json list node containing database entries
    */
-  json::ListNode* database;
+  json::list_node* database;
 
   /**
    * Root node of the json file (since appearantly the json module does not support a list node
    * as root node of a json file)
    */
-  std::unique_ptr<json::JSON> databaseRoot;
+  std::unique_ptr<json::json> databaseRoot;
 
   /**
    * Scans the entire database and finds the first entry that matches the configurations. Returns
@@ -113,7 +113,7 @@ class DBMatDatabase{
    * @param entry_num the index of the entry the root node belongs to
    * @return if the passed grid configuration matches the grid configuration of the node
    */
-  bool gridConfigurationMatches(json::DictNode *node,
+  bool gridConfigurationMatches(json::dict_node *node,
       sgpp::base::GeneralGridConfiguration& gridConfig, size_t entry_num);
 
   /**
@@ -125,7 +125,7 @@ class DBMatDatabase{
    * @return if the passed regularization configuration matches the regularization configuration
    * of the node
    */
-  bool regularizationConfigurationMatches(json::DictNode *node,
+  bool regularizationConfigurationMatches(json::dict_node *node,
       sgpp::datadriven::RegularizationConfiguration& regularizationConfig, size_t entry_num);
 
   /**
@@ -137,7 +137,7 @@ class DBMatDatabase{
    * @return if the passed density estimation configuration matches the density estimation
    * configuration of the node
    */
-  bool densityEstimationConfigurationMatches(json::DictNode *node,
+  bool densityEstimationConfigurationMatches(json::dict_node *node,
       sgpp::datadriven::DensityEstimationConfiguration& densityEstimationConfig,
       size_t entry_num);
 };

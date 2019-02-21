@@ -46,9 +46,9 @@ sgpp::base::OCLOperationConfiguration StaticParameterTuner::tuneEverything(
     sgpp::datadriven::LearnerScenario &scenario, const std::string &kernelName) {
   uint64_t configuredDevices = 0;
   for (const std::string &platformName : this->fixedParameters["PLATFORMS"].keys()) {
-    json::Node &platformNode = this->fixedParameters["PLATFORMS"][platformName];
+    json::node &platformNode = this->fixedParameters["PLATFORMS"][platformName];
     for (const std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       if (!deviceNode.contains("COUNT") || deviceNode["COUNT"].getUInt() > 0) {
         configuredDevices += 1;
       }
@@ -66,12 +66,12 @@ sgpp::base::OCLOperationConfiguration StaticParameterTuner::tuneEverything(
 
   std::vector<std::string> platformsCopy = this->fixedParameters["PLATFORMS"].keys();
   for (const std::string &platformName : platformsCopy) {
-    json::Node &platformNode = this->fixedParameters["PLATFORMS"][platformName];
+    json::node &platformNode = this->fixedParameters["PLATFORMS"][platformName];
     std::vector<std::string> devicesCopy = platformNode["DEVICES"].keys();
 
     // temporarily remove all other platforms
     std::vector<std::string> otherPlatformsName;
-    std::vector<std::unique_ptr<json::Node>> otherPlatforms;
+    std::vector<std::unique_ptr<json::node>> otherPlatforms;
     for (const std::string &otherPlatformName : platformsCopy) {
       if (otherPlatformName.compare(platformName) == 0) {
         continue;
@@ -82,7 +82,7 @@ sgpp::base::OCLOperationConfiguration StaticParameterTuner::tuneEverything(
     }
 
     for (const std::string &deviceName : devicesCopy) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
       if (deviceNode.contains("COUNT")) {
         if (deviceNode["COUNT"].getUInt() == 0) {
@@ -98,7 +98,7 @@ sgpp::base::OCLOperationConfiguration StaticParameterTuner::tuneEverything(
 
       // temporarily remove all other devices
       std::vector<std::string> otherDevicesName;
-      std::vector<std::unique_ptr<json::Node>> otherDevices;
+      std::vector<std::unique_ptr<json::node>> otherDevices;
       for (const std::string &otherDeviceName : devicesCopy) {
         if (otherDeviceName.compare(deviceName) == 0) {
           continue;
@@ -268,7 +268,7 @@ void StaticParameterTuner::tuneParameters(sgpp::datadriven::LearnerScenario &sce
     }
   }
 
-  json::Node &kernelNode =
+  json::node &kernelNode =
       fixedParameters["PLATFORMS"][platformName]["DEVICES"][deviceName]["KERNELS"][kernelName];
 
   // create initial parameter combination
@@ -302,7 +302,7 @@ void StaticParameterTuner::tuneParameters(sgpp::datadriven::LearnerScenario &sce
                                   shortestDurationKernels, highestGFlops);
   }
 
-  std::unique_ptr<json::Node> bestParameters(kernelNode.clone());
+  std::unique_ptr<json::node> bestParameters(kernelNode.clone());
 
   size_t parameterIndex = 0;
   while (parameterIndex < tunableParameters.size()) {
@@ -344,7 +344,7 @@ void StaticParameterTuner::tuneParameters(sgpp::datadriven::LearnerScenario &sce
                   << std::endl;
         shortestDuration = duration;
         highestGFlops = GFlops;
-        bestParameters = std::unique_ptr<json::Node>(kernelNode.clone());
+        bestParameters = std::unique_ptr<json::node>(kernelNode.clone());
         //        std::cout << *bestParameters << std::endl;
       }
       if (collectStatistics) {
@@ -468,7 +468,7 @@ void StaticParameterTuner::writeStatisticsToFile(const std::string &statisticsFi
 
   for (auto &parameterDurationGFlopsTuple : this->statistics) {
     sgpp::base::OCLOperationConfiguration &parameter = std::get<0>(parameterDurationGFlopsTuple);
-    json::Node &kernelNode =
+    json::node &kernelNode =
         parameter["PLATFORMS"][platformName]["DEVICES"][deviceName]["KERNELS"][kernelName];
     double duration = std::get<1>(parameterDurationGFlopsTuple);
     double durationOperations = std::get<2>(parameterDurationGFlopsTuple);

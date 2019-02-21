@@ -47,7 +47,7 @@ private:
   SourceBuilderMult<real_type> kernelSourceBuilder;
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   //    std::shared_ptr<base::OCLOperationConfiguration> parameters;
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMult;
 
@@ -61,7 +61,7 @@ private:
 public:
   KernelMult(std::shared_ptr<base::OCLDevice> device, size_t dims,
              std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-             json::Node &kernelConfiguration,
+             json::node &kernelConfiguration,
              std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMult)
       : device(device), dims(dims), err(CL_SUCCESS), deviceLevel(device),
         deviceIndex(device), deviceAlpha(device), deviceData(device),

@@ -24,7 +24,7 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
  private:
   std::shared_ptr<base::OCLDevice> device;
 
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   size_t dims;
 
@@ -151,7 +151,7 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
 
  public:
   SourceBuilderMultTranspose(std::shared_ptr<base::OCLDevice> device,
-                             json::Node &kernelConfiguration, size_t dims)
+                             json::node &kernelConfiguration, size_t dims)
       : device(device), kernelConfiguration(kernelConfiguration), dims(dims) {
     localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();

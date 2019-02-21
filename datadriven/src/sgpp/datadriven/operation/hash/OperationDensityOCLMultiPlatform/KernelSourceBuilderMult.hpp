@@ -20,7 +20,7 @@ template <typename real_type>
 class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
   /// Used workgroupsize for opencl kernel execution
@@ -423,7 +423,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<real_type> {
   }
 
  public:
-  explicit SourceBuilderMult(json::Node &kernelConfiguration)
+  explicit SourceBuilderMult(json::node &kernelConfiguration)
       : kernelConfiguration(kernelConfiguration),
         dataBlockSize(1),
         use_level_cache(false),

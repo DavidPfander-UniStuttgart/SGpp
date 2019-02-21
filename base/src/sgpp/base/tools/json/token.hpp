@@ -9,14 +9,14 @@
 
 namespace json {
 
-enum class TokenType {
+enum class token_type {
   LBRACE, RBRACE, LBRACKET, RBRACKET, COLON, ID, STRING, COMMA, COMMENT,
   SINGLELINE, MULTILINECOMMENT, MULTILINECOMMENTSTAR, NONE
 };
 
-class Token {
+class token {
  public:
-  TokenType type;
+  token_type type;
   std::string value;
   size_t lineNumber;
   size_t charNumber;

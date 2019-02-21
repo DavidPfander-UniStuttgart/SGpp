@@ -3,20 +3,18 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include <sgpp/base/tools/json/IDNode.hpp>
-#include <sgpp/base/tools/json/json_exception.hpp>
+#include "text_node.hpp"
+#include "json_exception.hpp"
 
 #include <fstream>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
 namespace json {
 
-IDNode::IDNode()
+text_node::text_node()
     : value(),
-      //        internalType(InternalIDType::ID),
       isDouble(false),
       doubleValue(0.0),
       isUnsigned(false),
@@ -26,74 +24,126 @@ IDNode::IDNode()
       isBool(false),
       boolValue(false) {}
 
-Node& IDNode::operator=(const Node& right) {
-  const IDNode& idNode = dynamic_cast<const IDNode&>(right);
-  this->operator=(idNode);
+node &text_node::operator=(const node &right) {
+  const text_node &textNode = dynamic_cast<const text_node &>(right);
+  this->operator=(textNode);
   return *this;
 }
 
-void IDNode::parse(std::vector<Token>& stream) {
-  // create new text node
-  if (stream[0].type == TokenType::ID) {
-    this->value = stream[0].value;
-    stream.erase(stream.begin());
+void text_node::setupInternalType() {
+  //    this->internalType = InternalIDType::ID;
 
-    this->setupInternalType();
-  } else {
-    throw json_exception(stream[0], "expected id");
-  }
-}
-
-void IDNode::setupInternalType() {
+  // try validating as bool
   if (this->value.compare("true") == 0) {
+    //        this->internalType = InternalIDType::BOOL;
     this->isBool = true;
     this->boolValue = true;
+    return;
   } else if (this->value.compare("false") == 0) {
+    //        this->internalType = InternalIDType::BOOL;
     this->isBool = true;
     this->boolValue = false;
+    return;
   }
 
+  // try validating as unsigned integer
+  // try {
+  //   std::string::size_type size;
+  //   uint64_t asUnsigned = stoull(this->value, &size);
+
+  //   if (this->value.size() == size) {
+  //     this->isUnsigned = true;
+  //     this->unsignedValue = asUnsigned;
+  //     //            this->internalType = InternalIDType::UINT;
+  //     //      return;
+  //   }
+  // } catch (std::invalid_argument& e) {
+  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     uint64_t r;
     conv_stream >> r;
-    if (!conv_stream.fail()) {
+    if (conv_stream.fail()) {
       this->isUnsigned = true;
       this->unsignedValue = r;
     }
   }
+
+  // try validating as signed integer
+  // try {
+  //   std::string::size_type size;
+  //   int64_t asSigned = stoll(this->value, &size);
+
+  //   if (this->value.size() == size) {
+  //     this->isSigned = true;
+  //     this->signedValue = asSigned;
+  //     //            this->internalType = InternalIDType::INT;
+  //     //      return;
+  //   }
+  // } catch (std::invalid_argument& e) {
+  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     int64_t r;
     conv_stream >> r;
-    if (!conv_stream.fail()) {
+    if (conv_stream.fail()) {
       this->isSigned = true;
       this->signedValue = r;
     }
   }
+
+  // try validating as double
+  // try {
+  //   std::string::size_type size;
+  //   double asDouble = stod(this->value, &size);
+
+  //   if (this->value.size() == size) {
+  //     this->isDouble = true;
+  //     this->doubleValue = asDouble;
+  //     //            this->internalType = InternalIDType::DOUBLE;
+  //     //      return;
+  //   }
+  // } catch (std::invalid_argument& e) {
+  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     double r;
     conv_stream >> r;
-    if (!conv_stream.fail()) {
+    if (conv_stream.fail()) {
       this->isDouble = true;
       this->doubleValue = r;
     }
   }
 }
 
-std::string& IDNode::get() { return this->value; }
+void text_node::parse(std::vector<token>::iterator &stream_it,
+                      std::vector<token>::iterator &stream_end) {
+  // create new text node
+  if ((*stream_it).type == token_type::STRING) {
+    this->value = (*stream_it).value;
+    stream_it++;
 
-void IDNode::set(const std::string& value) {
+    this->setupInternalType();
+  } else {
+    throw json_exception("expected string value");
+  }
+}
+
+void text_node::serialize(std::ostream &outFile, size_t indentWidth) {
+  outFile << "\"" << this->value << "\"";
+}
+
+std::string &text_node::get() { return this->value; }
+
+void text_node::set(const std::string &value) {
   this->value = value;
-
   this->setupInternalType();
 }
 
-double IDNode::getDouble() {
+double text_node::getDouble() {
   //    if (this->internalType == InternalIDType::DOUBLE) {
   if (this->isDouble) {
     return this->doubleValue;
@@ -102,7 +152,7 @@ double IDNode::getDouble() {
   }
 }
 
-void IDNode::setDouble(double numericValue) {
+void text_node::setDouble(double numericValue) {
   //    this->doubleValue = numericValue;
   //    this->internalType = InternalIDType::DOUBLE;
   std::stringstream stringstream;
@@ -111,7 +161,7 @@ void IDNode::setDouble(double numericValue) {
   this->setupInternalType();
 }
 
-uint64_t IDNode::getUInt() {
+uint64_t text_node::getUInt() {
   //    if (this->internalType == InternalIDType::UINT) {
   if (this->isUnsigned) {
     return this->unsignedValue;
@@ -120,7 +170,7 @@ uint64_t IDNode::getUInt() {
   }
 }
 
-void IDNode::setUInt(uint64_t uintValue) {
+void text_node::setUInt(uint64_t uintValue) {
   //    this->unsignedValue = uintValue;
   //    this->internalType = InternalIDType::UINT;
   std::stringstream stringstream;
@@ -129,7 +179,7 @@ void IDNode::setUInt(uint64_t uintValue) {
   this->setupInternalType();
 }
 
-int64_t IDNode::getInt() {
+int64_t text_node::getInt() {
   //    if (this->internalType == InternalIDType::INT) {
   if (this->isSigned) {
     return this->signedValue;
@@ -138,7 +188,7 @@ int64_t IDNode::getInt() {
   }
 }
 
-void IDNode::setInt(int64_t intValue) {
+void text_node::setInt(int64_t intValue) {
   //    this->unsignedValue = intValue;
   //    this->internalType = InternalIDType::INT;
   std::stringstream stringstream;
@@ -147,7 +197,7 @@ void IDNode::setInt(int64_t intValue) {
   this->setupInternalType();
 }
 
-bool IDNode::getBool() {
+bool text_node::getBool() {
   //    if (this->internalType == InternalIDType::BOOL) {
   if (this->isBool) {
     return this->boolValue;
@@ -156,7 +206,7 @@ bool IDNode::getBool() {
   }
 }
 
-void IDNode::setBool(bool boolValue) {
+void text_node::setBool(bool boolValue) {
   //    this->boolValue = boolValue;
   //    this->internalType = InternalIDType::BOOL;
   if (boolValue) {
@@ -168,12 +218,10 @@ void IDNode::setBool(bool boolValue) {
   this->setupInternalType();
 }
 
-void IDNode::serialize(std::ostream& outFile, size_t indentWidth) { outFile << this->value; }
+size_t text_node::size() { return 1; }
 
-size_t IDNode::size() { return 1; }
-
-Node* IDNode::clone() {
-  IDNode* newNode = new IDNode(*this);
+node *text_node::clone() {
+  text_node *newNode = new text_node(*this);
   return newNode;
 }
 

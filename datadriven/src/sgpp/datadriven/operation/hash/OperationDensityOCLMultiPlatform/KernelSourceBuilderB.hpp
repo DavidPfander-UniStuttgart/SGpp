@@ -19,7 +19,7 @@ template <typename real_type>
 class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
   bool use_compression_fixed;
@@ -27,7 +27,7 @@ class SourceBuilderB : public base::KernelSourceBuilderBase<real_type> {
   std::string compression_type;
 
  public:
-  SourceBuilderB(json::Node &kernelConfiguration, size_t dims)
+  SourceBuilderB(json::node &kernelConfiguration, size_t dims)
       : kernelConfiguration(kernelConfiguration), dims(dims) {
     if (kernelConfiguration.contains("USE_COMPRESSION_FIXED")) {
       use_compression_fixed = kernelConfiguration["USE_COMPRESSION_FIXED"].getBool();

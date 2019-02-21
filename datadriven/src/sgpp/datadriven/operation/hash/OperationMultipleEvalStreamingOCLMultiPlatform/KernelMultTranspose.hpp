@@ -73,7 +73,7 @@ class KernelMultTranspose {
   SourceBuilderMultTranspose<T> kernelSourceBuilder;
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   //    std::shared_ptr<base::OCLOperationConfiguration> parameters;
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMultTranspose;
 
@@ -101,7 +101,7 @@ class KernelMultTranspose {
    */
   KernelMultTranspose(std::shared_ptr<base::OCLDevice> device, size_t dims,
                       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                      json::Node &kernelConfiguration,
+                      json::node &kernelConfiguration,
                       std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMultTranspose)
       : device(device),
         dims(dims),

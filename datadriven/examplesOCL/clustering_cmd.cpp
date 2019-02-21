@@ -36,7 +36,7 @@
 #include "sgpp/globaldef.hpp"
 #include "sgpp/solver/sle/ConjugateGradients.hpp"
 
-#include "spatial_refinement_blocked.hpp"
+#include "sgpp/datadriven/grid/spatial_refinement_blocked.hpp"
 
 #include <sgpp/base/grid/generation/functors/UnlimitedCoarseningFunctor.hpp>
 namespace sgpp {
@@ -562,7 +562,8 @@ int main(int argc, char **argv) {
       grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createLinearGrid(dimension));
       sgpp::base::GridStorage &grid_storage = grid->getStorage();
       sgpp::base::HashGridPoint p(dimension);
-      for (int64_t gp_index = 0; gp_index < static_cast<int64_t>(ls.size() / dimension); gp_index += 1) {
+      for (int64_t gp_index = 0; gp_index < static_cast<int64_t>(ls.size() / dimension);
+           gp_index += 1) {
         for (int64_t d = 0; d < static_cast<int64_t>(dimension); d += 1) {
           p.set(d, ls[gp_index * dimension + d], is[gp_index * dimension + d]);
         }
@@ -571,7 +572,7 @@ int main(int argc, char **argv) {
       grid_storage.recalcLeafProperty();
       std::cout << "datadriven refinement done, grid size: " << grid->getSize() << std::endl;
     }
-    sgpp::base::GridStorage &grid_storage = grid->getStorage();
+    // sgpp::base::GridStorage &grid_storage = grid->getStorage();
 
     // for (size_t gp_index = 0; gp_index < grid_storage.getSize();
     //      gp_index += 1) {

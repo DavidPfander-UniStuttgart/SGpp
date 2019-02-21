@@ -20,12 +20,12 @@ template <typename real_type>
 class SourceBuilderPruneGraph : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   /// Dimensions of grid
   size_t dims;
 
  public:
-  SourceBuilderPruneGraph(json::Node &kernelConfiguration, size_t dims)
+  SourceBuilderPruneGraph(json::node &kernelConfiguration, size_t dims)
       : kernelConfiguration(kernelConfiguration), dims(dims) {}
 
   /// Generates the whole opencl kernel code used for the pruning of a graph

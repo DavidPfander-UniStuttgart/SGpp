@@ -20,7 +20,7 @@ template <typename real_type>
 class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   /// Dimensions of the used dataset
   size_t dims;
   /// Used workgroupsize for opencl kernel execution
@@ -235,7 +235,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   }
 
  public:
-  SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims)
+  SourceBuilderCreateGraph(json::node &kernelConfiguration, size_t dims)
       : kernelConfiguration(kernelConfiguration),
         dims(dims),
         use_select(false),

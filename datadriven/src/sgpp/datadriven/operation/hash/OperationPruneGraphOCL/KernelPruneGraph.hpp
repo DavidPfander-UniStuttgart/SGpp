@@ -53,7 +53,7 @@ class KernelPruneGraph {
   /// Stores the running time of the kernel
   double deviceTimingMult;
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   bool verbose;
   bool uselocal;
@@ -65,7 +65,7 @@ class KernelPruneGraph {
  public:
   KernelPruneGraph(std::shared_ptr<base::OCLDevice> dev, size_t dims, T threshold, size_t k,
                    std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                   json::Node &kernelConfiguration, std::vector<int> &pointsVector,
+                   json::node &kernelConfiguration, std::vector<int> &pointsVector,
                    std::vector<T> &alphaVector, std::vector<T> &dataVector)
       : device(dev),
         dims(dims),
@@ -248,13 +248,13 @@ class KernelPruneGraph {
   /// Adds all possible building parameters to the configuration if they do not exist yet
   static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      json::node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
         const std::string &kernelName = "removeEdges";
 
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                      ? deviceNode["KERNELS"][kernelName]
                                      : deviceNode["KERNELS"].addDictAttr(kernelName);
 
