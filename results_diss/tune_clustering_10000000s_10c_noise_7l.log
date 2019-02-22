@@ -1,0 +1,3729 @@
+lambda_factor: 10.0 lambda_start_lower:1e-07 overall_best_lambda_value: -1
+lambda_values filtered:[9.999999999999999e-06, 1e-06, 1e-07]
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 4.47709
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.36639s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 40.1969s
+ops_generate_b: 247527
+flops_generate_b: 6157.86 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.425137
+delta: 0.250401
+delta: 0.118028
+delta: 0.0368358
+delta: 0.0239943
+delta: 0.0439434
+delta: 0.00567048
+delta: 0.00146212
+delta: 0.000768761
+delta: 0.000935635
+delta: 0.000672558
+delta: 0.000136829
+delta: 9.42034e-05
+delta: 1.52157e-05
+delta: 1.37946e-05
+delta: 2.30563e-06
+Number of iterations: 16 (max. 1000)
+Final norm of residuum: 2.30563e-06
+counted_mult_calls: 17
+Grid points after refinement step: 397825
+act_it: 17
+acc_duration_density: 70.5023s
+ops_density: 382051 GOps
+flops_density: 5418.99 GFLOPS
+density_duration_total: 118.194s
+surplus min: -171.486 max: 1265.74
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+last_duration_create_graph: 521.057s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 5990.14 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.6s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7170.57 GFLOPS
+write pruned knn graph duration:14.0918s
+Finding clusters...
+find_cluster_duration_total: 9.28512s
+detected clusters: 326
+datapoints in clusters: 10008689
+score: 0
+write cluster map duration:9.24272s
+total_duration_without_disk: 941.936
+total_duration: 946.413
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 326
+datapoints_clusters: 10008689
+total_dur: 934.33302
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 277.777777778 percent_correct: 0.11679519607843138 ARI: 0.008111434820847958
+-> new best_ARI:0.008111434820847958, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08547
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24417s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 45.3566s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.986s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7159.32 GFLOPS
+write pruned knn graph duration:14.0635s
+Finding clusters...
+find_cluster_duration_total: 8.9647s
+detected clusters: 171
+datapoints in clusters: 10002535
+score: 0
+write cluster map duration:9.22536s
+total_duration_without_disk: 332.432
+total_duration: 333.517
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 171
+datapoints_clusters: 10002535
+total_dur: 254.95069999999998
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 555.555555556 percent_correct: 0.21543774509803923 ARI: 0.055562185915458064
+-> new best_ARI:0.055562185915458064, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07054
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24642s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 44.5229s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.162s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7183.37 GFLOPS
+write pruned knn graph duration:14.118s
+Finding clusters...
+find_cluster_duration_total: 8.66657s
+detected clusters: 73
+datapoints in clusters: 10000970
+score: 0
+write cluster map duration:9.22613s
+total_duration_without_disk: 330.577
+total_duration: 331.648
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 73
+datapoints_clusters: 10000970
+total_dur: 253.82857
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 833.333333333 percent_correct: 0.6077480392156863 ARI: 0.6183922517046131
+-> new best_ARI:0.6183922517046131, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06834
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23946s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 46.2757s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.825s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7164.01 GFLOPS
+write pruned knn graph duration:13.9421s
+Finding clusters...
+find_cluster_duration_total: 10.3087s
+detected clusters: 31
+datapoints in clusters: 10000425
+score: 0
+write cluster map duration:9.34369s
+total_duration_without_disk: 334.504
+total_duration: 335.572
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 31
+datapoints_clusters: 10000425
+total_dur: 256.1337
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 1111.11111111 percent_correct: 0.7058406862745098 ARI: 0.6747214569830658
+-> new best_ARI:0.6747214569830658, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08347
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24785s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 44.2143s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.158s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7154.31 GFLOPS
+write pruned knn graph duration:14.2714s
+Finding clusters...
+find_cluster_duration_total: 8.75543s
+detected clusters: 21
+datapoints in clusters: 10000214
+score: 0
+write cluster map duration:9.22379s
+total_duration_without_disk: 331.511
+total_duration: 332.595
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 21
+datapoints_clusters: 10000214
+total_dur: 254.91342999999998
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 1388.88888889 percent_correct: 0.9999790196078432 ARI: 0.9999752212409839
+-> new best_ARI:0.9999752212409839, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07967
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.25064s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 44.2611s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.832s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7163.81 GFLOPS
+write pruned knn graph duration:14.1793s
+Finding clusters...
+find_cluster_duration_total: 9.08777s
+detected clusters: 13
+datapoints in clusters: 9999296
+score: 6.86226
+write cluster map duration:9.26718s
+total_duration_without_disk: 331.584
+total_duration: 332.663
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 13
+datapoints_clusters: 9999296
+total_dur: 254.91977
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 1666.66666667 percent_correct: 0.99991 ARI: 0.9998795491843949
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06485
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23835s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 44.7725s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.277s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7180 GFLOPS
+write pruned knn graph duration:14.076s
+Finding clusters...
+find_cluster_duration_total: 7.76315s
+detected clusters: 10
+datapoints in clusters: 9982033
+score: 9.78631
+write cluster map duration:9.21457s
+total_duration_without_disk: 329.973
+total_duration: 331.038
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 10
+datapoints_clusters: 9982033
+total_dur: 253.04014999999998
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 1944.44444444 percent_correct: 0.9982273529411765 ARI: 0.9976015990105317
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08216
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2431s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 44.232s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.912s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7161.47 GFLOPS
+write pruned knn graph duration:14.0014s
+Finding clusters...
+find_cluster_duration_total: 8.08577s
+detected clusters: 13
+datapoints in clusters: 9897454
+score: 6.79237
+write cluster map duration:9.24965s
+total_duration_without_disk: 330.438
+total_duration: 331.52
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 13
+datapoints_clusters: 9897454
+total_dur: 253.99777
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 2222.22222222 percent_correct: 0.9899394117647059 ARI: 0.9862203303131228
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=9.999999999999999e-06 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07305
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24304s
+surplus min: -171.486 max: 1265.74
+reusing knn graph
+loading graph (reuse) duration: 43.8548s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.59s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7170.85 GFLOPS
+write pruned knn graph duration:13.6801s
+Finding clusters...
+find_cluster_duration_total: 8.23557s
+detected clusters: 19
+datapoints in clusters: 9678837
+score: 0.948906
+write cluster map duration:9.24431s
+total_duration_without_disk: 329.527
+total_duration: 330.6
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 19
+datapoints_clusters: 9678837
+total_dur: 253.82557
+
+------------- END RUN ---------------
+attempt lambda: 9.999999999999999e-06 threshold: 2500.0 percent_correct: 0.9685083333333333 ARI: 0.9555816783363331
+-> new overall_best_ARI:0.9999752212409839, overall_best_lambda_value: 9.999999999999999e-06, new best_threshold:1388.88888889
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07079
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.37897s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.9775s
+ops_generate_b: 247527
+flops_generate_b: 6191.66 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.461378
+delta: 0.378734
+delta: 0.256768
+delta: 0.155962
+delta: 0.20517
+delta: 0.57853
+delta: 0.0963712
+delta: 0.0625297
+delta: 0.0765933
+delta: 0.092371
+delta: 0.160666
+delta: 0.0366049
+delta: 0.0404748
+delta: 0.00984048
+delta: 0.100867
+delta: 0.00904579
+delta: 0.0180579
+delta: 0.00683456
+delta: 0.0146495
+delta: 0.00631271
+delta: 0.00444618
+delta: 0.00187597
+delta: 0.00334592
+delta: 0.0214524
+delta: 0.00151216
+delta: 0.00358545
+delta: 0.000412542
+delta: 0.00136162
+delta: 0.000290754
+delta: 0.000726592
+delta: 9.25855e-05
+delta: 0.000602344
+delta: 0.000764964
+delta: 8.92225e-05
+delta: 5.59554e-05
+delta: 5.62193e-05
+delta: 0.000558957
+delta: 8.72569e-05
+delta: 1.36995e-05
+delta: 5.72817e-05
+delta: 9.81131e-06
+Number of iterations: 41 (max. 1000)
+Final norm of residuum: 9.81131e-06
+counted_mult_calls: 42
+Grid points after refinement step: 397825
+act_it: 42
+acc_duration_density: 173.922s
+ops_density: 943891 GOps
+flops_density: 5427.09 GFLOPS
+density_duration_total: 221.583s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 45.6361s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.259s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7151.37 GFLOPS
+write pruned knn graph duration:13.9834s
+Finding clusters...
+find_cluster_duration_total: 8.91234s
+detected clusters: 987
+datapoints in clusters: 10014768
+score: 0
+write cluster map duration:9.21547s
+total_duration_without_disk: 554.048
+total_duration: 555.119
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 987
+datapoints_clusters: 10014768
+total_dur: 516.7318399999999
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 277.777777778 percent_correct: 0.1161992156862745 ARI: 0.007899475283636229
+-> new best_ARI:0.007899475283636229, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07234
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.29423s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 44.0602s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.662s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7168.75 GFLOPS
+write pruned knn graph duration:14.231s
+Finding clusters...
+find_cluster_duration_total: 8.68601s
+detected clusters: 453
+datapoints in clusters: 10007157
+score: 0
+write cluster map duration:9.33749s
+total_duration_without_disk: 330.913
+total_duration: 331.986
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 453
+datapoints_clusters: 10007157
+total_dur: 254.34801000000002
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 555.555555556 percent_correct: 0.21498460784313725 ARI: 0.05534620766922874
+-> new best_ARI:0.05534620766922874, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0697
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23783s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 44.4764s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.56s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.74 GFLOPS
+write pruned knn graph duration:14.447s
+Finding clusters...
+find_cluster_duration_total: 7.6323s
+detected clusters: 327
+datapoints in clusters: 10004315
+score: 0
+write cluster map duration:9.28164s
+total_duration_without_disk: 330.322
+total_duration: 331.392
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 327
+datapoints_clusters: 10004315
+total_dur: 253.1923
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 833.333333333 percent_correct: 0.31330245098039217 ARI: 0.23689902344420902
+-> new best_ARI:0.23689902344420902, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07739
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.31815s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 43.4377s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.344s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7178.04 GFLOPS
+write pruned knn graph duration:14.2248s
+Finding clusters...
+find_cluster_duration_total: 8.24789s
+detected clusters: 243
+datapoints in clusters: 10002837
+score: 0
+write cluster map duration:9.27536s
+total_duration_without_disk: 329.579
+total_duration: 330.656
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 243
+datapoints_clusters: 10002837
+total_dur: 253.59189
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 1111.11111111 percent_correct: 0.411486568627451 ARI: 0.4487672965364623
+-> new best_ARI:0.4487672965364623, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08309
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24191s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 45.0674s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.611s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7170.24 GFLOPS
+write pruned knn graph duration:14.3563s
+Finding clusters...
+find_cluster_duration_total: 8.69441s
+detected clusters: 179
+datapoints in clusters: 10001936
+score: 0
+write cluster map duration:9.3009s
+total_duration_without_disk: 331.923
+total_duration: 333.006
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 179
+datapoints_clusters: 10001936
+total_dur: 254.30541
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 1388.88888889 percent_correct: 0.41157490196078433 ARI: 0.4488419420360017
+-> new best_ARI:0.4488419420360017, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07395
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24153s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 44.8463s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.684s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7168.13 GFLOPS
+write pruned knn graph duration:14.4882s
+Finding clusters...
+find_cluster_duration_total: 8.99491s
+detected clusters: 135
+datapoints in clusters: 10001413
+score: 0
+write cluster map duration:9.34125s
+total_duration_without_disk: 332.179
+total_duration: 333.253
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 135
+datapoints_clusters: 10001413
+total_dur: 254.67891
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 1666.66666667 percent_correct: 0.9018222549019608 ARI: 0.898628389105397
+-> new best_ARI:0.898628389105397, new best_threshold:1666.66666667
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06714
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23707s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 43.6178s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.478s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7174.12 GFLOPS
+write pruned knn graph duration:14.2052s
+Finding clusters...
+find_cluster_duration_total: 8.84345s
+detected clusters: 100
+datapoints in clusters: 10001036
+score: 0
+write cluster map duration:9.27585s
+total_duration_without_disk: 330.361
+total_duration: 331.428
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 100
+datapoints_clusters: 10001036
+total_dur: 254.32145
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 1944.44444444 percent_correct: 0.9018592156862745 ARI: 0.8986641981327568
+-> new best_ARI:0.8986641981327568, new best_threshold:1944.44444444
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07037
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2414s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 45.8636s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 244.976s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7188.84 GFLOPS
+write pruned knn graph duration:13.9316s
+Finding clusters...
+find_cluster_duration_total: 8.66138s
+detected clusters: 81
+datapoints in clusters: 10000804
+score: 0
+write cluster map duration:9.2273s
+total_duration_without_disk: 331.576
+total_duration: 332.646
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 81
+datapoints_clusters: 10000804
+total_dur: 253.63738
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 2222.22222222 percent_correct: 0.9999211764705882 ARI: 0.9999187058125902
+-> new best_ARI:0.9999187058125902, new best_threshold:2222.22222222
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-06 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08314
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24251s
+surplus min: -2067.75 max: 7829.92
+reusing knn graph
+loading graph (reuse) duration: 45.4467s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.387s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7176.81 GFLOPS
+write pruned knn graph duration:13.8433s
+Finding clusters...
+find_cluster_duration_total: 8.08916s
+detected clusters: 62
+datapoints in clusters: 10000601
+score: 0
+write cluster map duration:9.27967s
+total_duration_without_disk: 330.9
+total_duration: 331.983
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 62
+datapoints_clusters: 10000601
+total_dur: 253.47616
+
+------------- END RUN ---------------
+attempt lambda: 1e-06 threshold: 2500.0 percent_correct: 0.9999410784313726 ARI: 0.9999378256558186
+-> new best_ARI:0.9999378256558186, new best_threshold:2500.0
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07556
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.38082s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.8662s
+ops_generate_b: 247527
+flops_generate_b: 6208.94 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.465255
+delta: 0.396608
+delta: 0.282049
+delta: 0.190637
+delta: 0.291894
+delta: 0.884606
+delta: 0.158518
+delta: 0.131154
+delta: 0.21172
+delta: 0.263626
+delta: 0.540442
+delta: 0.133702
+delta: 0.169469
+delta: 0.0595827
+delta: 0.784606
+delta: 0.0810793
+delta: 0.202595
+delta: 0.0851094
+delta: 0.204074
+delta: 0.11604
+delta: 0.0901204
+delta: 0.0445279
+delta: 0.0949937
+delta: 0.753476
+delta: 0.0650165
+delta: 0.176778
+delta: 0.0254301
+delta: 0.100588
+delta: 0.0305634
+delta: 0.0567068
+delta: 0.0139317
+delta: 0.104957
+delta: 0.14452
+delta: 0.0192132
+delta: 0.0172562
+delta: 0.0217755
+delta: 0.277759
+delta: 0.0500073
+delta: 0.00977084
+delta: 0.0477103
+delta: 0.00904888
+delta: 0.057612
+delta: 0.00607444
+delta: 0.00403484
+delta: 0.0191695
+delta: 0.0546712
+delta: 0.0111477
+delta: 0.00964437
+delta: 0.00378528
+delta: 0.0155221
+delta: 0.00839263
+delta: 0.00793696
+delta: 0.00498575
+delta: 0.0275071
+delta: 0.00670523
+delta: 0.0044464
+delta: 0.00332738
+delta: 0.0118243
+delta: 0.00206999
+delta: 0.0262475
+delta: 0.00215056
+delta: 0.00176927
+delta: 0.00241735
+delta: 0.00212904
+delta: 0.00171285
+delta: 0.00202721
+delta: 0.00433137
+delta: 0.00201506
+delta: 0.0012703
+delta: 0.00436946
+delta: 0.00106752
+delta: 0.002775
+delta: 0.000566771
+delta: 0.00476602
+delta: 0.00118547
+delta: 0.000368648
+delta: 0.002503
+delta: 0.00129988
+delta: 0.000567243
+delta: 0.00206272
+delta: 0.000472856
+delta: 0.00051195
+delta: 0.000515676
+delta: 0.00415337
+delta: 0.000925568
+delta: 0.00020278
+delta: 0.00339593
+delta: 0.000343876
+delta: 0.000918667
+delta: 0.000253199
+delta: 0.000336944
+delta: 0.000255892
+delta: 0.000186932
+delta: 0.000323125
+delta: 0.000184051
+delta: 0.000105762
+delta: 0.000447894
+delta: 0.000343464
+delta: 0.000135694
+delta: 0.000219299
+delta: 0.000159297
+delta: 0.000142643
+delta: 5.02098e-05
+delta: 0.000269806
+delta: 0.000200539
+delta: 6.1637e-05
+delta: 0.000180271
+delta: 0.000278533
+delta: 4.55307e-05
+delta: 0.000184895
+delta: 6.91806e-05
+delta: 3.92717e-05
+delta: 0.000126914
+delta: 5.93852e-05
+delta: 4.2061e-05
+delta: 6.50969e-05
+delta: 0.000115193
+delta: 4.20842e-05
+delta: 2.86713e-05
+delta: 9.14824e-05
+delta: 7.16042e-06
+Number of iterations: 121 (max. 1000)
+Final norm of residuum: 7.16042e-06
+counted_mult_calls: 124
+Grid points after refinement step: 397825
+act_it: 124
+acc_duration_density: 514.291s
+ops_density: 2.78673e+06 GOps
+flops_density: 5418.58 GFLOPS
+density_duration_total: 562.349s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.3698s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.473s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7174.27 GFLOPS
+write pruned knn graph duration:14.2878s
+Finding clusters...
+find_cluster_duration_total: 8.47609s
+detected clusters: 3715
+datapoints in clusters: 10033269
+score: 0
+write cluster map duration:9.42863s
+total_duration_without_disk: 892.878
+total_duration: 893.954
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 3715
+datapoints_clusters: 10033269
+total_dur: 856.16429
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 277.777777778 percent_correct: 0.11438539215686275 ARI: 0.007504436024607364
+-> new best_ARI:0.007504436024607364, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0783
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24811s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.1716s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.359s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7177.6 GFLOPS
+write pruned knn graph duration:14.292s
+Finding clusters...
+find_cluster_duration_total: 11.2676s
+detected clusters: 1824
+datapoints in clusters: 10012417
+score: 0
+write cluster map duration:9.27804s
+total_duration_without_disk: 333.267
+total_duration: 334.346
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 1824
+datapoints_clusters: 10012417
+total_dur: 256.6266
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 555.555555556 percent_correct: 0.21446892156862746 ARI: 0.05530937775153942
+-> new best_ARI:0.05530937775153942, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08011
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.27708s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.3173s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.558s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.79 GFLOPS
+write pruned knn graph duration:14.2896s
+Finding clusters...
+find_cluster_duration_total: 8.06205s
+detected clusters: 898
+datapoints in clusters: 10006811
+score: 0
+write cluster map duration:9.2565s
+total_duration_without_disk: 330.396
+total_duration: 331.476
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 898
+datapoints_clusters: 10006811
+total_dur: 253.62005
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 833.333333333 percent_correct: 0.31305774509803924 ARI: 0.23683592643360318
+-> new best_ARI:0.23683592643360318, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07413
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2368s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.6861s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.776s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7165.43 GFLOPS
+write pruned knn graph duration:14.2681s
+Finding clusters...
+find_cluster_duration_total: 7.66593s
+detected clusters: 538
+datapoints in clusters: 10004619
+score: 0
+write cluster map duration:9.28817s
+total_duration_without_disk: 330.494
+total_duration: 331.568
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 538
+datapoints_clusters: 10004619
+total_dur: 253.44193
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 1111.11111111 percent_correct: 0.5093510784313725 ARI: 0.5241152211927559
+-> new best_ARI:0.5241152211927559, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07128
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23743s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.4722s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.571s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.42 GFLOPS
+write pruned knn graph duration:14.2663s
+Finding clusters...
+find_cluster_duration_total: 9.25355s
+detected clusters: 395
+datapoints in clusters: 10003439
+score: 0
+write cluster map duration:9.45747s
+total_duration_without_disk: 331.838
+total_duration: 332.91
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 395
+datapoints_clusters: 10003439
+total_dur: 254.82455
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 1388.88888889 percent_correct: 0.7055451960784314 ARI: 0.7386630316466316
+-> new best_ARI:0.7386630316466316, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07863
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24354s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.1423s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.579s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.18 GFLOPS
+write pruned knn graph duration:14.2519s
+Finding clusters...
+find_cluster_duration_total: 9.18028s
+detected clusters: 313
+datapoints in clusters: 10002746
+score: 0
+write cluster map duration:9.28635s
+total_duration_without_disk: 331.333
+total_duration: 332.412
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 313
+datapoints_clusters: 10002746
+total_dur: 254.75928000000002
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 1666.66666667 percent_correct: 0.901691568627451 ARI: 0.8985235776210686
+-> new best_ARI:0.8985235776210686, new best_threshold:1666.66666667
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06963
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23704s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.2316s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.497s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7173.58 GFLOPS
+write pruned knn graph duration:14.5959s
+Finding clusters...
+find_cluster_duration_total: 8.39077s
+detected clusters: 251
+datapoints in clusters: 10002234
+score: 0
+write cluster map duration:9.28706s
+total_duration_without_disk: 330.853
+total_duration: 331.923
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 251
+datapoints_clusters: 10002234
+total_dur: 253.88777000000002
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 1944.44444444 percent_correct: 0.9017417647058823 ARI: 0.8985643858443809
+-> new best_ARI:0.8985643858443809, new best_threshold:1944.44444444
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0767
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23988s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.3971s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.851s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7163.26 GFLOPS
+write pruned knn graph duration:14.7079s
+Finding clusters...
+find_cluster_duration_total: 8.03296s
+detected clusters: 212
+datapoints in clusters: 10001840
+score: 0
+write cluster map duration:9.26029s
+total_duration_without_disk: 331.225
+total_duration: 332.301
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 212
+datapoints_clusters: 10001840
+total_dur: 253.88396
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 2222.22222222 percent_correct: 0.9017803921568628 ARI: 0.8986001547049637
+-> new best_ARI:0.8986001547049637, new best_threshold:2222.22222222
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1e-07 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07116
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23904s
+surplus min: -13434.9 max: 35833.1
+reusing knn graph
+loading graph (reuse) duration: 44.15s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.515s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7173.05 GFLOPS
+write pruned knn graph duration:14.1569s
+Finding clusters...
+find_cluster_duration_total: 8.45719s
+detected clusters: 187
+datapoints in clusters: 10001596
+score: 0
+write cluster map duration:9.40745s
+total_duration_without_disk: 330.566
+total_duration: 331.637
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 187
+datapoints_clusters: 10001596
+total_dur: 253.97218999999998
+
+------------- END RUN ---------------
+attempt lambda: 1e-07 threshold: 2500.0 percent_correct: 0.9018043137254902 ARI: 0.89862218061945
+-> new best_ARI:0.89862218061945, new best_threshold:2500.0
+lambda_factor: 3.1622776601683795 lambda_start_lower:1e-06 overall_best_lambda_value: 9.999999999999999e-06
+lambda_values filtered:[3.1622776601683795e-05, 3.162277660168379e-06]
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.23612
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.37179s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.907s
+ops_generate_b: 247527
+flops_generate_b: 6202.59 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.353734
+delta: 0.117389
+delta: 0.0342187
+delta: 0.00531098
+delta: 0.00206748
+delta: 0.00189605
+delta: 0.000214081
+delta: 2.24599e-05
+delta: 9.27649e-06
+Number of iterations: 9 (max. 1000)
+Final norm of residuum: 9.27649e-06
+counted_mult_calls: 10
+Grid points after refinement step: 397825
+act_it: 10
+acc_duration_density: 41.3805s
+ops_density: 224736 GOps
+flops_density: 5430.96 GFLOPS
+density_duration_total: 88.7588s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 44.3194s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.356s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7148.55 GFLOPS
+write pruned knn graph duration:14.1818s
+Finding clusters...
+find_cluster_duration_total: 8.50742s
+detected clusters: 207
+datapoints in clusters: 10003683
+score: 0
+write cluster map duration:9.26448s
+total_duration_without_disk: 419.589
+total_duration: 420.825
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 207
+datapoints_clusters: 10003683
+total_dur: 383.52922
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 277.777777778 percent_correct: 0.11728598039215686 ARI: 0.00834615795277473
+-> new best_ARI:0.00834615795277473, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06964
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24056s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 44.237s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.589s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7170.9 GFLOPS
+write pruned knn graph duration:14.0364s
+Finding clusters...
+find_cluster_duration_total: 8.17018s
+detected clusters: 42
+datapoints in clusters: 10000547
+score: 0
+write cluster map duration:9.31044s
+total_duration_without_disk: 330.197
+total_duration: 331.267
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 42
+datapoints_clusters: 10000547
+total_dur: 253.75918
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 555.555555556 percent_correct: 0.705828725490196 ARI: 0.6747051091325872
+-> new best_ARI:0.6747051091325872, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07599
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24398s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 44.1943s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.558s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.8 GFLOPS
+write pruned knn graph duration:14.0302s
+Finding clusters...
+find_cluster_duration_total: 7.60493s
+detected clusters: 13
+datapoints in clusters: 9987368
+score: 6.85408
+write cluster map duration:9.22823s
+total_duration_without_disk: 329.464
+total_duration: 330.54
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 13
+datapoints_clusters: 9987368
+total_dur: 253.16293
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 833.333333333 percent_correct: 0.9987380392156863 ARI: 0.9982951016334478
+-> new best_ARI:0.9982951016334478, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07543
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24698s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 45.1243s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.094s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7185.37 GFLOPS
+write pruned knn graph duration:14.2962s
+Finding clusters...
+find_cluster_duration_total: 8.44542s
+detected clusters: 17
+datapoints in clusters: 9611382
+score: 2.82688
+write cluster map duration:9.49491s
+total_duration_without_disk: 331.298
+total_duration: 332.373
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 17
+datapoints_clusters: 9611382
+total_dur: 253.53942
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 1111.11111111 percent_correct: 0.9618913725490196 ARI: 0.9452314038326789
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07287
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23962s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 44.1463s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.642s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7169.35 GFLOPS
+write pruned knn graph duration:13.5598s
+Finding clusters...
+find_cluster_duration_total: 7.4104s
+detected clusters: 72
+datapoints in clusters: 8232778
+score: 0
+write cluster map duration:9.43683s
+total_duration_without_disk: 329.031
+total_duration: 330.104
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 72
+datapoints_clusters: 8232778
+total_dur: 253.0524
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 1388.88888889 percent_correct: 0.8267267647058824 ARI: 0.7190438269849394
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.1622776601683795e-05 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07791
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2503s
+surplus min: -49.5256 max: 480.496
+reusing knn graph
+loading graph (reuse) duration: 45.9666s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.723s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7166.99 GFLOPS
+write pruned knn graph duration:12.284s
+Finding clusters...
+find_cluster_duration_total: 7.3665s
+detected clusters: 290
+datapoints in clusters: 6297063
+score: 0
+write cluster map duration:9.49291s
+total_duration_without_disk: 329.767
+total_duration: 330.845
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 290
+datapoints_clusters: 6297063
+total_dur: 253.08950000000002
+
+------------- END RUN ---------------
+attempt lambda: 3.1622776601683795e-05 threshold: 1666.66666667 percent_correct: 0.6368998039215686 ARI: 0.4489631562985955
+datapoints_clusters too low, aborting threshold testing
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07213
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.37535s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 40.1348s
+ops_generate_b: 247527
+flops_generate_b: 6167.38 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.45226
+delta: 0.340336
+delta: 0.207872
+delta: 0.101932
+delta: 0.103103
+delta: 0.255463
+delta: 0.0379764
+delta: 0.0173134
+delta: 0.0147846
+delta: 0.0186173
+delta: 0.0224577
+delta: 0.00502681
+delta: 0.00468992
+delta: 0.000816775
+delta: 0.0041691
+delta: 0.000450496
+delta: 0.000648247
+delta: 0.000247427
+delta: 0.000823274
+delta: 0.000127913
+delta: 9.07653e-05
+delta: 3.28908e-05
+delta: 5.52288e-05
+delta: 0.000150036
+delta: 1.31474e-05
+Number of iterations: 25 (max. 1000)
+Final norm of residuum: 1.31474e-05
+counted_mult_calls: 26
+Grid points after refinement step: 397825
+act_it: 26
+acc_duration_density: 107.723s
+ops_density: 584313 GOps
+flops_density: 5424.24 GFLOPS
+density_duration_total: 155.454s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 45.9145s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.544s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7172.19 GFLOPS
+write pruned knn graph duration:14.1145s
+Finding clusters...
+find_cluster_duration_total: 8.1958s
+detected clusters: 462
+datapoints in clusters: 10012318
+score: 0
+write cluster map duration:9.28626s
+total_duration_without_disk: 486.896
+total_duration: 487.968
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 462
+datapoints_clusters: 10012318
+total_dur: 449.3286
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 277.777777778 percent_correct: 0.11643941176470589 ARI: 0.007948043733849173
+-> new best_ARI:0.007948043733849173, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07538
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24993s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.6711s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.668s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7168.58 GFLOPS
+write pruned knn graph duration:14.4314s
+Finding clusters...
+find_cluster_duration_total: 10.1425s
+detected clusters: 316
+datapoints in clusters: 10005268
+score: 0
+write cluster map duration:9.40277s
+total_duration_without_disk: 333.158
+total_duration: 334.234
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 316
+datapoints_clusters: 10005268
+total_dur: 255.81050000000002
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 555.555555556 percent_correct: 0.11713058823529411 ARI: 0.008282891531789308
+-> new best_ARI:0.008282891531789308, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07327
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24418s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.2635s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.625s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7169.83 GFLOPS
+write pruned knn graph duration:14.3471s
+Finding clusters...
+find_cluster_duration_total: 7.98143s
+detected clusters: 213
+datapoints in clusters: 10002649
+score: 0
+write cluster map duration:9.28225s
+total_duration_without_disk: 330.368
+total_duration: 331.442
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 213
+datapoints_clusters: 10002649
+total_dur: 253.60643
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 833.333333333 percent_correct: 0.411505 ARI: 0.4487725465248711
+-> new best_ARI:0.4487725465248711, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08216
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24534s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 43.9051s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.497s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7173.58 GFLOPS
+write pruned knn graph duration:14.1666s
+Finding clusters...
+find_cluster_duration_total: 8.14686s
+detected clusters: 121
+datapoints in clusters: 10001499
+score: 0
+write cluster map duration:9.45446s
+total_duration_without_disk: 330.008
+total_duration: 331.091
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 121
+datapoints_clusters: 10001499
+total_dur: 253.64386000000002
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 1111.11111111 percent_correct: 0.5096569607843138 ARI: 0.5243149709730893
+-> new best_ARI:0.5243149709730893, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08089
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24181s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.1324s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.557s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.83 GFLOPS
+write pruned knn graph duration:14.2145s
+Finding clusters...
+find_cluster_duration_total: 9.28006s
+detected clusters: 80
+datapoints in clusters: 10000917
+score: 0
+write cluster map duration:9.22127s
+total_duration_without_disk: 331.247
+total_duration: 332.328
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 80
+datapoints_clusters: 10000917
+total_dur: 254.83705999999998
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 1388.88888889 percent_correct: 0.8038316666666667 ARI: 0.8127236684652648
+-> new best_ARI:0.8127236684652648, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07781
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24235s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.2546s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.731s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7166.75 GFLOPS
+write pruned knn graph duration:14.2624s
+Finding clusters...
+find_cluster_duration_total: 8.47113s
+detected clusters: 56
+datapoints in clusters: 10000592
+score: 0
+write cluster map duration:9.24008s
+total_duration_without_disk: 330.868
+total_duration: 331.946
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 56
+datapoints_clusters: 10000592
+total_dur: 254.20212999999998
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 1666.66666667 percent_correct: 0.9999419607843137 ARI: 0.9999373623564026
+-> new best_ARI:0.9999373623564026, new best_threshold:1666.66666667
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07675
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2415s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.2279s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.332s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7178.4 GFLOPS
+write pruned knn graph duration:14.0432s
+Finding clusters...
+find_cluster_duration_total: 7.77853s
+detected clusters: 35
+datapoints in clusters: 10000394
+score: 0
+write cluster map duration:9.29941s
+total_duration_without_disk: 329.584
+total_duration: 330.661
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 35
+datapoints_clusters: 10000394
+total_dur: 253.11052999999998
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 1944.44444444 percent_correct: 0.9999613725490196 ARI: 0.999957038647745
+-> new best_ARI:0.999957038647745, new best_threshold:1944.44444444
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07215
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23651s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.2929s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.415s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7175.99 GFLOPS
+write pruned knn graph duration:14.0063s
+Finding clusters...
+find_cluster_duration_total: 8.49842s
+detected clusters: 27
+datapoints in clusters: 10000267
+score: 0
+write cluster map duration:9.30528s
+total_duration_without_disk: 330.359
+total_duration: 331.431
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 27
+datapoints_clusters: 10000267
+total_dur: 253.91342
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 2222.22222222 percent_correct: 0.9999738235294118 ARI: 0.99997030613042
+-> new best_ARI:0.99997030613042, new best_threshold:2222.22222222
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=3.162277660168379e-06 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 3.16228e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0691
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23885s
+surplus min: -645.043 max: 3168.56
+reusing knn graph
+loading graph (reuse) duration: 44.3509s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.79s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7165.02 GFLOPS
+write pruned knn graph duration:14.198s
+Finding clusters...
+find_cluster_duration_total: 8.08568s
+detected clusters: 22
+datapoints in clusters: 10000199
+score: 0
+write cluster map duration:9.28287s
+total_duration_without_disk: 330.54
+total_duration: 331.609
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 22
+datapoints_clusters: 10000199
+total_dur: 253.87568
+
+------------- END RUN ---------------
+attempt lambda: 3.162277660168379e-06 threshold: 2500.0 percent_correct: 0.9999804901960785 ARI: 0.9999775357920206
+-> new best_ARI:0.9999775357920206, new best_threshold:2500.0
+-> new overall_best_ARI:0.9999775357920206, overall_best_lambda_value: 3.162277660168379e-06, new best_threshold:2500.0
+lambda_factor: 1.778279410038923 lambda_start_lower:1e-06 overall_best_lambda_value: 3.162277660168379e-06
+lambda_values filtered:[5.623413251903493e-06, 1.778279410038923e-06]
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08004
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.38082s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.9781s
+ops_generate_b: 247527
+flops_generate_b: 6191.56 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.442206
+delta: 0.3032
+delta: 0.166916
+delta: 0.0675283
+delta: 0.0557661
+delta: 0.122859
+delta: 0.0169693
+delta: 0.00600184
+delta: 0.00408707
+delta: 0.00519242
+delta: 0.00484942
+delta: 0.00106075
+delta: 0.00087055
+delta: 0.000130919
+delta: 0.000349247
+delta: 4.58639e-05
+delta: 5.32411e-05
+delta: 1.9739e-05
+delta: 9.05348e-05
+delta: 7.35808e-06
+Number of iterations: 20 (max. 1000)
+Final norm of residuum: 7.35808e-06
+counted_mult_calls: 21
+Grid points after refinement step: 397825
+act_it: 21
+acc_duration_density: 86.7699s
+ops_density: 471945 GOps
+flops_density: 5439.04 GFLOPS
+density_duration_total: 134.269s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 46.2457s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.512s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7173.15 GFLOPS
+write pruned knn graph duration:14.0094s
+Finding clusters...
+find_cluster_duration_total: 10.2252s
+detected clusters: 399
+datapoints in clusters: 10010785
+score: 0
+write cluster map duration:9.21723s
+total_duration_without_disk: 467.78
+total_duration: 468.86
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 399
+datapoints_clusters: 10010785
+total_dur: 429.98429999999996
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 277.777777778 percent_correct: 0.11658970588235294 ARI: 0.008015741910972957
+-> new best_ARI:0.008015741910972957, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0691
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.25792s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.9366s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.719s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7167.1 GFLOPS
+write pruned knn graph duration:14.1657s
+Finding clusters...
+find_cluster_duration_total: 9.48675s
+detected clusters: 257
+datapoints in clusters: 10003922
+score: 0
+write cluster map duration:9.27391s
+total_duration_without_disk: 332.463
+total_duration: 333.533
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 257
+datapoints_clusters: 10003922
+total_dur: 255.20575
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 555.555555556 percent_correct: 0.21530176470588236 ARI: 0.05549830414747551
+-> new best_ARI:0.05549830414747551, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07217
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.25096s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.3038s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.714s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7167.23 GFLOPS
+write pruned knn graph duration:14.4449s
+Finding clusters...
+find_cluster_duration_total: 8.03099s
+detected clusters: 137
+datapoints in clusters: 10001751
+score: 0
+write cluster map duration:9.25317s
+total_duration_without_disk: 330.695
+total_duration: 331.767
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 137
+datapoints_clusters: 10001751
+total_dur: 253.74499
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 833.333333333 percent_correct: 0.4115930392156863 ARI: 0.4488460341103316
+-> new best_ARI:0.4488460341103316, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06775
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23696s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.6796s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.198s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7182.31 GFLOPS
+write pruned knn graph duration:14.1591s
+Finding clusters...
+find_cluster_duration_total: 9.88987s
+detected clusters: 73
+datapoints in clusters: 10000899
+score: 0
+write cluster map duration:9.24692s
+total_duration_without_disk: 332.088
+total_duration: 333.156
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 73
+datapoints_clusters: 10000899
+total_dur: 255.08787
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 1111.11111111 percent_correct: 0.7057942156862745 ARI: 0.6746746478543806
+-> new best_ARI:0.6746746478543806, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07602
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24516s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 45.4737s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.731s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7166.74 GFLOPS
+write pruned knn graph duration:14.1947s
+Finding clusters...
+find_cluster_duration_total: 7.70226s
+detected clusters: 42
+datapoints in clusters: 10000490
+score: 0
+write cluster map duration:9.24023s
+total_duration_without_disk: 331.53
+total_duration: 332.606
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 42
+datapoints_clusters: 10000490
+total_dur: 253.43326
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 1388.88888889 percent_correct: 0.9999519607843137 ARI: 0.9999459984013948
+-> new best_ARI:0.9999459984013948, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.06475
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24582s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.4067s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.114s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7184.79 GFLOPS
+write pruned knn graph duration:13.9982s
+Finding clusters...
+find_cluster_duration_total: 7.74031s
+detected clusters: 29
+datapoints in clusters: 10000298
+score: 0
+write cluster map duration:9.35343s
+total_duration_without_disk: 329.515
+total_duration: 330.58
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 29
+datapoints_clusters: 10000298
+total_dur: 252.85431
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 1666.66666667 percent_correct: 0.9999707843137254 ARI: 0.9999670882920376
+-> new best_ARI:0.9999670882920376, new best_threshold:1666.66666667
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08119
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24798s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.5231s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.699s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7167.69 GFLOPS
+write pruned knn graph duration:14.1697s
+Finding clusters...
+find_cluster_duration_total: 8.18959s
+detected clusters: 20
+datapoints in clusters: 10000184
+score: 0
+write cluster map duration:9.27719s
+total_duration_without_disk: 330.767
+total_duration: 331.848
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 20
+datapoints_clusters: 10000184
+total_dur: 253.88859000000002
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 1944.44444444 percent_correct: 0.9999819607843137 ARI: 0.9999786378542289
+-> new best_ARI:0.9999786378542289, new best_threshold:1944.44444444
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08283
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24744s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 44.1182s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.059s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7186.41 GFLOPS
+write pruned knn graph duration:14.1295s
+Finding clusters...
+find_cluster_duration_total: 9.79443s
+detected clusters: 14
+datapoints in clusters: 10000040
+score: 5.88238
+write cluster map duration:9.41012s
+total_duration_without_disk: 331.487
+total_duration: 332.57
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 14
+datapoints_clusters: 10000040
+total_dur: 254.85343
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 2222.22222222 percent_correct: 0.9999817647058824 ARI: 0.9999766089150516
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=5.623413251903493e-06 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62341e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07113
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23869s
+surplus min: -340.082 max: 1995.81
+reusing knn graph
+loading graph (reuse) duration: 45.0515s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.648s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7169.17 GFLOPS
+write pruned knn graph duration:14.4031s
+Finding clusters...
+find_cluster_duration_total: 11.0334s
+detected clusters: 11
+datapoints in clusters: 9998144
+score: 8.82189
+write cluster map duration:9.4023s
+total_duration_without_disk: 334.426
+total_duration: 335.497
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 11
+datapoints_clusters: 9998144
+total_dur: 256.6814
+
+------------- END RUN ---------------
+attempt lambda: 5.623413251903493e-06 threshold: 2500.0 percent_correct: 0.9998045098039215 ARI: 0.9997364195271213
+-> new overall_best_ARI:0.9999786378542289, overall_best_lambda_value: 5.623413251903493e-06, new best_threshold:1944.44444444
+thresholds:[    0.           277.77777778   555.55555556   833.33333333  1111.11111111
+  1388.88888889  1666.66666667  1944.44444444  2222.22222222  2500.        ], threshold_step:277.777777778
+is_first_overall: False
+is_first_lambda: True
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 277.77777777777777 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 277.778
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0703
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.37426s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.935s
+ops_generate_b: 247527
+flops_generate_b: 6198.25 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.458065
+delta: 0.364214
+delta: 0.237441
+delta: 0.132711
+delta: 0.156746
+delta: 0.419865
+delta: 0.0665954
+delta: 0.0371309
+delta: 0.038521
+delta: 0.0476244
+delta: 0.0710126
+delta: 0.0159778
+delta: 0.0164138
+delta: 0.00339354
+delta: 0.026845
+delta: 0.00252459
+delta: 0.00425543
+delta: 0.00167879
+delta: 0.00425022
+delta: 0.00115839
+delta: 0.000835188
+delta: 0.000334015
+delta: 0.000567478
+delta: 0.00270935
+delta: 0.000195362
+delta: 0.000475489
+delta: 4.73554e-05
+delta: 0.00025215
+delta: 2.66061e-05
+delta: 5.91375e-05
+delta: 6.81504e-06
+Number of iterations: 31 (max. 1000)
+Final norm of residuum: 6.81504e-06
+counted_mult_calls: 32
+Grid points after refinement step: 397825
+act_it: 32
+acc_duration_density: 132.57s
+ops_density: 719155 GOps
+flops_density: 5424.73 GFLOPS
+density_duration_total: 180.917s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.485s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.735s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7137.58 GFLOPS
+write pruned knn graph duration:14.3512s
+Finding clusters...
+find_cluster_duration_total: 8.41068s
+detected clusters: 636
+datapoints in clusters: 10013483
+score: 0
+write cluster map duration:9.37814s
+total_duration_without_disk: 513.001
+total_duration: 514.071
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 636
+datapoints_clusters: 10013483
+total_dur: 475.99768
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 277.777777778 percent_correct: 0.11632519607843138 ARI: 0.007915746929491293
+-> new best_ARI:0.007915746929491293, new best_threshold:277.777777778
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 555.5555555555555 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 555.556
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0672
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23778s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.1998s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.311s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7179.01 GFLOPS
+write pruned knn graph duration:13.7962s
+Finding clusters...
+find_cluster_duration_total: 8.3124s
+detected clusters: 376
+datapoints in clusters: 10006363
+score: 0
+write cluster map duration:9.24399s
+total_duration_without_disk: 331.21
+total_duration: 332.277
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 376
+datapoints_clusters: 10006363
+total_dur: 253.6234
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 555.555555556 percent_correct: 0.21506245098039214 ARI: 0.05537802764653601
+-> new best_ARI:0.05537802764653601, new best_threshold:555.555555556
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 833.3333333333333 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 833.333
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0693
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.23783s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.8038s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.421s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7175.81 GFLOPS
+write pruned knn graph duration:14.142s
+Finding clusters...
+find_cluster_duration_total: 7.84059s
+detected clusters: 280
+datapoints in clusters: 10003594
+score: 0
+write cluster map duration:9.24818s
+total_duration_without_disk: 330.54
+total_duration: 331.609
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 280
+datapoints_clusters: 10003594
+total_dur: 253.26158999999998
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 833.333333333 percent_correct: 0.31337313725490196 ARI: 0.23694629547297877
+-> new best_ARI:0.23694629547297877, new best_threshold:833.333333333
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 1111.111111111111 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1111.11
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07574
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24251s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.2939s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.01s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7158.63 GFLOPS
+write pruned knn graph duration:14.2002s
+Finding clusters...
+find_cluster_duration_total: 8.97028s
+detected clusters: 196
+datapoints in clusters: 10002174
+score: 0
+write cluster map duration:9.30647s
+total_duration_without_disk: 333.228
+total_duration: 334.304
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 196
+datapoints_clusters: 10002174
+total_dur: 254.98028
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 1111.11111111 percent_correct: 0.41155156862745096 ARI: 0.44882123183280404
+-> new best_ARI:0.44882123183280404, new best_threshold:1111.11111111
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 1388.888888888889 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1388.89
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0757
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24637s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 45.3683s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.03s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7158.02 GFLOPS
+write pruned knn graph duration:14.5757s
+Finding clusters...
+find_cluster_duration_total: 8.06888s
+detected clusters: 122
+datapoints in clusters: 10001420
+score: 0
+write cluster map duration:9.62667s
+total_duration_without_disk: 333.895
+total_duration: 334.971
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 122
+datapoints_clusters: 10001420
+total_dur: 254.09888
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 1388.88888889 percent_correct: 0.705743137254902 ARI: 0.6746256502711125
+-> new best_ARI:0.6746256502711125, new best_threshold:1388.88888889
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 1666.6666666666665 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1666.67
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08463
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.25436s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 45.7369s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.895s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7161.98 GFLOPS
+write pruned knn graph duration:14.1372s
+Finding clusters...
+find_cluster_duration_total: 9.25729s
+detected clusters: 90
+datapoints in clusters: 10000982
+score: 0
+write cluster map duration:9.22987s
+total_duration_without_disk: 333.572
+total_duration: 334.656
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 90
+datapoints_clusters: 10000982
+total_dur: 255.15229000000002
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 1666.66666667 percent_correct: 0.9018645098039215 ARI: 0.8986678844079855
+-> new best_ARI:0.8986678844079855, new best_threshold:1666.66666667
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 1944.4444444444443 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944.44
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08397
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.2465s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 45.3069s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.691s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7167.91 GFLOPS
+write pruned knn graph duration:14.6238s
+Finding clusters...
+find_cluster_duration_total: 8.11779s
+detected clusters: 68
+datapoints in clusters: 10000705
+score: 0
+write cluster map duration:9.25003s
+total_duration_without_disk: 331.981
+total_duration: 333.065
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 68
+datapoints_clusters: 10000705
+total_dur: 253.80879
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 1944.44444444 percent_correct: 0.9999308823529411 ARI: 0.999927052963976
+-> new best_ARI:0.999927052963976, new best_threshold:1944.44444444
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 2222.222222222222 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2222.22
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.07808
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24635s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.6122s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 245.562s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7171.67 GFLOPS
+write pruned knn graph duration:13.7553s
+Finding clusters...
+find_cluster_duration_total: 7.72114s
+detected clusters: 45
+datapoints in clusters: 10000496
+score: 0
+write cluster map duration:9.30029s
+total_duration_without_disk: 329.925
+total_duration: 331.003
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 45
+datapoints_clusters: 10000496
+total_dur: 253.28314
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 2222.22222222 percent_correct: 0.9999513725490196 ARI: 0.9999464173922437
+-> new best_ARI:0.9999464173922437, new best_threshold:2222.22222222
+is_first_overall: False
+is_first_lambda: False
+
+------------ START RUN --------------
+
+--------------- CMD -----------------
+./datadriven/examplesOCL/clustering_cmd --config OCL_configs/config_ocl_float_gtx1080ti.cfg --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --level=7 --lambda=1.778279410038923e-06 --k 6 --epsilon 0.01 --threshold 2500.0 --target_clusters 10 --reuse_knn_graph tune_gaussian_c10_size10000000_dim10_noise_graph.csv --reuse_density_grid tune_gaussian_c10_size10000000_dim10_noise_density_grid.serialized --write_all --file_prefix tune_gaussian_c10_size10000000_dim10_noise >> tune_precision_10d_10000000s.log 2>tune_precision_10d_10000000s_error.log
+-------------- OUTPUT ---------------
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 2500
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.08023
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+reusing density grid and coefficients
+loading density grid (reuse) duration: 1.24349s
+surplus min: -1176.58 max: 5031.25
+reusing knn graph
+loading graph (reuse) duration: 44.407s
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.092s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7156.22 GFLOPS
+write pruned knn graph duration:14.3261s
+Finding clusters...
+find_cluster_duration_total: 7.63998s
+detected clusters: 34
+datapoints in clusters: 10000378
+score: 0
+write cluster map duration:9.27766s
+total_duration_without_disk: 330.86
+total_duration: 331.941
+
+all done!
+
+-------------- ERROR ----------------
+
+------------- SUMMARY ---------------
+detected_clusters: 34
+datapoints_clusters: 10000378
+total_dur: 253.73198000000002
+
+------------- END RUN ---------------
+attempt lambda: 1.778279410038923e-06 threshold: 2500.0 percent_correct: 0.9999629411764706 ARI: 0.9999584930115992
+-> new best_ARI:0.9999584930115992, new best_threshold:2500.0
+final overall_best_ARI: 0.9999786378542289, overall_best_threshold: 1944.44444444, overall_best_lambda_value: 5.623413251903493e-06

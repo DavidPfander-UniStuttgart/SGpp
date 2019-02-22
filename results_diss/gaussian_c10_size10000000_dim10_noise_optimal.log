@@ -1,0 +1,79 @@
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 5.62e-06
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1944
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.0883
+dimension: 10
+data points: 10200000
+printing first two datapoints:
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.38132s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 40.2461s
+ops_generate_b: 247527
+flops_generate_b: 6150.33 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.442219
+delta: 0.303248
+delta: 0.166964
+delta: 0.0675639
+delta: 0.0557862
+delta: 0.123011
+delta: 0.0169875
+delta: 0.0060094
+delta: 0.00407321
+delta: 0.0052121
+delta: 0.00487091
+delta: 0.00106301
+delta: 0.000872343
+delta: 0.000130153
+delta: 0.000357921
+delta: 4.59986e-05
+delta: 5.38279e-05
+delta: 1.97226e-05
+delta: 8.81508e-05
+delta: 7.41276e-06
+Number of iterations: 20 (max. 1000)
+Final norm of residuum: 7.41276e-06
+counted_mult_calls: 21
+act_it: 21
+acc_duration_density: 87.0213s
+ops_density: 471945 GOps
+flops_density: 5423.33 GFLOPS
+density_duration_total: 134.857s
+surplus min: -340.318 max: 1996.74
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+last_duration_create_graph: 520.626s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 5995.09 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 246.87s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7133.69 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 8.13142s
+detected clusters: 20
+datapoints in clusters: 10000184
+write cluster map duration:9.51081s
+total_duration_without_disk: 925.628
+total_duration: 926.716
+
+all done!
+ARI: 0.9999786378542289
