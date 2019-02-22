@@ -61,7 +61,6 @@ def filter_log_files(log_files, with_ARI = False):
         prune_graph_pattern = 'last_duration_prune_graph: ' + num_re + 's'
         total_duration_pattern = 'total_duration: ' + num_re + '\n'
 
-
         generate_b_dur = float(re.search(generate_b_pattern, content).group(1))
         density_dur = float(re.search(density_pattern, content).group(1))
         its = re.search(it_pattern, content).group(1)
