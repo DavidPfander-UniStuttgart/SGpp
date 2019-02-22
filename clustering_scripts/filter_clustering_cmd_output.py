@@ -7,13 +7,13 @@ import sys
 
 # flops_kernel_index=['generate_b_flops', 'density_flops', 'create_graph_flops', 'prune_graph_flops']
 # kernel_names={'generate_b_dur': 'dens. right-hand side', 'density_dur': 'sum density mult.', 'density_single_it_dur': 'dens. matrix-vector mult. (1 it.)', 'create_graph_dur': 'create graph', 'prune_graph_dur': 'prune graph'}
-kernel_index=['dataset_name', 'precision', 'device', 'level', 'lambda_value', 'threshold', 'k', 'generate_b_dur', 'density_dur', 'density_single_it_dur', 'create_graph_dur', 'prune_graph_dur', 'total_duration']
+kernel_index=['dataset_name', 'precision', 'device', 'level', 'lambda_value', 'threshold', 'k', 'generate_b_dur', 'density_dur', 'density_single_it_dur', 'create_graph_dur', 'prune_graph_dur', 'total_duration', 'ARI']
 
 num_re = r'(\d+(?:\.\d*)?)'
 sci_num_re = r'(\d+(?:\.\d*)?[eE][-+]?\d+)'
 # any_num_re = r'(?:' + num_re + r'|' + sci_num_re + r')'
 
-def filter_log_files(log_files):
+def filter_log_files(log_files, with_ARI = False):
 
     df = pd.DataFrame(np.zeros(shape=(len(kernel_index), 0)), index=kernel_index, dtype=object)
 
@@ -61,6 +61,7 @@ def filter_log_files(log_files):
         prune_graph_pattern = 'last_duration_prune_graph: ' + num_re + 's'
         total_duration_pattern = 'total_duration: ' + num_re + '\n'
 
+
         generate_b_dur = float(re.search(generate_b_pattern, content).group(1))
         density_dur = float(re.search(density_pattern, content).group(1))
         its = re.search(it_pattern, content).group(1)
@@ -69,7 +70,12 @@ def filter_log_files(log_files):
         prune_graph_dur = float(re.search(prune_graph_pattern, content).group(1))
         total_dur = float(re.search(total_duration_pattern, content).group(1))
 
-        temp_df = pd.Series([dataset_name, precision, device, level, lambda_value, threshold, k, generate_b_dur, density_dur, density_single_it_dur, create_graph_dur, prune_graph_dur, total_dur], index=kernel_index, dtype=object)
+        ARI_value = None
+        if with_ARI:
+            ARI_pattern = r'ARI: ' + num_re + r'\n'
+            ARI_value = float(re.search(ARI_pattern, content).group(1))
+
+        temp_df = pd.Series([dataset_name, precision, device, level, lambda_value, threshold, k, generate_b_dur, density_dur, density_single_it_dur, create_graph_dur, prune_graph_dur, total_dur, ARI_value], index=kernel_index, dtype=object)
         # df[device_names[0]] = temp_df
         df[num_column] = temp_df.values
         num_column += 1
