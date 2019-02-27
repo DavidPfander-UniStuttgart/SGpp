@@ -189,6 +189,7 @@ clusters_distance = 6 # required distance between cluster centers, criterion dis
 additional_dims = 6
 additional_dims_random = False
 # noise_percent = 0.02
+noise_dims = 5
 # for dim in range(2, 11, 2):
 for dim in range(4, 5, 2):
     for noise_percent in [0.0, 0.02]:

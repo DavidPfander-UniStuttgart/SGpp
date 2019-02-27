@@ -4,10 +4,11 @@ import pandas as pd
 import numpy as np
 import re
 import sys
+import os
 
 # flops_kernel_index=['generate_b_flops', 'density_flops', 'create_graph_flops', 'prune_graph_flops']
 # kernel_names={'generate_b_dur': 'dens. right-hand side', 'density_dur': 'sum density mult.', 'density_single_it_dur': 'dens. matrix-vector mult. (1 it.)', 'create_graph_dur': 'create graph', 'prune_graph_dur': 'prune graph'}
-kernel_index=['dataset_name', 'precision', 'device', 'level', 'lambda_value', 'threshold', 'k', 'generate_b_dur', 'density_dur', 'density_single_it_dur', 'create_graph_dur', 'prune_graph_dur', 'total_duration', 'ARI']
+kernel_index=['dataset_name', 'precision', 'device', 'level', 'lambda_value', 'threshold', 'k', 'generate_b_dur', 'density_dur', 'density_single_it_dur', 'create_graph_dur', 'prune_graph_dur', 'find_clusters_dur','total_kernels', 'total_duration', 'ARI']
 
 num_re = r'(\d+(?:\.\d*)?)'
 sci_num_re = r'(\d+(?:\.\d*)?[eE][-+]?\d+)'
@@ -39,7 +40,7 @@ def filter_log_files(log_files, with_ARI = False):
             dataset_name = m.group(1)
         else:
             dataset_name = m.group(1)
-        print(dataset_name)
+        dataset_name = os.path.split(dataset_name)[-1]
 
         # experiments setup
 
@@ -48,10 +49,10 @@ def filter_log_files(log_files, with_ARI = False):
         threshold_pattern = 'threshold: ' + num_re + '\n'
         k_pattern = 'k: ' + num_re + '\n'
 
-        level = re.search(level_pattern, content).group(1)
-        lambda_value = re.search(lambda_pattern, content).group(1)
-        threshold = re.search(threshold_pattern, content).group(1)
-        k = re.search(k_pattern, content).group(1)
+        level = int(re.search(level_pattern, content).group(1))
+        lambda_value = float(re.search(lambda_pattern, content).group(1))
+        threshold = float(re.search(threshold_pattern, content).group(1))
+        k = int(re.search(k_pattern, content).group(1))
 
         # durations
         generate_b_pattern = 'last_duration_generate_b: ' + num_re + 's'
@@ -59,6 +60,7 @@ def filter_log_files(log_files, with_ARI = False):
         it_pattern = 'act_it: ' + num_re + '\n'
         create_graph_pattern = 'last_duration_create_graph: ' + num_re + 's'
         prune_graph_pattern = 'last_duration_prune_graph: ' + num_re + 's'
+        find_clusters_pattern = 'find_cluster_duration_total: ' + num_re + 's'
         total_duration_pattern = 'total_duration: ' + num_re + '\n'
 
         generate_b_dur = float(re.search(generate_b_pattern, content).group(1))
@@ -67,6 +69,8 @@ def filter_log_files(log_files, with_ARI = False):
         density_single_it_dur = density_dur / float(its)
         create_graph_dur = float(re.search(create_graph_pattern, content).group(1))
         prune_graph_dur = float(re.search(prune_graph_pattern, content).group(1))
+        find_clusters_dur = float(re.search(find_clusters_pattern, content).group(1))
+        total_kernels = generate_b_dur + density_dur + create_graph_dur + prune_graph_dur + find_clusters_dur
         total_dur = float(re.search(total_duration_pattern, content).group(1))
 
         ARI_value = None
@@ -74,11 +78,11 @@ def filter_log_files(log_files, with_ARI = False):
             ARI_pattern = r'ARI: ' + num_re + r'\n'
             ARI_value = float(re.search(ARI_pattern, content).group(1))
 
-        temp_df = pd.Series([dataset_name, precision, device, level, lambda_value, threshold, k, generate_b_dur, density_dur, density_single_it_dur, create_graph_dur, prune_graph_dur, total_dur, ARI_value], index=kernel_index, dtype=object)
+        temp_df = pd.Series([dataset_name, precision, device, level, lambda_value, threshold, k, generate_b_dur, density_dur, density_single_it_dur, create_graph_dur, prune_graph_dur, find_clusters_dur, total_kernels, total_dur, ARI_value], index=kernel_index, dtype=object)
         # df[device_names[0]] = temp_df
         df[num_column] = temp_df.values
         num_column += 1
-    print(df)
+    # print(df)
     return df
 
 if __name__ == "__main__":
