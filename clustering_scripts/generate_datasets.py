@@ -32,34 +32,66 @@ def write_csv(f, n_features, points):
         f.write("\n")
 
 def normalize(dataset, centers, dimensions):
-   # B = np.array(liste)
-   mins = []
-   maxs = []
-   for dimension in range(0, dimensions):
-      teil = dataset[:, dimension]
-      minimum = min(teil)
-      maximum = max(teil)
-      mins += [minimum]
-      maxs += [maximum]
-      for i in range(0, len(teil)):
-         teil[i] = (teil[i] - minimum)/(maximum - minimum)
-         teil[i] = teil[i] * (domain_max - domain_min) + domain_min
-         # teil[i] = (teil[i]+0.1)*0.8
-      dataset[:, dimension] = teil
+    # B = np.array(liste)
+    mins = []
+    maxs = []
+    for dimension in range(0, dimensions):
+        col = dataset[:, dimension]
+        minimum = min(col)
+        maximum = max(col)
+        mins += [minimum]
+        maxs += [maximum]
+        if maximum == minimum and minimum >= 0.0 and minimum <= 1.0:
+            continue
+        for i in range(0, len(col)):
+            col[i] = (col[i] - minimum)/(maximum - minimum)
+            # print(col[i])
+            col[i] = col[i] * (domain_max - domain_min) + domain_min
+            # col[i] = (col[i]+0.1)*0.8
+        dataset[:, dimension] = col
 
-   for dimension in range(0, dimensions):
-      teil = centers[:, dimension]
-      minimum = mins[dimension]
-      maximum = maxs[dimension]
-      for i in range(0, len(teil)):
-         teil[i] = (teil[i] - minimum)/(maximum - minimum)
-         teil[i] = teil[i] * (domain_max - domain_min) + domain_min
-         # teil[i] = (teil[i]+0.1)*0.8
-      centers[:, dimension] = teil
+    for dimension in range(0, dimensions):
+        col = centers[:, dimension]
+        minimum = mins[dimension]
+        maximum = maxs[dimension]
+        if maximum == minimum and minimum >= 0.0 and minimum <= 1.0:
+            continue
+        for i in range(0, len(col)):
+            col[i] = (col[i] - minimum)/(maximum - minimum)
+            col[i] = col[i] * (domain_max - domain_min) + domain_min
+            # col[i] = (col[i]+0.1)*0.8
+        centers[:, dimension] = col
 
-def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize, clusters_distance):
+
+# def normalize(dataset, centers, dimensions):
+#    # B = np.array(liste)
+#    mins = []
+#    maxs = []
+#    for dimension in range(0, dimensions):
+#       teil = dataset[:, dimension]
+#       minimum = min(teil)
+#       maximum = max(teil)
+#       mins += [minimum]
+#       maxs += [maximum]
+#       for i in range(0, len(teil)):
+#          teil[i] = (teil[i] - minimum)/(maximum - minimum)
+#          teil[i] = teil[i] * (domain_max - domain_min) + domain_min
+#          # teil[i] = (teil[i]+0.1)*0.8
+#       dataset[:, dimension] = teil
+
+#    for dimension in range(0, dimensions):
+#       teil = centers[:, dimension]
+#       minimum = mins[dimension]
+#       maximum = maxs[dimension]
+#       for i in range(0, len(teil)):
+#          teil[i] = (teil[i] - minimum)/(maximum - minimum)
+#          teil[i] = teil[i] * (domain_max - domain_min) + domain_min
+#          # teil[i] = (teil[i]+0.1)*0.8
+#       centers[:, dimension] = teil
+
+def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize, clusters_distance, additional_dims, additional_dims_random):
    #generate centers
-   centers = np.zeros(shape=(num_clusters, dimensions))
+   centers = np.zeros(shape=(num_clusters, dimensions + additional_dims))
    for cluster in range(0, num_clusters):
       abstand = 0
       center = []
@@ -83,14 +115,19 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
                continue_search = 1
                break
          counter = counter +1
+         for d in range(additional_dims):
+             if additional_dims_random:
+                 pass
+             else:
+                 center.append(0.5)
       centers[cluster] = center
 
    #generate datapoints
-   dataset = np.zeros(shape=(setsize + rauschensize, dimensions))
+   dataset = np.zeros(shape=(setsize + rauschensize, dimensions + additional_dims))
    cluster_ret = np.zeros(shape=(setsize + rauschensize), dtype=int)
    currentsize = 0
-   cluster_size = setsize / num_clusters
-   print("create clusters")
+   cluster_size = int(setsize / num_clusters)
+   print("create clusters, cluster_size:", cluster_size)
    for cluster in range(0, num_clusters):
        if currentsize >= setsize:
             print("error: cluster was not generated!")
@@ -100,6 +137,11 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
        for i in range(0, cluster_size):
             for dimension in range(0, dimensions):
                 dataset[currentsize, dimension] = random.gauss(centers[cluster][dimension], abweichung)
+            for d in range(additional_dims):
+                if additional_dims_random:
+                    pass
+                else:
+                    dataset[currentsize, dimensions + d] = 0.5
             cluster_ret[currentsize] = cluster + 1
             currentsize = currentsize + 1
             if currentsize >= setsize:
@@ -114,13 +156,13 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
 
    print("create rauschen")
    for i in range(0, rauschensize):
-      for dimension in range(0, dimensions):
+      for dimension in range(0, dimensions + additional_dims):
           dataset[setsize + i, dimension] = random.uniform(0.0, 1.0)
       cluster_ret[setsize + i] = -1
 
    print("created, now normalizing")
 
-   normalize(dataset, centers, dimensions)
+   normalize(dataset, centers, dimensions + additional_dims)
    # for dimension in range(0, dimensions):
    #    col = dataset[:, dimension]
    #    minimum = min(col)
@@ -141,28 +183,30 @@ def generate_dataset(dimensions, num_clusters, setsize, abweichung, rauschensize
    return dataset, cluster_ret, centers
 
 # dimensions, clusters, setsize, abweichung, rauschensize
-num_clusters=100
+num_clusters=10
 abweichung = 0.05
 clusters_distance = 6 # required distance between cluster centers, criterion dis < c_dis * abw
+additional_dims = 6
+additional_dims_random = False
 # noise_percent = 0.02
 noise_dims = 5
 # for dim in range(2, 11, 2):
-for dim in range(10, 11, 2):
+for dim in range(4, 5, 2):
     for noise_percent in [0.0, 0.02]:
         # for dataset_size in [10000000, 100000000]:
         for dataset_size in [1000000]:
         # for dataset_size in [100]:
             # for dataset_size in chain([200], range(20000, 110000, 20000), range(200000, 1100000, 200000)):
-          file_name = "final_paper_datasets/gaussian_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
+          file_name = "datasets_diss/gaussian_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim + additional_dims) + "id" + str(dim)
           if noise_percent > 0.0:
               file_name += "_noise"
           print("creating " + file_name + ".arff")
           noise_size = int(noise_percent * dataset_size)
-          dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, abweichung, noise_size, clusters_distance)
+          dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, abweichung, noise_size, clusters_distance, additional_dims, additional_dims_random)
 
           f = open(file_name + ".arff", "w")
-          write_arff_header(f, dim, file_name, False)
-          write_csv(f, dim, dataset1)
+          write_arff_header(f, dim + additional_dims, file_name, False)
+          write_csv(f, dim + additional_dims, dataset1)
 
           f = open(file_name + "_class.arff", "w")
           for i in range(len(Y1)):
@@ -172,7 +216,7 @@ for dim in range(10, 11, 2):
           f = open(file_name + "_centers.arff", "w")
           # write_arff_header(f, dim, file_name)
           for center in centers:
-              for d in range(dim):
+              for d in range(dim + additional_dims):
                   if (d > 0):
                       f.write(", ")
                   f.write(str(center[d]))
