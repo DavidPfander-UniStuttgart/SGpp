@@ -145,6 +145,7 @@ num_clusters=100
 abweichung = 0.05
 clusters_distance = 6 # required distance between cluster centers, criterion dis < c_dis * abw
 # noise_percent = 0.02
+noise_dims = 5
 # for dim in range(2, 11, 2):
 for dim in range(10, 11, 2):
     for noise_percent in [0.0, 0.02]:
@@ -156,8 +157,8 @@ for dim in range(10, 11, 2):
           if noise_percent > 0.0:
               file_name += "_noise"
           print("creating " + file_name + ".arff")
-          noise = int(noise_percent * dataset_size)
-          dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, abweichung, noise, clusters_distance)
+          noise_size = int(noise_percent * dataset_size)
+          dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, abweichung, noise_size, clusters_distance)
 
           f = open(file_name + ".arff", "w")
           write_arff_header(f, dim, file_name, False)
