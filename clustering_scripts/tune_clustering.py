@@ -269,7 +269,7 @@ for dataset_size, num_clusters, level in experiments:
     # configure threshold search
     #############################
 
-    t_config = threshold_configuration(threshold_intervals = 10.0, threshold_start = 0.0, threshold_stop = 2500.0, threshold_step_min = 100.0)
+    t_config = threshold_configuration(threshold_intervals = 10.0, threshold_start = 0.0, threshold_stop = 5000.0, threshold_step_min = 100.0)
 
     #############################
     # configure lambda search

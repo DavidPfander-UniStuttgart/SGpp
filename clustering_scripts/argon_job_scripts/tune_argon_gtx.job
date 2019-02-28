@@ -2,8 +2,8 @@
 #SBATCH --job-name="clustering experiments"
 #SBATCH --nodelist=argon-gtx
 #SBATCH --gres=gpu:8
-#SBATCH --ntasks=9
-#SBATCH --ntasks-per-node=9
+#SBATCH --ntasks=1
+#SBATCH --ntasks-per-node=1
 #SBATCH --exclusive
 #SBATCH -o slurm.%N.%j.out # STDOUT
 #SBATCH -e slurm.%N.%j.out # STDERR
