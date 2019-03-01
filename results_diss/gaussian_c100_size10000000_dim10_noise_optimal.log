@@ -1,163 +1,276 @@
 binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size10000000_dim10_noise
 level: 7
-lambda: 1e-07
+lambda: 1.77828e-08
 OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
 k: 6
-threshold: 1944
+threshold: 3641.98
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 1.07871
+Dataset load duration: 1.1017
 dimension: 10
 data points: 10200000
 printing first two datapoints:
 0.214481, 0.554334, 0.642808, 0.825717, 0.647876, 0.197221, 0.361363, 0.79707, 0.63018, 0.871278
 0.298784, 0.523701, 0.316682, 0.742123, 0.456755, 0.78974, 0.5497, 0.231498, 0.7254, 0.711656
 initial grid created, grid points: 397825
-grid create duration: 1.37453s
+grid create duration: 1.39537s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 39.8851s
+last_duration_generate_b: 39.9016s
 ops_generate_b: 247527
-flops_generate_b: 6205.99 GFLOPS
+flops_generate_b: 6203.43 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
 Starting norm of residuum: 0.0513473
 Target norm:               5.13473e-06
-delta: 0.0267387
-delta: 0.0535676
-delta: 0.0462341
-delta: 0.0344983
-delta: 0.0407259
-delta: 0.0321995
-delta: 0.0912052
-delta: 0.0315779
-delta: 0.0368349
-delta: 0.0195968
-delta: 0.0709202
-delta: 0.0284634
-delta: 0.0398638
-delta: 0.00986371
-delta: 0.0154385
-delta: 0.0125397
-delta: 0.105942
-delta: 0.0257737
-delta: 0.0208551
-delta: 0.0216696
-delta: 0.00597751
-delta: 0.0203205
-delta: 0.0341048
-delta: 0.0195097
-delta: 0.00656355
-delta: 0.00806584
-delta: 0.0287559
-delta: 0.00723092
-delta: 0.00767699
-delta: 0.00340189
-delta: 0.00236668
-delta: 0.00760032
-delta: 0.00762045
-delta: 0.00335053
-delta: 0.0144652
-delta: 0.0019687
-delta: 0.00368389
-delta: 0.00754778
-delta: 0.00330887
-delta: 0.000970089
-delta: 0.00205023
-delta: 0.00213817
-delta: 0.00173084
-delta: 0.0166007
-delta: 0.000543467
-delta: 0.00120397
-delta: 0.000895874
-delta: 0.00265414
-delta: 0.0021846
-delta: 0.00113361
-delta: 0.000913953
-delta: 0.000468386
-delta: 0.00717826
-delta: 0.000928441
-delta: 0.000489328
-delta: 0.000953355
-delta: 0.000138112
-delta: 0.00176027
-delta: 0.000322772
-delta: 0.000244155
-delta: 0.00050728
-delta: 0.00115857
-delta: 0.000579549
-delta: 0.000759993
-delta: 0.000113399
-delta: 0.000138747
-delta: 0.00128728
-delta: 8.12942e-05
-delta: 0.000246479
-delta: 0.000165933
-delta: 0.000279037
-delta: 0.00135499
-delta: 4.68085e-05
-delta: 7.395e-05
-delta: 0.000244129
-delta: 0.000412524
-delta: 0.00040513
-delta: 3.78146e-05
-delta: 6.21318e-05
-delta: 6.01581e-05
-delta: 0.000366861
-delta: 4.75134e-05
-delta: 0.000118498
-delta: 4.55005e-05
-delta: 3.88776e-05
-delta: 0.000160476
-delta: 8.34822e-05
-delta: 1.55785e-05
-delta: 6.41694e-05
-delta: 2.39187e-05
-delta: 0.000165054
-delta: 5.52913e-05
-delta: 8.98472e-06
-delta: 8.26183e-06
-delta: 3.59999e-05
-delta: 7.86686e-05
-delta: 5.55757e-06
-delta: 1.79173e-05
-delta: 4.16951e-05
-delta: 3.25142e-05
-delta: 9.9508e-06
-delta: 1.20888e-05
-delta: 5.8514e-06
-delta: 4.18689e-06
-Number of iterations: 104 (max. 1000)
-Final norm of residuum: 4.18689e-06
-counted_mult_calls: 107
-act_it: 107
-acc_duration_density: 443.105s
-ops_density: 2.40467e+06 GOps
-flops_density: 5426.87 GFLOPS
-density_duration_total: 491.209s
-surplus min: -3019.81 max: 12854.1
+delta: 0.0267446
+delta: 0.0537295
+delta: 0.0465853
+delta: 0.0351031
+delta: 0.0420436
+delta: 0.0343507
+delta: 0.0920392
+delta: 0.0341171
+delta: 0.0405023
+delta: 0.0221798
+delta: 0.0824513
+delta: 0.0250574
+delta: 0.0928516
+delta: 0.0125016
+delta: 0.0208111
+delta: 0.0168039
+delta: 0.146699
+delta: 0.0429501
+delta: 0.0332564
+delta: 0.0338917
+delta: 0.00974032
+delta: 0.0251274
+delta: 0.0461899
+delta: 0.0911485
+delta: 0.0134259
+delta: 0.0157555
+delta: 0.0606807
+delta: 0.00843839
+delta: 0.0915271
+delta: 0.00898791
+delta: 0.00621119
+delta: 0.0157687
+delta: 0.00904602
+delta: 0.0339873
+delta: 0.128875
+delta: 0.00695909
+delta: 0.0129152
+delta: 0.0106854
+delta: 0.00392783
+delta: 0.0763
+delta: 0.00934348
+delta: 0.00962159
+delta: 0.00758029
+delta: 0.0029006
+delta: 0.0411083
+delta: 0.0079817
+delta: 0.00554409
+delta: 0.00716599
+delta: 0.0115416
+delta: 0.00519263
+delta: 0.0380788
+delta: 0.0035011
+delta: 0.00663613
+delta: 0.00532997
+delta: 0.0191263
+delta: 0.00143254
+delta: 0.00832776
+delta: 0.00791711
+delta: 0.00515956
+delta: 0.00361827
+delta: 0.00285426
+delta: 0.0581024
+delta: 0.00152116
+delta: 0.00660543
+delta: 0.00878348
+delta: 0.00760322
+delta: 0.00323887
+delta: 0.0012805
+delta: 0.00239254
+delta: 0.00943283
+delta: 0.00511914
+delta: 0.000909409
+delta: 0.0104221
+delta: 0.00424935
+delta: 0.00222165
+delta: 0.00136092
+delta: 0.00615047
+delta: 0.00211595
+delta: 0.00283889
+delta: 0.00123728
+delta: 0.00821433
+delta: 0.00335925
+delta: 0.0017091
+delta: 0.00327957
+delta: 0.00262287
+delta: 0.00211227
+delta: 0.001572
+delta: 0.0014253
+delta: 0.00683655
+delta: 0.000550328
+delta: 0.00650341
+delta: 0.00045286
+delta: 0.00984593
+delta: 0.000374364
+delta: 0.00224879
+delta: 0.0123262
+delta: 0.00110586
+delta: 0.00121339
+delta: 0.000677922
+delta: 0.00590672
+delta: 0.00557315
+delta: 0.000387938
+delta: 0.000561386
+delta: 0.00309281
+delta: 0.00128747
+delta: 0.000461901
+delta: 0.00269148
+delta: 0.0021878
+delta: 0.000218069
+delta: 0.000353784
+delta: 0.000853451
+delta: 0.000182801
+delta: 0.000332873
+delta: 0.00110984
+delta: 0.000975766
+delta: 0.00132255
+delta: 0.000434571
+delta: 0.000612343
+delta: 0.00028815
+delta: 0.000276766
+delta: 0.000685154
+delta: 0.00024598
+delta: 0.0013484
+delta: 0.00177009
+delta: 0.000263691
+delta: 0.000293942
+delta: 0.00177892
+delta: 0.000172883
+delta: 0.000259264
+delta: 0.00109825
+delta: 0.00110795
+delta: 0.000138706
+delta: 0.000164823
+delta: 0.000178722
+delta: 0.000809858
+delta: 0.000120828
+delta: 0.00012472
+delta: 0.000660615
+delta: 0.000226379
+delta: 0.000297312
+delta: 0.000551543
+delta: 0.000169663
+delta: 0.000502808
+delta: 4.5125e-05
+delta: 0.00013886
+delta: 0.000178922
+delta: 0.000412079
+delta: 0.000272964
+delta: 0.000300833
+delta: 0.00060218
+delta: 7.03346e-05
+delta: 6.76047e-05
+delta: 0.000274942
+delta: 0.000145217
+delta: 0.000203328
+delta: 0.000265425
+delta: 0.000127395
+delta: 0.000439963
+delta: 0.000115646
+delta: 9.38789e-05
+delta: 4.79572e-05
+delta: 6.34295e-05
+delta: 0.000138416
+delta: 8.2515e-05
+delta: 6.75905e-05
+delta: 0.000195864
+delta: 3.17801e-05
+delta: 2.45454e-05
+delta: 0.000542604
+delta: 1.86235e-05
+delta: 0.000138995
+delta: 7.54665e-05
+delta: 0.000198326
+delta: 2.69647e-05
+delta: 5.7766e-05
+delta: 3.46443e-05
+delta: 0.000264513
+delta: 3.03294e-05
+delta: 4.83616e-05
+delta: 6.07335e-05
+delta: 0.000145995
+delta: 0.00014642
+delta: 1.44481e-05
+delta: 3.59494e-05
+delta: 5.29359e-05
+delta: 1.58298e-05
+delta: 4.94956e-05
+delta: 4.64257e-05
+delta: 8.58884e-05
+delta: 1.98917e-05
+delta: 2.97613e-05
+delta: 0.000171947
+delta: 4.80282e-05
+delta: 1.45945e-05
+delta: 1.11155e-05
+delta: 6.59512e-05
+delta: 4.00875e-05
+delta: 6.21719e-05
+delta: 3.13659e-05
+delta: 3.55458e-05
+delta: 3.15366e-05
+delta: 6.8702e-06
+delta: 4.20092e-05
+delta: 2.45234e-05
+delta: 3.40938e-05
+delta: 8.43214e-06
+delta: 1.41396e-05
+delta: 4.77565e-05
+delta: 6.28547e-06
+delta: 8.16566e-06
+delta: 2.52336e-05
+delta: 1.22214e-05
+delta: 6.55188e-06
+delta: 1.18569e-05
+delta: 3.38438e-05
+delta: 7.41936e-05
+delta: 3.89316e-06
+Number of iterations: 217 (max. 1000)
+Final norm of residuum: 3.89316e-06
+counted_mult_calls: 222
+act_it: 222
+acc_duration_density: 920.581s
+ops_density: 4.98914e+06 GOps
+flops_density: 5419.55 GFLOPS
+density_duration_total: 969.418s
+surplus min: -8957.93 max: 42410.6
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 10200000 adding elements: 64 (* dims)
-last_duration_create_graph: 520.612s
+last_duration_create_graph: 523.493s
 ops_create_graph: 3.1212e+06 GOps
-flops_create_graph: 5995.25 GFLOPS
+flops_create_graph: 5962.26 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 245.801s
+last_duration_prune_graph: 247.372s
 ops_prune_graph: 1.76109e+06 GOps
-flops_prune_graph: 7164.71 GFLOPS
+flops_prune_graph: 7119.21 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 8.3611s
-detected clusters: 134
-datapoints in clusters: 9902296
-write cluster map duration:9.29619s
-total_duration_without_disk: 1281.24
-total_duration: 1282.32
+find_cluster_duration_total: 9.41349s
+detected clusters: 127
+datapoints in clusters: 9879079
+write cluster map duration:9.48816s
+total_duration_without_disk: 1765.28
+total_duration: 1766.38
 
 all done!
-ARI: 0.9350893808592908
+ARI: 0.9634387553615351
