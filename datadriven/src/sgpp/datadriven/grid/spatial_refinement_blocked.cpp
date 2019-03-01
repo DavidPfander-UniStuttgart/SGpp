@@ -51,8 +51,8 @@ void spatial_refinement_blocked::verify_support_blocked() {
       }
       bool has_support = true;
       for (int64_t d = 0; d < dim; d += 1) {
-        if (data[d * entries + data_index] < bound_left[candidate_index * dim + d] ||
-            data[d * entries + data_index] > bound_right[candidate_index * dim + d]) {
+        if (data[d * entries + data_index] <= bound_left[candidate_index * dim + d] ||
+            data[d * entries + data_index] >= bound_right[candidate_index * dim + d]) {
           has_support = false;
           break;
         }
@@ -65,7 +65,7 @@ void spatial_refinement_blocked::verify_support_blocked() {
   }
 
   for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
-    if (num_support[candidate_index] > min_support) {
+    if (num_support[candidate_index] >= min_support) {
       schedule_support[candidate_index] = true;
     }
     // else {

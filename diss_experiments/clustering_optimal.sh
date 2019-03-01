@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 
-device="gtx1080ti"
+device="QuadroGP100"
 
 coarsen_threshold="1.0E-5"
 max_iterations="50"

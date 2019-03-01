@@ -56,8 +56,8 @@ class spatial_refinement {
 
   bool has_support(std::vector<double> &bound_left, std::vector<double> &bound_right,
                    size_t data_index, size_t changed_dim) {
-    if (data[changed_dim * entries + data_index] < bound_left[changed_dim] ||
-        data[changed_dim * entries + data_index] > bound_right[changed_dim]) {
+    if (data[changed_dim * entries + data_index] <= bound_left[changed_dim] ||
+        data[changed_dim * entries + data_index] >= bound_right[changed_dim]) {
       return false;
     }
     return true;
