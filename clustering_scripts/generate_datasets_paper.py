@@ -233,7 +233,7 @@ clusters_distance = 7 # unit: standard deviation
 cutoff_radius = 3 # unit: standard deviation
 noise_percent = 0.02
 datasets_folder='datasets_diss/'
-additional_dims = 0
+additional_dims = 1
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
 for dim in [5]: # [5, 10]
     for dataset_size in [int(1E5)]: # [1000000, 10000000, 100000000]
