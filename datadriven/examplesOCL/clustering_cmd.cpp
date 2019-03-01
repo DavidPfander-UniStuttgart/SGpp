@@ -685,7 +685,7 @@ int main(int argc, char **argv) {
     base::GridGenerator &grid_generator = grid->getGenerator();
 
     for (size_t i = 0; i < refinement_steps; i++) {
-      if (coarsening_points > 0 && i > 0 && i < refinement_steps - 1) {
+      if (coarsening_points > 0 && i > 0) {
         size_t grid_size_before_coarsen = grid->getSize();
         sgpp::base::SurplusCoarseningFunctor coarsen_func(
             alpha, coarsening_points, coarsening_threshold);
@@ -713,6 +713,8 @@ int main(int argc, char **argv) {
         for (size_t j = old_size; j < alpha.getSize(); j++) {
           b[j] = 0.0;
         }
+        std::cout << "surplus refinement: new grid size " << grid->getSize()
+                  << std::endl;
       }
 
       std::unique_ptr<datadriven::DensityOCLMultiPlatform::OperationDensity>
