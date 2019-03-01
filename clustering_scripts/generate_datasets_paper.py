@@ -61,6 +61,8 @@ def normalize(dataset, centers, dimensions):
         maximum = max(col)
         mins += [minimum]
         maxs += [maximum]
+        if maximum == minimum and minimum >= 0.0 and minimum <= 1.0:
+            continue
         for i in range(0, len(col)):
             col[i] = (col[i] - minimum)/(maximum - minimum)
             col[i] = col[i] * (domain_max - domain_min) + domain_min
@@ -71,15 +73,17 @@ def normalize(dataset, centers, dimensions):
         col = centers[:, dimension]
         minimum = mins[dimension]
         maximum = maxs[dimension]
+        if maximum == minimum and minimum >= 0.0 and minimum <= 1.0:
+            continue
         for i in range(0, len(col)):
             col[i] = (col[i] - minimum)/(maximum - minimum)
             col[i] = col[i] * (domain_max - domain_min) + domain_min
             # col[i] = (col[i]+0.1)*0.8
         centers[:, dimension] = col
 
-def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, clusters_distance, cutoff_radius):
+def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, clusters_distance, cutoff_radius, additional_dims):
     #generate centers
-    centers = np.zeros(shape=(num_clusters, dimensions))
+    centers = np.zeros(shape=(num_clusters, dimensions + additional_dims))
     for cluster in range(0, num_clusters):
         distance = 0
         center = []
@@ -92,11 +96,13 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
                 raise SystemExit
             for dimension in range(0, dimensions):
                 center.append(random.uniform(0.0, 1.0))
+            for dimension in range(0, additional_dims):
+                center.append(0.5)
             #check point
             continue_search = 0
             for c in centers:
                 distance = 0
-                for dimension in range(0, dimensions):
+                for dimension in range(0, dimensions + additional_dims):
                     distance = distance + (center[dimension] - c[dimension])**2
                 distance = math.sqrt(distance) # ** 0.5
                 if distance < clusters_distance * deviation:
@@ -109,7 +115,7 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
         print(c)
 
     #generate datapoints
-    dataset = np.zeros(shape=(setsize + num_noise, dimensions))
+    dataset = np.zeros(shape=(setsize + num_noise, dimensions + additional_dims))
     cluster_ret = np.zeros(shape=(setsize + num_noise), dtype=int)
     currentsize = 0
     cluster_size = setsize / num_clusters
@@ -130,8 +136,11 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
                 for dimension in range(0, dimensions):
                     dataset[currentsize, dimension] = random.uniform(centers[cluster][dimension] - deviation, centers[cluster][dimension] + deviation)
 
+            for dimension in range(0, additional_dims):
+                dataset[currentsize, dimensions + dimension] = 0.5
+
             dist = 0.0
-            for dimension in range(0, dimensions):
+            for dimension in range(0, dimensions + additional_dims):
                 temp = dataset[currentsize, dimension] - centers[cluster][dimension]
                 dist += temp * temp
             dist = math.sqrt(dist)
@@ -153,6 +162,17 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
             for dimension in range(0, dimensions):
                 dataset[currentsize, dimension] = random.uniform(centers[cluster][dimension] - deviation, centers[cluster][dimension] + deviation)
 
+        for dimension in range(0, additional_dims):
+            dataset[currentsize, dimensions + dimension] = 0.5
+
+        dist = 0.0
+        for dimension in range(0, dimensions + additional_dims):
+            temp = dataset[currentsize, dimension] - centers[cluster][dimension]
+            dist += temp * temp
+        dist = math.sqrt(dist)
+        if dist > cutoff_radius * deviation:
+            continue
+
         cluster_ret[currentsize] = num_clusters
         currentsize = currentsize + 1
 
@@ -161,11 +181,13 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
         for i in range(0, num_noise):
             for dimension in range(0, dimensions):
                 dataset[setsize + i, dimension] = random.uniform(0.0, 1.0)
+            for dimension in range(0, additional_dims):
+                dataset[setsize + i, dimensions + dimension] = 0.5
             cluster_ret[setsize + i] = -1
 
     print("created, now normalizing")
 
-    normalize(dataset, centers, dimensions)
+    normalize(dataset, centers, dimensions + additional_dims)
     # for dimension in range(0, dimensions):
     #     col = dataset[:, dimension]
     #     minimum = min(col)
@@ -186,14 +208,16 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, num_noise, cl
 
     return dataset, cluster_ret, centers
 
-def add_noise(dimensions, setsize, num_noise, dataset1, Y1):
+def add_noise(dimensions, setsize, num_noise, dataset1, Y1, additional_dims):
     # dataset = dataset1.copy()
-    noise_data = np.zeros(shape=(num_noise, dim))
+    noise_data = np.zeros(shape=(num_noise, dimensions + additional_dims))
     cluster_noise = np.zeros(shape=(num_noise))
     print("create rauschen")
     for i in range(0, num_noise):
         for dimension in range(0, dimensions):
             noise_data[i, dimension] = random.uniform(domain_min, domain_max)
+        for dimension in range(dimension, additional_dims):
+            noise_data[i, dimension] = 0.5
         cluster_noise[i] = -1
 
     dataset = np.concatenate((dataset1, noise_data), axis = 0)
@@ -212,25 +236,26 @@ def add_noise(dimensions, setsize, num_noise, dataset1, Y1):
 
 # dimensions, clusters, setsize, deviation, noise_percent
 np.set_printoptions(precision=3)
-num_clusters=50
+num_clusters = 100
 deviation = 0.05
 clusters_distance = 7 # unit: standard deviation
 cutoff_radius = 3 # unit: standard deviation
-noise_percent = 0.02
-datasets_folder='datasets_WPDM18/'
+noise_percent = 1.0
+datasets_folder='datasets_diss/'
+additional_dims = 15
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
-for dim in [10]: # [5, 10]
-    for dataset_size in [int(1E6), int(1E7)]: # [1000000, 10000000, 100000000]
+for dim in [5]: # [5, 10]
+    for dataset_size in [int(1E5)]: # [1000000, 10000000, 100000000]
         for dataset_type in ["gaussian"]: # , "hypercube"
-            file_name = datasets_folder + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim)
+            file_name = datasets_folder + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim + additional_dims) + "id" + str(dim)
             print("creating " + file_name + ".arff")
             # always create dataset without noise first
-            dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, deviation, 0, clusters_distance, cutoff_radius)
-            write_all_arffs(dim, file_name, dataset1, Y1, centers)
+            dataset1, Y1, centers = generate_dataset(dim, num_clusters, dataset_size, deviation, 0, clusters_distance, cutoff_radius, additional_dims)
+            write_all_arffs(dim + additional_dims, file_name, dataset1, Y1, centers)
             num_noise = int(noise_percent * dataset_size)
             assert((num_noise > 0) or (noise_percent == 0))
             if num_noise > 0:
                 file_name += "_noise"
                 print("creating " + file_name + ".arff")
-                dataset1_noise, Y1_noise = add_noise(dim, dataset_size, num_noise, dataset1, Y1)
-                write_all_arffs(dim, file_name, dataset1_noise, Y1_noise, centers)
+                dataset1_noise, Y1_noise = add_noise(dim, dataset_size, num_noise, dataset1, Y1, additional_dims)
+                write_all_arffs(dim + additional_dims, file_name, dataset1_noise, Y1_noise, centers)

@@ -17,12 +17,23 @@ void spatial_refinement_blocked::verify_support_blocked_OCL() {
     throw opencl::manager_error("only supports single device");
   }
   opencl::device_t device = manager.get_devices()[0];
-  opencl::managed_buffer<double> data_device(device, data.size());
+  int64_t num_data = static_cast<int64_t>(data.size()) / dim;
+  int64_t num_data_padded = num_data;
+
+  const int local_cache = 16;
+
+  if (num_data % local_cache != 0) {
+    num_data_padded += local_cache - (num_data % local_cache);
+  }
+
+  opencl::managed_buffer<double> data_device(device, num_data_padded * dim);
+  data_device.fill_buffer(
+      -1.0); // generates out of support data points in padding
   data_device.to_device(data);
 
   const int block_size = 256;
 
-  int64_t num_candidates = static_cast<int64_t>(schedule_level.size() / dim);
+  int64_t num_candidates = static_cast<int64_t>(schedule_level.size()) / dim;
   int64_t num_candidates_padded = num_candidates;
   if (num_candidates % block_size != 0) {
     num_candidates_padded += block_size - (num_candidates % block_size);

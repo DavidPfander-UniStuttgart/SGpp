@@ -5,6 +5,7 @@
 
 #include <boost/program_options.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <experimental/filesystem>
 #include <fstream>
@@ -554,8 +555,8 @@ int main(int argc, char **argv) {
     return 1;
   }
   // // read dataset
-  std::cout << "printing first two datapoints:" << std::endl;
-  for (size_t i = 0; i < 2; i += 1) {
+  std::cout << "printing first two datapoints (if available):" << std::endl;
+  for (size_t i = 0; i < std::min(trainingData.getNrows(), 2ul); i += 1) {
     for (size_t d = 0; d < dimension; d += 1) {
       if (d > 0) {
         std::cout << ", ";
@@ -607,11 +608,17 @@ int main(int argc, char **argv) {
       std::cout << "initial grid created, grid points: " << grid->getSize()
                 << std::endl;
     } else {
+      std::cout << "datadriven_refinement_min_support:"
+                << datadriven_refinement_min_support << std::endl;
       sgpp::datadriven::spatial_refinement_blocked ref(
           dimension, level, datadriven_refinement_min_support, trainingData);
       ref.enable_OCL(configFileName);
       ref.refine();
       std::vector<int64_t> &ls = ref.get_levels();
+      if (ls.size() == 0) {
+        std::cerr << "error: no grid points generated" << std::endl;
+        return 1;
+      }
       std::vector<int64_t> &is = ref.get_indices();
       grid = std::unique_ptr<sgpp::base::Grid>(
           sgpp::base::Grid::createLinearGrid(dimension));
