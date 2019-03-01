@@ -1,0 +1,36 @@
+Thanks you very much for all of your valuable insights. We made changes to address the mentioned issues. Please find a short summary of how we addressed these points below (indicated by the "=>").
+
+
+datadriven refinement done, grid size: 7896
+
+
+datadriven refinement done, grid size: 7896
+
+ARI: 0.996
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 7 --epsilon 1E-2 --threshold 55.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 5 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5
+things learned:
+- 57s
+- less regularization, deeper refinement!
+- needed grid size of 136577
+- (1 refinement step less: 93331 grid points, but ARI is 0.9863482383386838)
+- (max_iterations set to 50 reduces ARI to 0.9866833544685779)
+
+datadriven refinement instead of surplus refinement:
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 55.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 0 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5 --max_iterations 50 --use_datadriven_refinement --datadriven_refinement_min_support 1000
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 55.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 0 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5 --max_iterations 50 --use_datadriven_refinement --datadriven_refinement_min_support 1000
+- 13s for ari of 0.9818959646599051
+
+datadriven refinement with 1 surplus step:
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 55.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 1 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5 --max_iterations 50 --use_datadriven_refinement --datadriven_refinement_min_support 1000
+- 22s for ARI of 0.9945170863152439
+
+better datadriven refinement with 0! surplus step:
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 12 --epsilon 1E-2 --threshold 55.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 0 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5 --max_iterations 50 --use_datadriven_refinement --datadriven_refinement_min_support 800
+- 20s for ARI of 0.9911138648378208 and 80431 grid points
+
+pure pruning approach:
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 54.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-3 --refinement_steps 0 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 5.0E-5 --max_iterations 50
+- 14s for ARI of 0.98486127841009
+- of course can only be used if dim is low enough so that b is still computable
+
+-------------------------------- dim20id5
