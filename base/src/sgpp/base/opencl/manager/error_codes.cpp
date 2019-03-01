@@ -4,6 +4,7 @@
 #include <map>
 
 namespace opencl {
+    namespace detail {
 std::map<cl_int, std::string> error_map{
     {0, "CL_SUCCESS"},
     {-1, "CL_DEVICE_NOT_FOUND"},
@@ -68,10 +69,11 @@ std::map<cl_int, std::string> error_map{
     {-70, "CL_INVALID_DEVICE_QUEUE"},
     {-71, "CL_INVALID_SPEC_ID"},
     {-72, "CL_MAX_SIZE_RESTRICTION_EXCEEDED"}};
+    }
 
 void report_error(cl_int err) {
-  auto it = error_map.find(err);
-  if (it != error_map.end()) {
+  auto it = detail::error_map.find(err);
+  if (it != detail::error_map.end()) {
     std::cout << it->second << "(" << it->first << ")";
   } else {
     std::cout << err << " (proprietary error)";
@@ -79,8 +81,8 @@ void report_error(cl_int err) {
 }
 
 std::string resolve_error(cl_int err) {
-  auto it = error_map.find(err);
-  if (it != error_map.end()) {
+  auto it = detail::error_map.find(err);
+  if (it != detail::error_map.end()) {
     return it->second + std::string("(") + std::to_string(it->first) +
            std::string(")");
   } else {
