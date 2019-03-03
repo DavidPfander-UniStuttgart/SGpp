@@ -153,7 +153,7 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, clusters_dist
             i += 1
 
     # cluster size does not divide setsize, fill up last cluster
-    print("currentsize:", currentsize, "setsize:", setsize)
+    print("fillup currentsize:", currentsize, "setsize:", setsize)
     while currentsize < setsize:
         if dataset_type == "gaussian":
             for dimension in range(0, dimensions):
@@ -202,7 +202,7 @@ def generate_dataset(dimensions, num_clusters, setsize, deviation, clusters_dist
 def add_noise(dimensions, setsize, num_noise, dataset1, Y1, additional_dims):
     # dataset = dataset1.copy()
     noise_data = np.zeros(shape=(num_noise, dimensions + additional_dims))
-    cluster_noise = np.zeros(shape=(num_noise))
+    cluster_noise = np.zeros(shape=(num_noise), dtype=int)
     print("create rauschen")
     for i in range(0, num_noise):
         for dimension in range(0, dimensions):
@@ -233,7 +233,7 @@ clusters_distance = 7 # unit: standard deviation
 cutoff_radius = 3 # unit: standard deviation
 noise_percent = 0.02
 datasets_folder='datasets_diss/'
-additional_dims = 1
+additional_dims = 15
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
 for dim in [5]: # [5, 10]
     for dataset_size in [int(1E5)]: # [1000000, 10000000, 100000000]

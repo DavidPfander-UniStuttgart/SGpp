@@ -33,4 +33,32 @@ pure pruning approach:
 - 14s for ARI of 0.98486127841009
 - of course can only be used if dim is low enough so that b is still computable
 
--------------------------------- dim20id5
+-------------------------------- dim6id5
+
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim6id5_noise.arff --level 12 --epsilon 1E-2 --threshold 130.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-4 --refinement_steps 0 --refinement_points 1000 --coarsen_points 100 --coarsen_threshold 1E-5 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 800 --reuse_density_grid ref_testing_density_grid.serialized
+- ARI=0.9902316094904312
+- potentially need more iterations
+- 78k grid
+- duration 22s
+
+------------------------------- dim10id5 -----------------------
+
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim10id5_noise.arff --level 15 --epsilon 1E-5 --threshold 12000.0 --lambda 1.0E-7 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 600 --reuse_density_grid ref_testing_density_grid.serialized
+- ARI=0.985
+- needed to much smaller lambda compared to 5d 6d
+- 125.6s
+
+------------------------------- dim20id5 ------------------------
+
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff --level 15 --epsilon 1E-5 --threshold 7.5E8 --lambda 1.0E-12 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 600 --write_density_grid
+- ARI is 0.9925577991250059
+- 279s
+
+--datasetFileName datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff --level 15 --epsilon 1E-2 --threshold 7.5E8 --lambda 1.0E-12 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 600 --write_density_grid
+datasetFileName: datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff
+- ARI is 0.9925258896445076
+- 120.6s
+- for comparison:
+     - l6 regular grid has 1515009 vs 138881 grid points for datadriven refinement
+
+# with surplus refinement, starting from l4

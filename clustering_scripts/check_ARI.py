@@ -46,8 +46,9 @@ print(M.shape)
 ones = np.ones(shape=(M.shape[1], 1))
 # print(ones.shape)
 sums = np.dot(M, ones)
+np.set_printoptions(threshold=np.inf)
 print(sums.T)
 
-np.set_printoptions(threshold=np.inf)
+
 # print("contingency matrix:")
 # print(M)
