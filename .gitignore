@@ -39,7 +39,8 @@
 
 #ignoring build output
 /lib/*
-*.log
+build.log
+config.log
 /Doxyfile
 /base/doc/doxygen/examples_*.doxy
 /base/doc/doxygen/modules.doxy

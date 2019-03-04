@@ -1,0 +1,155 @@
+datasetFileName: datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff
+level: 11
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_QuadroGP100.cfg
+k: 6
+threshold: 54
+using naive ocl knn
+reading dataset...
+info: ARFF dataset
+Dataset load duration: 0.183695
+dimension: 5
+data points: 102000
+printing first two datapoints (if available):
+0.328415, 0.827011, 0.833273, 0.263307, 0.738096
+0.677258, 0.203804, 0.323615, 0.378071, 0.508477
+initial grid created, grid points: 1579007
+grid create duration: 2.88405s
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 1.00819s
+ops_generate_b: 4992.82
+flops_generate_b: 4952.24 GFLOPS
+
+b-based coarsening: removed 1538645 grid points, remaining: 40362
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.271698
+Target norm:               2.71698e-05
+delta: 0.0401184
+delta: 0.0777359
+delta: 0.0454157
+delta: 0.0436271
+delta: 0.0425746
+delta: 0.055277
+delta: 0.0255932
+delta: 0.0272281
+delta: 0.0795321
+delta: 0.0355438
+delta: 0.0216099
+delta: 0.0178589
+delta: 0.0181362
+delta: 0.0284922
+delta: 0.00873072
+delta: 0.015523
+delta: 0.0252101
+delta: 0.0127543
+delta: 0.0192715
+delta: 0.00669195
+delta: 0.00790813
+delta: 0.00474635
+delta: 0.00672923
+delta: 0.00448685
+delta: 0.0192857
+delta: 0.00320364
+delta: 0.00489246
+delta: 0.00434096
+delta: 0.00411589
+delta: 0.00252806
+delta: 0.00361276
+delta: 0.00749574
+delta: 0.00459427
+delta: 0.00186901
+delta: 0.00156882
+delta: 0.00223537
+delta: 0.00273483
+delta: 0.00105696
+delta: 0.00154724
+delta: 0.0035276
+delta: 0.00128364
+delta: 0.00177972
+delta: 0.00070866
+delta: 0.00080912
+delta: 0.00111931
+delta: 0.000819511
+delta: 0.000475351
+delta: 0.00274598
+delta: 0.000393698
+delta: 0.000455908
+delta: 0.000261975
+delta: 0.000330528
+delta: 0.000391644
+delta: 0.000529287
+delta: 0.000766444
+delta: 0.000147953
+delta: 0.000229381
+delta: 0.000263268
+delta: 0.000153636
+delta: 0.000117318
+delta: 0.000488383
+delta: 0.000149548
+delta: 0.000172477
+delta: 0.000109637
+delta: 8.91163e-05
+delta: 8.01126e-05
+delta: 0.000138815
+delta: 6.79525e-05
+delta: 0.000187848
+delta: 7.44307e-05
+delta: 4.25062e-05
+delta: 0.000110119
+delta: 4.97027e-05
+delta: 3.82229e-05
+delta: 2.87717e-05
+delta: 0.000118932
+delta: 4.44587e-05
+delta: 2.0722e-05
+Number of iterations: 78 (max. 1000)
+Final norm of residuum: 2.0722e-05
+counted_mult_calls: 80
+act_it: 80
+acc_duration_density: 2.10309s
+ops_density: 9383.56 GOps
+flops_density: 4461.81 GFLOPS
+density_duration_total: 10.6227s
+surplus min: -52.7708 max: 87.2871
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+unpadded_datasize: 102000 adding elements: 16 (* dims)
+last_duration_create_graph: 0.056085s
+ops_create_graph: 156.06 GOps
+flops_create_graph: 2782.56 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+last_duration_prune_graph: 0.208061s
+ops_prune_graph: 922.191 GOps
+flops_prune_graph: 4432.31 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.100644s
+detected clusters: 100
+datapoints in clusters: 99084
+write cluster map duration:0.151274s
+total_duration_without_disk: 14.8578
+total_duration: 15.0415
+
+all done!
+ARI: 0.98556551580742
+(101, 100)
+[[  970.   983.   993.   979.   989.   998.   989.   992.   995.   988.
+    997.   990.   997.   979.   996.   977.   995.   998.   993.   991.
+    998.   989.  1000.   995.   999.   973.   991.   990.   986.   988.
+    993.   981.   984.   995.   989.   987.   993.   997.   991.   998.
+    989.   991.   993.   993.   987.   997.   987.   981.   988.   991.
+    989.   992.   990.   983.   999.   998.   988.   991.   995.   992.
+    991.   981.   990.   993.   984.   973.   991.   984.   995.   989.
+    999.   986.   993.   975.   993.   991.   992.   990.   995.   990.
+    979.   994.   996.   997.   989.   988.   998.   997.   995.   993.
+    976.   996.   986.   993.  1000.   991.   982.   985.   993.   994.
+    983.]]

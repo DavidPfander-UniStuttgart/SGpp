@@ -48,6 +48,20 @@ pure pruning approach:
 - needed to much smaller lambda compared to 5d 6d
 - 125.6s
 
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim10id5_noise.arff --level 15 --epsilon 1E-2 --threshold 13000.0 --lambda 3.0E-8 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 600 --write_density_grid
+- ARI=0.9926918806370938
+- 80s
+
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim10id5_noise.arff --level 15 --epsilon 1E-2 --threshold 13000.0 --lambda 3.0E-8 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 800 --write_density_grid
+- ARI=0.9910765261506578
+- 40s
+
+# coarsening approach
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim10id5_noise.arff --level 9 --epsilon 1E-2 --threshold 13000.0 --lambda 3.0E-8 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --refinement_steps 0 --refinement_points 800 --max_iterations 200 --use_b_coarsening --b_coarsening_threshold 1E-4 --write_density_grid
+- ARI=0.9939802369998213
+- calculating right-hand side for 8085505 grid points!
+- b-based coarsening: removed 7990076 grid points, remaining: 95429
+
 ------------------------------- dim20id5 ------------------------
 
 ./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff --level 15 --epsilon 1E-5 --threshold 7.5E8 --lambda 1.0E-12 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 600 --write_density_grid
@@ -61,4 +75,13 @@ datasetFileName: datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff
 - for comparison:
      - l6 regular grid has 1515009 vs 138881 grid points for datadriven refinement
 
+# limiting iterations to 50
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff --level 15 --epsilon 1E-2 --threshold 7.5E8 --lambda 1.0E-12 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 50 --use_datadriven_refinement --datadriven_refinement_min_support 600 --write_density_grid
+- ARI is 0.9923830434224715
+- total duration of 90s
+- tried to reduce max level to 10, ARI down to 0.9838084365921729
 # with surplus refinement, starting from l4
+
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim20id5_noise.arff --level 15 --epsilon 1E-2 --threshold 7.6E8 --lambda 7.8E-13 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing  --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 1E-7 --max_iterations 200 --use_datadriven_refinement --datadriven_refinement_min_support 800 --write_density_grid
+- ARI is 0.9919078330985492
+- duration 58s
