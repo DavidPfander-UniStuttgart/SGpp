@@ -116,6 +116,16 @@ class parameter_tuner:
         # Load last column of files
         reference_assignement = np.genfromtxt(reference_file, delimiter=',', usecols=(-1))
         actual_assignement = np.genfromtxt(results_file, delimiter=',', usecols=(-1))
+
+        # filter noise indices and remove from both mapping (otherwise ARI tries to optimize noise assignment as well, which is undesirable, as by definition noise is not a cluster)
+        indices_to_remove = []
+        for i, x in np.ndenumerate(reference_assignement):
+            if x < 0.0:
+                indices_to_remove.append(i)
+        # print(indices_to_remove)
+        reference_assignement = np.delete(reference_assignement, indices_to_remove)
+        actual_assignement = np.delete(actual_assignement, indices_to_remove)
+
         # Check whether number of data points checks out
         if reference_assignement.shape[0] != actual_assignement.shape[0]:
             print("Error! Number of data points in the reference file does not match the number of",
@@ -247,10 +257,10 @@ class parameter_tuner:
         self.datapoints_clusters_min = int(0.75 * d_config.dataset_size)
         self.is_first_overall = True
         self.level = level
-        logfile_name = "tune_clustering_" + str(d_config.dataset_size) + "s_" + str(d_config.num_clusters) + "c" + str(d_config.noise_suffix) + "_" + str(level) + "l" + ".log"
+        logfile_name = "results_diss/tune_clustering_" + str(d_config.dataset_size) + "s_" + str(d_config.num_clusters) + "c" + str(d_config.noise_suffix) + "_" + str(level) + "l" + ".log"
         print("logfile_name:", logfile_name)
         self.f_log = open(logfile_name, "w")
-        resultsfile_name = "tune_clustering_results_" + str(d_config.dataset_size) + "s_"+ str(d_config.num_clusters) + "c" + str(d_config.noise_suffix) + "_" + str(level) + "l" + ".csv"
+        resultsfile_name = "results_diss/tune_clustering_results_" + str(d_config.dataset_size) + "s_"+ str(d_config.num_clusters) + "c" + str(d_config.noise_suffix) + "_" + str(level) + "l" + ".csv"
         print("resultsfile_name:", resultsfile_name)
         self.f_results = open(resultsfile_name, "w")
         self.f_results.write("lambda_value, threshold, percent_correct, ARI, duration, iterations\n")

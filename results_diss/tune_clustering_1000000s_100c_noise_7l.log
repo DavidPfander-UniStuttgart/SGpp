@@ -18,21 +18,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.119123
+Dataset load duration: 0.112587
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.33022s
+grid create duration: 1.32619s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.06688s
+last_duration_generate_b: 4.03639s
 ops_generate_b: 24752.7
-flops_generate_b: 6086.41 GFLOPS
+flops_generate_b: 6132.38 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -56,31 +56,31 @@ Number of iterations: 14 (max. 1000)
 Final norm of residuum: 1.18486e-06
 counted_mult_calls: 15
 act_it: 15
-acc_duration_density: 61.7076s
+acc_duration_density: 61.7673s
 ops_density: 337104 GOps
-flops_density: 5462.92 GFLOPS
-density_duration_total: 72.8835s
+flops_density: 5457.64 GFLOPS
+density_duration_total: 73.0798s
 surplus min: -60.4847 max: 217.68
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 1020000 adding elements: 32 (* dims)
-last_duration_create_graph: 5.28825s
+last_duration_create_graph: 5.35232s
 ops_create_graph: 31212 GOps
-flops_create_graph: 5902.14 GFLOPS
+flops_create_graph: 5831.49 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7309s
+last_duration_prune_graph: 24.6616s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7121.02 GFLOPS
-write pruned knn graph duration:1.28821s
+flops_prune_graph: 7141.02 GFLOPS
+write pruned knn graph duration:1.268s
 Finding clusters...
-find_cluster_duration_total: 0.725627s
+find_cluster_duration_total: 0.661509s
 detected clusters: 142
 datapoints in clusters: 668692
 score: 38.0237
-write cluster map duration:0.938614s
-total_duration_without_disk: 115.244
-total_duration: 115.363
+write cluster map duration:0.953114s
+total_duration_without_disk: 115.342
+total_duration: 115.455
 
 all done!
 
@@ -89,7 +89,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 142
 datapoints_clusters: 668692
-total_dur: 107.695157
+total_dur: 107.791619
 
 ------------- END RUN ---------------
 attempt lambda: 9.999999999999999e-06 threshold: 555.555555556 percent_correct: 0.675 ARI: 0.1214947362876905
@@ -114,31 +114,31 @@ threshold: 123.457
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.114207
+Dataset load duration: 0.116698
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24567s
+loading density grid (reuse) duration: 1.25309s
 surplus min: -60.4847 max: 217.68
 reusing knn graph
-loading graph (reuse) duration: 4.58991s
+loading graph (reuse) duration: 4.37523s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8151s
+last_duration_prune_graph: 24.6228s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7096.84 GFLOPS
-write pruned knn graph duration:1.39984s
+flops_prune_graph: 7152.29 GFLOPS
+write pruned knn graph duration:1.39768s
 Finding clusters...
-find_cluster_duration_total: 0.718367s
+find_cluster_duration_total: 0.723054s
 detected clusters: 74
 datapoints in clusters: 978291
 score: 70.9741
-write cluster map duration:1.02512s
-total_duration_without_disk: 40.7358
-total_duration: 40.85
+write cluster map duration:0.978663s
+total_duration_without_disk: 40.4205
+total_duration: 40.5373
 
 all done!
 
@@ -147,7 +147,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 74
 datapoints_clusters: 978291
-total_dur: 25.533467
+total_dur: 25.345854000000003
 
 ------------- END RUN ---------------
 attempt lambda: 9.999999999999999e-06 threshold: 123.456790123 percent_correct: 0.5557745098039216 ARI: 0.14733366367851353
@@ -169,31 +169,31 @@ threshold: 246.914
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12174
+Dataset load duration: 0.124312
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26397s
+loading density grid (reuse) duration: 1.26848s
 surplus min: -60.4847 max: 217.68
 reusing knn graph
-loading graph (reuse) duration: 4.23772s
+loading graph (reuse) duration: 4.29663s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8006s
+last_duration_prune_graph: 24.5853s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7101 GFLOPS
-write pruned knn graph duration:1.3733s
+flops_prune_graph: 7163.18 GFLOPS
+write pruned knn graph duration:1.39477s
 Finding clusters...
-find_cluster_duration_total: 0.761662s
+find_cluster_duration_total: 0.776242s
 detected clusters: 109
 datapoints in clusters: 910453
 score: 81.2267
-write cluster map duration:0.943558s
-total_duration_without_disk: 40.2751
-total_duration: 40.3969
+write cluster map duration:0.970604s
+total_duration_without_disk: 40.1623
+total_duration: 40.2867
 
 all done!
 
@@ -202,7 +202,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 109
 datapoints_clusters: 910453
-total_dur: 25.562262
+total_dur: 25.361542
 
 ------------- END RUN ---------------
 attempt lambda: 9.999999999999999e-06 threshold: 246.913580247 percent_correct: 0.7942509803921569 ARI: 0.5802030111247813
@@ -224,31 +224,31 @@ threshold: 370.37
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124894
+Dataset load duration: 0.120497
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26307s
+loading density grid (reuse) duration: 1.26759s
 surplus min: -60.4847 max: 217.68
 reusing knn graph
-loading graph (reuse) duration: 4.24644s
+loading graph (reuse) duration: 4.24697s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8722s
+last_duration_prune_graph: 24.5753s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7080.57 GFLOPS
-write pruned knn graph duration:1.36579s
+flops_prune_graph: 7166.1 GFLOPS
+write pruned knn graph duration:1.34603s
 Finding clusters...
-find_cluster_duration_total: 0.688226s
+find_cluster_duration_total: 0.754849s
 detected clusters: 106
 datapoints in clusters: 836978
 score: 77.1333
-write cluster map duration:1.02697s
-total_duration_without_disk: 40.3779
-total_duration: 40.5029
+write cluster map duration:0.948163s
+total_duration_without_disk: 40.007
+total_duration: 40.1275
 
 all done!
 
@@ -257,7 +257,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 106
 datapoints_clusters: 836978
-total_dur: 25.560426
+total_dur: 25.330149
 
 ------------- END RUN ---------------
 attempt lambda: 9.999999999999999e-06 threshold: 370.37037037 percent_correct: 0.8204588235294118 ARI: 0.3616471192428895
@@ -278,31 +278,31 @@ threshold: 493.827
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121007
+Dataset load duration: 0.120192
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26098s
+loading density grid (reuse) duration: 1.25421s
 surplus min: -60.4847 max: 217.68
 reusing knn graph
-loading graph (reuse) duration: 4.24832s
+loading graph (reuse) duration: 4.3055s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7794s
+last_duration_prune_graph: 24.5824s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7107.09 GFLOPS
-write pruned knn graph duration:1.30526s
+flops_prune_graph: 7164.04 GFLOPS
+write pruned knn graph duration:1.30656s
 Finding clusters...
-find_cluster_duration_total: 0.699446s
+find_cluster_duration_total: 0.724354s
 detected clusters: 138
 datapoints in clusters: 722877
 score: 43.9396
-write cluster map duration:1.00103s
-total_duration_without_disk: 40.1939
-total_duration: 40.315
+write cluster map duration:0.961359s
+total_duration_without_disk: 40.0298
+total_duration: 40.1501
 
 all done!
 
@@ -311,7 +311,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 138
 datapoints_clusters: 722877
-total_dur: 25.478845999999997
+total_dur: 25.306754
 
 ------------- END RUN ---------------
 attempt lambda: 9.999999999999999e-06 threshold: 493.827160494 percent_correct: 0.7183460784313725 ARI: 0.16632764369866296
@@ -336,21 +336,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120748
+Dataset load duration: 0.122567
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.31704s
+grid create duration: 1.31776s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.04068s
+last_duration_generate_b: 4.00329s
 ops_generate_b: 24752.7
-flops_generate_b: 6125.86 GFLOPS
+flops_generate_b: 6183.08 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -396,27 +396,27 @@ Number of iterations: 36 (max. 1000)
 Final norm of residuum: 3.53325e-06
 counted_mult_calls: 37
 act_it: 37
-acc_duration_density: 153.153s
+acc_duration_density: 153.247s
 ops_density: 831523 GOps
-flops_density: 5429.36 GFLOPS
-density_duration_total: 164.424s
+flops_density: 5426.04 GFLOPS
+density_duration_total: 164.496s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.23409s
+loading graph (reuse) duration: 4.23971s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6709s
+last_duration_prune_graph: 24.7487s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7138.32 GFLOPS
-write pruned knn graph duration:1.40099s
+flops_prune_graph: 7115.89 GFLOPS
+write pruned knn graph duration:1.40707s
 Finding clusters...
-find_cluster_duration_total: 0.724002s
+find_cluster_duration_total: 0.78837s
 detected clusters: 98
 datapoints in clusters: 970951
 score: 93.2874
-write cluster map duration:0.93099s
-total_duration_without_disk: 203.925
-total_duration: 204.046
+write cluster map duration:0.947805s
+total_duration_without_disk: 204.189
+total_duration: 204.312
 
 all done!
 
@@ -425,7 +425,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 970951
-total_dur: 193.85958200000002
+total_dur: 194.03636
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 555.555555556 percent_correct: 0.9025843137254902 ARI: 0.8503429630183921
@@ -447,31 +447,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.114063
+Dataset load duration: 0.112647
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24069s
+loading density grid (reuse) duration: 1.23156s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.23841s
+loading graph (reuse) duration: 4.32929s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6322s
+last_duration_prune_graph: 24.5618s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7149.54 GFLOPS
-write pruned knn graph duration:1.39039s
+flops_prune_graph: 7170.03 GFLOPS
+write pruned knn graph duration:1.3954s
 Finding clusters...
-find_cluster_duration_total: 0.705533s
+find_cluster_duration_total: 0.722787s
 detected clusters: 125
 datapoints in clusters: 905972
 score: 66.6156
-write cluster map duration:1.01553s
-total_duration_without_disk: 40.0932
-total_duration: 40.2074
+write cluster map duration:0.958026s
+total_duration_without_disk: 40.1061
+total_duration: 40.2188
 
 all done!
 
@@ -480,7 +480,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 125
 datapoints_clusters: 905972
-total_dur: 25.337733
+total_dur: 25.284587000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 1111.11111111 percent_correct: 0.8978823529411765 ARI: 0.6191242788750001
@@ -501,31 +501,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12069
+Dataset load duration: 0.122648
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25896s
+loading density grid (reuse) duration: 1.26169s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.38081s
+loading graph (reuse) duration: 4.25324s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5686s
+last_duration_prune_graph: 24.5439s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7168.07 GFLOPS
-write pruned knn graph duration:1.33345s
+flops_prune_graph: 7175.28 GFLOPS
+write pruned knn graph duration:1.353s
 Finding clusters...
-find_cluster_duration_total: 0.702536s
+find_cluster_duration_total: 0.693331s
 detected clusters: 114
 datapoints in clusters: 830531
 score: 70.0252
-write cluster map duration:0.939577s
-total_duration_without_disk: 40.2012
-total_duration: 40.322
+write cluster map duration:0.958715s
+total_duration_without_disk: 40.0128
+total_duration: 40.1355
 
 all done!
 
@@ -534,7 +534,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 114
 datapoints_clusters: 830531
-total_dur: 25.271136
+total_dur: 25.237231
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 1666.66666667 percent_correct: 0.833778431372549 ARI: 0.3479785533345908
@@ -555,31 +555,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122249
+Dataset load duration: 0.120468
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26087s
+loading density grid (reuse) duration: 1.27634s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.23712s
+loading graph (reuse) duration: 4.25153s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5716s
+last_duration_prune_graph: 24.4922s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7167.18 GFLOPS
-write pruned knn graph duration:1.27794s
+flops_prune_graph: 7190.42 GFLOPS
+write pruned knn graph duration:1.28013s
 Finding clusters...
-find_cluster_duration_total: 0.685909s
+find_cluster_duration_total: 0.699831s
 detected clusters: 132
 datapoints in clusters: 716377
 score: 47.7585
-write cluster map duration:1.04651s
-total_duration_without_disk: 40.0107
-total_duration: 40.133
+write cluster map duration:0.951195s
+total_duration_without_disk: 39.8632
+total_duration: 39.9838
 
 all done!
 
@@ -588,7 +588,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 132
 datapoints_clusters: 716377
-total_dur: 25.257509
+total_dur: 25.192031
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 2222.22222222 percent_correct: 0.7218156862745098 ARI: 0.15751795505108046
@@ -612,31 +612,31 @@ threshold: 123.457
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124009
+Dataset load duration: 0.12031
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26169s
+loading density grid (reuse) duration: 1.24439s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.28106s
+loading graph (reuse) duration: 4.29569s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5105s
+last_duration_prune_graph: 24.4954s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7185.05 GFLOPS
-write pruned knn graph duration:1.4066s
+flops_prune_graph: 7189.47 GFLOPS
+write pruned knn graph duration:1.41337s
 Finding clusters...
-find_cluster_duration_total: 0.740664s
+find_cluster_duration_total: 0.771152s
 detected clusters: 110
 datapoints in clusters: 1001924
 score: 88.4051
-write cluster map duration:1.04184s
-total_duration_without_disk: 40.1261
-total_duration: 40.2502
+write cluster map duration:0.949537s
+total_duration_without_disk: 40.0476
+total_duration: 40.1679
 
 all done!
 
@@ -645,7 +645,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 110
 datapoints_clusters: 1001924
-total_dur: 25.251164
+total_dur: 25.266552
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 123.456790123 percent_correct: 0.2824274509803922 ARI: 0.03304804032178265
@@ -666,31 +666,31 @@ threshold: 246.914
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122612
+Dataset load duration: 0.122833
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24358s
+loading density grid (reuse) duration: 1.25752s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.24044s
+loading graph (reuse) duration: 4.23452s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5134s
+last_duration_prune_graph: 24.5213s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7184.21 GFLOPS
-write pruned knn graph duration:1.4153s
+flops_prune_graph: 7181.89 GFLOPS
+write pruned knn graph duration:1.41136s
 Finding clusters...
-find_cluster_duration_total: 0.674471s
+find_cluster_duration_total: 0.684611s
 detected clusters: 84
 datapoints in clusters: 1000580
 score: 82.4007
-write cluster map duration:0.937816s
-total_duration_without_disk: 39.9386
-total_duration: 40.0612
+write cluster map duration:1.05569s
+total_duration_without_disk: 40.1883
+total_duration: 40.3112
 
 all done!
 
@@ -699,7 +699,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 84
 datapoints_clusters: 1000580
-total_dur: 25.187871
+total_dur: 25.205911
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 246.913580247 percent_correct: 0.6167705882352941 ARI: 0.42635115183377353
@@ -720,31 +720,31 @@ threshold: 370.37
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122939
+Dataset load duration: 0.121898
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26241s
+loading density grid (reuse) duration: 1.24913s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.24034s
+loading graph (reuse) duration: 4.2488s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.603s
+last_duration_prune_graph: 24.4884s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7158.03 GFLOPS
-write pruned knn graph duration:1.40982s
+flops_prune_graph: 7191.52 GFLOPS
+write pruned knn graph duration:1.42101s
 Finding clusters...
-find_cluster_duration_total: 0.75521s
+find_cluster_duration_total: 0.759098s
 detected clusters: 83
 datapoints in clusters: 995261
 score: 80.9869
-write cluster map duration:0.945018s
-total_duration_without_disk: 40.207
-total_duration: 40.33
+write cluster map duration:0.945029s
+total_duration_without_disk: 40.0348
+total_duration: 40.1568
 
 all done!
 
@@ -753,7 +753,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 83
 datapoints_clusters: 995261
-total_dur: 25.358210000000003
+total_dur: 25.247498
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 370.37037037 percent_correct: 0.7789892156862745 ARI: 0.7035496327580218
@@ -774,31 +774,31 @@ threshold: 493.827
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123527
+Dataset load duration: 0.121953
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27007s
+loading density grid (reuse) duration: 1.24147s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.27465s
+loading graph (reuse) duration: 4.2378s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5013s
+last_duration_prune_graph: 24.5305s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7187.73 GFLOPS
-write pruned knn graph duration:1.41363s
+flops_prune_graph: 7179.19 GFLOPS
+write pruned knn graph duration:1.40312s
 Finding clusters...
-find_cluster_duration_total: 0.708423s
+find_cluster_duration_total: 0.725876s
 detected clusters: 90
 datapoints in clusters: 980563
 score: 86.5203
-write cluster map duration:0.946001s
-total_duration_without_disk: 39.9933
-total_duration: 40.1169
+write cluster map duration:0.959867s
+total_duration_without_disk: 40.0211
+total_duration: 40.1431
 
 all done!
 
@@ -807,7 +807,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 90
 datapoints_clusters: 980563
-total_dur: 25.209723
+total_dur: 25.256376
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 493.827160494 percent_correct: 0.8628950980392157 ARI: 0.823350191335469
@@ -828,31 +828,31 @@ threshold: 617.284
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123792
+Dataset load duration: 0.123133
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27134s
+loading density grid (reuse) duration: 1.26013s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.23414s
+loading graph (reuse) duration: 4.4346s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8766s
+last_duration_prune_graph: 24.5669s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7079.32 GFLOPS
-write pruned knn graph duration:1.39001s
+flops_prune_graph: 7168.56 GFLOPS
+write pruned knn graph duration:1.42205s
 Finding clusters...
-find_cluster_duration_total: 0.757669s
+find_cluster_duration_total: 0.784485s
 detected clusters: 102
 datapoints in clusters: 961276
 score: 92.3579
-write cluster map duration:0.957574s
-total_duration_without_disk: 40.4111
-total_duration: 40.535
+write cluster map duration:0.946143s
+total_duration_without_disk: 40.3391
+total_duration: 40.4623
 
 all done!
 
@@ -861,7 +861,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 102
 datapoints_clusters: 961276
-total_dur: 25.634269
+total_dur: 25.351385
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 617.283950617 percent_correct: 0.9127666666666666 ARI: 0.8300768915118669
@@ -882,31 +882,31 @@ threshold: 740.741
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124931
+Dataset load duration: 0.122488
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26139s
+loading density grid (reuse) duration: 1.26177s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.24073s
+loading graph (reuse) duration: 4.28238s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9349s
+last_duration_prune_graph: 24.5634s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7062.75 GFLOPS
-write pruned knn graph duration:1.38743s
+flops_prune_graph: 7169.58 GFLOPS
+write pruned knn graph duration:1.39385s
 Finding clusters...
-find_cluster_duration_total: 0.713287s
+find_cluster_duration_total: 0.754566s
 detected clusters: 112
 datapoints in clusters: 943762
 score: 81.4226
-write cluster map duration:0.976161s
-total_duration_without_disk: 40.4218
-total_duration: 40.5468
+write cluster map duration:0.962829s
+total_duration_without_disk: 40.101
+total_duration: 40.2235
 
 all done!
 
@@ -915,7 +915,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 112
 datapoints_clusters: 943762
-total_dur: 25.648187
+total_dur: 25.317966000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 740.740740741 percent_correct: 0.9054578431372549 ARI: 0.7679222063045047
@@ -936,31 +936,31 @@ threshold: 864.198
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124666
+Dataset load duration: 0.123954
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25639s
+loading density grid (reuse) duration: 1.26432s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.32331s
+loading graph (reuse) duration: 4.24073s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.784s
+last_duration_prune_graph: 24.5621s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7105.77 GFLOPS
-write pruned knn graph duration:1.39964s
+flops_prune_graph: 7169.96 GFLOPS
+write pruned knn graph duration:1.40607s
 Finding clusters...
-find_cluster_duration_total: 0.745107s
+find_cluster_duration_total: 0.771645s
 detected clusters: 118
 datapoints in clusters: 929440
 score: 74.7197
-write cluster map duration:0.961795s
-total_duration_without_disk: 40.4054
-total_duration: 40.5301
+write cluster map duration:0.978558s
+total_duration_without_disk: 40.1165
+total_duration: 40.2405
 
 all done!
 
@@ -969,7 +969,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 118
 datapoints_clusters: 929440
-total_dur: 25.529107
+total_dur: 25.333745
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 864.197530864 percent_correct: 0.8914254901960784 ARI: 0.7086126439295198
@@ -990,31 +990,31 @@ threshold: 987.654
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123256
+Dataset load duration: 0.123297
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25522s
+loading density grid (reuse) duration: 1.26528s
 surplus min: -443.468 max: 1569.38
 reusing knn graph
-loading graph (reuse) duration: 4.23449s
+loading graph (reuse) duration: 4.23875s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8092s
+last_duration_prune_graph: 24.5747s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7098.55 GFLOPS
-write pruned knn graph duration:1.38057s
+flops_prune_graph: 7166.27 GFLOPS
+write pruned knn graph duration:1.40295s
 Finding clusters...
-find_cluster_duration_total: 0.687679s
+find_cluster_duration_total: 0.766748s
 detected clusters: 125
 datapoints in clusters: 917428
 score: 67.4579
-write cluster map duration:0.94227s
-total_duration_without_disk: 40.2403
-total_duration: 40.3637
+write cluster map duration:1.03747s
+total_duration_without_disk: 40.2005
+total_duration: 40.3239
 
 all done!
 
@@ -1023,7 +1023,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 125
 datapoints_clusters: 917428
-total_dur: 25.496879
+total_dur: 25.341448
 
 ------------- END RUN ---------------
 attempt lambda: 1e-06 threshold: 987.654320988 percent_correct: 0.8992823529411764 ARI: 0.6661537601444166
@@ -1047,21 +1047,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12408
+Dataset load duration: 0.123414
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.3321s
+grid create duration: 1.3346s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.05613s
+last_duration_generate_b: 4.0564s
 ops_generate_b: 24752.7
-flops_generate_b: 6102.54 GFLOPS
+flops_generate_b: 6102.12 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -1170,27 +1170,27 @@ Number of iterations: 99 (max. 1000)
 Final norm of residuum: 3.75847e-06
 counted_mult_calls: 101
 act_it: 101
-acc_duration_density: 418.292s
+acc_duration_density: 418.524s
 ops_density: 2.26983e+06 GOps
-flops_density: 5426.43 GFLOPS
-density_duration_total: 430.264s
+flops_density: 5423.43 GFLOPS
+density_duration_total: 430.368s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.28824s
+loading graph (reuse) duration: 4.33938s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6695s
+last_duration_prune_graph: 24.7405s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7138.74 GFLOPS
-write pruned knn graph duration:1.45117s
+flops_prune_graph: 7118.26 GFLOPS
+write pruned knn graph duration:1.43681s
 Finding clusters...
-find_cluster_duration_total: 0.795318s
+find_cluster_duration_total: 0.725458s
 detected clusters: 99
 datapoints in clusters: 1000429
 score: 97.1005
-write cluster map duration:0.972694s
-total_duration_without_disk: 470.141
-total_duration: 470.266
+write cluster map duration:0.966987s
+total_duration_without_disk: 470.268
+total_duration: 470.391
 
 all done!
 
@@ -1199,7 +1199,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 1000429
-total_dur: 459.78494800000004
+total_dur: 459.890358
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 555.555555556 percent_correct: 0.8426558823529412 ARI: 0.8286233843802785
@@ -1221,31 +1221,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.114181
+Dataset load duration: 0.113119
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24023s
+loading density grid (reuse) duration: 1.28124s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.24686s
+loading graph (reuse) duration: 4.23817s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5742s
+last_duration_prune_graph: 24.5374s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7166.43 GFLOPS
-write pruned knn graph duration:1.41795s
+flops_prune_graph: 7177.18 GFLOPS
+write pruned knn graph duration:1.41658s
 Finding clusters...
-find_cluster_duration_total: 0.691264s
+find_cluster_duration_total: 0.772726s
 detected clusters: 96
 datapoints in clusters: 992112
 score: 93.3752
-write cluster map duration:1.05418s
-total_duration_without_disk: 40.1566
-total_duration: 40.2708
+write cluster map duration:0.948481s
+total_duration_without_disk: 40.1001
+total_duration: 40.2133
 
 all done!
 
@@ -1254,7 +1254,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 992112
-total_dur: 25.265464
+total_dur: 25.310126
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1111.11111111 percent_correct: 0.9429852941176471 ARI: 0.9325956084275584
@@ -1276,31 +1276,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123819
+Dataset load duration: 0.122267
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25715s
+loading density grid (reuse) duration: 1.25964s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.27193s
+loading graph (reuse) duration: 4.24377s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.471s
+last_duration_prune_graph: 24.5257s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7196.65 GFLOPS
-write pruned knn graph duration:1.45239s
+flops_prune_graph: 7180.58 GFLOPS
+write pruned knn graph duration:1.40348s
 Finding clusters...
-find_cluster_duration_total: 0.717785s
+find_cluster_duration_total: 0.688237s
 detected clusters: 103
 datapoints in clusters: 967729
 score: 92.0291
-write cluster map duration:0.984755s
-total_duration_without_disk: 40.0534
-total_duration: 40.1773
+write cluster map duration:1.00839s
+total_duration_without_disk: 40.0594
+total_duration: 40.1817
 
 all done!
 
@@ -1309,7 +1309,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 103
 datapoints_clusters: 967729
-total_dur: 25.188785
+total_dur: 25.213937
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1666.66666667 percent_correct: 0.9486274509803921 ARI: 0.8773609196271763
@@ -1330,31 +1330,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122121
+Dataset load duration: 0.120736
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27039s
+loading density grid (reuse) duration: 1.24013s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.24224s
+loading graph (reuse) duration: 4.24709s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4956s
+last_duration_prune_graph: 24.4829s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7189.41 GFLOPS
-write pruned knn graph duration:1.41696s
+flops_prune_graph: 7193.16 GFLOPS
+write pruned knn graph duration:1.38731s
 Finding clusters...
-find_cluster_duration_total: 0.773048s
+find_cluster_duration_total: 0.758676s
 detected clusters: 111
 datapoints in clusters: 942143
 score: 82.2066
-write cluster map duration:1.00903s
-total_duration_without_disk: 40.0954
-total_duration: 40.2175
+write cluster map duration:0.942559s
+total_duration_without_disk: 39.9652
+total_duration: 40.086
 
 all done!
 
@@ -1363,7 +1363,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 111
 datapoints_clusters: 942143
-total_dur: 25.268648
+total_dur: 25.241576000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 2222.22222222 percent_correct: 0.933385294117647 ARI: 0.7775513536195925
@@ -1384,31 +1384,31 @@ threshold: 2777.78
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122427
+Dataset load duration: 0.121759
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.28436s
+loading density grid (reuse) duration: 1.25739s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.24672s
+loading graph (reuse) duration: 4.28851s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7308s
+last_duration_prune_graph: 24.6457s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7121.05 GFLOPS
-write pruned knn graph duration:1.38006s
+flops_prune_graph: 7145.64 GFLOPS
+write pruned knn graph duration:1.38393s
 Finding clusters...
-find_cluster_duration_total: 0.804997s
+find_cluster_duration_total: 0.729256s
 detected clusters: 129
 datapoints in clusters: 921298
 score: 64.1296
-write cluster map duration:0.940598s
-total_duration_without_disk: 40.2462
-total_duration: 40.3687
+write cluster map duration:0.94183s
+total_duration_without_disk: 40.1536
+total_duration: 40.2755
 
 all done!
 
@@ -1417,7 +1417,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 129
 datapoints_clusters: 921298
-total_dur: 25.535797
+total_dur: 25.374956
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 2777.77777778 percent_correct: 0.9129049019607843 ARI: 0.6863278848956362
@@ -1438,31 +1438,31 @@ threshold: 3333.33
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122857
+Dataset load duration: 0.12054
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26673s
+loading density grid (reuse) duration: 1.25833s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.34466s
+loading graph (reuse) duration: 4.24199s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8659s
+last_duration_prune_graph: 24.5994s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7082.34 GFLOPS
-write pruned knn graph duration:1.36467s
+flops_prune_graph: 7159.09 GFLOPS
+write pruned knn graph duration:1.38387s
 Finding clusters...
-find_cluster_duration_total: 0.758631s
+find_cluster_duration_total: 0.733044s
 detected clusters: 122
 datapoints in clusters: 904265
 score: 69.1497
-write cluster map duration:0.950929s
-total_duration_without_disk: 40.5437
-total_duration: 40.6666
+write cluster map duration:1.01633s
+total_duration_without_disk: 40.1733
+total_duration: 40.2939
 
 all done!
 
@@ -1471,7 +1471,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 122
 datapoints_clusters: 904265
-total_dur: 25.624531
+total_dur: 25.332444
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 3333.33333333 percent_correct: 0.906036274509804 ARI: 0.6155901599415743
@@ -1492,31 +1492,31 @@ threshold: 3888.89
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122105
+Dataset load duration: 0.121783
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25654s
+loading density grid (reuse) duration: 1.24743s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.29978s
+loading graph (reuse) duration: 4.38304s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7331s
+last_duration_prune_graph: 24.5604s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7120.37 GFLOPS
-write pruned knn graph duration:1.36843s
+flops_prune_graph: 7170.45 GFLOPS
+write pruned knn graph duration:1.39319s
 Finding clusters...
-find_cluster_duration_total: 0.804663s
+find_cluster_duration_total: 0.779969s
 detected clusters: 119
 datapoints in clusters: 885688
 score: 70.334
-write cluster map duration:0.935538s
-total_duration_without_disk: 40.2677
-total_duration: 40.3898
+write cluster map duration:0.994253s
+total_duration_without_disk: 40.2506
+total_duration: 40.3725
 
 all done!
 
@@ -1525,7 +1525,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 119
 datapoints_clusters: 885688
-total_dur: 25.537763
+total_dur: 25.340369000000003
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 3888.88888889 percent_correct: 0.8878607843137255 ARI: 0.5344773035426952
@@ -1546,31 +1546,31 @@ threshold: 4444.44
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123059
+Dataset load duration: 0.121479
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25888s
+loading density grid (reuse) duration: 1.26376s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.25868s
+loading graph (reuse) duration: 4.25833s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7302s
+last_duration_prune_graph: 24.6215s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7121.22 GFLOPS
-write pruned knn graph duration:1.3456s
+flops_prune_graph: 7152.66 GFLOPS
+write pruned knn graph duration:1.35113s
 Finding clusters...
-find_cluster_duration_total: 0.714027s
+find_cluster_duration_total: 0.688413s
 detected clusters: 110
 datapoints in clusters: 862203
 score: 76.0767
-write cluster map duration:0.943644s
-total_duration_without_disk: 40.1557
-total_duration: 40.2788
+write cluster map duration:0.961963s
+total_duration_without_disk: 40.0801
+total_duration: 40.2017
 
 all done!
 
@@ -1579,7 +1579,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 110
 datapoints_clusters: 862203
-total_dur: 25.444227
+total_dur: 25.309913
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 4444.44444444 percent_correct: 0.8648558823529412 ARI: 0.4429955553733052
@@ -1600,31 +1600,31 @@ threshold: 5000
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121416
+Dataset load duration: 0.120801
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26311s
+loading density grid (reuse) duration: 1.25886s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.25664s
+loading graph (reuse) duration: 4.27078s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7567s
+last_duration_prune_graph: 24.5527s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7113.59 GFLOPS
-write pruned knn graph duration:1.3339s
+flops_prune_graph: 7172.7 GFLOPS
+write pruned knn graph duration:1.34539s
 Finding clusters...
-find_cluster_duration_total: 0.696076s
+find_cluster_duration_total: 0.719476s
 detected clusters: 113
 datapoints in clusters: 832078
 score: 70.9714
-write cluster map duration:1.00352s
-total_duration_without_disk: 40.2314
-total_duration: 40.3529
+write cluster map duration:0.943709s
+total_duration_without_disk: 40.03
+total_duration: 40.1508
 
 all done!
 
@@ -1633,7 +1633,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 113
 datapoints_clusters: 832078
-total_dur: 25.452776
+total_dur: 25.272176
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 5000.0 percent_correct: 0.8353078431372549 ARI: 0.3489743393228983
@@ -1656,31 +1656,31 @@ threshold: 679.012
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121954
+Dataset load duration: 0.123658
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26498s
+loading density grid (reuse) duration: 1.26248s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.26198s
+loading graph (reuse) duration: 4.25593s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7974s
+last_duration_prune_graph: 24.5774s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7101.93 GFLOPS
-write pruned knn graph duration:1.40751s
+flops_prune_graph: 7165.48 GFLOPS
+write pruned knn graph duration:1.43728s
 Finding clusters...
-find_cluster_duration_total: 0.781241s
+find_cluster_duration_total: 0.773726s
 detected clusters: 98
 datapoints in clusters: 1000020
 score: 96.0804
-write cluster map duration:0.938963s
-total_duration_without_disk: 40.3202
-total_duration: 40.4422
+write cluster map duration:0.943387s
+total_duration_without_disk: 40.1488
+total_duration: 40.2726
 
 all done!
 
@@ -1689,7 +1689,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 1000020
-total_dur: 25.578641
+total_dur: 25.351126
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 679.012345679 percent_correct: 0.8915235294117647 ARI: 0.8859059988247646
@@ -1710,31 +1710,31 @@ threshold: 802.469
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123544
+Dataset load duration: 0.122045
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26044s
+loading density grid (reuse) duration: 1.247s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.48987s
+loading graph (reuse) duration: 4.23782s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8208s
+last_duration_prune_graph: 24.562s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7095.23 GFLOPS
-write pruned knn graph duration:1.43127s
+flops_prune_graph: 7169.99 GFLOPS
+write pruned knn graph duration:1.41221s
 Finding clusters...
-find_cluster_duration_total: 0.747751s
+find_cluster_duration_total: 0.781486s
 detected clusters: 97
 datapoints in clusters: 999009
 score: 95.0038
-write cluster map duration:1.01019s
-total_duration_without_disk: 40.7632
-total_duration: 40.8868
+write cluster map duration:0.989659s
+total_duration_without_disk: 40.0842
+total_duration: 40.2063
 
 all done!
 
@@ -1743,7 +1743,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 999009
-total_dur: 25.568551
+total_dur: 25.343486000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 802.469135802 percent_correct: 0.9200950980392156 ARI: 0.9238847718810081
@@ -1764,31 +1764,31 @@ threshold: 925.926
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122163
+Dataset load duration: 0.122322
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26615s
+loading density grid (reuse) duration: 1.25809s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.32881s
+loading graph (reuse) duration: 4.24066s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8241s
+last_duration_prune_graph: 24.6378s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7094.27 GFLOPS
-write pruned knn graph duration:1.4264s
+flops_prune_graph: 7147.92 GFLOPS
+write pruned knn graph duration:1.41425s
 Finding clusters...
-find_cluster_duration_total: 0.716478s
+find_cluster_duration_total: 0.73921s
 detected clusters: 95
 datapoints in clusters: 997092
 score: 92.8664
-write cluster map duration:0.93977s
-total_duration_without_disk: 40.4175
-total_duration: 40.5397
+write cluster map duration:0.945138s
+total_duration_without_disk: 40.1148
+total_duration: 40.2371
 
 all done!
 
@@ -1797,7 +1797,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 95
 datapoints_clusters: 997092
-total_dur: 25.540578
+total_dur: 25.37701
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 925.925925926 percent_correct: 0.9183254901960785 ARI: 0.9194740210779973
@@ -1818,31 +1818,31 @@ threshold: 1049.38
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121661
+Dataset load duration: 0.120073
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26063s
+loading density grid (reuse) duration: 1.26001s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.24048s
+loading graph (reuse) duration: 4.33886s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8301s
+last_duration_prune_graph: 24.4973s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7092.55 GFLOPS
-write pruned knn graph duration:1.4301s
+flops_prune_graph: 7188.93 GFLOPS
+write pruned knn graph duration:1.43308s
 Finding clusters...
-find_cluster_duration_total: 0.67801s
+find_cluster_duration_total: 0.80362s
 detected clusters: 99
 datapoints in clusters: 994032
 score: 96.4796
-write cluster map duration:1.04261s
-total_duration_without_disk: 40.4134
-total_duration: 40.5352
+write cluster map duration:0.948431s
+total_duration_without_disk: 40.2686
+total_duration: 40.3888
 
 all done!
 
@@ -1851,7 +1851,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 994032
-total_dur: 25.508110000000002
+total_dur: 25.300919999999998
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1049.38271605 percent_correct: 0.9448392156862745 ARI: 0.937551831340266
@@ -1873,31 +1873,31 @@ threshold: 1172.84
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123052
+Dataset load duration: 0.120024
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27032s
+loading density grid (reuse) duration: 1.25164s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.25576s
+loading graph (reuse) duration: 4.28196s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7703s
+last_duration_prune_graph: 24.538s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7109.69 GFLOPS
-write pruned knn graph duration:1.42245s
+flops_prune_graph: 7176.99 GFLOPS
+write pruned knn graph duration:1.40579s
 Finding clusters...
-find_cluster_duration_total: 0.765995s
+find_cluster_duration_total: 0.743473s
 detected clusters: 96
 datapoints in clusters: 990022
 score: 93.1785
-write cluster map duration:0.955176s
-total_duration_without_disk: 40.363
-total_duration: 40.4861
+write cluster map duration:0.940563s
+total_duration_without_disk: 40.0075
+total_duration: 40.1276
 
 all done!
 
@@ -1906,7 +1906,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 990022
-total_dur: 25.536295
+total_dur: 25.281473000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1172.83950617 percent_correct: 0.9409480392156863 ARI: 0.9269626939431923
@@ -1927,31 +1927,31 @@ threshold: 1296.3
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123606
+Dataset load duration: 0.121059
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26366s
+loading density grid (reuse) duration: 1.24892s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.23532s
+loading graph (reuse) duration: 4.28738s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7948s
+last_duration_prune_graph: 24.5716s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7102.67 GFLOPS
-write pruned knn graph duration:1.43243s
+flops_prune_graph: 7167.19 GFLOPS
+write pruned knn graph duration:1.40771s
 Finding clusters...
-find_cluster_duration_total: 0.731621s
+find_cluster_duration_total: 0.769097s
 detected clusters: 96
 datapoints in clusters: 985166
 score: 92.7215
-write cluster map duration:0.98434s
-total_duration_without_disk: 40.3655
-total_duration: 40.4892
+write cluster map duration:0.948176s
+total_duration_without_disk: 40.151
+total_duration: 40.2721
 
 all done!
 
@@ -1960,7 +1960,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 985166
-total_dur: 25.526421
+total_dur: 25.340697
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1296.2962963 percent_correct: 0.9362186274509804 ARI: 0.9131058119036385
@@ -1981,31 +1981,31 @@ threshold: 1419.75
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124884
+Dataset load duration: 0.121659
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26369s
+loading density grid (reuse) duration: 1.26717s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.30464s
+loading graph (reuse) duration: 4.27033s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8025s
+last_duration_prune_graph: 24.6098s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7100.46 GFLOPS
-write pruned knn graph duration:1.39721s
+flops_prune_graph: 7156.05 GFLOPS
+write pruned knn graph duration:1.41059s
 Finding clusters...
-find_cluster_duration_total: 0.79585s
+find_cluster_duration_total: 0.697925s
 detected clusters: 102
 datapoints in clusters: 979723
 score: 94.1302
-write cluster map duration:0.939676s
-total_duration_without_disk: 40.3794
-total_duration: 40.5043
+write cluster map duration:0.931275s
+total_duration_without_disk: 40.1569
+total_duration: 40.2786
 
 all done!
 
@@ -2014,7 +2014,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 102
 datapoints_clusters: 979723
-total_dur: 25.59835
+total_dur: 25.307725
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1419.75308642 percent_correct: 0.9505196078431373 ARI: 0.9125311913372773
@@ -2035,31 +2035,31 @@ threshold: 1543.21
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121866
+Dataset load duration: 0.120907
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24417s
+loading density grid (reuse) duration: 1.25911s
 surplus min: -2852.6 max: 8136.11
 reusing knn graph
-loading graph (reuse) duration: 4.25783s
+loading graph (reuse) duration: 4.28148s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8291s
+last_duration_prune_graph: 24.6499s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7092.84 GFLOPS
-write pruned knn graph duration:1.39823s
+flops_prune_graph: 7144.42 GFLOPS
+write pruned knn graph duration:1.40704s
 Finding clusters...
-find_cluster_duration_total: 0.775178s
+find_cluster_duration_total: 0.804628s
 detected clusters: 105
 datapoints in clusters: 973861
 score: 90.7027
-write cluster map duration:0.950081s
-total_duration_without_disk: 40.3957
-total_duration: 40.5177
+write cluster map duration:0.933476s
+total_duration_without_disk: 40.2086
+total_duration: 40.3296
 
 all done!
 
@@ -2068,7 +2068,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 105
 datapoints_clusters: 973861
-total_dur: 25.604278
+total_dur: 25.454528
 
 ------------- END RUN ---------------
 attempt lambda: 1e-07 threshold: 1543.20987654 percent_correct: 0.9545970588235294 ARI: 0.9003094217547579
@@ -2094,21 +2094,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123408
+Dataset load duration: 0.121059
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.32609s
+grid create duration: 1.3207s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.00604s
+last_duration_generate_b: 4.03818s
 ops_generate_b: 24752.7
-flops_generate_b: 6178.83 GFLOPS
+flops_generate_b: 6129.66 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -2182,27 +2182,27 @@ Number of iterations: 64 (max. 1000)
 Final norm of residuum: 2.68376e-06
 counted_mult_calls: 66
 act_it: 66
-acc_duration_density: 273.385s
+acc_duration_density: 273.359s
 ops_density: 1.48326e+06 GOps
-flops_density: 5425.52 GFLOPS
-density_duration_total: 284.844s
+flops_density: 5426.03 GFLOPS
+density_duration_total: 284.813s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.27976s
+loading graph (reuse) duration: 4.2584s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.733s
+last_duration_prune_graph: 24.6907s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7120.4 GFLOPS
-write pruned knn graph duration:1.41377s
+flops_prune_graph: 7132.6 GFLOPS
+write pruned knn graph duration:1.43943s
 Finding clusters...
-find_cluster_duration_total: 0.711112s
+find_cluster_duration_total: 0.715989s
 detected clusters: 91
 datapoints in clusters: 998309
 score: 89.0648
-write cluster map duration:0.927982s
-total_duration_without_disk: 324.563
-total_duration: 324.686
+write cluster map duration:0.938126s
+total_duration_without_disk: 324.438
+total_duration: 324.559
 
 all done!
 
@@ -2211,7 +2211,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 91
 datapoints_clusters: 998309
-total_dur: 314.294152
+total_dur: 314.25786899999997
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 555.555555556 percent_correct: 0.85065 ARI: 0.8382873163790877
@@ -2233,31 +2233,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.113946
+Dataset load duration: 0.114095
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24585s
+loading density grid (reuse) duration: 1.27631s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.28929s
+loading graph (reuse) duration: 4.27834s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5081s
+last_duration_prune_graph: 24.5718s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7185.76 GFLOPS
-write pruned knn graph duration:1.39846s
+flops_prune_graph: 7167.13 GFLOPS
+write pruned knn graph duration:1.4054s
 Finding clusters...
-find_cluster_duration_total: 0.71585s
+find_cluster_duration_total: 0.736168s
 detected clusters: 105
 datapoints in clusters: 961342
 score: 89.5368
-write cluster map duration:1.02263s
-total_duration_without_disk: 40.0961
-total_duration: 40.2101
+write cluster map duration:0.941864s
+total_duration_without_disk: 40.0904
+total_duration: 40.2046
 
 all done!
 
@@ -2266,7 +2266,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 105
 datapoints_clusters: 961342
-total_dur: 25.22395
+total_dur: 25.307968
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1111.11111111 percent_correct: 0.9325323529411764 ARI: 0.8449207004565595
@@ -2288,31 +2288,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123726
+Dataset load duration: 0.121491
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2602s
+loading density grid (reuse) duration: 1.25746s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.26306s
+loading graph (reuse) duration: 4.27946s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5239s
+last_duration_prune_graph: 24.4965s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7181.14 GFLOPS
-write pruned knn graph duration:1.38212s
+flops_prune_graph: 7189.15 GFLOPS
+write pruned knn graph duration:1.3884s
 Finding clusters...
-find_cluster_duration_total: 0.769173s
+find_cluster_duration_total: 0.727577s
 detected clusters: 126
 datapoints in clusters: 923685
 score: 67.0124
-write cluster map duration:0.940598s
-total_duration_without_disk: 40.1026
-total_duration: 40.2264
+write cluster map duration:0.94536s
+total_duration_without_disk: 39.9763
+total_duration: 40.0979
 
 all done!
 
@@ -2321,7 +2321,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 126
 datapoints_clusters: 923685
-total_dur: 25.293073
+total_dur: 25.224077
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1666.66666667 percent_correct: 0.915235294117647 ARI: 0.6976721097610883
@@ -2342,31 +2342,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122172
+Dataset load duration: 0.121623
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26397s
+loading density grid (reuse) duration: 1.26238s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.25143s
+loading graph (reuse) duration: 4.28776s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4982s
+last_duration_prune_graph: 24.633s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7188.64 GFLOPS
-write pruned knn graph duration:1.35909s
+flops_prune_graph: 7149.32 GFLOPS
+write pruned knn graph duration:1.37337s
 Finding clusters...
-find_cluster_duration_total: 0.727651s
+find_cluster_duration_total: 0.722704s
 detected clusters: 122
 datapoints in clusters: 894653
 score: 68.4146
-write cluster map duration:0.951401s
-total_duration_without_disk: 39.928
-total_duration: 40.0502
+write cluster map duration:0.947832s
+total_duration_without_disk: 40.305
+total_duration: 40.4267
 
 all done!
 
@@ -2375,7 +2375,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 122
 datapoints_clusters: 894653
-total_dur: 25.225851000000002
+total_dur: 25.355704
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 2222.22222222 percent_correct: 0.8966205882352941 ARI: 0.5731426574736671
@@ -2396,31 +2396,31 @@ threshold: 2777.78
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120997
+Dataset load duration: 0.122205
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26018s
+loading density grid (reuse) duration: 1.26919s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.28467s
+loading graph (reuse) duration: 4.2739s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.571s
+last_duration_prune_graph: 24.4896s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7167.36 GFLOPS
-write pruned knn graph duration:1.35193s
+flops_prune_graph: 7191.2 GFLOPS
+write pruned knn graph duration:1.3654s
 Finding clusters...
-find_cluster_duration_total: 0.756812s
+find_cluster_duration_total: 0.710049s
 detected clusters: 110
 datapoints in clusters: 856131
 score: 75.541
-write cluster map duration:0.939299s
-total_duration_without_disk: 40.1255
-total_duration: 40.2465
+write cluster map duration:1.03503s
+total_duration_without_disk: 40.1911
+total_duration: 40.3133
 
 all done!
 
@@ -2429,7 +2429,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 110
 datapoints_clusters: 856131
-total_dur: 25.327812
+total_dur: 25.199649
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 2777.77777778 percent_correct: 0.8589 ARI: 0.4234070656426182
@@ -2450,31 +2450,31 @@ threshold: 3333.33
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123231
+Dataset load duration: 0.120692
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24412s
+loading density grid (reuse) duration: 1.27112s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.24347s
+loading graph (reuse) duration: 4.27838s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5226s
+last_duration_prune_graph: 24.601s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7181.5 GFLOPS
-write pruned knn graph duration:1.31609s
+flops_prune_graph: 7158.62 GFLOPS
+write pruned knn graph duration:1.32882s
 Finding clusters...
-find_cluster_duration_total: 0.702095s
+find_cluster_duration_total: 0.722393s
 detected clusters: 120
 datapoints in clusters: 801928
 score: 62.8963
-write cluster map duration:0.933704s
-total_duration_without_disk: 39.876
-total_duration: 39.9993
+write cluster map duration:1.01131s
+total_duration_without_disk: 40.1072
+total_duration: 40.228
 
 all done!
 
@@ -2483,7 +2483,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 120
 datapoints_clusters: 801928
-total_dur: 25.224695
+total_dur: 25.323393
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 3333.33333333 percent_correct: 0.8057352941176471 ARI: 0.2790693441143192
@@ -2504,31 +2504,31 @@ threshold: 3888.89
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122245
+Dataset load duration: 0.122489
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26113s
+loading density grid (reuse) duration: 1.25828s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.26226s
+loading graph (reuse) duration: 4.25307s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5829s
+last_duration_prune_graph: 24.5495s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7163.88 GFLOPS
-write pruned knn graph duration:1.29593s
+flops_prune_graph: 7173.64 GFLOPS
+write pruned knn graph duration:1.35652s
 Finding clusters...
-find_cluster_duration_total: 0.741497s
+find_cluster_duration_total: 0.728319s
 detected clusters: 132
 datapoints in clusters: 738752
 score: 49.2501
-write cluster map duration:0.963018s
-total_duration_without_disk: 40.1026
-total_duration: 40.2249
+write cluster map duration:0.956899s
+total_duration_without_disk: 40.0853
+total_duration: 40.2078
 
 all done!
 
@@ -2537,7 +2537,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 132
 datapoints_clusters: 738752
-total_dur: 25.324396999999998
+total_dur: 25.277818999999997
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 3888.88888889 percent_correct: 0.7437431372549019 ARI: 0.18010051404334665
@@ -2561,31 +2561,31 @@ threshold: 679.012
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122119
+Dataset load duration: 0.12189
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26388s
+loading density grid (reuse) duration: 1.25109s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.23407s
+loading graph (reuse) duration: 4.25042s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5286s
+last_duration_prune_graph: 24.6285s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7179.74 GFLOPS
-write pruned knn graph duration:1.42327s
+flops_prune_graph: 7150.63 GFLOPS
+write pruned knn graph duration:1.41277s
 Finding clusters...
-find_cluster_duration_total: 0.77599s
+find_cluster_duration_total: 0.735273s
 detected clusters: 97
 datapoints in clusters: 993619
 score: 94.4912
-write cluster map duration:0.970642s
-total_duration_without_disk: 40.1299
-total_duration: 40.2521
+write cluster map duration:0.986129s
+total_duration_without_disk: 40.1773
+total_duration: 40.2993
 
 all done!
 
@@ -2594,7 +2594,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 993619
-total_dur: 25.30459
+total_dur: 25.363773
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 679.012345679 percent_correct: 0.9247 ARI: 0.9189298996738265
@@ -2616,31 +2616,31 @@ threshold: 802.469
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120214
+Dataset load duration: 0.121562
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24972s
+loading density grid (reuse) duration: 1.25824s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.28806s
+loading graph (reuse) duration: 4.29096s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5397s
+last_duration_prune_graph: 24.5495s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7176.49 GFLOPS
-write pruned knn graph duration:1.42368s
+flops_prune_graph: 7173.63 GFLOPS
+write pruned knn graph duration:1.41121s
 Finding clusters...
-find_cluster_duration_total: 0.753737s
+find_cluster_duration_total: 0.757194s
 detected clusters: 94
 datapoints in clusters: 986087
 score: 90.8747
-write cluster map duration:0.975637s
-total_duration_without_disk: 40.1643
-total_duration: 40.2846
+write cluster map duration:0.948956s
+total_duration_without_disk: 40.1065
+total_duration: 40.2281
 
 all done!
 
@@ -2649,7 +2649,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 94
 datapoints_clusters: 986087
-total_dur: 25.293437
+total_dur: 25.306693999999997
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 802.469135802 percent_correct: 0.9174460784313726 ARI: 0.8987878825270359
@@ -2670,31 +2670,31 @@ threshold: 925.926
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121967
+Dataset load duration: 0.123765
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26434s
+loading density grid (reuse) duration: 1.26809s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.2324s
+loading graph (reuse) duration: 4.3056s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6097s
+last_duration_prune_graph: 24.5383s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7156.08 GFLOPS
-write pruned knn graph duration:1.39169s
+flops_prune_graph: 7176.9 GFLOPS
+write pruned knn graph duration:1.42386s
 Finding clusters...
-find_cluster_duration_total: 0.734976s
+find_cluster_duration_total: 0.712764s
 detected clusters: 98
 datapoints in clusters: 976685
 score: 93.8384
-write cluster map duration:0.940034s
-total_duration_without_disk: 40.0754
-total_duration: 40.1974
+write cluster map duration:1.04434s
+total_duration_without_disk: 40.1826
+total_duration: 40.3064
 
 all done!
 
@@ -2703,7 +2703,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 976685
-total_dur: 25.344676
+total_dur: 25.251064
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 925.925925926 percent_correct: 0.9180911764705882 ARI: 0.8778301704946982
@@ -2724,31 +2724,31 @@ threshold: 1049.38
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124193
+Dataset load duration: 0.122764
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27048s
+loading density grid (reuse) duration: 1.24802s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.24631s
+loading graph (reuse) duration: 4.23189s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4297s
+last_duration_prune_graph: 24.5143s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7208.81 GFLOPS
-write pruned knn graph duration:1.40932s
+flops_prune_graph: 7183.94 GFLOPS
+write pruned knn graph duration:1.40063s
 Finding clusters...
-find_cluster_duration_total: 0.777031s
+find_cluster_duration_total: 0.671849s
 detected clusters: 99
 datapoints in clusters: 966376
 score: 93.7953
-write cluster map duration:0.956094s
-total_duration_without_disk: 39.993
-total_duration: 40.1172
+write cluster map duration:1.01311s
+total_duration_without_disk: 40.0587
+total_duration: 40.1815
 
 all done!
 
@@ -2757,7 +2757,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 966376
-total_dur: 25.206731
+total_dur: 25.186149
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1049.38271605 percent_correct: 0.9178352941176471 ARI: 0.8495584914519347
@@ -2778,31 +2778,31 @@ threshold: 1172.84
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123455
+Dataset load duration: 0.122148
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26362s
+loading density grid (reuse) duration: 1.26203s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.27372s
+loading graph (reuse) duration: 4.34591s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6044s
+last_duration_prune_graph: 24.4885s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7157.62 GFLOPS
-write pruned knn graph duration:1.39114s
+flops_prune_graph: 7191.49 GFLOPS
+write pruned knn graph duration:1.41453s
 Finding clusters...
-find_cluster_duration_total: 0.705803s
+find_cluster_duration_total: 0.761907s
 detected clusters: 107
 datapoints in clusters: 956408
 score: 87.2019
-write cluster map duration:0.938186s
-total_duration_without_disk: 40.0961
-total_duration: 40.2196
+write cluster map duration:0.962811s
+total_duration_without_disk: 40.1334
+total_duration: 40.2556
 
 all done!
 
@@ -2811,7 +2811,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 107
 datapoints_clusters: 956408
-total_dur: 25.310202999999998
+total_dur: 25.250407
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1172.83950617 percent_correct: 0.9276980392156863 ARI: 0.8253639326510182
@@ -2832,31 +2832,31 @@ threshold: 1296.3
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121808
+Dataset load duration: 0.122815
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27088s
+loading density grid (reuse) duration: 1.25926s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.24071s
+loading graph (reuse) duration: 4.23836s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4445s
+last_duration_prune_graph: 24.5261s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7204.46 GFLOPS
-write pruned knn graph duration:1.3942s
+flops_prune_graph: 7180.49 GFLOPS
+write pruned knn graph duration:1.38995s
 Finding clusters...
-find_cluster_duration_total: 0.717533s
+find_cluster_duration_total: 0.752038s
 detected clusters: 115
 datapoints in clusters: 946973
 score: 78.9144
-write cluster map duration:0.944482s
-total_duration_without_disk: 39.8696
-total_duration: 39.9915
+write cluster map duration:0.943954s
+total_duration_without_disk: 40.0031
+total_duration: 40.1259
 
 all done!
 
@@ -2865,7 +2865,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 115
 datapoints_clusters: 946973
-total_dur: 25.162033
+total_dur: 25.278138
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1296.2962963 percent_correct: 0.9282617647058824 ARI: 0.7930652161600753
@@ -2886,31 +2886,31 @@ threshold: 1419.75
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123774
+Dataset load duration: 0.11962
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27558s
+loading density grid (reuse) duration: 1.24584s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.25987s
+loading graph (reuse) duration: 4.25633s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.504s
+last_duration_prune_graph: 24.5361s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7186.95 GFLOPS
-write pruned knn graph duration:1.3791s
+flops_prune_graph: 7177.55 GFLOPS
+write pruned knn graph duration:1.38479s
 Finding clusters...
-find_cluster_duration_total: 0.725462s
+find_cluster_duration_total: 0.713611s
 detected clusters: 109
 datapoints in clusters: 938603
 score: 83.7381
-write cluster map duration:0.943078s
-total_duration_without_disk: 39.9924
-total_duration: 40.1163
+write cluster map duration:0.944649s
+total_duration_without_disk: 39.9795
+total_duration: 40.0991
 
 all done!
 
@@ -2919,7 +2919,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 109
 datapoints_clusters: 938603
-total_dur: 25.229462
+total_dur: 25.249711
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1419.75308642 percent_correct: 0.929893137254902 ARI: 0.7631335985147665
@@ -2940,31 +2940,31 @@ threshold: 1543.21
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121287
+Dataset load duration: 0.121743
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26474s
+loading density grid (reuse) duration: 1.25579s
 surplus min: -1173.51 max: 3755.49
 reusing knn graph
-loading graph (reuse) duration: 4.24641s
+loading graph (reuse) duration: 4.24387s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4194s
+last_duration_prune_graph: 24.5248s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7211.86 GFLOPS
-write pruned knn graph duration:1.3762s
+flops_prune_graph: 7180.86 GFLOPS
+write pruned knn graph duration:1.38081s
 Finding clusters...
-find_cluster_duration_total: 0.75267s
+find_cluster_duration_total: 0.713351s
 detected clusters: 127
 datapoints in clusters: 930809
 score: 66.6167
-write cluster map duration:0.941885s
-total_duration_without_disk: 39.8731
-total_duration: 39.9944
+write cluster map duration:1.00055s
+total_duration_without_disk: 40.0532
+total_duration: 40.175
 
 all done!
 
@@ -2973,7 +2973,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 127
 datapoints_clusters: 930809
-total_dur: 25.172069999999998
+total_dur: 25.238151
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-07 threshold: 1543.20987654 percent_correct: 0.9222156862745098 ARI: 0.7289614045895388
@@ -2996,21 +2996,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122491
+Dataset load duration: 0.122146
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.3182s
+grid create duration: 1.32111s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.07058s
+last_duration_generate_b: 4.05908s
 ops_generate_b: 24752.7
-flops_generate_b: 6080.87 GFLOPS
+flops_generate_b: 6098.1 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -3180,27 +3180,27 @@ Number of iterations: 160 (max. 1000)
 Final norm of residuum: 3.1541e-06
 counted_mult_calls: 164
 act_it: 164
-acc_duration_density: 679.485s
+acc_duration_density: 679.514s
 ops_density: 3.68567e+06 GOps
-flops_density: 5424.21 GFLOPS
-density_duration_total: 691.634s
+flops_density: 5423.97 GFLOPS
+density_duration_total: 691.663s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.29655s
+loading graph (reuse) duration: 4.28709s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.681s
+last_duration_prune_graph: 24.6333s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7135.41 GFLOPS
-write pruned knn graph duration:1.40959s
+flops_prune_graph: 7149.24 GFLOPS
+write pruned knn graph duration:1.42296s
 Finding clusters...
-find_cluster_duration_total: 0.746253s
+find_cluster_duration_total: 0.769814s
 detected clusters: 128
 datapoints in clusters: 1000626
 score: 70.6324
-write cluster map duration:0.951002s
-total_duration_without_disk: 731.604
-total_duration: 731.727
+write cluster map duration:0.991333s
+total_duration_without_disk: 731.378
+total_duration: 731.5
 
 all done!
 
@@ -3209,7 +3209,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 128
 datapoints_clusters: 1000626
-total_dur: 721.131833
+total_dur: 721.125194
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 555.555555556 percent_correct: 0.8621313725490196 ARI: 0.8350739371593895
@@ -3231,31 +3231,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.113352
+Dataset load duration: 0.112751
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25084s
+loading density grid (reuse) duration: 1.24883s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.24399s
+loading graph (reuse) duration: 4.25736s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5718s
+last_duration_prune_graph: 24.4941s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7167.13 GFLOPS
-write pruned knn graph duration:1.41s
+flops_prune_graph: 7189.86 GFLOPS
+write pruned knn graph duration:1.41204s
 Finding clusters...
-find_cluster_duration_total: 0.748488s
+find_cluster_duration_total: 0.685786s
 detected clusters: 99
 datapoints in clusters: 998959
 score: 96.9578
-write cluster map duration:0.94676s
-total_duration_without_disk: 40.1486
-total_duration: 40.262
+write cluster map duration:1.02528s
+total_duration_without_disk: 40.0093
+total_duration: 40.1222
 
 all done!
 
@@ -3264,7 +3264,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 998959
-total_dur: 25.320287999999998
+total_dur: 25.179886
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1111.11111111 percent_correct: 0.9397617647058824 ARI: 0.9410649891736084
@@ -3286,31 +3286,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122946
+Dataset load duration: 0.12301
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26617s
+loading density grid (reuse) duration: 1.26003s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.32465s
+loading graph (reuse) duration: 4.2381s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.518s
+last_duration_prune_graph: 24.5341s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7182.85 GFLOPS
-write pruned knn graph duration:1.40913s
+flops_prune_graph: 7178.13 GFLOPS
+write pruned knn graph duration:1.41459s
 Finding clusters...
-find_cluster_duration_total: 0.729446s
+find_cluster_duration_total: 0.712513s
 detected clusters: 99
 datapoints in clusters: 989753
 score: 96.0643
-write cluster map duration:0.950004s
-total_duration_without_disk: 40.0233
-total_duration: 40.1463
+write cluster map duration:0.945063s
+total_duration_without_disk: 40.0961
+total_duration: 40.2191
 
 all done!
 
@@ -3319,7 +3319,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 989753
-total_dur: 25.247446
+total_dur: 25.246613
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1666.66666667 percent_correct: 0.9505156862745098 ARI: 0.9350825353511286
@@ -3340,31 +3340,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121504
+Dataset load duration: 0.121817
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26246s
+loading density grid (reuse) duration: 1.26186s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.26146s
+loading graph (reuse) duration: 4.33517s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5746s
+last_duration_prune_graph: 24.5127s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7166.32 GFLOPS
-write pruned knn graph duration:1.4004s
+flops_prune_graph: 7184.39 GFLOPS
+write pruned knn graph duration:1.40749s
 Finding clusters...
-find_cluster_duration_total: 0.714961s
+find_cluster_duration_total: 0.736656s
 detected clusters: 103
 datapoints in clusters: 973211
 score: 92.5505
-write cluster map duration:0.954918s
-total_duration_without_disk: 40.1315
-total_duration: 40.2531
+write cluster map duration:0.978918s
+total_duration_without_disk: 40.1617
+total_duration: 40.2836
 
 all done!
 
@@ -3373,7 +3373,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 103
 datapoints_clusters: 973211
-total_dur: 25.289561
+total_dur: 25.249356
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 2222.22222222 percent_correct: 0.954006862745098 ARI: 0.8981356169788031
@@ -3394,31 +3394,31 @@ threshold: 2777.78
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122254
+Dataset load duration: 0.120626
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24842s
+loading density grid (reuse) duration: 1.26236s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.2629s
+loading graph (reuse) duration: 4.27797s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.42s
+last_duration_prune_graph: 24.4837s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7211.69 GFLOPS
-write pruned knn graph duration:1.39333s
+flops_prune_graph: 7192.91 GFLOPS
+write pruned knn graph duration:1.40347s
 Finding clusters...
-find_cluster_duration_total: 0.684482s
+find_cluster_duration_total: 0.806786s
 detected clusters: 114
 datapoints in clusters: 954869
 score: 80.5086
-write cluster map duration:1.01741s
-total_duration_without_disk: 39.9899
-total_duration: 40.1122
+write cluster map duration:0.940667s
+total_duration_without_disk: 40.0496
+total_duration: 40.1703
 
 all done!
 
@@ -3427,7 +3427,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 114
 datapoints_clusters: 954869
-total_dur: 25.104482
+total_dur: 25.290485999999998
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 2777.77777778 percent_correct: 0.9458294117647059 ARI: 0.8320252944064415
@@ -3448,31 +3448,31 @@ threshold: 3333.33
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122434
+Dataset load duration: 0.122563
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24844s
+loading density grid (reuse) duration: 1.26449s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.25616s
+loading graph (reuse) duration: 4.24202s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4677s
+last_duration_prune_graph: 24.6004s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7197.63 GFLOPS
-write pruned knn graph duration:1.37976s
+flops_prune_graph: 7158.8 GFLOPS
+write pruned knn graph duration:1.41211s
 Finding clusters...
-find_cluster_duration_total: 0.720808s
+find_cluster_duration_total: 0.726989s
 detected clusters: 116
 datapoints in clusters: 938256
 score: 77.2681
-write cluster map duration:0.94903s
-total_duration_without_disk: 39.9658
-total_duration: 40.0883
+write cluster map duration:0.948547s
+total_duration_without_disk: 40.1193
+total_duration: 40.2419
 
 all done!
 
@@ -3481,7 +3481,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 116
 datapoints_clusters: 938256
-total_dur: 25.188508000000002
+total_dur: 25.327389
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 3333.33333333 percent_correct: 0.9295578431372549 ARI: 0.7596898087730344
@@ -3502,31 +3502,31 @@ threshold: 3888.89
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122604
+Dataset load duration: 0.121368
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26819s
+loading density grid (reuse) duration: 1.24655s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.23092s
+loading graph (reuse) duration: 4.23469s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4863s
+last_duration_prune_graph: 24.5252s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7192.14 GFLOPS
-write pruned knn graph duration:1.37381s
+flops_prune_graph: 7180.73 GFLOPS
+write pruned knn graph duration:1.3795s
 Finding clusters...
-find_cluster_duration_total: 0.729739s
+find_cluster_duration_total: 0.737352s
 detected clusters: 128
 datapoints in clusters: 923784
 score: 65.2083
-write cluster map duration:1.01365s
-total_duration_without_disk: 39.9979
-total_duration: 40.1206
+write cluster map duration:0.939405s
+total_duration_without_disk: 39.989
+total_duration: 40.1104
 
 all done!
 
@@ -3535,7 +3535,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 128
 datapoints_clusters: 923784
-total_dur: 25.216039
+total_dur: 25.262552000000003
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 3888.88888889 percent_correct: 0.9153568627450981 ARI: 0.6965439962909569
@@ -3556,31 +3556,31 @@ threshold: 4444.44
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124553
+Dataset load duration: 0.121573
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25382s
+loading density grid (reuse) duration: 1.29437s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.48955s
+loading graph (reuse) duration: 4.23348s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5118s
+last_duration_prune_graph: 24.5322s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7184.68 GFLOPS
-write pruned knn graph duration:1.37947s
+flops_prune_graph: 7178.71 GFLOPS
+write pruned knn graph duration:1.37401s
 Finding clusters...
-find_cluster_duration_total: 0.732193s
+find_cluster_duration_total: 0.690864s
 detected clusters: 121
 datapoints in clusters: 911683
 score: 70.6107
-write cluster map duration:0.948314s
-total_duration_without_disk: 40.217
-total_duration: 40.3416
+write cluster map duration:0.942026s
+total_duration_without_disk: 39.9967
+total_duration: 40.1183
 
 all done!
 
@@ -3589,7 +3589,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 121
 datapoints_clusters: 911683
-total_dur: 25.243993
+total_dur: 25.223064
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 4444.44444444 percent_correct: 0.9132941176470588 ARI: 0.6483485483372288
@@ -3610,31 +3610,31 @@ threshold: 5000
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121465
+Dataset load duration: 0.120967
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2565s
+loading density grid (reuse) duration: 1.27973s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.69025s
+loading graph (reuse) duration: 4.35948s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5596s
+last_duration_prune_graph: 24.5078s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7170.69 GFLOPS
-write pruned knn graph duration:1.36485s
+flops_prune_graph: 7185.83 GFLOPS
+write pruned knn graph duration:1.37323s
 Finding clusters...
-find_cluster_duration_total: 0.756633s
+find_cluster_duration_total: 0.742335s
 detected clusters: 124
 datapoints in clusters: 900167
 score: 67.0713
-write cluster map duration:0.957039s
-total_duration_without_disk: 40.4981
-total_duration: 40.6196
+write cluster map duration:0.942149s
+total_duration_without_disk: 40.0946
+total_duration: 40.2156
 
 all done!
 
@@ -3643,7 +3643,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 124
 datapoints_clusters: 900167
-total_dur: 25.316233
+total_dur: 25.250135
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 5000.0 percent_correct: 0.9020127450980392 ARI: 0.5971177477723644
@@ -3666,31 +3666,31 @@ threshold: 679.012
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121996
+Dataset load duration: 0.122117
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24947s
+loading density grid (reuse) duration: 1.24861s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.25514s
+loading graph (reuse) duration: 4.24482s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5573s
+last_duration_prune_graph: 24.515s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7171.35 GFLOPS
-write pruned knn graph duration:1.41317s
+flops_prune_graph: 7183.72 GFLOPS
+write pruned knn graph duration:1.41703s
 Finding clusters...
-find_cluster_duration_total: 0.729536s
+find_cluster_duration_total: 0.701115s
 detected clusters: 108
 datapoints in clusters: 1000449
 score: 90.2366
-write cluster map duration:0.939194s
-total_duration_without_disk: 40.0999
-total_duration: 40.222
+write cluster map duration:0.967159s
+total_duration_without_disk: 39.9289
+total_duration: 40.0511
 
 all done!
 
@@ -3699,7 +3699,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 108
 datapoints_clusters: 1000449
-total_dur: 25.286836
+total_dur: 25.216115000000002
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 679.012345679 percent_correct: 0.8818990196078431 ARI: 0.8712006786985973
@@ -3720,31 +3720,31 @@ threshold: 802.469
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120743
+Dataset load duration: 0.122714
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2512s
+loading density grid (reuse) duration: 1.26205s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.2371s
+loading graph (reuse) duration: 4.23607s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.3996s
+last_duration_prune_graph: 24.4623s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7217.71 GFLOPS
-write pruned knn graph duration:1.42022s
+flops_prune_graph: 7199.21 GFLOPS
+write pruned knn graph duration:1.42216s
 Finding clusters...
-find_cluster_duration_total: 0.720425s
+find_cluster_duration_total: 0.710395s
 detected clusters: 103
 datapoints in clusters: 1000307
 score: 95.1272
-write cluster map duration:0.946646s
-total_duration_without_disk: 39.8474
-total_duration: 39.9682
+write cluster map duration:0.99332s
+total_duration_without_disk: 39.9797
+total_duration: 40.1025
 
 all done!
 
@@ -3753,7 +3753,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 103
 datapoints_clusters: 1000307
-total_dur: 25.120025
+total_dur: 25.172694999999997
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 802.469135802 percent_correct: 0.9113676470588236 ARI: 0.9101687710042184
@@ -3774,31 +3774,31 @@ threshold: 925.926
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.125266
+Dataset load duration: 0.123271
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2638s
+loading density grid (reuse) duration: 1.26759s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.29816s
+loading graph (reuse) duration: 4.23895s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5963s
+last_duration_prune_graph: 24.5005s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7159.97 GFLOPS
-write pruned knn graph duration:1.42942s
+flops_prune_graph: 7187.98 GFLOPS
+write pruned knn graph duration:1.41686s
 Finding clusters...
-find_cluster_duration_total: 0.689237s
+find_cluster_duration_total: 0.749618s
 detected clusters: 102
 datapoints in clusters: 999994
 score: 96.0779
-write cluster map duration:0.988359s
-total_duration_without_disk: 40.2281
-total_duration: 40.3534
+write cluster map duration:0.94342s
+total_duration_without_disk: 40.0118
+total_duration: 40.1351
 
 all done!
 
@@ -3807,7 +3807,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 102
 datapoints_clusters: 999994
-total_dur: 25.285536999999998
+total_dur: 25.250118
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 925.925925926 percent_correct: 0.9308196078431372 ARI: 0.9347075353538359
@@ -3828,31 +3828,31 @@ threshold: 1049.38
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122868
+Dataset load duration: 0.121484
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24795s
+loading density grid (reuse) duration: 1.24087s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.2831s
+loading graph (reuse) duration: 4.26346s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5203s
+last_duration_prune_graph: 24.5452s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7182.18 GFLOPS
-write pruned knn graph duration:1.40487s
+flops_prune_graph: 7174.88 GFLOPS
+write pruned knn graph duration:1.43471s
 Finding clusters...
-find_cluster_duration_total: 0.698198s
+find_cluster_duration_total: 0.768379s
 detected clusters: 100
 datapoints in clusters: 999393
 score: 97.9797
-write cluster map duration:1.01161s
-total_duration_without_disk: 40.1124
-total_duration: 40.2353
+write cluster map duration:0.952006s
+total_duration_without_disk: 40.1257
+total_duration: 40.2473
 
 all done!
 
@@ -3861,7 +3861,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 100
 datapoints_clusters: 999393
-total_dur: 25.218498
+total_dur: 25.313579
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1049.38271605 percent_correct: 0.9401401960784314 ARI: 0.9420429015986798
@@ -3883,31 +3883,31 @@ threshold: 1172.84
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123765
+Dataset load duration: 0.12207
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26128s
+loading density grid (reuse) duration: 1.26777s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.32029s
+loading graph (reuse) duration: 4.28213s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5025s
+last_duration_prune_graph: 24.4338s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7187.39 GFLOPS
-write pruned knn graph duration:1.42222s
+flops_prune_graph: 7207.61 GFLOPS
+write pruned knn graph duration:1.44165s
 Finding clusters...
-find_cluster_duration_total: 0.704466s
+find_cluster_duration_total: 0.748628s
 detected clusters: 97
 datapoints in clusters: 998416
 score: 94.9474
-write cluster map duration:0.959635s
-total_duration_without_disk: 40.0535
-total_duration: 40.1773
+write cluster map duration:0.956782s
+total_duration_without_disk: 40.0061
+total_duration: 40.1283
 
 all done!
 
@@ -3916,7 +3916,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 998416
-total_dur: 25.206966
+total_dur: 25.182428
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1172.83950617 percent_correct: 0.9392666666666667 ARI: 0.9397933177523395
@@ -3937,31 +3937,31 @@ threshold: 1296.3
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120615
+Dataset load duration: 0.120749
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2481s
+loading density grid (reuse) duration: 1.25616s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.24506s
+loading graph (reuse) duration: 4.25481s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5251s
+last_duration_prune_graph: 24.5237s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7180.78 GFLOPS
-write pruned knn graph duration:1.4114s
+flops_prune_graph: 7181.19 GFLOPS
+write pruned knn graph duration:1.41672s
 Finding clusters...
-find_cluster_duration_total: 0.746033s
+find_cluster_duration_total: 0.764861s
 detected clusters: 96
 datapoints in clusters: 997001
 score: 93.8354
-write cluster map duration:0.940767s
-total_duration_without_disk: 40.0493
-total_duration: 40.17
+write cluster map duration:0.941705s
+total_duration_without_disk: 40.0231
+total_duration: 40.1439
 
 all done!
 
@@ -3970,7 +3970,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 997001
-total_dur: 25.271133
+total_dur: 25.288561
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1296.2962963 percent_correct: 0.9379362745098039 ARI: 0.9364346691115472
@@ -3991,31 +3991,31 @@ threshold: 1419.75
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120826
+Dataset load duration: 0.122406
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24556s
+loading density grid (reuse) duration: 1.25762s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.25929s
+loading graph (reuse) duration: 4.30956s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5096s
+last_duration_prune_graph: 24.4398s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7185.33 GFLOPS
-write pruned knn graph duration:1.40885s
+flops_prune_graph: 7205.85 GFLOPS
+write pruned knn graph duration:1.41349s
 Finding clusters...
-find_cluster_duration_total: 0.737828s
+find_cluster_duration_total: 0.767612s
 detected clusters: 98
 datapoints in clusters: 995019
 score: 95.5999
-write cluster map duration:0.947041s
-total_duration_without_disk: 39.9801
-total_duration: 40.101
+write cluster map duration:0.944131s
+total_duration_without_disk: 39.995
+total_duration: 40.1175
 
 all done!
 
@@ -4024,7 +4024,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 995019
-total_dur: 25.247428
+total_dur: 25.207412
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1419.75308642 percent_correct: 0.9556480392156863 ARI: 0.9490441522157756
@@ -4046,31 +4046,31 @@ threshold: 1543.21
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12101
+Dataset load duration: 0.120669
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25243s
+loading density grid (reuse) duration: 1.25773s
 surplus min: -5884.13 max: 18833.1
 reusing knn graph
-loading graph (reuse) duration: 4.29109s
+loading graph (reuse) duration: 4.23684s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5266s
+last_duration_prune_graph: 24.5441s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7180.34 GFLOPS
-write pruned knn graph duration:1.41538s
+flops_prune_graph: 7175.21 GFLOPS
+write pruned knn graph duration:1.40908s
 Finding clusters...
-find_cluster_duration_total: 0.762324s
+find_cluster_duration_total: 0.755874s
 detected clusters: 97
 datapoints in clusters: 992585
 score: 94.3929
-write cluster map duration:0.93755s
-total_duration_without_disk: 40.1428
-total_duration: 40.2638
+write cluster map duration:0.976151s
+total_duration_without_disk: 40.0869
+total_duration: 40.2076
 
 all done!
 
@@ -4079,7 +4079,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 992585
-total_dur: 25.288923999999998
+total_dur: 25.299974
 
 ------------- END RUN ---------------
 attempt lambda: 3.16227766016838e-08 threshold: 1543.20987654 percent_correct: 0.9532833333333334 ARI: 0.9427884797158202
@@ -4105,21 +4105,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121136
+Dataset load duration: 0.119563
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.31945s
+grid create duration: 1.32491s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.10976s
+last_duration_generate_b: 4.04597s
 ops_generate_b: 24752.7
-flops_generate_b: 6022.91 GFLOPS
+flops_generate_b: 6117.85 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -4263,27 +4263,27 @@ Number of iterations: 134 (max. 1000)
 Final norm of residuum: 2.73067e-06
 counted_mult_calls: 137
 act_it: 137
-acc_duration_density: 567.53s
+acc_duration_density: 568.272s
 ops_density: 3.07888e+06 GOps
-flops_density: 5425.06 GFLOPS
-density_duration_total: 579.561s
+flops_density: 5417.97 GFLOPS
+density_duration_total: 580.131s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.2454s
+loading graph (reuse) duration: 4.2869s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.7073s
+last_duration_prune_graph: 24.7253s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7127.81 GFLOPS
-write pruned knn graph duration:1.41254s
+flops_prune_graph: 7122.64 GFLOPS
+write pruned knn graph duration:1.42909s
 Finding clusters...
-find_cluster_duration_total: 0.747409s
+find_cluster_duration_total: 0.748173s
 detected clusters: 109
 datapoints in clusters: 1000534
 score: 89.2633
-write cluster map duration:0.994076s
-total_duration_without_disk: 619.244
-total_duration: 619.365
+write cluster map duration:0.946202s
+total_duration_without_disk: 619.878
+total_duration: 619.997
 
 all done!
 
@@ -4292,7 +4292,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 109
 datapoints_clusters: 1000534
-total_dur: 609.1254690000001
+total_dur: 609.6504429999999
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 555.555555556 percent_correct: 0.8622176470588235 ARI: 0.8421956956842737
@@ -4314,31 +4314,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.114867
+Dataset load duration: 0.112724
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24325s
+loading density grid (reuse) duration: 1.25413s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.28842s
+loading graph (reuse) duration: 4.27048s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5445s
+last_duration_prune_graph: 24.5591s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7175.09 GFLOPS
-write pruned knn graph duration:1.40876s
+flops_prune_graph: 7170.83 GFLOPS
+write pruned knn graph duration:1.43816s
 Finding clusters...
-find_cluster_duration_total: 0.7614s
+find_cluster_duration_total: 0.701063s
 detected clusters: 96
 datapoints in clusters: 997037
 score: 93.8388
-write cluster map duration:0.948042s
-total_duration_without_disk: 40.0921
-total_duration: 40.2071
+write cluster map duration:0.946264s
+total_duration_without_disk: 40.0262
+total_duration: 40.139
 
 all done!
 
@@ -4347,7 +4347,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 997037
-total_dur: 25.305899999999998
+total_dur: 25.260163000000002
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1111.11111111 percent_correct: 0.9379519607843138 ARI: 0.9364453042417317
@@ -4369,31 +4369,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122161
+Dataset load duration: 0.118804
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26139s
+loading density grid (reuse) duration: 1.26496s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.2323s
+loading graph (reuse) duration: 4.2407s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4723s
+last_duration_prune_graph: 24.5108s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7196.27 GFLOPS
-write pruned knn graph duration:1.42332s
+flops_prune_graph: 7184.95 GFLOPS
+write pruned knn graph duration:1.40046s
 Finding clusters...
-find_cluster_duration_total: 0.704039s
+find_cluster_duration_total: 0.740969s
 detected clusters: 101
 datapoints in clusters: 981651
 score: 95.2779
-write cluster map duration:0.955417s
-total_duration_without_disk: 40.034
-total_duration: 40.1562
+write cluster map duration:0.941408s
+total_duration_without_disk: 39.9821
+total_duration: 40.101
 
 all done!
 
@@ -4402,7 +4402,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 101
 datapoints_clusters: 981651
-total_dur: 25.176339000000002
+total_dur: 25.251769
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1666.66666667 percent_correct: 0.9524235294117647 ARI: 0.9190851893661331
@@ -4423,31 +4423,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121927
+Dataset load duration: 0.122874
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26408s
+loading density grid (reuse) duration: 1.26447s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.25191s
+loading graph (reuse) duration: 4.24035s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5469s
+last_duration_prune_graph: 24.505s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7174.39 GFLOPS
-write pruned knn graph duration:1.3848s
+flops_prune_graph: 7186.67 GFLOPS
+write pruned knn graph duration:1.39614s
 Finding clusters...
-find_cluster_duration_total: 0.736376s
+find_cluster_duration_total: 0.750003s
 detected clusters: 114
 datapoints in clusters: 959902
 score: 80.9329
-write cluster map duration:0.939465s
-total_duration_without_disk: 39.9879
-total_duration: 40.1099
+write cluster map duration:0.940269s
+total_duration_without_disk: 39.9756
+total_duration: 40.0985
 
 all done!
 
@@ -4456,7 +4456,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 114
 datapoints_clusters: 959902
-total_dur: 25.283276
+total_dur: 25.255003
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 2222.22222222 percent_correct: 0.9507441176470588 ARI: 0.853411478327045
@@ -4477,31 +4477,31 @@ threshold: 2777.78
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123103
+Dataset load duration: 0.12095
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26405s
+loading density grid (reuse) duration: 1.25291s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.30125s
+loading graph (reuse) duration: 4.26433s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.534s
+last_duration_prune_graph: 24.5334s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7178.18 GFLOPS
-write pruned knn graph duration:1.38383s
+flops_prune_graph: 7178.34 GFLOPS
+write pruned knn graph duration:1.39363s
 Finding clusters...
-find_cluster_duration_total: 0.754622s
+find_cluster_duration_total: 0.686024s
 detected clusters: 113
 datapoints in clusters: 939758
 score: 80.1558
-write cluster map duration:0.939565s
-total_duration_without_disk: 40.1053
-total_duration: 40.2284
+write cluster map duration:0.939114s
+total_duration_without_disk: 40.0046
+total_duration: 40.1256
 
 all done!
 
@@ -4510,7 +4510,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 113
 datapoints_clusters: 939758
-total_dur: 25.288622
+total_dur: 25.219424
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 2777.77777778 percent_correct: 0.9310323529411765 ARI: 0.7666311196176439
@@ -4531,31 +4531,31 @@ threshold: 3333.33
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122704
+Dataset load duration: 0.121044
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25749s
+loading density grid (reuse) duration: 1.25948s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.23457s
+loading graph (reuse) duration: 4.33383s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5998s
+last_duration_prune_graph: 24.5419s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7158.97 GFLOPS
-write pruned knn graph duration:1.37469s
+flops_prune_graph: 7175.85 GFLOPS
+write pruned knn graph duration:1.39381s
 Finding clusters...
-find_cluster_duration_total: 0.695105s
+find_cluster_duration_total: 0.737687s
 detected clusters: 120
 datapoints in clusters: 922603
 score: 72.361
-write cluster map duration:0.939227s
-total_duration_without_disk: 40.0312
-total_duration: 40.154
+write cluster map duration:0.942042s
+total_duration_without_disk: 40.1515
+total_duration: 40.2726
 
 all done!
 
@@ -4564,7 +4564,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 120
 datapoints_clusters: 922603
-total_dur: 25.294905
+total_dur: 25.279587
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 3333.33333333 percent_correct: 0.9142098039215686 ARI: 0.6916988415790283
@@ -4585,31 +4585,31 @@ threshold: 3888.89
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123306
+Dataset load duration: 0.120796
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25634s
+loading density grid (reuse) duration: 1.26312s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.25684s
+loading graph (reuse) duration: 4.25987s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4951s
+last_duration_prune_graph: 24.4532s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7189.57 GFLOPS
-write pruned knn graph duration:1.37226s
+flops_prune_graph: 7201.9 GFLOPS
+write pruned knn graph duration:1.36892s
 Finding clusters...
-find_cluster_duration_total: 0.746566s
+find_cluster_duration_total: 0.728819s
 detected clusters: 124
 datapoints in clusters: 908649
 score: 67.7033
-write cluster map duration:0.931992s
-total_duration_without_disk: 39.9534
-total_duration: 40.0768
+write cluster map duration:1.00011s
+total_duration_without_disk: 39.9795
+total_duration: 40.1003
 
 all done!
 
@@ -4618,7 +4618,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 124
 datapoints_clusters: 908649
-total_dur: 25.241666000000002
+total_dur: 25.182019
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 3888.88888889 percent_correct: 0.9103313725490196 ARI: 0.6350487413741808
@@ -4639,31 +4639,31 @@ threshold: 4444.44
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123744
+Dataset load duration: 0.120305
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24768s
+loading density grid (reuse) duration: 1.26419s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.24216s
+loading graph (reuse) duration: 4.26253s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4838s
+last_duration_prune_graph: 24.5397s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7192.88 GFLOPS
-write pruned knn graph duration:1.36102s
+flops_prune_graph: 7176.5 GFLOPS
+write pruned knn graph duration:1.37494s
 Finding clusters...
-find_cluster_duration_total: 0.702132s
+find_cluster_duration_total: 0.750713s
 detected clusters: 132
 datapoints in clusters: 894461
 score: 59.6307
-write cluster map duration:0.935001s
-total_duration_without_disk: 39.8476
-total_duration: 39.9714
+write cluster map duration:1.04164s
+total_duration_without_disk: 40.1251
+total_duration: 40.2455
 
 all done!
 
@@ -4672,7 +4672,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 132
 datapoints_clusters: 894461
-total_dur: 25.185931999999998
+total_dur: 25.290413
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 4444.44444444 percent_correct: 0.8964029411764706 ARI: 0.5721196412221388
@@ -4693,31 +4693,31 @@ threshold: 5000
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122306
+Dataset load duration: 0.12225
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.2429s
+loading density grid (reuse) duration: 1.24401s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.24086s
+loading graph (reuse) duration: 4.25737s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5943s
+last_duration_prune_graph: 24.5144s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7160.57 GFLOPS
-write pruned knn graph duration:1.35294s
+flops_prune_graph: 7183.92 GFLOPS
+write pruned knn graph duration:1.3615s
 Finding clusters...
-find_cluster_duration_total: 0.711843s
+find_cluster_duration_total: 0.758125s
 detected clusters: 104
 datapoints in clusters: 877846
 score: 82.6208
-write cluster map duration:0.970477s
-total_duration_without_disk: 40.0069
-total_duration: 40.1293
+write cluster map duration:0.942756s
+total_duration_without_disk: 39.9707
+total_duration: 40.093
 
 all done!
 
@@ -4726,7 +4726,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 104
 datapoints_clusters: 877846
-total_dur: 25.306143
+total_dur: 25.272524999999998
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 5000.0 percent_correct: 0.8802088235294118 ARI: 0.5018271548662879
@@ -4749,31 +4749,31 @@ threshold: 679.012
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123618
+Dataset load duration: 0.122499
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27809s
+loading density grid (reuse) duration: 1.26569s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.27697s
+loading graph (reuse) duration: 4.24167s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4924s
+last_duration_prune_graph: 24.595s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7190.36 GFLOPS
-write pruned knn graph duration:1.41069s
+flops_prune_graph: 7160.37 GFLOPS
+write pruned knn graph duration:1.42799s
 Finding clusters...
-find_cluster_duration_total: 0.75085s
+find_cluster_duration_total: 0.773267s
 detected clusters: 101
 datapoints in clusters: 1000360
 score: 97.0938
-write cluster map duration:0.954315s
-total_duration_without_disk: 40.1645
-total_duration: 40.2882
+write cluster map duration:0.948194s
+total_duration_without_disk: 40.1467
+total_duration: 40.2693
 
 all done!
 
@@ -4782,7 +4782,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 101
 datapoints_clusters: 1000360
-total_dur: 25.24325
+total_dur: 25.368267
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 679.012345679 percent_correct: 0.8819176470588236 ARI: 0.8712591103167333
@@ -4803,31 +4803,31 @@ threshold: 802.469
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124099
+Dataset load duration: 0.121119
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26137s
+loading density grid (reuse) duration: 1.25964s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.25338s
+loading graph (reuse) duration: 4.30999s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5046s
+last_duration_prune_graph: 24.5971s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7186.77 GFLOPS
-write pruned knn graph duration:1.44011s
+flops_prune_graph: 7159.76 GFLOPS
+write pruned knn graph duration:1.42601s
 Finding clusters...
-find_cluster_duration_total: 0.731203s
+find_cluster_duration_total: 0.719002s
 detected clusters: 98
 datapoints in clusters: 1000005
 score: 96.0789
-write cluster map duration:1.01169s
-total_duration_without_disk: 40.1336
-total_duration: 40.2578
+write cluster map duration:0.937964s
+total_duration_without_disk: 40.1706
+total_duration: 40.2918
 
 all done!
 
@@ -4836,7 +4836,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 1000005
-total_dur: 25.235803
+total_dur: 25.316102
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 802.469135802 percent_correct: 0.8915598039215686 ARI: 0.8860075264638738
@@ -4857,31 +4857,31 @@ threshold: 925.926
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.124125
+Dataset load duration: 0.122718
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26403s
+loading density grid (reuse) duration: 1.25945s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.29558s
+loading graph (reuse) duration: 4.2347s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6455s
+last_duration_prune_graph: 24.5331s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7145.69 GFLOPS
-write pruned knn graph duration:1.44558s
+flops_prune_graph: 7178.42 GFLOPS
+write pruned knn graph duration:1.42429s
 Finding clusters...
-find_cluster_duration_total: 0.753885s
+find_cluster_duration_total: 0.769081s
 detected clusters: 98
 datapoints in clusters: 999268
 score: 96.0081
-write cluster map duration:0.974607s
-total_duration_without_disk: 40.3695
-total_duration: 40.4936
+write cluster map duration:0.938268s
+total_duration_without_disk: 40.0534
+total_duration: 40.1762
 
 all done!
 
@@ -4890,7 +4890,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 999268
-total_dur: 25.399385
+total_dur: 25.302181
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 925.925925926 percent_correct: 0.9203607843137255 ARI: 0.9245647704732974
@@ -4911,31 +4911,31 @@ threshold: 1049.38
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122994
+Dataset load duration: 0.121089
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27687s
+loading density grid (reuse) duration: 1.23988s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.2817s
+loading graph (reuse) duration: 4.24967s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6319s
+last_duration_prune_graph: 24.5304s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7149.64 GFLOPS
-write pruned knn graph duration:1.4132s
+flops_prune_graph: 7179.22 GFLOPS
+write pruned knn graph duration:1.4409s
 Finding clusters...
-find_cluster_duration_total: 0.776096s
+find_cluster_duration_total: 0.730264s
 detected clusters: 96
 datapoints in clusters: 997906
 score: 93.9206
-write cluster map duration:0.940892s
-total_duration_without_disk: 40.252
-total_duration: 40.3751
+write cluster map duration:0.964586s
+total_duration_without_disk: 40.0174
+total_duration: 40.1385
 
 all done!
 
@@ -4944,7 +4944,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 997906
-total_dur: 25.407996
+total_dur: 25.260664
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1049.38271605 percent_correct: 0.9387686274509804 ARI: 0.9385119126658363
@@ -4966,31 +4966,31 @@ threshold: 1172.84
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121624
+Dataset load duration: 0.123484
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26121s
+loading density grid (reuse) duration: 1.24943s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.26327s
+loading graph (reuse) duration: 4.24257s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5254s
+last_duration_prune_graph: 24.4936s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7180.69 GFLOPS
-write pruned knn graph duration:1.40772s
+flops_prune_graph: 7190.01 GFLOPS
+write pruned knn graph duration:1.41333s
 Finding clusters...
-find_cluster_duration_total: 0.696119s
+find_cluster_duration_total: 0.786665s
 detected clusters: 96
 datapoints in clusters: 995902
 score: 93.732
-write cluster map duration:1.02267s
-total_duration_without_disk: 40.2066
-total_duration: 40.3283
+write cluster map duration:0.940048s
+total_duration_without_disk: 40.0181
+total_duration: 40.1416
 
 all done!
 
@@ -4999,7 +4999,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 995902
-total_dur: 25.221519
+total_dur: 25.280265
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1172.83950617 percent_correct: 0.9368666666666666 ARI: 0.9337025107719403
@@ -5020,31 +5020,31 @@ threshold: 1296.3
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122746
+Dataset load duration: 0.121363
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26275s
+loading density grid (reuse) duration: 1.24457s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.36051s
+loading graph (reuse) duration: 4.27213s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5414s
+last_duration_prune_graph: 24.4542s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7176 GFLOPS
-write pruned knn graph duration:1.42153s
+flops_prune_graph: 7201.59 GFLOPS
+write pruned knn graph duration:1.43388s
 Finding clusters...
-find_cluster_duration_total: 0.673314s
+find_cluster_duration_total: 0.671833s
 detected clusters: 96
 datapoints in clusters: 993143
 score: 93.4723
-write cluster map duration:1.0445s
-total_duration_without_disk: 40.2355
-total_duration: 40.3583
+write cluster map duration:0.95208s
+total_duration_without_disk: 39.9907
+total_duration: 40.1121
 
 all done!
 
@@ -5053,7 +5053,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 96
 datapoints_clusters: 993143
-total_dur: 25.214714
+total_dur: 25.126033
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1296.2962963 percent_correct: 0.9440009803921569 ARI: 0.9354232591512451
@@ -5074,31 +5074,31 @@ threshold: 1419.75
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12371
+Dataset load duration: 0.123188
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26012s
+loading density grid (reuse) duration: 1.26333s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.35236s
+loading graph (reuse) duration: 4.23938s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5173s
+last_duration_prune_graph: 24.4895s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7183.07 GFLOPS
-write pruned knn graph duration:1.4081s
+flops_prune_graph: 7191.2 GFLOPS
+write pruned knn graph duration:1.40749s
 Finding clusters...
-find_cluster_duration_total: 0.678169s
+find_cluster_duration_total: 0.782393s
 detected clusters: 99
 datapoints in clusters: 989836
 score: 96.0723
-write cluster map duration:0.991938s
-total_duration_without_disk: 40.0942
-total_duration: 40.218
+write cluster map duration:0.955274s
+total_duration_without_disk: 40.0559
+total_duration: 40.1791
 
 all done!
 
@@ -5107,7 +5107,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 989836
-total_dur: 25.195469
+total_dur: 25.271893
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1419.75308642 percent_correct: 0.9505882352941176 ARI: 0.9351668490162613
@@ -5128,31 +5128,31 @@ threshold: 1543.21
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.125784
+Dataset load duration: 0.12058
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26329s
+loading density grid (reuse) duration: 1.25952s
 surplus min: -4146.37 max: 12493.8
 reusing knn graph
-loading graph (reuse) duration: 4.28856s
+loading graph (reuse) duration: 4.35277s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5257s
+last_duration_prune_graph: 24.5274s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7180.61 GFLOPS
-write pruned knn graph duration:1.43424s
+flops_prune_graph: 7180.11 GFLOPS
+write pruned knn graph duration:1.42493s
 Finding clusters...
-find_cluster_duration_total: 0.774005s
+find_cluster_duration_total: 0.763159s
 detected clusters: 97
 datapoints in clusters: 985928
 score: 93.7598
-write cluster map duration:0.976535s
-total_duration_without_disk: 40.2822
-total_duration: 40.408
+write cluster map duration:0.955706s
+total_duration_without_disk: 40.2285
+total_duration: 40.3491
 
 all done!
 
@@ -5161,7 +5161,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 985928
-total_dur: 25.299705
+total_dur: 25.290559000000002
 
 ------------- END RUN ---------------
 attempt lambda: 5.623413251903491e-08 threshold: 1543.20987654 percent_correct: 0.9467833333333333 ARI: 0.9239377356162166
@@ -5184,21 +5184,21 @@ threshold: 555.556
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120337
+Dataset load duration: 0.122537
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.32075s
+grid create duration: 1.32394s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.03725s
+last_duration_generate_b: 4.03989s
 ops_generate_b: 24752.7
-flops_generate_b: 6131.07 GFLOPS
+flops_generate_b: 6127.06 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -5402,27 +5402,27 @@ Number of iterations: 194 (max. 1000)
 Final norm of residuum: 3.21073e-06
 counted_mult_calls: 198
 act_it: 198
-acc_duration_density: 820.749s
+acc_duration_density: 820.826s
 ops_density: 4.44977e+06 GOps
-flops_density: 5421.6 GFLOPS
-density_duration_total: 833.081s
+flops_density: 5421.09 GFLOPS
+density_duration_total: 833.206s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23589s
+loading graph (reuse) duration: 4.38797s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.6784s
+last_duration_prune_graph: 24.7468s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7136.16 GFLOPS
-write pruned knn graph duration:1.42754s
+flops_prune_graph: 7116.44 GFLOPS
+write pruned knn graph duration:1.44381s
 Finding clusters...
-find_cluster_duration_total: 0.764162s
+find_cluster_duration_total: 0.709096s
 detected clusters: 143
 datapoints in clusters: 1000705
 score: 55.9217
-write cluster map duration:0.982224s
-total_duration_without_disk: 872.793
-total_duration: 872.914
+write cluster map duration:0.961085s
+total_duration_without_disk: 873.173
+total_duration: 873.296
 
 all done!
 
@@ -5431,7 +5431,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 143
 datapoints_clusters: 1000705
-total_dur: 862.560812
+total_dur: 862.7017860000001
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 555.555555556 percent_correct: 0.8424460784313725 ARI: 0.8083322264008266
@@ -5453,31 +5453,31 @@ threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.113192
+Dataset load duration: 0.112971
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24102s
+loading density grid (reuse) duration: 1.23867s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.24422s
+loading graph (reuse) duration: 4.33545s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5479s
+last_duration_prune_graph: 24.586s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7174.1 GFLOPS
-write pruned knn graph duration:1.41635s
+flops_prune_graph: 7163 GFLOPS
+write pruned knn graph duration:1.42929s
 Finding clusters...
-find_cluster_duration_total: 0.7426s
+find_cluster_duration_total: 0.687507s
 detected clusters: 100
 datapoints in clusters: 999735
 score: 98.0132
-write cluster map duration:0.983111s
-total_duration_without_disk: 40.0884
-total_duration: 40.2017
+write cluster map duration:1.04862s
+total_duration_without_disk: 40.241
+total_duration: 40.354
 
 all done!
 
@@ -5486,7 +5486,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 100
 datapoints_clusters: 999735
-total_dur: 25.290499999999998
+total_dur: 25.273507
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1111.11111111 percent_correct: 0.9404833333333333 ARI: 0.9429494662091621
@@ -5508,31 +5508,31 @@ threshold: 1666.67
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120919
+Dataset load duration: 0.1196
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25715s
+loading density grid (reuse) duration: 1.26188s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23244s
+loading graph (reuse) duration: 4.34124s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4754s
+last_duration_prune_graph: 24.5154s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7195.36 GFLOPS
-write pruned knn graph duration:1.41042s
+flops_prune_graph: 7183.61 GFLOPS
+write pruned knn graph duration:1.42713s
 Finding clusters...
-find_cluster_duration_total: 0.687346s
+find_cluster_duration_total: 0.749481s
 detected clusters: 97
 datapoints in clusters: 994233
 score: 94.5496
-write cluster map duration:0.995978s
-total_duration_without_disk: 40.0165
-total_duration: 40.1375
+write cluster map duration:0.959419s
+total_duration_without_disk: 40.1165
+total_duration: 40.2361
 
 all done!
 
@@ -5541,7 +5541,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 994233
-total_dur: 25.162746000000002
+total_dur: 25.264881
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1666.66666667 percent_correct: 0.9548950980392157 ARI: 0.9471344837926842
@@ -5563,31 +5563,31 @@ threshold: 2222.22
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123655
+Dataset load duration: 0.12133
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24489s
+loading density grid (reuse) duration: 1.24988s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.28798s
+loading graph (reuse) duration: 4.25742s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5378s
+last_duration_prune_graph: 24.5029s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7177.06 GFLOPS
-write pruned knn graph duration:1.39991s
+flops_prune_graph: 7187.27 GFLOPS
+write pruned knn graph duration:1.40157s
 Finding clusters...
-find_cluster_duration_total: 0.710062s
+find_cluster_duration_total: 0.684049s
 detected clusters: 100
 datapoints in clusters: 982156
 score: 96.2898
-write cluster map duration:0.931471s
-total_duration_without_disk: 40.0465
-total_duration: 40.1702
+write cluster map duration:0.937608s
+total_duration_without_disk: 39.9109
+total_duration: 40.0323
 
 all done!
 
@@ -5596,7 +5596,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 100
 datapoints_clusters: 982156
-total_dur: 25.247862
+total_dur: 25.186949000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 2222.22222222 percent_correct: 0.9529343137254902 ARI: 0.9209760357931503
@@ -5617,31 +5617,31 @@ threshold: 2777.78
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122514
+Dataset load duration: 0.119378
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.27807s
+loading density grid (reuse) duration: 1.26409s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.24414s
+loading graph (reuse) duration: 4.31735s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4946s
+last_duration_prune_graph: 24.417s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7189.71 GFLOPS
-write pruned knn graph duration:1.40285s
+flops_prune_graph: 7212.57 GFLOPS
+write pruned knn graph duration:1.41597s
 Finding clusters...
-find_cluster_duration_total: 0.76322s
+find_cluster_duration_total: 0.762843s
 detected clusters: 106
 datapoints in clusters: 966430
 score: 89.0632
-write cluster map duration:0.935143s
-total_duration_without_disk: 40.0323
-total_duration: 40.1548
+write cluster map duration:0.941367s
+total_duration_without_disk: 40.0319
+total_duration: 40.1513
 
 all done!
 
@@ -5650,7 +5650,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 106
 datapoints_clusters: 966430
-total_dur: 25.25782
+total_dur: 25.179843
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 2777.77777778 percent_correct: 0.9571921568627451 ARI: 0.8798008349564548
@@ -5671,31 +5671,31 @@ threshold: 3333.33
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122026
+Dataset load duration: 0.122867
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.263s
+loading density grid (reuse) duration: 1.24623s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23691s
+loading graph (reuse) duration: 4.24396s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.4903s
+last_duration_prune_graph: 24.5809s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7190.98 GFLOPS
-write pruned knn graph duration:1.43486s
+flops_prune_graph: 7164.46 GFLOPS
+write pruned knn graph duration:1.41229s
 Finding clusters...
-find_cluster_duration_total: 0.736047s
+find_cluster_duration_total: 0.757306s
 detected clusters: 109
 datapoints in clusters: 950683
 score: 84.8158
-write cluster map duration:1.0447s
-total_duration_without_disk: 40.0972
-total_duration: 40.2193
+write cluster map duration:0.960633s
+total_duration_without_disk: 40.1068
+total_duration: 40.2297
 
 all done!
 
@@ -5704,7 +5704,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 109
 datapoints_clusters: 950683
-total_dur: 25.226347
+total_dur: 25.338206
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 3333.33333333 percent_correct: 0.9417490196078432 ARI: 0.8136596752140431
@@ -5725,31 +5725,31 @@ threshold: 3888.89
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123723
+Dataset load duration: 0.122208
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26493s
+loading density grid (reuse) duration: 1.25862s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23762s
+loading graph (reuse) duration: 4.26587s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5281s
+last_duration_prune_graph: 24.4411s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7179.89 GFLOPS
-write pruned knn graph duration:1.3853s
+flops_prune_graph: 7205.44 GFLOPS
+write pruned knn graph duration:1.39391s
 Finding clusters...
-find_cluster_duration_total: 0.705817s
+find_cluster_duration_total: 0.725329s
 detected clusters: 117
 datapoints in clusters: 936505
 score: 76.2058
-write cluster map duration:0.953615s
-total_duration_without_disk: 39.9694
-total_duration: 40.0932
+write cluster map duration:0.941542s
+total_duration_without_disk: 39.918
+total_duration: 40.0403
 
 all done!
 
@@ -5758,7 +5758,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 117
 datapoints_clusters: 936505
-total_dur: 25.233916999999998
+total_dur: 25.166428999999997
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 3888.88888889 percent_correct: 0.9278480392156863 ARI: 0.7517092817171505
@@ -5779,31 +5779,31 @@ threshold: 4444.44
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.121336
+Dataset load duration: 0.122498
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.24733s
+loading density grid (reuse) duration: 1.26261s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23297s
+loading graph (reuse) duration: 4.2296s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.604s
+last_duration_prune_graph: 24.5424s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7157.76 GFLOPS
-write pruned knn graph duration:1.36908s
+flops_prune_graph: 7175.72 GFLOPS
+write pruned knn graph duration:1.39841s
 Finding clusters...
-find_cluster_duration_total: 0.750024s
+find_cluster_duration_total: 0.732136s
 detected clusters: 127
 datapoints in clusters: 923933
 score: 66.1246
-write cluster map duration:0.947211s
-total_duration_without_disk: 40.0807
-total_duration: 40.2021
+write cluster map duration:1.02556s
+total_duration_without_disk: 40.0761
+total_duration: 40.1987
 
 all done!
 
@@ -5812,7 +5812,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 127
 datapoints_clusters: 923933
-total_dur: 25.354024
+total_dur: 25.274536
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 4444.44444444 percent_correct: 0.9155068627450981 ARI: 0.6969436528620502
@@ -5833,31 +5833,31 @@ threshold: 5000
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123338
+Dataset load duration: 0.121606
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26528s
+loading density grid (reuse) duration: 1.256s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23575s
+loading graph (reuse) duration: 4.35667s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.5134s
+last_duration_prune_graph: 24.5166s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7184.21 GFLOPS
-write pruned knn graph duration:1.37197s
+flops_prune_graph: 7183.25 GFLOPS
+write pruned knn graph duration:1.38361s
 Finding clusters...
-find_cluster_duration_total: 0.752969s
+find_cluster_duration_total: 0.757862s
 detected clusters: 125
 datapoints in clusters: 913212
 score: 67.1479
-write cluster map duration:0.942293s
-total_duration_without_disk: 40.0513
-total_duration: 40.1747
+write cluster map duration:0.945077s
+total_duration_without_disk: 40.1027
+total_duration: 40.2244
 
 all done!
 
@@ -5866,7 +5866,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 125
 datapoints_clusters: 913212
-total_dur: 25.266369
+total_dur: 25.274462
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 5000.0 percent_correct: 0.9148117647058823 ARI: 0.6548833010308475
@@ -5889,31 +5889,31 @@ threshold: 1234.57
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123301
+Dataset load duration: 0.121572
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26133s
+loading density grid (reuse) duration: 1.24697s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.23439s
+loading graph (reuse) duration: 4.25589s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9234s
+last_duration_prune_graph: 24.5627s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7066.01 GFLOPS
-write pruned knn graph duration:1.40827s
+flops_prune_graph: 7169.78 GFLOPS
+write pruned knn graph duration:1.41602s
 Finding clusters...
-find_cluster_duration_total: 0.721634s
+find_cluster_duration_total: 0.788213s
 detected clusters: 100
 datapoints in clusters: 999119
 score: 97.9528
-write cluster map duration:0.943923s
-total_duration_without_disk: 40.4232
-total_duration: 40.5465
+write cluster map duration:0.940515s
+total_duration_without_disk: 40.1129
+total_duration: 40.2345
 
 all done!
 
@@ -5922,7 +5922,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 100
 datapoints_clusters: 999119
-total_dur: 25.645034000000003
+total_dur: 25.350913
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1234.56790123 percent_correct: 0.9399303921568627 ARI: 0.9415060956612562
@@ -5943,31 +5943,31 @@ threshold: 1358.02
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122341
+Dataset load duration: 0.121063
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26451s
+loading density grid (reuse) duration: 1.25632s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.43582s
+loading graph (reuse) duration: 4.25916s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9987s
+last_duration_prune_graph: 24.5825s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7044.73 GFLOPS
-write pruned knn graph duration:1.4124s
+flops_prune_graph: 7164.01 GFLOPS
+write pruned knn graph duration:1.40474s
 Finding clusters...
-find_cluster_duration_total: 0.81298s
+find_cluster_duration_total: 0.760663s
 detected clusters: 99
 datapoints in clusters: 998181
 score: 96.8823
-write cluster map duration:0.92578s
-total_duration_without_disk: 40.769
-total_duration: 40.8914
+write cluster map duration:0.945843s
+total_duration_without_disk: 40.0775
+total_duration: 40.1986
 
 all done!
 
@@ -5976,7 +5976,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 998181
-total_dur: 25.81168
+total_dur: 25.343163
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1358.02469136 percent_correct: 0.9488794117647059 ARI: 0.9480300726962815
@@ -5998,31 +5998,31 @@ threshold: 1481.48
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.128016
+Dataset load duration: 0.121488
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26491s
+loading density grid (reuse) duration: 1.24752s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.30954s
+loading graph (reuse) duration: 4.24537s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8958s
+last_duration_prune_graph: 24.5929s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7073.84 GFLOPS
-write pruned knn graph duration:1.42709s
+flops_prune_graph: 7160.98 GFLOPS
+write pruned knn graph duration:1.45641s
 Finding clusters...
-find_cluster_duration_total: 0.73395s
+find_cluster_duration_total: 0.730396s
 detected clusters: 98
 datapoints in clusters: 996904
 score: 95.781
-write cluster map duration:0.948512s
-total_duration_without_disk: 40.4755
-total_duration: 40.6035
+write cluster map duration:0.964387s
+total_duration_without_disk: 40.1432
+total_duration: 40.2647
 
 all done!
 
@@ -6031,7 +6031,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 996904
-total_dur: 25.62975
+total_dur: 25.323296
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1481.48148148 percent_correct: 0.9476627450980392 ARI: 0.9449320213694845
@@ -6052,31 +6052,31 @@ threshold: 1604.94
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.125786
+Dataset load duration: 0.120939
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25366s
+loading density grid (reuse) duration: 1.24911s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.25157s
+loading graph (reuse) duration: 4.23549s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9555s
+last_duration_prune_graph: 24.5039s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7056.92 GFLOPS
-write pruned knn graph duration:1.40953s
+flops_prune_graph: 7186.97 GFLOPS
+write pruned knn graph duration:1.41836s
 Finding clusters...
-find_cluster_duration_total: 0.672702s
+find_cluster_duration_total: 0.763844s
 detected clusters: 97
 datapoints in clusters: 995209
 score: 94.6424
-write cluster map duration:0.939782s
-total_duration_without_disk: 40.3888
-total_duration: 40.5147
+write cluster map duration:0.943241s
+total_duration_without_disk: 40.0295
+total_duration: 40.1505
 
 all done!
 
@@ -6085,7 +6085,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 995209
-total_dur: 25.628202
+total_dur: 25.267744
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1604.9382716 percent_correct: 0.9460401960784314 ARI: 0.9408144755443107
@@ -6106,31 +6106,31 @@ threshold: 1728.4
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120249
+Dataset load duration: 0.121043
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26482s
+loading density grid (reuse) duration: 1.24764s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.2413s
+loading graph (reuse) duration: 4.27617s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9941s
+last_duration_prune_graph: 24.6764s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7046.04 GFLOPS
-write pruned knn graph duration:1.46668s
+flops_prune_graph: 7136.74 GFLOPS
+write pruned knn graph duration:1.433s
 Finding clusters...
-find_cluster_duration_total: 0.743547s
+find_cluster_duration_total: 0.799392s
 detected clusters: 97
 datapoints in clusters: 993173
 score: 94.4488
-write cluster map duration:0.947848s
-total_duration_without_disk: 40.5428
-total_duration: 40.6631
+write cluster map duration:0.964089s
+total_duration_without_disk: 40.273
+total_duration: 40.3941
 
 all done!
 
@@ -6139,7 +6139,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 97
 datapoints_clusters: 993173
-total_dur: 25.737647
+total_dur: 25.475792000000002
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1728.39506173 percent_correct: 0.9538598039215687 ARI: 0.9444117966403983
@@ -6160,31 +6160,31 @@ threshold: 1851.85
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.122973
+Dataset load duration: 0.120914
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26265s
+loading density grid (reuse) duration: 1.25231s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.26721s
+loading graph (reuse) duration: 4.24179s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8872s
+last_duration_prune_graph: 24.5783s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7076.29 GFLOPS
-write pruned knn graph duration:1.41081s
+flops_prune_graph: 7165.22 GFLOPS
+write pruned knn graph duration:1.42243s
 Finding clusters...
-find_cluster_duration_total: 0.735263s
+find_cluster_duration_total: 0.73466s
 detected clusters: 99
 datapoints in clusters: 990825
 score: 96.1683
-write cluster map duration:0.929351s
-total_duration_without_disk: 40.4189
-total_duration: 40.5419
+write cluster map duration:1.00853s
+total_duration_without_disk: 40.1471
+total_duration: 40.2681
 
 all done!
 
@@ -6193,7 +6193,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 99
 datapoints_clusters: 990825
-total_dur: 25.622463
+total_dur: 25.31296
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1851.85185185 percent_correct: 0.9613764705882353 ARI: 0.946912201969971
@@ -6214,31 +6214,31 @@ threshold: 1975.31
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.120604
+Dataset load duration: 0.123212
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.25869s
+loading density grid (reuse) duration: 1.26696s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.239s
+loading graph (reuse) duration: 4.27321s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9783s
+last_duration_prune_graph: 24.554s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7050.48 GFLOPS
-write pruned knn graph duration:1.40517s
+flops_prune_graph: 7172.33 GFLOPS
+write pruned knn graph duration:1.41252s
 Finding clusters...
-find_cluster_duration_total: 0.748197s
+find_cluster_duration_total: 0.754504s
 detected clusters: 98
 datapoints in clusters: 988222
 score: 94.9468
-write cluster map duration:0.928673s
-total_duration_without_disk: 40.4895
-total_duration: 40.6101
+write cluster map duration:0.938876s
+total_duration_without_disk: 40.0539
+total_duration: 40.1772
 
 all done!
 
@@ -6247,7 +6247,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 98
 datapoints_clusters: 988222
-total_dur: 25.726497000000002
+total_dur: 25.308504
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 1975.30864198 percent_correct: 0.9588568627450981 ARI: 0.9395907726295983
@@ -6268,31 +6268,31 @@ threshold: 2098.77
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.123585
+Dataset load duration: 0.122301
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 reusing density grid and coefficients
-loading density grid (reuse) duration: 1.26556s
+loading density grid (reuse) duration: 1.25565s
 surplus min: -7948.54 max: 27566.9
 reusing knn graph
-loading graph (reuse) duration: 4.27465s
+loading graph (reuse) duration: 4.35053s
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.9515s
+last_duration_prune_graph: 24.5915s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7058.05 GFLOPS
-write pruned knn graph duration:1.4113s
+flops_prune_graph: 7161.37 GFLOPS
+write pruned knn graph duration:1.40927s
 Finding clusters...
-find_cluster_duration_total: 0.768365s
+find_cluster_duration_total: 0.749681s
 detected clusters: 100
 datapoints in clusters: 985247
 score: 96.5928
-write cluster map duration:0.939975s
-total_duration_without_disk: 40.4986
-total_duration: 40.6222
+write cluster map duration:0.946002s
+total_duration_without_disk: 40.1734
+total_duration: 40.2958
 
 all done!
 
@@ -6301,7 +6301,7 @@ all done!
 ------------- SUMMARY ---------------
 detected_clusters: 100
 datapoints_clusters: 985247
-total_dur: 25.719865
+total_dur: 25.341181
 
 ------------- END RUN ---------------
 attempt lambda: 1.778279410038923e-08 threshold: 2098.7654321 percent_correct: 0.9559480392156863 ARI: 0.9306742724693016
