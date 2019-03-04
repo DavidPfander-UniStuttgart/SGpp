@@ -7,21 +7,21 @@ threshold: 5185.19
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 1.10093
+Dataset load duration: 1.09361
 dimension: 10
 data points: 10200000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
 0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
 initial grid created, grid points: 397825
-grid create duration: 1.39113s
+grid create duration: 1.40204s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 40.6234s
+last_duration_generate_b: 40.5522s
 ops_generate_b: 247527
-flops_generate_b: 6093.21 GFLOPS
+flops_generate_b: 6103.9 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -72,29 +72,33 @@ Number of iterations: 41 (max. 1000)
 Final norm of residuum: 9.81131e-06
 counted_mult_calls: 42
 act_it: 42
-acc_duration_density: 173.987s
+acc_duration_density: 174.146s
 ops_density: 943891 GOps
-flops_density: 5425.08 GFLOPS
-density_duration_total: 222.313s
+flops_density: 5420.12 GFLOPS
+density_duration_total: 222.377s
 surplus min: -2067.75 max: 7829.92
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 10200000 adding elements: 64 (* dims)
-last_duration_create_graph: 523.243s
+last_duration_create_graph: 521.302s
 ops_create_graph: 3.1212e+06 GOps
-flops_create_graph: 5965.1 GFLOPS
+flops_create_graph: 5987.32 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 247.43s
+last_duration_prune_graph: 247.229s
 ops_prune_graph: 1.76109e+06 GOps
-flops_prune_graph: 7117.53 GFLOPS
+flops_prune_graph: 7123.32 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 9.85159s
+find_cluster_duration_total: 8.21505s
 detected clusters: 15
 datapoints in clusters: 10000086
-write cluster map duration:9.50448s
-total_duration_without_disk: 1018.06
-total_duration: 1019.16
+write cluster map duration:9.31079s
+total_duration_without_disk: 1013.44
+total_duration: 1014.53
 
 all done!
-ARI: 0.9999887340940983
+ARI: 0.9999994444464753
+(11, 10)
+[[  5.00000000e+00   1.00000000e+06   1.00000000e+06   1.00000000e+06
+    1.00000000e+06   9.99995000e+05   1.00000000e+06   1.00000000e+06
+    1.00000000e+06   1.00000000e+06   1.00000000e+06]]

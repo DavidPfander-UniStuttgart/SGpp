@@ -7,21 +7,21 @@ threshold: 3641.98
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 1.09346
+Dataset load duration: 1.0868
 dimension: 10
 data points: 10200000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.214481, 0.554334, 0.642808, 0.825717, 0.647876, 0.197221, 0.361363, 0.79707, 0.63018, 0.871278
 0.298784, 0.523701, 0.316682, 0.742123, 0.456755, 0.78974, 0.5497, 0.231498, 0.7254, 0.711656
 initial grid created, grid points: 397825
-grid create duration: 1.37919s
+grid create duration: 1.38415s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 40.2242s
+last_duration_generate_b: 39.9614s
 ops_generate_b: 247527
-flops_generate_b: 6153.68 GFLOPS
+flops_generate_b: 6194.14 GFLOPS
 
 b-based coarsening: removed 128343 grid points, remaining: 269482
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
@@ -312,29 +312,59 @@ Number of iterations: 275 (max. 1000)
 Final norm of residuum: 4.60742e-06
 counted_mult_calls: 281
 act_it: 281
-acc_duration_density: 542.331s
+acc_duration_density: 542.349s
 ops_density: 2.89771e+06 GOps
-flops_density: 5343.06 GFLOPS
-density_duration_total: 595.116s
+flops_density: 5342.88 GFLOPS
+density_duration_total: 595.174s
 surplus min: -8511.35 max: 38469
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 10200000 adding elements: 64 (* dims)
-last_duration_create_graph: 523.531s
+last_duration_create_graph: 523.05s
 ops_create_graph: 3.1212e+06 GOps
-flops_create_graph: 5961.83 GFLOPS
+flops_create_graph: 5967.3 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 167.861s
+last_duration_prune_graph: 168.03s
 ops_prune_graph: 1.19294e+06 GOps
-flops_prune_graph: 7106.73 GFLOPS
+flops_prune_graph: 7099.59 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 8.90599s
+find_cluster_duration_total: 8.44102s
 detected clusters: 124
 datapoints in clusters: 9866336
-write cluster map duration:9.42662s
-total_duration_without_disk: 1311.02
-total_duration: 1312.11
+write cluster map duration:9.16696s
+total_duration_without_disk: 1309.02
+total_duration: 1310.11
 
 all done!
-ARI: 0.9587783694454488
+ARI: 0.9828779182149424
+(115, 100)
+[[  1.33912000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   9.99990000e+04   1.00000000e+05
+    9.99760000e+04   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   2.00000000e+05   1.00000000e+05   9.99080000e+04
+    1.00000000e+05   8.84650000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   9.99980000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    9.97770000e+04   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   9.19570000e+04   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   9.99980000e+04
+    1.00000000e+05   9.99570000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   9.99750000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   9.99900000e+04
+    1.00000000e+05   9.24760000e+04   9.99950000e+04   9.28580000e+04
+    1.00000000e+05   9.99890000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   7.30000000e+02
+    2.00000000e+00   3.00000000e+00   4.00000000e+00   2.00000000e+00
+    2.00000000e+00   2.00000000e+00   3.00000000e+00   3.00000000e+00
+    3.00000000e+00   5.00000000e+00   3.00000000e+00   2.00000000e+00
+    2.00000000e+00   2.00000000e+00   2.00000000e+00]]

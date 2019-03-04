@@ -1,14 +1,14 @@
 #!/bin/bash
 set -x
 
-device="QuadroGP100"
+device="gtx1080ti"
 
 coarsen_threshold="1.0E-5"
 max_iterations="50"
 
 ############## 1M-10C ##############
-lambda="1.778279410038923e-08"
-threshold="4074.07407407"
+lambda="5.623413251903491e-08"
+threshold="3641.97530864"
 # direct
 ./datadriven/examplesOCL/clustering_cmd --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size1000000_dim10_noise --config OCL_configs/config_ocl_float_${device}.cfg --lambda ${lambda} --threshold ${threshold} --level 6 --epsilon 1E-2 --k 6 --write_cluster_map --file_prefix data_ref_testing > results_diss/gaussian_c10_size1000000_dim10_noise_optimal.log 2>&1
 
@@ -30,8 +30,8 @@ threshold="4074.07407407"
 ./clustering_scripts/check_ARI.py --reference_cluster_assignment ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size1000000_dim10_noise_class.arff --cluster_assignment data_ref_testing_cluster_map.csv >> results_diss/gaussian_c10_size1000000_dim10_noise_optimal_coarsen_limited.log 2>&1
 
 ################# 1M-100C ###################
-lambda="3.16227766016838e-08"
-threshold="1419.75308642"
+lambda="1.778279410038923e-08"
+threshold="1666.66666667"
 # direct
 ./datadriven/examplesOCL/clustering_cmd --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size1000000_dim10_noise --config OCL_configs/config_ocl_float_${device}.cfg --lambda ${lambda} --threshold ${threshold} --level 7 --epsilon 1E-2 --k 6 --write_cluster_map --file_prefix data_ref_testing > results_diss/gaussian_c100_size1000000_dim10_noise_optimal.log 2>&1
 
@@ -78,7 +78,6 @@ threshold="1049.38271605"
 ################## 10M-10C ################
 lambda="1e-06"
 threshold="5185.18518519"
-
 # direct
 ./datadriven/examplesOCL/clustering_cmd --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise --config OCL_configs/config_ocl_float_${device}.cfg --lambda ${lambda} --threshold ${threshold} --level 7 --epsilon 1E-2 --k 6 --write_cluster_map --file_prefix data_ref_testing > results_diss/gaussian_c10_size10000000_dim10_noise_optimal.log 2>&1
 

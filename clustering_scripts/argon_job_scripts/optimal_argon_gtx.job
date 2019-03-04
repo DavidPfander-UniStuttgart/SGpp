@@ -14,4 +14,4 @@ srun echo `hostname`
 
 cd /data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp
 source source_autotunetmp_generic.sh
-python3 ./diss_experiments/clustering_optimal.sh
+./diss_experiments/clustering_optimal.sh

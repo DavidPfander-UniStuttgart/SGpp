@@ -1,109 +1,113 @@
 binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size1000000_dim10_noise
 level: 6
-lambda: 1.77828e-08
+lambda: 5.62341e-08
 OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
 k: 6
-threshold: 4074.07
+threshold: 3641.98
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.126574
+Dataset load duration: 0.122696
 dimension: 10
 data points: 1020000
-printing first two datapoints:
+printing first two datapoints (if available):
 0.455971, 0.23104, 0.415448, 0.559524, 0.392029, 0.727333, 0.26555, 0.729712, 0.177172, 0.525939
 0.655281, 0.58152, 0.642507, 0.802767, 0.463711, 0.26669, 0.224731, 0.236338, 0.730016, 0.626458
 initial grid created, grid points: 77505
-grid create duration: 0.241833s
+grid create duration: 0.240482s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 0.897037s
+last_duration_generate_b: 0.932261s
 ops_generate_b: 4822.36
-flops_generate_b: 5375.87 GFLOPS
+flops_generate_b: 5172.76 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
 Starting norm of residuum: 0.062259
 Target norm:               6.2259e-06
-delta: 0.180563
-delta: 0.0755614
-delta: 0.148316
-delta: 0.0605314
-delta: 0.0805372
-delta: 0.0586158
-delta: 0.0973634
-delta: 0.0500104
-delta: 0.0486362
-delta: 0.0396098
-delta: 0.0853391
-delta: 0.0274525
-delta: 0.0660664
-delta: 0.0245704
-delta: 0.0202354
-delta: 0.0961897
-delta: 0.0203531
-delta: 0.040872
-delta: 0.0191317
-delta: 0.0880814
-delta: 0.0259898
-delta: 0.0975699
-delta: 0.016071
-delta: 0.00904883
-delta: 0.0126486
-delta: 0.00716319
-delta: 0.0476615
-delta: 0.00624873
-delta: 0.0557918
-delta: 0.00725316
-delta: 0.0215125
-delta: 0.00774657
-delta: 0.00338506
-delta: 0.00325852
-delta: 0.00546248
-delta: 0.0280316
-delta: 0.00801877
-delta: 0.00805825
-delta: 0.00349691
-delta: 0.00353849
-delta: 0.0021618
-delta: 0.00769376
-delta: 0.00479161
-delta: 0.00196746
-delta: 0.0102856
-delta: 0.00740715
-delta: 0.0159506
-delta: 0.00292797
-delta: 0.00102391
-delta: 0.00143475
+delta: 0.18049
+delta: 0.0753717
+delta: 0.147511
+delta: 0.0598495
+delta: 0.0790951
+delta: 0.0548546
+delta: 0.100119
+delta: 0.0475863
+delta: 0.0458585
+delta: 0.0364033
+delta: 0.0643646
+delta: 0.0228482
+delta: 0.0888741
+delta: 0.0208737
+delta: 0.0166506
+delta: 0.0643851
+delta: 0.0170575
+delta: 0.0323436
+delta: 0.0143533
+delta: 0.0341974
+delta: 0.0232226
+delta: 0.06433
+delta: 0.011622
+delta: 0.00618871
+delta: 0.00857498
+delta: 0.00461108
+delta: 0.0319676
+delta: 0.00372783
+delta: 0.0155858
+delta: 0.00488962
+delta: 0.0110993
+delta: 0.00544364
+delta: 0.00159065
+delta: 0.00141071
+delta: 0.00294992
+delta: 0.0157321
+delta: 0.00265538
+delta: 0.00220406
+delta: 0.00213306
+delta: 0.00182638
+delta: 0.000829771
+delta: 0.00397381
+delta: 0.0016679
+delta: 0.000770406
+delta: 0.00206034
+delta: 0.00275431
+delta: 0.00291421
+delta: 0.00157452
+delta: 0.000310359
+delta: 0.000391893
 Number of iterations: 50 (max. 50)
-Final norm of residuum: 0.00143475
+Final norm of residuum: 0.000391893
 counted_mult_calls: 51
 act_it: 52
-acc_duration_density: 8.48567s
+acc_duration_density: 8.60019s
 ops_density: 44355.9 GOps
-flops_density: 5227.15 GFLOPS
-density_duration_total: 16.2068s
-surplus min: -20198.8 max: 59277.8
+flops_density: 5157.55 GFLOPS
+density_duration_total: 16.9196s
+surplus min: -14795.4 max: 44951.3
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 1020000 adding elements: 32 (* dims)
-last_duration_create_graph: 5.24845s
+last_duration_create_graph: 5.31695s
 ops_create_graph: 31212 GOps
-flops_create_graph: 5946.9 GFLOPS
+flops_create_graph: 5870.29 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 4.83798s
+last_duration_prune_graph: 4.82615s
 ops_prune_graph: 34309.9 GOps
-flops_prune_graph: 7091.78 GFLOPS
+flops_prune_graph: 7109.17 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 0.745904s
-detected clusters: 12
-datapoints in clusters: 1000048
-write cluster map duration:1.00691s
-total_duration_without_disk: 29.4327
-total_duration: 29.5593
+find_cluster_duration_total: 0.788264s
+detected clusters: 11
+datapoints in clusters: 1000030
+write cluster map duration:0.943416s
+total_duration_without_disk: 32.7705
+total_duration: 32.8933
 
 all done!
-ARI: 0.9999299092562733
+ARI: 0.9999844462887081
+(11, 10)
+[[  1.40000000e+01   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   9.99860000e+04   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05]]
