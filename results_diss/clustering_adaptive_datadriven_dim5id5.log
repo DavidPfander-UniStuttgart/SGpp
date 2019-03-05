@@ -1,0 +1,213 @@
+datasetFileName: datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff
+level: 15
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_QuadroGP100.cfg
+k: 6
+threshold: 55
+using naive ocl knn
+reading dataset...
+info: ARFF dataset
+Dataset load duration: 0.218638
+dimension: 5
+data points: 102000
+printing first two datapoints (if available):
+0.328415, 0.827011, 0.833273, 0.263307, 0.738096
+0.677258, 0.203804, 0.323615, 0.378071, 0.508477
+datadriven_refinement_min_support:800
+num_candidates: 1
+num_candidates: 1 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.0752912
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.0725461
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.0704662
+candidates with support: 60
+num_candidates: 280
+num_candidates: 280 num_candidates_padded: 512 grid_size: 512 block_size: 256
+duration (s): 0.0707995
+candidates with support: 270
+num_candidates: 1060
+num_candidates: 1060 num_candidates_padded: 1280 grid_size: 1280 block_size: 256
+duration (s): 0.0717764
+candidates with support: 1016
+num_candidates: 3578
+num_candidates: 3578 num_candidates_padded: 3584 grid_size: 3584 block_size: 256
+duration (s): 0.0711974
+candidates with support: 3233
+num_candidates: 10560
+num_candidates: 10560 num_candidates_padded: 10752 grid_size: 10752 block_size: 256
+duration (s): 0.0704773
+candidates with support: 8606
+num_candidates: 26770
+num_candidates: 26770 num_candidates_padded: 26880 grid_size: 26880 block_size: 256
+duration (s): 0.0808086
+candidates with support: 18211
+num_candidates: 55004
+num_candidates: 55004 num_candidates_padded: 55040 grid_size: 55040 block_size: 256
+duration (s): 0.196976
+candidates with support: 23667
+num_candidates: 67646
+num_candidates: 67646 num_candidates_padded: 67840 grid_size: 67840 block_size: 256
+duration (s): 0.205458
+candidates with support: 16641
+num_candidates: 43812
+num_candidates: 43812 num_candidates_padded: 44032 grid_size: 44032 block_size: 256
+duration (s): 0.127754
+candidates with support: 6869
+num_candidates: 16870
+num_candidates: 16870 num_candidates_padded: 16896 grid_size: 16896 block_size: 256
+duration (s): 0.079204
+candidates with support: 1950
+num_candidates: 4598
+num_candidates: 4598 num_candidates_padded: 4608 grid_size: 4608 block_size: 256
+duration (s): 0.0701893
+candidates with support: 400
+num_candidates: 928
+num_candidates: 928 num_candidates_padded: 1024 grid_size: 1024 block_size: 256
+duration (s): 0.0709401
+candidates with support: 44
+num_candidates: 106
+num_candidates: 106 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.0695111
+candidates with support: 3
+datadriven refinement done, grid size: 80981
+grid create duration: 10.5321s
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.074717s
+ops_generate_b: 256.062
+flops_generate_b: 3427.09 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.282768
+Target norm:               2.82768e-05
+delta: 0.0466815
+delta: 0.0861892
+delta: 0.0526971
+delta: 0.0511306
+delta: 0.0453141
+delta: 0.0688737
+delta: 0.030845
+delta: 0.0384175
+delta: 0.124443
+delta: 0.0294732
+delta: 0.0339162
+delta: 0.0199053
+delta: 0.0227019
+delta: 0.0257768
+delta: 0.015179
+delta: 0.0198045
+delta: 0.0127647
+delta: 0.0405753
+delta: 0.0124378
+delta: 0.0132001
+delta: 0.0105611
+delta: 0.00660484
+delta: 0.00857453
+delta: 0.00579816
+delta: 0.0120418
+delta: 0.00802721
+delta: 0.00475067
+delta: 0.0047085
+delta: 0.00753461
+delta: 0.00430777
+delta: 0.00328745
+delta: 0.00403643
+delta: 0.0090441
+delta: 0.00567059
+delta: 0.00205501
+delta: 0.00219452
+delta: 0.00233003
+delta: 0.00373198
+delta: 0.00124669
+delta: 0.00342067
+delta: 0.00263494
+delta: 0.00139475
+delta: 0.00291298
+delta: 0.000962946
+delta: 0.00100003
+delta: 0.000762164
+delta: 0.00174346
+delta: 0.00131883
+delta: 0.00114593
+delta: 0.000494214
+delta: 0.000644683
+delta: 0.000433048
+delta: 0.000473134
+delta: 0.000450093
+delta: 0.00175077
+delta: 0.000424652
+delta: 0.000282736
+delta: 0.000192796
+delta: 0.000705962
+delta: 0.000203729
+delta: 0.000243501
+delta: 0.000861929
+delta: 0.000219366
+delta: 0.000337564
+delta: 0.000185223
+delta: 0.000132565
+delta: 0.000107952
+delta: 0.000124823
+delta: 0.000130871
+delta: 0.000325988
+delta: 0.000128656
+delta: 5.77775e-05
+delta: 8.71887e-05
+delta: 6.43023e-05
+delta: 0.000116741
+delta: 3.88301e-05
+delta: 0.000102893
+delta: 6.41066e-05
+delta: 7.03971e-05
+delta: 6.13708e-05
+delta: 2.28778e-05
+Number of iterations: 81 (max. 200)
+Final norm of residuum: 2.28778e-05
+counted_mult_calls: 83
+act_it: 83
+acc_duration_density: 11.5743s
+ops_density: 39190.1 GOps
+flops_density: 3385.96 GFLOPS
+density_duration_total: 12.2139s
+surplus min: -45.1629 max: 94.2281
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+unpadded_datasize: 102000 adding elements: 16 (* dims)
+last_duration_create_graph: 0.0661119s
+ops_create_graph: 156.06 GOps
+flops_create_graph: 2360.54 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+last_duration_prune_graph: 0.601986s
+ops_prune_graph: 1850.25 GOps
+flops_prune_graph: 3073.58 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.10348s
+detected clusters: 100
+datapoints in clusters: 99377
+write cluster map duration:0.149898s
+total_duration_without_disk: 24.875
+total_duration: 25.0936
+
+all done!
+ARI: 0.9910090577548882
+(101, 100)
+[[  671.   989.   998.   979.   990.   997.   990.   994.   997.   997.
+    998.   994.  1000.   986.   995.   980.   997.   998.   995.   996.
+    998.   996.  1000.   998.   999.   986.   996.   993.   988.   990.
+    995.   991.   987.   998.   992.   993.   991.   997.   996.   998.
+    994.   995.   995.   991.   985.   997.   989.   970.   992.   989.
+    994.   996.   995.   990.   998.   999.   993.   993.   998.   995.
+    994.   984.   994.   994.   991.   975.   996.   987.   997.   994.
+   1000.   994.   994.   988.   992.   997.   994.   997.   997.   988.
+    989.   995.   997.   999.   994.   996.   999.   997.   998.   992.
+    988.   998.   990.   994.  1000.   991.   991.   994.   995.   995.
+    990.]]
