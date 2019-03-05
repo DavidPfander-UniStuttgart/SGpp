@@ -1,0 +1,156 @@
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size1000000_dim10_noise
+level: 6
+lambda: 5.62341e-08
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 3641.98
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 0.125155
+dimension: 10
+data points: 1020000
+printing first two datapoints (if available):
+0.455971, 0.23104, 0.415448, 0.559524, 0.392029, 0.727333, 0.26555, 0.729712, 0.177172, 0.525939
+0.655281, 0.58152, 0.642507, 0.802767, 0.463711, 0.26669, 0.224731, 0.236338, 0.730016, 0.626458
+initial grid created, grid points: 77505
+grid create duration: 0.242287s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 0.918636s
+ops_generate_b: 4822.36
+flops_generate_b: 5249.48 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.062259
+Target norm:               6.2259e-06
+delta: 0.18049
+delta: 0.0753717
+delta: 0.147511
+delta: 0.0598495
+delta: 0.0790951
+delta: 0.0548546
+delta: 0.100119
+delta: 0.0475863
+delta: 0.0458585
+delta: 0.0364033
+delta: 0.0643646
+delta: 0.0228482
+delta: 0.0888741
+delta: 0.0208737
+delta: 0.0166506
+delta: 0.0643851
+delta: 0.0170575
+delta: 0.0323436
+delta: 0.0143533
+delta: 0.0341974
+delta: 0.0232226
+delta: 0.06433
+delta: 0.011622
+delta: 0.00618871
+delta: 0.00857498
+delta: 0.00461108
+delta: 0.0319676
+delta: 0.00372783
+delta: 0.0155858
+delta: 0.00488962
+delta: 0.0110993
+delta: 0.00544364
+delta: 0.00159065
+delta: 0.00141071
+delta: 0.00294992
+delta: 0.0157321
+delta: 0.00265538
+delta: 0.00220406
+delta: 0.00213306
+delta: 0.00182638
+delta: 0.000829771
+delta: 0.00397381
+delta: 0.0016679
+delta: 0.000770406
+delta: 0.00206034
+delta: 0.00275431
+delta: 0.00291421
+delta: 0.00157452
+delta: 0.000310359
+delta: 0.000391893
+delta: 0.00148998
+delta: 0.0072862
+delta: 0.000296008
+delta: 0.000631468
+delta: 0.00331905
+delta: 0.000589883
+delta: 0.000187176
+delta: 0.000151275
+delta: 0.000290638
+delta: 0.000253349
+delta: 0.000129499
+delta: 0.000156177
+delta: 0.000132378
+delta: 0.000407353
+delta: 0.00153793
+delta: 0.000165124
+delta: 0.000182716
+delta: 5.99677e-05
+delta: 0.000289169
+delta: 4.48915e-05
+delta: 5.89153e-05
+delta: 0.000329237
+delta: 0.000304189
+delta: 0.000220403
+delta: 2.69345e-05
+delta: 8.44769e-05
+delta: 0.000149791
+delta: 0.000369892
+delta: 3.95593e-05
+delta: 3.48074e-05
+delta: 0.000207374
+delta: 0.000196037
+delta: 2.37333e-05
+delta: 4.72501e-05
+delta: 3.6873e-05
+delta: 9.41567e-05
+delta: 3.13328e-05
+delta: 9.71416e-06
+delta: 1.04468e-05
+delta: 1.97858e-05
+delta: 9.67491e-05
+delta: 1.74912e-05
+delta: 2.77954e-06
+Number of iterations: 93 (max. 1000)
+Final norm of residuum: 2.77954e-06
+counted_mult_calls: 95
+act_it: 95
+acc_duration_density: 15.8458s
+ops_density: 81034.8 GOps
+flops_density: 5113.95 GFLOPS
+density_duration_total: 23.6962s
+surplus min: -16008.8 max: 45944.4
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+unpadded_datasize: 1020000 adding elements: 32 (* dims)
+last_duration_create_graph: 5.20255s
+ops_create_graph: 31212 GOps
+flops_create_graph: 5999.37 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 4.85647s
+ops_prune_graph: 34309.9 GOps
+flops_prune_graph: 7064.79 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.691783s
+detected clusters: 11
+datapoints in clusters: 1000036
+write cluster map duration:0.945309s
+total_duration_without_disk: 37.1714
+total_duration: 37.2966
+
+all done!
+ARI: 0.9999911116790263
+(11, 10)
+[[  8.00000000e+00   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   9.99920000e+04   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05]]

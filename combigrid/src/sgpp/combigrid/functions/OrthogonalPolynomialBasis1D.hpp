@@ -8,7 +8,7 @@
 #include <sgpp/combigrid/functions/AbstractInfiniteFunctionBasis1D.hpp>
 #include <sgpp/combigrid/GeneralFunction.hpp>
 
-#include <sgpp/base/tools/json/JSON.hpp>
+#include <sgpp/base/tools/json/json.hpp>
 
 #ifdef USE_DAKOTA
 #include <BasisPolynomial.hpp>
@@ -51,7 +51,7 @@ struct OrthogonalPolynomialBasis1DParameters {
 // --------------------------------------------------------------------------
 class OrthogonalPolynomialBasis1D;
 
-class OrthogonalPolynomialBasis1DConfiguration : public json::JSON {
+class OrthogonalPolynomialBasis1DConfiguration : public json::json {
   friend class OrthogonalPolynomialBasis1D;
 
  public:

@@ -24,7 +24,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<T> {
  private:
   std::shared_ptr<base::OCLDevice> device;
 
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   size_t dims;
 
@@ -158,7 +158,7 @@ class SourceBuilderMult : public base::KernelSourceBuilderBase<T> {
   }
 
  public:
-  SourceBuilderMult(std::shared_ptr<base::OCLDevice> device, json::Node &kernelConfiguration,
+  SourceBuilderMult(std::shared_ptr<base::OCLDevice> device, json::node &kernelConfiguration,
                     size_t dims)
       : device(device), kernelConfiguration(kernelConfiguration), dims(dims) {
     localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();

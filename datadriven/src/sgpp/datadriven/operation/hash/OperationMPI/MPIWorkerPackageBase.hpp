@@ -72,7 +72,7 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       // Get possible device names for error message
       std::vector<std::string> possible_devicenames;
       for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-        json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+        json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
         for (std::string &deviceName : platformNode["DEVICES"].keys()) {
           possible_devicenames.push_back(deviceName);
         }
@@ -80,9 +80,9 @@ class MPIWorkerPackageBase : virtual public MPIWorkerBase {
       // Insert/Update select on node level using opencl_platform and opencl_device
       bool found_device = false;
       for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-        json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+        json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
         for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-          json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+          json::node &deviceNode = platformNode["DEVICES"][deviceName];
           if (chosen_device_name == std::string("Unknown")) {
             chosen_device_name = deviceName;
             found_device = true;

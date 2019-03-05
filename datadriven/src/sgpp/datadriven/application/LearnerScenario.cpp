@@ -15,7 +15,7 @@ namespace datadriven {
 LearnerScenario::LearnerScenario() : initialized(false) {}
 
 LearnerScenario::LearnerScenario(std::string scenarioFileName)
-    : json::JSON(scenarioFileName), initialized(true) {
+    : json::json(scenarioFileName), initialized(true) {
   //  this->readFromFile(scenarioFileName);
 }
 

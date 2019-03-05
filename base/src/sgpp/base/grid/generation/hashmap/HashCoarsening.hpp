@@ -9,6 +9,7 @@
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include <sgpp/base/grid/GridStorage.hpp>
 #include <sgpp/base/grid/generation/functors/CoarseningFunctor.hpp>
+#include <sgpp/base/grid/generation/functors/UnlimitedCoarseningFunctor.hpp>
 #include <sgpp/base/exception/generation_exception.hpp>
 
 #include <sgpp/globaldef.hpp>
@@ -63,9 +64,6 @@ class HashCoarsening {
    * specified in the coarsening functor. ONLY INNER GRID POINTS WILL
    * BE REMOVED!
    *
-   * This function calls free_coarsen_NFirstOnly with numFirstPoints equal
-   * to the grid's size.
-   *
    * Note that seq numbers in @param removedSeq are invalid to use with the resulting grid after coarsening
    * since the seq numbers get recomputed after removal. Use @param removedPoints unless 
    * outdated seq numbers are explicitly required.
@@ -83,6 +81,10 @@ class HashCoarsening {
                     std::vector<HashGridPoint>* removedPoints = 0,
                     std::vector<size_t>* removedSeq = 0);
 
+  void free_coarsen(GridStorage& storage,
+                    UnlimitedCoarseningFunctor& functor,
+                    DataVector& alpha);
+    
   /**
    * Calculates the number of points, which can be refined
    *

@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "OCLDevice.hpp"
-#include "sgpp/base/tools/json/Node.hpp"
+#include "sgpp/base/tools/json/node.hpp"
 
 namespace sgpp {
 namespace base {

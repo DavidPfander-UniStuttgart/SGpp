@@ -11,27 +11,27 @@
  * Also it permits easy but limited object serialization functionality.
  */
 
-#include "../src/sgpp/base/tools/json/JSON.hpp"
-#include "../src/sgpp/base/tools/json/TextNode.hpp"
+#include "../src/sgpp/base/tools/json/json.hpp"
 #include "../src/sgpp/base/tools/json/json_exception.hpp"
+#include "../src/sgpp/base/tools/json/text_node.hpp"
 
 int main(int argc, char **argv) {
   try {
     /**
      * We first create an empty JSON object
      */
-    json::JSON configuration;
+    json::json configuration;
     /**
      * Then we introduce the following JSON structure:
      * @verbatim
      * {
-     * 	parent:{
-     * 		"t1":"v1";
-     * 		"t2":"v2";
-     * 		"list1":["tv1",96.0,"tv2"]
-     * 			};
-     * 	"textAttr1":"text1";
-     * 	"numVal1":36.0
+     *   parent:{
+     *     "t1":"v1";
+     *     "t2":"v2";
+     *       "list1":["tv1",96.0,"tv2"]
+     *     };
+     *   "textAttr1":"text1";
+     *   "numVal1":36.0
      * }
      * @endverbatim
      *
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
      * returned to us by the erase operation. All Objects inside a JSON object are represented
      * internally as an object of type <tt>Node</tt>"
      */
-    std::unique_ptr<json::Node> parentNode = configuration["parent"].erase();
+    std::unique_ptr<json::node> parentNode = configuration["parent"].erase();
 
     /**
      *
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
     /**
      * We can also read a JSON file by passing it's path to the constructor of a JSON object
      */
-    json::JSON reread("write.json");
+    json::json reread("write.json");
   } catch (json::json_exception &e) {
     std::cout << e.what() << std::endl;
   }

@@ -10,7 +10,7 @@
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/operation/hash/OperationMatrix.hpp>
-#include <sgpp/base/tools/json/JSON.hpp>
+#include <sgpp/base/tools/json/json.hpp>
 #include <sgpp/datadriven/operation/hash/simple/OperationMakePositive.hpp>
 
 #include <sgpp/base/grid/Grid.hpp>
@@ -57,7 +57,7 @@ struct SGDEConfiguration {
 // --------------------------------------------------------------------------
 class SparseGridDensityEstimator;
 
-class SparseGridDensityEstimatorConfiguration : public json::JSON {
+class SparseGridDensityEstimatorConfiguration : public json::json {
   friend class SparseGridDensityEstimator;
 
  public:

@@ -98,9 +98,9 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
     }
     auto device = devices[0];
 
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &configuration = deviceNode["KERNELS"]["removeEdges"];
+    json::node &configuration = deviceNode["KERNELS"]["removeEdges"];
     graph_kernel = std::make_shared<KernelPruneGraph<T>>(
         device, dims, threshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
     if (configuration["VERBOSE"].getBool()) verbose = true;
@@ -155,9 +155,9 @@ class OperationPruneGraphOCLMultiPlatform : public OperationPruneGraphOCL {
     }
     auto device = devices[0];
 
-    json::Node &deviceNode =
+    json::node &deviceNode =
         (*parameters)["PLATFORMS"][device->platformName]["DEVICES"][device->deviceName];
-    json::Node &configuration = deviceNode["KERNELS"]["removeEdges"];
+    json::node &configuration = deviceNode["KERNELS"]["removeEdges"];
     graph_kernel = std::make_shared<KernelPruneGraph<T>>(
         device, dims, threshold, k, manager, configuration, pointsVector, alphaVector, dataVector);
     if (configuration["VERBOSE"].getBool()) verbose = true;

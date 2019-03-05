@@ -49,7 +49,7 @@ private:
   SourceBuilderMultTranspose<real_type> kernelSourceBuilder;
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   //    std::shared_ptr<base::OCLOperationConfiguration> parameters;
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMultTranspose;
 
@@ -64,7 +64,7 @@ public:
   KernelMultTranspose(
       std::shared_ptr<base::OCLDevice> device, size_t dims,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-      json::Node &kernelConfiguration,
+      json::node &kernelConfiguration,
       std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMultTranpose)
       : device(device), dims(dims), err(CL_SUCCESS),
         deviceLevelTranspose(device), deviceIndexTranspose(device),

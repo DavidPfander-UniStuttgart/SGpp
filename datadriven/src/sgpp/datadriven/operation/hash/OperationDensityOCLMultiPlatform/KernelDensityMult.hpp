@@ -30,13 +30,13 @@ class KernelDensityMultInterface {
   /// Adds all possible building parameters to the configuration if they do not exist yet
   static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
-      json::Node &platformNode = parameters["PLATFORMS"][platformName];
+      json::node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
         const std::string &kernelName = "multdensity";
 
-        json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                  ? deviceNode["KERNELS"][kernelName]
                                  : deviceNode["KERNELS"].addDictAttr(kernelName);
 
@@ -155,7 +155,7 @@ class KernelDensityMult : public KernelDensityMultInterface<T> {
   /// Stores the running time of the kernel
   double deviceTimingMult;
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   bool verbose;
 
   size_t localSize;
@@ -178,7 +178,7 @@ class KernelDensityMult : public KernelDensityMultInterface<T> {
  public:
   KernelDensityMult(std::shared_ptr<base::OCLDevice> dev, size_t dims,
                     std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-                    json::Node &kernelConfiguration, std::vector<int> &points, T lambda)
+                    json::node &kernelConfiguration, std::vector<int> &points, T lambda)
       : device(dev),
         dims(dims),
         lambda(lambda),

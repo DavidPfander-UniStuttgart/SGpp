@@ -53,11 +53,11 @@ class MPIEnviroment {
    * In this main loop, every slave receives the messages to create or run operations.
    */
   void slave_mainloop(void);
-  int count_slaves(json::Node &currentslave);
-  int count_nodes(json::Node &currentworker);
+  int count_slaves(json::node &currentslave);
+  int count_nodes(json::node &currentworker);
   void create_opencl_node_list(std::vector<int> &node_id_list,
                                unsigned int &current_node_id,
-                               json::Node &currentslave);
+                               json::node &currentslave);
   void init_communicator(base::OperationConfiguration conf);
   void init_opencl_communicator(base::OperationConfiguration conf);
   void init_worker(int workerid, int source);

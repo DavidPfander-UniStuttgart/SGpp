@@ -39,13 +39,13 @@ namespace sgpp {
 namespace datadriven {
 
 // --------------------------------------------------------------------------------------------
-SparseGridDensityEstimatorConfiguration::SparseGridDensityEstimatorConfiguration() : json::JSON() {
+SparseGridDensityEstimatorConfiguration::SparseGridDensityEstimatorConfiguration() : json::json() {
   initConfig();
 }
 
 SparseGridDensityEstimatorConfiguration::SparseGridDensityEstimatorConfiguration(
     const std::string& fileName)
-    : json::JSON(fileName) {
+    : json::json(fileName) {
   // initialize structs with default values
   initConfig();
   // initialize structs from file
@@ -149,7 +149,7 @@ SparseGridDensityEstimatorConfiguration::SparseGridDensityEstimatorConfiguration
           (*this)["sgde_makePositive_generateConsistentGrid"].getBool();
     if (this->contains("sgde_unitIntegrand"))
       sgdeConfig.unitIntegrand_ = (*this)["sgde_unitIntegrand"].getBool();
-  } catch (json::json_exception& e) {
+  } catch (::json::json_exception& e) {
     std::cout << e.what() << std::endl;
   }
 }

@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name="clustering experiments"
+#SBATCH --nodelist=argon-gtx
+#SBATCH --gres=gpu:8
+#SBATCH --ntasks=9
+#SBATCH --ntasks-per-node=9
+#SBATCH --exclusive
+#SBATCH -o slurm.%N.%j.out # STDOUT
+#SBATCH -e slurm.%N.%j.out # STDERR
+#SBATCH --workdir="/home/pfandedd"
+
+echo "starting"
+srun echo `hostname`
+
+cd /data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp
+source source_autotunetmp_generic.sh
+./diss_experiments/clustering_optimal.sh

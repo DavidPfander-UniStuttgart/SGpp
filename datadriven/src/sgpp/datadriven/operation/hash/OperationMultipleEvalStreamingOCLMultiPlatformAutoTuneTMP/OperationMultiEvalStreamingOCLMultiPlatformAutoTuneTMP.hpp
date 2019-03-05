@@ -157,16 +157,16 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
         [this](autotune::parameter_value_set &parameter_values) {
           for (auto &p : parameter_values) {
             for (std::string &platformName : (*this->ocl_parameters_mult)["PLATFORMS"].keys()) {
-              json::Node &platformNode = (*this->ocl_parameters_mult)["PLATFORMS"][platformName];
+              json::node &platformNode = (*this->ocl_parameters_mult)["PLATFORMS"][platformName];
               for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-                json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+                json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
                 const std::string &kernelName =
                     sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName();
-                json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+                json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                              ? deviceNode["KERNELS"][kernelName]
                                              : deviceNode["KERNELS"].addDictAttr(kernelName);
-                // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+                // json::node &kernelNode = deviceNode["KERNELS"][kernelName];
                 // std::cout << "parameter name: " << p.first << " value: " << p.second <<
                 // std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
@@ -204,17 +204,17 @@ class OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP : public base::Oper
           for (auto &p : parameter_values) {
             for (std::string &platformName :
                  (*this->ocl_parameters_multTranspose)["PLATFORMS"].keys()) {
-              json::Node &platformNode =
+              json::node &platformNode =
                   (*this->ocl_parameters_multTranspose)["PLATFORMS"][platformName];
               for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-                json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+                json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
                 const std::string &kernelName =
                     sgpp::datadriven::StreamingOCLMultiPlatform::Configuration::getKernelName();
-                json::Node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
+                json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
                                              ? deviceNode["KERNELS"][kernelName]
                                              : deviceNode["KERNELS"].addDictAttr(kernelName);
-                // json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+                // json::node &kernelNode = deviceNode["KERNELS"][kernelName];
                 std::cout << "parameter name: " << p.first << " value: " << p.second << std::endl;
                 kernelNode.replaceTextAttr(p.first, p.second);
                 kernelNode.replaceTextAttr("VERBOSE", "true");

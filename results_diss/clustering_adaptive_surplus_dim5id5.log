@@ -1,0 +1,612 @@
+datasetFileName: datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_QuadroGP100.cfg
+k: 6
+threshold: 55
+using naive ocl knn
+reading dataset...
+info: ARFF dataset
+Dataset load duration: 0.21887
+dimension: 5
+data points: 102000
+printing first two datapoints (if available):
+0.328415, 0.827011, 0.833273, 0.263307, 0.738096
+0.677258, 0.203804, 0.323615, 0.378071, 0.508477
+initial grid created, grid points: 18943
+grid create duration: 0.0299155s
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0355385s
+ops_generate_b: 59.8978
+flops_generate_b: 1685.43 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.227479
+Target norm:               2.27479e-05
+delta: 0.0268157
+delta: 0.0348545
+delta: 0.0223219
+delta: 0.0225521
+delta: 0.0137401
+delta: 0.0172486
+delta: 0.0104576
+delta: 0.0572609
+delta: 0.00645758
+delta: 0.00973095
+delta: 0.00745805
+delta: 0.00478988
+delta: 0.0169494
+delta: 0.0028508
+delta: 0.0316538
+delta: 0.00292422
+delta: 0.00215829
+delta: 0.0018776
+delta: 0.00143401
+delta: 0.00932963
+delta: 0.00117632
+delta: 0.00345673
+delta: 0.00130521
+delta: 0.00157463
+delta: 0.000971297
+delta: 0.00176933
+delta: 0.000852487
+delta: 0.000655994
+delta: 0.000538702
+delta: 0.00074319
+delta: 0.000442868
+delta: 0.00102659
+delta: 0.000239497
+delta: 0.00292175
+delta: 0.000139204
+delta: 0.000130687
+delta: 8.32382e-05
+delta: 0.000260796
+delta: 0.000123955
+delta: 0.00010299
+delta: 0.000230838
+delta: 0.000176558
+delta: 4.33674e-05
+delta: 8.5523e-05
+delta: 0.000203951
+delta: 3.17958e-05
+delta: 2.50704e-05
+delta: 6.10758e-05
+delta: 3.4312e-05
+delta: 6.6906e-05
+delta: 2.5015e-05
+delta: 9.28763e-05
+delta: 9.71174e-06
+Number of iterations: 53 (max. 1000)
+Final norm of residuum: 9.71174e-06
+counted_mult_calls: 55
+act_it: 55
+acc_duration_density: 0.37835s
+ops_density: 1421 GOps
+flops_density: 3755.77 GFLOPS
+surplus refinement: new grid size 25207
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0511301s
+ops_generate_b: 79.7045
+flops_generate_b: 1558.86 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.236715
+Target norm:               2.36715e-05
+delta: 0.0307786
+delta: 0.0426677
+delta: 0.0294658
+delta: 0.0297285
+delta: 0.0183821
+delta: 0.0259134
+delta: 0.0322436
+delta: 0.016883
+delta: 0.0355685
+delta: 0.0107253
+delta: 0.0117653
+delta: 0.0144013
+delta: 0.011434
+delta: 0.00781495
+delta: 0.00665397
+delta: 0.00632111
+delta: 0.0283346
+delta: 0.00822009
+delta: 0.00441573
+delta: 0.00348315
+delta: 0.0042413
+delta: 0.00343223
+delta: 0.00547499
+delta: 0.00320186
+delta: 0.00247958
+delta: 0.00761009
+delta: 0.00192605
+delta: 0.00155476
+delta: 0.00174447
+delta: 0.00151289
+delta: 0.00261587
+delta: 0.000924615
+delta: 0.00926773
+delta: 0.000637072
+delta: 0.00112987
+delta: 0.00102309
+delta: 0.00118965
+delta: 0.000636629
+delta: 0.000414775
+delta: 0.000927251
+delta: 0.000673112
+delta: 0.000972713
+delta: 0.000381205
+delta: 0.00032658
+delta: 0.000189909
+delta: 0.000484483
+delta: 0.000264933
+delta: 0.000405713
+delta: 0.000496166
+delta: 0.000241865
+delta: 9.87948e-05
+delta: 0.000122836
+delta: 0.000197157
+delta: 0.000172688
+delta: 0.000309086
+delta: 8.40873e-05
+delta: 0.000168718
+delta: 3.41417e-05
+delta: 0.000163868
+delta: 7.29719e-05
+delta: 4.65369e-05
+delta: 9.83638e-05
+delta: 5.74488e-05
+delta: 3.52232e-05
+delta: 9.21844e-05
+delta: 3.57592e-05
+delta: 1.86388e-05
+Number of iterations: 67 (max. 1000)
+Final norm of residuum: 1.86388e-05
+counted_mult_calls: 69
+act_it: 69
+acc_duration_density: 0.721223s
+ops_density: 3156.63 GOps
+flops_density: 4376.77 GFLOPS
+surplus refinement: new grid size 37843
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0490771s
+ops_generate_b: 119.66
+flops_generate_b: 2438.19 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.247473
+Target norm:               2.47473e-05
+delta: 0.0356149
+delta: 0.0517287
+delta: 0.038199
+delta: 0.0383567
+delta: 0.0238415
+delta: 0.0362167
+delta: 0.0394093
+delta: 0.0219232
+delta: 0.0241911
+delta: 0.0213336
+delta: 0.0248714
+delta: 0.0132361
+delta: 0.0132378
+delta: 0.0111897
+delta: 0.0114106
+delta: 0.0137701
+delta: 0.0215579
+delta: 0.0392596
+delta: 0.00381767
+delta: 0.0065585
+delta: 0.00624687
+delta: 0.00948262
+delta: 0.00435299
+delta: 0.00454708
+delta: 0.0127226
+delta: 0.00370071
+delta: 0.00325644
+delta: 0.0024791
+delta: 0.00247883
+delta: 0.00390412
+delta: 0.00270192
+delta: 0.0105941
+delta: 0.00127124
+delta: 0.00289882
+delta: 0.00146009
+delta: 0.00152694
+delta: 0.00104488
+delta: 0.00171225
+delta: 0.00325848
+delta: 0.00115964
+delta: 0.00109421
+delta: 0.00066587
+delta: 0.000461397
+delta: 0.000838195
+delta: 0.00107909
+delta: 0.000677992
+delta: 0.000496277
+delta: 0.000610301
+delta: 0.000432863
+delta: 0.000236887
+delta: 0.00059596
+delta: 0.000192186
+delta: 0.000677621
+delta: 0.000307959
+delta: 0.00019586
+delta: 0.000104946
+delta: 0.000267341
+delta: 0.00019466
+delta: 0.000139292
+delta: 0.000431608
+delta: 0.000138691
+delta: 0.000141523
+delta: 0.000113628
+delta: 8.76541e-05
+delta: 6.30989e-05
+delta: 8.45948e-05
+delta: 7.2481e-05
+delta: 0.000139786
+delta: 5.86017e-05
+delta: 3.54071e-05
+delta: 2.79521e-05
+delta: 2.56103e-05
+delta: 5.82266e-05
+delta: 0.000128034
+delta: 3.7097e-05
+delta: 2.12999e-05
+Number of iterations: 76 (max. 1000)
+Final norm of residuum: 2.12999e-05
+counted_mult_calls: 78
+act_it: 78
+acc_duration_density: 1.85442s
+ops_density: 8042.63 GOps
+flops_density: 4337 GFLOPS
+surplus refinement: new grid size 57797
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0531772s
+ops_generate_b: 182.754
+flops_generate_b: 3436.7 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.258081
+Target norm:               2.58081e-05
+delta: 0.0409593
+delta: 0.0617541
+delta: 0.0477744
+delta: 0.0468959
+delta: 0.0296498
+delta: 0.0469381
+delta: 0.0443267
+delta: 0.027657
+delta: 0.0533476
+delta: 0.0201858
+delta: 0.0461305
+delta: 0.0135478
+delta: 0.0162208
+delta: 0.0148425
+delta: 0.0132306
+delta: 0.0170627
+delta: 0.0389941
+delta: 0.0390967
+delta: 0.00513771
+delta: 0.00826034
+delta: 0.00856763
+delta: 0.0119148
+delta: 0.00634684
+delta: 0.00655152
+delta: 0.0137847
+delta: 0.00492222
+delta: 0.00488928
+delta: 0.00290423
+delta: 0.00447543
+delta: 0.00465919
+delta: 0.0028829
+delta: 0.014689
+delta: 0.0018084
+delta: 0.00375261
+delta: 0.00232852
+delta: 0.001955
+delta: 0.0014872
+delta: 0.00205095
+delta: 0.00518945
+delta: 0.00113799
+delta: 0.00306589
+delta: 0.000801793
+delta: 0.000670413
+delta: 0.00125472
+delta: 0.000652991
+delta: 0.00152555
+delta: 0.00138698
+delta: 0.000978267
+delta: 0.000634581
+delta: 0.000289416
+delta: 0.000851247
+delta: 0.000333009
+delta: 0.000634849
+delta: 0.000621477
+delta: 0.000398454
+delta: 0.000315652
+delta: 0.000186852
+delta: 0.000218861
+delta: 0.000210451
+delta: 0.000710152
+delta: 0.000180499
+delta: 0.000167742
+delta: 0.000121339
+delta: 0.000266828
+delta: 0.000106533
+delta: 7.03591e-05
+delta: 0.000218878
+delta: 0.000169364
+delta: 0.000136749
+delta: 7.29025e-05
+delta: 5.15457e-05
+delta: 4.66038e-05
+delta: 8.15535e-05
+delta: 0.000142396
+delta: 6.72106e-05
+delta: 2.99538e-05
+delta: 3.68912e-05
+delta: 3.49291e-05
+delta: 7.08757e-05
+delta: 1.70061e-05
+Number of iterations: 80 (max. 1000)
+Final norm of residuum: 1.70061e-05
+counted_mult_calls: 82
+act_it: 82
+acc_duration_density: 4.43132s
+ops_density: 19722.3 GOps
+flops_density: 4450.65 GFLOPS
+surplus refinement: new grid size 85480
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0854248s
+ops_generate_b: 270.288
+flops_generate_b: 3164.04 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.267625
+Target norm:               2.67625e-05
+delta: 0.0462402
+delta: 0.0711138
+delta: 0.0573229
+delta: 0.0551057
+delta: 0.0348253
+delta: 0.0537655
+delta: 0.0506201
+delta: 0.035444
+delta: 0.116678
+delta: 0.020197
+delta: 0.0411695
+delta: 0.0172907
+delta: 0.0203641
+delta: 0.0188494
+delta: 0.0175998
+delta: 0.022924
+delta: 0.0327438
+delta: 0.0466306
+delta: 0.0061446
+delta: 0.00959742
+delta: 0.00972968
+delta: 0.00796129
+delta: 0.0168529
+delta: 0.00643473
+delta: 0.0249887
+delta: 0.00621313
+delta: 0.006872
+delta: 0.0029698
+delta: 0.0045679
+delta: 0.00796126
+delta: 0.00374341
+delta: 0.00401964
+delta: 0.00445098
+delta: 0.00331235
+delta: 0.00284654
+delta: 0.00366865
+delta: 0.00186032
+delta: 0.00231778
+delta: 0.00234627
+delta: 0.00199907
+delta: 0.00903777
+delta: 0.000913357
+delta: 0.00121787
+delta: 0.00144019
+delta: 0.00104015
+delta: 0.00116839
+delta: 0.0011938
+delta: 0.0022421
+delta: 0.000820845
+delta: 0.000362381
+delta: 0.000492563
+delta: 0.00103179
+delta: 0.00056198
+delta: 0.000495129
+delta: 0.000826201
+delta: 0.000218103
+delta: 0.000663368
+delta: 0.000292847
+delta: 0.000316198
+delta: 0.000206034
+delta: 0.000228357
+delta: 0.000279694
+delta: 0.00039509
+delta: 0.000376457
+delta: 0.000147332
+delta: 8.09773e-05
+delta: 0.000190883
+delta: 0.000177312
+delta: 0.000106439
+delta: 0.000206093
+delta: 0.000108123
+delta: 4.36748e-05
+delta: 8.94969e-05
+delta: 0.000116791
+delta: 4.89195e-05
+delta: 4.715e-05
+delta: 6.00196e-05
+delta: 0.000125015
+delta: 2.35257e-05
+Number of iterations: 79 (max. 1000)
+Final norm of residuum: 2.35257e-05
+counted_mult_calls: 81
+act_it: 81
+acc_duration_density: 11.9334s
+ops_density: 42613.4 GOps
+flops_density: 3570.94 GFLOPS
+surplus refinement: new grid size 122173
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+device name: Quadro GP100
+query_size: 4
+max_compute_units: 56
+last_duration_generate_b: 0.0912053s
+ops_generate_b: 386.311
+flops_generate_b: 4235.62 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.275898
+Target norm:               2.75898e-05
+delta: 0.0511376
+delta: 0.0799501
+delta: 0.0661271
+delta: 0.06217
+delta: 0.0396524
+delta: 0.0639492
+delta: 0.0534506
+delta: 0.0442656
+delta: 0.115891
+delta: 0.0232128
+delta: 0.0432197
+delta: 0.0204118
+delta: 0.024798
+delta: 0.0219649
+delta: 0.0213138
+delta: 0.033531
+delta: 0.038942
+delta: 0.0284833
+delta: 0.00730532
+delta: 0.0113849
+delta: 0.0186755
+delta: 0.0132148
+delta: 0.00910982
+delta: 0.0239964
+delta: 0.00925204
+delta: 0.00753056
+delta: 0.00642536
+delta: 0.00323309
+delta: 0.00587477
+delta: 0.00807244
+delta: 0.00720874
+delta: 0.011086
+delta: 0.0027116
+delta: 0.00391388
+delta: 0.0032992
+delta: 0.00524944
+delta: 0.00218836
+delta: 0.00289058
+delta: 0.00634945
+delta: 0.00203973
+delta: 0.0043333
+delta: 0.00100544
+delta: 0.00174165
+delta: 0.00154931
+delta: 0.00102604
+delta: 0.00326496
+delta: 0.00195028
+delta: 0.00186204
+delta: 0.00080323
+delta: 0.000489832
+delta: 0.00055457
+delta: 0.00142632
+delta: 0.00144167
+delta: 0.000968792
+delta: 0.000572519
+delta: 0.000250956
+delta: 0.000921085
+delta: 0.000319722
+delta: 0.000408077
+delta: 0.00110862
+delta: 0.000241733
+delta: 0.000167228
+delta: 0.000470751
+delta: 0.000327682
+delta: 0.000173042
+delta: 0.000149454
+delta: 0.000626404
+delta: 0.000191271
+delta: 0.000177735
+delta: 0.000132594
+delta: 9.14124e-05
+delta: 7.40788e-05
+delta: 0.000111986
+delta: 0.000438408
+delta: 5.9122e-05
+delta: 0.000163092
+delta: 5.12056e-05
+delta: 7.10081e-05
+delta: 3.64399e-05
+delta: 0.000163877
+delta: 0.000136615
+delta: 3.09277e-05
+delta: 3.45641e-05
+delta: 3.81724e-05
+delta: 5.46213e-05
+delta: 2.34982e-05
+Number of iterations: 86 (max. 1000)
+Final norm of residuum: 2.34982e-05
+counted_mult_calls: 88
+act_it: 88
+acc_duration_density: 19.6687s
+ops_density: 94572.7 GOps
+flops_density: 4808.27 GFLOPS
+density_duration_total: 44.802s
+surplus min: -37.3327 max: 93.6482
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+unpadded_datasize: 102000 adding elements: 16 (* dims)
+last_duration_create_graph: 0.0584749s
+ops_create_graph: 156.06 GOps
+flops_create_graph: 2668.84 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_QuadroGP100.cfg
+last_duration_prune_graph: 0.542971s
+ops_prune_graph: 2791.41 GOps
+flops_prune_graph: 5140.99 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.0859837s
+detected clusters: 100
+datapoints in clusters: 99731
+write cluster map duration:0.151963s
+total_duration_without_disk: 47.953
+total_duration: 48.172
+
+all done!
+ARI: 0.9961975397291772
+(101, 100)
+[[  325.   998.   999.   995.   996.   996.   993.   996.   999.   999.
+    998.   993.   999.   988.   999.   995.   997.   999.   999.   997.
+    997.   999.  1000.  1000.   999.   995.   993.   999.   995.   992.
+    997.   997.   989.  1000.   993.   996.   996.   998.   994.   999.
+    999.   994.   998.   996.   997.   999.   994.   987.   994.   995.
+    999.   999.   998.   998.  1000.  1000.   999.   998.   996.   996.
+    999.   992.   995.   997.   994.   989.   996.   998.   998.   998.
+   1000.   998.   998.   993.   999.   996.   999.   999.   999.   996.
+    991.   994.   997.   996.   997.   999.   999.   997.   999.  1000.
+    999.   999.   995.   995.  1000.   995.   998.   996.   997.  1000.
+   1000.]]

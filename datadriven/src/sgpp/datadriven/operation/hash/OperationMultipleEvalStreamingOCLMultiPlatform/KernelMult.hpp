@@ -62,7 +62,7 @@ private:
 
   double deviceTimingMult;
 
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMult;
 
@@ -87,7 +87,7 @@ public:
    */
   KernelMult(std::shared_ptr<base::OCLDevice> device, size_t dims,
              std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-             json::Node &kernelConfiguration,
+             json::node &kernelConfiguration,
              std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMult)
       : device(device), dims(dims), err(CL_SUCCESS), deviceData(device),
         deviceLevel(device), deviceIndex(device), deviceAlpha(device),

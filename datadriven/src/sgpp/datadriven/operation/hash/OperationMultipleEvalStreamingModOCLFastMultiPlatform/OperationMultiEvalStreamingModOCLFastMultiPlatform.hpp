@@ -112,11 +112,11 @@ class OperationMultiEvalStreamingModOCLFastMultiPlatform : public base::Operatio
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node& platformConfiguration =
+      json::node& platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node& deviceConfiguration =
+      json::node& deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node& kernelConfiguration =
+      json::node& kernelConfiguration =
           deviceConfiguration["KERNELS"]
                              [StreamingModOCLFastMultiPlatform::Configuration::getKernelName()];
 
@@ -323,11 +323,11 @@ class OperationMultiEvalStreamingModOCLFastMultiPlatform : public base::Operatio
   size_t calculateCommonDatasetPadding() {
     size_t commonPaddingRequiredment = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node& platformConfiguration =
+      json::node& platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node& deviceConfiguration =
+      json::node& deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node& kernelConfiguration =
+      json::node& kernelConfiguration =
           deviceConfiguration["KERNELS"]
                              [StreamingModOCLFastMultiPlatform::Configuration::getKernelName()];
 
@@ -341,11 +341,11 @@ class OperationMultiEvalStreamingModOCLFastMultiPlatform : public base::Operatio
   size_t calculateCommonGridPadding() {
     size_t commonPaddingRequiredment = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node& platformConfiguration =
+      json::node& platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node& deviceConfiguration =
+      json::node& deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node& kernelConfiguration =
+      json::node& kernelConfiguration =
           deviceConfiguration["KERNELS"]
                              [StreamingModOCLFastMultiPlatform::Configuration::getKernelName()];
 

@@ -87,12 +87,12 @@ OperationConfiguration *OCLOperationConfiguration::clone() {
   return dynamic_cast<OperationConfiguration *>(new OCLOperationConfiguration(*this));
 }
 
-std::vector<std::reference_wrapper<json::Node>> OCLOperationConfiguration::getAllDeviceNodes() {
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes;
+std::vector<std::reference_wrapper<json::node>> OCLOperationConfiguration::getAllDeviceNodes() {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes;
   for (std::string &platformName : (*this)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*this)["PLATFORMS"][platformName];
+    json::node &platformNode = (*this)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       deviceNodes.push_back(deviceNode);
     }
   }

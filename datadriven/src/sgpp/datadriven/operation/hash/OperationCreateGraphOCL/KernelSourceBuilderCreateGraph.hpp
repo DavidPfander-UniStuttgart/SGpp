@@ -20,7 +20,7 @@ template <typename real_type>
 class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type> {
  private:
   /// OpenCL configuration containing the building flags
-  json::Node &kernelConfiguration;
+  json::node &kernelConfiguration;
   /// Dimensions of the used dataset
   size_t dims;
   /// Used workgroupsize for opencl kernel execution
@@ -77,138 +77,137 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
     std::stringstream output;
     if (use_approx) {
       output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-      for (int block = 2; block < dataBlockSize + 1; block++) {
-        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
+      for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
+        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";"
+               << std::endl;
       }
-      output << this->indent[2] << "for (int j = 0; j < " << dimensions - (dimensions % dataBlockSize) << " ; j+="
-             << dataBlockSize << ") {" << std::endl;
+      output << this->indent[2] << "for (int j = 0; j < "
+             << dimensions - (dimensions % dataBlockSize) << " ; j+=" << dataBlockSize << ") {"
+             << std::endl;
       if (localWorkgroupSize != approxRegCount) {
         output << this->indent[3] << "dist += (datapoint[j] - data_local[j + (chunkindex) * "
                << dimensions << " ])" << std::endl
-               << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* "
-               << dimensions << " ]);" << std::endl;
-        for (int block = 2; block < dataBlockSize + 1; block++) {
-          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + (chunkindex) * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + (chunkindex)* "
-                 << dimensions << " ]);" << std::endl;
-        }
-        output << this->indent[2] << "}" << std::endl;
-        // handle everything that is leftover from the dimension
-        int startid = dimensions - (dimensions % dataBlockSize);
-        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
-          std::string accu = "dist";
-          if (block != 1) { // different naming in this case for dist
-            accu = std::string("dist") + std::to_string(block);
-          }
-          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + (chunkindex) * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + (chunkindex)* "
-                 << dimensions << " ]);" << std::endl;
-        }
-      } else { // in this case we have no chunkindex loop
-        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * "
-               << dimensions << " ])" << std::endl
-               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
+               << this->indent[3] << "* (datapoint[j] - data_local[j + (chunkindex)* " << dimensions
                << " ]);" << std::endl;
-        for (int block = 2; block < dataBlockSize + 1; block++) {
+        for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
           output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + i* " << dimensions
-                 << " ]);" << std::endl;
+                 << "] - data_local[j + " << block - 1 << " + (chunkindex) * " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + " << block - 1 << "] - data_local[j + "
+                 << block - 1 << " + (chunkindex)* " << dimensions << " ]);" << std::endl;
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
         int startid = dimensions - (dimensions % dataBlockSize);
-        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+        for (int block = 1; block < static_cast<int>((dimensions % dataBlockSize) + 1);
+             block++, startid++) {
           std::string accu = "dist";
-          if (block != 1) { // different naming in this case for dist
+          if (block != 1) {  // different naming in this case for dist
             accu = std::string("dist") + std::to_string(block);
           }
           output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + i* "
-                 << dimensions << " ]);" << std::endl;
+                 << "] - data_local[" << startid + block - 1 << " + (chunkindex) * " << dimensions
+                 << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1 << "] - data_local["
+                 << startid + block - 1 << " + (chunkindex)* " << dimensions << " ]);" << std::endl;
+        }
+      } else {  // in this case we have no chunkindex loop
+        output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
+               << " ])" << std::endl
+               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions << " ]);"
+               << std::endl;
+        for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
+          output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
+                 << "] - data_local[j + " << block - 1 << " + i * " << dimensions << " ])"
+                 << std::endl
+                 << this->indent[3] << "* (datapoint[j + " << block - 1 << "] - data_local[j + "
+                 << block - 1 << " + i* " << dimensions << " ]);" << std::endl;
+        }
+        output << this->indent[2] << "}" << std::endl;
+        // handle everything that is leftover from the dimension
+        int startid = dimensions - (dimensions % dataBlockSize);
+        for (int block = 1; block < static_cast<int>((dimensions % dataBlockSize) + 1);
+             block++, startid++) {
+          std::string accu = "dist";
+          if (block != 1) {  // different naming in this case for dist
+            accu = std::string("dist") + std::to_string(block);
+          }
+          output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
+                 << "] - data_local[" << startid + block - 1 << " + i * " << dimensions << " ])"
+                 << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1 << "] - data_local["
+                 << startid + block - 1 << " + i* " << dimensions << " ]);" << std::endl;
         }
       }
-      for (int block = 2; block < dataBlockSize + 1; block++) {
+      for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
       }
 
-    } else { // no use approx, we need to calc the distance for the real knn
+    } else {  // no use approx, we need to calc the distance for the real knn
 
       output << this->indent[2] << "dist = 0.0" << this->constSuffix() << ";" << std::endl;
-      for (int block = 2; block < dataBlockSize + 1; block++) {
-        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";" << std::endl;
+      for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
+        output << this->indent[2] << "dist" << block << " = 0.0" << this->constSuffix() << ";"
+               << std::endl;
       }
-      output << this->indent[2] << "for (int j = 0; j < " << dimensions - (dimensions % dataBlockSize) << " ; j+="
-             << dataBlockSize << ") {" << std::endl;
+      output << this->indent[2] << "for (int j = 0; j < "
+             << dimensions - (dimensions % dataBlockSize) << " ; j+=" << dataBlockSize << ") {"
+             << std::endl;
       if (useLocalMemory) {
         output << this->indent[3] << "dist += (datapoint[j] - data_local[j + i * " << dimensions
                << " ])" << std::endl
-               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions
-               << " ]);" << std::endl;
-        for (int block = 2; block < dataBlockSize + 1; block++) {
+               << this->indent[3] << "* (datapoint[j] - data_local[j + i* " << dimensions << " ]);"
+               << std::endl;
+        for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
           output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + i * "
-                 <<  dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + " << block - 1
-                 << "] - data_local[j + " << block - 1 << " + i* " << dimensions
-                 << " ]);" << std::endl;
+                 << "] - data_local[j + " << block - 1 << " + i * " << dimensions << " ])"
+                 << std::endl
+                 << this->indent[3] << "* (datapoint[j + " << block - 1 << "] - data_local[j + "
+                 << block - 1 << " + i* " << dimensions << " ]);" << std::endl;
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
         int startid = dimensions - (dimensions % dataBlockSize);
-        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+        for (int block = 1; block < static_cast<int>((dimensions % dataBlockSize) + 1);
+             block++, startid++) {
           std::string accu = "dist";
-          if (block != 1) { // different naming in this case for dist
+          if (block != 1) {  // different naming in this case for dist
             accu = std::string("dist") + std::to_string(block);
           }
           output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[" << startid + block - 1
-                 << "] - data_local[" << startid + block - 1 << " + i* "
-                 << dimensions << " ]);" << std::endl;
+                 << "] - data_local[" << startid + block - 1 << " + i * " << dimensions << " ])"
+                 << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1 << "] - data_local["
+                 << startid + block - 1 << " + i* " << dimensions << " ]);" << std::endl;
         }
-      } else { // using global arrays for this one
-        output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions
-               << " ])" << std::endl
+      } else {  // using global arrays for this one
+        output << this->indent[3] << "dist += (datapoint[j] - data[j + i* " << dimensions << " ])"
+               << std::endl
                << this->indent[3] << "* (datapoint[j] - data[j + i* " << dimensions << " ]);"
                << std::endl;
-        for (int block = 2; block < dataBlockSize + 1; block++) {
+        for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
           output << this->indent[3] << "dist" << block << " += (datapoint[j + " << block - 1
-                 << "] - data[j + " << block - 1 << " + i* " << dimensions
-                 << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[j + " << block - 1
-                 << "] - data[j + " << block - 1 << " + i* " << dimensions << " ]);"
-                 << std::endl;
+                 << "] - data[j + " << block - 1 << " + i* " << dimensions << " ])" << std::endl
+                 << this->indent[3] << "* (datapoint[j + " << block - 1 << "] - data[j + "
+                 << block - 1 << " + i* " << dimensions << " ]);" << std::endl;
         }
         output << this->indent[2] << "}" << std::endl;
         // handle everything that is leftover from the dimension
         int startid = dimensions - (dimensions % dataBlockSize);
-        for (int block = 1; block < (dimensions % dataBlockSize) + 1 ; block++, startid++) {
+        for (int block = 1; block < static_cast<int>((dimensions % dataBlockSize) + 1);
+             block++, startid++) {
           std::string accu = "dist";
-          if (block != 1) { // different naming in this case for dist
+          if (block != 1) {  // different naming in this case for dist
             accu = std::string("dist") + std::to_string(block);
           }
           output << this->indent[3] << accu << " += (datapoint[" << startid + block - 1
-                 << "] - data[" << startid + block - 1 << " + i * "
-                 << dimensions << " ])" << std::endl
-                 << this->indent[3] << "* (datapoint[" << startid + block - 1
-                 << "] - data[" << startid + block - 1 << " + i* "
-                 << dimensions << " ]);" << std::endl;
+                 << "] - data[" << startid + block - 1 << " + i * " << dimensions << " ])"
+                 << std::endl
+                 << this->indent[3] << "* (datapoint[" << startid + block - 1 << "] - data["
+                 << startid + block - 1 << " + i* " << dimensions << " ]);" << std::endl;
         }
       }
-      for (int block = 2; block < dataBlockSize + 1; block++) {
+      for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
         output << this->indent[2] << "dist += dist" << block << ";" << std::endl;
       }
     }
@@ -236,9 +235,13 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
   }
 
  public:
-  SourceBuilderCreateGraph(json::Node &kernelConfiguration, size_t dims)
-      : kernelConfiguration(kernelConfiguration), dims(dims), use_select(false),
-        use_approx(false), allow_reflexive(true), dataBlockSize(1) {
+  SourceBuilderCreateGraph(json::node &kernelConfiguration, size_t dims)
+      : kernelConfiguration(kernelConfiguration),
+        dims(dims),
+        use_select(false),
+        use_approx(false),
+        dataBlockSize(1),
+        allow_reflexive(true) {
     localWorkgroupSize = 128;
     if (kernelConfiguration.contains("LOCAL_SIZE"))
       localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
@@ -279,8 +282,9 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
 
     // Check whether it is a valid configuration
     if (use_approx && local_cache_size < approxRegCount) {
-      std::string error = std::string("Error: Number of bins (APPROX_REG_COUNT) cannot be ") +
-                          std::string("larger than the local cache size (KERNEL_LOCAL_CACHE_SIZE)!");
+      std::string error =
+          std::string("Error: Number of bins (APPROX_REG_COUNT) cannot be ") +
+          std::string("larger than the local cache size (KERNEL_LOCAL_CACHE_SIZE)!");
       throw error.c_str();
     }
     if (use_approx && local_cache_size % approxRegCount != 0) {
@@ -313,12 +317,11 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << init_k_registers(k) << std::endl;
     }
     sourceStream << save_from_global_to_private(dimensions);
-    sourceStream << this->indent[0] << "__private "
-                 << this->floatType() << " dist = 0.0" << this->constSuffix() << ";" << std::endl;
-    for (int block = 2; block < dataBlockSize + 1; block++) {
-      sourceStream << this->indent[0] << "__private "
-                   << this->floatType() << " dist" << block << " = 0.0"
-                   << this->constSuffix() << ";" << std::endl;
+    sourceStream << this->indent[0] << "__private " << this->floatType() << " dist = 0.0"
+                 << this->constSuffix() << ";" << std::endl;
+    for (int block = 2; block < static_cast<int>(dataBlockSize + 1); block++) {
+      sourceStream << this->indent[0] << "__private " << this->floatType() << " dist" << block
+                   << " = 0.0" << this->constSuffix() << ";" << std::endl;
     }
     if (use_approx) {
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
@@ -357,7 +360,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
         sourceStream << this->indent[1] << "for (int i = 0 ; i < " << approxRegCount
                      << "; i++, chunkindex++) {" << std::endl;
       }
-      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      sourceStream << calculate_distance(dimensions);  // writes the source code to calculate
       // the distance between two points
       if (localWorkgroupSize != approxRegCount) {
         if (allow_reflexive) {
@@ -413,7 +416,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "dist_reg[min_index] = " << dims << ".0"
                    << this->constSuffix() << ";" << std::endl;
       sourceStream << this->indent[0] << "}" << std::endl;
-    } else if (useLocalMemory) { // no use approx
+    } else if (useLocalMemory) {  // no use approx
       sourceStream << this->indent[0] << "__local " << this->floatType() << " data_local["
                    << local_cache_size * dimensions << "];" << std::endl
                    << this->indent[0] << "for (long group = 0; group < "
@@ -432,7 +435,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
       sourceStream << this->indent[1] << "for (int i = 0 ; i < " << local_cache_size << "; i++) {"
                    << std::endl;
 
-      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      sourceStream << calculate_distance(dimensions);  // writes the source code to calculate
       // the distance between two points
       sourceStream << this->indent[2] << "int min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]
@@ -451,7 +454,7 @@ class SourceBuilderCreateGraph : public base::KernelSourceBuilderBase<real_type>
                    << std::endl
                    << this->indent[1] << "if (i != global_index) {" << std::endl
                    << "//get distance to current point" << std::endl;
-      sourceStream << calculate_distance(dimensions); // writes the source code to calculate
+      sourceStream << calculate_distance(dimensions);  // writes the source code to calculate
       // the distance between two points
       sourceStream << this->indent[2] << "long min_index = 0;" << std::endl
                    << find_min_index(k, true) << this->indent[2]

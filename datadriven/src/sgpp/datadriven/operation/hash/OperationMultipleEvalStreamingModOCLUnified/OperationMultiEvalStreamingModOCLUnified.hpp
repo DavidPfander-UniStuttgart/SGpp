@@ -108,11 +108,11 @@ public:
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"][StreamingModOCLUnified::Configuration::getKernelName()];
 
       multKernels.emplace_back(devices[deviceIndex], dims, this->manager,
@@ -372,11 +372,11 @@ private:
   size_t calculateCommonDatasetPadding() {
     size_t commonPaddingRequiredment = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"][StreamingModOCLUnified::Configuration::getKernelName()];
 
       commonPaddingRequiredment =
@@ -390,11 +390,11 @@ private:
   size_t calculateCommonGridPadding() {
     size_t commonPaddingRequiredment = 1;
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      json::Node &platformConfiguration =
+      json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
-      json::Node &deviceConfiguration =
+      json::node &deviceConfiguration =
           platformConfiguration["DEVICES"][devices[deviceIndex]->deviceName];
-      json::Node &kernelConfiguration = deviceConfiguration
+      json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"][StreamingModOCLUnified::Configuration::getKernelName()];
 
       commonPaddingRequiredment = std::max(

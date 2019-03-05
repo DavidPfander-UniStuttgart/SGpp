@@ -5,12 +5,12 @@
 
 #pragma once
 
-#include <vector>
 #include <map>
 #include <string>
+#include <vector>
 
-#include "sgpp/globaldef.hpp"
 #include "sgpp/base/tools/OperationConfiguration.hpp"
+#include "sgpp/globaldef.hpp"
 
 #if USE_OCL == 0
 #error "OCL is not enabled"
@@ -30,9 +30,9 @@ class OCLOperationConfiguration : public OperationConfiguration {
 
   OperationConfiguration* clone() override;
 
-  std::vector<std::reference_wrapper<json::Node>> getAllDeviceNodes();
+  std::vector<std::reference_wrapper<json::node>> getAllDeviceNodes();
 
-  static std::unique_ptr<OCLOperationConfiguration> fromString(std::string &parametersString);
+  static std::unique_ptr<OCLOperationConfiguration> fromString(std::string& parametersString);
 };
 
 }  // namespace base

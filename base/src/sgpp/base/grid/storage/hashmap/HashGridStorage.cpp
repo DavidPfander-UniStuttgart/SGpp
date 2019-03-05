@@ -14,6 +14,7 @@
 #include <typeinfo>
 #include <unordered_map>
 #include <vector>
+#include <limits>
 
 namespace sgpp {
 namespace base {
@@ -160,8 +161,9 @@ std::vector<size_t> HashGridStorage::deletePoints(std::list<size_t>& removePoint
   std::vector<size_t> remainingPoints;
   size_t delCounter = 0;
 
-  // sort list
-  removePoints.sort();
+  // TODO(pfandedd): sort is extremely slow for large grid (and likely unnecessary). Leaving this comment as it is hard to know for sure whether sort() is needed for any reason
+  // // sort list
+  // removePoints.sort();
 
   // DEBUG : print list points to delete, sorted
   // std::cout << std::endl << "List of points to delete, sorted" << std::endl;
@@ -179,13 +181,24 @@ std::vector<size_t> HashGridStorage::deletePoints(std::list<size_t>& removePoint
     size_t curPos = tmpIndex - delCounter;
 
     // GridPoint
-    curPoint = list[curPos];
+    // curPoint = list[curPos];
+    curPoint = list[tmpIndex];
 
     // erase point
     delCounter++;
     map.erase(curPoint);
-    list.erase(list.begin() + curPos);
+    // list.erase(list.begin() + curPos); // expensive!!! -> needs to copy the entire list!
+    list[tmpIndex] = nullptr;
   }
+
+  grid_list new_list;
+  new_list.reserve(list.size() - removePoints.size());
+  for (size_t i = 0; i < list.size(); i +=1) {
+      if (list[i] != nullptr) {
+          new_list.push_back(list[i]);
+      }
+  }
+  std::swap(list, new_list);
 
   // reset all entries in hash map and build list of remaining
   for (size_t i = 0; i < list.size(); i++) {

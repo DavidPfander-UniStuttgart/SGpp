@@ -56,8 +56,8 @@ BOOST_AUTO_TEST_CASE(Simple) {
 
   (*parameters)["INTERNAL_PRECISION"].set("double");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
@@ -77,8 +77,8 @@ BOOST_AUTO_TEST_CASE(Local) {
 
   (*parameters)["INTERNAL_PRECISION"].set("double");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -98,8 +98,8 @@ BOOST_AUTO_TEST_CASE(Blocking) {
 
   (*parameters)["INTERNAL_PRECISION"].set("double");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -120,8 +120,8 @@ BOOST_AUTO_TEST_CASE(MultiDevice) {
 
   (*parameters)["INTERNAL_PRECISION"].set("double");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -142,8 +142,8 @@ BOOST_AUTO_TEST_CASE(MultiPlatform) {
 
   (*parameters)["INTERNAL_PRECISION"].set("double");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -164,8 +164,8 @@ BOOST_AUTO_TEST_CASE(SimpleSinglePrecision) {
 
   (*parameters)["INTERNAL_PRECISION"].set("float");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
@@ -185,8 +185,8 @@ BOOST_AUTO_TEST_CASE(LocalSinglePrecision) {
 
   (*parameters)["INTERNAL_PRECISION"].set("float");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -206,8 +206,8 @@ BOOST_AUTO_TEST_CASE(BlockingSinglePrecision) {
 
   (*parameters)["INTERNAL_PRECISION"].set("float");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -228,8 +228,8 @@ BOOST_AUTO_TEST_CASE(MultiDeviceSinglePrecision) {
 
   (*parameters)["INTERNAL_PRECISION"].set("float");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -250,8 +250,8 @@ BOOST_AUTO_TEST_CASE(MultiPlatformSinglePrecision) {
 
   (*parameters)["INTERNAL_PRECISION"].set("float");
 
-  std::vector<std::reference_wrapper<json::Node>> deviceNodes = parameters->getAllDeviceNodes();
-  for (json::Node &deviceNode : deviceNodes) {
+  std::vector<std::reference_wrapper<json::node>> deviceNodes = parameters->getAllDeviceNodes();
+  for (json::node &deviceNode : deviceNodes) {
     auto &kernelNode = deviceNode["KERNELS"].replaceDictAttr(
         sgpp::datadriven::StreamingModOCLOpt::Configuration::getKernelName());
     kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);

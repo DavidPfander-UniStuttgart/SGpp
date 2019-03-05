@@ -57,6 +57,12 @@ void StretchedBoundaryGridGenerator::coarsen(CoarseningFunctor& func,
   coarsen.free_coarsen(this->storage, func, alpha);
 }
 
+void StretchedBoundaryGridGenerator::coarsen(UnlimitedCoarseningFunctor& func,
+                                             DataVector& alpha) {
+  HashCoarsening coarsen;
+  coarsen.free_coarsen(this->storage, func, alpha);
+}
+
 void StretchedBoundaryGridGenerator::coarsenNFirstOnly(CoarseningFunctor& func,
     DataVector& alpha, size_t numFirstOnly) {
   HashCoarsening coarsen;

@@ -10,10 +10,10 @@
 namespace sgpp {
 namespace base {
 
-OperationConfiguration::OperationConfiguration() : json::JSON() {}
+OperationConfiguration::OperationConfiguration() : json::json() {}
 
 OperationConfiguration::OperationConfiguration(const std::string& fileName)
-    : json::JSON(fileName) {}
+    : json::json(fileName) {}
 
 OperationConfiguration* OperationConfiguration::clone() {
   OperationConfiguration* clone = new OperationConfiguration(*this);

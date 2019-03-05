@@ -6,7 +6,7 @@
 #include <sgpp/combigrid/functions/OrthogonalPolynomialBasis1D.hpp>
 #include <sgpp/combigrid/GeneralFunction.hpp>
 
-#include <sgpp/base/tools/json/JSON.hpp>
+#include <sgpp/base/tools/json/json.hpp>
 #include <sgpp/base/tools/json/json_exception.hpp>
 #include <sgpp/base/exception/application_exception.hpp>
 #include <sgpp/globaldef.hpp>
@@ -33,13 +33,13 @@ namespace combigrid {
 
 // --------------------------------------------------------------------------------------------
 OrthogonalPolynomialBasis1DConfiguration::OrthogonalPolynomialBasis1DConfiguration()
-    : json::JSON() {
+    : json::json() {
   initConfig();
 }
 
 OrthogonalPolynomialBasis1DConfiguration::OrthogonalPolynomialBasis1DConfiguration(
     const std::string& fileName)
-    : json::JSON(fileName) {
+    : json::json(fileName) {
   initConfig();
   // initialize structs from file
   // configure grid

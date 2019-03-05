@@ -56,14 +56,14 @@ class OCLManagerMultiPlatform {
                    std::map<cl_platform_id, std::vector<cl_kernel>> &kernels);
 
   cl_kernel buildKernel(const std::string &source, std::shared_ptr<OCLDevice> device,
-                        json::Node &kernelConfiguration, const std::string &kernelName);
+                        json::node &kernelConfiguration, const std::string &kernelName);
 
   void configure(bool useConfiguration = false);
 
   void configurePlatform(cl_platform_id platformId, base::OCLOperationConfiguration &configuration,
                          bool useConfiguration);
 
-  void configureDevice(cl_device_id deviceId, json::Node &devicesNode,
+  void configureDevice(cl_device_id deviceId, json::node &devicesNode,
                        std::vector<cl_device_id> &filteredDeviceIds,
                        std::vector<std::string> &filteredDeviceNames,
                        std::map<std::string, size_t> &countLimitMap, bool useConfiguration);

@@ -81,11 +81,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Default) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing default rhs kernel ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
       }
@@ -137,11 +137,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemory) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", false);
 	// kernelNode.replaceIDAttr("WRITE_SOURCE", true);
@@ -193,11 +193,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with local memory and compression ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
 	kernelNode.replaceIDAttr("WRITE_SOURCE", true);
@@ -248,11 +248,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression) {
 //     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
 //     std::cout << "Testing rhs kernel with local memory and compression ..." << std::endl;
 //     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-//       json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+//       json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
 //       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-//         json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+//         json::node &deviceNode = platformNode["DEVICES"][deviceName];
 //         const std::string &kernelName = "cscheme";
-//         json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+//         json::node &kernelNode = deviceNode["KERNELS"][kernelName];
 //         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
 //         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
 //       }
@@ -302,11 +302,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression32) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with unsigned compression type unsigned int and without local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
@@ -357,11 +357,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32) {
     sgpp::datadriven::DensityOCLMultiPlatform::OperationDensity::load_default_parameters(parameters);
     std::cout << "Testing rhs kernel with unsigned compression type unsigned int and with local memory ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("COMPRESSION_TYPE", "unsigned int");
@@ -413,11 +413,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32Registers) {
     std::cout << "Testing rhs kernel with unsigned compression type unsigned int, without "
               << "local memory and without compression registers ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
@@ -470,11 +470,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression32NoRegisters) {
     std::cout << "Testing rhs kernel with unsigned compression type unsigned int, with "
               << "local memory and without compression registers ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
@@ -527,11 +527,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_Compression64NoRegisters) {
     std::cout << "Testing rhs kernel with long compression type, without "
               << "local memory and without compression registers ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
@@ -584,11 +584,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegisters) {
     std::cout << "Testing rhs kernel with long compression type, with "
               << "local memory and without compression registers ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
@@ -641,11 +641,11 @@ BOOST_AUTO_TEST_CASE(DensityRHSOpenCL_LocalMemoryCompression64NoRegistersEvalBlo
     std::cout << "Testing rhs kernel with long compression type, with "
               << "local memory and without compression registers ..." << std::endl;
     for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-      json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+      json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-        json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
         const std::string &kernelName = "cscheme";
-        json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+        json::node &kernelNode = deviceNode["KERNELS"][kernelName];
         kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_FIXED", true);
         kernelNode.replaceIDAttr("USE_COMPRESSION_REGISTERS", false);
@@ -700,11 +700,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing with preprocessed positions..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", true);
     }
   }
@@ -712,11 +712,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing with preprocessed positions and ignored flags..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -725,11 +725,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   }
   multiply_and_test(parameters, mult_optimal_result, manager, *grid);
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -741,11 +741,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing with branchless mutliplication kernel..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", false);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
@@ -758,11 +758,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing with branchless mutliplication kernel with fabs modifications..."
             << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
@@ -773,11 +773,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   multiply_and_test(parameters, mult_optimal_result, manager, *grid);
   std::cout << "Testing with branchless mutliplication kernel with level cache..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
@@ -790,11 +790,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing with branchless mutliplication kernel with implicit modifications..."
             << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", false);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -807,11 +807,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing with branchless mutliplication kernel with "
             << "all modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -823,11 +823,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing default multiplcation kernel with fabs modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
@@ -839,11 +839,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing default multiplcation kernel with implicit modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", false);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -855,11 +855,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing default multiplcation kernel with level cache..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", false);
       kernelNode.replaceIDAttr("USE_IMPLICIT", false);
@@ -871,11 +871,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing default multiplcation kernel with all modifications..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
       kernelNode.replaceIDAttr("USE_IMPLICIT", true);
@@ -887,11 +887,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression for streaming gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -906,11 +906,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression for fixed gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -925,11 +925,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression for all gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -944,11 +944,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression but without implicit..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -964,11 +964,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression but without optimized operation count..."
             << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -983,11 +983,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression and without local memory..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1002,11 +1002,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for streaming gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1022,11 +1022,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for fixed gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1042,11 +1042,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for all gridpoints..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1062,11 +1062,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" but without implicit..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1083,11 +1083,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" but without optimized operation count..."
             << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1103,11 +1103,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
 
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" and without local memory..." << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1124,11 +1124,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for streaming gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1146,11 +1146,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for fixed gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1168,11 +1168,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" for all gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1190,11 +1190,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" but without implicit..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1213,11 +1213,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
             << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1235,11 +1235,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"unsigned int\" and without local memory..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1257,11 +1257,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for streaming gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1279,11 +1279,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for fixed gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1301,11 +1301,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" for all gridpoints..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1323,11 +1323,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" but without implicit..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1346,11 +1346,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
             << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1368,11 +1368,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL) {
   std::cout << "Testing multiplication kernel with compression_type \"uint64_t\" and without local memory..." << std::endl;
   std::cout << "No compression register!" << std::endl;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1417,11 +1417,11 @@ BOOST_AUTO_TEST_CASE(DensityMultiplicationOpenCL_EvalBlocking) {
   sgpp::base::GridGenerator &gridGen = grid->getGenerator();
   gridGen.regular(11);
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "multdensity";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("PREPROCESS_POSITIONS", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
       kernelNode.replaceIDAttr("USE_FABS", true);
@@ -1595,11 +1595,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing kernel with select
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", true);
     }
   }
@@ -1608,11 +1608,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
       kernelNode.replaceIDAttr("USE_APPROX", false);
@@ -1629,11 +1629,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1652,11 +1652,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel with reflexive edges
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1674,11 +1674,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel with unrolled dist (2) and maximum number of bins
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1698,11 +1698,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel with unrolled dist (2)
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1722,11 +1722,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // Testing approximate KNN kernel with unrolled dist (3)
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("LOCAL_SIZE", 128l);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1743,11 +1743,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
   run_knn_test_case(parameters, data_dim10, graph_approx_result_dim10);
 
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("USE_APPROX", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1767,11 +1767,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // testing with unrolled dim loop
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("USE_APPROX", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);
@@ -1791,11 +1791,11 @@ BOOST_AUTO_TEST_CASE(KNNGraphOpenCL) {
 
   // testing with unrolled dim loop
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
-    json::Node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
-      json::Node &deviceNode = platformNode["DEVICES"][deviceName];
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
       const std::string &kernelName = "connectNeighbors";
-      json::Node &kernelNode = deviceNode["KERNELS"][kernelName];
+      json::node &kernelNode = deviceNode["KERNELS"][kernelName];
       kernelNode.replaceIDAttr("USE_SELECT", false);
       kernelNode.replaceIDAttr("USE_APPROX", false);
       kernelNode.replaceIDAttr("KERNEL_USE_LOCAL_MEMORY", true);

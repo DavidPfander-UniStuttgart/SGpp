@@ -10,7 +10,7 @@
 #include "sgpp/globaldef.hpp"
 #include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/solver/TypesSolver.hpp"
-#include "sgpp/base/tools/json/JSON.hpp"
+#include "sgpp/base/tools/json/json.hpp"
 
 namespace sgpp {
 namespace datadriven {
@@ -32,7 +32,7 @@ class TestsetConfiguration {
         expectedLargestDifference(0.0) {}
 };
 
-class LearnerScenario : public json::JSON {
+class LearnerScenario : public json::json {
  private:
   bool initialized;
   //
