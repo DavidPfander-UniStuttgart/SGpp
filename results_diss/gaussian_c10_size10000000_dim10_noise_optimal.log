@@ -1,104 +1,78 @@
 binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size10000000_dim10_noise
 level: 7
-lambda: 1e-06
+lambda: 1e-05
 OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
 k: 6
-threshold: 5185.19
+threshold: 1234.57
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 1.09361
+Dataset load duration: 1.10513
 dimension: 10
 data points: 10200000
 printing first two datapoints (if available):
 0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
 0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
 initial grid created, grid points: 397825
-grid create duration: 1.40204s
+grid create duration: 1.39672s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 40.5522s
+last_duration_generate_b: 40.3412s
 ops_generate_b: 247527
-flops_generate_b: 6103.9 GFLOPS
+flops_generate_b: 6135.83 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
 Starting norm of residuum: 0.131773
 Target norm:               1.31773e-05
-delta: 0.461378
-delta: 0.378734
-delta: 0.256768
-delta: 0.155962
-delta: 0.20517
-delta: 0.57853
-delta: 0.0963712
-delta: 0.0625297
-delta: 0.0765933
-delta: 0.092371
-delta: 0.160666
-delta: 0.0366049
-delta: 0.0404748
-delta: 0.00984048
-delta: 0.100867
-delta: 0.00904579
-delta: 0.0180579
-delta: 0.00683456
-delta: 0.0146495
-delta: 0.00631271
-delta: 0.00444618
-delta: 0.00187597
-delta: 0.00334592
-delta: 0.0214524
-delta: 0.00151216
-delta: 0.00358545
-delta: 0.000412542
-delta: 0.00136162
-delta: 0.000290754
-delta: 0.000726592
-delta: 9.25855e-05
-delta: 0.000602344
-delta: 0.000764964
-delta: 8.92225e-05
-delta: 5.59554e-05
-delta: 5.62193e-05
-delta: 0.000558957
-delta: 8.72569e-05
-delta: 1.36995e-05
-delta: 5.72817e-05
-delta: 9.81131e-06
-Number of iterations: 41 (max. 1000)
-Final norm of residuum: 9.81131e-06
-counted_mult_calls: 42
-act_it: 42
-acc_duration_density: 174.146s
-ops_density: 943891 GOps
-flops_density: 5420.12 GFLOPS
-density_duration_total: 222.377s
-surplus min: -2067.75 max: 7829.92
+delta: 0.425137
+delta: 0.250401
+delta: 0.118028
+delta: 0.0368358
+delta: 0.0239943
+delta: 0.0439434
+delta: 0.00567048
+delta: 0.00146212
+delta: 0.000768761
+delta: 0.000935635
+delta: 0.000672558
+delta: 0.000136829
+delta: 9.42034e-05
+delta: 1.52157e-05
+delta: 1.37946e-05
+delta: 2.30563e-06
+Number of iterations: 16 (max. 1000)
+Final norm of residuum: 2.30563e-06
+counted_mult_calls: 17
+act_it: 17
+acc_duration_density: 70.406s
+ops_density: 382051 GOps
+flops_density: 5426.4 GFLOPS
+density_duration_total: 118.235s
+surplus min: -171.486 max: 1265.74
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 10200000 adding elements: 64 (* dims)
-last_duration_create_graph: 521.302s
+last_duration_create_graph: 523.287s
 ops_create_graph: 3.1212e+06 GOps
-flops_create_graph: 5987.32 GFLOPS
+flops_create_graph: 5964.6 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 247.229s
+last_duration_prune_graph: 247.285s
 ops_prune_graph: 1.76109e+06 GOps
-flops_prune_graph: 7123.32 GFLOPS
+flops_prune_graph: 7121.72 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 8.21505s
-detected clusters: 15
-datapoints in clusters: 10000086
-write cluster map duration:9.31079s
-total_duration_without_disk: 1013.44
-total_duration: 1014.53
+find_cluster_duration_total: 7.75882s
+detected clusters: 31
+datapoints in clusters: 10000311
+write cluster map duration:9.24944s
+total_duration_without_disk: 911.314
+total_duration: 912.419
 
 all done!
-ARI: 0.9999994444464753
-(11, 10)
-[[  5.00000000e+00   1.00000000e+06   1.00000000e+06   1.00000000e+06
-    1.00000000e+06   9.99995000e+05   1.00000000e+06   1.00000000e+06
-    1.00000000e+06   1.00000000e+06   1.00000000e+06]]
+ARI: 1.0
+(10, 10)
+[[ 1000000.  1000000.  1000000.  1000000.  1000000.  1000000.  1000000.
+   1000000.  1000000.  1000000.]]

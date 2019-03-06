@@ -3,25 +3,25 @@ level: 7
 lambda: 1.77828e-08
 OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
 k: 6
-threshold: 1666.67
+threshold: 1851.85
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.113214
+Dataset load duration: 0.138514
 dimension: 10
 data points: 1020000
 printing first two datapoints (if available):
 0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
 0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
 initial grid created, grid points: 397825
-grid create duration: 1.32469s
+grid create duration: 1.32979s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 4.26512s
+last_duration_generate_b: 4.03594s
 ops_generate_b: 24752.7
-flops_generate_b: 5803.51 GFLOPS
+flops_generate_b: 6133.07 GFLOPS
 Solving density SLE
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
@@ -225,41 +225,55 @@ Number of iterations: 194 (max. 1000)
 Final norm of residuum: 3.21073e-06
 counted_mult_calls: 198
 act_it: 198
-acc_duration_density: 820.556s
+acc_duration_density: 821.601s
 ops_density: 4.44977e+06 GOps
-flops_density: 5422.87 GFLOPS
-density_duration_total: 834.217s
+flops_density: 5415.97 GFLOPS
+density_duration_total: 833.84s
 surplus min: -7948.54 max: 27566.9
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 1020000 adding elements: 32 (* dims)
-last_duration_create_graph: 5.27339s
+last_duration_create_graph: 5.4289s
 ops_create_graph: 31212 GOps
-flops_create_graph: 5918.78 GFLOPS
+flops_create_graph: 5749.23 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 24.8968s
+last_duration_prune_graph: 25.0366s
 ops_prune_graph: 176109 GOps
-flops_prune_graph: 7073.56 GFLOPS
+flops_prune_graph: 7034.07 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 0.71254s
-detected clusters: 97
-datapoints in clusters: 994233
-write cluster map duration:0.988397s
-total_duration_without_disk: 869.097
-total_duration: 869.211
+find_cluster_duration_total: 0.718922s
+detected clusters: 99
+datapoints in clusters: 990825
+write cluster map duration:0.978286s
+total_duration_without_disk: 869.679
+total_duration: 869.817
 
 all done!
-ARI: 0.9562775571639475
-(97, 100)
-[[  5887.  10000.   9980.  20000.  10000.  10000.  10000.  10000.  10000.
-    9998.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   20000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.   9548.  20000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.  10000.  10000.   9586.  10000.  10000.
-   10000.   9408.  10000.  20000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.  10000.
-   10000.  10000.   5798.  10000.   9995.   9800.  10000.]]
+ARI: 0.9624054953941112
+(99, 100)
+[[  9.28400000e+03   1.00000000e+04   9.92400000e+03   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   9.98700000e+03   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   2.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    9.14300000e+03   2.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   9.15900000e+03
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   8.74300000e+03
+    1.00000000e+04   2.00000000e+04   9.99900000e+03   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   1.00000000e+04   1.00000000e+04   1.00000000e+04
+    1.00000000e+04   4.28000000e+03   1.00000000e+04   9.96000000e+03
+    9.51800000e+03   1.00000000e+04   3.00000000e+00]]

@@ -1,27 +1,27 @@
 binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c10_size1000000_dim10_noise
 level: 6
-lambda: 5.62341e-08
+lambda: 1e-06
 OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
 k: 6
-threshold: 3641.98
+threshold: 1111.11
 using naive ocl knn
 reading dataset...
 info: binary dataset
-Dataset load duration: 0.12244
+Dataset load duration: 0.125154
 dimension: 10
 data points: 1020000
 printing first two datapoints (if available):
 0.455971, 0.23104, 0.415448, 0.559524, 0.392029, 0.727333, 0.26555, 0.729712, 0.177172, 0.525939
 0.655281, 0.58152, 0.642507, 0.802767, 0.463711, 0.26669, 0.224731, 0.236338, 0.730016, 0.626458
 initial grid created, grid points: 77505
-grid create duration: 0.240225s
+grid create duration: 0.240871s
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 device name: GeForce GTX 1080 Ti
 query_size: 4
 max_compute_units: 28
-last_duration_generate_b: 0.932728s
+last_duration_generate_b: 0.917005s
 ops_generate_b: 4822.36
-flops_generate_b: 5170.17 GFLOPS
+flops_generate_b: 5258.82 GFLOPS
 
 b-based coarsening: removed 42818 grid points, remaining: 34687
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
@@ -33,169 +33,72 @@ Starting Conjugated Gradients
 All temp variables used in CG have been initialized
 Starting norm of residuum: 0.0622584
 Target norm:               6.22584e-06
-delta: 0.136989
-delta: 0.066656
-delta: 0.117409
-delta: 0.0549779
-delta: 0.102665
-delta: 0.0489918
-delta: 0.102805
-delta: 0.0940524
-delta: 0.0589966
-delta: 0.0487096
-delta: 0.0679297
-delta: 0.0281378
-delta: 0.0474298
-delta: 0.039659
-delta: 0.0980882
-delta: 0.0278653
-delta: 0.0370885
-delta: 0.0220425
-delta: 0.0338911
-delta: 0.0240999
-delta: 0.0247016
-delta: 0.0655051
-delta: 0.051633
-delta: 0.0150691
-delta: 0.0133358
-delta: 0.0229388
-delta: 0.0106013
-delta: 0.0127028
-delta: 0.0573832
-delta: 0.00772509
-delta: 0.0186877
-delta: 0.0100226
-delta: 0.016843
-delta: 0.00590274
-delta: 0.0133932
-delta: 0.0134744
-delta: 0.0085781
-delta: 0.00502069
-delta: 0.00404337
-delta: 0.00249189
-delta: 0.00524499
-delta: 0.00757939
-delta: 0.00600238
-delta: 0.00345596
-delta: 0.00237973
-delta: 0.00448281
-delta: 0.00226854
-delta: 0.00941282
-delta: 0.00226558
-delta: 0.00407515
-delta: 0.0015705
-delta: 0.00231151
-delta: 0.00258221
-delta: 0.00148255
-delta: 0.00527589
-delta: 0.00281562
-delta: 0.00120001
-delta: 0.000756924
-delta: 0.0024097
-delta: 0.000927759
-delta: 0.00356222
-delta: 0.00168112
-delta: 0.000963846
-delta: 0.00085619
-delta: 0.000832567
-delta: 0.000700469
-delta: 0.000653633
-delta: 0.00135663
-delta: 0.000679026
-delta: 0.000613994
-delta: 0.000437471
-delta: 0.000721032
-delta: 0.00051458
-delta: 0.00178922
-delta: 0.00032525
-delta: 0.000641495
-delta: 0.000304423
-delta: 0.000310382
-delta: 0.000243885
-delta: 0.000640513
-delta: 0.000456149
-delta: 0.000381774
-delta: 0.000185289
-delta: 0.000172588
-delta: 0.000145661
-delta: 0.000262365
-delta: 0.000653618
-delta: 0.000137351
-delta: 0.000246389
-delta: 8.10221e-05
-delta: 8.89463e-05
-delta: 0.000249539
-delta: 7.59014e-05
-delta: 0.000100359
-delta: 9.62537e-05
-delta: 0.000105631
-delta: 9.41862e-05
-delta: 7.59214e-05
-delta: 0.000215369
-delta: 5.38754e-05
-delta: 7.91282e-05
-delta: 3.42155e-05
-delta: 0.000108044
-delta: 3.60875e-05
-delta: 0.000171155
-delta: 5.11531e-05
-delta: 4.55312e-05
-delta: 3.30138e-05
-delta: 4.29285e-05
-delta: 3.74461e-05
-delta: 0.000113904
-delta: 2.50073e-05
-delta: 3.70225e-05
-delta: 1.97137e-05
-delta: 5.97746e-05
-delta: 1.26205e-05
-delta: 6.55305e-05
-delta: 2.29232e-05
-delta: 3.01431e-05
-delta: 1.74205e-05
-delta: 2.214e-05
-delta: 1.74095e-05
-delta: 8.63911e-06
-delta: 3.24816e-05
-delta: 1.08879e-05
-delta: 9.21479e-06
-delta: 1.62464e-05
-delta: 7.21543e-06
-delta: 1.91815e-05
-delta: 8.18601e-06
-delta: 1.54602e-05
-delta: 5.87513e-06
-Number of iterations: 132 (max. 1000)
-Final norm of residuum: 5.87513e-06
-counted_mult_calls: 135
-act_it: 135
-acc_duration_density: 5.2843s
-ops_density: 23065.1 GOps
-flops_density: 4364.84 GFLOPS
-density_duration_total: 15.228s
-surplus min: -15752 max: 42451
+delta: 0.135631
+delta: 0.0621172
+delta: 0.100369
+delta: 0.0419086
+delta: 0.0671983
+delta: 0.0278063
+delta: 0.0459677
+delta: 0.0162199
+delta: 0.0757896
+delta: 0.0157433
+delta: 0.016859
+delta: 0.0058852
+delta: 0.00791043
+delta: 0.0056463
+delta: 0.00270482
+delta: 0.00313479
+delta: 0.00862098
+delta: 0.0015721
+delta: 0.00188735
+delta: 0.00112964
+delta: 0.000819256
+delta: 0.000995346
+delta: 0.000303273
+delta: 0.000279805
+delta: 0.000553314
+delta: 0.000285862
+delta: 0.000108974
+delta: 0.000109475
+delta: 0.000128175
+delta: 4.2292e-05
+delta: 6.00448e-05
+delta: 8.56567e-05
+delta: 4.73069e-05
+delta: 1.32629e-05
+delta: 1.25912e-05
+delta: 5.71515e-06
+Number of iterations: 36 (max. 1000)
+Final norm of residuum: 5.71515e-06
+counted_mult_calls: 37
+act_it: 37
+acc_duration_density: 1.45465s
+ops_density: 6321.55 GOps
+flops_density: 4345.75 GFLOPS
+density_duration_total: 9.75967s
+surplus min: -2140.48 max: 8402.27
 Starting graph creation...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
 unpadded_datasize: 1020000 adding elements: 32 (* dims)
-last_duration_create_graph: 5.61354s
+last_duration_create_graph: 5.20668s
 ops_create_graph: 31212 GOps
-flops_create_graph: 5560.13 GFLOPS
+flops_create_graph: 5994.6 GFLOPS
 Pruning graph...
 Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
-last_duration_prune_graph: 2.65844s
+last_duration_prune_graph: 2.55565s
 ops_prune_graph: 15355.2 GOps
-flops_prune_graph: 5776.03 GFLOPS
+flops_prune_graph: 6008.35 GFLOPS
 Finding clusters...
-find_cluster_duration_total: 0.796715s
-detected clusters: 10
-datapoints in clusters: 999974
-write cluster map duration:0.926831s
-total_duration_without_disk: 28.5916
-total_duration: 28.7141
+find_cluster_duration_total: 0.81143s
+detected clusters: 15
+datapoints in clusters: 1000116
+write cluster map duration:0.928763s
+total_duration_without_disk: 20.5858
+total_duration: 20.711
 
 all done!
-ARI: 0.9999267101102116
-(11, 10)
-[[  6.60000000e+01   1.00000000e+05   1.00000000e+05   1.00000000e+05
-    1.00000000e+05   1.00000000e+05   9.99340000e+04   1.00000000e+05
-    1.00000000e+05   1.00000000e+05   1.00000000e+05]]
+ARI: 1.0
+(10, 10)
+[[ 100000.  100000.  100000.  100000.  100000.  100000.  100000.  100000.
+   100000.  100000.]]
