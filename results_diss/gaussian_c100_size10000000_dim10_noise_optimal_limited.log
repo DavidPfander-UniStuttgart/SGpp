@@ -1,0 +1,137 @@
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size10000000_dim10_noise
+level: 7
+lambda: 1.77828e-08
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 3580.25
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 1.22464
+dimension: 10
+data points: 10200000
+printing first two datapoints (if available):
+0.214481, 0.554334, 0.642808, 0.825717, 0.647876, 0.197221, 0.361363, 0.79707, 0.63018, 0.871278
+0.298784, 0.523701, 0.316682, 0.742123, 0.456755, 0.78974, 0.5497, 0.231498, 0.7254, 0.711656
+initial grid created, grid points: 397825
+grid create duration: 1.38297s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 39.9228s
+ops_generate_b: 247527
+flops_generate_b: 6200.13 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.0513473
+Target norm:               5.13473e-06
+delta: 0.0267446
+delta: 0.0537295
+delta: 0.0465853
+delta: 0.0351031
+delta: 0.0420436
+delta: 0.0343507
+delta: 0.0920392
+delta: 0.0341171
+delta: 0.0405023
+delta: 0.0221798
+delta: 0.0824513
+delta: 0.0250574
+delta: 0.0928516
+delta: 0.0125016
+delta: 0.0208111
+delta: 0.0168039
+delta: 0.146699
+delta: 0.0429501
+delta: 0.0332564
+delta: 0.0338917
+delta: 0.00974032
+delta: 0.0251274
+delta: 0.0461899
+delta: 0.0911485
+delta: 0.0134259
+delta: 0.0157555
+delta: 0.0606807
+delta: 0.00843839
+delta: 0.0915271
+delta: 0.00898791
+delta: 0.00621119
+delta: 0.0157687
+delta: 0.00904602
+delta: 0.0339873
+delta: 0.128875
+delta: 0.00695909
+delta: 0.0129152
+delta: 0.0106854
+delta: 0.00392783
+delta: 0.0763
+delta: 0.00934348
+delta: 0.00962159
+delta: 0.00758029
+delta: 0.0029006
+delta: 0.0411083
+delta: 0.0079817
+delta: 0.00554409
+delta: 0.00716599
+delta: 0.0115416
+delta: 0.00519263
+Number of iterations: 50 (max. 50)
+Final norm of residuum: 0.00519263
+counted_mult_calls: 51
+act_it: 52
+acc_duration_density: 211.449s
+ops_density: 1.16863e+06 GOps
+flops_density: 5526.76 GFLOPS
+density_duration_total: 259.101s
+surplus min: -5035.47 max: 19471.8
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+last_duration_create_graph: 523.457s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 5962.66 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 247.362s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 7119.5 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 8.12554s
+detected clusters: 116
+datapoints in clusters: 9864710
+write cluster map duration:10.1156s
+total_duration_without_disk: 1053.73
+total_duration: 1054.95
+
+all done!
+ARI: 0.9729200565976622
+(108, 100)
+[[  1.35542000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   9.99990000e+04   9.99990000e+04   1.00000000e+05
+    9.99800000e+04   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   2.00000000e+05   1.00000000e+05
+    1.00000000e+05   2.00000000e+05   1.00000000e+05   9.97320000e+04
+    1.00000000e+05   8.93810000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    9.99130000e+04   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   8.99050000e+04   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   9.99990000e+04
+    1.00000000e+05   9.99960000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   9.99930000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   9.27440000e+04   1.00000000e+05   9.24680000e+04
+    1.00000000e+05   9.99940000e+04   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   1.00000000e+05   1.00000000e+05
+    1.00000000e+05   1.00000000e+05   3.33000000e+02   2.00000000e+00
+    2.00000000e+00   2.00000000e+00   3.00000000e+00   4.00000000e+00
+    2.00000000e+00   2.00000000e+00   3.00000000e+00   2.00000000e+00]]
