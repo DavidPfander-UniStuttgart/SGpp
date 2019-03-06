@@ -115,22 +115,27 @@ void manager_t::build_kernel(
     // compiling the program
     err = clBuildProgram(program, 0, NULL, build_opts.c_str(), NULL, NULL);
 
-    if (err != CL_SUCCESS) {
+    if (verbose) {
+
       // get the build log
       size_t len;
-      clGetProgramBuildInfo(program, platform.deviceIds[0],
-                            CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
-      std::string buffer(len, '\0');
-      clGetProgramBuildInfo(program, platform.deviceIds[0],
-                            CL_PROGRAM_BUILD_LOG, len, &buffer[0], NULL);
-      buffer = buffer.substr(0, buffer.find('\0'));
-
-      if (verbose) {
+      cl_int err_buildlog = clGetProgramBuildInfo(
+          program, platform.deviceIds[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
+      check(err_buildlog,
+            "OCL Error: build error, could not retrieve size of build log");
+      if (err_buildlog == CL_SUCCESS) {
+        std::string buffer(len, '\0');
+        err_buildlog =
+            clGetProgramBuildInfo(program, platform.deviceIds[0],
+                                  CL_PROGRAM_BUILD_LOG, len, &buffer[0], NULL);
+        check(err_buildlog,
+              "OCL Error: build error, could not retrieve build log");
+        buffer = buffer.substr(0, buffer.find('\0'));
         std::cout << "--- Build Log ---" << std::endl << buffer << std::endl;
       }
-
-      check(err, "OCL Error: OpenCL build error");
     }
+
+    check(err, "OCL Error: OpenCL build error");
 
     for (size_t i = 0; i < platform.deviceIds.size(); i++) {
       // creating the kernel
@@ -294,6 +299,12 @@ void manager_t::configure_platform(cl_platform_id platformId,
   if (verbose) {
     std::cout << "OCL Info: using platform, name: \"" << platformName << "\""
               << std::endl;
+  }
+
+  if (std::string(platformName).compare("Clover") == 0) {
+    std::cout << "OCL Info: platform skipped due to buggy behavior"
+              << std::endl;
+    return;
   }
 
   json::node &devicesNode = parameters["PLATFORMS"][platformName]["DEVICES"];

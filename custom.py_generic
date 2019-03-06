@@ -19,7 +19,6 @@ RUN_BOOST_TESTS=0
 # boost and OpenCL
 BOOST_LIBRARY_PATH=os.environ["BOOST_REPO_PATH"] + '/lib'
 BOOST_INCLUDE_PATH=os.environ["BOOST_REPO_PATH"] + '/include'
-USE_OCL=1
 OCL_LIBRARY_PATH=os.environ["OCL_LIBRARY_PATH"]
 # AutoTuneTMP (can only be enabled together with OpenCL)
 USE_AUTOTUNE_TMP=1
