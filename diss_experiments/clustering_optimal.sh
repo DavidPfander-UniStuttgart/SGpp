@@ -43,7 +43,7 @@ threshold="1851.85185185"
 ./clustering_scripts/check_ARI.py --reference_cluster_assignment ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size1000000_dim10_noise_class.arff --cluster_assignment data_ref_testing_cluster_map.csv >> results_diss/gaussian_c100_size1000000_dim10_noise_optimal_limited.log 2>&1
 
 # coarsen
-./datadriven/examplesOCL/clustering_cmd --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size1000000_dim10_noise --config OCL_configs/config_ocl_float_${device}.cfg --lambda ${lambda} --threshold ${threshold} --level 7 --epsilon 1E-2 --k 6 --write_cluster_map --file_prefix data_ref_testing --b_coarsening_threshold ${coarsen_threshold} > results_diss/gaussian_c100_size1000000_dim10_noise_optimal_coarsen.log 2>&1
+./datadriven/examplesOCL/clustering_cmd --binary_header_filename ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size1000000_dim10_noise --config OCL_configs/config_ocl_float_${device}.cfg --lambda ${lambda} --threshold ${threshold} --level 7 --epsilon 1E-2 --k 6 --write_cluster_map --file_prefix data_ref_testing --use_b_coarsening --b_coarsening_threshold ${coarsen_threshold} > results_diss/gaussian_c100_size1000000_dim10_noise_optimal_coarsen.log 2>&1
 
 ./clustering_scripts/check_ARI.py --reference_cluster_assignment ../../DissertationCodeTesla1/SGpp/datasets_WPDM18/gaussian_c100_size1000000_dim10_noise_class.arff --cluster_assignment data_ref_testing_cluster_map.csv >> results_diss/gaussian_c100_size1000000_dim10_noise_optimal_coarsen.log 2>&1
 
