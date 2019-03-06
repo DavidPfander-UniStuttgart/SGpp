@@ -26,7 +26,7 @@ device="QuadroGP100"
 ./clustering_scripts/check_ARI.py --reference_cluster_assignment datasets_diss/gaussian_c100_size100000_dim5id5_noise_class.arff --cluster_assignment ref_testing_cluster_map.csv >> results_diss/clustering_adaptive_surplus_dim5id5.log 2>&1
 
 # dim5id5 with pruning only
-./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 54.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 1E-3 --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 5.0E-5 > results_diss/clustering_adaptive_pruning_dim5id5.log
+./datadriven/examplesOCL/clustering_cmd --datasetFileName datasets_diss/gaussian_c100_size100000_dim5id5_noise.arff --level 11 --epsilon 1E-2 --threshold 54.0 --lambda 1.0E-5 --k 6 --config OCL_configs/config_ocl_float_QuadroGP100.cfg --write_cluster_map --file_prefix ref_testing --use_b_coarsening --b_coarsening_threshold 7.5E-4 --refinement_steps 0 --refinement_points 1000 --coarsen_points 0 --coarsen_threshold 5.0E-5 > results_diss/clustering_adaptive_pruning_dim5id5.log
 
 ./clustering_scripts/check_ARI.py --reference_cluster_assignment datasets_diss/gaussian_c100_size100000_dim5id5_noise_class.arff --cluster_assignment ref_testing_cluster_map.csv >> results_diss/clustering_adaptive_pruning_dim5id5.log 2>&1
 
