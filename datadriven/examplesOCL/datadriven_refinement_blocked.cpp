@@ -27,7 +27,7 @@ int main(void) {
   std::cout << "dim: " << dim << " entries: " << entries << std::endl;
 
   int64_t max_level = 10;
-  int64_t min_support = 80;
+  int64_t min_support = 50;
   std::string grid_file_name("results_diss/support_refined_grid_G2D.csv");
 
   sgpp::datadriven::spatial_refinement_blocked ref(dim, max_level, min_support,

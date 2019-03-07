@@ -228,10 +228,10 @@ def add_noise(dimensions, setsize, num_noise, dataset1, Y1, additional_dims):
 # dimensions, clusters, setsize, deviation, noise_percent
 np.set_printoptions(precision=3)
 num_clusters = 4
-deviation = 0.05
-clusters_distance = 7 # unit: standard deviation
+deviation = 0.07
+clusters_distance = 5 # unit: standard deviation
 cutoff_radius = 3 # unit: standard deviation
-noise_percent = 0.05
+noise_percent = 0.8
 datasets_folder='datasets_diss/'
 additional_dims = 0
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
