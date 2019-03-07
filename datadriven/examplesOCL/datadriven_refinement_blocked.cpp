@@ -15,7 +15,7 @@
 
 int main(void) {
   std::string dataset_file_name(
-      "datasets_diss/test.arff");
+      "datasets_diss/gaussian_c4_size500_dim2id2_noise.arff");
 
   sgpp::datadriven::Dataset dataset =
       sgpp::datadriven::ARFFTools::readARFF(dataset_file_name);
@@ -26,13 +26,13 @@ int main(void) {
 
   std::cout << "dim: " << dim << " entries: " << entries << std::endl;
 
-  int64_t max_level = 2;
-  int64_t min_support = 1;
-  std::string grid_file_name("refined_grid.csv");
+  int64_t max_level = 10;
+  int64_t min_support = 80;
+  std::string grid_file_name("results_diss/support_refined_grid_G2D.csv");
 
   sgpp::datadriven::spatial_refinement_blocked ref(dim, max_level, min_support,
                                                    data);
-  ref.enable_OCL("OCL_configs/config_ocl_float_w8100.cfg");
+  ref.enable_OCL("OCL_configs/config_ocl_float_QuadroGP100.cfg");
   ref.refine();
 
   std::vector<int64_t> &ls = ref.get_levels();
