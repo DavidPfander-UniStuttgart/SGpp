@@ -236,7 +236,7 @@ datasets_folder='datasets_diss/'
 additional_dims = 0
 # dataset_type = "gaussian" # 'gaussian' or 'hypercube'
 for dim in [2]: # [5, 10]
-    for dataset_size in [int(400)]: # [1000000, 10000000, 100000000]
+    for dataset_size in [int(300)]: # [1000000, 10000000, 100000000]
         for dataset_type in ["gaussian"]: # , "hypercube"
             file_name = datasets_folder + dataset_type + "_c" + str(num_clusters) + "_size" + str(dataset_size) + "_dim" + str(dim + additional_dims) + "id" + str(dim)
             print("creating " + file_name + ".arff")
