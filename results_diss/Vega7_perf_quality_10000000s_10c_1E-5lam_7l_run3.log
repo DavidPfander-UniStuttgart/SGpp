@@ -1,0 +1,147 @@
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18//gaussian_c10_size10000000_dim10_noise
+level: 7
+lambda: 1e-05
+OpenCL configuration file: OCL_configs/config_ocl_float_Vega7.cfg
+k: 6
+threshold: 1167
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 0.548136
+dimension: 10
+data points: 10200000
+printing first two datapoints (if available):
+0.264133, 0.461687, 0.744619, 0.557456, 0.413433, 0.695519, 0.700544, 0.55475, 0.398261, 0.427065
+0.624058, 0.463125, 0.479409, 0.212546, 0.499116, 0.638229, 0.209502, 0.805448, 0.456405, 0.820289
+initial grid created, grid points: 397825
+grid create duration: 1.27405s
+Using configuration file OCL_configs/config_ocl_float_Vega7.cfg
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+device name: gfx906
+query_size: 4
+max_compute_units: 60
+building with optimization flags: -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_generate_b: 27.9292s
+ops_generate_b: 247527
+flops_generate_b: 8862.65 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+building with optimization flags: -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+Starting norm of residuum: 0.131773
+Target norm:               1.31773e-05
+delta: 0.425137
+delta: 0.250401
+delta: 0.118028
+delta: 0.0368358
+delta: 0.0239947
+delta: 0.0439426
+delta: 0.00567047
+delta: 0.00146212
+delta: 0.000769379
+delta: 0.000935577
+delta: 0.000672159
+delta: 0.000136829
+delta: 9.4203e-05
+delta: 1.52589e-05
+delta: 1.37594e-05
+delta: 2.30649e-06
+Number of iterations: 16 (max. 1000)
+Final norm of residuum: 2.30649e-06
+counted_mult_calls: 17
+act_it: 17
+acc_duration_density: 58.3489s
+ops_density: 382051 GOps
+flops_density: 6547.7 GFLOPS
+density_duration_total: 87.8107s
+surplus min: -171.486 max: 1265.74
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_Vega7.cfg
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+unpadded_datasize: 10200000 adding elements: 64 (* dims)
+building with optimization flags: -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_create_graph: 503.72s
+ops_create_graph: 3.1212e+06 GOps
+flops_create_graph: 6196.3 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_Vega7.cfg
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+building with optimization flags: -cl-mad-enable -cl-denorms-are-zero -cl-no-signed-zeros -cl-unsafe-math-optimizations -cl-finite-math-only -cl-fast-relaxed-math
+--- Begin Build Log ---
+
+--- End Build Log ---
+last_duration_prune_graph: 183.564s
+ops_prune_graph: 1.76109e+06 GOps
+flops_prune_graph: 9593.87 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 9.85661s
+detected clusters: 31
+size cluster i: 0 -> 1000091
+size cluster i: 1 -> 1000020
+size cluster i: 2 -> 1000057
+size cluster i: 3 -> 1000014
+size cluster i: 4 -> 1000021
+size cluster i: 5 -> 1000011
+size cluster i: 6 -> 1000023
+size cluster i: 7 -> 1000011
+size cluster i: 8 -> 1000012
+size cluster i: 9 -> 1000028
+size cluster i: 10 -> 6
+size cluster i: 11 -> 8
+size cluster i: 12 -> 3
+size cluster i: 13 -> 4
+size cluster i: 14 -> 2
+size cluster i: 15 -> 2
+size cluster i: 16 -> 4
+size cluster i: 17 -> 2
+size cluster i: 18 -> 3
+size cluster i: 19 -> 4
+size cluster i: 20 -> 3
+size cluster i: 21 -> 2
+size cluster i: 22 -> 6
+size cluster i: 23 -> 3
+size cluster i: 24 -> 4
+size cluster i: 25 -> 4
+size cluster i: 26 -> 3
+size cluster i: 27 -> 4
+size cluster i: 28 -> 2
+size cluster i: 29 -> 2
+size cluster i: 30 -> 3
+datapoints in clusters: 10000362
+score: 0
+total_duration_without_disk: 788.53
+total_duration: 789.078
+
+all done!
