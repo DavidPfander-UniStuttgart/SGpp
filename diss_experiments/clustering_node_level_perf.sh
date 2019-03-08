@@ -13,7 +13,7 @@ elif [ ${hn} = "argon-epyc" ]; then
     device_name='Vega7'
     dataset_directory='../../DissertationCodeTesla1/SGpp/datasets_WPDM18/'
 elif [ ${hn} = "argon-gtx" ]; then
-    device_name='P100'
+    device_name='gtx1080ti'
     dataset_directory='../../DissertationCodeTesla1/SGpp/datasets_WPDM18/'
 else
     device_name='hazelhen'

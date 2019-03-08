@@ -1,0 +1,255 @@
+binary_header_filename: ../../DissertationCodeTesla1/SGpp/datasets_WPDM18//gaussian_c100_size1000000_dim10_noise
+level: 7
+lambda: 1e-07
+OpenCL configuration file: OCL_configs/config_ocl_float_gtx1080ti.cfg
+k: 6
+threshold: 1056
+using naive ocl knn
+reading dataset...
+info: binary dataset
+Dataset load duration: 0.117975
+dimension: 10
+data points: 1020000
+printing first two datapoints (if available):
+0.761177, 0.218928, 0.356789, 0.334628, 0.526923, 0.592047, 0.216967, 0.559013, 0.58146, 0.719555
+0.854362, 0.810024, 0.555204, 0.64013, 0.263688, 0.276989, 0.211694, 0.681618, 0.832303, 0.202619
+initial grid created, grid points: 397825
+grid create duration: 1.32795s
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+device name: GeForce GTX 1080 Ti
+query_size: 4
+max_compute_units: 28
+last_duration_generate_b: 4.08874s
+ops_generate_b: 24752.7
+flops_generate_b: 6053.87 GFLOPS
+Solving density SLE
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: 0.0440302
+Target norm:               4.40302e-06
+delta: 0.0228199
+delta: 0.0544764
+delta: 0.0444728
+delta: 0.0319131
+delta: 0.0378208
+delta: 0.0605145
+delta: 0.0361845
+delta: 0.026919
+delta: 0.0394675
+delta: 0.0164576
+delta: 0.079264
+delta: 0.058309
+delta: 0.0218162
+delta: 0.00958552
+delta: 0.0140642
+delta: 0.0492664
+delta: 0.0138616
+delta: 0.0130742
+delta: 0.0296211
+delta: 0.0221802
+delta: 0.00620545
+delta: 0.0828858
+delta: 0.0101582
+delta: 0.0220459
+delta: 0.00500067
+delta: 0.0112924
+delta: 0.051359
+delta: 0.00444604
+delta: 0.0125649
+delta: 0.00325877
+delta: 0.00228613
+delta: 0.0187257
+delta: 0.00229531
+delta: 0.00448618
+delta: 0.0069899
+delta: 0.00225407
+delta: 0.0288797
+delta: 0.00237326
+delta: 0.00191755
+delta: 0.00114263
+delta: 0.00130417
+delta: 0.005553
+delta: 0.00143174
+delta: 0.0031418
+delta: 0.000543386
+delta: 0.00114738
+delta: 0.00319962
+delta: 0.00071799
+delta: 0.0019662
+delta: 0.000565262
+delta: 0.000541955
+delta: 0.0014537
+delta: 0.00809065
+delta: 0.00038189
+delta: 0.00113799
+delta: 0.000130535
+delta: 0.000703775
+delta: 0.000427226
+delta: 0.000418701
+delta: 0.000681088
+delta: 0.000185434
+delta: 0.000377307
+delta: 0.000743238
+delta: 0.000146572
+delta: 0.000155124
+delta: 0.000156999
+delta: 0.000132598
+delta: 0.00058422
+delta: 7.49437e-05
+delta: 0.000342358
+delta: 4.94315e-05
+delta: 7.23398e-05
+delta: 0.000234562
+delta: 0.0002166
+delta: 0.000126841
+delta: 5.69656e-05
+delta: 6.72163e-05
+delta: 0.000542551
+delta: 8.81835e-05
+delta: 3.14911e-05
+delta: 3.21294e-05
+delta: 0.000171831
+delta: 0.000105192
+delta: 3.49529e-05
+delta: 2.69986e-05
+delta: 3.99729e-05
+delta: 1.23462e-05
+delta: 0.000339274
+delta: 1.75528e-05
+delta: 1.22719e-05
+delta: 3.72632e-05
+delta: 7.42506e-06
+delta: 0.000245855
+delta: 2.53737e-05
+delta: 8.68102e-06
+delta: 8.98116e-06
+delta: 3.09757e-05
+delta: 7.0761e-05
+delta: 3.75847e-06
+Number of iterations: 99 (max. 1000)
+Final norm of residuum: 3.75847e-06
+counted_mult_calls: 101
+act_it: 101
+acc_duration_density: 418.331s
+ops_density: 2.26983e+06 GOps
+flops_density: 5425.93 GFLOPS
+density_duration_total: 430.146s
+surplus min: -2852.6 max: 8136.11
+Starting graph creation...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+unpadded_datasize: 1020000 adding elements: 32 (* dims)
+last_duration_create_graph: 5.40417s
+ops_create_graph: 31212 GOps
+flops_create_graph: 5775.54 GFLOPS
+Pruning graph...
+Using configuration file OCL_configs/config_ocl_float_gtx1080ti.cfg
+last_duration_prune_graph: 24.9169s
+ops_prune_graph: 176109 GOps
+flops_prune_graph: 7067.86 GFLOPS
+Finding clusters...
+find_cluster_duration_total: 0.718838s
+detected clusters: 98
+size cluster i: 0 -> 10004
+size cluster i: 1 -> 9976
+size cluster i: 2 -> 20003
+size cluster i: 3 -> 10000
+size cluster i: 4 -> 10000
+size cluster i: 5 -> 10001
+size cluster i: 6 -> 10000
+size cluster i: 7 -> 10000
+size cluster i: 8 -> 10000
+size cluster i: 9 -> 10003
+size cluster i: 10 -> 10000
+size cluster i: 11 -> 10001
+size cluster i: 12 -> 10005
+size cluster i: 13 -> 10001
+size cluster i: 14 -> 10000
+size cluster i: 15 -> 10000
+size cluster i: 16 -> 10001
+size cluster i: 17 -> 20001
+size cluster i: 18 -> 10002
+size cluster i: 19 -> 10000
+size cluster i: 20 -> 10000
+size cluster i: 21 -> 10001
+size cluster i: 22 -> 10002
+size cluster i: 23 -> 10003
+size cluster i: 24 -> 20004
+size cluster i: 25 -> 10003
+size cluster i: 26 -> 10001
+size cluster i: 27 -> 10001
+size cluster i: 28 -> 10002
+size cluster i: 29 -> 10001
+size cluster i: 30 -> 9362
+size cluster i: 31 -> 20007
+size cluster i: 32 -> 10005
+size cluster i: 33 -> 10001
+size cluster i: 34 -> 10000
+size cluster i: 35 -> 10001
+size cluster i: 36 -> 10002
+size cluster i: 37 -> 10001
+size cluster i: 38 -> 10001
+size cluster i: 39 -> 10004
+size cluster i: 40 -> 10001
+size cluster i: 41 -> 9525
+size cluster i: 42 -> 10003
+size cluster i: 43 -> 10002
+size cluster i: 44 -> 10000
+size cluster i: 45 -> 9269
+size cluster i: 46 -> 10001
+size cluster i: 47 -> 20004
+size cluster i: 48 -> 10001
+size cluster i: 49 -> 10002
+size cluster i: 50 -> 10001
+size cluster i: 51 -> 10001
+size cluster i: 52 -> 10001
+size cluster i: 53 -> 10002
+size cluster i: 54 -> 10001
+size cluster i: 55 -> 10003
+size cluster i: 56 -> 10001
+size cluster i: 57 -> 10001
+size cluster i: 58 -> 10001
+size cluster i: 59 -> 10000
+size cluster i: 60 -> 10001
+size cluster i: 61 -> 10005
+size cluster i: 62 -> 10003
+size cluster i: 63 -> 10000
+size cluster i: 64 -> 10003
+size cluster i: 65 -> 10001
+size cluster i: 66 -> 10001
+size cluster i: 67 -> 10007
+size cluster i: 68 -> 10003
+size cluster i: 69 -> 10003
+size cluster i: 70 -> 10001
+size cluster i: 71 -> 10002
+size cluster i: 72 -> 10001
+size cluster i: 73 -> 10000
+size cluster i: 74 -> 10002
+size cluster i: 75 -> 10001
+size cluster i: 76 -> 10003
+size cluster i: 77 -> 10000
+size cluster i: 78 -> 10000
+size cluster i: 79 -> 10000
+size cluster i: 80 -> 10003
+size cluster i: 81 -> 10000
+size cluster i: 82 -> 10003
+size cluster i: 83 -> 10001
+size cluster i: 84 -> 10004
+size cluster i: 85 -> 10000
+size cluster i: 86 -> 10000
+size cluster i: 87 -> 10001
+size cluster i: 88 -> 10001
+size cluster i: 89 -> 10000
+size cluster i: 90 -> 5802
+size cluster i: 91 -> 10002
+size cluster i: 92 -> 9993
+size cluster i: 93 -> 9771
+size cluster i: 94 -> 10000
+size cluster i: 95 -> 2
+size cluster i: 96 -> 2
+size cluster i: 97 -> 2
+datapoints in clusters: 993844
+score: 95.487
+total_duration_without_disk: 464.863
+total_duration: 464.981
+
+all done!
