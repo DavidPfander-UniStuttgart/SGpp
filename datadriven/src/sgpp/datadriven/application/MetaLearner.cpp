@@ -23,12 +23,11 @@
 namespace sgpp {
 namespace datadriven {
 
-MetaLearner::MetaLearner(
-    sgpp::base::RegularGridConfiguration gridConfig,
-    sgpp::solver::SLESolverConfiguration solverConfig,
-    sgpp::solver::SLESolverConfiguration solverFinalStep,
-    sgpp::base::AdaptivityConfiguration adaptivityConfiguration, double lambda,
-    bool verbose) {
+MetaLearner::MetaLearner(sgpp::base::RegularGridConfiguration gridConfig,
+                         sgpp::solver::SLESolverConfiguration solverConfig,
+                         sgpp::solver::SLESolverConfiguration solverFinalStep,
+                         sgpp::base::AdaptivityConfiguration adaptivityConfiguration, double lambda,
+                         bool verbose) {
   this->csvSep = "& ";
   this->gridConfig = gridConfig;
   this->solverConfig = solverConfig;
@@ -39,9 +38,9 @@ MetaLearner::MetaLearner(
   this->instances = 0;
 }
 
-void MetaLearner::learn(sgpp::datadriven::OperationMultipleEvalConfiguration
-                            &operationConfiguration,
-                        std::string &datasetFileName, bool isRegression) {
+void MetaLearner::learn(
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
+    std::string &datasetFileName, bool isRegression) {
   std::ifstream t(datasetFileName);
   if (!t.is_open()) {
     throw;
@@ -53,8 +52,7 @@ void MetaLearner::learn(sgpp::datadriven::OperationMultipleEvalConfiguration
 }
 
 void MetaLearner::learnString(
-    sgpp::datadriven::OperationMultipleEvalConfiguration
-        &operationConfiguration,
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
     std::string &content, bool isRegression) {
   Dataset dataset = ARFFTools::readARFFFromString(content);
 
@@ -71,16 +69,14 @@ void MetaLearner::learnString(
   //    bool isRegression = true; // treat everything as if it were a
   //    regression, as classification is not fully supported by Learner
   std::unique_ptr<LearnerLeastSquaresIdentity> myLearner =
-      std::make_unique<LearnerLeastSquaresIdentity>(isRegression,
-                                                    this->verbose);
+      std::make_unique<LearnerLeastSquaresIdentity>(isRegression, this->verbose);
   myLearner->setImplementation(operationConfiguration);
   // TODO(pfandedd): reenabled after performance calculator has been adjusted
   myLearner->setReuseCoefficients(false);
 
   LearnerTiming timings =
-      myLearner->train(trainingData, classesVector, this->gridConfig,
-                       this->solverConfig, this->solverFinalStep,
-                       this->adaptivityConfiguration, false, this->lambda);
+      myLearner->train(trainingData, classesVector, this->gridConfig, this->solverConfig,
+                       this->solverFinalStep, this->adaptivityConfiguration, false, this->lambda);
 
   this->myTiming = timings;
   this->ExecTimesOnStep = myLearner->getRefinementExecTimes();
@@ -90,22 +86,19 @@ void MetaLearner::learnString(
 
 base::Grid &MetaLearner::getLearnedGrid() {
   if (!this->myLearner.operator bool()) {
-    throw base::application_exception(
-        "error: cannot get grid if nothing was learned before");
+    throw base::application_exception("error: cannot get grid if nothing was learned before");
   }
   return this->myLearner->getGrid();
 }
 
 base::DataVector &MetaLearner::getLearnedAlpha() {
   if (!this->myLearner.operator bool()) {
-    throw base::application_exception(
-        "error: cannot get surplusses if nothing was learned before");
+    throw base::application_exception("error: cannot get surplusses if nothing was learned before");
   }
   return this->myLearner->getAlpha();
 }
 
-void MetaLearner::learnReference(std::string &datasetFileName,
-                                 bool isRegression) {
+void MetaLearner::learnReference(std::string &datasetFileName, bool isRegression) {
   std::ifstream t(datasetFileName);
   if (!t.is_open()) {
     throw;
@@ -116,8 +109,7 @@ void MetaLearner::learnReference(std::string &datasetFileName,
   this->learnReferenceString(bufferString);
 }
 
-void MetaLearner::learnReferenceString(std::string &content,
-                                       bool isRegression) {
+void MetaLearner::learnReferenceString(std::string &content, bool isRegression) {
   Dataset dataset = ARFFTools::readARFFFromString(content);
   this->gridConfig.dim_ = dataset.getDimension();
   this->instances = dataset.getNumberInstances();
@@ -130,8 +122,7 @@ void MetaLearner::learnReferenceString(std::string &content,
   base::DataMatrix &trainingData = dataset.getData();
 
   std::unique_ptr<LearnerLeastSquaresIdentity> referenceLearner =
-      std::make_unique<LearnerLeastSquaresIdentity>(isRegression,
-                                                    this->verbose);
+      std::make_unique<LearnerLeastSquaresIdentity>(isRegression, this->verbose);
   sgpp::datadriven::OperationMultipleEvalConfiguration operationConfiguration(
       OperationMultipleEvalType::DEFAULT, OperationMultipleEvalSubType::DEFAULT,
       OperationMultipleEvalMPIType::NONE, "STREAMING");
@@ -139,9 +130,9 @@ void MetaLearner::learnReferenceString(std::string &content,
   // TODO(pfandedd): reenabled after performance calculator has been adjusted
   referenceLearner->setReuseCoefficients(false);
 
-  LearnerTiming timings = referenceLearner->train(
-      trainingData, classesVector, gridConfig, solverConfig, solverFinalStep,
-      adaptivityConfiguration, false, lambda);
+  LearnerTiming timings =
+      referenceLearner->train(trainingData, classesVector, gridConfig, solverConfig,
+                              solverFinalStep, adaptivityConfiguration, false, lambda);
   this->referenceTiming = timings;
   this->ExecTimesOnStepReference = referenceLearner->getRefinementExecTimes();
 
@@ -149,10 +140,8 @@ void MetaLearner::learnReferenceString(std::string &content,
 }
 
 void MetaLearner::learnAndTest(
-    sgpp::datadriven::OperationMultipleEvalConfiguration
-        &operationConfiguration,
-    std::string &datasetFileName, std::string &testFileName,
-    bool isRegression) {
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
+    std::string &datasetFileName, std::string &testFileName, bool isRegression) {
   std::ifstream dataFile(datasetFileName);
   std::stringstream bufferData;
   bufferData << dataFile.rdbuf();
@@ -161,14 +150,13 @@ void MetaLearner::learnAndTest(
   bufferTest << testFile.rdbuf();
   std::string bufferDataString = bufferData.str();
   std::string bufferTestString = bufferTest.str();
-  this->learnAndTestString(operationConfiguration, bufferDataString,
-                           bufferTestString, isRegression);
+  this->learnAndTestString(operationConfiguration, bufferDataString, bufferTestString,
+                           isRegression);
 }
 
 // learn and test against test dataset and measure hits/mse
 void MetaLearner::learnAndTestString(
-    sgpp::datadriven::OperationMultipleEvalConfiguration
-        &operationConfiguration,
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
     std::string &dataContent, std::string &testContent, bool isRegression) {
   // always to this first
   this->learnString(operationConfiguration, dataContent);
@@ -181,8 +169,7 @@ void MetaLearner::learnAndTestString(
   base::DataMatrix &testTrainingData = testDataset.getData();
 
   if (verbose && testDim != this->gridConfig.dim_) {
-    std::cout << "dim of test dataset and training dataset doesn't match"
-              << std::endl;
+    std::cout << "dim of test dataset and training dataset doesn't match" << std::endl;
   }
 
   if (verbose) {
@@ -197,7 +184,7 @@ void MetaLearner::learnAndTestString(
   this->myLearner->predict(testTrainingData, computedClasses);
 
   if (verbose) {
-    std::cout << "classes computed" << std::endl;
+    std::cout << "classes computed/predicted" << std::endl;
   }
 
   if (isRegression) {
@@ -231,9 +218,7 @@ void MetaLearner::learnAndTestString(
     }
 
     if (verbose) {
-      std::cout << "hits (%): "
-                << (static_cast<double>(hits) /
-                    static_cast<double>(testInstances))
+      std::cout << "hits (%): " << (static_cast<double>(hits) / static_cast<double>(testInstances))
                 << std::endl;
     }
   }
@@ -241,8 +226,7 @@ void MetaLearner::learnAndTestString(
 
 // learn and test against the streaming implemenation
 double MetaLearner::learnAndCompare(
-    sgpp::datadriven::OperationMultipleEvalConfiguration
-        &operationConfiguration,
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
     std::string &datasetFileName, size_t gridGranularity) {
   std::ifstream t(datasetFileName);
   if (!t.is_open()) {
@@ -251,14 +235,12 @@ double MetaLearner::learnAndCompare(
   std::stringstream buffer;
   buffer << t.rdbuf();
   std::string bufferString = buffer.str();
-  return this->learnAndCompareString(operationConfiguration, bufferString,
-                                     gridGranularity);
+  return this->learnAndCompareString(operationConfiguration, bufferString, gridGranularity);
 }
 
 // learn and test against the streaming implemenation
 double MetaLearner::learnAndCompareString(
-    sgpp::datadriven::OperationMultipleEvalConfiguration
-        &operationConfiguration,
+    sgpp::datadriven::OperationMultipleEvalConfiguration &operationConfiguration,
     std::string &content, size_t gridGranularity) {
   // always do this first
   this->learnString(operationConfiguration, content);
@@ -287,15 +269,14 @@ double MetaLearner::learnAndCompareString(
       testPoint[index] += increment;
 
       for (size_t i = 0; i < index; i++) {
-        testPoint[i] = 0.0 + increment; // skip border
+        testPoint[i] = 0.0 + increment;  // skip border
       }
 
       testTrainingData.appendRow(testPoint);
       testInstanceCounter += 1;
 
       if (verbose && testInstanceCounter % 1000000 == 0) {
-        std::cout << "testInstanceCounter (still generating): "
-                  << testInstanceCounter << std::endl;
+        std::cout << "testInstanceCounter (still generating): " << testInstanceCounter << std::endl;
       }
 
       index = 0;
@@ -305,8 +286,7 @@ double MetaLearner::learnAndCompareString(
   }
 
   if (verbose) {
-    std::cout << "testInstanceCounter: " << (testInstanceCounter + 1)
-              << std::endl;
+    std::cout << "testInstanceCounter: " << (testInstanceCounter + 1) << std::endl;
     std::cout << "predicting..." << std::endl;
   }
 
@@ -338,9 +318,9 @@ double MetaLearner::learnAndCompareString(
       maxDiff = diff;
       firstValue = computedClasses.get(i);
       secondValue = referenceClasses.get(i);
-      //      std::cout << "first: " << firstValue << " second: " << secondValue
-      //      << std::endl;
     }
+    std::cout << "first: " << firstValue << " second: " << secondValue << " diff: " << diff
+              << std::endl;
 
     diff *= diff;
     squareSum += diff;
@@ -350,8 +330,8 @@ double MetaLearner::learnAndCompareString(
 
   if (verbose) {
     std::cout << "sqrt: " << squareSum << std::endl;
-    std::cout << "maxDiff: " << maxDiff << " value: " << firstValue
-              << " second: " << secondValue << std::endl;
+    std::cout << "maxDiff: " << maxDiff << " value: " << firstValue << " second: " << secondValue
+              << std::endl;
   }
 
   return squareSum;
@@ -359,8 +339,6 @@ double MetaLearner::learnAndCompareString(
 
 LearnerTiming MetaLearner::getLearnerTiming() { return this->myTiming; }
 
-LearnerTiming MetaLearner::getLearnerReferenceTiming() {
-  return this->referenceTiming;
-}
-} // namespace datadriven
-} // namespace sgpp
+LearnerTiming MetaLearner::getLearnerReferenceTiming() { return this->referenceTiming; }
+}  // namespace datadriven
+}  // namespace sgpp

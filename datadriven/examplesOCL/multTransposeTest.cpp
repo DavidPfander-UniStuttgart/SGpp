@@ -42,7 +42,8 @@ int main(int argc, char** argv) {
   //  std::string fileName = "debugging.arff";
   //  std::string fileName = "friedman_4d.arff";
   //  std::string fileName = "friedman_10d.arff";
-  std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
+  std::string fileName = "../datasets/friedman/friedman1_10d_150000.arff";
+  // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   //  std::string fileName = "DR5_train.arff";
   // std::string fileName = "debugging_small.arff";
 
@@ -55,11 +56,11 @@ int main(int argc, char** argv) {
   adaptConfig.percent_ = 200.0;
   adaptConfig.threshold_ = 0.0;
 
-  sgpp::base::OCLOperationConfiguration parameters("platformFloat.cfg");
+  sgpp::base::OCLOperationConfiguration parameters("OCL_configs/config_ocl_float_gtx1080ti.cfg");
 
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-      sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, parameters);
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
@@ -68,7 +69,7 @@ int main(int argc, char** argv) {
 
   size_t dim = dataset.getDimension();
 
-  bool modLinear = true;
+  bool modLinear = false;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
   if (modLinear) {
     grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));

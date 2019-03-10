@@ -241,6 +241,22 @@ LearnerTiming LearnerBase::train(sgpp::base::DataMatrix& trainDataset,
     }
 
     myCG->solve(*DMSystem, *alpha, b, reuseCoefficients, solverVerbose, 0.0);
+    std::cout << "alpha first 5 (after solve):" << std::endl;
+    for (size_t i = 0; i < 5; i += 1) {
+      if (i > 0) {
+        std::cout << ", ";
+      }
+      std::cout << (*alpha)[i];
+    }
+    std::cout << std::endl;
+    std::cout << "alpha last 5 (after solve):" << std::endl;
+    for (size_t i = alpha->size() - 5; i < alpha->size(); i += 1) {
+      if (i > 0) {
+        std::cout << ", ";
+      }
+      std::cout << (*alpha)[i];
+    }
+    std::cout << std::endl;
 
     double stopTime = myStopwatch->stop();
     this->execTime += stopTime;

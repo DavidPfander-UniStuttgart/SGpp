@@ -262,7 +262,8 @@ public:
       std::rethrow_exception(exceptionPtr);
     }
 
-    result.resize(endIndexData - startIndexData);
+		//TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and CG, but might be needed for multidevice?
+    // result.resize(endIndexData - startIndexData);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[(startIndexData - startIndexDataPadded) + i];
     }
@@ -363,7 +364,8 @@ public:
       std::rethrow_exception(exceptionPtr);
     }
 
-    result.resize(endIndexGrid - startIndexGrid);
+		//TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and CG, but might be needed for multidevice?
+    // result.resize(endIndexGrid - startIndexGrid);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[(startIndexGrid - startIndexGridPadded) + i];
     }

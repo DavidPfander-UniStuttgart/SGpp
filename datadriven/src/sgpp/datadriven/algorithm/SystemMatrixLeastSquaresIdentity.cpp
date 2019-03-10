@@ -3,9 +3,9 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "SystemMatrixLeastSquaresIdentity.hpp"
 #include "sgpp/base/exception/operation_exception.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
-#include "SystemMatrixLeastSquaresIdentity.hpp"
 #include "sgpp/globaldef.hpp"
 
 // #include <iostream>
@@ -32,7 +32,25 @@ SystemMatrixLeastSquaresIdentity::~SystemMatrixLeastSquaresIdentity() {}
 void SystemMatrixLeastSquaresIdentity::mult(base::DataVector& alpha, base::DataVector& result) {
   base::DataVector temp(this->paddedInstances);
 
+  // std::cout << "alpha first 5:" << std::endl;
+  // for (size_t i = 0; i < 5; i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << alpha[i];
+  // }
+  // std::cout << std::endl;
+  // std::cout << "alpha last 5:" << std::endl;
+  // for (size_t i = result.size() - 5; i < result.size(); i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << alpha[i];
+  // }
+  // std::cout << std::endl;
+
   // Operation B
+  std::cout << "result.size() (before!!!): " << result.size() << std::endl;
   this->myTimer_->start();
   this->B->mult(alpha, temp);
   this->completeTimeMult_ += this->myTimer_->stop();
@@ -42,7 +60,23 @@ void SystemMatrixLeastSquaresIdentity::mult(base::DataVector& alpha, base::DataV
   this->B->multTranspose(temp, result);
   this->completeTimeMultTrans_ += this->myTimer_->stop();
   this->computeTimeMultTrans_ += this->B->getDuration();
-
+  // std::cout << "result first 5:" << std::endl;
+  // for (size_t i = 0; i < 5; i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << result[i];
+  // }
+  // std::cout << std::endl;
+  // std::cout << "result last 5:" << std::endl;
+  // for (size_t i = result.size() - 5; i < result.size(); i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << result[i];
+  // }
+  // std::cout << std::endl;
+  std::cout << "result.size(): " << result.size() << std::endl;
   result.axpy(static_cast<double>(this->instances) * this->lambda_, alpha);
 }
 

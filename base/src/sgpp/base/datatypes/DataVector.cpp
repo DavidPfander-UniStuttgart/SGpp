@@ -13,12 +13,12 @@
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
 
 namespace sgpp {
 namespace base {
@@ -67,7 +67,7 @@ DataVector DataVector::fromString(const std::string& serializedVector) {
 
     if (state == PARSER_STATE::INIT) {
       if (c != '[') {
-        throw;
+        throw sgpp::base::data_exception("DataVector::fromString : file does not start with '['");
       }
       state = PARSER_STATE::VALUE;
       i += 1;
@@ -350,7 +350,7 @@ void DataVector::minmax(double* min, double* max) const {
 
 void DataVector::axpy(double a, DataVector& x) {
   if (this->size() != x.size()) {
-    return;
+    throw sgpp::base::data_exception("DataVector::axpy : vector sizes do not match");
   }
 
   for (size_t i = 0; i < this->size(); i++) {
