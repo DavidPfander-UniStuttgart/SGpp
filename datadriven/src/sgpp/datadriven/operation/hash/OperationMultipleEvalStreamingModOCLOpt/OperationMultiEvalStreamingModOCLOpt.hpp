@@ -189,7 +189,8 @@ public:
                 << std::endl;
     }
 
-    resultArray.reserve(this->datasetSizePadded);
+		//TODO: commenting this out could have introdued bugs somewhere!
+    // resultArray.reserve(this->datasetSizePadded);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }
@@ -256,7 +257,8 @@ public:
                 << std::endl;
     }
 
-    result.resize(this->gridSizePadded);
+		//TODO: commenting this out could have introdued bugs somewhere!
+    //result.resize(this->gridSizePadded);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }

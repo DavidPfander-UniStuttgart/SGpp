@@ -5,18 +5,19 @@
 
 #pragma once
 
+#include "../OperationMultipleEvalStreamingModOCLUnified/OperationMultiEvalStreamingModOCLUnified.hpp"
 #include <sgpp/base/exception/factory_exception.hpp>
 #include <sgpp/base/opencl/OCLOperationConfiguration.hpp>
 #include <sgpp/base/operation/hash/OperationMultipleEval.hpp>
 #include <sgpp/globaldef.hpp>
-#include "../OperationMultipleEvalStreamingModOCLUnified/OperationMultiEvalStreamingModOCLUnified.hpp"
 
 namespace sgpp {
 namespace datadriven {
 
-base::OperationMultipleEval* createStreamingModOCLUnifiedConfigured(
-    base::Grid& grid, base::DataMatrix& dataset,
-    sgpp::datadriven::OperationMultipleEvalConfiguration& configuration);
+base::OperationMultipleEval *createStreamingModOCLUnifiedConfigured(
+    base::Grid &grid, base::DataMatrix &dataset,
+    sgpp::datadriven::OperationMultipleEvalConfiguration &configuration,
+    bool isModLinear);
 
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace datadriven
+} // namespace sgpp

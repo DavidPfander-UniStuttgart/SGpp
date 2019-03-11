@@ -95,14 +95,18 @@ void validate(boost::any& v, const std::vector<std::string>& values,
     v = sgpp::datadriven::OperationMultipleEvalSubType::COMBINED;
   } else if (s.compare("OCL") == 0) {
     v = sgpp::datadriven::OperationMultipleEvalSubType::OCL;
-  } else if (s.compare("OCLMASK") == 0) {
+  } else if (s.compare("OCLMASKMP") == 0) {
     v = sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP;
   } else if (s.compare("OCLMP") == 0) {
     v = sgpp::datadriven::OperationMultipleEvalSubType::OCLMP;
   } else if (s.compare("SIMPLE") == 0) {
     v = sgpp::datadriven::OperationMultipleEvalSubType::SIMPLE;
-  } else if (s.compare("OCLFASTMULTIPLATFORM") == 0) {
+  } else if (s.compare("OCLFASTMP") == 0) {
     v = sgpp::datadriven::OperationMultipleEvalSubType::OCLFASTMP;
+  } else if (s.compare("OCLOPT") == 0) {
+    v = sgpp::datadriven::OperationMultipleEvalSubType::OCLOPT;
+  } else if (s.compare("OCLUNIFIED") == 0) {
+    v = sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED;
   } else {
     throw boost::program_options::validation_error(
         boost::program_options::validation_error::invalid_option_value);

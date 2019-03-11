@@ -65,15 +65,18 @@ protected:
   size_t overallGridBlockingSize;
   size_t overallDataBlockingSize;
 
+  bool isModLinear;
+
 public:
   OperationMultiEvalStreamingModOCLUnified(
       base::Grid &grid, base::DataMatrix &dataset,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
-      std::shared_ptr<base::OCLOperationConfiguration> parameters)
+      std::shared_ptr<base::OCLOperationConfiguration> parameters,
+      bool isModLinear)
       : OperationMultipleEval(grid, dataset), preparedDataset(dataset),
         parameters(parameters), myTimer(sgpp::base::SGppStopwatch()),
         storage(grid.getStorage()), duration(-1.0), manager(manager),
-        devices(manager->getDevices()) {
+        devices(manager->getDevices()), isModLinear(isModLinear) {
     this->verbose = (*parameters)["VERBOSE"].getBool();
 
     this->dims = dataset.getNcols(); // be aware of transpose!
@@ -104,7 +107,7 @@ public:
                                          this->preparedDataset.getNcols());
 
     for (size_t i = 0; i < this->preparedDataset.getSize(); i++) {
-      this->kernelDataset[i] = (T) this->preparedDataset[i];
+      this->kernelDataset[i] = (T)this->preparedDataset[i];
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
@@ -146,8 +149,14 @@ public:
 
     std::vector<T> alphaArray(this->gridSizePadded);
 
-    for (size_t i = 0; i < alpha.getSize(); i++) {
-      alphaArray[i] = (T)alpha[i] * scaling[i];
+    if (isModLinear) {
+      for (size_t i = 0; i < alpha.getSize(); i++) {
+        alphaArray[i] = (T)alpha[i] * scaling[i];
+      }
+    } else {
+      for (size_t i = 0; i < alpha.getSize(); i++) {
+        alphaArray[i] = (T)alpha[i];
+      }
     }
 
     for (size_t i = alpha.getSize(); i < this->gridSizePadded; i++) {
@@ -178,7 +187,8 @@ public:
                 << std::endl;
     }
 
-    result.resize(this->datasetSizePadded);
+    // TODO: this might have introduced a bug
+    // result.resize(this->datasetSizePadded);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }
@@ -200,7 +210,8 @@ public:
     size_t datasetFrom = 0;
     size_t datasetTo = this->datasetSizePadded;
 
-    queueLoadBalancerMultTrans->initialize(gridFrom, gridTo, overallGridBlockingSize);
+    queueLoadBalancerMultTrans->initialize(gridFrom, gridTo,
+                                           overallGridBlockingSize);
 
     std::vector<T> sourceArray(this->datasetSizePadded);
 
@@ -237,9 +248,16 @@ public:
                 << std::endl;
     }
 
-    result.resize(this->gridSizePadded);
-    for (size_t i = 0; i < result.getSize(); i++) {
-      result[i] = resultArray[i] * scaling[i];
+    // TODO: this might have introduced a bug
+    // result.resize(this->gridSizePadded);
+    if (isModLinear) {
+      for (size_t i = 0; i < result.getSize(); i++) {
+        result[i] = resultArray[i] * scaling[i];
+      }
+    } else {
+      for (size_t i = 0; i < result.getSize(); i++) {
+        result[i] = resultArray[i];
+      }
     }
 
     // restore old value of OMP_NUM_THREADS

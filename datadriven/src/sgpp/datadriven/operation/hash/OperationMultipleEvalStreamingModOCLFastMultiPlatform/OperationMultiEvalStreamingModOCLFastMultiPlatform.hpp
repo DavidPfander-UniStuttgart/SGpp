@@ -182,7 +182,8 @@ class OperationMultiEvalStreamingModOCLFastMultiPlatform : public base::Operatio
       std::cout << "duration mult ocl: " << elapsed_seconds.count() << std::endl;
     }
 
-    result.resize(this->datasetSizePadded);
+		//TODO: might have been mistakenly commented out
+    // result.resize(this->datasetSizePadded);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }
@@ -239,7 +240,8 @@ class OperationMultiEvalStreamingModOCLFastMultiPlatform : public base::Operatio
       std::cout << "duration multTranspose ocl: " << elapsed_seconds.count() << std::endl;
     }
 
-    result.resize(this->gridSizePadded);
+		//TODO: might have been mistakenly commented out
+    // result.resize(this->gridSizePadded);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }
