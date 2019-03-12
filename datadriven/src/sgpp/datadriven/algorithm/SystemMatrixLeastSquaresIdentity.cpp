@@ -50,7 +50,6 @@ void SystemMatrixLeastSquaresIdentity::mult(base::DataVector& alpha, base::DataV
   // std::cout << std::endl;
 
   // Operation B
-  std::cout << "result.size() (before!!!): " << result.size() << std::endl;
   this->myTimer_->start();
   this->B->mult(alpha, temp);
   this->completeTimeMult_ += this->myTimer_->stop();
@@ -76,7 +75,6 @@ void SystemMatrixLeastSquaresIdentity::mult(base::DataVector& alpha, base::DataV
   //   std::cout << result[i];
   // }
   // std::cout << std::endl;
-  std::cout << "result.size(): " << result.size() << std::endl;
   result.axpy(static_cast<double>(this->instances) * this->lambda_, alpha);
 }
 

@@ -262,7 +262,8 @@ public:
       std::rethrow_exception(exceptionPtr);
     }
 
-		//TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and CG, but might be needed for multidevice?
+    // TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and
+    // CG, but might be needed for multidevice?
     // result.resize(endIndexData - startIndexData);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[(startIndexData - startIndexDataPadded) + i];
@@ -273,8 +274,11 @@ public:
 
     this->duration = this->myTimer.stop();
 
-    for (StreamingOCLMultiPlatform::KernelMult<T> &kernel : multKernels) {
-      this->duration -= kernel.getBuildDuration();
+    if (verbose) {
+      for (StreamingOCLMultiPlatform::KernelMult<T> &kernel : multKernels) {
+        std::cout << "duration build mult ocl: " << kernel.getBuildDuration()
+                  << std::endl;
+      }
     }
 
     if (verbose) {
@@ -364,7 +368,8 @@ public:
       std::rethrow_exception(exceptionPtr);
     }
 
-		//TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and CG, but might be needed for multidevice?
+    // TODO: this is a bug that leads to invalid axpy-calls in SystemMatrix and
+    // CG, but might be needed for multidevice?
     // result.resize(endIndexGrid - startIndexGrid);
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[(startIndexGrid - startIndexGridPadded) + i];
@@ -375,9 +380,12 @@ public:
 
     this->duration = this->myTimer.stop();
 
-    for (StreamingOCLMultiPlatform::KernelMultTranspose<T> &kernelTranspose :
-         multTransposeKernels) {
-      this->duration -= kernelTranspose.getBuildDuration();
+    if (verbose) {
+      for (StreamingOCLMultiPlatform::KernelMultTranspose<T> &kernelTranspose :
+           multTransposeKernels) {
+        std::cout << "duration build multTranspose ocl: "
+                  << kernelTranspose.getBuildDuration() << std::endl;
+      }
     }
 
     if (verbose) {

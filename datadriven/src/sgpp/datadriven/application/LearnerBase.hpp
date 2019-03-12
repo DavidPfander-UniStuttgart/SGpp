@@ -5,17 +5,17 @@
 
 #pragma once
 
-#include <utility>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include "sgpp/base/grid/Grid.hpp"
-#include "sgpp/base/datatypes/DataVector.hpp"
 #include "sgpp/base/datatypes/DataMatrix.hpp"
-#include "sgpp/solver/SLESolver.hpp"
+#include "sgpp/base/datatypes/DataVector.hpp"
+#include "sgpp/base/grid/Grid.hpp"
 #include "sgpp/datadriven/algorithm/DMSystemMatrixBase.hpp"
 #include "sgpp/datadriven/tools/TypesDatadriven.hpp"
 #include "sgpp/globaldef.hpp"
+#include "sgpp/solver/SLESolver.hpp"
 
 namespace sgpp {
 namespace datadriven {
@@ -30,7 +30,7 @@ namespace datadriven {
  * and test.
  */
 class LearnerBase {
- protected:
+protected:
   /// the grid's coefficients
   std::unique_ptr<sgpp::base::DataVector> alpha;
   /// sparse grid object
@@ -65,7 +65,7 @@ class LearnerBase {
   /// the current refinment step during training
   size_t currentRefinementStep;
 
-  std::vector<std::pair<size_t, double> > ExecTimeOnStep;
+  std::vector<std::pair<size_t, double>> ExecTimeOnStep;
 
   /**
    * Hook-Method for pre-processing before
@@ -85,8 +85,8 @@ class LearnerBase {
    * @param numNeededIterations number of required iterations
    *
    */
-  virtual void postProcessing(const sgpp::base::DataMatrix& trainDataset,
-                              const sgpp::solver::SLESolverType& solver,
+  virtual void postProcessing(const sgpp::base::DataMatrix &trainDataset,
+                              const sgpp::solver::SLESolverType &solver,
                               const size_t numNeededIterations);
 
   /**
@@ -94,7 +94,13 @@ class LearnerBase {
    *
    * @param GridConfig structure which describes the regular start grid
    */
-  virtual void InitializeGrid(const sgpp::base::RegularGridConfiguration& GridConfig);
+  virtual void
+  InitializeGrid(const sgpp::base::RegularGridConfiguration &GridConfig,
+                 const sgpp::base::AdaptivityConfiguration &AdaptConfig,
+                 sgpp::base::DataMatrix &trainDataset);
+
+  virtual void
+  InitializeGridRegular(const sgpp::base::RegularGridConfiguration &GridConfig);
 
   /**
    * abstract method that constructs the corresponding system of linear
@@ -104,10 +110,10 @@ class LearnerBase {
    * @param trainDataset training dataset
    * @param lambda lambda regularization parameter
    */
-  virtual std::unique_ptr<sgpp::datadriven::DMSystemMatrixBase> createDMSystem(
-      sgpp::base::DataMatrix& trainDataset, double lambda) = 0;
+  virtual std::unique_ptr<sgpp::datadriven::DMSystemMatrixBase>
+  createDMSystem(sgpp::base::DataMatrix &trainDataset, double lambda) = 0;
 
- public:
+public:
   /**
    * Constructor
    *
@@ -121,7 +127,7 @@ class LearnerBase {
    *
    * @param copyMe LearnerBase that should be duplicated
    */
-  LearnerBase(const LearnerBase& copyMe);
+  LearnerBase(const LearnerBase &copyMe);
 
   /**
    * Destructor
@@ -142,18 +148,20 @@ class LearnerBase {
    * @param testAccDuringAdapt set to true if the training accuracy should be
    * determined in evert refinement step
    * @param lambdaRegularization regularization parameter lambda
-   * @param testDataset the test dataset (for accuracy output, nullptr if no output is wished)
-   * @param testClasses classes corresponding to the testing dataset (for accuracy output, nullptr
-   * if no output is wished)
+   * @param testDataset the test dataset (for accuracy output, nullptr if no
+   * output is wished)
+   * @param testClasses classes corresponding to the testing dataset (for
+   * accuracy output, nullptr if no output is wished)
    */
-  virtual LearnerTiming train(sgpp::base::DataMatrix& trainDataset, sgpp::base::DataVector& classes,
-                              const sgpp::base::RegularGridConfiguration& GridConfig,
-                              const sgpp::solver::SLESolverConfiguration& SolverConfigRefine,
-                              const sgpp::solver::SLESolverConfiguration& SolverConfigFinal,
-                              const sgpp::base::AdaptivityConfiguration& AdaptConfig,
-                              bool testAccDuringAdapt, const double lambdaRegularization,
-                              sgpp::base::DataMatrix* testDataset = nullptr,
-                              sgpp::base::DataVector* testClasses = nullptr);
+  virtual LearnerTiming
+  train(sgpp::base::DataMatrix &trainDataset, sgpp::base::DataVector &classes,
+        const sgpp::base::RegularGridConfiguration &GridConfig,
+        const sgpp::solver::SLESolverConfiguration &SolverConfigRefine,
+        const sgpp::solver::SLESolverConfiguration &SolverConfigFinal,
+        const sgpp::base::AdaptivityConfiguration &AdaptConfig,
+        bool testAccDuringAdapt, const double lambdaRegularization,
+        sgpp::base::DataMatrix *testDataset = nullptr,
+        sgpp::base::DataVector *testClasses = nullptr);
 
   /**
    * Learning a dataset with regular sparse grids
@@ -164,9 +172,10 @@ class LearnerBase {
    * @param SolverConfig configuration of the SLE solver
    * @param lambdaRegularization regularization parameter lambda
    */
-  LearnerTiming train(sgpp::base::DataMatrix& trainDataset, sgpp::base::DataVector& classes,
-                      const sgpp::base::RegularGridConfiguration& GridConfig,
-                      const sgpp::solver::SLESolverConfiguration& SolverConfig,
+  LearnerTiming train(sgpp::base::DataMatrix &trainDataset,
+                      sgpp::base::DataVector &classes,
+                      const sgpp::base::RegularGridConfiguration &GridConfig,
+                      const sgpp::solver::SLESolverConfiguration &SolverConfig,
                       const double lambdaRegularization);
 
   /**
@@ -177,11 +186,12 @@ class LearnerBase {
    *
    * @return regression values of testDataset
    */
-  virtual void predict(sgpp::base::DataMatrix& testDataset,
-                       sgpp::base::DataVector& classesComputed);
+  virtual void predict(sgpp::base::DataMatrix &testDataset,
+                       sgpp::base::DataVector &classesComputed);
 
-  virtual void multTranspose(sgpp::base::DataMatrix& dataset, sgpp::base::DataVector& multiplier,
-                             sgpp::base::DataVector& result);
+  virtual void multTranspose(sgpp::base::DataMatrix &dataset,
+                             sgpp::base::DataVector &multiplier,
+                             sgpp::base::DataVector &result);
 
   /**
    * compute the accuracy for given testDataset. test is automatically called
@@ -199,8 +209,8 @@ class LearnerBase {
    *
    * @return accuracy, percent or MSE, depending on the execution mode
    */
-  virtual double getAccuracy(sgpp::base::DataMatrix& testDataset,
-                             const sgpp::base::DataVector& classesReference,
+  virtual double getAccuracy(sgpp::base::DataMatrix &testDataset,
+                             const sgpp::base::DataVector &classesReference,
                              const double threshold = 0.0);
 
   /**
@@ -218,8 +228,8 @@ class LearnerBase {
    *
    * @return accuracy, percent or MSE, depending on the execution mode
    */
-  virtual double getAccuracy(const sgpp::base::DataVector& classesComputed,
-                             const sgpp::base::DataVector& classesReference,
+  virtual double getAccuracy(const sgpp::base::DataVector &classesComputed,
+                             const sgpp::base::DataVector &classesReference,
                              const double threshold = 0.0);
 
   /**
@@ -234,9 +244,10 @@ class LearnerBase {
    *
    * @return quality structure containing tp, tn, fp, fn counts
    */
-  virtual ClassificatorQuality getCassificatorQuality(
-      sgpp::base::DataMatrix& testDataset, const sgpp::base::DataVector& classesReference,
-      const double threshold = 0.0);
+  virtual ClassificatorQuality
+  getCassificatorQuality(sgpp::base::DataMatrix &testDataset,
+                         const sgpp::base::DataVector &classesReference,
+                         const double threshold = 0.0);
 
   /**
    * compute the quality for given testDataset, classification ONLY!
@@ -248,9 +259,10 @@ class LearnerBase {
    *
    * @return quality structure containing tp, tn, fp, fn counts
    */
-  virtual ClassificatorQuality getCassificatorQuality(
-      const sgpp::base::DataVector& classesComputed, const sgpp::base::DataVector& classesReference,
-      const double threshold = 0.0);
+  virtual ClassificatorQuality
+  getCassificatorQuality(const sgpp::base::DataVector &classesComputed,
+                         const sgpp::base::DataVector &classesReference,
+                         const double threshold = 0.0);
 
   /**
    * store the grid and its current coefficients into files for
@@ -303,15 +315,15 @@ class LearnerBase {
    */
   void setIsVerbose(const bool isVerbose);
 
-  std::vector<std::pair<size_t, double> > getRefinementExecTimes();
+  std::vector<std::pair<size_t, double>> getRefinementExecTimes();
 
-  sgpp::base::Grid& getGrid();
+  sgpp::base::Grid &getGrid();
 
-  sgpp::base::DataVector& getAlpha();
+  sgpp::base::DataVector &getAlpha();
 
   void setReuseCoefficients(bool reuseCoefficients);
 
   void setSolverVerbose(bool solverVerbose);
 };
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace datadriven
+} // namespace sgpp

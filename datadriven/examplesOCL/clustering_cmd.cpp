@@ -39,45 +39,48 @@
 
 #include "sgpp/datadriven/grid/spatial_refinement_blocked.hpp"
 
-#include <sgpp/base/grid/generation/functors/UnlimitedCoarseningFunctor.hpp>
-namespace sgpp {
-namespace base {
-class DensityBCoarseningFunctor : public UnlimitedCoarseningFunctor {
-protected:
-  DataVector &b;
-  double threshold;
+#include <sgpp/base/grid/generation/functors/WeightSupportCoarseningFunctor.hpp>
+// #include <sgpp/base/grid/generation/functors/UnlimitedCoarseningFunctor.hpp>
+// namespace sgpp {
+// namespace base {
+// class DensityBCoarseningFunctor : public UnlimitedCoarseningFunctor {
+// protected:
+//   DataVector &b;
+//   double threshold;
 
-public:
-  /**
-   * Constructor.
-   *
-   * @param alpha DataVector that is basis for coarsening decisions. The i-th
-   * entry corresponds to the i-th grid point.
-   * @param threshold The absolute value of the entries have to be less or equal
-   * than the threshold to be considered for coarsening
-   */
-  DensityBCoarseningFunctor(DataVector &b, double threshold = 0.0)
-      : b(b), threshold(threshold) {}
+// public:
+//   /**
+//    * Constructor.
+//    *
+//    * @param alpha DataVector that is basis for coarsening decisions. The i-th
+//    * entry corresponds to the i-th grid point.
+//    * @param threshold The absolute value of the entries have to be less or
+//    equal
+//    * than the threshold to be considered for coarsening
+//    */
+//   DensityBCoarseningFunctor(DataVector &b, double threshold = 0.0)
+//       : b(b), threshold(threshold) {}
 
-  ~DensityBCoarseningFunctor() override {}
+//   ~DensityBCoarseningFunctor() override {}
 
-  bool operator()(GridStorage &storage, size_t seq) override {
-    return b[seq] < threshold; // sums of hat functions are positive
-  }
+//   bool operator()(GridStorage &storage, size_t seq) override {
+//     return b[seq] < threshold; // sums of hat functions are positive
+//   }
 
-  // double start() const override { return 1.0; }
+//   // double start() const override { return 1.0; }
 
-  // size_t getRemovementsNum() const override {
-  //   // interface does not allow for infinity
-  //   // TODO: stupid implementation, buffer of that size is allocated
-  //   return 500000;
-  // }
+//   // size_t getRemovementsNum() const override {
+//   //   // interface does not allow for infinity
+//   //   // TODO: stupid implementation, buffer of that size is allocated
+//   //   return 500000;
+//   // }
 
-  // double getCoarseningThreshold() const override { return this->threshold; }
-};
+//   // double getCoarseningThreshold() const override { return this->threshold;
+//   }
+// };
 
-} // namespace base
-} // namespace sgpp
+// } // namespace base
+// } // namespace sgpp
 
 // namespace util {
 // std::vector<int64_t> read_vector(const std::string &file_name) {
@@ -195,11 +198,11 @@ int main(int argc, char **argv) {
   // int64_t connected_components_k_factor;
 
   // for right-hand side coarsening
-  bool b_coarsening;
-  double b_coarsening_threshold;
+  bool weight_support_coarsening;
+  double weight_support_coarsening_threshold;
 
-  bool use_datadriven_refinement;
-  int64_t datadriven_refinement_min_support;
+  bool use_support_refinement;
+  int64_t support_refinement_min_support;
 
   size_t refinement_steps;
   size_t refinement_points;
@@ -329,22 +332,24 @@ int main(int argc, char **argv) {
       boost::program_options::value<int64_t>(&print_cluster_sizes)
           ->default_value(0),
       "print the cluster sizes to stdout, value is min cluster size")(
-      "use_b_coarsening", boost::program_options::bool_switch(&b_coarsening),
+      "use_weight_support_coarsening",
+      boost::program_options::bool_switch(&weight_support_coarsening),
       "for density estimation, use the vector for cheap support-based "
       "coarsening")(
-      "b_coarsening_threshold",
-      boost::program_options::value<double>(&b_coarsening_threshold)
+      "weight_support_coarsening_threshold",
+      boost::program_options::value<double>(
+          &weight_support_coarsening_threshold)
           ->default_value(0.0),
       "for density estimation, prune if per grid points sum is <= given "
       "threshold")(
-      "use_datadriven_refinement",
-      boost::program_options::bool_switch(&use_datadriven_refinement),
-      "use datadriven refinement to guess an initial grid without using the CG "
+      "use_support_refinement",
+      boost::program_options::bool_switch(&use_support_refinement),
+      "use support refinement to guess an initial grid without using the CG "
       "solver")(
-      "datadriven_refinement_min_support",
-      boost::program_options::value<int64_t>(&datadriven_refinement_min_support)
+      "support_refinement_min_support",
+      boost::program_options::value<int64_t>(&support_refinement_min_support)
           ->default_value(1),
-      "for datadriven refinement, minimal number of data points on support for "
+      "for support refinement, minimal number of data points on support for "
       "accepting data "
       "point")
       // (
@@ -600,7 +605,7 @@ int main(int argc, char **argv) {
     std::chrono::time_point<std::chrono::system_clock> grid_create_start,
         grid_create_stop;
     grid_create_start = std::chrono::system_clock::now();
-    if (!use_datadriven_refinement) {
+    if (!use_support_refinement) {
       grid =
           std::unique_ptr<base::Grid>(base::Grid::createLinearGrid(dimension));
       base::GridGenerator &grid_generator = grid->getGenerator();
@@ -608,10 +613,10 @@ int main(int argc, char **argv) {
       std::cout << "initial grid created, grid points: " << grid->getSize()
                 << std::endl;
     } else {
-      std::cout << "datadriven_refinement_min_support:"
-                << datadriven_refinement_min_support << std::endl;
+      std::cout << "support_refinement_min_support:"
+                << support_refinement_min_support << std::endl;
       sgpp::datadriven::spatial_refinement_blocked ref(
-          dimension, level, datadriven_refinement_min_support, trainingData);
+          dimension, level, support_refinement_min_support, trainingData);
       ref.enable_OCL(configFileName);
       ref.refine();
       std::vector<int64_t> &ls = ref.get_levels();
@@ -633,7 +638,7 @@ int main(int argc, char **argv) {
         grid_storage.insert(p);
       }
       grid_storage.recalcLeafProperty();
-      std::cout << "datadriven refinement done, grid size: " << grid->getSize()
+      std::cout << "support refinement done, grid size: " << grid->getSize()
                 << std::endl;
     }
     // sgpp::base::GridStorage &grid_storage = grid->getStorage();
@@ -740,7 +745,7 @@ int main(int argc, char **argv) {
                        << "; ";
       }
 
-      if (b_coarsening && i == 0) {
+      if (weight_support_coarsening && i == 0) {
         // std::cout << "b: ";
         // for (size_t u = 0; u < b.size(); u += 1) {
         //   if (u > 0) {
@@ -751,9 +756,10 @@ int main(int argc, char **argv) {
 
         std::cout << std::endl;
         size_t old_size = alpha.getSize();
-        sgpp::base::DensityBCoarseningFunctor b_coarsen_functor(
-            b, b_coarsening_threshold);
-        grid_generator.coarsen(b_coarsen_functor, b);
+        sgpp::base::WeightSupportCoarseningFunctor
+            weight_support_coarsen_functor(b,
+                                           weight_support_coarsening_threshold);
+        grid_generator.coarsen(weight_support_coarsen_functor, b);
         alpha.resize(grid->getSize());
         std::cout << "b-based coarsening: removed "
                   << (old_size - grid->getSize())

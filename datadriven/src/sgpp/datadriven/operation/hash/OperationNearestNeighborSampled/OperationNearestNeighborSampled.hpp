@@ -48,7 +48,7 @@ public:
   std::vector<int64_t> knn_naive(size_t dim, sgpp::base::DataMatrix &dataset,
                                  uint32_t k);
 
-#ifdef USE_OCL == 1
+#if USE_OCL == 1
   std::vector<int64_t> knn_naive_ocl(size_t dim,
                                      sgpp::base::DataMatrix &dataset,
                                      uint32_t k, std::string configFileName);

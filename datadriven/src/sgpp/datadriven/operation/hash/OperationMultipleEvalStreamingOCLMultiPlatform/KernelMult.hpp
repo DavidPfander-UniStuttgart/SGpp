@@ -74,6 +74,7 @@ private:
   size_t totalBlockSize;
 
   double buildDuration;
+  double oclKernelDuration;
 
 public:
   /**
@@ -395,6 +396,7 @@ public:
       }
     }
 
+    this->oclKernelDuration = this->deviceTimingMult;
     return this->deviceTimingMult;
   }
 
@@ -402,6 +404,8 @@ public:
    * @return The time it took to compile the OpenCL kernel code
    */
   double getBuildDuration() { return this->buildDuration; }
+
+  double getOCLKernelDuration() { return this->oclKernelDuration; }
 
 private:
   /**
