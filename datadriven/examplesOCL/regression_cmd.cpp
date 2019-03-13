@@ -4,6 +4,7 @@
 // sgpp.sparsegrids.org
 
 #include <boost/program_options.hpp>
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -354,6 +355,8 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  auto total_timer_start = std::chrono::system_clock::now();
+
   sgpp::datadriven::MetaLearner learner(gridConfig, SLESolverConfigRefine,
                                         SLESolverConfigFinal, adaptConfig,
                                         lambda, verbose);
@@ -381,6 +384,12 @@ int main(int argc, char *argv[]) {
     learner.learnAndTest(configuration, trainingFileName, testFileName,
                          isRegression);
   }
+
+  auto total_timer_stop = std::chrono::system_clock::now();
+  std::chrono::duration<double> total_elapsed_seconds =
+      total_timer_stop - total_timer_start;
+  double total_duration = total_elapsed_seconds.count();
+  std::cout << "total_duration: " << total_duration << std::endl;
 
   return 0;
 }
