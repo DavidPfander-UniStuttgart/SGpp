@@ -11,28 +11,6 @@
 namespace sgpp::datadriven {
 
 void spatial_refinement_blocked::verify_support_blocked_OCL() {
-  std::string configuration_file(ocl_config_file_name);
-  opencl::manager_t manager(configuration_file);
-  if (manager.get_devices().size() > 1) {
-    throw opencl::manager_error("only supports single device");
-  }
-  opencl::device_t device = manager.get_devices()[0];
-  int64_t num_data = static_cast<int64_t>(data.size()) / dim;
-  int64_t num_data_padded = num_data;
-
-  const int local_cache = 16;
-
-  if (num_data % local_cache != 0) {
-    num_data_padded += local_cache - (num_data % local_cache);
-  }
-
-  opencl::managed_buffer<double> data_device(device, num_data_padded * dim);
-  data_device.fill_buffer(
-      -1.0); // generates out of support data points in padding
-  data_device.to_device(data);
-
-  const int block_size = 256;
-
   int64_t num_candidates = static_cast<int64_t>(schedule_level.size()) / dim;
   int64_t num_candidates_padded = num_candidates;
   if (num_candidates % block_size != 0) {
@@ -53,21 +31,7 @@ void spatial_refinement_blocked::verify_support_blocked_OCL() {
                                                        num_candidates_padded);
   schedule_support_device.fill_buffer(false);
 
-  cl_kernel kernel_verify_support;
-  if (!kernel_verify_support) {
-    std::string kernel_src_file_name{
-        "datadriven/src/sgpp/datadriven/grid/spatial_refinement_kernel.cl"};
-    std::string kernel_src = manager.read_src_file(kernel_src_file_name);
-    json::node &deviceNode =
-        manager.get_configuration()["PLATFORMS"][device.platformName]["DEVICES"]
-                                   [device.deviceName];
-    json::node &kernelConfig = deviceNode["KERNELS"]["verify_support"];
-    kernel_verify_support =
-        manager.build_kernel(kernel_src, device, kernelConfig, "verify_support",
-                             std::string("-DDIM=") + std::to_string(dim));
-  }
-
-  opencl::apply_arguments(kernel_verify_support, data_device.get(), entries,
+  opencl::apply_arguments(kernel_verify_support, data_device->get(), entries,
                           schedule_level_device.get(),
                           schedule_index_device.get(),
                           schedule_support_device.get(), min_support);

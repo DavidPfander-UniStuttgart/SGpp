@@ -1,11 +1,17 @@
 #pragma once
 
+#include <chrono>
 #include <cinttypes>
 #include <cmath>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
+
+#if USE_OCL == 1
+#include "sgpp/base/opencl/manager/managed_buffer.hpp"
+#include "sgpp/base/opencl/manager/manager.hpp"
+#endif
 
 namespace sgpp::datadriven {
 
@@ -33,6 +39,14 @@ private:
 #if USE_OCL == 1
   bool use_ocl = false;
   std::string ocl_config_file_name;
+  const int local_cache = 16;
+  const int block_size = 256;
+  // std::string configuration_file(ocl_config_file_name);
+  std::unique_ptr<opencl::manager_t> manager;
+  opencl::device_t device;
+  cl_kernel kernel_verify_support = nullptr;
+  std::unique_ptr<opencl::managed_buffer<double>> data_device;
+
 #endif
 
   inline void child_d_dir(std::vector<int64_t> &l, std::vector<int64_t> &i,
@@ -100,6 +114,47 @@ public:
   inline void enable_OCL(const std::string &ocl_config_file_name) {
     this->use_ocl = true;
     this->ocl_config_file_name = ocl_config_file_name;
+    auto ocl_init_start = std::chrono::system_clock::now();
+    this->manager = std::make_unique<opencl::manager_t>(ocl_config_file_name);
+    auto ocl_init_stop = std::chrono::system_clock::now();
+    std::chrono::duration<double> ocl_init_seconds =
+        ocl_init_stop - ocl_init_start;
+    double ocl_init_duration = ocl_init_seconds.count();
+    std::cout << "ocl_init_duration: " << ocl_init_duration << std::endl;
+    device = manager->get_devices()[0];
+
+    if (manager->get_devices().size() > 1) {
+      std::cout << "warning: support refinement: more than one device "
+                   "configured, using first device only!"
+                << std::endl;
+      // throw opencl::manager_error("only supports single device");
+    }
+
+    if (!kernel_verify_support) {
+      std::string kernel_src_file_name{
+          "datadriven/src/sgpp/datadriven/grid/spatial_refinement_kernel.cl"};
+      std::string kernel_src = manager->read_src_file(kernel_src_file_name);
+      json::node &deviceNode =
+          manager->get_configuration()["PLATFORMS"][device.platformName]
+                                      ["DEVICES"][device.deviceName];
+      json::node &kernelConfig = deviceNode["KERNELS"]["verify_support"];
+      kernel_verify_support = manager->build_kernel(
+          kernel_src, device, kernelConfig, "verify_support",
+          std::string("-DDIM=") + std::to_string(dim));
+    }
+
+    int64_t num_data = static_cast<int64_t>(data.size()) / dim;
+    int64_t num_data_padded = num_data;
+
+    if (num_data % local_cache != 0) {
+      num_data_padded += local_cache - (num_data % local_cache);
+    }
+
+    this->data_device = std::make_unique<opencl::managed_buffer<double>>(
+        device, num_data_padded * dim);
+    data_device->fill_buffer(
+        -1.0); // generates out of support data points in padding
+    data_device->to_device(data);
   }
 #endif
 
