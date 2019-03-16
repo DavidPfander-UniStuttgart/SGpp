@@ -7,24 +7,25 @@
 
 #include <string>
 
-#include "sgpp/globaldef.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
+#include "sgpp/globaldef.hpp"
 
 namespace sgpp {
 namespace datadriven {
 namespace StreamingModOCLFastMultiPlatform {
 
 class Configuration {
- private:
+private:
   Configuration() = default;
 
- public:
+public:
   static const std::string &getKernelName() {
     static std::string kernelName = "StreamingModOCLFastMultiPlatform";
     return kernelName;
   }
 
-  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
+  static void
+  augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     // setup verbose variable for the operation
     if (parameters.contains("VERBOSE") == false) {
       parameters.addIDAttr("VERBOSE", false);
@@ -38,9 +39,10 @@ class Configuration {
         const std::string &kernelName =
             StreamingModOCLFastMultiPlatform::Configuration::getKernelName();
 
-        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                     ? deviceNode["KERNELS"][kernelName]
-                                     : deviceNode["KERNELS"].addDictAttr(kernelName);
+        json::node &kernelNode =
+            deviceNode["KERNELS"].contains(kernelName)
+                ? deviceNode["KERNELS"][kernelName]
+                : deviceNode["KERNELS"].addDictAttr(kernelName);
 
         // set verbosity for the individual kernels
         if (kernelNode.contains("VERBOSE") == false) {
@@ -61,6 +63,10 @@ class Configuration {
 
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
+        }
+
+        if (kernelNode.contains("KERNEL_TRANS_SCHEDULE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_SCHEDULE_SIZE", UINT64_C(102400));
         }
 
         if (kernelNode.contains("INTERNAL_PRECISION") == false) {
@@ -98,6 +104,6 @@ class Configuration {
     }
   }
 };
-}  // namespace StreamingModOCLFastMultiPlatform
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace StreamingModOCLFastMultiPlatform
+} // namespace datadriven
+} // namespace sgpp

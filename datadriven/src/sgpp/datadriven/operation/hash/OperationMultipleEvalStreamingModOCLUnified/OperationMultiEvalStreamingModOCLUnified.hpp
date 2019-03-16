@@ -135,7 +135,7 @@ public:
 
   void mult(sgpp::base::DataVector &alpha,
             sgpp::base::DataVector &result) override {
-    this->prepare();
+    // this->prepare();
 
     this->myTimer.start();
 
@@ -201,7 +201,7 @@ public:
 
   void multTranspose(sgpp::base::DataVector &source,
                      sgpp::base::DataVector &result) override {
-    this->prepare();
+    // this->prepare();
 
     this->myTimer.start();
 

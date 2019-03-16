@@ -100,7 +100,7 @@ public:
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     gridBlockSize =
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
-    scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
+    scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * gridBlockSize;
   }
 

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "sgpp/base/opencl/manager/manager.hpp"
 #include "sgpp/datadriven/application/MetaLearner.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
 #include "sgpp/globaldef.hpp"
@@ -161,6 +162,8 @@ int main(int argc, char *argv[]) {
   double lambda = 0.000001;
 
   bool verbose = true;
+
+  bool do_dummy_ocl_init = false;
 
   sgpp::base::RegularGridConfiguration gridConfig;
   sgpp::solver::SLESolverConfiguration SLESolverConfigRefine;
@@ -327,7 +330,11 @@ int main(int argc, char *argv[]) {
           "implementation sub type of the operation")(
           "additionalConfig",
           boost::program_options::value<std::string>(&additionalConfigFileName),
-          "(OpenCL) kernel configuration file");
+          "(OpenCL) kernel configuration file")(
+          "do_dummy_ocl_init",
+          boost::program_options::bool_switch(&do_dummy_ocl_init),
+          "do untimed dummy ocl init to remove duration of buggy first OCL "
+          "initialization on some hardware platforms");
 
   boost::program_options::variables_map variables_map;
 
@@ -353,6 +360,18 @@ int main(int argc, char *argv[]) {
       std::cout << "test file not found" << std::endl;
       return 1;
     }
+  }
+
+  // do dummy ocl init to not time it
+  {
+    auto total_timer_start = std::chrono::system_clock::now();
+    opencl::manager_t manager(additionalConfigFileName);
+    auto total_timer_stop = std::chrono::system_clock::now();
+    std::chrono::duration<double> total_elapsed_seconds =
+        total_timer_stop - total_timer_start;
+    double total_duration = total_elapsed_seconds.count();
+    std::cout << "ocl dummy initalization duration: " << total_duration
+              << std::endl;
   }
 
   auto total_timer_start = std::chrono::system_clock::now();

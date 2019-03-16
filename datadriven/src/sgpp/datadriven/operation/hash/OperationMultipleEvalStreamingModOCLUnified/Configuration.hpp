@@ -19,27 +19,29 @@ namespace datadriven {
 namespace StreamingModOCLUnified {
 
 class Configuration {
- private:
+private:
   Configuration() = delete;
 
- public:
+public:
   static const std::string &getKernelName() {
     static std::string kernelName = "StreamingModOCLUnified";
     return kernelName;
   }
 
-  static void augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
+  static void
+  augmentDefaultParameters(sgpp::base::OCLOperationConfiguration &parameters) {
     for (std::string &platformName : parameters["PLATFORMS"].keys()) {
       json::node &platformNode = parameters["PLATFORMS"][platformName];
       for (std::string &deviceName : platformNode["DEVICES"].keys()) {
         json::node &deviceNode = platformNode["DEVICES"][deviceName];
 
-        const std::string &kernelName =
-            sgpp::datadriven::StreamingModOCLUnified::Configuration::getKernelName();
+        const std::string &kernelName = sgpp::datadriven::
+            StreamingModOCLUnified::Configuration::getKernelName();
 
-        json::node &kernelNode = deviceNode["KERNELS"].contains(kernelName)
-                                     ? deviceNode["KERNELS"][kernelName]
-                                     : deviceNode["KERNELS"].addDictAttr(kernelName);
+        json::node &kernelNode =
+            deviceNode["KERNELS"].contains(kernelName)
+                ? deviceNode["KERNELS"][kernelName]
+                : deviceNode["KERNELS"].addDictAttr(kernelName);
         //            std::cout << "in kernel augment" << std::endl;
         //            std::cout << "-----------------------------------" <<
         //            std::endl;
@@ -66,6 +68,10 @@ class Configuration {
 
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
+        }
+
+        if (kernelNode.contains("KERNEL_TRANS_SCHEDULE_SIZE") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_SCHEDULE_SIZE", UINT64_C(102400));
         }
 
         if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
@@ -99,6 +105,6 @@ class Configuration {
     }
   }
 };
-}  // namespace StreamingModOCLUnified
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace StreamingModOCLUnified
+} // namespace datadriven
+} // namespace sgpp
