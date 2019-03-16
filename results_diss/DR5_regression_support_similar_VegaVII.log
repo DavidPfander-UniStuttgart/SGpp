@@ -1,0 +1,1783 @@
+./datadriven/examplesOCL/regression_cmd --trainingFileName ../../DissertationCodeGTX/datasets/DR5/DR5_nowarnings_less05_train.arff --testFileName ../../DissertationCodeGTX/datasets/DR5/DR5_nowarnings_less05_test.arff --learnerMode LEARNTEST --grid.level 10 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig OCL_configs/config_ocl_double_Vega7.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 250 --solverFinal.eps 0 --isRegression true --solverRefine.eps 0 --solverRefine.maxIterations 250 --adaptConfig.noPoints 200 --adaptConfig.numRefinements 0 --adaptConfig.support_refinement_min_support 1000 --adaptConfig.support_refinement_ocl_config OCL_configs/config_ocl_double_Vega7.cfg --adaptConfig.use_support_refinement
+instances: 371908
+support_refinement_min_support:1000
+num_candidates: 1
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 1 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.283296
+candidates with support: 1
+num_candidates: 10
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 10 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.322366
+candidates with support: 10
+num_candidates: 60
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 60 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.3227
+candidates with support: 50
+num_candidates: 224
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 224 num_candidates_padded: 256 grid_size: 256 block_size: 256
+duration (s): 0.322307
+candidates with support: 170
+num_candidates: 656
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 656 num_candidates_padded: 768 grid_size: 768 block_size: 256
+duration (s): 0.316571
+candidates with support: 477
+num_candidates: 1694
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 1694 num_candidates_padded: 1792 grid_size: 1792 block_size: 256
+duration (s): 0.316428
+candidates with support: 1187
+num_candidates: 3946
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 3946 num_candidates_padded: 4096 grid_size: 4096 block_size: 256
+duration (s): 0.316823
+candidates with support: 2704
+num_candidates: 8544
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 8544 num_candidates_padded: 8704 grid_size: 8704 block_size: 256
+duration (s): 0.316606
+candidates with support: 5744
+num_candidates: 17454
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 17454 num_candidates_padded: 17664 grid_size: 17664 block_size: 256
+duration (s): 0.616069
+candidates with support: 11357
+num_candidates: 33436
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: platform device count: 1
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+OCL Info: platform not configured, skipping...
+building kernel: verify_support
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+num_candidates: 33436 num_candidates_padded: 33536 grid_size: 33536 block_size: 256
+duration (s): 0.922918
+candidates with support: 21000
+datadriven refinement done, grid size: 42700
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 42700
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274909
+duration multTranspose ocl mod: 0.392155
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191198
+duration mult ocl mod: 0.319852
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274434
+duration multTranspose ocl mod: 0.284494
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19189
+duration mult ocl mod: 0.201306
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275212
+duration multTranspose ocl mod: 0.284095
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192017
+duration mult ocl mod: 0.201132
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275343
+duration multTranspose ocl mod: 0.283651
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191793
+duration mult ocl mod: 0.200503
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275205
+duration multTranspose ocl mod: 0.285356
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192137
+duration mult ocl mod: 0.202538
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275407
+duration multTranspose ocl mod: 0.283417
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192132
+duration mult ocl mod: 0.203507
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275456
+duration multTranspose ocl mod: 0.285923
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192177
+duration mult ocl mod: 0.202808
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275335
+duration multTranspose ocl mod: 0.283376
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19208
+duration mult ocl mod: 0.202939
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275285
+duration multTranspose ocl mod: 0.283302
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191966
+duration mult ocl mod: 0.201682
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275279
+duration multTranspose ocl mod: 0.283199
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191964
+duration mult ocl mod: 0.204419
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275494
+duration multTranspose ocl mod: 0.285019
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192204
+duration mult ocl mod: 0.203036
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275274
+duration multTranspose ocl mod: 0.283342
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191895
+duration mult ocl mod: 0.201453
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275454
+duration multTranspose ocl mod: 0.284524
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191894
+duration mult ocl mod: 0.20059
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275223
+duration multTranspose ocl mod: 0.285288
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19206
+duration mult ocl mod: 0.201432
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275346
+duration multTranspose ocl mod: 0.285264
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191866
+duration mult ocl mod: 0.201779
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275405
+duration multTranspose ocl mod: 0.284657
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192348
+duration mult ocl mod: 0.202039
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275415
+duration multTranspose ocl mod: 0.282933
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191958
+duration mult ocl mod: 0.204698
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27563
+duration multTranspose ocl mod: 0.284879
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192025
+duration mult ocl mod: 0.20118
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275631
+duration multTranspose ocl mod: 0.28562
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192056
+duration mult ocl mod: 0.203468
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275451
+duration multTranspose ocl mod: 0.283571
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191944
+duration mult ocl mod: 0.204678
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275182
+duration multTranspose ocl mod: 0.283997
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192321
+duration mult ocl mod: 0.203423
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275339
+duration multTranspose ocl mod: 0.283462
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19217
+duration mult ocl mod: 0.201896
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275443
+duration multTranspose ocl mod: 0.28468
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192169
+duration mult ocl mod: 0.20182
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275532
+duration multTranspose ocl mod: 0.284731
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192116
+duration mult ocl mod: 0.200999
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275627
+duration multTranspose ocl mod: 0.285217
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192165
+duration mult ocl mod: 0.201103
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275362
+duration multTranspose ocl mod: 0.283449
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191934
+duration mult ocl mod: 0.202471
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275354
+duration multTranspose ocl mod: 0.283661
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192061
+duration mult ocl mod: 0.201167
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275366
+duration multTranspose ocl mod: 0.283325
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191873
+duration mult ocl mod: 0.202357
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275298
+duration multTranspose ocl mod: 0.282851
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192166
+duration mult ocl mod: 0.204658
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275354
+duration multTranspose ocl mod: 0.283989
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192567
+duration mult ocl mod: 0.202177
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275502
+duration multTranspose ocl mod: 0.284307
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191959
+duration mult ocl mod: 0.200921
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275416
+duration multTranspose ocl mod: 0.283195
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192769
+duration mult ocl mod: 0.202433
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275464
+duration multTranspose ocl mod: 0.28309
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191938
+duration mult ocl mod: 0.203304
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275525
+duration multTranspose ocl mod: 0.284246
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192534
+duration mult ocl mod: 0.201075
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275484
+duration multTranspose ocl mod: 0.285037
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192117
+duration mult ocl mod: 0.201161
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275449
+duration multTranspose ocl mod: 0.285199
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192234
+duration mult ocl mod: 0.201233
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275434
+duration multTranspose ocl mod: 0.28317
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192055
+duration mult ocl mod: 0.203212
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275366
+duration multTranspose ocl mod: 0.283255
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192032
+duration mult ocl mod: 0.201833
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275374
+duration multTranspose ocl mod: 0.283064
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192125
+duration mult ocl mod: 0.202122
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275346
+duration multTranspose ocl mod: 0.282756
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192116
+duration mult ocl mod: 0.20478
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275535
+duration multTranspose ocl mod: 0.283396
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192014
+duration mult ocl mod: 0.200955
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275604
+duration multTranspose ocl mod: 0.28505
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191938
+duration mult ocl mod: 0.200579
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275452
+duration multTranspose ocl mod: 0.284625
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191984
+duration mult ocl mod: 0.200703
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275417
+duration multTranspose ocl mod: 0.28535
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192036
+duration mult ocl mod: 0.200909
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275623
+duration multTranspose ocl mod: 0.285472
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192035
+duration mult ocl mod: 0.20108
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275479
+duration multTranspose ocl mod: 0.28314
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192144
+duration mult ocl mod: 0.204791
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275587
+duration multTranspose ocl mod: 0.284258
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192153
+duration mult ocl mod: 0.201096
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275546
+duration multTranspose ocl mod: 0.284135
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192035
+duration mult ocl mod: 0.201207
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275634
+duration multTranspose ocl mod: 0.284734
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192319
+duration mult ocl mod: 0.201419
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27554
+duration multTranspose ocl mod: 0.285703
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192009
+duration mult ocl mod: 0.201885
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275571
+duration multTranspose ocl mod: 0.283445
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192073
+duration mult ocl mod: 0.20197
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275433
+duration multTranspose ocl mod: 0.28318
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192026
+duration mult ocl mod: 0.204416
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275768
+duration multTranspose ocl mod: 0.284343
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19215
+duration mult ocl mod: 0.200781
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275046
+duration multTranspose ocl mod: 0.283293
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191748
+duration mult ocl mod: 0.200725
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275617
+duration multTranspose ocl mod: 0.284321
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192215
+duration mult ocl mod: 0.200986
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274956
+duration multTranspose ocl mod: 0.283049
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191894
+duration mult ocl mod: 0.200729
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275654
+duration multTranspose ocl mod: 0.285803
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19211
+duration mult ocl mod: 0.202975
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275704
+duration multTranspose ocl mod: 0.285402
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191883
+duration mult ocl mod: 0.201019
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275655
+duration multTranspose ocl mod: 0.284889
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192085
+duration mult ocl mod: 0.203441
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275237
+duration multTranspose ocl mod: 0.28279
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192218
+duration mult ocl mod: 0.200965
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275293
+duration multTranspose ocl mod: 0.284914
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192069
+duration mult ocl mod: 0.201029
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275525
+duration multTranspose ocl mod: 0.285139
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192052
+duration mult ocl mod: 0.201365
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275589
+duration multTranspose ocl mod: 0.283428
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192132
+duration mult ocl mod: 0.201128
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275507
+duration multTranspose ocl mod: 0.284091
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192055
+duration mult ocl mod: 0.201083
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275354
+duration multTranspose ocl mod: 0.284507
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19222
+duration mult ocl mod: 0.201321
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27539
+duration multTranspose ocl mod: 0.285208
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191847
+duration mult ocl mod: 0.201016
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275521
+duration multTranspose ocl mod: 0.285149
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192537
+duration mult ocl mod: 0.201865
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275623
+duration multTranspose ocl mod: 0.284613
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192126
+duration mult ocl mod: 0.201069
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275523
+duration multTranspose ocl mod: 0.284889
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191725
+duration mult ocl mod: 0.200914
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275557
+duration multTranspose ocl mod: 0.283453
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191925
+duration mult ocl mod: 0.202809
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275403
+duration multTranspose ocl mod: 0.283226
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192006
+duration mult ocl mod: 0.202238
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275474
+duration multTranspose ocl mod: 0.283048
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192173
+duration mult ocl mod: 0.202136
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275382
+duration multTranspose ocl mod: 0.282947
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191904
+duration mult ocl mod: 0.202452
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275529
+duration multTranspose ocl mod: 0.285721
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192275
+duration mult ocl mod: 0.203357
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275206
+duration multTranspose ocl mod: 0.284879
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191965
+duration mult ocl mod: 0.200579
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27536
+duration multTranspose ocl mod: 0.282851
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192173
+duration mult ocl mod: 0.202285
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275251
+duration multTranspose ocl mod: 0.282671
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192496
+duration mult ocl mod: 0.213944
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274771
+duration multTranspose ocl mod: 0.286847
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19225
+duration mult ocl mod: 0.201752
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275569
+duration multTranspose ocl mod: 0.284977
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192263
+duration mult ocl mod: 0.202937
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275438
+duration multTranspose ocl mod: 0.284993
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191868
+duration mult ocl mod: 0.201398
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275523
+duration multTranspose ocl mod: 0.284262
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192075
+duration mult ocl mod: 0.201365
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275134
+duration multTranspose ocl mod: 0.284758
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192195
+duration mult ocl mod: 0.203168
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275391
+duration multTranspose ocl mod: 0.282921
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19208
+duration mult ocl mod: 0.204259
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275588
+duration multTranspose ocl mod: 0.284161
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19258
+duration mult ocl mod: 0.201176
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275529
+duration multTranspose ocl mod: 0.285191
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191962
+duration mult ocl mod: 0.200958
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275593
+duration multTranspose ocl mod: 0.284728
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192156
+duration mult ocl mod: 0.201588
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275586
+duration multTranspose ocl mod: 0.284727
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192232
+duration mult ocl mod: 0.2027
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275498
+duration multTranspose ocl mod: 0.28528
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192256
+duration mult ocl mod: 0.201599
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275566
+duration multTranspose ocl mod: 0.284673
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191988
+duration mult ocl mod: 0.201123
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275537
+duration multTranspose ocl mod: 0.284044
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191753
+duration mult ocl mod: 0.200737
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275674
+duration multTranspose ocl mod: 0.286038
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192701
+duration mult ocl mod: 0.203386
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275472
+duration multTranspose ocl mod: 0.284466
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192366
+duration mult ocl mod: 0.201344
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275584
+duration multTranspose ocl mod: 0.28376
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192185
+duration mult ocl mod: 0.201153
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275472
+duration multTranspose ocl mod: 0.286036
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191613
+duration mult ocl mod: 0.200725
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275421
+duration multTranspose ocl mod: 0.283565
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192253
+duration mult ocl mod: 0.200914
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275443
+duration multTranspose ocl mod: 0.28378
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192115
+duration mult ocl mod: 0.201678
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275401
+duration multTranspose ocl mod: 0.283281
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191899
+duration mult ocl mod: 0.201747
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275605
+duration multTranspose ocl mod: 0.286314
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191963
+duration mult ocl mod: 0.201349
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275454
+duration multTranspose ocl mod: 0.283335
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191617
+duration mult ocl mod: 0.201033
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27543
+duration multTranspose ocl mod: 0.283222
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192201
+duration mult ocl mod: 0.20148
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275502
+duration multTranspose ocl mod: 0.28389
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192242
+duration mult ocl mod: 0.201415
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275496
+duration multTranspose ocl mod: 0.283833
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192179
+duration mult ocl mod: 0.20149
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275448
+duration multTranspose ocl mod: 0.283148
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192078
+duration mult ocl mod: 0.201401
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27526
+duration multTranspose ocl mod: 0.283137
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19268
+duration mult ocl mod: 0.201929
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275317
+duration multTranspose ocl mod: 0.283137
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192422
+duration mult ocl mod: 0.201827
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275611
+duration multTranspose ocl mod: 0.285859
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192653
+duration mult ocl mod: 0.202471
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275494
+duration multTranspose ocl mod: 0.2832
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191667
+duration mult ocl mod: 0.201552
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275441
+duration multTranspose ocl mod: 0.28349
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191842
+duration mult ocl mod: 0.200918
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27538
+duration multTranspose ocl mod: 0.285193
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192433
+duration mult ocl mod: 0.203238
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275406
+duration multTranspose ocl mod: 0.28327
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192179
+duration mult ocl mod: 0.204627
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275456
+duration multTranspose ocl mod: 0.284558
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192311
+duration mult ocl mod: 0.203284
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275406
+duration multTranspose ocl mod: 0.283521
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192344
+duration mult ocl mod: 0.20272
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275049
+duration multTranspose ocl mod: 0.282714
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192139
+duration mult ocl mod: 0.203184
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27578
+duration multTranspose ocl mod: 0.285591
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192009
+duration mult ocl mod: 0.201402
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275434
+duration multTranspose ocl mod: 0.282974
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192027
+duration mult ocl mod: 0.203223
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275499
+duration multTranspose ocl mod: 0.283412
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192037
+duration mult ocl mod: 0.202966
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275487
+duration multTranspose ocl mod: 0.283114
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192499
+duration mult ocl mod: 0.203273
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275344
+duration multTranspose ocl mod: 0.283359
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192002
+duration mult ocl mod: 0.201105
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275467
+duration multTranspose ocl mod: 0.285179
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19172
+duration mult ocl mod: 0.201258
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274882
+duration multTranspose ocl mod: 0.283572
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19251
+duration mult ocl mod: 0.201547
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275415
+duration multTranspose ocl mod: 0.283323
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192265
+duration mult ocl mod: 0.202388
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275611
+duration multTranspose ocl mod: 0.28597
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192085
+duration mult ocl mod: 0.200979
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275429
+duration multTranspose ocl mod: 0.283891
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192088
+duration mult ocl mod: 0.2013
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275321
+duration multTranspose ocl mod: 0.284469
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191984
+duration mult ocl mod: 0.200823
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27545
+duration multTranspose ocl mod: 0.286091
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191863
+duration mult ocl mod: 0.202992
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275421
+duration multTranspose ocl mod: 0.284263
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19194
+duration mult ocl mod: 0.201514
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275549
+duration multTranspose ocl mod: 0.285127
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19231
+duration mult ocl mod: 0.203693
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275344
+duration multTranspose ocl mod: 0.283492
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192158
+duration mult ocl mod: 0.202512
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275269
+duration multTranspose ocl mod: 0.283011
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192117
+duration mult ocl mod: 0.201351
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275405
+duration multTranspose ocl mod: 0.285345
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192066
+duration mult ocl mod: 0.201903
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275372
+duration multTranspose ocl mod: 0.283836
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191847
+duration mult ocl mod: 0.202875
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275527
+duration multTranspose ocl mod: 0.284048
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192209
+duration mult ocl mod: 0.201718
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274918
+duration multTranspose ocl mod: 0.283294
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192496
+duration mult ocl mod: 0.20157
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275596
+duration multTranspose ocl mod: 0.285571
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191908
+duration mult ocl mod: 0.20104
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275458
+duration multTranspose ocl mod: 0.283801
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192171
+duration mult ocl mod: 0.201713
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275384
+duration multTranspose ocl mod: 0.283628
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192182
+duration mult ocl mod: 0.201395
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275405
+duration multTranspose ocl mod: 0.283702
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192883
+duration mult ocl mod: 0.20186
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275371
+duration multTranspose ocl mod: 0.285166
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191791
+duration mult ocl mod: 0.200801
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275354
+duration multTranspose ocl mod: 0.283676
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192745
+duration mult ocl mod: 0.201915
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275244
+duration multTranspose ocl mod: 0.283196
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192069
+duration mult ocl mod: 0.201755
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275176
+duration multTranspose ocl mod: 0.283436
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192343
+duration mult ocl mod: 0.201524
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27545
+duration multTranspose ocl mod: 0.283725
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191893
+duration mult ocl mod: 0.200869
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275301
+duration multTranspose ocl mod: 0.283456
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192255
+duration mult ocl mod: 0.201925
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275345
+duration multTranspose ocl mod: 0.283513
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191924
+duration mult ocl mod: 0.201347
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275346
+duration multTranspose ocl mod: 0.283235
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191806
+duration mult ocl mod: 0.201818
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275311
+duration multTranspose ocl mod: 0.285264
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191784
+duration mult ocl mod: 0.200825
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27546
+duration multTranspose ocl mod: 0.285722
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19206
+duration mult ocl mod: 0.203806
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274975
+duration multTranspose ocl mod: 0.285309
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192066
+duration mult ocl mod: 0.201408
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27531
+duration multTranspose ocl mod: 0.284378
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192212
+duration mult ocl mod: 0.203496
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275236
+duration multTranspose ocl mod: 0.283155
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19193
+duration mult ocl mod: 0.201347
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275248
+duration multTranspose ocl mod: 0.28337
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192211
+duration mult ocl mod: 0.20156
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275468
+duration multTranspose ocl mod: 0.285953
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191955
+duration mult ocl mod: 0.20211
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275241
+duration multTranspose ocl mod: 0.28317
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191984
+duration mult ocl mod: 0.201775
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275111
+duration multTranspose ocl mod: 0.284454
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192088
+duration mult ocl mod: 0.202387
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275313
+duration multTranspose ocl mod: 0.283378
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191941
+duration mult ocl mod: 0.201853
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275361
+duration multTranspose ocl mod: 0.283915
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192096
+duration mult ocl mod: 0.202825
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275378
+duration multTranspose ocl mod: 0.283525
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191829
+duration mult ocl mod: 0.201566
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274978
+duration multTranspose ocl mod: 0.285133
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191825
+duration mult ocl mod: 0.201041
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275402
+duration multTranspose ocl mod: 0.283369
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191835
+duration mult ocl mod: 0.201407
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275434
+duration multTranspose ocl mod: 0.283645
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192038
+duration mult ocl mod: 0.201422
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275361
+duration multTranspose ocl mod: 0.283158
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191985
+duration mult ocl mod: 0.203336
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275305
+duration multTranspose ocl mod: 0.283718
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19212
+duration mult ocl mod: 0.202414
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275242
+duration multTranspose ocl mod: 0.283214
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191835
+duration mult ocl mod: 0.201737
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27489
+duration multTranspose ocl mod: 0.283447
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19273
+duration mult ocl mod: 0.201827
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275477
+duration multTranspose ocl mod: 0.284516
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192127
+duration mult ocl mod: 0.201854
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275449
+duration multTranspose ocl mod: 0.28446
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191794
+duration mult ocl mod: 0.200909
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275476
+duration multTranspose ocl mod: 0.283551
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192073
+duration mult ocl mod: 0.201393
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275497
+duration multTranspose ocl mod: 0.283778
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192029
+duration mult ocl mod: 0.201973
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274828
+duration multTranspose ocl mod: 0.284914
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19187
+duration mult ocl mod: 0.202035
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275446
+duration multTranspose ocl mod: 0.283745
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192243
+duration mult ocl mod: 0.201775
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275275
+duration multTranspose ocl mod: 0.28364
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191876
+duration mult ocl mod: 0.201477
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275308
+duration multTranspose ocl mod: 0.283334
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192132
+duration mult ocl mod: 0.201325
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275172
+duration multTranspose ocl mod: 0.283391
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192115
+duration mult ocl mod: 0.201152
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275318
+duration multTranspose ocl mod: 0.283545
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192117
+duration mult ocl mod: 0.201496
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275338
+duration multTranspose ocl mod: 0.283772
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191859
+duration mult ocl mod: 0.201053
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275448
+duration multTranspose ocl mod: 0.285526
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191928
+duration mult ocl mod: 0.200779
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275347
+duration multTranspose ocl mod: 0.283676
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191857
+duration mult ocl mod: 0.201292
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275312
+duration multTranspose ocl mod: 0.283354
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191885
+duration mult ocl mod: 0.20155
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275311
+duration multTranspose ocl mod: 0.283711
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192204
+duration mult ocl mod: 0.201574
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275328
+duration multTranspose ocl mod: 0.283567
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.1921
+duration mult ocl mod: 0.201811
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275353
+duration multTranspose ocl mod: 0.283756
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191734
+duration mult ocl mod: 0.200809
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275251
+duration multTranspose ocl mod: 0.283332
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192014
+duration mult ocl mod: 0.201303
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275241
+duration multTranspose ocl mod: 0.283237
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19196
+duration mult ocl mod: 0.201337
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275397
+duration multTranspose ocl mod: 0.283781
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191898
+duration mult ocl mod: 0.202183
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275391
+duration multTranspose ocl mod: 0.283413
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192216
+duration mult ocl mod: 0.202036
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275347
+duration multTranspose ocl mod: 0.283234
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19187
+duration mult ocl mod: 0.203487
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275316
+duration multTranspose ocl mod: 0.283115
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192663
+duration mult ocl mod: 0.206062
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274746
+duration multTranspose ocl mod: 0.283176
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191842
+duration mult ocl mod: 0.20109
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275286
+duration multTranspose ocl mod: 0.285657
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192316
+duration mult ocl mod: 0.202521
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274893
+duration multTranspose ocl mod: 0.284794
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191936
+duration mult ocl mod: 0.201392
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275314
+duration multTranspose ocl mod: 0.283596
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192018
+duration mult ocl mod: 0.201358
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275539
+duration multTranspose ocl mod: 0.284827
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192068
+duration mult ocl mod: 0.201698
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275344
+duration multTranspose ocl mod: 0.284978
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191945
+duration mult ocl mod: 0.200874
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275454
+duration multTranspose ocl mod: 0.285529
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192244
+duration mult ocl mod: 0.201809
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275444
+duration multTranspose ocl mod: 0.283377
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191822
+duration mult ocl mod: 0.204327
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275515
+duration multTranspose ocl mod: 0.284782
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192272
+duration mult ocl mod: 0.204675
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275387
+duration multTranspose ocl mod: 0.284528
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192152
+duration mult ocl mod: 0.201774
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27545
+duration multTranspose ocl mod: 0.28468
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192162
+duration mult ocl mod: 0.20174
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275229
+duration multTranspose ocl mod: 0.284325
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192049
+duration mult ocl mod: 0.201364
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275378
+duration multTranspose ocl mod: 0.285914
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192137
+duration mult ocl mod: 0.203425
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275469
+duration multTranspose ocl mod: 0.284608
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19177
+duration mult ocl mod: 0.201738
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275473
+duration multTranspose ocl mod: 0.285549
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191909
+duration mult ocl mod: 0.203663
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274548
+duration multTranspose ocl mod: 0.284593
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192072
+duration mult ocl mod: 0.204182
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27537
+duration multTranspose ocl mod: 0.283412
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192018
+duration mult ocl mod: 0.203524
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275409
+duration multTranspose ocl mod: 0.284829
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192314
+duration mult ocl mod: 0.203711
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275442
+duration multTranspose ocl mod: 0.28557
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192049
+duration mult ocl mod: 0.201335
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275095
+duration multTranspose ocl mod: 0.285154
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192182
+duration mult ocl mod: 0.20269
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275113
+duration multTranspose ocl mod: 0.283168
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192192
+duration mult ocl mod: 0.201526
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275293
+duration multTranspose ocl mod: 0.28507
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192398
+duration mult ocl mod: 0.201203
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275439
+duration multTranspose ocl mod: 0.285075
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192097
+duration mult ocl mod: 0.203467
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275241
+duration multTranspose ocl mod: 0.283471
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191729
+duration mult ocl mod: 0.203001
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.2753
+duration multTranspose ocl mod: 0.283561
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19217
+duration mult ocl mod: 0.203267
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27519
+duration multTranspose ocl mod: 0.283265
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19208
+duration mult ocl mod: 0.201873
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275311
+duration multTranspose ocl mod: 0.285102
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192005
+duration mult ocl mod: 0.201579
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275123
+duration multTranspose ocl mod: 0.283311
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192042
+duration mult ocl mod: 0.201395
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275112
+duration multTranspose ocl mod: 0.283193
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191922
+duration mult ocl mod: 0.204536
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275344
+duration multTranspose ocl mod: 0.283562
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19205
+duration mult ocl mod: 0.201754
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275264
+duration multTranspose ocl mod: 0.283395
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192189
+duration mult ocl mod: 0.202136
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275122
+duration multTranspose ocl mod: 0.283314
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192058
+duration mult ocl mod: 0.201832
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275394
+duration multTranspose ocl mod: 0.28461
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192076
+duration mult ocl mod: 0.201917
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275046
+duration multTranspose ocl mod: 0.284059
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191814
+duration mult ocl mod: 0.203071
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275244
+duration multTranspose ocl mod: 0.283322
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191868
+duration mult ocl mod: 0.201101
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275286
+duration multTranspose ocl mod: 0.285335
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192003
+duration mult ocl mod: 0.20168
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275305
+duration multTranspose ocl mod: 0.284439
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192028
+duration mult ocl mod: 0.201471
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275338
+duration multTranspose ocl mod: 0.285908
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19173
+duration mult ocl mod: 0.202627
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27527
+duration multTranspose ocl mod: 0.284708
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191879
+duration mult ocl mod: 0.202766
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275108
+duration multTranspose ocl mod: 0.282688
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191719
+duration mult ocl mod: 0.204001
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275169
+duration multTranspose ocl mod: 0.284341
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192511
+duration mult ocl mod: 0.201674
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275191
+duration multTranspose ocl mod: 0.283344
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191921
+duration mult ocl mod: 0.202727
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275277
+duration multTranspose ocl mod: 0.285755
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191448
+duration mult ocl mod: 0.20059
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27526
+duration multTranspose ocl mod: 0.28317
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191551
+duration mult ocl mod: 0.200327
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27516
+duration multTranspose ocl mod: 0.282983
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191823
+duration mult ocl mod: 0.200777
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275221
+duration multTranspose ocl mod: 0.28295
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191963
+duration mult ocl mod: 0.201055
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275148
+duration multTranspose ocl mod: 0.283193
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192011
+duration mult ocl mod: 0.201322
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275227
+duration multTranspose ocl mod: 0.283041
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19245
+duration mult ocl mod: 0.201448
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275222
+duration multTranspose ocl mod: 0.283067
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192603
+duration mult ocl mod: 0.201258
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275028
+duration multTranspose ocl mod: 0.282746
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192297
+duration mult ocl mod: 0.201016
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275235
+duration multTranspose ocl mod: 0.283068
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192257
+duration mult ocl mod: 0.201392
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275223
+duration multTranspose ocl mod: 0.282949
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192173
+duration mult ocl mod: 0.201095
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275256
+duration multTranspose ocl mod: 0.283105
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19194
+duration mult ocl mod: 0.200745
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275231
+duration multTranspose ocl mod: 0.283014
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191922
+duration mult ocl mod: 0.201071
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275256
+duration multTranspose ocl mod: 0.283237
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192184
+duration mult ocl mod: 0.201402
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275279
+duration multTranspose ocl mod: 0.283231
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192097
+duration mult ocl mod: 0.20131
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275431
+duration multTranspose ocl mod: 0.28381
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191617
+duration mult ocl mod: 0.200338
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.2752
+duration multTranspose ocl mod: 0.283071
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191857
+duration mult ocl mod: 0.200896
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275208
+duration multTranspose ocl mod: 0.282971
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191884
+duration mult ocl mod: 0.200514
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275213
+duration multTranspose ocl mod: 0.283542
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191661
+duration mult ocl mod: 0.201052
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275286
+duration multTranspose ocl mod: 0.283265
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192291
+duration mult ocl mod: 0.201357
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275192
+duration multTranspose ocl mod: 0.283043
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192061
+duration mult ocl mod: 0.201677
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274966
+duration multTranspose ocl mod: 0.284511
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191903
+duration mult ocl mod: 0.204179
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275313
+duration multTranspose ocl mod: 0.283064
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191958
+duration mult ocl mod: 0.2016
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.274946
+duration multTranspose ocl mod: 0.284634
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191896
+duration mult ocl mod: 0.20096
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275398
+duration multTranspose ocl mod: 0.284435
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.19186
+duration mult ocl mod: 0.201717
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.27523
+duration multTranspose ocl mod: 0.2828
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.192028
+duration mult ocl mod: 0.205096
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275423
+duration multTranspose ocl mod: 0.283423
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191953
+duration mult ocl mod: 0.20418
+device: gfx906 (0x454b3e0)  kernel from: 0 to: 42752 -> range: 42752 (with blocking: 42752)
+device: 0x454b3e0 duration: 0.275321
+duration multTranspose ocl mod: 0.283957
+
+Needed Iterations: 250
+Final residuum: 5194.7
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation: 256.5
+note: performance calculation: additional iteration for residual recalculation: 5
+
+Current GFlop/s: 1070.62
+Current GByte/s: 5027.13
+
+Finished Training!
+
+Training took: 127.552 seconds
+
+computing MSE of test dataset
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected platform vendor name: "Advanced Micro Devices, Inc."
+OCL Info: using platform, name: "AMD Accelerated Parallel Processing"
+OCL Info: detected device, name: "gfx906"
+OCL Info: using device, name: "gfx906"
+OCL Info: detected platform, name: "Clover"
+OCL Info: detected platform vendor name: "Mesa"
+building with optimization flags: 
+--- Begin Build Log ---
+
+--- End Build Log ---
+device: 0x454b3e0 kernel from: 0 to: 371968 -> range: 371968
+device: 0x454b3e0 duration: 0.191576
+duration mult ocl mod: 0.324852
+classes computed/predicted
+mse: 0.000501522
+total_duration: 139.011
