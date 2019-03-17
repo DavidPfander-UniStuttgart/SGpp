@@ -74,11 +74,11 @@ void support_refinement_iterative::verify_support_blocked() {
     // }
   }
 
-  std::cout << "schedule_support: ";
-  for (size_t i = 0; i < schedule_support.size(); i += 1) {
-    std::cout << schedule_support[i];
-  }
-  std::cout << std::endl;
+  // std::cout << "schedule_support: ";
+  // for (size_t i = 0; i < schedule_support.size(); i += 1) {
+  //   std::cout << schedule_support[i];
+  // }
+  // std::cout << std::endl;
 }
 
 // N * m data points accessed (~memory operations)
