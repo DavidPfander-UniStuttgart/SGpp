@@ -41,8 +41,9 @@ class manager_t {
   ~manager_t();
 
   // for all devices
-  void build_kernel(const std::string &program_src, const std::string &kernel_name,
-                    std::map<cl_platform_id, std::vector<cl_kernel>> &kernels);
+  std::vector<cl_kernel> build_kernel(const std::string &program_src,
+                                      const std::string &kernel_name,
+                                      const std::string additional_options = "");
 
   // for a single device
   cl_kernel build_kernel(const std::string &source, device_t &device,
@@ -66,6 +67,10 @@ class manager_t {
   void set_verbose(bool verbose);
 
   std::string read_src_file(const std::string &kernel_src_file_name) const;
+
+  void release_kernel(cl_kernel kernel);
+
+  void release_kernels(std::vector<cl_kernel> kernels);
 };
 
 inline void check(cl_int err, const std::string &message) {

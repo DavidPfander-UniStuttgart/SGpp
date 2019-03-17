@@ -11,7 +11,7 @@
 #include "sgpp/base/grid/storage/hashmap/HashGridPoint.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 
-#include "sgpp/datadriven/grid/spatial_refinement.hpp"
+#include "sgpp/datadriven/grid/support_refinement_recursive.hpp"
 
 // // read into vector of size rows*cols
 // class csv_reader {
@@ -160,7 +160,7 @@
 //   std::vector<int64_t> &get() { return cur; }
 // };
 
-// class spatial_refinement {
+// class support_refinement_recursive {
 //  private:
 //   int64_t dim;
 //   int64_t max_level;
@@ -316,7 +316,7 @@
 //   }
 
 //  public:
-//   spatial_refinement(int64_t dim, int64_t max_level, int64_t min_support,
+//   support_refinement_recursive(int64_t dim, int64_t max_level, int64_t min_support,
 //                      const std::vector<double> &data)
 //       : dim(dim), max_level(max_level), min_support(min_support), data(data), num_visited(0) {
 //     entries = data.size() / dim;
@@ -454,7 +454,7 @@ int main(void) {
   //   }
   //   std::cout << std::endl;
   // }
-  sgpp::datadriven::spatial_refinement ref(dim, max_level, min_support, data);
+  sgpp::datadriven::support_refinement_recursive ref(dim, max_level, min_support, data);
   ref.refine();
 
   std::vector<std::vector<int64_t>> &ls = ref.get_levels();
@@ -491,8 +491,8 @@ int main(void) {
 
   if (ls.size() > 0) {
     std::cout << "final number of grid points created: " << (ls.size() / dim) << std::endl;
-    sgpp::datadriven::spatial_refinement::write_grid_positions(grid_file_name, dataset_file_name,
-                                                               ls, is);
+    sgpp::datadriven::support_refinement_recursive::write_grid_positions(grid_file_name,
+                                                                         dataset_file_name, ls, is);
   } else {
     std::cerr << "error: did not create any grid points" << std::endl;
   }

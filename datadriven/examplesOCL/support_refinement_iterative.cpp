@@ -11,18 +11,15 @@
 #include "sgpp/base/grid/storage/hashmap/HashGridPoint.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 
-#include "sgpp/datadriven/grid/spatial_refinement_blocked.hpp"
+#include "sgpp/datadriven/grid/support_refinement_iterative.hpp"
 
 int main(void) {
-  std::string dataset_file_name(
-      "datasets_diss/gaussian_c4_size500_dim2id2_noise.arff");
+  std::string dataset_file_name("datasets_diss/gaussian_c4_size500_dim2id2_noise.arff");
 
-  sgpp::datadriven::Dataset dataset =
-      sgpp::datadriven::ARFFTools::readARFF(dataset_file_name);
+  sgpp::datadriven::Dataset dataset = sgpp::datadriven::ARFFTools::readARFF(dataset_file_name);
   int64_t entries = dataset.getNumberInstances();
   int64_t dim = dataset.getDimension();
-  std::vector<double> data =
-      std::move(dataset.getData()); // this won't actually move
+  std::vector<double> data = std::move(dataset.getData());  // this won't actually move
 
   std::cout << "dim: " << dim << " entries: " << entries << std::endl;
 
@@ -30,16 +27,15 @@ int main(void) {
   int64_t min_support = 40;
   std::string grid_file_name("results_diss/support_refined_grid_G2D.csv");
 
-  sgpp::datadriven::spatial_refinement_blocked ref(dim, max_level, min_support,
-                                                   data);
+  sgpp::datadriven::support_refinement_iterative ref(dim, max_level, min_support, data);
   ref.enable_OCL("OCL_configs/config_ocl_float_QuadroGP100.cfg");
   ref.refine();
 
   std::vector<int64_t> &ls = ref.get_levels();
   std::vector<int64_t> &is = ref.get_indices();
 
-  std::unique_ptr<sgpp::base::Grid> grid = std::unique_ptr<sgpp::base::Grid>(
-      sgpp::base::Grid::createLinearGrid(dim));
+  std::unique_ptr<sgpp::base::Grid> grid =
+      std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createLinearGrid(dim));
   // sgpp::base::GridGenerator &grid_generator = grid->getGenerator();
   sgpp::base::GridStorage &grid_storage = grid->getStorage();
   sgpp::base::HashGridPoint p(dim);
@@ -51,10 +47,9 @@ int main(void) {
   }
 
   if (ls.size() > 0) {
-    std::cout << "final number of grid points created: " << (ls.size() / dim)
-              << std::endl;
-    sgpp::datadriven::spatial_refinement_blocked::write_grid_positions(
-        dim, grid_file_name, dataset_file_name, ls, is);
+    std::cout << "final number of grid points created: " << (ls.size() / dim) << std::endl;
+    sgpp::datadriven::support_refinement_iterative::write_grid_positions(dim, grid_file_name,
+                                                                         dataset_file_name, ls, is);
   } else {
     std::cerr << "error: did not create any grid points" << std::endl;
   }

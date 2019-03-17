@@ -3,7 +3,7 @@
 namespace sgpp {
 namespace datadriven {
 
-class spatial_refinement {
+class support_refinement_recursive {
  private:
   int64_t dim;
   int64_t max_level;
@@ -154,8 +154,8 @@ class spatial_refinement {
   }
 
  public:
-  spatial_refinement(int64_t dim, int64_t max_level, int64_t min_support,
-                     const std::vector<double> &data)
+  support_refinement_recursive(int64_t dim, int64_t max_level, int64_t min_support,
+                               const std::vector<double> &data)
       : dim(dim),
         max_level(max_level),
         min_support(min_support),

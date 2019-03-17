@@ -55,31 +55,37 @@ class managed_buffer {
 
   cl_mem get() { return ptr; }
 
-  void to_device(const std::vector<T> &data) {
+  void to_device(const std::vector<T> &data) { to_device(data, 0, data.size()); }
+
+  void to_device(const std::vector<T> &data, const size_t range_start, const size_t range_end) {
     if (!ptr) {
       throw std::runtime_error("managed_buffer: buffer not initialized");
     }
-    if (data.size() > buffer_size) {
+    const size_t range = range_end - range_start;
+    if (range > buffer_size) {
       throw std::runtime_error("managed_buffer: to_device: device buffer too small");
     }
     cl_int err;
-    err = clEnqueueWriteBuffer(device.commandQueue, ptr, CL_TRUE, 0, sizeof(T) * data.size(),
-                               data.data(), 0, nullptr, nullptr);
+    err = clEnqueueWriteBuffer(device.commandQueue, ptr, CL_TRUE, 0, sizeof(T) * range,
+                               data.data() + range_start, 0, nullptr, nullptr);
     opencl::check(err, "managed_buffer: clEnqueueWriteBuffer failed");
     clFinish(device.commandQueue);
   }
 
-  void from_device(std::vector<T> &data) {
+  void from_device(std::vector<T> &data) { from_device(data, 0, data.size()); }
+
+  void from_device(std::vector<T> &data, const size_t range_start, const size_t range_end) {
     if (!ptr) {
       throw std::runtime_error("managed_buffer: buffer not initialized");
     }
+    size_t range = static_cast<size_t>(range_end - range_start);
     // if (data.size() < buffer_size) {
     //   throw std::runtime_error("managed_buffer: from_device: host-side buffer too small");
     // }
     cl_int err;
     err = clEnqueueReadBuffer(device.commandQueue, ptr, CL_TRUE, 0,
-                              sizeof(T) * std::min(buffer_size, data.size()), data.data(), 0,
-                              nullptr, nullptr);
+                              sizeof(T) * std::min(buffer_size, range), data.data() + range_start,
+                              0, nullptr, nullptr);
     opencl::check(err, "managed_buffer: clEnqueueReadBuffer failed");
     clFinish(device.commandQueue);
   }
@@ -144,17 +150,20 @@ class managed_buffer<bool> {
 
   cl_mem get() { return ptr; }
 
-  void to_device(const std::vector<bool> &data) {
+  void to_device(const std::vector<bool> &data) { to_device(data, 0, data.size()); }
+
+  void to_device(const std::vector<bool> &data, const size_t range_start, const size_t range_end) {
     if (!ptr) {
       throw std::runtime_error("managed_buffer: buffer not initialized");
     }
-    if (data.size() > buffer_size) {
+    size_t range = range_end - range_start;
+    if (range > buffer_size) {
       throw std::runtime_error("managed_buffer: to_device: device buffer too small");
     }
 
-    std::vector<unsigned char> data_temp(data.size());
+    std::vector<unsigned char> data_temp(range);
     for (size_t i = 0; i < data.size(); i += 1) {
-      data_temp[i] = data[i];
+      data_temp[i] = data[range_start + i];
     }
 
     cl_int err;
@@ -165,22 +174,25 @@ class managed_buffer<bool> {
     clFinish(device.commandQueue);
   }
 
-  void from_device(std::vector<bool> &data) {
+  void from_device(std::vector<bool> &data) { from_device(data, 0, data.size()); }
+
+  void from_device(std::vector<bool> &data, const size_t range_start, const size_t range_end) {
     if (!ptr) {
       throw std::runtime_error("managed_buffer: buffer not initialized");
     }
+    size_t range = range_end - range_start;
     // if (data.size() < buffer_size) {
     //   throw std::runtime_error("managed_buffer: from_device: host-side buffer too small");
     // }
-    std::vector<unsigned char> data_temp(data.size());
+    std::vector<unsigned char> data_temp(range);
     cl_int err;
     err = clEnqueueReadBuffer(device.commandQueue, ptr, CL_TRUE, 0,
-                              sizeof(unsigned char) * std::min(buffer_size, data.size()),
+                              sizeof(unsigned char) * std::min(buffer_size, range),
                               data_temp.data(), 0, nullptr, nullptr);
     opencl::check(err, "managed_buffer: clEnqueueReadBuffer failed");
     clFinish(device.commandQueue);
     for (size_t i = 0; i < data.size(); i += 1) {
-      data[i] = data_temp[i];
+      data[range_start + i] = data_temp[i];
     }
   }
 
