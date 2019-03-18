@@ -21,7 +21,7 @@ namespace StreamingModOCLUnified {
 
 template <typename T>
 class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
- private:
+private:
   std::shared_ptr<base::OCLDevice> device;
 
   json::node &kernelConfiguration;
@@ -38,11 +38,13 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
     std::stringstream output;
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
       output << "level_" << gridBlockingIndex << "[" << dim << "]";
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
+    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+                   "register") == 0) {
       output << "level_" << gridBlockingIndex << "_" << dim;
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
-      output << "ptrLevel[(((globalSize * " << gridBlockingIndex << ") + globalIdx) * " << dims
-             << ") + " << dim << "]";
+    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+                   "pointer") == 0) {
+      output << "ptrLevel[(((globalSize * " << gridBlockingIndex
+             << ") + globalIdx) * " << dims << ") + " << dim << "]";
     } else {
       throw new base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -58,11 +60,13 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
     std::stringstream output;
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
       output << "index_" << gridBlockingIndex << "[" << dim << "]";
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
+    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+                   "register") == 0) {
       output << "index_" << gridBlockingIndex << "_" << dim;
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("pointer") == 0) {
-      output << "ptrIndex[(((globalSize * " << gridBlockingIndex << ") + globalIdx) * " << dims
-             << ") + " << dim << "]";
+    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+                   "pointer") == 0) {
+      output << "ptrIndex[(((globalSize * " << gridBlockingIndex
+             << ") + globalIdx) * " << dims << ") + " << dim << "]";
     } else {
       throw new base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -86,8 +90,10 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
 
   std::string getData(size_t dim) { return this->getData(std::to_string(dim)); }
 
-  std::string unrolledBasisFunctionEvalulation(size_t dims, size_t startDim, size_t endDim,
-                                               std::string unrollVariable, size_t indentLevel) {
+  std::string unrolledBasisFunctionEvalulation(size_t dims, size_t startDim,
+                                               size_t endDim,
+                                               std::string unrollVariable,
+                                               size_t indentLevel) {
     std::stringstream output;
 
     for (size_t d = startDim; d < endDim; d++) {
@@ -101,7 +107,8 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
       std::string pointerAccess = dimElement.str();
 
       std::string dString;
-      if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
+      if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
+          0) {
         std::stringstream stream;
         stream << (d);
         dString = stream.str();
@@ -112,52 +119,58 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
         // TODO(pfandedd): add 1d blocked basis function evaluation
 
-        //        output << this->indent[2] << "// nothing to do on l == 1" << std::endl;
-        //        output << this->indent[2] << "if (" << getLevel(dString, gridIndex) << " == 0) {"
+        //        output << this->indent[2] << "// nothing to do on l == 1" <<
+        //        std::endl; output << this->indent[2] << "if (" <<
+        //        getLevel(dString, gridIndex) << " == 0) {"
         //               << std::endl;
         //        output << this->indent[2] << "} else {" << std::endl;
-        output << this->indent[2] << "curSupport_" << gridIndex << " *= fmax(1.0"
-               << this->constSuffix() << " - fabs((";
-        output << getLevel(dString, gridIndex) << " * " << getData(dString) << ") - "
-               << getIndex(dString, gridIndex) << "), 0.0" << this->constSuffix() << ");"
-               << std::endl;
+        output << this->indent[2] << "curSupport_" << gridIndex
+               << " *= fmax(1.0" << this->constSuffix() << " - fabs((";
+        output << getLevel(dString, gridIndex) << " * " << getData(dString)
+               << ") - " << getIndex(dString, gridIndex) << "), 0.0"
+               << this->constSuffix() << ");" << std::endl;
 
-        //        output << this->indent[3] << "if (" << getIndex(dString, gridIndex) << " == 0 || "
-        //               << getIndex(dString, gridIndex) << " == " << getLevel(dString, gridIndex)
+        //        output << this->indent[3] << "if (" << getIndex(dString,
+        //        gridIndex) << " == 0 || "
+        //               << getIndex(dString, gridIndex) << " == " <<
+        //               getLevel(dString, gridIndex)
         //               << ") {"
         //               << std::endl;
-        //        output << this->indent[4] << "curSupport_" << gridIndex << " *= 2;" << std::endl;
-        //        output << this->indent[3] << "}" << std::endl;
-        //        output << this->indent[2] << "}" << std::endl;
+        //        output << this->indent[4] << "curSupport_" << gridIndex << "
+        //        *= 2;" << std::endl; output << this->indent[3] << "}" <<
+        //        std::endl; output << this->indent[2] << "}" << std::endl;
 
         //                output << this->indent[2] << "} else {" << std::endl;
-        //                output << this->indent[3] << "curSupport_" << i << " *= fmax(1.0" <<
-        //                this->constSuffix()
+        //                output << this->indent[3] << "curSupport_" << i << "
+        //                *= fmax(1.0" << this->constSuffix()
         //                       << " - fabs((";
-        //                output << levelAccess << " * " << getData(dString, i) << ") - " <<
-        //                indexAccess <<
+        //                output << levelAccess << " * " << getData(dString, i)
+        //                << ") - " << indexAccess <<
         //                "), 0.0"
         //                       << this->constSuffix() << ");" << std::endl;
-        //                output << this->indent[3] << "if (" << indexAccess << " == 0 || " <<
-        //                indexAccess
+        //                output << this->indent[3] << "if (" << indexAccess <<
+        //                " == 0 || " << indexAccess
         //                       << " == " << levelAccess << ") {" << std::endl;
-        //                output << this->indent[4] << "curSupport_" << i << " *= 2;" << std::endl;
-        //                output << this->indent[3] << "}" << std::endl;
-        //                output << this->indent[2] << "}" << std::endl;
+        //                output << this->indent[4] << "curSupport_" << i << "
+        //                *= 2;" << std::endl; output << this->indent[3] << "}"
+        //                << std::endl; output << this->indent[2] << "}" <<
+        //                std::endl;
       }
     }
     return output.str();
   }
 
- public:
+public:
   SourceBuilderMultTranspose(std::shared_ptr<base::OCLDevice> device,
                              json::node &kernelConfiguration, size_t dims)
       : device(device), kernelConfiguration(kernelConfiguration), dims(dims) {
     localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
-    transGridBlockSize = kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
+    transGridBlockSize =
+        kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     maxDimUnroll = kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt();
-    transPrefetchSize = kernelConfiguration["KERNEL_TRANS_PREFETCH_SIZE"].getUInt();
+    transPrefetchSize =
+        kernelConfiguration["KERNEL_TRANS_PREFETCH_SIZE"].getUInt();
   }
 
   std::string generateSource() {
@@ -169,35 +182,47 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
 
     size_t indentLevel = 0;
 
-    sourceStream << "// platform: " << device->platformName << " device: " << device->deviceName
-                 << std::endl
+    sourceStream << "// platform: " << device->platformName
+                 << " device: " << device->deviceName << std::endl
                  << std::endl;
 
     if (std::is_same<T, double>::value) {
-      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable" << std::endl
+      sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable"
                    << std::endl;
+      sourceStream
+          << "#pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable"
+          << std::endl
+          << std::endl;
     }
 
     sourceStream << "__kernel" << std::endl;
-    sourceStream << "__attribute__((reqd_work_group_size(" << localWorkgroupSize << ", 1, 1)))"
-                 << std::endl;
-    sourceStream << "void multTransOCLUnified(__global const " << this->floatType() << "* ptrLevel,"
-                 << std::endl;
-    sourceStream << "           __global const " << this->floatType() << "* ptrIndex," << std::endl;
-    sourceStream << "           __global const " << this->floatType() << "* ptrData," << std::endl;
-    sourceStream << "           __global const " << this->floatType() << "* ptrSource,"
-                 << std::endl;
-    sourceStream << "           __global       " << this->floatType() << "* ptrResult,"
-                 << std::endl;
+    sourceStream << "__attribute__((reqd_work_group_size(" << localWorkgroupSize
+                 << ", 1, 1)))" << std::endl;
+    sourceStream << "void multTransOCLUnified(__global const "
+                 << this->floatType() << "* ptrLevel," << std::endl;
+    sourceStream << "           __global const " << this->floatType()
+                 << "* ptrIndex," << std::endl;
+    sourceStream << "           __global const " << this->floatType()
+                 << "* ptrData," << std::endl;
+    sourceStream << "           __global const " << this->floatType()
+                 << "* ptrSource," << std::endl;
+    sourceStream << "           __global       " << this->floatType()
+                 << "* ptrResult," << std::endl;
     sourceStream << "           int dataBlockStart," << std::endl;
     sourceStream << "           int dataBlockEnd)" << std::endl;
     sourceStream << "{" << std::endl;
-    sourceStream << this->indent[indentLevel] << "int globalIdx = get_global_id(0);" << std::endl;
-    sourceStream << this->indent[indentLevel] << "int localIdx = get_local_id(0);" << std::endl;
-    sourceStream << this->indent[indentLevel] << "int groupSize = get_local_size(0);" << std::endl;
-    sourceStream << this->indent[indentLevel] << "int globalSize = get_global_size(0);"
-                 << std::endl;
-    sourceStream << this->indent[indentLevel] << "int rangeData = dataBlockEnd - dataBlockStart;"
+    sourceStream << this->indent[indentLevel]
+                 << "int globalIdx = get_global_id(0);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int globalIdy = get_global_id(1);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int localIdx = get_local_id(0);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int groupSize = get_local_size(0);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int globalSize = get_global_size(0);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int rangeData = dataBlockEnd - dataBlockStart;"
                  << std::endl;
 
     sourceStream << std::endl;
@@ -205,17 +230,44 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
                  << " eval, index_calc, abs, last, localSupport;" << std::endl
                  << std::endl;
 
+    sourceStream << this->indent[indentLevel]
+                 << "int dataSplit = get_global_size(1);" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int groupDataRange = rangeData / dataSplit;" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int splitDataStart = groupDataRange * globalIdy;"
+                 << std::endl;
+    sourceStream << this->indent[indentLevel] << "if (splitDataStart % "
+                 << transPrefetchSize << " != 0) {" << std::endl;
+    sourceStream << this->indent[indentLevel + 1]
+                 << "splitDataStart += " << transPrefetchSize
+                 << " - (splitDataStart % " << transPrefetchSize << ");"
+                 << std::endl;
+    sourceStream << this->indent[indentLevel] << "}" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "int splitDataEnd = groupDataRange * (globalIdy + 1);"
+                 << std::endl;
+    sourceStream << this->indent[indentLevel] << "if (splitDataEnd % "
+                 << transPrefetchSize << " != 0) {" << std::endl;
+    sourceStream << this->indent[indentLevel + 1]
+                 << "splitDataEnd += " << transPrefetchSize
+                 << " - (splitDataEnd % " << transPrefetchSize << ");"
+                 << std::endl;
+    sourceStream << this->indent[indentLevel] << "}" << std::endl;
+
     for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-      sourceStream << this->indent[indentLevel] << this->floatType() << " myResult_" << gridIndex
-                   << " = 0.0;" << std::endl;
+      sourceStream << this->indent[indentLevel] << this->floatType()
+                   << " myResult_" << gridIndex << " = 0.0;" << std::endl;
     }
     sourceStream << std::endl;
 
     if (useLocalMemory) {
-      sourceStream << this->indent[indentLevel] << "__local " << this->floatType() << " locData["
+      sourceStream << this->indent[indentLevel] << "__local "
+                   << this->floatType() << " locData["
                    << dims * transPrefetchSize << "];" << std::endl;
-      sourceStream << this->indent[indentLevel] << "__local " << this->floatType() << " locSource["
-                   << transPrefetchSize << "];" << std::endl
+      sourceStream << this->indent[indentLevel] << "__local "
+                   << this->floatType() << " locSource[" << transPrefetchSize
+                   << "];" << std::endl
                    << std::endl;
     }
 
@@ -223,99 +275,115 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
     // the work item
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-        sourceStream << this->indent[indentLevel] << this->floatType() << " level_" << gridIndex
-                     << "[" << dims << "];" << std::endl;
+        sourceStream << this->indent[indentLevel] << this->floatType()
+                     << " level_" << gridIndex << "[" << dims << "];"
+                     << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << "level_" << gridIndex << "[" << d
-                       << "] = ptrLevel[(((globalSize * " << gridIndex << ") + globalIdx) * "
-                       << dims << ") + " << d << "];" << std::endl;
+          sourceStream << this->indent[indentLevel] << "level_" << gridIndex
+                       << "[" << d << "] = ptrLevel[(((globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
 
-        sourceStream << this->indent[indentLevel] << this->floatType() << " index_" << gridIndex
-                     << "[" << dims << "];" << std::endl;
+        sourceStream << this->indent[indentLevel] << this->floatType()
+                     << " index_" << gridIndex << "[" << dims << "];"
+                     << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << "index_" << gridIndex << "[" << d
-                       << "] = ptrIndex[(((globalSize * " << gridIndex << ") + globalIdx) * "
-                       << dims << ") + " << d << "];" << std::endl;
+          sourceStream << this->indent[indentLevel] << "index_" << gridIndex
+                       << "[" << d << "] = ptrIndex[(((globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
       }
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0) {
+    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+                   "register") == 0) {
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << this->floatType() << " level_" << gridIndex
-                       << "_" << d << " = ptrLevel[(((globalSize * " << gridIndex
-                       << ") + globalIdx) * " << dims << ") + " << d << "];" << std::endl;
+          sourceStream << this->indent[indentLevel] << this->floatType()
+                       << " level_" << gridIndex << "_" << d
+                       << " = ptrLevel[(((globalSize * " << gridIndex
+                       << ") + globalIdx) * " << dims << ") + " << d << "];"
+                       << std::endl;
         }
         sourceStream << std::endl;
 
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << this->floatType() << " index_" << gridIndex
-                       << "_" << d << " = ptrIndex[(((globalSize * " << gridIndex
-                       << ") + globalIdx) * " << dims << ") + " << d << "];" << std::endl;
+          sourceStream << this->indent[indentLevel] << this->floatType()
+                       << " index_" << gridIndex << "_" << d
+                       << " = ptrIndex[(((globalSize * " << gridIndex
+                       << ") + globalIdx) * " << dims << ") + " << d << "];"
+                       << std::endl;
         }
         sourceStream << std::endl;
       }
     }
 
     sourceStream << std::endl;
-    sourceStream << this->indent[indentLevel] << "// Iterate over all grid points" << std::endl;
+    sourceStream << this->indent[indentLevel]
+                 << "// Iterate over all grid points" << std::endl;
     if (useLocalMemory) {
       sourceStream << this->indent[indentLevel]
-                   << "for(int i = dataBlockStart; i < dataBlockEnd; i+=" << transPrefetchSize
-                   << ") {" << std::endl;
+                   << "for(int i = splitDataStart; i < splitDataEnd; i+="
+                   << transPrefetchSize << ") {" << std::endl;
 
       indentLevel += 1;
 
-      sourceStream << this->indent[indentLevel] << "if (localIdx < " << transPrefetchSize << ") {"
-                   << std::endl;
+      sourceStream << this->indent[indentLevel] << "if (localIdx < "
+                   << transPrefetchSize << ") {" << std::endl;
       indentLevel += 1;
 
       for (size_t d = 0; d < dims; d++) {
-        sourceStream << this->indent[indentLevel] << "locData[(" << d << "*" << transPrefetchSize
-                     << ")+(localIdx)] = ptrData[(" << d << "*rangeData)+(localIdx+i)];"
-                     << std::endl;
+        sourceStream << this->indent[indentLevel] << "locData[(" << d << "*"
+                     << transPrefetchSize << ")+(localIdx)] = ptrData[(" << d
+                     << "*rangeData)+(localIdx+i)];" << std::endl;
       }
 
-      sourceStream << this->indent[indentLevel] << "locSource[localIdx] = ptrSource[i+localIdx];"
+      sourceStream << this->indent[indentLevel]
+                   << "locSource[localIdx] = ptrSource[i+localIdx];"
                    << std::endl;
       indentLevel -= 1;
       sourceStream << this->indent[indentLevel] << "}" << std::endl;
-      sourceStream << this->indent[indentLevel] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
+      sourceStream << this->indent[indentLevel]
+                   << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl
                    << std::endl;
-      sourceStream << this->indent[indentLevel] << "for(int k = 0; k < " << transPrefetchSize
-                   << "; k++) {" << std::endl;
+      sourceStream << this->indent[indentLevel] << "for(int k = 0; k < "
+                   << transPrefetchSize << "; k++) {" << std::endl;
 
       indentLevel += 1;
 
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-        sourceStream << this->indent[indentLevel] << this->floatType() << " curSupport_"
-                     << gridIndex << " = locSource[k];" << std::endl;
+        sourceStream << this->indent[indentLevel] << this->floatType()
+                     << " curSupport_" << gridIndex << " = locSource[k];"
+                     << std::endl;
       }
     } else {
       sourceStream << this->indent[indentLevel]
-                   << "for(int k = dataBlockStart; k < dataBlockEnd; k++) {" << std::endl;
+                   << "for(int k = splitDataStart; k < splitDataEnd; k++) {"
+                   << std::endl;
 
       indentLevel += 1;
 
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-        sourceStream << this->indent[indentLevel] << this->floatType() << " curSupport_"
-                     << gridIndex << " = ptrSource[k];" << std::endl;
+        sourceStream << this->indent[indentLevel] << this->floatType()
+                     << " curSupport_" << gridIndex << " = ptrSource[k];"
+                     << std::endl;
       }
     }
 
     sourceStream << std::endl;
 
     if (dims > maxDimUnroll) {
-      sourceStream << this->indent[indentLevel] << "for (int unrollDim = 0; unrollDim < "
-                   << ((dims / maxDimUnroll) * maxDimUnroll) << "; unrollDim += " << maxDimUnroll
-                   << ") {" << std::endl;
+      sourceStream << this->indent[indentLevel]
+                   << "for (int unrollDim = 0; unrollDim < "
+                   << ((dims / maxDimUnroll) * maxDimUnroll)
+                   << "; unrollDim += " << maxDimUnroll << ") {" << std::endl;
 
       indentLevel += 1;
 
-      sourceStream << this->unrolledBasisFunctionEvalulation(dims, 0, std::min(maxDimUnroll, dims),
-                                                             "unrollDim", indentLevel);
+      sourceStream << this->unrolledBasisFunctionEvalulation(
+          dims, 0, std::min(maxDimUnroll, dims), "unrollDim", indentLevel);
 
       indentLevel -= 1;
 
@@ -327,46 +395,96 @@ class SourceBuilderMultTranspose : public base::KernelSourceBuilderBase<T> {
       }
 
     } else {
-      sourceStream << this->unrolledBasisFunctionEvalulation(dims, 0, dims, "", indentLevel);
+      sourceStream << this->unrolledBasisFunctionEvalulation(dims, 0, dims, "",
+                                                             indentLevel);
     }
 
     sourceStream << std::endl;
 
     for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-      sourceStream << this->indent[indentLevel] << "myResult_" << gridIndex << " += curSupport_"
-                   << gridIndex << ";" << std::endl;
+      sourceStream << this->indent[indentLevel] << "myResult_" << gridIndex
+                   << " += curSupport_" << gridIndex << ";" << std::endl;
     }
 
     indentLevel -= 1;
 
-    sourceStream << this->indent[indentLevel] << "}" << std::endl
-                 << std::endl;
+    sourceStream << this->indent[indentLevel] << "}" << std::endl << std::endl;
 
     if (useLocalMemory) {
-      sourceStream << this->indent[indentLevel] << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
+      sourceStream << this->indent[indentLevel]
+                   << "barrier(CLK_LOCAL_MEM_FENCE);" << std::endl;
 
       indentLevel -= 1;
 
       sourceStream << this->indent[indentLevel] << "}" << std::endl;
     }
 
+    sourceStream << this->indent[indentLevel] << "if (dataSplit > 1) {"
+                 << std::endl;
     for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
-      sourceStream << this->indent[indentLevel] << "ptrResult[(globalSize * " << gridIndex
-                   << ") + globalIdx] = myResult_" << gridIndex << ";" << std::endl;
+      indentLevel += 1;
+      sourceStream << this->indent[indentLevel] << "{" << std::endl;
+      sourceStream << this->indent[indentLevel] << "union {" << std::endl;
+      sourceStream << this->indent[indentLevel + 1] << this->floatType()
+                   << " f;" << std::endl;
+      sourceStream << this->indent[indentLevel + 1] << this->intType() << " i;"
+                   << std::endl;
+      sourceStream << this->indent[indentLevel] << "} old_value;" << std::endl;
+      sourceStream << this->indent[indentLevel] << "union {" << std::endl;
+      sourceStream << this->indent[indentLevel + 1] << this->floatType()
+                   << " f;" << std::endl;
+      sourceStream << this->indent[indentLevel + 1] << this->intType() << " i;"
+                   << std::endl;
+      sourceStream << this->indent[indentLevel] << "} new_value;" << std::endl;
+      sourceStream << this->indent[indentLevel] << this->intType()
+                   << " read_old;" << std::endl;
+      sourceStream << this->indent[indentLevel] << "do {" << std::endl;
+      indentLevel += 1;
+      sourceStream << this->indent[indentLevel]
+                   << "old_value.f = ptrResult[(globalSize * " << gridIndex
+                   << ") + globalIdx];" << std::endl;
+      sourceStream << this->indent[indentLevel]
+                   << "new_value.f = old_value.f + myResult_" << gridIndex
+                   << ";" << std::endl;
+      sourceStream << this->indent[indentLevel] << "read_old = atom_cmpxchg("
+                   << std::endl;
+      sourceStream << this->indent[indentLevel] << "(volatile __global "
+                   << this->intType() << " *)(ptrResult + (globalSize * "
+                   << gridIndex
+                   << ") + "
+                      "globalIdx),"
+                   << std::endl;
+      sourceStream << this->indent[indentLevel] << "old_value.i, new_value.i);"
+                   << std::endl;
+      indentLevel -= 1;
+      sourceStream << this->indent[indentLevel]
+                   << "} while (read_old != old_value.i);" << std::endl;
+      sourceStream << this->indent[indentLevel] << "}" << std::endl;
+      indentLevel -= 1;
     }
+    sourceStream << this->indent[indentLevel] << "} else {" << std::endl;
+    indentLevel += 1;
+    for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
+      sourceStream << this->indent[indentLevel] << "ptrResult[(globalSize * "
+                   << gridIndex << ") + globalIdx] = myResult_" << gridIndex
+                   << ";" << std::endl;
+    }
+    indentLevel -= 1;
+    sourceStream << this->indent[indentLevel] << "}" << std::endl;
 
     indentLevel -= 1;
 
     sourceStream << "}" << std::endl;
 
     if (kernelConfiguration["WRITE_SOURCE"].getBool()) {
-      this->writeSource("streamingModOCLUnified_multTranspose.cl", sourceStream.str());
+      this->writeSource("streamingModOCLUnified_multTranspose.cl",
+                        sourceStream.str());
     }
 
     return sourceStream.str();
   }
 };
 
-}  // namespace StreamingModOCLUnified
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace StreamingModOCLUnified
+} // namespace datadriven
+} // namespace sgpp

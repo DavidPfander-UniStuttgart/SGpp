@@ -57,6 +57,7 @@ private:
   size_t transGridBlockingSize;
   size_t scheduleSize;
   size_t totalBlockSize;
+  int dataSplit;
 
 public:
   KernelMultTranspose(
@@ -95,6 +96,7 @@ public:
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * transGridBlockingSize;
+    dataSplit = kernelConfiguration["KERNEL_TRANS_DATA_SPLIT"].getInt();
   }
 
   ~KernelMultTranspose() {
@@ -239,9 +241,13 @@ public:
 
         cl_event clTiming;
 
+        const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, dataSplit};
+        std::cout << "total work items: "
+                  << rangeSizeBlocked2D[0] * rangeSizeBlocked2D[1] << std::endl;
+        const size_t localSize2D[2] = {localSize, 1};
         // enqueue kernels
         err = clEnqueueNDRangeKernel(device->commandQueue, kernelMultTranspose,
-                                     1, 0, &rangeSizeBlocked, &localSize, 0,
+                                     2, 0, rangeSizeBlocked2D, localSize2D, 0,
                                      nullptr, &clTiming);
 
         if (err != CL_SUCCESS) {

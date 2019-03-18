@@ -249,8 +249,10 @@ public:
           throw sgpp::base::operation_exception(errorString.str());
         }
 
-        err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelMult, 1,
-                                     0, &rangeSizeBlocked, &localSize, 0,
+        const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, 1};
+        const size_t localSize2D[2] = {localSize, 1};
+        err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelMult, 2,
+                                     0, rangeSizeBlocked2D, localSize2D, 0,
                                      nullptr, &clTiming);
 
         if (err != CL_SUCCESS) {

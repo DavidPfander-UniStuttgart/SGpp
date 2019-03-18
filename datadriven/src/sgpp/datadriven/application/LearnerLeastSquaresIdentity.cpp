@@ -110,7 +110,7 @@ void LearnerLeastSquaresIdentity::postProcessing(
         this->implementationConfiguration.getType() ==
             sgpp::datadriven::OperationMultipleEvalType::STREAMING) {
       if (this->implementationConfiguration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP) {
+          sgpp::datadriven::OperationMultipleEvalSubType::OCLFASTMP) {
         for (size_t g = 0; g < grid->getSize(); g++) {
           base::GridPoint &curPoint = grid->getStorage().getPoint(g);
 
@@ -135,6 +135,11 @@ void LearnerLeastSquaresIdentity::postProcessing(
             }
           }
         }
+      } else if (this->implementationConfiguration.getSubType() ==
+                 sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP) {
+        this->GFlop += 2.0 * 1e-9 * static_cast<double>(nGridsize) *
+                       static_cast<double>(numInstances) *
+                       static_cast<double>(nDim) * 6.0 * actualIterations;
       } else if (this->implementationConfiguration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED) {
         this->GFlop += 2.0 * 1e-9 * static_cast<double>(nGridsize) *
