@@ -94,6 +94,10 @@ public:
           kernelNode.addIDAttr("KERNEL_TRANS_GRID_BLOCK_SIZE", UINT64_C(1));
         }
 
+        if (kernelNode.contains("KERNEL_TRANS_DATA_SPLIT") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_DATA_SPLIT", UINT64_C(1));
+        }
+
         if (kernelNode.contains("KERNEL_PREFETCH_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_PREFETCH_SIZE", UINT64_C(64));
         }
