@@ -109,6 +109,10 @@ public:
         if (kernelNode.contains("KERNEL_TRANS_PREFETCH_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_TRANS_PREFETCH_SIZE", UINT64_C(64));
         }
+
+        if (kernelNode.contains("KERNEL_TRANSFER_WHOLE_DATASET") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANSFER_WHOLE_DATASET", false);
+        }
       }
     }
   }

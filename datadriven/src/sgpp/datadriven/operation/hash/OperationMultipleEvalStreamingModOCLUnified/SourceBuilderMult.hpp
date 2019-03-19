@@ -43,8 +43,8 @@ private:
       output << "data_" << dataBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
                    "pointer") == 0) {
-      output << "ptrData[(" << dataBlockSize << " * globalIdx) + (resultSize * "
-             << dim << ") + " << dataBlockingIndex << "]";
+      output << "ptrData[(dataSize * " << dim << ") + dataOffset + ("
+             << dataBlockSize << " * globalIdx) + " << dataBlockingIndex << "]";
     } else {
       throw new base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -192,6 +192,10 @@ public:
       sourceStream << "#pragma OPENCL EXTENSION cl_khr_fp64 : enable"
                    << std::endl
                    << std::endl;
+      sourceStream
+          << "#pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable"
+          << std::endl
+          << std::endl;
     }
 
     sourceStream << "__kernel" << std::endl;
@@ -208,6 +212,8 @@ public:
     sourceStream << "           __global       " << this->floatType()
                  << "* ptrResult," << std::endl;
     sourceStream << "           int resultSize," << std::endl;
+    sourceStream << "           int dataSize," << std::endl;
+    sourceStream << "           int dataOffset," << std::endl;
     sourceStream << "           int start_grid," << std::endl;
     sourceStream << "           int end_grid) " << std::endl;
     sourceStream << "{" << std::endl;
@@ -278,8 +284,9 @@ public:
       for (size_t i = 0; i < dataBlockSize; i++) {
         for (size_t d = 0; d < dims; d++) {
           sourceStream << this->indent[0] << getData(d, i)
-                       << " = ptrData[(resultSize * " << d
-                       << ") + (globalSize * " << i << ") + globalIdx"
+                       << " = ptrData[(dataSize * " << d
+                       << ") + dataOffset + (globalSize * " << i
+                       << ") + globalIdx"
                        << "];" << std::endl;
         }
         sourceStream << std::endl;
@@ -289,8 +296,9 @@ public:
       for (size_t i = 0; i < dataBlockSize; i++) {
         for (size_t d = 0; d < dims; d++) {
           sourceStream << this->indent[0] << this->floatType() << " "
-                       << getData(d, i) << " = ptrData[(resultSize * " << d
-                       << ") + (globalSize * " << i << ") + globalIdx"
+                       << getData(d, i) << " = ptrData[(dataSize * " << d
+                       << ") + dataOffset + (globalSize * " << i
+                       << ") + globalIdx"
                        << "];" << std::endl;
         }
         sourceStream << std::endl;

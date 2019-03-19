@@ -60,6 +60,10 @@ private:
   size_t totalBlockSize;
   size_t dataSplit;
 
+  bool do_reset;
+
+  std::vector<real_type> zeros;
+
 public:
   KernelMultTranspose(
       std::shared_ptr<base::OCLDevice> device, size_t dims,
@@ -72,7 +76,8 @@ public:
         deviceResultGridTranspose(device), kernelMultTranspose(nullptr),
         kernelSourceBuilder(device, kernelConfiguration, dims),
         manager(manager), kernelConfiguration(kernelConfiguration),
-        queueLoadBalancerMultTranspose(queueBalancerMultTranpose) {
+        queueLoadBalancerMultTranspose(queueBalancerMultTranpose),
+        do_reset(true) {
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
             0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
@@ -107,11 +112,7 @@ public:
     }
   }
 
-  void resetKernel() {
-    //    releaseGridBuffersTranspose();
-    //    releaseDataBuffersTranspose();
-    //    releaseGridResultBufferTranspose();
-  }
+  void resetKernel() { do_reset = true; }
 
   double
   multTranspose(std::vector<real_type> &level, std::vector<real_type> &index,
@@ -131,16 +132,20 @@ public:
           program_src, device, kernelConfiguration, "multTransOCLUnified");
     }
 
+    if (do_reset) {
+      deviceDataTranspose.intializeTo(dataset, dims, start_index_data,
+                                      end_index_data, true);
+      do_reset = false;
+    }
+    deviceSourceTranspose.intializeTo(source, 1, start_index_data,
+                                      end_index_data);
+    // clFinish(device->commandQueue);
+
     this->deviceTimingMultTranspose = 0.0;
 
     while (true) {
-      size_t kernelStartData = start_index_data;
-      size_t kernelEndData = end_index_data;
-
-      // set kernel arguments
       size_t kernelStartGrid = 0;
       size_t kernelEndGrid = 0;
-
       bool segmentAvailable = queueLoadBalancerMultTranspose->getNextSegment(
           scheduleSize, kernelStartGrid, kernelEndGrid);
       if (!segmentAvailable) {
@@ -150,7 +155,7 @@ public:
       size_t rangeSizeUnblocked = kernelEndGrid - kernelStartGrid;
 
       if (verbose) {
-#pragma omp critical(StreamingModOCLUnifiedKernelMultTranspose)
+        // #pragma omp critical(StreamingModOCLUnifiedKernelMultTranspose)
         {
           std::cout << "device: " << device->deviceName << " ("
                     << device->deviceId << ") "
@@ -162,15 +167,31 @@ public:
                     << std::endl;
         }
       }
-
-      initGridBuffersTranspose(level, index, kernelStartGrid, kernelEndGrid);
-      initDatasetBuffersTranspose(dataset, source, kernelStartData,
-                                  kernelEndData);
-      initGridResultBuffersTranspose(kernelStartGrid, kernelEndGrid);
-
+      
       clFinish(device->commandQueue);
-      //            std::cout << "wrote to device: " << device->deviceId << ""
-      //            << std::endl;
+      std::chrono::time_point<std::chrono::system_clock> start, end;
+      start = std::chrono::system_clock::now();
+
+      deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
+                                       kernelEndGrid);
+      deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
+                                       kernelEndGrid);
+      size_t range = kernelEndGrid - kernelStartGrid;
+      if (zeros.size() != range) {
+        zeros.resize(range);
+        for (size_t i = 0; i < range; i++) {
+          zeros[i] = 0.0;
+        }
+      }
+      deviceResultGridTranspose.intializeTo(zeros, 1, 0, range);
+      clFinish(device->commandQueue);
+
+      end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed_seconds = end - start;
+      if (verbose) {
+        std::cout << "init buffers multTranspose: " << elapsed_seconds.count()
+                  << std::endl;
+      }
 
       size_t rangeSizeBlocked = (kernelEndGrid / transGridBlockingSize) -
                                 (kernelStartGrid / transGridBlockingSize);
@@ -183,10 +204,12 @@ public:
                                 *(this->deviceDataTranspose.getBuffer()),
                                 *(this->deviceSourceTranspose.getBuffer()),
                                 *(this->deviceResultGridTranspose.getBuffer()),
-                                static_cast<int>(kernelStartData),
-                                static_cast<int>(kernelEndData));
+                                static_cast<int>(start_index_data),
+                                static_cast<int>(end_index_data));
 
         cl_event clTiming;
+
+        clFinish(device->commandQueue);
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, dataSplit};
         const size_t localSize2D[2] = {localSize, 1};
@@ -203,14 +226,10 @@ public:
         }
 
         clFinish(device->commandQueue);
-        //                std::cout << "executed kernel: " << device->deviceId
-        //                << "" << std::endl;
 
         deviceResultGridTranspose.readFromBuffer();
 
         clFinish(device->commandQueue);
-        //                std::cout << "read from buffer: " << device->deviceId
-        //                << "" << std::endl;
 
         std::vector<real_type> &deviceResultGridTransposeHost =
             deviceResultGridTranspose.getHostPointer();
@@ -263,38 +282,6 @@ public:
       }
     }
     return this->deviceTimingMultTranspose;
-  }
-
-private:
-  void initGridBuffersTranspose(std::vector<real_type> &level,
-                                std::vector<real_type> &index,
-                                size_t kernelStartGrid, size_t kernelEndGrid) {
-    deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
-                                     kernelEndGrid);
-    deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
-                                     kernelEndGrid);
-  }
-
-  void initDatasetBuffersTranspose(std::vector<real_type> &dataset,
-                                   std::vector<real_type> &source,
-                                   size_t kernelStartData,
-                                   size_t kernelEndData) {
-    deviceDataTranspose.intializeTo(dataset, dims, kernelStartData,
-                                    kernelEndData, true);
-    deviceSourceTranspose.intializeTo(source, 1, kernelStartData,
-                                      kernelEndData);
-  }
-
-  void initGridResultBuffersTranspose(size_t kernelStartGrid,
-                                      size_t kernelEndGrid) {
-    size_t range = kernelEndGrid - kernelStartGrid;
-
-    std::vector<real_type> zeros(range);
-    for (size_t i = 0; i < range; i++) {
-      zeros[i] = 0.0;
-    }
-
-    deviceResultGridTranspose.intializeTo(zeros, 1, 0, range);
   }
 };
 

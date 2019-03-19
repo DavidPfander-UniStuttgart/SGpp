@@ -119,7 +119,8 @@ public:
           ["KERNELS"][StreamingModOCLUnified::Configuration::getKernelName()];
 
       multKernels.emplace_back(devices[deviceIndex], dims, this->manager,
-                               kernelConfiguration, queueLoadBalancerMult);
+                               kernelConfiguration, queueLoadBalancerMult,
+                               this->kernelDataset);
 
       multTransposeKernels.emplace_back(devices[deviceIndex], dims,
                                         this->manager, kernelConfiguration,
@@ -176,7 +177,7 @@ public:
     {
       size_t threadId = omp_get_thread_num();
       this->multKernels[threadId].mult(
-          this->level, this->index, this->kernelDataset, alphaArray,
+          this->level, this->index, alphaArray, // this->kernelDataset,
           resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
     }
     end = std::chrono::system_clock::now();

@@ -47,10 +47,11 @@ private:
 
   SourceBuilderMult<real_type> kernelSourceBuilder;
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
-  //    std::shared_ptr<base::OCLOperationConfiguration> parameters;
   json::node &kernelConfiguration;
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMult;
+
+  std::vector<real_type> &dataset;
 
   bool verbose;
 
@@ -59,18 +60,26 @@ private:
   size_t scheduleSize;
   size_t totalBlockSize;
   size_t gridSplit;
+  bool transferWholeDataset;
+
+  bool do_reset;
+  bool dataset_transferred;
+
+  std::vector<real_type> zeros;
 
 public:
   KernelMult(std::shared_ptr<base::OCLDevice> device, size_t dims,
              std::shared_ptr<base::OCLManagerMultiPlatform> manager,
              json::node &kernelConfiguration,
-             std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMult)
+             std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMult,
+             std::vector<real_type> &dataset)
       : device(device), dims(dims), err(CL_SUCCESS), deviceLevel(device),
         deviceIndex(device), deviceAlpha(device), deviceData(device),
         deviceResultData(device), kernelMult(nullptr),
         kernelSourceBuilder(device, kernelConfiguration, dims),
         manager(manager), kernelConfiguration(kernelConfiguration),
-        queueLoadBalancerMult(queueBalancerMult) {
+        queueLoadBalancerMult(queueBalancerMult), dataset(dataset),
+        do_reset(true), dataset_transferred(false) {
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
             0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
@@ -95,6 +104,8 @@ public:
     scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * dataBlockingSize;
     gridSplit = kernelConfiguration["KERNEL_GRID_SPLIT"].getUInt();
+    transferWholeDataset =
+        kernelConfiguration["KERNEL_TRANSFER_WHOLE_DATASET"].getBool();
   }
 
   ~KernelMult() {
@@ -104,14 +115,10 @@ public:
     }
   }
 
-  void resetKernel() {
-    //    releaseGridBuffers();
-    //    releaseDataBuffers();
-    //    releaseDatasetResultBuffer();
-  }
+  void resetKernel() { do_reset = true; }
 
   double mult(std::vector<real_type> &level, std::vector<real_type> &index,
-              std::vector<real_type> &dataset, std::vector<real_type> &alpha,
+              std::vector<real_type> &alpha, // std::vector<real_type> &dataset,
               std::vector<real_type> &result, const size_t start_index_grid,
               const size_t end_index_grid, const size_t start_index_data,
               const size_t end_index_data) {
@@ -127,18 +134,24 @@ public:
           program_src, device, kernelConfiguration, "multOCLUnified");
     }
 
-    initGridBuffers(level, index, alpha, start_index_grid, end_index_grid);
+    if (do_reset) {
+      deviceLevel.intializeTo(level, dims, start_index_grid, end_index_grid);
+      deviceIndex.intializeTo(index, dims, start_index_grid, end_index_grid);
+      do_reset = false;
+    }
+    if (transferWholeDataset && !dataset_transferred) {
+      deviceData.intializeTo(dataset, dims, start_index_data, end_index_data,
+                             true);
+      dataset_transferred = true;
+    }
+    deviceAlpha.intializeTo(alpha, 1, start_index_grid, end_index_grid);
+    // clFinish(device->commandQueue);
 
     this->deviceTimingMult = 0.0;
 
     while (true) {
       size_t kernelStartData = 0;
       size_t kernelEndData = 0;
-
-      // set kernel arguments
-      size_t kernelStartGrid = start_index_grid;
-      size_t kernelEndGrid = end_index_grid;
-
       bool segmentAvailable = queueLoadBalancerMult->getNextSegment(
           scheduleSize, kernelStartData, kernelEndData);
       if (!segmentAvailable) {
@@ -154,24 +167,57 @@ public:
                   << " -> range: " << rangeSizeUnblocked << std::endl;
       }
 
-      initDatasetBuffers(dataset, kernelStartData, kernelEndData);
-      initDatasetResultBuffers(kernelStartData, kernelEndData);
-
       clFinish(device->commandQueue);
+      std::chrono::time_point<std::chrono::system_clock> start, end;
+      start = std::chrono::system_clock::now();
+
+      // transfer partial dataset every iteration, for large datasets
+      if (!transferWholeDataset) {
+        deviceData.intializeTo(dataset, dims, kernelStartData, kernelEndData,
+                               true);
+      }
+      size_t range = kernelEndData - kernelStartData;
+      if (zeros.size() != range) {
+        zeros.resize(range);
+        for (size_t i = 0; i < range; i++) {
+          zeros[i] = 0.0;
+        }
+      }
+      deviceResultData.intializeTo(zeros, 1, 0, range);
+      clFinish(device->commandQueue);
+
+      end = std::chrono::system_clock::now();
+      std::chrono::duration<double> elapsed_seconds = end - start;
+      if (verbose) {
+        std::cout << "init buffers mult: " << elapsed_seconds.count()
+                  << std::endl;
+      }
 
       size_t rangeSizeBlocked = (kernelEndData / dataBlockingSize) -
                                 (kernelStartData / dataBlockingSize);
 
       if (rangeSizeBlocked > 0) {
+
+        // assuming transferring whole dataset
+        int deviceDataSize = end_index_data - start_index_data;
+        int deviceDataOffset = kernelStartData;
+        if (!transferWholeDataset) {
+          deviceDataSize = kernelEndData - kernelStartData;
+          deviceDataOffset = 0;
+        }
+
         opencl::apply_arguments(
             this->kernelMult, *(this->deviceLevel.getBuffer()),
             *(this->deviceIndex.getBuffer()), *(this->deviceData.getBuffer()),
             *(this->deviceAlpha.getBuffer()),
             *(this->deviceResultData.getBuffer()),
-            static_cast<int>(rangeSizeUnblocked),
-            static_cast<int>(kernelStartGrid), static_cast<int>(kernelEndGrid));
+            static_cast<int>(rangeSizeUnblocked), deviceDataSize,
+            deviceDataOffset, static_cast<int>(start_index_grid),
+            static_cast<int>(end_index_grid));
 
         cl_event clTiming = nullptr;
+
+        clFinish(device->commandQueue);
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, gridSplit};
         const size_t localSize2D[2] = {localSize, 1};
@@ -242,32 +288,6 @@ public:
     }
 
     return this->deviceTimingMult;
-  }
-
-private:
-  void initGridBuffers(std::vector<real_type> &level,
-                       std::vector<real_type> &index,
-                       std::vector<real_type> &alpha, size_t kernelStartGrid,
-                       size_t kernelEndGrid) {
-    deviceLevel.intializeTo(level, dims, kernelStartGrid, kernelEndGrid);
-    deviceIndex.intializeTo(index, dims, kernelStartGrid, kernelEndGrid);
-    deviceAlpha.intializeTo(alpha, 1, kernelStartGrid, kernelEndGrid);
-  }
-
-  void initDatasetBuffers(std::vector<real_type> &dataset,
-                          size_t kernelStartData, size_t kernelEndData) {
-    deviceData.intializeTo(dataset, dims, kernelStartData, kernelEndData, true);
-  }
-
-  void initDatasetResultBuffers(size_t kernelStartData, size_t kernelEndData) {
-    size_t range = kernelEndData - kernelStartData;
-
-    std::vector<real_type> zeros(range);
-    for (size_t i = 0; i < range; i++) {
-      zeros[i] = 0.0;
-    }
-
-    deviceResultData.intializeTo(zeros, 1, 0, range);
   }
 };
 } // namespace StreamingModOCLUnified
