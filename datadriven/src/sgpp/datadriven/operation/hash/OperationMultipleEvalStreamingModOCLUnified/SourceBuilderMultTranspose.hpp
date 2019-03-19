@@ -43,8 +43,9 @@ private:
       output << "level_" << gridBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
                    "pointer") == 0) {
-      output << "ptrLevel[(((globalSize * " << gridBlockingIndex
-             << ") + globalIdx) * " << dims << ") + " << dim << "]";
+      output << "ptrLevel[((gridOffset + (globalSize * "
+             << gridBlockingIndex << ") + globalIdx) * " << dims << ") + "
+             << dim << "]";
     } else {
       throw new base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -65,7 +66,7 @@ private:
       output << "index_" << gridBlockingIndex << "_" << dim;
     } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
                    "pointer") == 0) {
-      output << "ptrIndex[(((globalSize * " << gridBlockingIndex
+      output << "ptrIndex[((gridOffset + (globalSize * " << gridBlockingIndex
              << ") + globalIdx) * " << dims << ") + " << dim << "]";
     } else {
       throw new base::operation_exception(
@@ -208,6 +209,7 @@ public:
                  << "* ptrSource," << std::endl;
     sourceStream << "           __global       " << this->floatType()
                  << "* ptrResult," << std::endl;
+    sourceStream << "           int gridOffset," << std::endl;
     sourceStream << "           int dataBlockStart," << std::endl;
     sourceStream << "           int dataBlockEnd)" << std::endl;
     sourceStream << "{" << std::endl;
@@ -279,10 +281,11 @@ public:
                      << " level_" << gridIndex << "[" << dims << "];"
                      << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << "level_" << gridIndex
-                       << "[" << d << "] = ptrLevel[(((globalSize * "
-                       << gridIndex << ") + globalIdx) * " << dims << ") + "
-                       << d << "];" << std::endl;
+          sourceStream
+              << this->indent[indentLevel] << "level_" << gridIndex << "[" << d
+              << "] = ptrLevel[((gridOffset + (globalSize * "
+              << gridIndex << ") + globalIdx) * " << dims << ") + " << d << "];"
+              << std::endl;
         }
         sourceStream << std::endl;
 
@@ -290,10 +293,11 @@ public:
                      << " index_" << gridIndex << "[" << dims << "];"
                      << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream << this->indent[indentLevel] << "index_" << gridIndex
-                       << "[" << d << "] = ptrIndex[(((globalSize * "
-                       << gridIndex << ") + globalIdx) * " << dims << ") + "
-                       << d << "];" << std::endl;
+          sourceStream
+              << this->indent[indentLevel] << "index_" << gridIndex << "[" << d
+              << "] = ptrIndex[((gridOffset + (globalSize * "
+              << gridIndex << ") + globalIdx) * " << dims << ") + " << d << "];"
+              << std::endl;
         }
         sourceStream << std::endl;
       }
@@ -303,18 +307,18 @@ public:
         for (size_t d = 0; d < dims; d++) {
           sourceStream << this->indent[indentLevel] << this->floatType()
                        << " level_" << gridIndex << "_" << d
-                       << " = ptrLevel[(((globalSize * " << gridIndex
-                       << ") + globalIdx) * " << dims << ") + " << d << "];"
-                       << std::endl;
+                       << " = ptrLevel[((gridOffset + (globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
 
         for (size_t d = 0; d < dims; d++) {
           sourceStream << this->indent[indentLevel] << this->floatType()
                        << " index_" << gridIndex << "_" << d
-                       << " = ptrIndex[(((globalSize * " << gridIndex
-                       << ") + globalIdx) * " << dims << ") + " << d << "];"
-                       << std::endl;
+                       << " = ptrIndex[((gridOffset + (globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
       }

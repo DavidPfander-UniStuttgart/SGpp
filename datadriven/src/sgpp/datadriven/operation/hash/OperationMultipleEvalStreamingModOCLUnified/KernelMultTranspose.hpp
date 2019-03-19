@@ -52,6 +52,8 @@ private:
 
   std::shared_ptr<base::QueueLoadBalancerOpenMP> queueLoadBalancerMultTranspose;
 
+  std::vector<real_type> &dataset;
+
   bool verbose;
 
   size_t localSize;
@@ -59,8 +61,12 @@ private:
   size_t scheduleSize;
   size_t totalBlockSize;
   size_t dataSplit;
+  bool transferWholeGrid;
 
   bool do_reset;
+
+  // only relevant if whole grid is transferred
+  bool grid_transferred;
 
   std::vector<real_type> zeros;
 
@@ -69,7 +75,8 @@ public:
       std::shared_ptr<base::OCLDevice> device, size_t dims,
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       json::node &kernelConfiguration,
-      std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMultTranpose)
+      std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMultTranpose,
+      std::vector<real_type> &dataset)
       : device(device), dims(dims), err(CL_SUCCESS),
         deviceLevelTranspose(device), deviceIndexTranspose(device),
         deviceDataTranspose(device), deviceSourceTranspose(device),
@@ -77,7 +84,7 @@ public:
         kernelSourceBuilder(device, kernelConfiguration, dims),
         manager(manager), kernelConfiguration(kernelConfiguration),
         queueLoadBalancerMultTranspose(queueBalancerMultTranpose),
-        do_reset(true) {
+        dataset(dataset), do_reset(true), grid_transferred(false) {
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
             0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
@@ -103,6 +110,8 @@ public:
     scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * transGridBlockingSize;
     dataSplit = kernelConfiguration["KERNEL_TRANS_DATA_SPLIT"].getUInt();
+    transferWholeGrid =
+        kernelConfiguration["KERNEL_TRANS_TRANSFER_WHOLE_GRID"].getBool();
   }
 
   ~KernelMultTranspose() {
@@ -116,10 +125,9 @@ public:
 
   double
   multTranspose(std::vector<real_type> &level, std::vector<real_type> &index,
-                std::vector<real_type> &dataset, std::vector<real_type> &source,
-                std::vector<real_type> &result, const size_t start_index_grid,
-                const size_t end_index_grid, const size_t start_index_data,
-                const size_t end_index_data) {
+                std::vector<real_type> &source, std::vector<real_type> &result,
+                const size_t start_index_grid, const size_t end_index_grid,
+                const size_t start_index_data, const size_t end_index_data) {
     // check if there is something to do at all
     if (!(end_index_grid > start_index_grid &&
           end_index_data > start_index_data)) {
@@ -136,6 +144,13 @@ public:
       deviceDataTranspose.intializeTo(dataset, dims, start_index_data,
                                       end_index_data, true);
       do_reset = false;
+    }
+    if (transferWholeGrid && !grid_transferred) {
+      deviceLevelTranspose.intializeTo(level, dims, start_index_grid,
+                                       end_index_grid);
+      deviceIndexTranspose.intializeTo(index, dims, start_index_grid,
+                                       end_index_grid);
+      grid_transferred = true;
     }
     deviceSourceTranspose.intializeTo(source, 1, start_index_data,
                                       end_index_data);
@@ -167,36 +182,42 @@ public:
                     << std::endl;
         }
       }
-      
-      clFinish(device->commandQueue);
-      std::chrono::time_point<std::chrono::system_clock> start, end;
-      start = std::chrono::system_clock::now();
 
-      deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
-                                       kernelEndGrid);
-      deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
-                                       kernelEndGrid);
-      size_t range = kernelEndGrid - kernelStartGrid;
-      if (zeros.size() != range) {
-        zeros.resize(range);
-        for (size_t i = 0; i < range; i++) {
+      // clFinish(device->commandQueue);
+      // std::chrono::time_point<std::chrono::system_clock> start, end;
+      // start = std::chrono::system_clock::now();
+
+      if (!transferWholeGrid) {
+        deviceLevelTranspose.intializeTo(level, dims, kernelStartGrid,
+                                         kernelEndGrid);
+        deviceIndexTranspose.intializeTo(index, dims, kernelStartGrid,
+                                         kernelEndGrid);
+      }
+      if (zeros.size() != rangeSizeUnblocked) {
+        zeros.resize(rangeSizeUnblocked);
+        for (size_t i = 0; i < rangeSizeUnblocked; i++) {
           zeros[i] = 0.0;
         }
       }
-      deviceResultGridTranspose.intializeTo(zeros, 1, 0, range);
-      clFinish(device->commandQueue);
-
-      end = std::chrono::system_clock::now();
-      std::chrono::duration<double> elapsed_seconds = end - start;
-      if (verbose) {
-        std::cout << "init buffers multTranspose: " << elapsed_seconds.count()
-                  << std::endl;
-      }
+      deviceResultGridTranspose.intializeTo(zeros, 1, 0, rangeSizeUnblocked);
+      // clFinish(device->commandQueue);
+      // end = std::chrono::system_clock::now();
+      // std::chrono::duration<double> elapsed_seconds = end - start;
+      // if (verbose) {
+      //   std::cout << "init buffers multTranspose: " << elapsed_seconds.count()
+      //             << std::endl;
+      // }
 
       size_t rangeSizeBlocked = (kernelEndGrid / transGridBlockingSize) -
                                 (kernelStartGrid / transGridBlockingSize);
 
       if (rangeSizeBlocked > 0) {
+
+        // assuming transferring whole dataset
+        int deviceGridOffset = kernelStartGrid;
+        if (!transferWholeGrid) {
+          deviceGridOffset = 0;
+        }
 
         opencl::apply_arguments(this->kernelMultTranspose,
                                 *(this->deviceLevelTranspose.getBuffer()),
@@ -204,12 +225,13 @@ public:
                                 *(this->deviceDataTranspose.getBuffer()),
                                 *(this->deviceSourceTranspose.getBuffer()),
                                 *(this->deviceResultGridTranspose.getBuffer()),
+                                deviceGridOffset,
                                 static_cast<int>(start_index_data),
                                 static_cast<int>(end_index_data));
 
         cl_event clTiming;
 
-        clFinish(device->commandQueue);
+        // clFinish(device->commandQueue);
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, dataSplit};
         const size_t localSize2D[2] = {localSize, 1};
@@ -283,7 +305,7 @@ public:
     }
     return this->deviceTimingMultTranspose;
   }
-};
+}; // namespace StreamingModOCLUnified
 
 } // namespace StreamingModOCLUnified
 } // namespace datadriven

@@ -63,6 +63,7 @@ private:
   bool transferWholeDataset;
 
   bool do_reset;
+  // only relevant if whole dataset is transferred
   bool dataset_transferred;
 
   std::vector<real_type> zeros;
@@ -167,9 +168,9 @@ public:
                   << " -> range: " << rangeSizeUnblocked << std::endl;
       }
 
-      clFinish(device->commandQueue);
-      std::chrono::time_point<std::chrono::system_clock> start, end;
-      start = std::chrono::system_clock::now();
+      // clFinish(device->commandQueue);
+      // std::chrono::time_point<std::chrono::system_clock> start, end;
+      // start = std::chrono::system_clock::now();
 
       // transfer partial dataset every iteration, for large datasets
       if (!transferWholeDataset) {
@@ -186,12 +187,12 @@ public:
       deviceResultData.intializeTo(zeros, 1, 0, range);
       clFinish(device->commandQueue);
 
-      end = std::chrono::system_clock::now();
-      std::chrono::duration<double> elapsed_seconds = end - start;
-      if (verbose) {
-        std::cout << "init buffers mult: " << elapsed_seconds.count()
-                  << std::endl;
-      }
+      // end = std::chrono::system_clock::now();
+      // std::chrono::duration<double> elapsed_seconds = end - start;
+      // if (verbose) {
+      //   std::cout << "init buffers mult: " << elapsed_seconds.count()
+      //             << std::endl;
+      // }
 
       size_t rangeSizeBlocked = (kernelEndData / dataBlockingSize) -
                                 (kernelStartData / dataBlockingSize);
@@ -217,7 +218,7 @@ public:
 
         cl_event clTiming = nullptr;
 
-        clFinish(device->commandQueue);
+        // clFinish(device->commandQueue);
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, gridSplit};
         const size_t localSize2D[2] = {localSize, 1};

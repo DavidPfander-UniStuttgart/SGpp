@@ -113,6 +113,10 @@ public:
         if (kernelNode.contains("KERNEL_TRANSFER_WHOLE_DATASET") == false) {
           kernelNode.addIDAttr("KERNEL_TRANSFER_WHOLE_DATASET", false);
         }
+
+        if (kernelNode.contains("KERNEL_TRANS_TRANSFER_WHOLE_GRID") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_TRANSFER_WHOLE_GRID", false);
+        }
       }
     }
   }

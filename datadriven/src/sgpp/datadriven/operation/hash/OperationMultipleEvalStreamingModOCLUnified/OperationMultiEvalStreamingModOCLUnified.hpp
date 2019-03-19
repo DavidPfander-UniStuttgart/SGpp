@@ -122,9 +122,9 @@ public:
                                kernelConfiguration, queueLoadBalancerMult,
                                this->kernelDataset);
 
-      multTransposeKernels.emplace_back(devices[deviceIndex], dims,
-                                        this->manager, kernelConfiguration,
-                                        queueLoadBalancerMultTrans);
+      multTransposeKernels.emplace_back(
+          devices[deviceIndex], dims, this->manager, kernelConfiguration,
+          queueLoadBalancerMultTrans, this->kernelDataset);
     }
 
     // create the kernel specific data structures
@@ -239,7 +239,7 @@ public:
       size_t threadId = omp_get_thread_num();
 
       this->multTransposeKernels[threadId].multTranspose(
-          this->level, this->index, this->kernelDataset, sourceArray,
+          this->level, this->index, sourceArray, // this->kernelDataset
           resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
     }
     end = std::chrono::system_clock::now();
