@@ -242,8 +242,6 @@ public:
         cl_event clTiming;
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, dataSplit};
-        std::cout << "total work items: "
-                  << rangeSizeBlocked2D[0] * rangeSizeBlocked2D[1] << std::endl;
         const size_t localSize2D[2] = {localSize, 1};
         // enqueue kernels
         err = clEnqueueNDRangeKernel(device->commandQueue, kernelMultTranspose,
