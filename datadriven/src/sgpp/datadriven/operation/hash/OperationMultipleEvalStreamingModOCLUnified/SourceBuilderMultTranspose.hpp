@@ -421,7 +421,7 @@ public:
 
     sourceStream << this->indent[indentLevel] << "if (dataSplit > 1) {"
                  << std::endl;
-    for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
+    for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex += 1) {
       indentLevel += 1;
       sourceStream << this->indent[indentLevel] << "{" << std::endl;
       sourceStream << this->indent[indentLevel] << "union {" << std::endl;
@@ -464,7 +464,7 @@ public:
     }
     sourceStream << this->indent[indentLevel] << "} else {" << std::endl;
     indentLevel += 1;
-    for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
+    for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex += 1) {
       sourceStream << this->indent[indentLevel] << "ptrResult[(globalSize * "
                    << gridIndex << ") + globalIdx] = myResult_" << gridIndex
                    << ";" << std::endl;

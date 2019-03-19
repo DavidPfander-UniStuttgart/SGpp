@@ -17,6 +17,7 @@
 #include "sgpp/base/opencl/OCLBufferWrapperSD.hpp"
 #include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLStretchedBuffer.hpp"
+#include "sgpp/base/opencl/manager/apply_arguments.hpp"
 #include "sgpp/base/tools/QueueLoadBalancerOpenMP.hpp"
 #include "sgpp/globaldef.hpp"
 
@@ -57,7 +58,7 @@ private:
   size_t transGridBlockingSize;
   size_t scheduleSize;
   size_t totalBlockSize;
-  int dataSplit;
+  size_t dataSplit;
 
 public:
   KernelMultTranspose(
@@ -96,7 +97,7 @@ public:
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * transGridBlockingSize;
-    dataSplit = kernelConfiguration["KERNEL_TRANS_DATA_SPLIT"].getInt();
+    dataSplit = kernelConfiguration["KERNEL_TRANS_DATA_SPLIT"].getUInt();
   }
 
   ~KernelMultTranspose() {
@@ -175,75 +176,20 @@ public:
                                 (kernelStartGrid / transGridBlockingSize);
 
       if (rangeSizeBlocked > 0) {
-        err = clSetKernelArg(kernelMultTranspose, 0, sizeof(cl_mem),
-                             this->deviceLevelTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 1, sizeof(cl_mem),
-                             this->deviceIndexTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 2, sizeof(cl_mem),
-                             this->deviceDataTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 3, sizeof(cl_mem),
-                             this->deviceSourceTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 4, sizeof(cl_mem),
-                             this->deviceResultGridTranspose.getBuffer());
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 5, sizeof(cl_int),
-                             &kernelStartData);
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
-        err = clSetKernelArg(kernelMultTranspose, 6, sizeof(cl_int),
-                             &kernelEndData);
-        if (err != CL_SUCCESS) {
-          std::stringstream errorString;
-          errorString
-              << "OCL Error: Failed to create kernel arguments for device "
-              << std::endl;
-          throw sgpp::base::operation_exception(errorString.str());
-        }
+
+        opencl::apply_arguments(this->kernelMultTranspose,
+                                *(this->deviceLevelTranspose.getBuffer()),
+                                *(this->deviceIndexTranspose.getBuffer()),
+                                *(this->deviceDataTranspose.getBuffer()),
+                                *(this->deviceSourceTranspose.getBuffer()),
+                                *(this->deviceResultGridTranspose.getBuffer()),
+                                static_cast<int>(kernelStartData),
+                                static_cast<int>(kernelEndData));
 
         cl_event clTiming;
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, dataSplit};
         const size_t localSize2D[2] = {localSize, 1};
-        // enqueue kernels
         err = clEnqueueNDRangeKernel(device->commandQueue, kernelMultTranspose,
                                      2, 0, rangeSizeBlocked2D, localSize2D, 0,
                                      nullptr, &clTiming);
