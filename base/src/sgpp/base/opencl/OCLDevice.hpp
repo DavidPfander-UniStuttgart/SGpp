@@ -6,8 +6,8 @@
 #pragma once
 
 #include <CL/cl.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "sgpp/globaldef.hpp"
 
@@ -15,22 +15,22 @@ namespace sgpp {
 namespace base {
 
 class OCLDevice {
- public:
+public:
   cl_platform_id platformId;
   cl_device_id deviceId;
   std::string platformName;
   std::string deviceName;
   cl_context context;
   cl_command_queue commandQueue;
+  // only available on some platforms as OCL extensions are needed
+  cl_int devicePCIeBusId;
 
-  OCLDevice(cl_platform_id platformId, cl_device_id deviceId, const std::string &platformName,
-            const std::string &deviceName, cl_context context, cl_command_queue commandQueue)
-      : platformId(platformId),
-        deviceId(deviceId),
-        platformName(platformName),
-        deviceName(deviceName),
-        context(context),
-        commandQueue(commandQueue) {}
+  OCLDevice(cl_platform_id platformId, cl_device_id deviceId,
+            const std::string &platformName, const std::string &deviceName,
+            cl_context context, cl_command_queue commandQueue)
+      : platformId(platformId), deviceId(deviceId), platformName(platformName),
+        deviceName(deviceName), context(context), commandQueue(commandQueue),
+        devicePCIeBusId(0) {}
 };
-}  // namespace base
-}  // namespace sgpp
+} // namespace base
+} // namespace sgpp

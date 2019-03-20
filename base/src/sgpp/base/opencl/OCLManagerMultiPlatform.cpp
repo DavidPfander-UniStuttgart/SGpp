@@ -393,6 +393,19 @@ void OCLManagerMultiPlatform::configurePlatform(
           platformWrapper.platformId, platformWrapper.deviceIds[deviceIndex],
           platformName, platformWrapper.deviceNames[deviceIndex],
           platformWrapper.context, platformWrapper.commandQueues[deviceIndex]));
+// #define CL_DEVICE_PCI_SLOT_ID_NV 0x4009
+//       cl_uint slot_id_nv = 0;
+//       cl_int err = clGetDeviceInfo(platformWrapper.deviceIds[deviceIndex],
+//                                    CL_DEVICE_PCI_SLOT_ID_NV, sizeof(cl_uint),
+//                                    &slot_id_nv, NULL);
+#define CL_DEVICE_PCI_BUS_ID_NV 0x4008
+      cl_uint bus_id_nv = 0;
+      err = clGetDeviceInfo(platformWrapper.deviceIds[deviceIndex],
+                            CL_DEVICE_PCI_BUS_ID_NV, sizeof(cl_uint),
+                            &bus_id_nv, NULL);
+      if (err == CL_SUCCESS) {
+        this->devices[this->devices.size() - 1]->devicePCIeBusId = bus_id_nv;
+      }
     }
   }
 }

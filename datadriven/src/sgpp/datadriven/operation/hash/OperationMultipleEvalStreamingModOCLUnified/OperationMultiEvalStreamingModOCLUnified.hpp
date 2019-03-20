@@ -22,6 +22,11 @@
 #include "sgpp/base/tools/SGppStopwatch.hpp"
 #include "sgpp/globaldef.hpp"
 
+#include <future>
+#include <pthread.h>
+#include <sched.h>
+#include <thread>
+
 namespace sgpp {
 namespace datadriven {
 
@@ -54,8 +59,9 @@ protected:
   std::shared_ptr<base::OCLManagerMultiPlatform> manager;
   std::vector<std::shared_ptr<base::OCLDevice>> devices;
 
-  std::vector<StreamingModOCLUnified::KernelMult<T>> multKernels;
-  std::vector<StreamingModOCLUnified::KernelMultTranspose<T>>
+  std::vector<std::unique_ptr<StreamingModOCLUnified::KernelMult<T>>>
+      multKernels;
+  std::vector<std::unique_ptr<StreamingModOCLUnified::KernelMultTranspose<T>>>
       multTransposeKernels;
 
   std::shared_ptr<sgpp::base::QueueLoadBalancerOpenMP> queueLoadBalancerMult;
@@ -66,6 +72,9 @@ protected:
   size_t overallDataBlockingSize;
 
   bool isModLinear;
+
+  // std::map<int, int> threadDeviceMap;
+  std::vector<std::pair<int, int>> thread_device_pairs;
 
 public:
   OperationMultiEvalStreamingModOCLUnified(
@@ -110,6 +119,110 @@ public:
       this->kernelDataset[i] = (T)this->preparedDataset[i];
     }
 
+    multKernels.resize(devices.size());
+    multTransposeKernels.resize(devices.size());
+
+    // thread_device_pairs = {{0, 0x3d},  {1, 0x3e},  {2, 0x60},  {3, 0x61},
+    //                        {14, 0xb1}, {15, 0xb2}, {16, 0xda}, {17, 0xdb}};
+    // pthread_mutex_t prmutex = PTHREAD_MUTEX_INITIALIZER;
+
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   int hw_thread = thread_device_pairs[i].first;
+    //   int device_pcie = thread_device_pairs[i].second;
+    //   std::future<void> f = std::async(
+    //       std::launch::async,
+    //       [this, &parameters, &prmutex](int hw_thread,
+    //                                     int device_pcie) -> void {
+    //         // std::this_thread::get_id().native_handle();
+    //         pthread_t cur_thread = pthread_self();
+    //         cpu_set_t cpuset;
+    //         CPU_ZERO(&cpuset);
+    //         CPU_SET(hw_thread, &cpuset);
+    //         int err =
+    //             pthread_setaffinity_np(cur_thread, sizeof(cpu_set_t),
+    //             &cpuset);
+    //         if (err != 0) {
+    //           std::cout << "error: could not set affinity" << std::endl;
+    //         }
+    //         // find your device
+    //         int mapped_index = 0;
+    //         for (size_t deviceIndex = 0; deviceIndex < devices.size();
+    //              deviceIndex++) {
+    //           if (devices[deviceIndex]->devicePCIeBusId == device_pcie) {
+    //             mapped_index = deviceIndex;
+    //           }
+    //         }
+
+    //         // pthread_mutex_lock(&prmutex);
+    //         // std::cout << "sched_getcpu: " << sched_getcpu()
+    //         //           << " -> mapped_index: " << mapped_index <<
+    //         // std::endl;
+    //         // pthread_mutex_unlock(&prmutex);
+
+    //         json::node &platformConfiguration =
+    //             (*parameters)["PLATFORMS"][devices[mapped_index]->platformName];
+    //         json::node &deviceConfiguration =
+    //             platformConfiguration["DEVICES"]
+    //                                  [devices[mapped_index]->deviceName];
+    //         json::node &kernelConfiguration = deviceConfiguration
+    //             ["KERNELS"]
+    //             [StreamingModOCLUnified::Configuration::getKernelName()];
+
+    //         multKernels[mapped_index] =
+    //             std::make_unique<StreamingModOCLUnified::KernelMult<T>>(
+    //                 devices[mapped_index], dims, this->manager,
+    //                 kernelConfiguration, queueLoadBalancerMult,
+    //                 this->kernelDataset);
+
+    //         multTransposeKernels[mapped_index] = std::make_unique<
+    //             StreamingModOCLUnified::KernelMultTranspose<T>>(
+    //             devices[mapped_index], dims, this->manager,
+    //             kernelConfiguration, queueLoadBalancerMultTrans,
+    //             this->kernelDataset);
+    //       },
+    //       hw_thread, device_pcie);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   std::future<void> f = std::async(
+    //       std::launch::async,
+    //       [this, &parameters](int device_index) -> void {
+    //         json::node &platformConfiguration =
+    //             (*parameters)["PLATFORMS"][devices[device_index]->platformName];
+    //         json::node &deviceConfiguration =
+    //             platformConfiguration["DEVICES"]
+    //                                  [devices[device_index]->deviceName];
+    //         json::node &kernelConfiguration = deviceConfiguration
+    //             ["KERNELS"]
+    //             [StreamingModOCLUnified::Configuration::getKernelName()];
+
+    //         multKernels[device_index] =
+    //             std::make_unique<StreamingModOCLUnified::KernelMult<T>>(
+    //                 devices[device_index], dims, this->manager,
+    //                 kernelConfiguration, queueLoadBalancerMult,
+    //                 this->kernelDataset);
+
+    //         multTransposeKernels[device_index] = std::make_unique<
+    //             StreamingModOCLUnified::KernelMultTranspose<T>>(
+    //             devices[device_index], dims, this->manager,
+    //             kernelConfiguration, queueLoadBalancerMultTrans,
+    //             this->kernelDataset);
+    //       },
+    //       i);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
+    int oldThreads = omp_get_max_threads();
+    omp_set_num_threads(static_cast<int>(devices.size()));
+
+#pragma omp parallel for schedule(static, 1)
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
       json::node &platformConfiguration =
           (*parameters)["PLATFORMS"][devices[deviceIndex]->platformName];
@@ -118,14 +231,19 @@ public:
       json::node &kernelConfiguration = deviceConfiguration
           ["KERNELS"][StreamingModOCLUnified::Configuration::getKernelName()];
 
-      multKernels.emplace_back(devices[deviceIndex], dims, this->manager,
-                               kernelConfiguration, queueLoadBalancerMult,
-                               this->kernelDataset);
+      multKernels[deviceIndex] =
+          std::make_unique<StreamingModOCLUnified::KernelMult<T>>(
+              devices[deviceIndex], dims, this->manager, kernelConfiguration,
+              queueLoadBalancerMult, this->kernelDataset);
 
-      multTransposeKernels.emplace_back(
-          devices[deviceIndex], dims, this->manager, kernelConfiguration,
-          queueLoadBalancerMultTrans, this->kernelDataset);
+      multTransposeKernels[deviceIndex] =
+          std::make_unique<StreamingModOCLUnified::KernelMultTranspose<T>>(
+              devices[deviceIndex], dims, this->manager, kernelConfiguration,
+              queueLoadBalancerMultTrans, this->kernelDataset);
     }
+
+    // restore old value of OMP_NUM_THREADS
+    omp_set_num_threads(oldThreads);
 
     // create the kernel specific data structures
     // also sets the correct padded grid size
@@ -170,16 +288,75 @@ public:
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   int hw_thread = thread_device_pairs[i].first;
+    //   int device_pcie = thread_device_pairs[i].second;
+    //   std::future<void> f = std::async(
+    //       std::launch::async,
+    //       [this, &alphaArray, &resultArray, &gridFrom, &gridTo, &datasetFrom,
+    //        &datasetTo](int hw_thread, int device_pcie) -> void {
+    //         // std::this_thread::get_id().native_handle();
+    //         pthread_t cur_thread = pthread_self();
+    //         cpu_set_t cpuset;
+    //         CPU_ZERO(&cpuset);
+    //         CPU_SET(hw_thread, &cpuset);
+    //         int err =
+    //             pthread_setaffinity_np(cur_thread, sizeof(cpu_set_t),
+    //             &cpuset);
+    //         if (err != 0) {
+    //           std::cout << "error: could not set affinity" << std::endl;
+    //         }
+    //         // find your device
+    //         int mapped_index = 0;
+    //         for (size_t deviceIndex = 0; deviceIndex < devices.size();
+    //              deviceIndex++) {
+    //           if (devices[deviceIndex]->devicePCIeBusId == device_pcie) {
+    //             mapped_index = deviceIndex;
+    //           }
+    //         }
+
+    //         // do something
+    //         this->multKernels[mapped_index]->mult(
+    //             this->level, this->index, alphaArray, resultArray, gridFrom,
+    //             gridTo, datasetFrom, datasetTo);
+    //       },
+    //       hw_thread, device_pcie);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   std::future<void> f =
+    //       std::async(std::launch::async,
+    //                  [this, &alphaArray, &resultArray, &gridFrom, &gridTo,
+    //                   &datasetFrom, &datasetTo](int device_index) -> void {
+    //                    // do something
+    //                    this->multKernels[device_index]->mult(
+    //                        this->level, this->index, alphaArray, resultArray,
+    //                        gridFrom, gridTo, datasetFrom, datasetTo);
+    //                  },
+    //                  i);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
     int oldThreads = omp_get_max_threads();
     omp_set_num_threads(static_cast<int>(devices.size()));
 
-#pragma omp parallel
-    {
-      size_t threadId = omp_get_thread_num();
-      this->multKernels[threadId].mult(
-          this->level, this->index, alphaArray, // this->kernelDataset,
-          resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
+#pragma omp parallel for schedule(static, 1)
+    for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
+      this->multKernels[deviceIndex]->mult(this->level, this->index, alphaArray,
+                                           resultArray, gridFrom, gridTo,
+                                           datasetFrom, datasetTo);
     }
+
+    // restore old value of OMP_NUM_THREADS
+    omp_set_num_threads(oldThreads);
+
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
 
@@ -193,9 +370,6 @@ public:
     for (size_t i = 0; i < result.getSize(); i++) {
       result[i] = resultArray[i];
     }
-
-    // restore old value of OMP_NUM_THREADS
-    omp_set_num_threads(oldThreads);
 
     this->duration = this->myTimer.stop();
   }
@@ -231,17 +405,77 @@ public:
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
 
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   int hw_thread = thread_device_pairs[i].first;
+    //   int device_pcie = thread_device_pairs[i].second;
+    //   std::future<void> f = std::async(
+    //       std::launch::async,
+    //       [this, &sourceArray, &resultArray, &gridFrom, &gridTo,
+    //       &datasetFrom,
+    //        &datasetTo](int hw_thread, int device_pcie) -> void {
+    //         // std::this_thread::get_id().native_handle();
+    //         pthread_t cur_thread = pthread_self();
+    //         cpu_set_t cpuset;
+    //         CPU_ZERO(&cpuset);
+    //         CPU_SET(hw_thread, &cpuset);
+    //         int err =
+    //             pthread_setaffinity_np(cur_thread, sizeof(cpu_set_t),
+    //             &cpuset);
+    //         if (err != 0) {
+    //           std::cout << "error: could not set affinity" << std::endl;
+    //         }
+    //         // find your device
+    //         int mapped_index = 0;
+    //         for (size_t deviceIndex = 0; deviceIndex < devices.size();
+    //              deviceIndex++) {
+    //           if (devices[deviceIndex]->devicePCIeBusId == device_pcie) {
+    //             mapped_index = deviceIndex;
+    //           }
+    //         }
+
+    //         // do something
+    //         this->multTransposeKernels[mapped_index]->multTranspose(
+    //             this->level, this->index, sourceArray, resultArray, gridFrom,
+    //             gridTo, datasetFrom, datasetTo);
+    //       },
+    //       hw_thread, device_pcie);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
+    // std::vector<std::future<void>> fs;
+    // for (size_t i = 0; i < devices.size(); i += 1) {
+    //   std::future<void> f =
+    //       std::async(std::launch::async,
+    //                  [this, &sourceArray, &resultArray, &gridFrom, &gridTo,
+    //                   &datasetFrom, &datasetTo](int device_index) -> void {
+    //                    // do something
+    //                    this->multTransposeKernels[device_index]->multTranspose(
+    //                        this->level, this->index, sourceArray,
+    //                        resultArray, gridFrom, gridTo, datasetFrom,
+    //                        datasetTo);
+    //                  },
+    //                  i);
+    //   fs.push_back(std::move(f));
+    // }
+    // for (auto &f : fs)
+    //   f.get();
+
     int oldThreads = omp_get_max_threads();
     omp_set_num_threads(static_cast<int>(devices.size()));
 
-#pragma omp parallel
-    {
-      size_t threadId = omp_get_thread_num();
-
-      this->multTransposeKernels[threadId].multTranspose(
-          this->level, this->index, sourceArray, // this->kernelDataset
-          resultArray, gridFrom, gridTo, datasetFrom, datasetTo);
+#pragma omp parallel for schedule(static, 1)
+    for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
+      this->multTransposeKernels[deviceIndex]->multTranspose(
+          this->level, this->index, sourceArray, resultArray, gridFrom, gridTo,
+          datasetFrom, datasetTo);
     }
+
+    // restore old value of OMP_NUM_THREADS
+    omp_set_num_threads(oldThreads);
+
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
     if (verbose) {
@@ -261,9 +495,6 @@ public:
       }
     }
 
-    // restore old value of OMP_NUM_THREADS
-    omp_set_num_threads(oldThreads);
-
     this->duration = this->myTimer.stop();
   }
 
@@ -273,11 +504,11 @@ public:
     this->recalculateLevelAndIndex();
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      this->multKernels[deviceIndex].resetKernel();
+      this->multKernels[deviceIndex]->resetKernel();
     }
 
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
-      this->multTransposeKernels[deviceIndex].resetKernel();
+      this->multTransposeKernels[deviceIndex]->resetKernel();
     }
   }
 
