@@ -26,7 +26,7 @@ void support_refinement_iterative::verify_support_blocked_OCL() {
             << std::endl;
 // << " blocks_per_device: " << blocks_per_device << std::endl;
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(static, 1)
   for (size_t i = 0; i < manager->get_devices().size(); i += 1) {
     int64_t range_start = i * num_candidates_per_device;
     int64_t range_end = (i + 1) * num_candidates_per_device; // exclusive
