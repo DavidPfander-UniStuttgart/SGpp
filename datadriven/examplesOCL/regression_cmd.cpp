@@ -350,15 +350,22 @@ int main(int argc, char *argv[]) {
 
   std::ifstream trainingFile(trainingFileName);
   if (!trainingFile.good()) {
-    std::cout << "training file not found" << std::endl;
+    std::cerr << "error: training file not found" << std::endl;
     return 1;
+  }
+
+  if (verbose) {
+    std::cout << "training dataset: " << trainingFileName << std::endl;
   }
 
   if (learnerMode == sgpp::datadriven::LearnerMode::LEARNCOMPARE) {
     std::ifstream testFile(testFileName);
     if (!testFile.good()) {
-      std::cout << "test file not found" << std::endl;
+      std::cerr << "error: test file not found" << std::endl;
       return 1;
+    }
+    if (verbose) {
+      std::cout << "test dataset: " << testFileName << std::endl;
     }
   }
 

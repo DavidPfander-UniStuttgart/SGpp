@@ -142,9 +142,33 @@ void LearnerLeastSquaresIdentity::postProcessing(
                        static_cast<double>(nDim) * 6.0 * actualIterations;
       } else if (this->implementationConfiguration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED) {
-        this->GFlop += 2.0 * 1e-9 * static_cast<double>(nGridsize) *
-                       static_cast<double>(numInstances) *
-                       static_cast<double>(nDim) * 6.0 * actualIterations;
+        // level 0 is skipped only if configured modlinear and only for the
+        // multiEval operator
+        // flops for a single non-skipped 1d hat
+        double act_1d_eval_flops =
+            1e-9 * 6.0 * static_cast<double>(numInstances);
+        double flops_mult_it = 0.0;
+        double flops_transposed_it =
+            1e-9 * 6.0 * static_cast<double>(numInstances) *
+            static_cast<double>(nGridsize) * static_cast<double>(nDim);
+        for (size_t g = 0; g < grid->getSize(); g++) {
+          base::GridPoint &curPoint = grid->getStorage().getPoint(g);
+          for (size_t h = 0; h < nDim; h++) {
+            base::level_t level;
+            base::index_t index;
+            curPoint.get(h, level, index);
+            if (level > 1)
+              flops_transposed_it += act_1d_eval_flops;
+          }
+        }
+        double multCalls = actualIterations - 0.5;
+        double multTransposeCalls = multCalls + 1.0;
+        this->GFlop += (multCalls * flops_mult_it) +
+                       (multTransposeCalls * flops_transposed_it);
+        //}
+        // this->GFlop += 2.0 * 1e-9 * static_cast<double>(nGridsize) *
+        //                static_cast<double>(numInstances) *
+        //                static_cast<double>(nDim) * 6.0 * actualIterations;
       } else {
         std::cout << "warning: cannot calculate GFLOPS for operation subtype"
                   << std::endl;
@@ -183,7 +207,7 @@ void LearnerLeastSquaresIdentity::postProcessing(
   // std::cout << "Current GByte/s: " << this->GByte / this->execTime
   //           << std::endl;
   std::cout << std::endl;
-}
+} // namespace datadriven
 
 void LearnerLeastSquaresIdentity::predict(
     sgpp::base::DataMatrix &testDataset,
