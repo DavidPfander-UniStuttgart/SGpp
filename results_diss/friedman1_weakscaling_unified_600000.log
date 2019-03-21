@@ -1,4 +1,5 @@
-./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_600000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig results_diss/friedman1_ocl_float_gtx1080ti.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --do_dummy_ocl_init
+./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_600000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig results_diss/friedman1_ocl_float_gtx1080ti_6.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --do_dummy_ocl_init
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_600000.arff
 OCL Info: 2 OpenCL platforms have been found
 OCL Info: detected platform, name: "Intel(R) OpenCL"
 OCL Info: detected platform vendor name: "Intel(R) Corporation"
@@ -20,10 +21,8 @@ OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
-ocl dummy initalization duration: 8.93439
+ocl dummy initalization duration: 8.15131
 instances: 600000
 regular grid size: 397825
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -47,9 +46,7 @@ OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
 Starting Learning....
 
 Doing refinement: 0
@@ -60,8 +57,6 @@ building with optimization flags:
 building with optimization flags: 
 building with optimization flags: 
 building with optimization flags: 
-building with optimization flags: 
-building with optimization flags: 
 --- Begin Build Log ---
 
 
@@ -86,17 +81,7 @@ building with optimization flags:
 
 
 --- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
-duration multTranspose ocl mod: 0.805407
-building with optimization flags: 
-building with optimization flags: 
+duration multTranspose ocl mod: 0.832082
 building with optimization flags: 
 building with optimization flags: 
 building with optimization flags: 
@@ -127,230 +112,222 @@ building with optimization flags:
 
 
 --- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
-duration mult ocl mod: 0.71673
-duration multTranspose ocl mod: 0.263216
-duration mult ocl mod: 0.25638
-duration multTranspose ocl mod: 0.266905
-duration mult ocl mod: 0.259059
-duration multTranspose ocl mod: 0.261674
-duration mult ocl mod: 0.257274
-duration multTranspose ocl mod: 0.260392
-duration mult ocl mod: 0.26014
-duration multTranspose ocl mod: 0.268957
-duration mult ocl mod: 0.259729
-duration multTranspose ocl mod: 0.26764
-duration mult ocl mod: 0.259621
-duration multTranspose ocl mod: 0.259603
-duration mult ocl mod: 0.260627
-duration multTranspose ocl mod: 0.263767
-duration mult ocl mod: 0.260168
-duration multTranspose ocl mod: 0.269566
-duration mult ocl mod: 0.256576
-duration multTranspose ocl mod: 0.263306
-duration mult ocl mod: 0.259621
-duration multTranspose ocl mod: 0.263746
-duration mult ocl mod: 0.256329
-duration multTranspose ocl mod: 0.264295
-duration mult ocl mod: 0.260193
-duration multTranspose ocl mod: 0.263086
-duration mult ocl mod: 0.260616
-duration multTranspose ocl mod: 0.27083
-duration mult ocl mod: 0.256976
-duration multTranspose ocl mod: 0.264008
-duration mult ocl mod: 0.259687
-duration multTranspose ocl mod: 0.265134
-duration mult ocl mod: 0.25999
-duration multTranspose ocl mod: 0.260784
-duration mult ocl mod: 0.259497
-duration multTranspose ocl mod: 0.261458
-duration mult ocl mod: 0.259901
-duration multTranspose ocl mod: 0.261943
-duration mult ocl mod: 0.256125
-duration multTranspose ocl mod: 0.262675
-duration mult ocl mod: 0.260424
-duration multTranspose ocl mod: 0.258484
-duration mult ocl mod: 0.259983
-duration multTranspose ocl mod: 0.267767
-duration mult ocl mod: 0.259226
-duration multTranspose ocl mod: 0.264138
-duration mult ocl mod: 0.260391
-duration multTranspose ocl mod: 0.267923
-duration mult ocl mod: 0.259679
-duration multTranspose ocl mod: 0.268459
-duration mult ocl mod: 0.260356
-duration multTranspose ocl mod: 0.258374
-duration mult ocl mod: 0.259769
-duration multTranspose ocl mod: 0.267653
-duration mult ocl mod: 0.255894
-duration multTranspose ocl mod: 0.259521
-duration mult ocl mod: 0.260163
-duration multTranspose ocl mod: 0.261816
-duration mult ocl mod: 0.25891
-duration multTranspose ocl mod: 0.257764
-duration mult ocl mod: 0.261138
-duration multTranspose ocl mod: 0.263185
-duration mult ocl mod: 0.261748
-duration multTranspose ocl mod: 0.258098
-duration mult ocl mod: 0.26113
-duration multTranspose ocl mod: 0.259278
-duration mult ocl mod: 0.261094
-duration multTranspose ocl mod: 0.264568
-duration mult ocl mod: 0.261694
-duration multTranspose ocl mod: 0.259164
-duration mult ocl mod: 0.261328
-duration multTranspose ocl mod: 0.258638
-duration mult ocl mod: 0.261924
-duration multTranspose ocl mod: 0.264969
-duration mult ocl mod: 0.26183
-duration multTranspose ocl mod: 0.258417
-duration mult ocl mod: 0.262086
-duration multTranspose ocl mod: 0.26027
-duration mult ocl mod: 0.261624
-duration multTranspose ocl mod: 0.255292
-duration mult ocl mod: 0.261895
-duration multTranspose ocl mod: 0.255298
-duration mult ocl mod: 0.261578
-duration multTranspose ocl mod: 0.262271
-duration mult ocl mod: 0.256335
-duration multTranspose ocl mod: 0.260722
-duration mult ocl mod: 0.261084
-duration multTranspose ocl mod: 0.263331
-duration mult ocl mod: 0.262804
-duration multTranspose ocl mod: 0.258876
-duration mult ocl mod: 0.261929
-duration multTranspose ocl mod: 0.263912
-duration mult ocl mod: 0.257804
-duration multTranspose ocl mod: 0.257792
-duration mult ocl mod: 0.258451
-duration multTranspose ocl mod: 0.259906
-duration mult ocl mod: 0.261684
-duration multTranspose ocl mod: 0.253589
-duration mult ocl mod: 0.260854
-duration multTranspose ocl mod: 0.259637
-duration mult ocl mod: 0.261465
-duration multTranspose ocl mod: 0.262
-duration mult ocl mod: 0.258224
-duration multTranspose ocl mod: 0.258964
-duration mult ocl mod: 0.257397
-duration multTranspose ocl mod: 0.261728
-duration mult ocl mod: 0.262455
-duration multTranspose ocl mod: 0.258052
-duration mult ocl mod: 0.261615
-duration multTranspose ocl mod: 0.261824
-duration mult ocl mod: 0.257851
-duration multTranspose ocl mod: 0.26251
-duration mult ocl mod: 0.256874
-duration multTranspose ocl mod: 0.259475
-duration mult ocl mod: 0.259871
-duration multTranspose ocl mod: 0.254882
-duration mult ocl mod: 0.257883
-duration multTranspose ocl mod: 0.261925
-duration mult ocl mod: 0.261592
-duration multTranspose ocl mod: 0.256648
-duration mult ocl mod: 0.256835
-duration multTranspose ocl mod: 0.258914
-duration mult ocl mod: 0.258876
-duration multTranspose ocl mod: 0.263531
-duration mult ocl mod: 0.261186
-duration multTranspose ocl mod: 0.26268
-duration mult ocl mod: 0.26136
-duration multTranspose ocl mod: 0.263148
-duration mult ocl mod: 0.261468
-duration multTranspose ocl mod: 0.264685
-duration mult ocl mod: 0.260808
-duration multTranspose ocl mod: 0.259522
-duration mult ocl mod: 0.26111
-duration multTranspose ocl mod: 0.258402
-duration mult ocl mod: 0.257948
-duration multTranspose ocl mod: 0.258632
-duration mult ocl mod: 0.258171
-duration multTranspose ocl mod: 0.259947
-duration mult ocl mod: 0.261332
-duration multTranspose ocl mod: 0.264907
-duration mult ocl mod: 0.261939
-duration multTranspose ocl mod: 0.258996
-duration mult ocl mod: 0.258461
-duration multTranspose ocl mod: 0.259574
-duration mult ocl mod: 0.259669
-duration multTranspose ocl mod: 0.255087
-duration mult ocl mod: 0.258801
-duration multTranspose ocl mod: 0.263635
-duration mult ocl mod: 0.25804
-duration multTranspose ocl mod: 0.262531
-duration mult ocl mod: 0.259319
-duration multTranspose ocl mod: 0.260225
-duration mult ocl mod: 0.262045
-duration multTranspose ocl mod: 0.264596
-duration mult ocl mod: 0.26175
-duration multTranspose ocl mod: 0.264023
-duration mult ocl mod: 0.261459
-duration multTranspose ocl mod: 0.262576
-duration mult ocl mod: 0.261841
-duration multTranspose ocl mod: 0.260306
-duration mult ocl mod: 0.261128
-duration multTranspose ocl mod: 0.261723
-duration mult ocl mod: 0.261
-duration multTranspose ocl mod: 0.257636
-duration mult ocl mod: 0.261777
-duration multTranspose ocl mod: 0.268323
-duration mult ocl mod: 0.26141
-duration multTranspose ocl mod: 0.260379
-duration mult ocl mod: 0.258752
-duration multTranspose ocl mod: 0.258466
-duration mult ocl mod: 0.26229
-duration multTranspose ocl mod: 0.25755
-duration mult ocl mod: 0.261549
-duration multTranspose ocl mod: 0.257965
-duration mult ocl mod: 0.261397
-duration multTranspose ocl mod: 0.262612
-duration mult ocl mod: 0.261128
-duration multTranspose ocl mod: 0.260263
-duration mult ocl mod: 0.261681
-duration multTranspose ocl mod: 0.265163
-duration mult ocl mod: 0.261752
-duration multTranspose ocl mod: 0.262952
-duration mult ocl mod: 0.261949
-duration multTranspose ocl mod: 0.259125
-duration mult ocl mod: 0.26186
-duration multTranspose ocl mod: 0.263335
-duration mult ocl mod: 0.261552
-duration multTranspose ocl mod: 0.270289
-duration mult ocl mod: 0.261455
-duration multTranspose ocl mod: 0.256517
-duration mult ocl mod: 0.261621
-duration multTranspose ocl mod: 0.259757
-duration mult ocl mod: 0.26116
-duration multTranspose ocl mod: 0.256905
-duration mult ocl mod: 0.261756
-duration multTranspose ocl mod: 0.256505
-duration mult ocl mod: 0.260834
-duration multTranspose ocl mod: 0.257904
-duration mult ocl mod: 0.262006
-duration multTranspose ocl mod: 0.262893
-duration mult ocl mod: 0.261049
-duration multTranspose ocl mod: 0.262821
-duration mult ocl mod: 0.262271
-duration multTranspose ocl mod: 0.261652
+duration mult ocl mod: 0.52144
+duration multTranspose ocl mod: 0.489126
+duration mult ocl mod: 0.256175
+duration multTranspose ocl mod: 0.49063
+duration mult ocl mod: 0.257066
+duration multTranspose ocl mod: 0.493846
+duration mult ocl mod: 0.25643
+duration multTranspose ocl mod: 0.492015
+duration mult ocl mod: 0.256174
+duration multTranspose ocl mod: 0.491439
+duration mult ocl mod: 0.256353
+duration multTranspose ocl mod: 0.489624
+duration mult ocl mod: 0.256965
+duration multTranspose ocl mod: 0.490785
+duration mult ocl mod: 0.256789
+duration multTranspose ocl mod: 0.491654
+duration mult ocl mod: 0.257033
+duration multTranspose ocl mod: 0.496252
+duration mult ocl mod: 0.259213
+duration multTranspose ocl mod: 0.495058
+duration mult ocl mod: 0.256865
+duration multTranspose ocl mod: 0.496999
+duration mult ocl mod: 0.260377
+duration multTranspose ocl mod: 0.498582
+duration mult ocl mod: 0.257228
+duration multTranspose ocl mod: 0.494593
+duration mult ocl mod: 0.261512
+duration multTranspose ocl mod: 0.495626
+duration mult ocl mod: 0.257618
+duration multTranspose ocl mod: 0.495212
+duration mult ocl mod: 0.25779
+duration multTranspose ocl mod: 0.495386
+duration mult ocl mod: 0.25815
+duration multTranspose ocl mod: 0.49275
+duration mult ocl mod: 0.256903
+duration multTranspose ocl mod: 0.496457
+duration mult ocl mod: 0.257224
+duration multTranspose ocl mod: 0.496131
+duration mult ocl mod: 0.256759
+duration multTranspose ocl mod: 0.49514
+duration mult ocl mod: 0.258478
+duration multTranspose ocl mod: 0.492157
+duration mult ocl mod: 0.259356
+duration multTranspose ocl mod: 0.496226
+duration mult ocl mod: 0.258895
+duration multTranspose ocl mod: 0.496536
+duration mult ocl mod: 0.258634
+duration multTranspose ocl mod: 0.494569
+duration mult ocl mod: 0.25906
+duration multTranspose ocl mod: 0.493567
+duration mult ocl mod: 0.272404
+duration multTranspose ocl mod: 0.494382
+duration mult ocl mod: 0.25844
+duration multTranspose ocl mod: 0.497571
+duration mult ocl mod: 0.258977
+duration multTranspose ocl mod: 0.495795
+duration mult ocl mod: 0.262157
+duration multTranspose ocl mod: 0.494996
+duration mult ocl mod: 0.258542
+duration multTranspose ocl mod: 0.495113
+duration mult ocl mod: 0.25921
+duration multTranspose ocl mod: 0.494361
+duration mult ocl mod: 0.258434
+duration multTranspose ocl mod: 0.494872
+duration mult ocl mod: 0.258554
+duration multTranspose ocl mod: 0.495253
+duration mult ocl mod: 0.258954
+duration multTranspose ocl mod: 0.497342
+duration mult ocl mod: 0.257768
+duration multTranspose ocl mod: 0.49364
+duration mult ocl mod: 0.25861
+duration multTranspose ocl mod: 0.493414
+duration mult ocl mod: 0.257716
+duration multTranspose ocl mod: 0.494622
+duration mult ocl mod: 0.258001
+duration multTranspose ocl mod: 0.491746
+duration mult ocl mod: 0.259013
+duration multTranspose ocl mod: 0.49785
+duration mult ocl mod: 0.259045
+duration multTranspose ocl mod: 0.496682
+duration mult ocl mod: 0.258846
+duration multTranspose ocl mod: 0.493563
+duration mult ocl mod: 0.258671
+duration multTranspose ocl mod: 0.493318
+duration mult ocl mod: 0.258525
+duration multTranspose ocl mod: 0.492929
+duration mult ocl mod: 0.258865
+duration multTranspose ocl mod: 0.490865
+duration mult ocl mod: 0.258902
+duration multTranspose ocl mod: 0.493113
+duration mult ocl mod: 0.258814
+duration multTranspose ocl mod: 0.495459
+duration mult ocl mod: 0.259172
+duration multTranspose ocl mod: 0.494471
+duration mult ocl mod: 0.258485
+duration multTranspose ocl mod: 0.496774
+duration mult ocl mod: 0.258533
+duration multTranspose ocl mod: 0.495703
+duration mult ocl mod: 0.260723
+duration multTranspose ocl mod: 0.495112
+duration mult ocl mod: 0.259717
+duration multTranspose ocl mod: 0.497948
+duration mult ocl mod: 0.258202
+duration multTranspose ocl mod: 0.492567
+duration mult ocl mod: 0.258165
+duration multTranspose ocl mod: 0.494393
+duration mult ocl mod: 0.258821
+duration multTranspose ocl mod: 0.496518
+duration mult ocl mod: 0.258712
+duration multTranspose ocl mod: 0.493587
+duration mult ocl mod: 0.258673
+duration multTranspose ocl mod: 0.492981
+duration mult ocl mod: 0.258404
+duration multTranspose ocl mod: 0.496706
+duration mult ocl mod: 0.259179
+duration multTranspose ocl mod: 0.494082
+duration mult ocl mod: 0.258854
+duration multTranspose ocl mod: 0.493717
+duration mult ocl mod: 0.259046
+duration multTranspose ocl mod: 0.494958
+duration mult ocl mod: 0.258941
+duration multTranspose ocl mod: 0.495488
+duration mult ocl mod: 0.258625
+duration multTranspose ocl mod: 0.494077
+duration mult ocl mod: 0.259351
+duration multTranspose ocl mod: 0.497776
+duration mult ocl mod: 0.258751
+duration multTranspose ocl mod: 0.494472
+duration mult ocl mod: 0.259007
+duration multTranspose ocl mod: 0.494856
+duration mult ocl mod: 0.259071
+duration multTranspose ocl mod: 0.494746
+duration mult ocl mod: 0.258938
+duration multTranspose ocl mod: 0.495541
+duration mult ocl mod: 0.258829
+duration multTranspose ocl mod: 0.495176
+duration mult ocl mod: 0.258605
+duration multTranspose ocl mod: 0.497869
+duration mult ocl mod: 0.258397
+duration multTranspose ocl mod: 0.494226
+duration mult ocl mod: 0.260274
+duration multTranspose ocl mod: 0.49593
+duration mult ocl mod: 0.259176
+duration multTranspose ocl mod: 0.493255
+duration mult ocl mod: 0.258741
+duration multTranspose ocl mod: 0.493543
+duration mult ocl mod: 0.259374
+duration multTranspose ocl mod: 0.495002
+duration mult ocl mod: 0.259062
+duration multTranspose ocl mod: 0.494876
+duration mult ocl mod: 0.259335
+duration multTranspose ocl mod: 0.494673
+duration mult ocl mod: 0.258968
+duration multTranspose ocl mod: 0.496578
+duration mult ocl mod: 0.258989
+duration multTranspose ocl mod: 0.494362
+duration mult ocl mod: 0.258895
+duration multTranspose ocl mod: 0.494588
+duration mult ocl mod: 0.259246
+duration multTranspose ocl mod: 0.496301
+duration mult ocl mod: 0.260313
+duration multTranspose ocl mod: 0.495079
+duration mult ocl mod: 0.259032
+duration multTranspose ocl mod: 0.498573
+duration mult ocl mod: 0.259216
+duration multTranspose ocl mod: 0.495351
+duration mult ocl mod: 0.259093
+duration multTranspose ocl mod: 0.494588
+duration mult ocl mod: 0.259024
+duration multTranspose ocl mod: 0.498581
+duration mult ocl mod: 0.259408
+duration multTranspose ocl mod: 0.494826
+duration mult ocl mod: 0.258338
+duration multTranspose ocl mod: 0.495117
+duration mult ocl mod: 0.25887
+duration multTranspose ocl mod: 0.494663
+duration mult ocl mod: 0.259597
+duration multTranspose ocl mod: 0.496292
+duration mult ocl mod: 0.259
+duration multTranspose ocl mod: 0.495752
+duration mult ocl mod: 0.259332
+duration multTranspose ocl mod: 0.495262
+duration mult ocl mod: 0.261085
+duration multTranspose ocl mod: 0.495004
+duration mult ocl mod: 0.259096
+duration multTranspose ocl mod: 0.496963
+duration mult ocl mod: 0.258992
+duration multTranspose ocl mod: 0.491834
+duration mult ocl mod: 0.259187
+duration multTranspose ocl mod: 0.490172
+duration mult ocl mod: 0.259227
+duration multTranspose ocl mod: 0.491449
+duration mult ocl mod: 0.259329
+duration multTranspose ocl mod: 0.493286
+duration mult ocl mod: 0.258732
+duration multTranspose ocl mod: 0.495815
+duration mult ocl mod: 0.258882
+duration multTranspose ocl mod: 0.494968
+duration mult ocl mod: 0.259173
+duration multTranspose ocl mod: 0.49421
+duration mult ocl mod: 0.258762
+duration multTranspose ocl mod: 0.493473
+duration mult ocl mod: 0.260062
+duration multTranspose ocl mod: 0.498554
 
 Needed Iterations: 100
-Final residuum: 3.11368e+10
+Final residuum: 1.48088e+10
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 
-Current Duration:: 56.173
-Current GFlop/s: 52776.1
+Current Duration:: 79.963
+Current GFlop/s: 25884.7
 
 Finished Training!
 
-Training took: 56.173 seconds
+Training took: 79.963 seconds
 
-total_duration: 63.4279
+total_duration: 86.3871
