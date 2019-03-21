@@ -36,16 +36,15 @@ private:
 
   std::string getLevel(std::string dim, size_t gridBlockingIndex) {
     std::stringstream output;
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
+    if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare("array") == 0) {
       output << "level_" << gridBlockingIndex << "[" << dim << "]";
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+    } else if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
                    "register") == 0) {
       output << "level_" << gridBlockingIndex << "_" << dim;
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+    } else if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
                    "pointer") == 0) {
-      output << "ptrLevel[((gridOffset + (globalSize * "
-             << gridBlockingIndex << ") + globalIdx) * " << dims << ") + "
-             << dim << "]";
+      output << "ptrLevel[((gridOffset + (globalSize * " << gridBlockingIndex
+             << ") + globalIdx) * " << dims << ") + " << dim << "]";
     } else {
       throw new base::operation_exception(
           "OCL error: Illegal value for parameter \"KERNEL_STORE_DATA\"\n");
@@ -59,12 +58,12 @@ private:
 
   std::string getIndex(std::string dim, size_t gridBlockingIndex) {
     std::stringstream output;
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
+    if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare("array") == 0) {
       output << "index_" << gridBlockingIndex << "[" << dim << "]";
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+    } else if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
                    "register") == 0) {
       output << "index_" << gridBlockingIndex << "_" << dim;
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+    } else if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
                    "pointer") == 0) {
       output << "ptrIndex[((gridOffset + (globalSize * " << gridBlockingIndex
              << ") + globalIdx) * " << dims << ") + " << dim << "]";
@@ -81,7 +80,7 @@ private:
 
   std::string getData(std::string dim) {
     std::stringstream output;
-    if (kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool()) {
+    if (kernelConfiguration["KERNEL_TRANS_USE_LOCAL_MEMORY"].getBool()) {
       output << "locData[(" << dim << " * " << transPrefetchSize << ") + k]";
     } else {
       output << "ptrData[(" << dim << " * rangeData) + k]";
@@ -108,7 +107,7 @@ private:
       std::string pointerAccess = dimElement.str();
 
       std::string dString;
-      if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
+      if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare("register") ==
           0) {
         std::stringstream stream;
         stream << (d);
@@ -165,11 +164,12 @@ public:
   SourceBuilderMultTranspose(std::shared_ptr<base::OCLDevice> device,
                              json::node &kernelConfiguration, size_t dims)
       : device(device), kernelConfiguration(kernelConfiguration), dims(dims) {
-    localWorkgroupSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
-    useLocalMemory = kernelConfiguration["KERNEL_USE_LOCAL_MEMORY"].getBool();
+    localWorkgroupSize = kernelConfiguration["TRANS_LOCAL_SIZE"].getUInt();
+    useLocalMemory =
+        kernelConfiguration["KERNEL_TRANS_USE_LOCAL_MEMORY"].getBool();
     transGridBlockSize =
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
-    maxDimUnroll = kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt();
+    maxDimUnroll = kernelConfiguration["KERNEL_TRANS_MAX_DIM_UNROLL"].getUInt();
     transPrefetchSize =
         kernelConfiguration["KERNEL_TRANS_PREFETCH_SIZE"].getUInt();
   }
@@ -275,17 +275,17 @@ public:
 
     // create a register storage for the level and index of the grid points of
     // the work item
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("array") == 0) {
+    if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare("array") == 0) {
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
         sourceStream << this->indent[indentLevel] << this->floatType()
                      << " level_" << gridIndex << "[" << dims << "];"
                      << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream
-              << this->indent[indentLevel] << "level_" << gridIndex << "[" << d
-              << "] = ptrLevel[((gridOffset + (globalSize * "
-              << gridIndex << ") + globalIdx) * " << dims << ") + " << d << "];"
-              << std::endl;
+          sourceStream << this->indent[indentLevel] << "level_" << gridIndex
+                       << "[" << d
+                       << "] = ptrLevel[((gridOffset + (globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
 
@@ -293,15 +293,15 @@ public:
                      << " index_" << gridIndex << "[" << dims << "];"
                      << std::endl;
         for (size_t d = 0; d < dims; d++) {
-          sourceStream
-              << this->indent[indentLevel] << "index_" << gridIndex << "[" << d
-              << "] = ptrIndex[((gridOffset + (globalSize * "
-              << gridIndex << ") + globalIdx) * " << dims << ") + " << d << "];"
-              << std::endl;
+          sourceStream << this->indent[indentLevel] << "index_" << gridIndex
+                       << "[" << d
+                       << "] = ptrIndex[((gridOffset + (globalSize * "
+                       << gridIndex << ") + globalIdx) * " << dims << ") + "
+                       << d << "];" << std::endl;
         }
         sourceStream << std::endl;
       }
-    } else if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare(
+    } else if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
                    "register") == 0) {
       for (size_t gridIndex = 0; gridIndex < transGridBlockSize; gridIndex++) {
         for (size_t d = 0; d < dims; d++) {

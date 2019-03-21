@@ -3,14 +3,14 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
+// #include "sgpp/base/grid/generation/functors/SurplusRefinementFunctor.hpp"
 #include "sgpp/base/opencl/OCLManagerMultiPlatform.hpp"
 #include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/base/operation/BaseOpFactory.hpp"
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
-#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingOCLMultiPlatformAutoTuneTMP/OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP.hpp"
+#include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLUnifiedAutoTuneTMP/OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
 #include <boost/program_options.hpp>
 #include <cstdlib>
@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
   uint32_t level;
   uint32_t repetitions;
   bool trans;
+  bool isModLinear;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -46,7 +47,10 @@ int main(int argc, char **argv) {
       "how often the tuning is to be repeated")(
       "trans",
       boost::program_options::value<bool>(&trans)->default_value(false),
-      "tune the transposed mult kernel instead of the standard one");
+      "tune the transposed mult kernel instead of the standard one")(
+      "isModLinear",
+      boost::program_options::value<bool>(&isModLinear)->default_value(true),
+      "use linear or mod-linear grid");
 
   boost::program_options::variables_map variables_map;
 
@@ -133,15 +137,14 @@ int main(int argc, char **argv) {
   //    std::unique_ptr<sgpp::base::Grid> grid =
   //    sgpp::base::Grid::createLinearGrid(dim);
 
-  // bool modLinear = false;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
-  // if (modLinear) {
-  //   grid =
-  //   std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));
-  // } else {
-  grid = std::unique_ptr<sgpp::base::Grid>(
-      sgpp::base::Grid::createLinearGrid(dim));
-  // }
+  if (isModLinear) {
+    grid = std::unique_ptr<sgpp::base::Grid>(
+        sgpp::base::Grid::createModLinearGrid(dim));
+  } else {
+    grid = std::unique_ptr<sgpp::base::Grid>(
+        sgpp::base::Grid::createLinearGrid(dim));
+  }
 
   sgpp::base::GridStorage &gridStorage = grid->getStorage();
   std::cout << "dimensionality:        " << gridStorage.getDimension()
@@ -153,23 +156,11 @@ int main(int argc, char **argv) {
   std::cout << "number of data points: " << dataset.getNumberInstances()
             << std::endl;
 
-  sgpp::base::DataVector alpha(gridStorage.getSize());
+  sgpp::datadriven::StreamingModOCLUnifiedAutoTuneTMP::
+      OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP<double>
+          eval(*grid, trainingData, parameters, isModLinear);
 
-  for (size_t i = 0; i < alpha.getSize(); i++) {
-    //    alpha[i] = dist(mt);
-    alpha[i] = static_cast<double>(i) + 1.0;
-  }
-
-  sgpp::datadriven::StreamingOCLMultiPlatformAutoTuneTMP::
-      OperationMultiEvalStreamingOCLMultiPlatformAutoTuneTMP<double>
-          eval(*grid, trainingData, parameters);
-
-  std::cout << "number of grid points after refinement: "
-            << gridStorage.getSize() << std::endl;
-  std::cout << "grid set up" << std::endl;
-
-  sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
-  dataSizeVectorResult.setAll(0);
+  std::cout << "grid set up, grid size: " << grid->getSize() << std::endl;
 
   std::cout << "preparing operation for refined grid" << std::endl;
   eval.prepare();
@@ -190,11 +181,23 @@ int main(int argc, char **argv) {
         std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
         "l_" + std::to_string(dim) + "d_" + std::to_string(r) + "r");
     if (!trans) {
+      sgpp::base::DataVector alpha(gridStorage.getSize());
+      for (size_t i = 0; i < alpha.getSize(); i++) {
+        alpha[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+      dataSizeVectorResult.setAll(0);
       eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
                      tunerName);
     } else {
-      eval.tune_multTranspose(alpha, dataSizeVectorResult, full_scenario_prefix,
-                              tunerName);
+      sgpp::base::DataVector source(dataset.getNumberInstances());
+      for (size_t i = 0; i < source.getSize(); i++) {
+        source[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
+      gridSizeVectorResult.setAll(0);
+      eval.tune_multTranspose(source, gridSizeVectorResult,
+                              full_scenario_prefix, tunerName);
     }
   }
 }

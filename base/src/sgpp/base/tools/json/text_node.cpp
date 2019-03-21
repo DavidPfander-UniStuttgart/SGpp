@@ -14,14 +14,8 @@
 namespace json {
 
 text_node::text_node()
-    : value(),
-      isDouble(false),
-      doubleValue(0.0),
-      isUnsigned(false),
-      unsignedValue(0),
-      isSigned(false),
-      signedValue(0),
-      isBool(false),
+    : value(), isDouble(false), doubleValue(0.0), isUnsigned(false),
+      unsignedValue(0), isSigned(false), signedValue(0), isBool(false),
       boolValue(false) {}
 
 node &text_node::operator=(const node &right) {
@@ -31,88 +25,48 @@ node &text_node::operator=(const node &right) {
 }
 
 void text_node::setupInternalType() {
-  //    this->internalType = InternalIDType::ID;
-
   // try validating as bool
   if (this->value.compare("true") == 0) {
-    //        this->internalType = InternalIDType::BOOL;
     this->isBool = true;
     this->boolValue = true;
     return;
   } else if (this->value.compare("false") == 0) {
-    //        this->internalType = InternalIDType::BOOL;
     this->isBool = true;
     this->boolValue = false;
     return;
   }
 
   // try validating as unsigned integer
-  // try {
-  //   std::string::size_type size;
-  //   uint64_t asUnsigned = stoull(this->value, &size);
-
-  //   if (this->value.size() == size) {
-  //     this->isUnsigned = true;
-  //     this->unsignedValue = asUnsigned;
-  //     //            this->internalType = InternalIDType::UINT;
-  //     //      return;
-  //   }
-  // } catch (std::invalid_argument& e) {
-  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     uint64_t r;
     conv_stream >> r;
-    if (conv_stream.fail()) {
+    if (!conv_stream.fail() && conv_stream.eof()) {
       this->isUnsigned = true;
       this->unsignedValue = r;
     }
   }
 
   // try validating as signed integer
-  // try {
-  //   std::string::size_type size;
-  //   int64_t asSigned = stoll(this->value, &size);
-
-  //   if (this->value.size() == size) {
-  //     this->isSigned = true;
-  //     this->signedValue = asSigned;
-  //     //            this->internalType = InternalIDType::INT;
-  //     //      return;
-  //   }
-  // } catch (std::invalid_argument& e) {
-  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     int64_t r;
     conv_stream >> r;
-    if (conv_stream.fail()) {
+    if (!conv_stream.fail() && conv_stream.eof()) {
       this->isSigned = true;
       this->signedValue = r;
     }
   }
 
   // try validating as double
-  // try {
-  //   std::string::size_type size;
-  //   double asDouble = stod(this->value, &size);
-
-  //   if (this->value.size() == size) {
-  //     this->isDouble = true;
-  //     this->doubleValue = asDouble;
-  //     //            this->internalType = InternalIDType::DOUBLE;
-  //     //      return;
-  //   }
-  // } catch (std::invalid_argument& e) {
-  // }
   {
     std::stringstream conv_stream;
     conv_stream << this->value;
     double r;
     conv_stream >> r;
-    if (conv_stream.fail()) {
+    if (!conv_stream.fail() && conv_stream.eof()) {
       this->isDouble = true;
       this->doubleValue = r;
     }
@@ -148,7 +102,7 @@ double text_node::getDouble() {
   if (this->isDouble) {
     return this->doubleValue;
   } else {
-    throw json_exception("node has not a numerical value");
+    throw json_exception("node does not have an numerical value");
   }
 }
 
@@ -166,7 +120,7 @@ uint64_t text_node::getUInt() {
   if (this->isUnsigned) {
     return this->unsignedValue;
   } else {
-    throw json_exception("node has not an unsigned integer value");
+    throw json_exception("node does not have an unsigned integer value");
   }
 }
 
@@ -184,7 +138,7 @@ int64_t text_node::getInt() {
   if (this->isSigned) {
     return this->signedValue;
   } else {
-    throw json_exception("node has not an integer value");
+    throw json_exception("node does not have an integer value");
   }
 }
 
@@ -202,7 +156,7 @@ bool text_node::getBool() {
   if (this->isBool) {
     return this->boolValue;
   } else {
-    throw json_exception("node has not a bool value");
+    throw json_exception("node does not have a bool value");
   }
 }
 
@@ -225,4 +179,4 @@ node *text_node::clone() {
   return newNode;
 }
 
-}  // namespace json
+} // namespace json

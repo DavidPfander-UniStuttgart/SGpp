@@ -85,17 +85,18 @@ public:
         manager(manager), kernelConfiguration(kernelConfiguration),
         queueLoadBalancerMultTranspose(queueBalancerMultTranpose),
         dataset(dataset), do_reset(true), grid_transferred(false) {
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
-            0 &&
-        dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
+    if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
+            "register") == 0 &&
+        dims > kernelConfiguration["KERNEL_TRANS_MAX_DIM_UNROLL"].getUInt()) {
       std::stringstream errorString;
-      errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
-                     "requires value of "
-                     "\"KERNEL_MAX_DIM_UNROLL\" to be greater than the "
-                     "dimension of the data "
-                     "set, was set to "
-                  << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()
-                  << std::endl;
+      errorString
+          << "OCL Error: setting \"KERNEL_TRANS_DATA_STORE\" to \"register\" "
+             "requires value of "
+             "\"KERNEL_TRANS_MAX_DIM_UNROLL\" to be greater than the "
+             "dimension of the data "
+             "set, was set to "
+          << kernelConfiguration["KERNEL_TRANS_MAX_DIM_UNROLL"].getUInt()
+          << std::endl;
       throw sgpp::base::operation_exception(errorString.str());
     }
 
@@ -104,7 +105,7 @@ public:
     this->deviceTimingMultTranspose = 1.0;
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
-    localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    localSize = kernelConfiguration["TRANS_LOCAL_SIZE"].getUInt();
     transGridBlockingSize =
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
@@ -204,7 +205,8 @@ public:
       // end = std::chrono::system_clock::now();
       // std::chrono::duration<double> elapsed_seconds = end - start;
       // if (verbose) {
-      //   std::cout << "init buffers multTranspose: " << elapsed_seconds.count()
+      //   std::cout << "init buffers multTranspose: " <<
+      //   elapsed_seconds.count()
       //             << std::endl;
       // }
 

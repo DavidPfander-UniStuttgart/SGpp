@@ -650,7 +650,7 @@ private:
       commonPaddingRequiredment = std::max(
           commonPaddingRequiredment,
           kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt() *
-              kernelConfiguration["LOCAL_SIZE"].getUInt());
+              kernelConfiguration["TRANS_LOCAL_SIZE"].getUInt());
     }
     return commonPaddingRequiredment;
   }

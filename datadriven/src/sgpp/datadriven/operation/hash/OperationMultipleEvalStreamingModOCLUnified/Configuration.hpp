@@ -66,6 +66,10 @@ public:
           kernelNode.addIDAttr("LOCAL_SIZE", UINT64_C(128));
         }
 
+        if (kernelNode.contains("TRANS_LOCAL_SIZE") == false) {
+          kernelNode.addIDAttr("TRANS_LOCAL_SIZE", UINT64_C(128));
+        }
+
         if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
           kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
         }
@@ -78,12 +82,24 @@ public:
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);
         }
 
+        if (kernelNode.contains("KERNEL_TRANS_USE_LOCAL_MEMORY") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_USE_LOCAL_MEMORY", false);
+        }
+
         if (kernelNode.contains("KERNEL_STORE_DATA") == false) {
           kernelNode.addTextAttr("KERNEL_STORE_DATA", "array");
         }
 
+        if (kernelNode.contains("KERNEL_TRANS_STORE_DATA") == false) {
+          kernelNode.addTextAttr("KERNEL_TRANS_STORE_DATA", "array");
+        }
+
         if (kernelNode.contains("KERNEL_MAX_DIM_UNROLL") == false) {
           kernelNode.addIDAttr("KERNEL_MAX_DIM_UNROLL", UINT64_C(10));
+        }
+
+        if (kernelNode.contains("KERNEL_TRANS_MAX_DIM_UNROLL") == false) {
+          kernelNode.addIDAttr("KERNEL_TRANS_MAX_DIM_UNROLL", UINT64_C(10));
         }
 
         if (kernelNode.contains("KERNEL_DATA_BLOCK_SIZE") == false) {
