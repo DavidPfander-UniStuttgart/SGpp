@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name="clustering experiments"
+#SBATCH --nodelist=argon-tesla1
+#SBATCH --gres=gpu:2
+#SBATCH --ntasks=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --exclusive
+#SBATCH -o slurm.%N.%j.out # STDOUT
+#SBATCH -e slurm.%N.%j.out # STDERR
+#SBATCH --workdir="/home/pfandedd"
+
+echo "starting"
+srun echo `hostname`
+
+cd /data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp
+source source_autotunetmp_generic.sh
+./diss_experiments/tune_for_scaling_experiments_DR5_f1.sh
