@@ -346,7 +346,7 @@ public:
     std::stringstream ss;
     this->ocl_parameters_mult->serialize(ss, 0);
     // std::cout << ss.str() << std::endl;
-    std::ofstream opt_config(scenario_name + "_mult_optimal.cfg");
+    std::ofstream opt_config(scenario_name + "_optimal.cfg");
     opt_config << ss.str();
     opt_config.close();
   }
@@ -390,7 +390,7 @@ public:
     std::stringstream ss;
     this->ocl_parameters_multTranspose->serialize(ss, 0);
     // std::cout << ss.str() << std::endl;
-    std::ofstream opt_config(scenario_name + "_mult_optimal.cfg");
+    std::ofstream opt_config(scenario_name + "_optimal.cfg");
     opt_config << ss.str();
     opt_config.close();
   }

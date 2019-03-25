@@ -198,7 +198,7 @@ int main(int argc, char **argv) {
   std::string full_scenario_prefix(file_prefix + scenarioName + +"_" + algorithm_to_tune +
                                    "_host_" + hostname + "_tuner_" + tunerName + "_t_" +
                                    (*parameters)["INTERNAL_PRECISION"].get() + "_" +
-                                   std::to_string(r) + "r");
+                                   std::to_string(repetitions) + "r");
   if (!trans) {
     sgpp::base::DataVector alpha(gridStorage.getSize());
     for (size_t i = 0; i < alpha.getSize(); i++) {
