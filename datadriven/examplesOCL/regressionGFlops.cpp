@@ -217,6 +217,11 @@ int main(int argc, char **argv) {
     }
     sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
     dataSizeVectorResult.setAll(0);
+
+    // first iteration not part of timing to avoid OCL platform initialization overhead problems
+    eval->mult(alpha, dataSizeVectorResult);
+    std::cout << "info: first mult not considered" << std::endl;
+
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     for (size_t i = 0; i < repetitions; i += 1) {
@@ -234,6 +239,11 @@ int main(int argc, char **argv) {
     }
     sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
     gridSizeVectorResult.setAll(0);
+
+    // first iteration not part of timing to avoid OCL platform initialization overhead problems
+    eval->multTranspose(source, gridSizeVectorResult);
+    std::cout << "info: first multTranspose not considered" << std::endl;
+
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
     for (size_t i = 0; i < repetitions; i += 1) {
