@@ -9,6 +9,7 @@
 #include "sgpp/base/operation/BaseOpFactory.hpp"
 #include "sgpp/base/operation/hash/OperationMultipleEval.hpp"
 #include "sgpp/datadriven/DatadrivenOpFactory.hpp"
+#include "sgpp/datadriven/grid/support_refinement_iterative.hpp"
 #include "sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp"
 #include "sgpp/datadriven/operation/hash/OperationMultipleEvalStreamingModOCLUnifiedAutoTuneTMP/OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP.hpp"
 #include "sgpp/datadriven/tools/ARFFTools.hpp"
@@ -27,13 +28,17 @@ int main(int argc, char **argv) {
   uint32_t repetitions;
   bool trans;
   bool isModLinear;
+  bool useSupportRefinement;
+  int64_t supportRefinementMinSupport;
+  std::string file_prefix; // path and prefix of file name
 
   boost::program_options::options_description description("Allowed options");
 
   description.add_options()("help", "display help")(
       "OpenCLConfigFile",
       boost::program_options::value<std::string>(&OpenCLConfigFile),
-      "the file name of the OpenCL configuration file")(
+      "the file name of the OpenCL configuration file (also used for support "
+      "refinement)")(
       "datasetFileName",
       boost::program_options::value<std::string>(&datasetFileName),
       "training data set as an arff or binary-arff file")(
@@ -50,7 +55,18 @@ int main(int argc, char **argv) {
       "tune the transposed mult kernel instead of the standard one")(
       "isModLinear",
       boost::program_options::value<bool>(&isModLinear)->default_value(true),
-      "use linear or mod-linear grid");
+      "use linear or mod-linear grid")(
+      "use_support_refinement",
+      boost::program_options::bool_switch(&useSupportRefinement),
+      "use support refinement to guess an initial grid "
+      "without using any solver")(
+      "support_refinement_min_support",
+      boost::program_options::value<int64_t>(&supportRefinementMinSupport)
+          ->default_value(1),
+      "for support refinement, minimal number of data points "
+      "on support for accepting data point")(
+      "file_prefix", boost::program_options::value<std::string>(&file_prefix),
+      "name for the current run, used when files are written");
 
   boost::program_options::variables_map variables_map;
 
@@ -118,12 +134,12 @@ int main(int argc, char **argv) {
   // std::string fileName = "datasets/friedman/friedman1_10d_150000.arff";
   // uint32_t level = 5;
 
-  sgpp::base::AdaptivityConfiguration adaptConfig;
-  adaptConfig.maxLevelType_ = false;
-  adaptConfig.noPoints_ = 80;
-  adaptConfig.numRefinements_ = 0;
-  adaptConfig.percent_ = 200.0;
-  adaptConfig.threshold_ = 0.0;
+  // sgpp::base::AdaptivityConfiguration adaptConfig;
+  // adaptConfig.maxLevelType_ = false;
+  // adaptConfig.noPoints_ = 80;
+  // adaptConfig.numRefinements_ = 0;
+  // adaptConfig.percent_ = 200.0;
+  // adaptConfig.threshold_ = 0.0;
 
   std::shared_ptr<sgpp::base::OCLOperationConfiguration> parameters =
       std::make_shared<sgpp::base::OCLOperationConfiguration>(OpenCLConfigFile);
@@ -147,18 +163,45 @@ int main(int argc, char **argv) {
   }
 
   sgpp::base::GridStorage &gridStorage = grid->getStorage();
-  std::cout << "dimensionality:        " << gridStorage.getDimension()
-            << std::endl;
+  if (useSupportRefinement) {
+    sgpp::datadriven::support_refinement_iterative ref(
+        dim, level, supportRefinementMinSupport, trainingData);
+    ref.enable_OCL(OpenCLConfigFile);
+    ref.refine();
+    std::vector<int64_t> &ls = ref.get_levels();
+    if (ls.size() == 0) {
+      std::cerr << "error: no grid points generated" << std::endl;
+      return 1;
+    }
+    std::vector<int64_t> &is = ref.get_indices();
+    // grid = std::unique_ptr<sgpp::base::Grid>(
+    //     sgpp::base::Grid::createLinearGrid(dimension));
 
-  sgpp::base::GridGenerator &gridGen = grid->getGenerator();
-  gridGen.regular(level);
+    sgpp::base::HashGridPoint p(dim);
+    for (int64_t gp_index = 0; gp_index < static_cast<int64_t>(ls.size() / dim);
+         gp_index += 1) {
+      for (int64_t d = 0; d < static_cast<int64_t>(dim); d += 1) {
+        p.set(d, ls[gp_index * dim + d], is[gp_index * dim + d]);
+      }
+      gridStorage.insert(p);
+    }
+    gridStorage.recalcLeafProperty();
+    std::cout << "support refinement done, grid size: " << grid->getSize()
+              << std::endl;
+  } else {
+    sgpp::base::GridGenerator &gridGen = grid->getGenerator();
+    gridGen.regular(level);
+  }
+
+  std::cout << "dimensionality:        " << dim << std::endl;
+
   std::cout << "number of grid points: " << gridStorage.getSize() << std::endl;
   std::cout << "number of data points: " << dataset.getNumberInstances()
             << std::endl;
 
   sgpp::datadriven::StreamingModOCLUnifiedAutoTuneTMP::
       OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP<double>
-          eval(*grid, trainingData, parameters, isModLinear);
+          eval(*grid, trainingData, parameters, isModLinear, repetitions);
 
   std::cout << "grid set up, grid size: " << grid->getSize() << std::endl;
 
@@ -166,38 +209,39 @@ int main(int argc, char **argv) {
   eval.prepare();
 
   std::cout << "starting tuning..." << std::endl;
-  for (size_t r = 0; r < repetitions; r += 1) {
-    std::cout << "rep: " << r << "(out of " << repetitions << ")" << std::endl;
-    std::string algorithm_to_tune("mult");
-    if (trans) {
-      algorithm_to_tune = "multTrans";
-    }
-
-    std::string full_scenario_prefix(
-        scenarioName + +"_" + algorithm_to_tune + "_host_" + hostname +
-        "_tuner_" + tunerName + "_t_" +
-        (*parameters)["INTERNAL_PRECISION"].get() + "_" +
-        std::to_string(dataset.getNumberInstances()) + "s_" +
-        std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
-        "l_" + std::to_string(dim) + "d_" + std::to_string(r) + "r");
-    if (!trans) {
-      sgpp::base::DataVector alpha(gridStorage.getSize());
-      for (size_t i = 0; i < alpha.getSize(); i++) {
-        alpha[i] = static_cast<double>(i) + 1.0;
-      }
-      sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
-      dataSizeVectorResult.setAll(0);
-      eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
-                     tunerName);
-    } else {
-      sgpp::base::DataVector source(dataset.getNumberInstances());
-      for (size_t i = 0; i < source.getSize(); i++) {
-        source[i] = static_cast<double>(i) + 1.0;
-      }
-      sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
-      gridSizeVectorResult.setAll(0);
-      eval.tune_multTranspose(source, gridSizeVectorResult,
-                              full_scenario_prefix, tunerName);
-    }
+  // for (size_t r = 0; r < repetitions; r += 1) {
+  //   std::cout << "rep: " << r << "(out of " << repetitions << ")" <<
+  //   std::endl;
+  std::string algorithm_to_tune("mult");
+  if (trans) {
+    algorithm_to_tune = "multTrans";
   }
+
+  std::string full_scenario_prefix(
+      file_prefix + scenarioName + +"_" + algorithm_to_tune + "_host_" +
+      hostname + "_tuner_" + tunerName + "_t_" +
+      (*parameters)["INTERNAL_PRECISION"].get() + "_" +
+      std::to_string(dataset.getNumberInstances()) + "s_" +
+      std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
+      "l_" + std::to_string(dim) + "d"); //  + std::to_string(r) + "r"
+  if (!trans) {
+    sgpp::base::DataVector alpha(gridStorage.getSize());
+    for (size_t i = 0; i < alpha.getSize(); i++) {
+      alpha[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+    dataSizeVectorResult.setAll(0);
+    eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
+                   tunerName);
+  } else {
+    sgpp::base::DataVector source(dataset.getNumberInstances());
+    for (size_t i = 0; i < source.getSize(); i++) {
+      source[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
+    gridSizeVectorResult.setAll(0);
+    eval.tune_multTranspose(source, gridSizeVectorResult, full_scenario_prefix,
+                            tunerName);
+  }
+  // }
 }

@@ -80,6 +80,11 @@ protected:
 
   bool isModLinear;
 
+  int64_t tune_repetitions;
+
+  double duration_mult_acc;
+  double duration_multTranspose_acc;
+
 public:
   /**
    * Creates a new instance of the OperationMultiEvalStreamingOCLMultiPlatform
@@ -98,9 +103,11 @@ public:
   OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP(
       base::Grid &grid, base::DataMatrix &dataset,
       std::shared_ptr<base::OCLOperationConfiguration> parameters,
-      bool isModLinear)
+      bool isModLinear, int64_t tune_repetitions = 1)
       : OperationMultipleEval(grid, dataset), dims(dataset.getNcols()),
-        duration(-1.0), always_recompile(true), isModLinear(isModLinear) {
+        duration(-1.0), always_recompile(true), isModLinear(isModLinear),
+        tune_repetitions(tune_repetitions), duration_mult_acc(0.0),
+        duration_multTranspose_acc(0.0) {
     this->verbose = (*parameters)["VERBOSE"].getBool();
     this->ocl_parameters_mult =
         std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
@@ -189,44 +196,24 @@ public:
           eval_mult = std::shared_ptr<sgpp::base::OperationMultipleEval>(
               datadriven::createStreamingModOCLUnifiedConfigured(
                   this->grid, this->dataset, configuration, this->isModLinear));
-          eval_mult->mult(alpha, result);
+          duration_mult_acc = 0.0;
+          for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
+            eval_mult->mult(alpha, result);
+            // always ignore first results
+            if (i > 0) {
+              duration_mult_acc += this->eval_mult->getDuration();
+            }
+          }
+          duration_mult_acc /= static_cast<double>(this->tune_repetitions);
         });
 
     autotune::mult_unified_with_tuning.set_kernel_duration_functor(
-        [this]() { return this->eval_mult->getDuration(); });
+        [this]() { return this->duration_mult_acc; });
 
     autotune::mult_unified_with_tuning.set_create_parameter_file_functor(
         [this](autotune::parameter_value_set &parameter_values) {
           this->apply_parameter_values(*this->ocl_parameters_mult,
                                        parameter_values);
-          // for (auto &p : parameter_values) {
-          //   for (std::string &platformName :
-          //        (*this->ocl_parameters_mult)["PLATFORMS"].keys()) {
-          //     json::node &platformNode =
-          //         (*this->ocl_parameters_mult)["PLATFORMS"][platformName];
-          //     for (std::string &deviceName : platformNode["DEVICES"].keys())
-          //     {
-          //       json::node &deviceNode = platformNode["DEVICES"][deviceName];
-
-          //       const std::string &kernelName = sgpp::datadriven::
-          //           StreamingModOCLUnified::Configuration::getKernelName();
-          //       json::node &kernelNode =
-          //           deviceNode["KERNELS"].contains(kernelName)
-          //               ? deviceNode["KERNELS"][kernelName]
-          //               : deviceNode["KERNELS"].addDictAttr(kernelName);
-          //       // json::node &kernelNode =
-          //       deviceNode["KERNELS"][kernelName];
-          //       // std::cout << "parameter name: " << p.first << " value: "
-          //       <<
-          //       // p.second << std::endl;
-          //       kernelNode.replaceTextAttr(p.first, p.second);
-          //       kernelNode.replaceTextAttr("VERBOSE", "true");
-          //     }
-          //   }
-          // }
-          // std::stringstream ss;
-          // this->ocl_parameters_mult->serialize(ss, 0);
-          // std::cout << ss.str() << std::endl;
         });
     autotune::mult_unified_with_tuning.set_verbose(true);
 
@@ -245,47 +232,27 @@ public:
                   datadriven::createStreamingModOCLUnifiedConfigured(
                       this->grid, this->dataset, configuration,
                       this->isModLinear));
-          eval_multTranspose->multTranspose(source, result);
+          duration_multTranspose_acc = 0.0;
+          for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
+            eval_multTranspose->multTranspose(source, result);
+            // always ignore first results
+            if (i > 0) {
+              duration_multTranspose_acc +=
+                  this->eval_multTranspose->getDuration();
+            }
+          }
+          duration_multTranspose_acc /=
+              static_cast<double>(this->tune_repetitions);
         });
 
     autotune::mult_transpose_unified_with_tuning.set_kernel_duration_functor(
-        [this]() { return this->eval_multTranspose->getDuration(); });
+        [this]() { return this->duration_multTranspose_acc; });
 
     autotune::mult_transpose_unified_with_tuning
         .set_create_parameter_file_functor(
             [this](autotune::parameter_value_set &parameter_values) {
               this->apply_parameter_values(*this->ocl_parameters_multTranspose,
                                            parameter_values);
-              // for (auto &p : parameter_values) {
-              //   for (std::string &platformName :
-              //        (*this->ocl_parameters_multTranspose)["PLATFORMS"].keys())
-              //        {
-              //     json::node &platformNode =
-              //         (*this->ocl_parameters_multTranspose)["PLATFORMS"]
-              //                                              [platformName];
-              //     for (std::string &deviceName :
-              //     platformNode["DEVICES"].keys()) {
-              //       json::node &deviceNode =
-              //       platformNode["DEVICES"][deviceName];
-
-              //       const std::string &kernelName = sgpp::datadriven::
-              //           StreamingModOCLUnified::Configuration::getKernelName();
-              //       json::node &kernelNode =
-              //           deviceNode["KERNELS"].contains(kernelName)
-              //               ? deviceNode["KERNELS"][kernelName]
-              //               : deviceNode["KERNELS"].addDictAttr(kernelName);
-              //       // json::node &kernelNode =
-              //       deviceNode["KERNELS"][kernelName]; std::cout <<
-              //       "parameter name: " << p.first
-              //                 << " value: " << p.second << std::endl;
-              //       kernelNode.replaceTextAttr(p.first, p.second);
-              //       kernelNode.replaceTextAttr("VERBOSE", "true");
-              //     }
-              //   }
-              // }
-              // std::stringstream ss;
-              // this->ocl_parameters_multTranspose->serialize(ss, 0);
-              // std::cout << ss.str() << std::endl;
             });
     autotune::mult_transpose_unified_with_tuning.set_verbose(true);
 
