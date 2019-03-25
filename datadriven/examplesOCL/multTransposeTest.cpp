@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
   //  std::string fileName = "DR5_train.arff";
   // std::string fileName = "debugging_small.arff";
 
-  uint32_t level = 8;
+  uint32_t level = 5;
 
   sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;
@@ -56,11 +56,16 @@ int main(int argc, char** argv) {
   adaptConfig.percent_ = 200.0;
   adaptConfig.threshold_ = 0.0;
 
-  sgpp::base::OCLOperationConfiguration parameters("OCL_configs/config_ocl_float_gtx1080ti.cfg");
+  sgpp::base::OCLOperationConfiguration parameters(
+      "results_diss/friedman1_pcsgs09_i76700k_ocl_config_single.cfg");
 
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-      sgpp::datadriven::OperationMultipleEvalSubType::OCLMP, parameters);
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
+
+  // sgpp::datadriven::OperationMultipleEvalConfiguration configuration2(
+  //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+  //     sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP, parameters);
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(fileName);
@@ -69,7 +74,7 @@ int main(int argc, char** argv) {
 
   size_t dim = dataset.getDimension();
 
-  bool modLinear = false;
+  bool modLinear = true;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
   if (modLinear) {
     grid = std::unique_ptr<sgpp::base::Grid>(sgpp::base::Grid::createModLinearGrid(dim));
@@ -123,7 +128,7 @@ int main(int argc, char** argv) {
 
   std::unique_ptr<sgpp::base::OperationMultipleEval> evalCompare =
       std::unique_ptr<sgpp::base::OperationMultipleEval>(
-          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));
+          sgpp::op_factory::createOperationMultipleEval(*grid, trainingData));  // , configuration2
 
   sgpp::base::DataVector alphaResultCompare(gridStorage.getSize());
 
