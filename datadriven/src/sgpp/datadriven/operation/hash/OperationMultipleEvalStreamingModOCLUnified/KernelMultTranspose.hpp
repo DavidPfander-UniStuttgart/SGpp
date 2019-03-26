@@ -54,11 +54,13 @@ private:
 
   std::vector<real_type> &dataset;
 
+  int64_t num_devices;
+
   bool verbose;
 
   size_t localSize;
   size_t transGridBlockingSize;
-  size_t scheduleSize;
+  // size_t scheduleSize;
   size_t totalBlockSize;
   size_t dataSplit;
   bool transferWholeGrid;
@@ -76,7 +78,7 @@ public:
       std::shared_ptr<base::OCLManagerMultiPlatform> manager,
       json::node &kernelConfiguration,
       std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMultTranpose,
-      std::vector<real_type> &dataset)
+      std::vector<real_type> &dataset, int64_t num_devices)
       : device(device), dims(dims), err(CL_SUCCESS),
         deviceLevelTranspose(device), deviceIndexTranspose(device),
         deviceDataTranspose(device), deviceSourceTranspose(device),
@@ -84,7 +86,8 @@ public:
         kernelSourceBuilder(device, kernelConfiguration, dims),
         manager(manager), kernelConfiguration(kernelConfiguration),
         queueLoadBalancerMultTranspose(queueBalancerMultTranpose),
-        dataset(dataset), do_reset(true), grid_transferred(false) {
+        dataset(dataset), num_devices(num_devices), do_reset(true),
+        grid_transferred(false) {
     if (kernelConfiguration["KERNEL_TRANS_STORE_DATA"].get().compare(
             "register") == 0 &&
         dims > kernelConfiguration["KERNEL_TRANS_MAX_DIM_UNROLL"].getUInt()) {
@@ -108,7 +111,8 @@ public:
     localSize = kernelConfiguration["TRANS_LOCAL_SIZE"].getUInt();
     transGridBlockingSize =
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
-    scheduleSize = kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
+    // scheduleSize =
+    // kernelConfiguration["KERNEL_TRANS_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * transGridBlockingSize;
     dataSplit = kernelConfiguration["KERNEL_TRANS_DATA_SPLIT"].getUInt();
     transferWholeGrid =
@@ -158,6 +162,15 @@ public:
     // clFinish(device->commandQueue);
 
     this->deviceTimingMultTranspose = 0.0;
+
+    // configure schedule size for a single valid-sized block per device
+    // raw schedule size
+    size_t scheduleSize =
+        queueLoadBalancerMultTranspose->getRange() / num_devices;
+    // make divisible by localSize*blockSize
+    if (scheduleSize % totalBlockSize != 0) {
+      scheduleSize += totalBlockSize - (scheduleSize % totalBlockSize);
+    }
 
     while (true) {
       size_t kernelStartGrid = 0;

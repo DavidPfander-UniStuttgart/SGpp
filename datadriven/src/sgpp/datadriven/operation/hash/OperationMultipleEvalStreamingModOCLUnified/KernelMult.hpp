@@ -25,9 +25,8 @@ namespace sgpp {
 namespace datadriven {
 namespace StreamingModOCLUnified {
 
-template <typename real_type>
-class KernelMult {
- private:
+template <typename real_type> class KernelMult {
+private:
   std::shared_ptr<base::OCLDevice> device;
 
   size_t dims;
@@ -54,11 +53,13 @@ class KernelMult {
 
   std::vector<real_type> &dataset;
 
+  int64_t num_devices;
+
   bool verbose;
 
   size_t localSize;
   size_t dataBlockingSize;
-  size_t scheduleSize;
+  // size_t scheduleSize;
   size_t totalBlockSize;
   size_t gridSplit;
   bool transferWholeDataset;
@@ -69,29 +70,22 @@ class KernelMult {
 
   std::vector<real_type> zeros;
 
- public:
+public:
   KernelMult(std::shared_ptr<base::OCLDevice> device, size_t dims,
              std::shared_ptr<base::OCLManagerMultiPlatform> manager,
              json::node &kernelConfiguration,
              std::shared_ptr<base::QueueLoadBalancerOpenMP> queueBalancerMult,
-             std::vector<real_type> &dataset, bool isModLinear)
-      : device(device),
-        dims(dims),
-        err(CL_SUCCESS),
-        deviceLevel(device),
-        deviceIndex(device),
-        deviceAlpha(device),
-        deviceData(device),
-        deviceResultData(device),
-        kernelMult(nullptr),
+             std::vector<real_type> &dataset, bool isModLinear,
+             int64_t num_devices)
+      : device(device), dims(dims), err(CL_SUCCESS), deviceLevel(device),
+        deviceIndex(device), deviceAlpha(device), deviceData(device),
+        deviceResultData(device), kernelMult(nullptr),
         kernelSourceBuilder(device, kernelConfiguration, dims, isModLinear),
-        manager(manager),
-        kernelConfiguration(kernelConfiguration),
-        queueLoadBalancerMult(queueBalancerMult),
-        dataset(dataset),
-        do_reset(true),
-        dataset_transferred(false) {
-    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") == 0 &&
+        manager(manager), kernelConfiguration(kernelConfiguration),
+        queueLoadBalancerMult(queueBalancerMult), dataset(dataset),
+        num_devices(num_devices), do_reset(true), dataset_transferred(false) {
+    if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
+            0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
       std::stringstream errorString;
       errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
@@ -99,7 +93,8 @@ class KernelMult {
                      "\"KERNEL_MAX_DIM_UNROLL\" to be greater than the "
                      "dimension of the data "
                      "set, was set to "
-                  << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt() << std::endl;
+                  << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()
+                  << std::endl;
       throw sgpp::base::operation_exception(errorString.str());
     }
 
@@ -110,10 +105,11 @@ class KernelMult {
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCK_SIZE"].getUInt();
-    scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
+    // scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * dataBlockingSize;
     gridSplit = kernelConfiguration["KERNEL_GRID_SPLIT"].getUInt();
-    transferWholeDataset = kernelConfiguration["KERNEL_TRANSFER_WHOLE_DATASET"].getBool();
+    transferWholeDataset =
+        kernelConfiguration["KERNEL_TRANSFER_WHOLE_DATASET"].getBool();
   }
 
   ~KernelMult() {
@@ -126,19 +122,20 @@ class KernelMult {
   void resetKernel() { do_reset = true; }
 
   double mult(std::vector<real_type> &level, std::vector<real_type> &index,
-              std::vector<real_type> &alpha,  // std::vector<real_type> &dataset,
+              std::vector<real_type> &alpha, // std::vector<real_type> &dataset,
               std::vector<real_type> &result, const size_t start_index_grid,
               const size_t end_index_grid, const size_t start_index_data,
               const size_t end_index_data) {
     // check if there is something to do at all
-    if (!(end_index_grid > start_index_grid && end_index_data > start_index_data)) {
+    if (!(end_index_grid > start_index_grid &&
+          end_index_data > start_index_data)) {
       return 0.0;
     }
 
     if (this->kernelMult == nullptr) {
       std::string program_src = kernelSourceBuilder.generateSource();
-      this->kernelMult =
-          manager->buildKernel(program_src, device, kernelConfiguration, "multOCLUnified");
+      this->kernelMult = manager->buildKernel(
+          program_src, device, kernelConfiguration, "multOCLUnified");
     }
 
     if (do_reset) {
@@ -147,7 +144,8 @@ class KernelMult {
       do_reset = false;
     }
     if (transferWholeDataset && !dataset_transferred) {
-      deviceData.intializeTo(dataset, dims, start_index_data, end_index_data, true);
+      deviceData.intializeTo(dataset, dims, start_index_data, end_index_data,
+                             true);
       dataset_transferred = true;
     }
     deviceAlpha.intializeTo(alpha, 1, start_index_grid, end_index_grid);
@@ -155,11 +153,19 @@ class KernelMult {
 
     this->deviceTimingMult = 0.0;
 
+    // configure schedule size for a single valid-sized block per device
+    // raw schedule size
+    size_t scheduleSize = queueLoadBalancerMult->getRange() / num_devices;
+    // make divisible by localSize*blockSize
+    if (scheduleSize % totalBlockSize != 0) {
+      scheduleSize += totalBlockSize - (scheduleSize % totalBlockSize);
+    }
+
     while (true) {
       size_t kernelStartData = 0;
       size_t kernelEndData = 0;
-      bool segmentAvailable =
-          queueLoadBalancerMult->getNextSegment(scheduleSize, kernelStartData, kernelEndData);
+      bool segmentAvailable = queueLoadBalancerMult->getNextSegment(
+          scheduleSize, kernelStartData, kernelEndData);
       if (!segmentAvailable) {
         break;
       }
@@ -167,8 +173,10 @@ class KernelMult {
       size_t rangeSizeUnblocked = kernelEndData - kernelStartData;
 
       if (verbose) {
-        std::cout << "device: " << device->deviceId << " kernel from: " << kernelStartData
-                  << " to: " << kernelEndData << " -> range: " << rangeSizeUnblocked << std::endl;
+        std::cout << "device: " << device->deviceId
+                  << " kernel from: " << kernelStartData
+                  << " to: " << kernelEndData
+                  << " -> range: " << rangeSizeUnblocked << std::endl;
       }
 
       // clFinish(device->commandQueue);
@@ -177,7 +185,8 @@ class KernelMult {
 
       // transfer partial dataset every iteration, for large datasets
       if (!transferWholeDataset) {
-        deviceData.intializeTo(dataset, dims, kernelStartData, kernelEndData, true);
+        deviceData.intializeTo(dataset, dims, kernelStartData, kernelEndData,
+                               true);
       }
       size_t range = kernelEndData - kernelStartData;
       if (zeros.size() != range) {
@@ -196,8 +205,8 @@ class KernelMult {
       //             << std::endl;
       // }
 
-      size_t rangeSizeBlocked =
-          (kernelEndData / dataBlockingSize) - (kernelStartData / dataBlockingSize);
+      size_t rangeSizeBlocked = (kernelEndData / dataBlockingSize) -
+                                (kernelStartData / dataBlockingSize);
 
       if (rangeSizeBlocked > 0) {
         // assuming transferring whole dataset
@@ -209,10 +218,12 @@ class KernelMult {
         }
 
         opencl::apply_arguments(
-            this->kernelMult, *(this->deviceLevel.getBuffer()), *(this->deviceIndex.getBuffer()),
-            *(this->deviceData.getBuffer()), *(this->deviceAlpha.getBuffer()),
-            *(this->deviceResultData.getBuffer()), static_cast<int>(rangeSizeUnblocked),
-            deviceDataSize, deviceDataOffset, static_cast<int>(start_index_grid),
+            this->kernelMult, *(this->deviceLevel.getBuffer()),
+            *(this->deviceIndex.getBuffer()), *(this->deviceData.getBuffer()),
+            *(this->deviceAlpha.getBuffer()),
+            *(this->deviceResultData.getBuffer()),
+            static_cast<int>(rangeSizeUnblocked), deviceDataSize,
+            deviceDataOffset, static_cast<int>(start_index_grid),
             static_cast<int>(end_index_grid));
 
         cl_event clTiming = nullptr;
@@ -221,13 +232,15 @@ class KernelMult {
 
         const size_t rangeSizeBlocked2D[2] = {rangeSizeBlocked, gridSplit};
         const size_t localSize2D[2] = {localSize, 1};
-        err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelMult, 2, 0,
-                                     rangeSizeBlocked2D, localSize2D, 0, nullptr, &clTiming);
+        err = clEnqueueNDRangeKernel(device->commandQueue, this->kernelMult, 2,
+                                     0, rangeSizeBlocked2D, localSize2D, 0,
+                                     nullptr, &clTiming);
 
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
-          errorString << "OCL Error: Failed to enqueue kernel command! Error code: " << err
-                      << std::endl;
+          errorString
+              << "OCL Error: Failed to enqueue kernel command! Error code: "
+              << err << std::endl;
           throw sgpp::base::operation_exception(errorString.str());
         }
 
@@ -248,8 +261,8 @@ class KernelMult {
         cl_ulong startTime = 0;
         cl_ulong endTime = 0;
 
-        err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_START, sizeof(cl_ulong),
-                                      &startTime, nullptr);
+        err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_START,
+                                      sizeof(cl_ulong), &startTime, nullptr);
 
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -259,8 +272,8 @@ class KernelMult {
           throw sgpp::base::operation_exception(errorString.str());
         }
 
-        err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_END, sizeof(cl_ulong),
-                                      &endTime, nullptr);
+        err = clGetEventProfilingInfo(clTiming, CL_PROFILING_COMMAND_END,
+                                      sizeof(cl_ulong), &endTime, nullptr);
 
         if (err != CL_SUCCESS) {
           std::stringstream errorString;
@@ -277,7 +290,8 @@ class KernelMult {
         time *= 1e-9;
 
         if (verbose) {
-          std::cout << "device: " << device->deviceId << " duration: " << time << std::endl;
+          std::cout << "device: " << device->deviceId << " duration: " << time
+                    << std::endl;
         }
 
         this->deviceTimingMult += time;
@@ -287,6 +301,6 @@ class KernelMult {
     return this->deviceTimingMult;
   }
 };
-}  // namespace StreamingModOCLUnified
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace StreamingModOCLUnified
+} // namespace datadriven
+} // namespace sgpp

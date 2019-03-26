@@ -133,8 +133,8 @@ public:
                                                {1, 2, 4, 8});
     autotune::fixed_set_parameter<uint64_t> p6("KERNEL_GRID_SPLIT",
                                                {1, 2, 4, 8});
-    autotune::fixed_set_parameter<uint64_t> p7("KERNEL_SCHEDULE_SIZE",
-                                               {1024000});
+    // autotune::fixed_set_parameter<uint64_t> p7("KERNEL_SCHEDULE_SIZE",
+    //                                            {1024000});
     autotune::fixed_set_parameter<uint64_t> p8("KERNEL_PREFETCH_SIZE",
                                                {16, 32, 64, 128});
     autotune::fixed_set_parameter<bool> p9("KERNEL_TRANSFER_WHOLE_DATASET",
@@ -147,7 +147,7 @@ public:
     autotune_parameters_mult.add_parameter(p4);
     autotune_parameters_mult.add_parameter(p5);
     autotune_parameters_mult.add_parameter(p6);
-    autotune_parameters_mult.add_parameter(p7);
+    // autotune_parameters_mult.add_parameter(p7);
     autotune_parameters_mult.add_parameter(p8);
     autotune_parameters_mult.add_parameter(p9);
 
@@ -164,21 +164,21 @@ public:
                                                 {1, 2, 4, 8});
     autotune::fixed_set_parameter<uint64_t> p15("KERNEL_TRANS_DATA_SPLIT",
                                                 {1, 2, 4, 8});
-    autotune::fixed_set_parameter<uint64_t> p16("KERNEL_TRANS_SCHEDULE_SIZE",
-                                                {1024000});
+    // autotune::fixed_set_parameter<uint64_t> p16("KERNEL_TRANS_SCHEDULE_SIZE",
+    //                                             {1024000});
     autotune::fixed_set_parameter<uint64_t> p17("KERNEL_TRANS_PREFETCH_SIZE",
                                                 {16, 32, 64, 128});
     autotune::fixed_set_parameter<bool> p18("KERNEL_TRANS_TRANSFER_WHOLE_GRID",
                                             {true, false});
 
-    autotune_parameters_mult.add_parameter(p0);
+    autotune_parameters_multTranspose.add_parameter(p0);
     autotune_parameters_multTranspose.add_parameter(p10);
     autotune_parameters_multTranspose.add_parameter(p11);
     autotune_parameters_multTranspose.add_parameter(p12);
     autotune_parameters_multTranspose.add_parameter(p13);
     autotune_parameters_multTranspose.add_parameter(p14);
     autotune_parameters_multTranspose.add_parameter(p15);
-    autotune_parameters_multTranspose.add_parameter(p16);
+    // autotune_parameters_multTranspose.add_parameter(p16);
     autotune_parameters_multTranspose.add_parameter(p17);
     autotune_parameters_multTranspose.add_parameter(p18);
 
