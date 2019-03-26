@@ -1,0 +1,36 @@
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+OpenCLConfigFile: results_diss/friedman1_Gold5120_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+hostname: argon-gtx
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+grid points with level > 1: 1550100
+num_ops: 18601.2
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: mult
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.76471
+info: first mult not considered
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.747
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.75707
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.75777
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.78202
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.7519
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.77062
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.7388
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.74346
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.76601
+device: 0x12934588 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12934588 duration: 2.74692
+duration mult: 27.6311, repetitions: 10
+GFLOPS: 673.197
