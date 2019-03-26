@@ -1,0 +1,2 @@
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+error: OpenCL configuration file does not exist: results_diss/friedman1_Vega7_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
