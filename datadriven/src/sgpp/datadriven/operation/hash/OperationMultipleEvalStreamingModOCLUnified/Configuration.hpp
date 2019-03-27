@@ -70,13 +70,13 @@ public:
           kernelNode.addIDAttr("TRANS_LOCAL_SIZE", UINT64_C(128));
         }
 
-        if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
-        }
+        // if (kernelNode.contains("KERNEL_SCHEDULE_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_SCHEDULE_SIZE", UINT64_C(102400));
+        // }
 
-        if (kernelNode.contains("KERNEL_TRANS_SCHEDULE_SIZE") == false) {
-          kernelNode.addIDAttr("KERNEL_TRANS_SCHEDULE_SIZE", UINT64_C(102400));
-        }
+        // if (kernelNode.contains("KERNEL_TRANS_SCHEDULE_SIZE") == false) {
+        //   kernelNode.addIDAttr("KERNEL_TRANS_SCHEDULE_SIZE", UINT64_C(102400));
+        // }
 
         if (kernelNode.contains("KERNEL_USE_LOCAL_MEMORY") == false) {
           kernelNode.addIDAttr("KERNEL_USE_LOCAL_MEMORY", false);

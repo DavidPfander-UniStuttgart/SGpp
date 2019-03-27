@@ -1,2 +1,37 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_Vega7_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_double_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_Vega7_weakscaling_parameters_multTrans_host_argon-epyc_tuner_line_search_t_double_10r_optimal.cfg
+hostname: argon-epyc
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+num_ops: 47739
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+starting performance test...
+algorithm: multTrans
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66777
+info: first multTranspose not considered
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.6684
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66839
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66809
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66824
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66824
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66845
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66783
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66866
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.6685
+device: gfx906 (0x1208ea60)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1208ea60 duration: 1.66888
+duration multTranspose: 16.7541, repetitions: 10
+GFLOPS: 2849.39

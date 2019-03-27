@@ -1,2 +1,37 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_Vega7_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_Vega7_weakscaling_parameters_multTrans_host_argon-epyc_tuner_line_search_t_float_10r_optimal.cfg
+hostname: argon-epyc
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+num_ops: 47739
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+starting performance test...
+algorithm: multTrans
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.49414
+info: first multTranspose not considered
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.494122
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493285
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493422
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493563
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493562
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.49355
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.49354
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493604
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.493532
+device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x12aee780 duration: 0.49345
+duration multTranspose: 4.99205, repetitions: 10
+GFLOPS: 9563.01

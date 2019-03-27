@@ -1,52 +1,52 @@
-KERNEL_TRANS_DATA_SPLIT,KERNEL_TRANS_GRID_BLOCK_SIZE,KERNEL_TRANS_MAX_DIM_UNROLL,KERNEL_TRANS_PREFETCH_SIZE,KERNEL_TRANS_SCHEDULE_SIZE,KERNEL_TRANS_STORE_DATA,KERNEL_TRANS_TRANSFER_WHOLE_GRID,KERNEL_TRANS_USE_LOCAL_MEMORY,TRANS_LOCAL_SIZE,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
-1,1,1,16,1024000,array,true,true,64,0.616714,0.616714,9.086e-05,0,0
-1,1,1,16,1024000,array,true,true,128,0.619205,0.619205,0.000190861,0,0
-1,1,1,16,1024000,array,true,true,256,0.594179,0.594179,0.000240162,0,0
-1,1,1,16,1024000,array,true,false,256,1.41614,1.41614,0.000171651,0,0
-1,1,2,16,1024000,array,true,true,256,0.594257,0.594257,0.000226442,0,0
-1,1,4,16,1024000,array,true,true,256,0.5945,0.5945,0.000174611,0,0
-1,1,10,16,1024000,array,true,true,256,0.595586,0.595586,0.000174811,0,0
-1,2,1,16,1024000,array,true,true,256,0.601384,0.601384,0.000175111,0,0
-1,4,1,16,1024000,array,true,true,256,0.640587,0.640587,0.000173091,0,0
-1,8,1,16,1024000,array,true,true,256,0.761037,0.761037,0.000172921,0,0
-2,1,1,16,1024000,array,true,true,256,0.583876,0.583876,0.000175731,0,0
-4,1,1,16,1024000,array,true,true,256,0.578654,0.578654,0.000175701,0,0
-8,1,1,16,1024000,array,true,true,256,0.576416,0.576416,0.000249442,0,0
-8,1,1,32,1024000,array,true,true,256,0.571344,0.571344,0.000173021,0,0
-8,1,1,64,1024000,array,true,true,256,0.55332,0.55332,0.000172211,0,0
-8,1,1,128,1024000,array,true,true,256,0.553662,0.553662,0.000176101,0,0
-8,1,1,64,1024000,array,false,true,256,0.571728,0.571728,0.000186801,0,0
-8,1,1,64,1024000,array,true,true,64,0.551874,0.551874,0.000176901,0,0
-8,1,1,64,1024000,array,true,true,128,0.571476,0.571476,0.000188181,0,0
-8,1,1,64,1024000,array,true,false,64,1.45231,1.45231,0.000177501,0,0
-8,1,2,64,1024000,array,true,true,64,0.552202,0.552202,0.000170761,0,0
-8,1,4,64,1024000,array,true,true,64,0.553699,0.553699,0.000173771,0,0
-8,1,10,64,1024000,array,true,true,64,0.554466,0.554466,0.000172551,0,0
-8,2,1,64,1024000,array,true,true,64,0.544105,0.544105,0.000175791,0,0
-8,4,1,64,1024000,array,true,true,64,0.534768,0.534768,0.000172141,0,0
-8,8,1,64,1024000,array,true,true,64,0.583297,0.583297,0.000175751,0,0
-1,4,1,64,1024000,array,true,true,64,0.590299,0.590299,0.000172291,0,0
-2,4,1,64,1024000,array,true,true,64,0.546846,0.546846,0.000172071,0,0
-4,4,1,64,1024000,array,true,true,64,0.539416,0.539416,0.000172611,0,0
-8,4,1,16,1024000,array,true,true,64,0.568214,0.568214,0.000173331,0,0
-8,4,1,32,1024000,array,true,true,64,0.552529,0.552529,0.000174291,0,0
-8,4,1,128,1024000,array,true,true,64,0.534926,0.534926,0.000170541,0,0
-8,4,1,64,1024000,array,false,true,64,0.550375,0.550375,0.00017302,0,0
-8,4,1,64,1024000,array,true,true,128,0.561706,0.561706,0.00013412,0,0
-8,4,1,64,1024000,array,true,true,256,0.539342,0.539342,0.000171801,0,0
-8,4,1,64,1024000,array,true,false,64,1.00945,1.00945,0.000174171,0,0
-8,4,2,64,1024000,array,true,true,64,0.534026,0.534026,0.000186081,0,0
-8,4,4,64,1024000,array,true,true,64,0.542101,0.542101,0.000185631,0,0
-8,4,10,64,1024000,array,true,true,64,0.535321,0.535321,0.000188491,0,0
-8,2,2,64,1024000,array,true,true,64,0.540613,0.540613,0.000185631,0,0
-8,8,2,64,1024000,array,true,true,64,0.583111,0.583111,0.000170671,0,0
-1,4,2,64,1024000,array,true,true,64,0.590419,0.590419,0.000186571,0,0
-2,4,2,64,1024000,array,true,true,64,0.547127,0.547127,0.000195621,0,0
-4,4,2,64,1024000,array,true,true,64,0.539293,0.539293,0.000171321,0,0
-8,4,2,16,1024000,array,true,true,64,0.567924,0.567924,0.000171711,0,0
-8,4,2,32,1024000,array,true,true,64,0.552415,0.552415,0.000171141,0,0
-8,4,2,128,1024000,array,true,true,64,0.535324,0.535324,0.000214411,0,0
-8,4,2,64,1024000,array,false,true,64,0.550269,0.550269,0.000170681,0,0
-8,4,2,64,1024000,array,true,true,128,0.562307,0.562307,0.000174771,0,0
-8,4,2,64,1024000,array,true,true,256,0.539845,0.539845,0.000171631,0,0
-8,4,2,64,1024000,array,true,false,64,1.01031,1.01031,0.000171121,0,0
+KERNEL_TRANS_DATA_SPLIT,KERNEL_TRANS_GRID_BLOCK_SIZE,KERNEL_TRANS_MAX_DIM_UNROLL,KERNEL_TRANS_PREFETCH_SIZE,KERNEL_TRANS_STORE_DATA,KERNEL_TRANS_TRANSFER_WHOLE_GRID,KERNEL_TRANS_USE_LOCAL_MEMORY,OPTIMIZATION_FLAGS,TRANS_LOCAL_SIZE,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+1,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,0.591606,0.591606,9.7321e-05,0,0
+1,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,0.596101,0.596101,0.000223681,0,0
+1,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.5671,0.5671,0.000248151,0,0
+1,1,1,16,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,1.40146,1.40146,0.000172921,0,0
+1,1,2,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.567245,0.567245,0.000175221,0,0
+1,1,4,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.567225,0.567225,0.000173061,0,0
+1,1,10,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.567937,0.567937,0.000170421,0,0
+1,2,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.605299,0.605299,0.000171811,0,0
+1,4,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.62232,0.62232,0.000173681,0,0
+1,8,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.726874,0.726874,0.000172961,0,0
+2,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.557867,0.557867,0.000145551,0,0
+4,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.551892,0.551892,0.000173991,0,0
+8,1,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.549349,0.549349,0.000173751,0,0
+8,1,1,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.543824,0.543824,0.000166991,0,0
+8,1,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.522981,0.522981,0.000172821,0,0
+8,1,1,128,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.525266,0.525266,0.000178051,0,0
+8,1,1,64,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.538817,0.538817,0.000173331,0,0
+8,1,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,0.52647,0.52647,0.000179891,0,0
+8,1,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,0.538791,0.538791,0.000188532,0,0
+8,1,1,64,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,1.4361,1.4361,0.000173611,0,0
+8,1,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.527798,0.527798,0.000171281,0,0
+8,1,4,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.528417,0.528417,0.000174201,0,0
+8,1,10,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.530374,0.530374,0.000175371,0,0
+8,2,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.504422,0.504422,0.000169631,0,0
+8,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.496185,0.496185,0.000174781,0,0
+8,8,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.555029,0.555029,0.000186251,0,0
+1,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.545389,0.545389,0.000174651,0,0
+2,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.501382,0.501382,0.000175851,0,0
+4,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.497713,0.497713,0.000177081,0,0
+8,4,1,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.556214,0.556214,0.000180952,0,0
+8,4,1,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.536322,0.536322,0.000183972,0,0
+8,4,1,128,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.528896,0.528896,0.000176761,0,0
+8,4,1,64,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.511833,0.511833,0.000176851,0,0
+8,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,0.49788,0.49788,0.00013169,0,0
+8,4,1,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,0.501126,0.501126,0.000171731,0,0
+8,4,1,64,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.691656,0.691656,0.000173201,0,0
+8,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.496157,0.496157,0.000182972,0,0
+8,4,4,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.496172,0.496172,0.000176881,0,0
+8,4,10,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.501619,0.501619,0.000174711,0,0
+8,2,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.504045,0.504045,0.000176681,0,0
+8,8,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.555098,0.555098,0.000175952,0,0
+1,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.545355,0.545355,0.000177041,0,0
+2,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.501439,0.501439,0.000177321,0,0
+4,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.497637,0.497637,0.000175651,0,0
+8,4,2,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.556585,0.556585,0.000176941,0,0
+8,4,2,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.536019,0.536019,0.000175551,0,0
+8,4,2,128,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.528754,0.528754,0.000176631,0,0
+8,4,2,64,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.510921,0.510921,0.000175891,0,0
+8,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,0.497956,0.497956,0.000139831,0,0
+8,4,2,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,0.501306,0.501306,0.000173801,0,0
+8,4,2,64,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,0.691894,0.691894,0.000185471,0,0

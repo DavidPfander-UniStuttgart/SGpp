@@ -1,2 +1,36 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_w8100_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_w8100_weakscaling_parameters_mult_host_pcsgs07_tuner_line_search_t_float_10r_optimal.cfg
+hostname: pcsgs07
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+grid points with level > 1: 1550100
+num_ops: 18601.2
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: mult
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95423
+info: first mult not considered
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95318
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95353
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95377
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95382
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95366
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95376
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95376
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.9535
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95339
+device: 0x11dc3d30 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11dc3d30 duration: 1.95377
+duration mult: 19.6021, repetitions: 10
+GFLOPS: 948.94
