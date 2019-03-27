@@ -1,2 +1,38 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_Vega7_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_Vega7_weakscaling_parameters_mult_host_argon-epyc_tuner_line_search_t_float_10r_optimal.cfg
+hostname: argon-epyc
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+grid points with level > 1: 1550100
+num_ops: 18601.2
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+starting performance test...
+algorithm: mult
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.411893
+info: first mult not considered
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.41178
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.410973
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.41109
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.410859
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.411287
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.41123
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.411138
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.410982
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.411092
+device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12435910 duration: 0.411009
+duration mult: 4.16279, repetitions: 10
+GFLOPS: 4468.45
