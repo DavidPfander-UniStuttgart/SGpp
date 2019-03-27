@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.399601
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.42824
 info: first mult not considered
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.374769
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.374331
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.375899
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.373482
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.374743
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.375824
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.37528
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.373921
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.375588
-device: 0x22fd4f0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x22fd4f0 duration: 0.374407
-duration mult: 3.78277, repetitions: 10
-GFLOPS: 4917.35
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.371352
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.36401
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367499
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367848
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367343
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367295
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367099
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367785
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.367344
+device: 0xb654f0 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb654f0 duration: 0.36769
+duration mult: 3.70653, repetitions: 10
+GFLOPS: 5018.5
