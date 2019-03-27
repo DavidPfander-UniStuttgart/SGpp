@@ -1,2 +1,35 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_P100_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_double_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_P100_weakscaling_parameters_multTrans_host_argon-tesla1_tuner_line_search_t_double_10r_optimal.cfg
+hostname: argon-tesla1
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+num_ops: 47739
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: multTrans
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.74933
+info: first multTranspose not considered
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.73552
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.73551
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.73551
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+device: Tesla P100-PCIE-16GB (0x1dd4b30)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x1dd4b30 duration: 1.7355
+duration multTranspose: 17.4269, repetitions: 10
+GFLOPS: 2739.38

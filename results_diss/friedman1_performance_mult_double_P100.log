@@ -1,2 +1,36 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-error: OpenCL configuration file does not exist: results_diss/friedman1_P100_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_double_10r_optimal.cfg
+OpenCLConfigFile: results_diss/friedman1_P100_weakscaling_parameters_mult_host_argon-tesla1_tuner_line_search_t_double_10r_optimal.cfg
+hostname: argon-tesla1
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+grid points with level > 1: 1550100
+num_ops: 18601.2
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: mult
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.924363
+info: first mult not considered
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899235
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899206
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899308
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899249
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899224
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899324
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.89918
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899279
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899225
+device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
+device: 0x25b7b30 duration: 0.899287
+duration mult: 9.055, repetitions: 10
+GFLOPS: 2054.25
