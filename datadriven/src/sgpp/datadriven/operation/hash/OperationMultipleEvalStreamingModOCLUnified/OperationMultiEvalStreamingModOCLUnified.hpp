@@ -372,6 +372,16 @@ public:
       result[i] = resultArray[i];
     }
 
+    // std::cout << "result mult: ";
+    // for (size_t i = 0;
+    //      i < std::min(static_cast<size_t>(10ull), result.getSize()); i++) {
+    //   if (i > 0) {
+    //     std::cout << ", ";
+    //   }
+    //   std::cout << result[i];
+    // }
+    // std::cout << std::endl;
+
     this->duration = this->myTimer.stop();
   }
 
@@ -496,6 +506,16 @@ public:
       }
     }
 
+    // std::cout << "result multTranspose: ";
+    // for (size_t i = 0;
+    //      i < std::min(static_cast<size_t>(10ull), result.getSize()); i++) {
+    //   if (i > 0) {
+    //     std::cout << ", ";
+    //   }
+    //   std::cout << result[i];
+    // }
+    // std::cout << std::endl;
+
     this->duration = this->myTimer.stop();
   }
 
@@ -503,7 +523,7 @@ public:
 
   void prepare() override {
     this->recalculateLevelAndIndex();
-
+    
     for (size_t deviceIndex = 0; deviceIndex < devices.size(); deviceIndex++) {
       this->multKernels[deviceIndex]->resetKernel();
     }

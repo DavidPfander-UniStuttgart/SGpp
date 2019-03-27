@@ -126,7 +126,10 @@ public:
     }
   }
 
-  void resetKernel() { do_reset = true; }
+  void resetKernel() {
+    do_reset = true;
+    grid_transferred = false;
+  }
 
   double
   multTranspose(std::vector<real_type> &level, std::vector<real_type> &index,
