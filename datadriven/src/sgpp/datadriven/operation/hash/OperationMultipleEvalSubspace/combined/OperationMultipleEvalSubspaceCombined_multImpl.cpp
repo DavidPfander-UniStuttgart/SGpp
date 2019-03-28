@@ -87,9 +87,6 @@ void OperationMultipleEvalSubspaceCombined::multImpl(
     for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount;
          subspaceIndex += 1) {
       SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
-      std::cout << "gridPointsOnLevel: " << subspace.gridPointsOnLevel
-                << std::endl;
-
       double *curSubspaceSurpluses = nullptr;
 
       // prepare the subspace array for a list type subspace

@@ -10,7 +10,6 @@ static inline void calculateIndexCombined(
     size_t dim, size_t nextIterationToRecalc,
     const double *const (&dataTuplePtr)[4], std::vector<uint32_t> &hInversePtr,
     uint32_t *(&partialIndicesFlat)[4], double *(&partialPhiEvals)[4],
-    // uint32_t *(&indexPtr)[4],
     uint32_t (&indexFlat)[4], double (&phiEval)[4]) {
   __m128i oneIntegerReg = _mm_set1_epi32((uint32_t)1);
 

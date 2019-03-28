@@ -161,6 +161,20 @@ void OperationMultipleEvalSubspaceCombined::padDataset(
 
   paddedDataset = DataMatrix(dataset);
 
+  // due to rounding issue in calculateIndex, replace all values of 1 by
+  // calculating the index of the grid point for a given level and data point (in 1d) treats the right border as part of the next grid point (ascending). This leads incorrect values for the right-most grid points.
+  double one = 1.0;
+  // subtract to obtain the next smaller float
+  uint64_t temp = reinterpret_cast<uint64_t &>(one) - 1;
+  double replace_value = reinterpret_cast<double &>(temp);
+  for (size_t i = 0; i < paddedDataset.size(); i += 1) {
+    if (paddedDataset[i] == 1.0) {
+      paddedDataset[i] = replace_value;
+    }
+  }
+  // std::cout.precision(17);
+  // std::cout << "one: " << one << " replace: " << replace_value << std::endl;
+
   // pad to make: dataset % X86COMBINED_PARALLEL_DATA_POINTS == 0
   if (loopCount != chunkSize) {
     sgpp::base::DataVector lastRow(dataset.getNcols());

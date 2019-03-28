@@ -26,7 +26,7 @@
 
 #ifndef X86COMBINED_UNROLL
 #define X86COMBINED_UNROLL 0
-// implies X86COMBINED_VEC_PADDING == 8
+// if set to 1, implies X86COMBINED_VEC_PADDING == 8
 #endif
 
 #ifndef X86COMBINED_VEC_PADDING

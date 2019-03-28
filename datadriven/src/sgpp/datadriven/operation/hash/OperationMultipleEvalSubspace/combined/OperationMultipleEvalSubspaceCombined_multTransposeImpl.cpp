@@ -80,18 +80,10 @@ void OperationMultipleEvalSubspaceCombined::multTransposeImpl(
     for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount;
          subspaceIndex++) {
       SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
-      std::cout << "l: ";
-      for (size_t i = 0; i < dim; i += 1) {
-        if (i > 0) {
-          std::cout << ", ";
-        }
-        std::cout << subspace.level[i];
-      }
-      std::cout << std::endl;
 
       // prepare the subspace array for a list type subspace
       if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
-        std::cout << "subspace type is LIST" << std::endl;
+        // std::cout << "subspace type is LIST" << std::endl;
         // fill with surplusses
         for (std::pair<uint32_t, double> tuple :
              subspace.indexFlatSurplusPairs) {
