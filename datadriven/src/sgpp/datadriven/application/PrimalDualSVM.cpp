@@ -17,20 +17,17 @@ namespace datadriven {
 PrimalDualSVM::PrimalDualSVM(size_t dim, size_t dataDim, size_t budget,
                              bool useBias)
     : svs(sgpp::base::DataMatrix(0, dataDim)),
-      alphas(sgpp::base::DataVector(0)),
-      norms(sgpp::base::DataVector(0)),
-      w(sgpp::base::DataVector(dim, 0.0)),
-      w2(sgpp::base::DataVector(dim, 0.0)),
-      budget(budget),
-      useBias(useBias),
-      bias(0.0) {
-  svs.reserveAdditionalRows(budget);
+      alphas(sgpp::base::DataVector(0)), norms(sgpp::base::DataVector(0)),
+      w(sgpp::base::DataVector(dim, 0.0)), w2(sgpp::base::DataVector(dim, 0.0)),
+      budget(budget), useBias(useBias), bias(0.0) {
+
+  svs.reserve(svs.size() + budget * svs.getNcols());
 }
 
 PrimalDualSVM::~PrimalDualSVM() {}
 
-double PrimalDualSVM::predictRaw(sgpp::base::Grid& grid,
-                                 sgpp::base::DataVector& x, size_t dataDim,
+double PrimalDualSVM::predictRaw(sgpp::base::Grid &grid,
+                                 sgpp::base::DataVector &x, size_t dataDim,
                                  bool trans) {
   sgpp::base::DataVector xTrans(grid.getSize());
   if (trans) {
@@ -51,7 +48,7 @@ double PrimalDualSVM::predictRaw(sgpp::base::Grid& grid,
   return res;
 }
 
-int PrimalDualSVM::predict(sgpp::base::Grid& grid, sgpp::base::DataVector& x,
+int PrimalDualSVM::predict(sgpp::base::Grid &grid, sgpp::base::DataVector &x,
                            size_t dataDim) {
   bool sign = std::signbit(this->predictRaw(grid, x, dataDim));
   if (sign) {
@@ -74,7 +71,7 @@ void PrimalDualSVM::multiply(double scalar) {
   }
 }
 
-void PrimalDualSVM::add(sgpp::base::Grid& grid, sgpp::base::DataVector& x,
+void PrimalDualSVM::add(sgpp::base::Grid &grid, sgpp::base::DataVector &x,
                         double alpha, size_t dataDim) {
   if (svs.getNrows() < budget) {
     sgpp::base::DataVector xTrans(grid.getSize());
@@ -106,5 +103,5 @@ void PrimalDualSVM::add(sgpp::base::Grid& grid, sgpp::base::DataVector& x,
   // ToDo:
 }*/
 
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace datadriven
+} // namespace sgpp

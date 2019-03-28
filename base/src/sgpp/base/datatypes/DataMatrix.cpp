@@ -22,24 +22,28 @@ namespace base {
 
 DataMatrix::DataMatrix() : DataMatrix(0, 0) {}
 
-DataMatrix::DataMatrix(size_t nrows, size_t ncols) : DataMatrix(nrows, ncols, 0.0) {}
+DataMatrix::DataMatrix(size_t nrows, size_t ncols)
+    : DataMatrix(nrows, ncols, 0.0) {}
 
-DataMatrix::DataMatrix(size_t nrows, size_t ncols, double value) : nrows(nrows), ncols(ncols) {
+DataMatrix::DataMatrix(size_t nrows, size_t ncols, double value)
+    : nrows(nrows), ncols(ncols) {
   this->assign(nrows * ncols, value);
 }
 
-DataMatrix::DataMatrix(const double* input, size_t nrows, size_t ncols)
-    : std::vector<double>(input, input + nrows * ncols), nrows(nrows), ncols(ncols) {}
+DataMatrix::DataMatrix(const double *input, size_t nrows, size_t ncols)
+    : std::vector<double>(input, input + nrows * ncols), nrows(nrows),
+      ncols(ncols) {}
 
-DataMatrix DataMatrix::fromFile(const std::string& fileName) {
+DataMatrix DataMatrix::fromFile(const std::string &fileName) {
   std::ifstream f(fileName, std::ifstream::in);
   f.exceptions(std::ifstream::failbit | std::ifstream::badbit);
   std::string content;
-  content.assign(std::istreambuf_iterator<char>(f), std::istreambuf_iterator<char>());
+  content.assign(std::istreambuf_iterator<char>(f),
+                 std::istreambuf_iterator<char>());
   return DataMatrix::fromString(content);
 }
 
-DataMatrix DataMatrix::fromString(const std::string& serializedVector) {
+DataMatrix DataMatrix::fromString(const std::string &serializedVector) {
   DataMatrix m(0, 0);
 
   enum class PARSER_STATE { INIT, ROW, ROWVALUE, ROWCOMMAEND, COMMAEND, END };
@@ -73,7 +77,8 @@ DataMatrix DataMatrix::fromString(const std::string& serializedVector) {
       row.append(value);
       state = PARSER_STATE::ROWCOMMAEND;
       //      i += next;
-      while (serializedVector[i] != ',' && serializedVector[i] != ']') ++i;
+      while (serializedVector[i] != ',' && serializedVector[i] != ']')
+        ++i;
     } else if (state == PARSER_STATE::ROWCOMMAEND) {
       if (c == ',') {
         state = PARSER_STATE::ROWVALUE;
@@ -96,7 +101,8 @@ DataMatrix DataMatrix::fromString(const std::string& serializedVector) {
         ++i;
       }
     } else if (state == PARSER_STATE::END) {
-      // only reached if a non-whitespace character was encountered after closing brace
+      // only reached if a non-whitespace character was encountered after
+      // closing brace
       throw data_exception("error: could not parse DataMatrix file");
     }
   }
@@ -114,7 +120,9 @@ void DataMatrix::resizeRows(size_t nrows) {
   this->std::vector<double>::resize(nrows * ncols);
 }
 
-void DataMatrix::resize(size_t nrows, size_t ncols) { this->resizeRowsCols(nrows, ncols); }
+void DataMatrix::resize(size_t nrows, size_t ncols) {
+  this->resizeRowsCols(nrows, ncols);
+}
 
 void DataMatrix::resizeRowsCols(size_t nrows, size_t ncols) {
   // don't do anything, if matrix already has the correct size
@@ -129,7 +137,8 @@ void DataMatrix::resizeRowsCols(size_t nrows, size_t ncols) {
 void DataMatrix::resizeQuadratic(size_t size) {
   // Throw exception if matrix is not quadratic
   if (this->nrows != this->ncols) {
-    throw sgpp::base::data_exception("DataMatrix::resizeQuadratic : DataMatrix is not quadratic");
+    throw sgpp::base::data_exception(
+        "DataMatrix::resizeQuadratic : DataMatrix is not quadratic");
   } else if (this->nrows == size) {
     // don't do anything, if matrix already has the correct size
     return;
@@ -139,7 +148,8 @@ void DataMatrix::resizeQuadratic(size_t size) {
 
   size_t min_size = std::min(this->ncols, size);
   for (size_t i = 0; i < min_size; ++i) {
-    std::copy(this->row_begin(i), this->row_begin(i) + min_size, newMatrix.row_begin(i));
+    std::copy(this->row_begin(i), this->row_begin(i) + min_size,
+              newMatrix.row_begin(i));
   }
 
   this->operator=(std::move(newMatrix));
@@ -147,14 +157,18 @@ void DataMatrix::resizeQuadratic(size_t size) {
 
 void DataMatrix::resizeZero(size_t nrows) { this->resizeRows(nrows); }
 
-void DataMatrix::resizeZero(size_t nrows, size_t ncols) { this->resizeRowsCols(nrows, ncols); }
+void DataMatrix::resizeZero(size_t nrows, size_t ncols) {
+  this->resizeRowsCols(nrows, ncols);
+}
 
-void DataMatrix::resizeToSubMatrix(size_t row_1, size_t col_1, size_t row_2, size_t col_2) {
+void DataMatrix::resizeToSubMatrix(size_t row_1, size_t col_1, size_t row_2,
+                                   size_t col_2) {
   if ((row_1 > row_2) || (col_1 > col_2)) {
-    throw sgpp::base::data_exception(
-        "DataMatrix::getSubMatrix : Expected indices do not fulfill requirements");
+    throw sgpp::base::data_exception("DataMatrix::getSubMatrix : Expected "
+                                     "indices do not fulfill requirements");
   } else if ((this->nrows < row_2) || (this->ncols < col_2)) {
-    throw sgpp::base::data_exception("DataMatrix::getSubMatrix : Indices are out of bounds");
+    throw sgpp::base::data_exception(
+        "DataMatrix::getSubMatrix : Indices are out of bounds");
   } else if ((row_1 == row_2) && (col_1 == col_2)) {
     // do nothing
     return;
@@ -191,7 +205,8 @@ void DataMatrix::transpose() {
   if (this->nrows == this->ncols) {
     for (size_t i = 1; i < this->nrows; ++i) {
       for (size_t j = 0; j < i; ++j) {
-        std::swap((*this)[(j * this->nrows) + i], (*this)[(i * this->ncols) + j]);
+        std::swap((*this)[(j * this->nrows) + i],
+                  (*this)[(i * this->ncols) + j]);
       }
     }
   } else {
@@ -205,18 +220,20 @@ void DataMatrix::transpose() {
   }
 }
 
-size_t DataMatrix::appendRow(const DataVector& vec) {
+size_t DataMatrix::appendRow(const DataVector &vec) {
   if (vec.getSize() != this->ncols) {
-    throw sgpp::base::data_exception("DataMatrix::appendRow : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::appendRow : Dimensions do not match");
   }
   this->insert(this->end(), vec.begin(), vec.end());
   ++this->nrows;
   return this->nrows - 1;
 }
 
-size_t DataMatrix::appendCol(const DataVector& vec) {
+size_t DataMatrix::appendCol(const DataVector &vec) {
   if (vec.getSize() != this->nrows) {
-    throw sgpp::base::data_exception("DataMatrix::appendCol : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::appendCol : Dimensions do not match");
   }
   if (this->nrows == 0) {
     ++this->ncols;
@@ -246,15 +263,18 @@ size_t DataMatrix::appendCol(const DataVector& vec) {
   this->push_back(vec[retained_rows]);
 
   // append full rows
-  for (size_t push_back_row = retained_rows + 1; push_back_row < this->nrows; ++push_back_row) {
-    this->insert(this->end(), this->row_begin(push_back_row), this->row_end(push_back_row));
+  for (size_t push_back_row = retained_rows + 1; push_back_row < this->nrows;
+       ++push_back_row) {
+    this->insert(this->end(), this->row_begin(push_back_row),
+                 this->row_end(push_back_row));
     this->push_back(vec[push_back_row]);
   }
 
   // copy partial row (if anything is left to do)
   std::copy_backward(this->row_begin(retained_rows),
                      this->row_begin(retained_rows) + retained_rows_rest,
-                     this->begin() + retained_rows * new_ncols + retained_rows_rest);
+                     this->begin() + retained_rows * new_ncols +
+                         retained_rows_rest);
   (*this)[retained_rows * new_ncols - 1] = vec[retained_rows - 1];
 
   // copy rest of the rows
@@ -276,9 +296,10 @@ void DataMatrix::setAll(double value) {
   }
 }
 
-void DataMatrix::getRow(size_t row, DataVector& vec) const {
+void DataMatrix::getRow(size_t row, DataVector &vec) const {
   if (vec.getSize() != this->ncols) {
-    throw sgpp::base::data_exception("DataMatrix::getRow : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::getRow : Dimensions do not match");
   }
 
   for (size_t i = 0; i < this->ncols; ++i) {
@@ -286,7 +307,7 @@ void DataMatrix::getRow(size_t row, DataVector& vec) const {
   }
 }
 
-void DataMatrix::getRow(size_t row, std::vector<double>& vec) const {
+void DataMatrix::getRow(size_t row, std::vector<double> &vec) const {
   vec.clear();
 
   for (size_t i = 0; i < this->ncols; ++i) {
@@ -294,11 +315,13 @@ void DataMatrix::getRow(size_t row, std::vector<double>& vec) const {
   }
 }
 
-void DataMatrix::setRow(size_t row, const DataVector& vec) {
+void DataMatrix::setRow(size_t row, const DataVector &vec) {
   if (vec.getSize() != this->ncols) {
-    throw sgpp::base::data_exception("DataMatrix::setRow : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::setRow : Dimensions do not match");
   } else if (row >= this->nrows) {
-    throw sgpp::base::data_exception("DataMatrix::setRow : \"row\" out of bounds");
+    throw sgpp::base::data_exception(
+        "DataMatrix::setRow : \"row\" out of bounds");
   }
 
   for (size_t i = 0; i < this->ncols; ++i) {
@@ -306,9 +329,10 @@ void DataMatrix::setRow(size_t row, const DataVector& vec) {
   }
 }
 
-void DataMatrix::getColumn(size_t col, DataVector& vec) const {
+void DataMatrix::getColumn(size_t col, DataVector &vec) const {
   if (vec.getSize() != this->nrows) {
-    throw sgpp::base::data_exception("DataMatrix::getColumn : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::getColumn : Dimensions do not match");
   }
 
   for (size_t j = 0; j < this->nrows; ++j) {
@@ -316,9 +340,10 @@ void DataMatrix::getColumn(size_t col, DataVector& vec) const {
   }
 }
 
-void DataMatrix::setColumn(size_t col, const DataVector& vec) {
+void DataMatrix::setColumn(size_t col, const DataVector &vec) {
   if (vec.getSize() != this->nrows) {
-    throw sgpp::base::data_exception("DataMatrix::setColumn : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::setColumn : Dimensions do not match");
   }
 
   for (size_t j = 0; j < this->nrows; ++j) {
@@ -326,16 +351,18 @@ void DataMatrix::setColumn(size_t col, const DataVector& vec) {
   }
 }
 
-void DataMatrix::copyFrom(const DataMatrix& matr) {
+void DataMatrix::copyFrom(const DataMatrix &matr) {
   if (*this == matr) {
     return;
   }
-  std::copy(matr.begin(), matr.begin() + std::min(this->size(), matr.size()), this->begin());
+  std::copy(matr.begin(), matr.begin() + std::min(this->size(), matr.size()),
+            this->begin());
 }
 
-void DataMatrix::add(const DataMatrix& matr) {
+void DataMatrix::add(const DataMatrix &matr) {
   if (this->nrows != matr.nrows || this->ncols != matr.ncols) {
-    throw sgpp::base::data_exception("DataMatrix::add : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::add : Dimensions do not match");
   }
 
   size_t n = nrows * ncols;
@@ -345,9 +372,10 @@ void DataMatrix::add(const DataMatrix& matr) {
   }
 }
 
-void DataMatrix::sub(const DataMatrix& matr) {
+void DataMatrix::sub(const DataMatrix &matr) {
   if (this->nrows != matr.nrows || this->ncols != matr.ncols) {
-    throw sgpp::base::data_exception("DataMatrix::sub : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::sub : Dimensions do not match");
   }
 
   size_t n = nrows * ncols;
@@ -357,9 +385,10 @@ void DataMatrix::sub(const DataMatrix& matr) {
   }
 }
 
-void DataMatrix::addReduce(DataVector& reduction) {
+void DataMatrix::addReduce(DataVector &reduction) {
   if (this->nrows != reduction.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::addReduce : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::addReduce : Dimensions do not match");
   }
 
   for (size_t i = 0; i < this->nrows; ++i) {
@@ -373,13 +402,16 @@ void DataMatrix::addReduce(DataVector& reduction) {
   }
 }
 
-void DataMatrix::addReduce(DataVector& reduction, DataVector& beta, size_t start_beta) {
+void DataMatrix::addReduce(DataVector &reduction, DataVector &beta,
+                           size_t start_beta) {
   if (this->nrows != reduction.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::addReduce : Dimensions do not match (reduction)");
+    throw sgpp::base::data_exception(
+        "DataMatrix::addReduce : Dimensions do not match (reduction)");
   }
 
   if (this->ncols + start_beta > beta.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::addReduce : Dimensions do not match (beta)");
+    throw sgpp::base::data_exception(
+        "DataMatrix::addReduce : Dimensions do not match (beta)");
   }
 
   for (size_t i = 0; i < this->nrows; ++i) {
@@ -393,9 +425,10 @@ void DataMatrix::addReduce(DataVector& reduction, DataVector& beta, size_t start
   }
 }
 
-void DataMatrix::expand(const DataVector& expand) {
+void DataMatrix::expand(const DataVector &expand) {
   if (this->nrows != expand.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::expand : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::expand : Dimensions do not match");
   }
 
   for (size_t i = 0; i < this->nrows; ++i) {
@@ -405,9 +438,10 @@ void DataMatrix::expand(const DataVector& expand) {
   }
 }
 
-void DataMatrix::componentwise_mult(const DataMatrix& matr) {
+void DataMatrix::componentwise_mult(const DataMatrix &matr) {
   if (this->nrows != matr.nrows || this->ncols != matr.ncols) {
-    throw sgpp::base::data_exception("DataMatrix::componentwise_mult : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::componentwise_mult : Dimensions do not match");
   }
 
   size_t n = nrows * ncols;
@@ -417,9 +451,10 @@ void DataMatrix::componentwise_mult(const DataMatrix& matr) {
   }
 }
 
-void DataMatrix::componentwise_div(const DataMatrix& matr) {
+void DataMatrix::componentwise_div(const DataMatrix &matr) {
   if (this->nrows != matr.nrows || this->ncols != matr.ncols) {
-    throw sgpp::base::data_exception("DataMatrix::componentwise_div : Dimensions do not match");
+    throw sgpp::base::data_exception(
+        "DataMatrix::componentwise_div : Dimensions do not match");
   }
 
   size_t n = nrows * ncols;
@@ -437,13 +472,15 @@ void DataMatrix::mult(double scalar) {
   }
 }
 
-void DataMatrix::mult(const DataVector& x, DataVector& y) {
+void DataMatrix::mult(const DataVector &x, DataVector &y) {
   if (ncols != x.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::mult : Dimensions do not match (x)");
+    throw sgpp::base::data_exception(
+        "DataMatrix::mult : Dimensions do not match (x)");
   }
 
   if (nrows != y.getSize()) {
-    throw sgpp::base::data_exception("DataMatrix::mult : Dimensions do not match (y)");
+    throw sgpp::base::data_exception(
+        "DataMatrix::mult : Dimensions do not match (y)");
   }
 
   for (size_t i = 0; i < nrows; ++i) {
@@ -519,7 +556,7 @@ void DataMatrix::normalizeDimension(size_t d, double border) {
   }
 }
 
-void DataMatrix::toString(std::string& text) const {
+void DataMatrix::toString(std::string &text) const {
   std::stringstream str;
 
   str << std::scientific;
@@ -559,7 +596,7 @@ std::string DataMatrix::toString() const {
   return str;
 }
 
-void DataMatrix::toFile(const std::string& fileName) const {
+void DataMatrix::toFile(const std::string &fileName) const {
   std::ofstream f(fileName, std::ofstream::out);
   f << this->toString();
   f.close();
@@ -617,11 +654,12 @@ double DataMatrix::max() const {
   return max;
 }
 
-void DataMatrix::minmax(size_t col, double* min, double* max) const {
+void DataMatrix::minmax(size_t col, double *min, double *max) const {
   size_t n = nrows * ncols;
 
   if (ncols <= col) {
-    throw sgpp::base::data_exception("DataMatrix::minmax : Not enough entries in DataMatrix");
+    throw sgpp::base::data_exception(
+        "DataMatrix::minmax : Not enough entries in DataMatrix");
   }
 
   // find min and max of column col
@@ -642,7 +680,7 @@ void DataMatrix::minmax(size_t col, double* min, double* max) const {
   (*max) = max_t;
 }
 
-void DataMatrix::minmax(double* min, double* max) const {
+void DataMatrix::minmax(double *min, double *max) const {
   size_t n = nrows * ncols;
 
   double min_t = INFINITY;
@@ -662,9 +700,9 @@ void DataMatrix::minmax(double* min, double* max) const {
   (*max) = max_t;
 }
 
-double* DataMatrix::getPointer() { return const_cast<double*>(this->data()); }
+double *DataMatrix::getPointer() { return const_cast<double *>(this->data()); }
 
-const double* DataMatrix::getPointer() const { return this->data(); }
+const double *DataMatrix::getPointer() const { return this->data(); }
 
 size_t DataMatrix::getNumberNonZero() const {
   size_t n = nrows * ncols;
@@ -679,5 +717,5 @@ size_t DataMatrix::getNumberNonZero() const {
   return nonZero;
 }
 
-}  // namespace base
-}  // namespace sgpp
+} // namespace base
+} // namespace sgpp
