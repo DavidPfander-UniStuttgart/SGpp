@@ -11,23 +11,18 @@
 #include <string>
 #include <vector>
 
-using sgpp::base::Grid;
 using sgpp::base::DataMatrix;
 using sgpp::base::DataVector;
+using sgpp::base::Grid;
 
-namespace sgpp {
-namespace datadriven {
+namespace sgpp::datadriven::SubspaceLinearCombined {
 
-OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Grid& grid,
-                                                                             DataMatrix& dataset)
-    : AbstractOperationMultipleEvalSubspace(grid, dataset) {
-  this->paddedDataset = this->padDataset(dataset);
-  this->storage = &grid.getStorage();
-  // this->dataset = dataset;
-  this->dim = dataset.getNcols();
-
-  // this->subspaceSize = (2 * this->dim) + 8;
-  this->maxGridPointsOnLevel = 0;
+OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(
+    Grid &grid, DataMatrix &dataset)
+    : AbstractOperationMultipleEvalSubspace(grid, dataset),
+      paddedDatasetSize(0), maxGridPointsOnLevel(0), dim(dataset.getNcols()),
+      maxLevel(0), subspaceCount(-1), totalRegularGridPoints(-1) {
+  this->padDataset(dataset);
 
 #ifdef X86COMBINED_WRITE_STATS
   string prefix("results/data/stats_");
@@ -51,20 +46,19 @@ OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Gri
 #endif
 }
 
-OperationMultipleEvalSubspaceCombined::~OperationMultipleEvalSubspaceCombined() {
+OperationMultipleEvalSubspaceCombined::
+    ~OperationMultipleEvalSubspaceCombined() {
 #ifdef X86COMBINED_WRITE_STATS
   this->statsFile.close();
 #endif
 }
 
 void OperationMultipleEvalSubspaceCombined::prepare() {
-  this->allLevelsIndexMap.clear();
-  this->allSubspaceNodes.clear();
-
   this->prepareSubspaceIterator();
 }
 
-void OperationMultipleEvalSubspaceCombined::setCoefficients(DataVector& surplusVector) {
+void OperationMultipleEvalSubspaceCombined::setCoefficients(
+    DataVector &surplusVector) {
   std::vector<uint32_t> level(dim);
   std::vector<uint32_t> maxIndex(dim);
   std::vector<uint32_t> index(dim);
@@ -72,8 +66,8 @@ void OperationMultipleEvalSubspaceCombined::setCoefficients(DataVector& surplusV
   base::level_t curLevel;
   base::index_t curIndex;
 
-  for (size_t gridPoint = 0; gridPoint < this->storage->getSize(); gridPoint++) {
-    sgpp::base::GridPoint& point = this->storage->getPoint(gridPoint);
+  for (size_t gridPoint = 0; gridPoint < this->storage.getSize(); gridPoint++) {
+    sgpp::base::GridPoint &point = this->storage.getPoint(gridPoint);
 
     for (size_t d = 0; d < this->dim; d++) {
       point.get(d, curLevel, curIndex);
@@ -87,7 +81,7 @@ void OperationMultipleEvalSubspaceCombined::setCoefficients(DataVector& surplusV
 }
 
 // writes a result vector in the order of the points in the grid storage
-void OperationMultipleEvalSubspaceCombined::unflatten(DataVector& result) {
+void OperationMultipleEvalSubspaceCombined::unflatten(DataVector &result) {
   std::vector<uint32_t> level(dim);
   std::vector<uint32_t> maxIndex(dim);
   std::vector<uint32_t> index(dim);
@@ -95,8 +89,8 @@ void OperationMultipleEvalSubspaceCombined::unflatten(DataVector& result) {
   base::level_t curLevel;
   base::index_t curIndex;
 
-  for (size_t gridPoint = 0; gridPoint < this->storage->getSize(); gridPoint++) {
-    sgpp::base::GridPoint& point = this->storage->getPoint(gridPoint);
+  for (size_t gridPoint = 0; gridPoint < this->storage.getSize(); gridPoint++) {
+    sgpp::base::GridPoint &point = this->storage.getPoint(gridPoint);
 
     for (size_t d = 0; d < this->dim; d++) {
       point.get(d, curLevel, curIndex);
@@ -113,24 +107,23 @@ void OperationMultipleEvalSubspaceCombined::unflatten(DataVector& result) {
   }
 }
 
-void OperationMultipleEvalSubspaceCombined::setSurplus(std::vector<uint32_t>& level,
-                                                       std::vector<uint32_t>& maxIndices,
-                                                       std::vector<uint32_t>& index, double value) {
+void OperationMultipleEvalSubspaceCombined::setSurplus(
+    std::vector<uint32_t> &level, std::vector<uint32_t> &maxIndices,
+    std::vector<uint32_t> &index, double value) {
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
-  SubspaceNodeCombined& subspace = this->allSubspaceNodes[subspaceIndex];
+  SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
   subspace.setSurplus(indexFlat, value);
 }
 
-void OperationMultipleEvalSubspaceCombined::getSurplus(std::vector<uint32_t>& level,
-                                                       std::vector<uint32_t>& maxIndices,
-                                                       std::vector<uint32_t>& index, double& value,
-                                                       bool& isVirtual) {
+void OperationMultipleEvalSubspaceCombined::getSurplus(
+    std::vector<uint32_t> &level, std::vector<uint32_t> &maxIndices,
+    std::vector<uint32_t> &index, double &value, bool &isVirtual) {
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
-  SubspaceNodeCombined& subspace = this->allSubspaceNodes[subspaceIndex];
+  SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
   value = subspace.getSurplus(indexFlat);
 
   if (std::isnan(value)) {
@@ -140,26 +133,8 @@ void OperationMultipleEvalSubspaceCombined::getSurplus(std::vector<uint32_t>& le
   }
 }
 
-uint32_t OperationMultipleEvalSubspaceCombined::flattenIndex(size_t dim,
-                                                             std::vector<uint32_t>& maxIndices,
-                                                             std::vector<uint32_t>& index) {
-  uint32_t indexFlat = index[0];
-  indexFlat >>= 1;
-
-  for (size_t i = 1; i < dim; i++) {
-    uint32_t actualDirectionGridPoints = maxIndices[i];
-    actualDirectionGridPoints >>= 1;
-    indexFlat *= actualDirectionGridPoints;
-    uint32_t actualIndex = index[i];
-    actualIndex >>= 1;  // divide index by 2, skip even indices
-    indexFlat += actualIndex;
-  }
-
-  return indexFlat;
-}
-
-uint32_t OperationMultipleEvalSubspaceCombined::flattenLevel(size_t dim, size_t maxLevel,
-                                                             std::vector<uint32_t>& level) {
+uint32_t OperationMultipleEvalSubspaceCombined::flattenLevel(
+    size_t dim, size_t maxLevel, std::vector<uint32_t> &level) {
   uint32_t levelFlat = 0;
   levelFlat += level[dim - 1];
 
@@ -172,59 +147,65 @@ uint32_t OperationMultipleEvalSubspaceCombined::flattenLevel(size_t dim, size_t 
   return levelFlat;
 }
 
-DataMatrix* OperationMultipleEvalSubspaceCombined::padDataset(sgpp::base::DataMatrix& dataset) {
+void OperationMultipleEvalSubspaceCombined::padDataset(
+    sgpp::base::DataMatrix &dataset) {
   size_t chunkSize = X86COMBINED_PARALLEL_DATA_POINTS;
 
   // Assure that data has a even number of instances -> padding might be needed
   size_t remainder = dataset.getNrows() % chunkSize;
   size_t loopCount = chunkSize - remainder;
 
-  if (loopCount == chunkSize) {
-    return &dataset;
-  }
+  // if (loopCount == chunkSize) {
+  //   std::endl; return &dataset;
+  // }
 
-  sgpp::base::DataVector lastRow(dataset.getNcols());
-  size_t oldSize = dataset.getNrows();
-  dataset.getRow(dataset.getNrows() - 1, lastRow);
+  paddedDataset = DataMatrix(dataset);
 
-  DataMatrix* paddedDataset = new DataMatrix(dataset);
   // pad to make: dataset % X86COMBINED_PARALLEL_DATA_POINTS == 0
-  paddedDataset->resize(dataset.getNrows() + loopCount);
+  if (loopCount != chunkSize) {
+    sgpp::base::DataVector lastRow(dataset.getNcols());
+    size_t oldSize = dataset.getNrows();
+    dataset.getRow(dataset.getNrows() - 1, lastRow);
+    paddedDataset.resize(dataset.getNrows() + loopCount);
 
-  for (size_t i = 0; i < loopCount; i++) {
-    paddedDataset->setRow(oldSize + i, lastRow);
-  }
-
-  // additional padding for subspace skipping
-  // if validIndices contain X86COMBINED_PARALLEL_DATA_POINTS - 1 it is possible for a vector
-  // iteration to contain
-  // indices larger than size(dataset) (even though the dataset is divided by
-  // X86COMBINED_PARALLEL_DATA_POINTS)
-  // add X86COMBINED_VEC_PADDING dummy data points to avoid that problem
-  // add X86COMBINED_VEC_PADDING * 2 to also enable the calculateIndexCombined2() method
-  // this works due to special semantics of "reserveAdditionalRows()", this function adds additional
-  // unused (and uncounted) rows
-  paddedDataset->reserveAdditionalRows(X86COMBINED_VEC_PADDING * 2);
-
-  for (size_t i = paddedDataset->getNrows();
-       i < paddedDataset->getNrows() + paddedDataset->getAdditionallyReservedRows(); i++) {
-    for (size_t j = 0; j < paddedDataset->getNcols(); j++) {
-      paddedDataset->set(i, j, 0.0);
+    for (size_t i = 0; i < loopCount; i++) {
+      paddedDataset.setRow(oldSize + i, lastRow);
     }
   }
+  paddedDatasetSize = paddedDataset.getNrows();
 
-  return paddedDataset;
+  // TODO: in the process of changing this, as the old approach is bullshit
+  // (accessing reserved parts of a vector...) additional padding for subspace
+  // skipping if validIndices contain X86COMBINED_PARALLEL_DATA_POINTS - 1 it is
+  // possible for a vector iteration to contain indices larger than
+  // size(dataset) (even though the dataset is divided by
+  // X86COMBINED_PARALLEL_DATA_POINTS) add X86COMBINED_VEC_PADDING dummy data
+  // points to avoid that problem add X86COMBINED_VEC_PADDING * 2 to also enable
+  // the calculateIndexCombined2() method this works due to special semantics of
+  // "reserveAdditionalRows()", this function adds additional unused (and
+  // uncounted) rows
+  // paddedDataset->reserveAdditionalRows(X86COMBINED_VEC_PADDING * 2);
+
+  paddedDataset.resize(paddedDataset.size() +
+                       X86COMBINED_VEC_PADDING * 2 * paddedDataset.getNcols());
+
+  for (size_t i = paddedDatasetSize; i < paddedDataset.getNrows(); i += 1) {
+    for (size_t j = 0; j < paddedDataset.getNcols(); j += 1) {
+      paddedDataset.set(i, j, 0.0);
+    }
+  }
 }
 
 size_t OperationMultipleEvalSubspaceCombined::getPaddedDatasetSize() {
-  return this->paddedDataset->getNrows();
+  return paddedDatasetSize;
 }
 
 size_t OperationMultipleEvalSubspaceCombined::getAlignment() {
   return X86COMBINED_PARALLEL_DATA_POINTS;
 }
 
-std::string OperationMultipleEvalSubspaceCombined::getImplementationName() { return "COMBINED"; }
+std::string OperationMultipleEvalSubspaceCombined::getImplementationName() {
+  return "COMBINED";
+}
 
-}  // namespace datadriven
-}  // namespace sgpp
+} // namespace sgpp::datadriven::SubspaceLinearCombined

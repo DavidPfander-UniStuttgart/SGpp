@@ -564,8 +564,8 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: DEFAULT==COMBINED"
                     << std::endl;
         }
-        return new datadriven::OperationMultipleEvalSubspaceCombined(grid,
-                                                                     dataset);
+        return new datadriven::SubspaceLinearCombined::
+            OperationMultipleEvalSubspaceCombined(grid, dataset);
 #else
         throw base::factory_exception(
             "Error creating function: the library wasn't compiled with AVX");

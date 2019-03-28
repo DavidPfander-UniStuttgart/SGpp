@@ -11,12 +11,12 @@
 #include "OperationMultipleEvalSubspaceCombinedParameters.hpp"
 #include "SubspaceNodeCombined.hpp"
 
-namespace sgpp {
-namespace datadriven {
+namespace sgpp::datadriven::SubspaceLinearCombined {
 
-SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t>& level, uint32_t flatLevel,
-                                           std::vector<uint32_t>& hInverse,
-                                           std::vector<uint32_t>& index) {
+SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level,
+                                           uint32_t flatLevel,
+                                           std::vector<uint32_t> &hInverse,
+                                           std::vector<uint32_t> &index) {
   size_t dim = level.size();
   this->level = level;
   this->hInverse = hInverse;
@@ -31,7 +31,7 @@ SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t>& level, uint32_
 
   for (size_t j = 0; j < dim; j++) {
     uint32_t dimTemp = hInverse[j];
-    dimTemp >>= 1;  // skip even indices
+    dimTemp >>= 1; // skip even indices
     this->gridPointsOnLevel *= dimTemp;
   }
 
@@ -61,10 +61,12 @@ SubspaceNodeCombined::SubspaceNodeCombined(size_t dim, uint32_t index) {
 
 void SubspaceNodeCombined::lockSubspace() { omp_set_lock(&this->subspaceLock); }
 
-void SubspaceNodeCombined::unlockSubspace() { omp_unset_lock(&this->subspaceLock); }
+void SubspaceNodeCombined::unlockSubspace() {
+  omp_unset_lock(&this->subspaceLock);
+}
 
 // increases number of grid points on the subspace
-void SubspaceNodeCombined::addGridPoint(std::vector<uint32_t>& index) {
+void SubspaceNodeCombined::addGridPoint(std::vector<uint32_t> &index) {
   size_t dim = index.size();
 
   for (size_t i = 0; i < dim; i++) {
@@ -86,11 +88,12 @@ void SubspaceNodeCombined::printLevel() {
   std::cout << std::endl;
 }
 
-// unpack has to be called when the subspace is set up (except for surplus valus)
-// this method will decide how to best represent the subspace (list or array type)
-// and prepare the subspace for its representation
+// unpack has to be called when the subspace is set up (except for surplus
+// valus) this method will decide how to best represent the subspace (list or
+// array type) and prepare the subspace for its representation
 void SubspaceNodeCombined::unpack() {
-  double usageRatio = (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
+  double usageRatio =
+      (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
 
   if (usageRatio < X86COMBINED_LIST_RATIO &&
       this->existingGridPointsOnLevel < X86COMBINED_STREAMING_THRESHOLD) {
@@ -114,7 +117,7 @@ void SubspaceNodeCombined::setSurplus(size_t indexFlat, double surplus) {
   } else if (this->type == LIST) {
     bool found = false;
 
-    for (std::pair<uint32_t, double>& tuple : this->indexFlatSurplusPairs) {
+    for (std::pair<uint32_t, double> &tuple : this->indexFlatSurplusPairs) {
       if (tuple.first == indexFlat) {
         tuple.second = surplus;
         found = true;
@@ -123,7 +126,8 @@ void SubspaceNodeCombined::setSurplus(size_t indexFlat, double surplus) {
     }
 
     if (!found) {
-      this->indexFlatSurplusPairs.emplace_back(std::make_pair(indexFlat, surplus));
+      this->indexFlatSurplusPairs.emplace_back(
+          std::make_pair(indexFlat, surplus));
     }
   }
 }
@@ -143,8 +147,9 @@ double SubspaceNodeCombined::getSurplus(size_t indexFlat) {
   throw;
 }
 
-uint32_t SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined& current,
-                                                        SubspaceNodeCombined& last) {
+uint32_t
+SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &current,
+                                               SubspaceNodeCombined &last) {
   for (uint32_t i = 0; i < current.level.size(); i++) {
     if (current.level[i] != last.level[i]) {
       return i;
@@ -154,7 +159,8 @@ uint32_t SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined& cu
   throw "illegal input";
 }
 
-bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right) {
+bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left,
+                                           SubspaceNodeCombined right) {
   for (size_t i = 0; i < left.level.size(); i++) {
     if (left.level[i] >= right.level[i]) {
       if (left.level[i] > right.level[i]) {
@@ -167,5 +173,5 @@ bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left, SubspaceNo
 
   return 1;
 }
-}
-}
+
+} // namespace sgpp::datadriven::SubspaceLinearCombined

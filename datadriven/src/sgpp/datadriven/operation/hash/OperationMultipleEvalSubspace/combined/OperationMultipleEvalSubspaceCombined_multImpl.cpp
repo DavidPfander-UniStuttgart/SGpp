@@ -11,8 +11,7 @@
 
 #include "sgpp/globaldef.hpp"
 
-namespace sgpp {
-namespace datadriven {
+namespace sgpp::datadriven::SubspaceLinearCombined {
 
 /**
  * Internal mult operator, should not be called directly.
@@ -24,10 +23,9 @@ namespace datadriven {
  * @param start_index_data beginning of the range to process
  * @param end_index_data end of the range to process
  */
-void OperationMultipleEvalSubspaceCombined::multImpl(sgpp::base::DataVector& source,
-                                                     sgpp::base::DataVector& result,
-                                                     const size_t start_index_data,
-                                                     const size_t end_index_data) {
+void OperationMultipleEvalSubspaceCombined::multImpl(
+    sgpp::base::DataVector &source, sgpp::base::DataVector &result,
+    const size_t start_index_data, const size_t end_index_data) {
   size_t tid = omp_get_thread_num();
 
   if (tid == 0) {
@@ -36,119 +34,128 @@ void OperationMultipleEvalSubspaceCombined::multImpl(sgpp::base::DataVector& sou
 
 #pragma omp barrier
 
-  size_t dim = this->paddedDataset->getNcols();
-  double* datasetPtr = this->paddedDataset->getPointer();
-
-  size_t totalThreadNumber = X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING;
-
-  double* evalIndexValuesAll = new double[(dim + 1) * totalThreadNumber];
-
-  for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
-    evalIndexValuesAll[i] = 1.0;
+  // partial phi computations, useful if it is assumed that the level only
+  // partially changes
+  std::vector<double> partialPhiEvalsSchedule(
+      (this->dim + 1) *
+      (X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING));
+  for (size_t i = 0; i < (this->dim + 1) * (X86COMBINED_PARALLEL_DATA_POINTS +
+                                            X86COMBINED_VEC_PADDING);
+       i++) {
+    partialPhiEvalsSchedule[i] = 1.0;
   }
 
   // for faster index flattening, last element is for padding
-  uint32_t* intermediatesAll = new uint32_t[(dim + 1) * totalThreadNumber];
-
-  for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
-    intermediatesAll[i] = 0.0;
+  std::vector<uint32_t> partialIndicesFlatSchedule(
+      (this->dim + 1) *
+      (X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING));
+  for (size_t i = 0; i < (this->dim + 1) * (X86COMBINED_PARALLEL_DATA_POINTS +
+                                            X86COMBINED_VEC_PADDING);
+       i++) {
+    partialIndicesFlatSchedule[i] = 0;
   }
 
-  size_t validIndices[X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING];
+  // data points that evaluate on the current subspace?
+  std::array<size_t, X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING>
+      validIndices;
   size_t validIndicesCount;
 
-  double componentResults[X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING];
-  size_t levelIndices[X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING];
-  // size_t nextIterationToRecalcReferences[X86COMBINED_PARALLEL_DATA_POINTS +
-  // X86COMBINED_VEC_PADDING];
+  // current results
+  std::array<double, X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING>
+      componentResults;
 
-  double* listSubspace = new double[this->maxGridPointsOnLevel];
+  // tracks the index of the subspace the data point evaluates next (required
+  // for subspace skipping, else always +1)
+  std::array<size_t, X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING>
+      nextSubspaceIndex;
 
-  for (size_t i = 0; i < this->maxGridPointsOnLevel; i++) {
+  std::vector<double> listSubspace(this->maxGridPointsOnLevel);
+
+  for (size_t i = 0; i < this->maxGridPointsOnLevel; i += 1) {
     listSubspace[i] = std::numeric_limits<double>::quiet_NaN();
   }
 
   // process the next chunk of data tuples in parallel
-  for (size_t dataIndexBase = start_index_data; dataIndexBase < end_index_data;
-       dataIndexBase += X86COMBINED_PARALLEL_DATA_POINTS) {
-    for (size_t i = 0; i < totalThreadNumber; i++) {
-      levelIndices[i] = 0.0;
+  for (size_t curDataStart = start_index_data; curDataStart < end_index_data;
+       curDataStart += X86COMBINED_PARALLEL_DATA_POINTS) {
+    for (size_t i = 0;
+         i < X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING; i++) {
+      nextSubspaceIndex[i] = 0.0;
       componentResults[i] = 0.0;
-      // nextIterationToRecalcReferences[i] = 0;
     }
 
-    for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount; subspaceIndex++) {
-      SubspaceNodeCombined& subspace = this->allSubspaceNodes[subspaceIndex];
+    for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount;
+         subspaceIndex += 1) {
+      SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+      std::cout << "gridPointsOnLevel: " << subspace.gridPointsOnLevel
+                << std::endl;
 
-      double* levelArrayContinuous = nullptr;
+      double *curSubspaceSurpluses = nullptr;
 
       // prepare the subspace array for a list type subspace
       if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
         // fill with surplusses
-        for (std::pair<uint32_t, double> tuple : subspace.indexFlatSurplusPairs) {
+        for (std::pair<uint32_t, double> tuple :
+             subspace.indexFlatSurplusPairs) {
           // actual values are utilized, but only read
           listSubspace[tuple.first] = tuple.second;
         }
 
-        levelArrayContinuous = listSubspace;
+        curSubspaceSurpluses = listSubspace.data();
       } else {
-        levelArrayContinuous = subspace.subspaceArray.data();
+        curSubspaceSurpluses = subspace.subspaceArray.data();
       }
 
       validIndicesCount = 0;
 
-      for (size_t parallelIndex = 0; parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS;
-           parallelIndex++) {
-        size_t parallelLevelIndex = levelIndices[parallelIndex];
-
-        if (parallelLevelIndex == subspaceIndex) {
-          validIndices[validIndicesCount] = parallelIndex;
+      // figure out which components evaluate on the current subspace
+      for (size_t i = 0; i < X86COMBINED_PARALLEL_DATA_POINTS; i += 1) {
+        if (nextSubspaceIndex[i] == subspaceIndex) {
+          validIndices[validIndicesCount] = nextSubspaceIndex[i];
           validIndicesCount += 1;
         }
       }
 
-      size_t paddingSize = std::min(static_cast<int>(validIndicesCount + X86COMBINED_VEC_PADDING),
-                                    X86COMBINED_PARALLEL_DATA_POINTS + X86COMBINED_VEC_PADDING);
+      // ensure that at least |vector|-many elements evaluate
+      // TODO: looks like a potentially too large padding
+      size_t paddingSize = std::min(
+          static_cast<size_t>(validIndicesCount + X86COMBINED_VEC_PADDING),
+          static_cast<size_t>(X86COMBINED_PARALLEL_DATA_POINTS +
+                              X86COMBINED_VEC_PADDING));
 
-      for (size_t i = validIndicesCount; i < paddingSize; i++) {
-        size_t threadId = X86COMBINED_PARALLEL_DATA_POINTS + (i - validIndicesCount);
+      for (size_t i = validIndicesCount; i < paddingSize; i += 1) {
+        size_t threadId =
+            X86COMBINED_PARALLEL_DATA_POINTS + (i - validIndicesCount);
         validIndices[i] = threadId;
         componentResults[threadId] = 0.0;
-        levelIndices[threadId] = 0;
-        // nextIterationToRecalcReferences[threadId] = 0;
-        double* evalIndexValues = evalIndexValuesAll + (dim + 1) * threadId;
+        nextSubspaceIndex[threadId] = 0;
 
-        // for faster index flattening, last element is for padding
-        uint32_t* intermediates = intermediatesAll + (dim + 1) * threadId;
-
-        for (size_t j = 0; j < dim; j++) {
-          evalIndexValues[j] = 1.0;
-          intermediates[j] = 0.0;
+        for (size_t j = 0; j < this->dim; j += 1) {
+          partialPhiEvalsSchedule[(this->dim + 1) * threadId + j] = 1.0;
+          partialIndicesFlatSchedule[(this->dim + 1) * threadId + j] = 0.0;
         }
       }
 
-      uncachedMultTransposeInner(dim, datasetPtr, dataIndexBase, end_index_data, subspace,
-                                 levelArrayContinuous, validIndicesCount, validIndices,
-                                 levelIndices,  // nextIterationToRecalcReferences,
-                                 componentResults, evalIndexValuesAll, intermediatesAll);
+      uncachedMultTransposeInner(
+          curDataStart, subspace, curSubspaceSurpluses, validIndicesCount,
+          validIndices, nextSubspaceIndex, componentResults,
+          partialPhiEvalsSchedule, partialIndicesFlatSchedule);
 
+      // in case of list subspace, reset used subspace indices to NaN (so that
+      // next subspaces have it initialized properly)
       if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
-        for (std::pair<uint32_t, double>& tuple : subspace.indexFlatSurplusPairs) {
+        for (std::pair<uint32_t, double> &tuple :
+             subspace.indexFlatSurplusPairs) {
           listSubspace[tuple.first] = std::numeric_limits<double>::quiet_NaN();
         }
       }
-    }  // end iterate grid
+    } // end iterate grid
 
-    for (size_t parallelIndex = 0; parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS;
-         parallelIndex++) {
-      size_t dataIndex = dataIndexBase + parallelIndex;
-      result.set(dataIndex, componentResults[parallelIndex]);
+    for (size_t i = 0; i < X86COMBINED_PARALLEL_DATA_POINTS; i += 1) {
+      size_t dataIndex = curDataStart + i;
+      result.set(dataIndex, componentResults[i]);
     }
-  }  // end iterate data chunks
-
-  delete evalIndexValuesAll;
-  delete intermediatesAll;
-  delete listSubspace;
+  } // end iterate data chunks
 }
-}  // namespace datadriven
-}  // namespace sgpp
+
+} // namespace sgpp::datadriven::SubspaceLinearCombined

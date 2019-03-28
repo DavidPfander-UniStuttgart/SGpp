@@ -3,18 +3,18 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "../../OperationMultipleEvalSubspace/combined/OperationMultipleEvalSubspaceCombined.hpp"
+#include "OperationMultipleEvalSubspaceCombined.hpp"
 
 #include <sgpp/globaldef.hpp>
 
-namespace sgpp {
-namespace datadriven {
+namespace sgpp::datadriven::SubspaceLinearCombined {
 
 void OperationMultipleEvalSubspaceCombined::listMultInner(
-    size_t dim, const double* const datasetPtr, sgpp::base::DataVector& alpha, size_t dataIndexBase,
-    size_t end_index_data, SubspaceNodeCombined& subspace, double* levelArrayContinuous,
-    size_t validIndicesCount, size_t* validIndices, size_t* levelIndices,
-    double* evalIndexValuesAll, uint32_t* intermediatesAll) {
+    size_t dim, sgpp::base::DataVector &alpha, size_t dataIndexBase,
+    size_t end_index_data, SubspaceNodeCombined &subspace,
+    double *levelArrayContinuous, size_t validIndicesCount,
+    size_t *validIndices, size_t *levelIndices, double *evalIndexValuesAll,
+    uint32_t *intermediatesAll) {
   for (size_t validIndex = 0; validIndex < validIndicesCount;
        validIndex += X86COMBINED_VEC_PADDING) {
     size_t parallelIndices[4];
@@ -29,19 +29,20 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     size_t nextIterationToRecalc = 0;
 #endif
 
-    const double* const dataTuplePtr[4] = {datasetPtr + (dataIndexBase + parallelIndices[0]) * dim,
-                                           datasetPtr + (dataIndexBase + parallelIndices[1]) * dim,
-                                           datasetPtr + (dataIndexBase + parallelIndices[2]) * dim,
-                                           datasetPtr + (dataIndexBase + parallelIndices[3]) * dim};
+    const double *const dataTuplePtr[4] = {
+        paddedDataset.data() + (dataIndexBase + parallelIndices[0]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices[1]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices[2]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices[3]) * dim};
 
-    double* evalIndexValues[4];
+    double *evalIndexValues[4];
     evalIndexValues[0] = evalIndexValuesAll + (dim + 1) * parallelIndices[0];
     evalIndexValues[1] = evalIndexValuesAll + (dim + 1) * parallelIndices[1];
     evalIndexValues[2] = evalIndexValuesAll + (dim + 1) * parallelIndices[2];
     evalIndexValues[3] = evalIndexValuesAll + (dim + 1) * parallelIndices[3];
 
     // for faster index flattening, last element is for padding
-    uint32_t* intermediates[4];
+    uint32_t *intermediates[4];
     intermediates[0] = intermediatesAll + (dim + 1) * parallelIndices[0];
     intermediates[1] = intermediatesAll + (dim + 1) * parallelIndices[1];
     intermediates[2] = intermediatesAll + (dim + 1) * parallelIndices[2];
@@ -57,19 +58,19 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     parallelIndices2[2] = validIndices[validIndex + 6];
     parallelIndices2[3] = validIndices[validIndex + 7];
 
-    const double* const dataTuplePtr2[4] = {
-        datasetPtr + (dataIndexBase + parallelIndices2[0]) * dim,
-        datasetPtr + (dataIndexBase + parallelIndices2[1]) * dim,
-        datasetPtr + (dataIndexBase + parallelIndices2[2]) * dim,
-        datasetPtr + (dataIndexBase + parallelIndices2[3]) * dim};
+    const double *const dataTuplePtr2[4] = {
+        paddedDataset.data() + (dataIndexBase + parallelIndices2[0]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices2[1]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices2[2]) * dim,
+        paddedDataset.data() + (dataIndexBase + parallelIndices2[3]) * dim};
 
-    double* evalIndexValues2[4];
+    double *evalIndexValues2[4];
     evalIndexValues2[0] = evalIndexValuesAll + (dim + 1) * parallelIndices2[0];
     evalIndexValues2[1] = evalIndexValuesAll + (dim + 1) * parallelIndices2[1];
     evalIndexValues2[2] = evalIndexValuesAll + (dim + 1) * parallelIndices2[2];
     evalIndexValues2[3] = evalIndexValuesAll + (dim + 1) * parallelIndices2[3];
 
-    uint32_t* intermediates2[4];
+    uint32_t *intermediates2[4];
     intermediates2[0] = intermediatesAll + (dim + 1) * parallelIndices2[0];
     intermediates2[1] = intermediatesAll + (dim + 1) * parallelIndices2[1];
     intermediates2[2] = intermediatesAll + (dim + 1) * parallelIndices2[2];
@@ -79,16 +80,37 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     double phiEval2[4];
 
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined2(
-        dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2, subspace.hInverse, intermediates,
-        intermediates2, evalIndexValues, evalIndexValues2, indexFlat, indexFlat2, phiEval,
-        phiEval2);
+        dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
+        subspace.hInverse, intermediates, intermediates2, evalIndexValues,
+        evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
 #else
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined(
-        dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse, intermediates, evalIndexValues,
-        indexFlat, phiEval);
+        dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
+        intermediates, evalIndexValues, indexFlat, phiEval);
 #endif
 
     double surplus[4];
+    if (indexFlat[0] >= subspace.gridPointsOnLevel) {
+      std::cout << "indexFlat 0 out of bounds: " << indexFlat[0] << std::endl;
+      throw;
+    }
+    if (indexFlat[1] >= subspace.gridPointsOnLevel) {
+      std::cout << "indexFlat 1 out of bounds: " << indexFlat[1] << std::endl;
+      throw;
+    }
+    if (indexFlat[2] >= subspace.gridPointsOnLevel) {
+      std::cout << "indexFlat 2 out of bounds: " << indexFlat[2] << std::endl;
+      throw;
+    }
+    if (indexFlat[3] >= subspace.gridPointsOnLevel) {
+      std::cout << "indexFlat 3 out of bounds: " << indexFlat[3] << std::endl;
+      throw;
+    }
+
+    // std::cout << "indexFlat 0: " << indexFlat[0]
+    //           << "indexFlat 1: " << indexFlat[1]
+    //           << "indexFlat 2: " << indexFlat[2]
+    //           << "indexFlat 3: " << indexFlat[3] << std::endl;
     surplus[0] = levelArrayContinuous[indexFlat[0]];
     surplus[1] = levelArrayContinuous[indexFlat[1]];
     surplus[2] = levelArrayContinuous[indexFlat[2]];
@@ -110,7 +132,8 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
 
         if (dataIndexBase + parallelIndex < end_index_data &&
             parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS) {
-          partialSurplus = phiEval[innerIndex] * alpha[dataIndexBase + parallelIndex];
+          partialSurplus =
+              phiEval[innerIndex] * alpha[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat[innerIndex];
 
@@ -131,7 +154,7 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    }  // end innerIndex
+    } // end innerIndex
 
 #if X86COMBINED_UNROLL == 1
 
@@ -144,7 +167,8 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
 
         if (dataIndexBase + parallelIndex < end_index_data &&
             parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS) {
-          partialSurplus = phiEval2[innerIndex] * alpha[dataIndexBase + parallelIndex];
+          partialSurplus =
+              phiEval2[innerIndex] * alpha[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat2[innerIndex];
 
@@ -165,10 +189,10 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    }  // end innerIndex
+    } // end innerIndex
 
 #endif
-  }  // end parallel
+  } // end parallel
 }
-}
-}
+
+} // namespace sgpp::datadriven::SubspaceLinearCombined

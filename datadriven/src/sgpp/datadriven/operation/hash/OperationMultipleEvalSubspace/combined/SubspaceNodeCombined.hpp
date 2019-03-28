@@ -11,11 +11,10 @@
 
 #include <sgpp/globaldef.hpp>
 
-namespace sgpp {
-namespace datadriven {
+namespace sgpp::datadriven::SubspaceLinearCombined {
 
 class SubspaceNodeCombined {
- public:
+public:
   enum SubspaceType { NOT_SET, ARRAY, LIST };
 
   std::vector<uint32_t> level;
@@ -25,7 +24,7 @@ class SubspaceNodeCombined {
   SubspaceType type;
   // for list representation (and future streaming subspaces)
   std::vector<uint32_t> indices;
-  std::vector<std::pair<uint32_t, double> > indexFlatSurplusPairs;
+  std::vector<std::pair<uint32_t, double>> indexFlatSurplusPairs;
   std::vector<double> subspaceArray;
   omp_lock_t subspaceLock;
 
@@ -35,8 +34,9 @@ class SubspaceNodeCombined {
   // every node that reaches this subspace has to calculate this diff
   uint32_t arriveDiff;
 
-  SubspaceNodeCombined(std::vector<uint32_t>& level, uint32_t flatLevel,
-                       std::vector<uint32_t>& hInverse, std::vector<uint32_t>& index);
+  SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_t flatLevel,
+                       std::vector<uint32_t> &hInverse,
+                       std::vector<uint32_t> &index);
 
   SubspaceNodeCombined(size_t dim, uint32_t index);
 
@@ -45,13 +45,13 @@ class SubspaceNodeCombined {
   void unlockSubspace();
 
   // increases number of grid points on the subspace
-  void addGridPoint(std::vector<uint32_t>& index);
+  void addGridPoint(std::vector<uint32_t> &index);
 
   void printLevel();
 
-  // unpack has to be called when the subspace is set up (except for surplus valus)
-  // this method will decide how to best represent the subspace (list or array type)
-  // and prepare the subspace for its representation
+  // unpack has to be called when the subspace is set up (except for surplus
+  // valus) this method will decide how to best represent the subspace (list or
+  // array type) and prepare the subspace for its representation
   void unpack();
 
   // the first call initializes the array for ARRAY type subspaces
@@ -61,10 +61,11 @@ class SubspaceNodeCombined {
   // the first call initializes the array for ARRAY type subspaces
   double getSurplus(size_t indexFlat);
 
-  static uint32_t compareLexicographically(SubspaceNodeCombined& current,
-                                           SubspaceNodeCombined& last);
+  static uint32_t compareLexicographically(SubspaceNodeCombined &current,
+                                           SubspaceNodeCombined &last);
 
-  static bool subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right);
+  static bool subspaceCompare(SubspaceNodeCombined left,
+                              SubspaceNodeCombined right);
 };
-}
-}
+
+} // namespace sgpp::datadriven::SubspaceLinearCombined

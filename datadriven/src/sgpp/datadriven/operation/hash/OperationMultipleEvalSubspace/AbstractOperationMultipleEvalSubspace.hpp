@@ -16,27 +16,34 @@
 namespace sgpp {
 namespace datadriven {
 
-class AbstractOperationMultipleEvalSubspace : public base::OperationMultipleEval {
- protected:
-  base::GridStorage* storage;
+class AbstractOperationMultipleEvalSubspace
+    : public base::OperationMultipleEval {
+protected:
+  base::GridStorage &storage;
 
- private:
+private:
   base::SGppStopwatch timer;
   double duration;
 
- public:
-  AbstractOperationMultipleEvalSubspace(base::Grid& grid, base::DataMatrix& dataset)
-      : base::OperationMultipleEval(grid, dataset), storage(&grid.getStorage()), duration(-1.0) {}
+public:
+  AbstractOperationMultipleEvalSubspace(base::Grid &grid,
+                                        base::DataMatrix &dataset)
+      : base::OperationMultipleEval(grid, dataset), storage(grid.getStorage()),
+        duration(-1.0) {}
 
   ~AbstractOperationMultipleEvalSubspace() {}
 
-  virtual void multImpl(base::DataVector& alpha, base::DataVector& result,
-                        const size_t start_index_data, const size_t end_index_data) = 0;
+  virtual void multImpl(base::DataVector &alpha, base::DataVector &result,
+                        const size_t start_index_data,
+                        const size_t end_index_data) = 0;
 
-  virtual void multTransposeImpl(sgpp::base::DataVector& source, sgpp::base::DataVector& result,
-                                 const size_t start_index_data, const size_t end_index_data) = 0;
+  virtual void multTransposeImpl(sgpp::base::DataVector &source,
+                                 sgpp::base::DataVector &result,
+                                 const size_t start_index_data,
+                                 const size_t end_index_data) = 0;
 
-  void multTranspose(sgpp::base::DataVector& alpha, sgpp::base::DataVector& result) override {
+  void multTranspose(sgpp::base::DataVector &alpha,
+                     sgpp::base::DataVector &result) override {
     if (!this->isPrepared) {
       this->prepare();
     }
@@ -56,8 +63,8 @@ class AbstractOperationMultipleEvalSubspace : public base::OperationMultipleEval
     {
       size_t start;
       size_t end;
-      PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
-                                                  this->getAlignment());
+      PartitioningTool::getOpenMPPartitionSegment(
+          start_index_data, end_index_data, &start, &end, this->getAlignment());
       this->multTransposeImpl(alpha, result, start, end);
     }
 
@@ -65,7 +72,8 @@ class AbstractOperationMultipleEvalSubspace : public base::OperationMultipleEval
     this->duration = this->timer.stop();
   }
 
-  void mult(sgpp::base::DataVector& source, sgpp::base::DataVector& result) override {
+  void mult(sgpp::base::DataVector &source,
+            sgpp::base::DataVector &result) override {
     if (!this->isPrepared) {
       this->prepare();
     }
@@ -83,8 +91,8 @@ class AbstractOperationMultipleEvalSubspace : public base::OperationMultipleEval
     {
       size_t start;
       size_t end;
-      PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
-                                                  this->getAlignment());
+      PartitioningTool::getOpenMPPartitionSegment(
+          start_index_data, end_index_data, &start, &end, this->getAlignment());
       this->multImpl(source, result, start, end);
     }
 
@@ -101,8 +109,8 @@ class AbstractOperationMultipleEvalSubspace : public base::OperationMultipleEval
 
   static inline size_t getChunkGridPoints() { return 12; }
   static inline size_t getChunkDataPoints() {
-    return 24;  // must be divisible by 24
+    return 24; // must be divisible by 24
   }
 };
-}
-}
+} // namespace datadriven
+} // namespace sgpp
