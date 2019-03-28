@@ -108,7 +108,7 @@ void OperationMultipleEvalSubspaceCombined::multImpl(
       // figure out which components evaluate on the current subspace
       for (size_t i = 0; i < X86COMBINED_PARALLEL_DATA_POINTS; i += 1) {
         if (nextSubspaceIndex[i] == subspaceIndex) {
-          validIndices[validIndicesCount] = nextSubspaceIndex[i];
+          validIndices[validIndicesCount] = i;
           validIndicesCount += 1;
         }
       }
