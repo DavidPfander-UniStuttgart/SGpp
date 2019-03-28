@@ -231,9 +231,8 @@ int main(int argc, char *argv[]) {
       // grid setup options
       ("grid.level", boost::program_options::value<int>(&gridConfig.level_),
        "level of the initial regular grid")(
-          "grid.type",
-          boost::program_options::value<sgpp::base::GridType>(
-              &gridConfig.type_),
+          "grid.type", boost::program_options::value<sgpp::base::GridType>(
+                           &gridConfig.type_),
           "type of the grid to be used")
 
       // adaptivity options
@@ -293,9 +292,8 @@ int main(int argc, char *argv[]) {
           boost::program_options::value<size_t>(
               &SLESolverConfigRefine.maxIterations_),
           "maximum number of iterations before the training is stopped")(
-          "solverRefine.threshold",
-          boost::program_options::value<double>(
-              &SLESolverConfigRefine.threshold_),
+          "solverRefine.threshold", boost::program_options::value<double>(
+                                        &SLESolverConfigRefine.threshold_),
           "early abort solver if this residual threshold is reached")(
           "solverRefine.type",
           boost::program_options::value<sgpp::solver::SLESolverType>(
@@ -310,9 +308,8 @@ int main(int argc, char *argv[]) {
           boost::program_options::value<size_t>(
               &SLESolverConfigFinal.maxIterations_),
           "maximum number of iterations before the training is stopped")(
-          "solverFinal.threshold",
-          boost::program_options::value<double>(
-              &SLESolverConfigRefine.threshold_),
+          "solverFinal.threshold", boost::program_options::value<double>(
+                                       &SLESolverConfigRefine.threshold_),
           "early abort solver if this residual threshold is reached")(
           "solverFinal.type",
           boost::program_options::value<sgpp::solver::SLESolverType>(
@@ -370,7 +367,7 @@ int main(int argc, char *argv[]) {
   }
 
   // do dummy ocl init to not time it
-  {
+  if (do_dummy_ocl_init) {
     auto total_timer_start = std::chrono::system_clock::now();
     opencl::manager_t manager(additionalConfigFileName);
     auto total_timer_stop = std::chrono::system_clock::now();

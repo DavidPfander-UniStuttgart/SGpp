@@ -15,12 +15,14 @@
 namespace sgpp {
 namespace solver {
 
-ConjugateGradients::ConjugateGradients(size_t imax, double epsilon) : SLESolver(imax, epsilon) {}
+ConjugateGradients::ConjugateGradients(size_t imax, double epsilon)
+    : SLESolver(imax, epsilon) {}
 
 ConjugateGradients::~ConjugateGradients() {}
 
-void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
-                               sgpp::base::DataVector& alpha, sgpp::base::DataVector& b, bool reuse,
+void ConjugateGradients::solve(sgpp::base::OperationMatrix &SystemMatrix,
+                               sgpp::base::DataVector &alpha,
+                               sgpp::base::DataVector &b, bool reuse,
                                bool verbose, double max_threshold) {
   this->starting();
 
@@ -46,7 +48,8 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
   size_t counted_mult_calls = 0;
 
   if (verbose == true) {
-    std::cout << "All temp variables used in CG have been initialized" << std::endl;
+    std::cout << "All temp variables used in CG have been initialized"
+              << std::endl;
   }
 
   if (reuse == true) {
@@ -81,12 +84,14 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
   this->calcStarting();
 
   if (verbose == true) {
-    std::cout << "Starting norm of residuum: " << (delta_0 / epsilonSquared) << std::endl;
+    std::cout << "Starting norm of residuum: " << (delta_0 / epsilonSquared)
+              << std::endl;
     std::cout << "Target norm:               " << (delta_0) << std::endl;
   }
 
   while ((this->nIterations < this->nMaxIterations) && (delta_new > delta_0) &&
          (delta_new > max_threshold)) {
+    std::cout << "." << std::flush;
     //          //sgpp::base::DataVector *myAlpha = this->myLearner->alpha_;
     //        if (this->nIterations == 42) {
     //          for (size_t j = 0; j < d.getSize();j++) {
@@ -144,13 +149,14 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix& SystemMatrix,
 
     this->nIterations++;
   }
+  std::cout << std::endl;
 
   this->residuum = delta_new;
   this->complete();
 
   if (verbose == true) {
-    std::cout << "Number of iterations: " << this->nIterations << " (max. " << this->nMaxIterations
-              << ")" << std::endl;
+    std::cout << "Number of iterations: " << this->nIterations << " (max. "
+              << this->nMaxIterations << ")" << std::endl;
     std::cout << "Final norm of residuum: " << delta_new << std::endl;
     std::cout << "counted_mult_calls: " << counted_mult_calls << std::endl;
   }
@@ -164,5 +170,5 @@ void ConjugateGradients::iterationComplete() {}
 
 void ConjugateGradients::complete() {}
 
-}  // namespace solver
-}  // namespace sgpp
+} // namespace solver
+} // namespace sgpp
