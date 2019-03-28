@@ -1,0 +1,28 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Free
+   fun:_ZdlPv
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Free
+   fun:_ZdaPv
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   ioctl(generic)
+   fun:ioctl
+   fun:drmIoctl
+   fun:drmCommandWriteRead
+   fun:amdgpu_create_bo_from_user_mem
+   obj:/opt/amdgpu-pro/lib/x86_64-linux-gnu/libamdocl64.so
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/opt/amdgpu-pro/lib/x86_64-linux-gnu/libamdocl64.so
+}
