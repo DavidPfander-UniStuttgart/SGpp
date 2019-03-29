@@ -18,10 +18,11 @@ using sgpp::base::Grid;
 namespace sgpp::datadriven::SubspaceLinearCombined {
 
 OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(
-    Grid &grid, DataMatrix &dataset)
+    Grid &grid, DataMatrix &dataset, bool isModLinear)
     : AbstractOperationMultipleEvalSubspace(grid, dataset),
       paddedDatasetSize(0), maxGridPointsOnLevel(0), dim(dataset.getNcols()),
-      maxLevel(0), subspaceCount(-1), totalRegularGridPoints(-1) {
+      maxLevel(0), subspaceCount(-1), totalRegularGridPoints(-1),
+      isModLinear(isModLinear) {
   this->padDataset(dataset);
 
 #ifdef X86COMBINED_WRITE_STATS
@@ -162,7 +163,9 @@ void OperationMultipleEvalSubspaceCombined::padDataset(
   paddedDataset = DataMatrix(dataset);
 
   // due to rounding issue in calculateIndex, replace all values of 1 by
-  // calculating the index of the grid point for a given level and data point (in 1d) treats the right border as part of the next grid point (ascending). This leads incorrect values for the right-most grid points.
+  // calculating the index of the grid point for a given level and data point
+  // (in 1d) treats the right border as part of the next grid point (ascending).
+  // This leads incorrect values for the right-most grid points.
   double one = 1.0;
   // subtract to obtain the next smaller float
   uint64_t temp = reinterpret_cast<uint64_t &>(one) - 1;

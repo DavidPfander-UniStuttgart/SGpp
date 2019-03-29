@@ -109,6 +109,14 @@ public:
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
     localSize = kernelConfiguration["TRANS_LOCAL_SIZE"].getUInt();
+    if (localSize <
+        kernelConfiguration["KERNEL_TRANS_PREFETCH_SIZE"].getUInt()) {
+      std::stringstream errorString;
+      errorString << "OCL Error: cannot set \"TRANS_LOCAL_SIZE\" < "
+                     "\"KERNEL_TRANS_PREFETCH_SIZE\""
+                  << std::endl;
+      throw sgpp::base::operation_exception(errorString.str());
+    }
     transGridBlockingSize =
         kernelConfiguration["KERNEL_TRANS_GRID_BLOCK_SIZE"].getUInt();
     // scheduleSize =

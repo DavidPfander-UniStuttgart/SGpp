@@ -565,7 +565,7 @@ base::OperationMultipleEval *createOperationMultipleEval(
                     << std::endl;
         }
         return new datadriven::SubspaceLinearCombined::
-            OperationMultipleEvalSubspaceCombined(grid, dataset);
+            OperationMultipleEvalSubspaceCombined(grid, dataset, false);
 #else
         throw base::factory_exception(
             "Error creating function: the library wasn't compiled with AVX");
@@ -661,6 +661,26 @@ base::OperationMultipleEval *createOperationMultipleEval(
 #else
         throw base::factory_exception("Error creating function: the library "
                                       "wasn't compiled with OpenCL support");
+#endif
+      }
+    } else if (configuration.getType() ==
+               datadriven::OperationMultipleEvalType::SUBSPACELINEAR) {
+      if (configuration.getSubType() ==
+              sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
+          configuration.getSubType() ==
+              sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
+#ifdef __AVX__
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear "
+                       "type: SUBSPACELINEAR "
+                       "subType: DEFAULT==COMBINED"
+                    << std::endl;
+        }
+        return new datadriven::SubspaceLinearCombined::
+            OperationMultipleEvalSubspaceCombined(grid, dataset, true);
+#else
+        throw base::factory_exception(
+            "Error creating function: the library wasn't compiled with AVX");
 #endif
       }
     }

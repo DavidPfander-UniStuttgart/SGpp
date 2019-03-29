@@ -8,28 +8,28 @@ num_ops: 47739
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.2231
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22764
 info: first multTranspose not considered
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.22133
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.22076
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.22264
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.22161
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.22103
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.21828
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.21734
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.21247
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.21395
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x118e4b48)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 198976)
-device: 0x118e4b48 duration: 5.21129
-duration multTranspose: 52.2624, repetitions: 10
-GFLOPS: 913.448
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22628
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22497
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.2278
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22974
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22209
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.22926
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.21883
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.21676
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.23034
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x116c9b48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x116c9b48 duration: 5.26516
+duration multTranspose: 52.3722, repetitions: 10
+GFLOPS: 911.534

@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.77345
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.75778
 info: first mult not considered
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.76846
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.7566
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.73196
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.74332
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.7509
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.73595
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.73989
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.77351
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.75845
-device: 0xc28a388 kernel from: 0 to: 200192 -> range: 200192
-device: 0xc28a388 duration: 2.74297
-duration mult: 27.6127, repetitions: 10
-GFLOPS: 673.647
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.75982
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.77666
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.74545
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.76346
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.74206
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.73897
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.73766
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.76935
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.74157
+device: 0xb06a388 kernel from: 0 to: 200192 -> range: 200192
+device: 0xb06a388 duration: 2.77156
+duration mult: 27.6094, repetitions: 10
+GFLOPS: 673.728

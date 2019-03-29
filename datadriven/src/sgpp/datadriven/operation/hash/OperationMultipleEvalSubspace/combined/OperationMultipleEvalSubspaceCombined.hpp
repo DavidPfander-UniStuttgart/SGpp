@@ -47,6 +47,8 @@ private:
 
   uint32_t totalRegularGridPoints; // = -1;
 
+  bool isModLinear;
+
 #ifdef X86COMBINED_WRITE_STATS
   size_t refinementStep = 0;
   ofstream statsFile;
@@ -124,7 +126,8 @@ public:
    * @param dataset set of evaluation points
    */
   OperationMultipleEvalSubspaceCombined(sgpp::base::Grid &grid,
-                                        sgpp::base::DataMatrix &dataset);
+                                        sgpp::base::DataMatrix &dataset,
+                                        bool isModLinear);
 
   /**
    * Destructor

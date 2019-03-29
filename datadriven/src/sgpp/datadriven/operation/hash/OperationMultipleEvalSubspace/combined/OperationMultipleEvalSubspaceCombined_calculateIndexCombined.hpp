@@ -7,7 +7,7 @@
 // -> therefore not in namespace
 
 static inline void calculateIndexCombined(
-    size_t dim, size_t nextIterationToRecalc,
+    bool isModLinear, size_t dim, size_t nextIterationToRecalc,
     const double *const (&dataTuplePtr)[4], std::vector<uint32_t> &hInversePtr,
     uint32_t *(&partialIndicesFlat)[4], double *(&partialPhiEvals)[4],
     uint32_t (&indexFlat)[4], double (&phiEval)[4]) {
@@ -78,14 +78,63 @@ static inline void calculateIndexCombined(
     // evaluate
     __m256d indexDoubleReg = _mm256_cvtepi32_pd(indexReg);
 
-    __m256d phi1DEvalReg = _mm256_mul_pd(hInverseReg, dataTupleReg);
-    phi1DEvalReg = _mm256_sub_pd(phi1DEvalReg, indexDoubleReg);
+    if (!isModLinear) {
+      __m256d phi1DEvalReg = _mm256_mul_pd(hInverseReg, dataTupleReg);
+      phi1DEvalReg = _mm256_sub_pd(phi1DEvalReg, indexDoubleReg);
 
-    phi1DEvalReg = _mm256_and_pd(phi1DEvalReg, absMask);
-    phi1DEvalReg = _mm256_sub_pd(one, phi1DEvalReg);
-    // phi1DEvalReg = _mm256_max_pd(zero, phi1DEvalReg);
+      phi1DEvalReg = _mm256_and_pd(phi1DEvalReg, absMask);
+      phi1DEvalReg = _mm256_sub_pd(one, phi1DEvalReg);
+      // provably on support, therefore max not needed
+      // phi1DEvalReg = _mm256_max_pd(zero, phi1DEvalReg);
+      phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEvalReg);
+    } else {
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } indices;
+      indices.doubleRegister = indexDoubleReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } hInverses;
+      hInverses.doubleRegister = hInverseReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } dataTuple;
+      dataTuple.doubleRegister = dataTupleReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } phi1DEval;
 
-    phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEvalReg);
+      for (size_t j = 0; j < 4; j += 1) {
+        // std::cout << "hInverses.doubleValue[" << j
+        //           << "]: " << hInverses.doubleValue[j];
+        // std::cout << " dataTuple.doubleValue[" << j
+        //           << "]: " << dataTuple.doubleValue[j];
+        // std::cout << " indices.doubleValue[" << j
+        //           << "]: " << indices.doubleValue[j] << std::endl;
+        // phi1DEval.doubleValue[j] =
+        //     1.0 - fabs(hInverses.doubleValue[j] * dataTuple.doubleValue[j] -
+        //                indices.doubleValue[j]);
+        if (hInverses.doubleValue[j] == 2) {
+          phi1DEval.doubleValue[j] = 1.0;
+        } else if (indices.doubleValue[j] == 1.0) {
+          phi1DEval.doubleValue[j] =
+              2.0 - hInverses.doubleValue[j] * dataTuple.doubleValue[j];
+        } else if (indices.doubleValue[j] == hInverses.doubleValue[j] - 1) {
+          phi1DEval.doubleValue[j] =
+              hInverses.doubleValue[j] * dataTuple.doubleValue[j] + 1.0 -
+              indices.doubleValue[j];
+        } else {
+          phi1DEval.doubleValue[j] =
+              1.0 - fabs(hInverses.doubleValue[j] * dataTuple.doubleValue[j] -
+                         indices.doubleValue[j]);
+        }
+      }
+      phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEval.doubleRegister);
+    }
 
     avxUnion.doubleRegister = phiEvalReg;
     partialPhiEvals[0][i + 1] = avxUnion.doubleValue[0];
@@ -101,7 +150,7 @@ static inline void calculateIndexCombined(
 }
 
 static inline void calculateIndexCombined2(
-    size_t dim, size_t nextIterationToRecalc,
+    bool isModLinear, size_t dim, size_t nextIterationToRecalc,
     // rep
     const double *const (&dataTuplePtr)[4],
     const double *const (&dataTuplePtr2)[4], std::vector<uint32_t> &hInversePtr,
@@ -213,23 +262,95 @@ static inline void calculateIndexCombined2(
     __m256d indexDoubleReg = _mm256_cvtepi32_pd(indexReg);
     __m256d indexDoubleReg2 = _mm256_cvtepi32_pd(indexReg2);
 
-    __m256d phi1DEvalReg = _mm256_mul_pd(hInverseReg, dataTupleReg);
-    __m256d phi1DEvalReg2 = _mm256_mul_pd(hInverseReg, dataTupleReg2);
+    if (!isModLinear) {
 
-    phi1DEvalReg = _mm256_sub_pd(phi1DEvalReg, indexDoubleReg);
-    phi1DEvalReg2 = _mm256_sub_pd(phi1DEvalReg2, indexDoubleReg2);
+      __m256d phi1DEvalReg = _mm256_mul_pd(hInverseReg, dataTupleReg);
+      __m256d phi1DEvalReg2 = _mm256_mul_pd(hInverseReg, dataTupleReg2);
 
-    phi1DEvalReg = _mm256_and_pd(phi1DEvalReg, absMask);
-    phi1DEvalReg2 = _mm256_and_pd(phi1DEvalReg2, absMask);
+      phi1DEvalReg = _mm256_sub_pd(phi1DEvalReg, indexDoubleReg);
+      phi1DEvalReg2 = _mm256_sub_pd(phi1DEvalReg2, indexDoubleReg2);
 
-    phi1DEvalReg = _mm256_sub_pd(one, phi1DEvalReg);
-    phi1DEvalReg2 = _mm256_sub_pd(one, phi1DEvalReg2);
+      phi1DEvalReg = _mm256_and_pd(phi1DEvalReg, absMask);
+      phi1DEvalReg2 = _mm256_and_pd(phi1DEvalReg2, absMask);
 
-    phi1DEvalReg = _mm256_max_pd(zero, phi1DEvalReg);
-    phi1DEvalReg2 = _mm256_max_pd(zero, phi1DEvalReg2);
+      phi1DEvalReg = _mm256_sub_pd(one, phi1DEvalReg);
+      phi1DEvalReg2 = _mm256_sub_pd(one, phi1DEvalReg2);
 
-    phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEvalReg);
-    phiEvalReg2 = _mm256_mul_pd(phiEvalReg2, phi1DEvalReg2);
+      phi1DEvalReg = _mm256_max_pd(zero, phi1DEvalReg);
+      phi1DEvalReg2 = _mm256_max_pd(zero, phi1DEvalReg2);
+
+      phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEvalReg);
+      phiEvalReg2 = _mm256_mul_pd(phiEvalReg2, phi1DEvalReg2);
+    } else {
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } indices;
+      indices.doubleRegister = indexDoubleReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } hInverses;
+      hInverses.doubleRegister = hInverseReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } dataTuple;
+      dataTuple.doubleRegister = dataTupleReg;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } phi1DEval;
+
+      for (size_t j = 0; j < 4; j += 1) {
+        if (hInverses.doubleValue[j] == 2) {
+          phi1DEval.doubleValue[j] = 1.0;
+        } else if (indices.doubleValue[j] == 1.0) {
+          phi1DEval.doubleValue[j] =
+              2.0 - hInverses.doubleValue[j] * dataTuple.doubleValue[j];
+        } else if (indices.doubleValue[j] == hInverses.doubleValue[j] - 1) {
+          phi1DEval.doubleValue[j] =
+              hInverses.doubleValue[j] * dataTuple.doubleValue[j] + 1.0 -
+              indices.doubleValue[j];
+        } else {
+          phi1DEval.doubleValue[j] =
+              1.0 - fabs(hInverses.doubleValue[j] * dataTuple.doubleValue[j] -
+                         indices.doubleValue[j]);
+        }
+      }
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } indices2;
+      indices2.doubleRegister = indexDoubleReg2;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } dataTuple2;
+      dataTuple2.doubleRegister = dataTupleReg2;
+      union {
+        __m256d doubleRegister;
+        double doubleValue[4];
+      } phi1DEval2;
+      for (size_t j = 0; j < 4; j += 1) {
+        if (hInverses.doubleValue[j] == 2) {
+          phi1DEval2.doubleValue[j] = 1.0;
+        } else if (indices2.doubleValue[j] == 1.0) {
+          phi1DEval2.doubleValue[j] =
+              2.0 - hInverses.doubleValue[j] * dataTuple2.doubleValue[j];
+        } else if (indices2.doubleValue[j] == hInverses.doubleValue[j] - 1) {
+          phi1DEval2.doubleValue[j] =
+              hInverses.doubleValue[j] * dataTuple2.doubleValue[j] + 1.0 -
+              indices2.doubleValue[j];
+        } else {
+          phi1DEval2.doubleValue[j] =
+              1.0 - fabs(hInverses.doubleValue[j] * dataTuple2.doubleValue[j] -
+                         indices2.doubleValue[j]);
+        }
+      }
+      phiEvalReg = _mm256_mul_pd(phiEvalReg, phi1DEval.doubleRegister);
+      phiEvalReg2 = _mm256_mul_pd(phiEvalReg2, phi1DEval2.doubleRegister);
+    }
 
     avxUnion.doubleRegister = phiEvalReg;
     partialPhiEvals[0][i + 1] = avxUnion.doubleValue[0];

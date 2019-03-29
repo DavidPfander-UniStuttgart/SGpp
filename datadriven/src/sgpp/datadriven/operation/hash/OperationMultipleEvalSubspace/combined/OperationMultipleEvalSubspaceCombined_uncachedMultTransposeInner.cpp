@@ -23,11 +23,11 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
   // iterate the indices of the datapoints that evaluate on this subspace
   for (size_t validIndex = 0; validIndex < validIndicesCount;
        validIndex += X86COMBINED_VEC_PADDING) {
-    // size_t parallelIndices[4];
-    // parallelIndices[0] = validIndices[validIndex];
-    // parallelIndices[1] = validIndices[validIndex + 1];
-    // parallelIndices[2] = validIndices[validIndex + 2];
-    // parallelIndices[3] = validIndices[validIndex + 3];
+    size_t parallelIndices[4];
+    parallelIndices[0] = validIndices[validIndex];
+    parallelIndices[1] = validIndices[validIndex + 1];
+    parallelIndices[2] = validIndices[validIndex + 2];
+    parallelIndices[3] = validIndices[validIndex + 3];
 
 #if X86COMBINED_ENABLE_PARTIAL_RESULT_REUSAGE == 1
     size_t nextIterationToRecalc = subspace.arriveDiff;
@@ -37,88 +37,81 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
 
     // for vector-gather, points to the data points
     const double *const dataTuplePtr[4] = {
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 0]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 1]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 2]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 3]) * dim};
+        paddedDataset.data() + (curDataStart + parallelIndices[0]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices[1]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices[2]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices[3]) * dim};
 
     double *evalIndexValues[4];
-    evalIndexValues[0] = partialPhiEvalsSchedule.data() +
-                         (dim + 1) * validIndices[validIndex + 0];
-    evalIndexValues[1] = partialPhiEvalsSchedule.data() +
-                         (dim + 1) * validIndices[validIndex + 1];
-    evalIndexValues[2] = partialPhiEvalsSchedule.data() +
-                         (dim + 1) * validIndices[validIndex + 2];
-    evalIndexValues[3] = partialPhiEvalsSchedule.data() +
-                         (dim + 1) * validIndices[validIndex + 3];
+    evalIndexValues[0] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[0];
+    evalIndexValues[1] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[1];
+    evalIndexValues[2] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[2];
+    evalIndexValues[3] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[3];
 
     // for faster index flattening, last element is for padding
     uint32_t *partialIndicesFlat[4];
-    partialIndicesFlat[0] = partialIndicesFlatSchedule.data() +
-                            (dim + 1) * validIndices[validIndex + 0];
-    partialIndicesFlat[1] = partialIndicesFlatSchedule.data() +
-                            (dim + 1) * validIndices[validIndex + 1];
-    partialIndicesFlat[2] = partialIndicesFlatSchedule.data() +
-                            (dim + 1) * validIndices[validIndex + 2];
-    partialIndicesFlat[3] = partialIndicesFlatSchedule.data() +
-                            (dim + 1) * validIndices[validIndex + 3];
+    partialIndicesFlat[0] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[0];
+    partialIndicesFlat[1] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[1];
+    partialIndicesFlat[2] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[2];
+    partialIndicesFlat[3] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[3];
 
     uint32_t indexFlat[4];
     double phiEval[4];
 
 #if X86COMBINED_UNROLL == 1
-    // size_t parallelIndices2[4];
-    // parallelIndices2[0] = validIndices[validIndex + 4];
-    // parallelIndices2[1] = validIndices[validIndex + 5];
-    // parallelIndices2[2] = validIndices[validIndex + 6];
-    // parallelIndices2[3] = validIndices[validIndex + 7];
+    size_t parallelIndices2[4];
+    parallelIndices2[0] = validIndices[validIndex + 4];
+    parallelIndices2[1] = validIndices[validIndex + 5];
+    parallelIndices2[2] = validIndices[validIndex + 6];
+    parallelIndices2[3] = validIndices[validIndex + 7];
 
     const double *const dataTuplePtr2[4] = {
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 4]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 5]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 6]) * dim,
-        paddedDataset.data() +
-            (curDataStart + validIndices[validIndex + 7]) * dim};
+        paddedDataset.data() + (curDataStart + parallelIndices2[0]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices2[1]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices2[2]) * dim,
+        paddedDataset.data() + (curDataStart + parallelIndices2[3]) * dim};
 
     double *evalIndexValues2[4];
-    evalIndexValues2[0] = partialPhiEvalsSchedule.data() +
-                          (dim + 1) * validIndices[validIndex + 4];
-    evalIndexValues2[1] = partialPhiEvalsSchedule.data() +
-                          (dim + 1) * validIndices[validIndex + 5];
-    evalIndexValues2[2] = partialPhiEvalsSchedule.data() +
-                          (dim + 1) * validIndices[validIndex + 6];
-    evalIndexValues2[3] = partialPhiEvalsSchedule.data() +
-                          (dim + 1) * validIndices[validIndex + 7];
+    evalIndexValues2[0] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[0];
+    evalIndexValues2[1] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[1];
+    evalIndexValues2[2] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[2];
+    evalIndexValues2[3] =
+        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[3];
 
     uint32_t *partialIndicesFlat2[4];
-    partialIndicesFlat2[0] = partialIndicesFlatSchedule.data() +
-                             (dim + 1) * validIndices[validIndex + 4];
-    partialIndicesFlat2[1] = partialIndicesFlatSchedule.data() +
-                             (dim + 1) * validIndices[validIndex + 5];
-    partialIndicesFlat2[2] = partialIndicesFlatSchedule.data() +
-                             (dim + 1) * validIndices[validIndex + 6];
-    partialIndicesFlat2[3] = partialIndicesFlatSchedule.data() +
-                             (dim + 1) * validIndices[validIndex + 7];
+    partialIndicesFlat2[0] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[0];
+    partialIndicesFlat2[1] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[1];
+    partialIndicesFlat2[2] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[2];
+    partialIndicesFlat2[3] =
+        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[3];
 
     uint32_t indexFlat2[4];
     double phiEval2[4];
 
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined2(
-        dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
+        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
         subspace.hInverse, partialIndicesFlat, partialIndicesFlat2,
         evalIndexValues, evalIndexValues2, indexFlat, indexFlat2, phiEval,
         phiEval2);
 #else
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined(
-        dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
-        partialIndicesFlat, evalIndexValues, indexFlat, phiEval);
+        isModLinear, dim, nextIterationToRecalc, dataTuplePtr,
+        subspace.hInverse, partialIndicesFlat, evalIndexValues, indexFlat,
+        phiEval);
 #endif
 
     double surplus[4];

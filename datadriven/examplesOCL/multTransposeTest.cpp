@@ -61,9 +61,13 @@ int main(int argc, char **argv) {
   // sgpp::base::OCLOperationConfiguration parameters(
   //     "results_diss/friedman1_pcsgs09_i76700k_ocl_config_single.cfg");
 
+  sgpp::base::OCLOperationConfiguration parameters(
+      "results_diss/"
+      "friedman1_Gold5120_weakscaling_parameters_merged_optimal.cfg");
+
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-      sgpp::datadriven::OperationMultipleEvalType::SUBSPACELINEAR,
-      sgpp::datadriven::OperationMultipleEvalSubType::COMBINED); // , parameters
+      sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+      sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED, parameters);
 
   // sgpp::datadriven::OperationMultipleEvalConfiguration configuration2(
   //     sgpp::datadriven::OperationMultipleEvalType::STREAMING,
@@ -76,7 +80,7 @@ int main(int argc, char **argv) {
 
   size_t dim = dataset.getDimension();
 
-  bool modLinear = false;
+  bool modLinear = true;
   std::unique_ptr<sgpp::base::Grid> grid(nullptr);
   if (modLinear) {
     grid = std::unique_ptr<sgpp::base::Grid>(

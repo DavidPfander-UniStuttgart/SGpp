@@ -217,6 +217,15 @@ public:
         });
     autotune::mult_unified_with_tuning.set_verbose(true);
 
+    autotune::mult_unified_with_tuning.set_valid_parameter_combination_functor(
+        [](autotune::parameter_value_set &pv) -> bool {
+          if (std::stoull(pv["LOCAL_SIZE"]) <
+              std::stoull(pv["KERNEL_PREFETCH_SIZE"])) {
+            return false;
+          }
+          return true;
+        });
+
     autotune::mult_transpose_unified_with_tuning.set_kernel_functor(
         [this](base::DataVector &source, base::DataVector &result) {
           // apply parameters to kernel by re-instantiating
@@ -255,6 +264,16 @@ public:
                                            parameter_values);
             });
     autotune::mult_transpose_unified_with_tuning.set_verbose(true);
+
+    autotune::mult_transpose_unified_with_tuning
+        .set_valid_parameter_combination_functor(
+            [](autotune::parameter_value_set &pv) {
+              if (std::stoull(pv["TRANS_LOCAL_SIZE"]) <
+                  std::stoull(pv["KERNEL_TRANS_PREFETCH_SIZE"])) {
+                return false;
+              }
+              return true;
+            });
 
     this->prepare();
   }

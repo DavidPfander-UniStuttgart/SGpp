@@ -80,62 +80,62 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     double phiEval2[4];
 
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined2(
-        dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
+        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
         subspace.hInverse, intermediates, intermediates2, evalIndexValues,
         evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
 #else
     OperationMultipleEvalSubspaceCombined::calculateIndexCombined(
-        dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
+        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
         intermediates, evalIndexValues, indexFlat, phiEval);
 #endif
 
     double surplus[4];
-    for (size_t i = 0; i < 4; i += 1) {
-      if (indexFlat[i] >= subspace.gridPointsOnLevel) {
-        std::cout << "l: ";
-        for (size_t j = 0; j < dim; j += 1) {
-          if (j > 0) {
-            std::cout << ", ";
-          }
-          std::cout << subspace.level[j];
-        }
-        std::cout << std::endl;
-        std::cout << "hInverse: ";
-        for (size_t j = 0; j < dim; j += 1) {
-          if (j > 0) {
-            std::cout << ", ";
-          }
-          std::cout << subspace.hInverse[j];
-        }
-        std::cout << std::endl;
-        std::cout << "dataTuplePtr: ";
-        for (size_t j = 0; j < dim; j += 1) {
-          if (j > 0) {
-            std::cout << ", ";
-          }
-          std::cout << dataTuplePtr[i][j];
-        }
-        std::cout << std::endl;
-        std::cout << "intermediates: "
-                  << intermediates[i][nextIterationToRecalc] << std::endl;
-        std::cout << "evalIndexValues: "
-                  << evalIndexValues[i][nextIterationToRecalc] << std::endl;
-        std::cout << "phiEval: " << phiEval[i] << std::endl;
-        std::cout << "existingGridPointsOnLevel: "
-                  << subspace.existingGridPointsOnLevel << std::endl;
-        std::cout << "nextIterationToRecalc: " << nextIterationToRecalc
-                  << std::endl;
-        std::cout << "parallelIndices[" << i << "] = " << parallelIndices[i]
-                  << std::endl;
-        std::cout << "indexFlat[" << i << "]: " << indexFlat[i] << std::endl;
-        // throw;
-      }
-    }
-    for (size_t i = 0; i < 4; i += 1) {
-      if (indexFlat[i] >= subspace.gridPointsOnLevel) {
-        throw;
-      }
-    }
+    // for (size_t i = 0; i < 4; i += 1) {
+    //   if (indexFlat[i] >= subspace.gridPointsOnLevel) {
+    //     std::cout << "l: ";
+    //     for (size_t j = 0; j < dim; j += 1) {
+    //       if (j > 0) {
+    //         std::cout << ", ";
+    //       }
+    //       std::cout << subspace.level[j];
+    //     }
+    //     std::cout << std::endl;
+    //     std::cout << "hInverse: ";
+    //     for (size_t j = 0; j < dim; j += 1) {
+    //       if (j > 0) {
+    //         std::cout << ", ";
+    //       }
+    //       std::cout << subspace.hInverse[j];
+    //     }
+    //     std::cout << std::endl;
+    //     std::cout << "dataTuplePtr: ";
+    //     for (size_t j = 0; j < dim; j += 1) {
+    //       if (j > 0) {
+    //         std::cout << ", ";
+    //       }
+    //       std::cout << dataTuplePtr[i][j];
+    //     }
+    //     std::cout << std::endl;
+    //     std::cout << "intermediates: "
+    //               << intermediates[i][nextIterationToRecalc] << std::endl;
+    //     std::cout << "evalIndexValues: "
+    //               << evalIndexValues[i][nextIterationToRecalc] << std::endl;
+    //     std::cout << "phiEval: " << phiEval[i] << std::endl;
+    //     std::cout << "existingGridPointsOnLevel: "
+    //               << subspace.existingGridPointsOnLevel << std::endl;
+    //     std::cout << "nextIterationToRecalc: " << nextIterationToRecalc
+    //               << std::endl;
+    //     std::cout << "parallelIndices[" << i << "] = " << parallelIndices[i]
+    //               << std::endl;
+    //     std::cout << "indexFlat[" << i << "]: " << indexFlat[i] << std::endl;
+    //     // throw;
+    //   }
+    // }
+    // for (size_t i = 0; i < 4; i += 1) {
+    //   if (indexFlat[i] >= subspace.gridPointsOnLevel) {
+    //     throw;
+    //   }
+    // }
 
     // std::cout << "indexFlat 0: " << indexFlat[0]
     //           << "indexFlat 1: " << indexFlat[1]

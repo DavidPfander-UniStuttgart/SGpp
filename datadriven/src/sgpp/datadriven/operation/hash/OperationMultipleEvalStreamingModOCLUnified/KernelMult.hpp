@@ -104,6 +104,13 @@ public:
     this->verbose = kernelConfiguration["VERBOSE"].getBool();
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
+    if (localSize < kernelConfiguration["KERNEL_PREFETCH_SIZE"].getUInt()) {
+      std::stringstream errorString;
+      errorString
+          << "OCL Error: cannot set \"LOCAL_SIZE\" < \"KERNEL_PREFETCH_SIZE\""
+          << std::endl;
+      throw sgpp::base::operation_exception(errorString.str());
+    }
     dataBlockingSize = kernelConfiguration["KERNEL_DATA_BLOCK_SIZE"].getUInt();
     // scheduleSize = kernelConfiguration["KERNEL_SCHEDULE_SIZE"].getUInt();
     totalBlockSize = localSize * dataBlockingSize;
