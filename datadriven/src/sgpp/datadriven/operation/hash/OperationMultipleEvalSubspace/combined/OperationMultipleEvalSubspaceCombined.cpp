@@ -15,7 +15,7 @@ using sgpp::base::DataMatrix;
 using sgpp::base::DataVector;
 using sgpp::base::Grid;
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Grid &grid,
                                                                              DataMatrix &dataset,
@@ -222,4 +222,4 @@ size_t OperationMultipleEvalSubspaceCombined::getAlignment() {
 
 std::string OperationMultipleEvalSubspaceCombined::getImplementationName() { return "COMBINED"; }
 
-}  // namespace sgpp::datadriven::SubspaceLinearCombined
+}  // namespace sgpp::datadriven::SubspaceCombined

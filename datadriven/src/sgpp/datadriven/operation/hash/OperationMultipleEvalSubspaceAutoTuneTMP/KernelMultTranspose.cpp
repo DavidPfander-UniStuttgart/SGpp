@@ -3,40 +3,24 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "KernelMultTranspose.hpp"
 #include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
+#include "SubspaceAutoTuneTMPParameters.hpp"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-void listMultInner(bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
-                   size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &alpha,
-                   size_t dataIndexBase, size_t end_index_data, SubspaceNodeCombined &subspace,
-                   double *levelArrayContinuous, size_t validIndicesCount, size_t *validIndices,
-                   size_t *levelIndices, double *evalIndexValuesAll, uint32_t *intermediatesAll);
+void multTransposeImpl(size_t maxGridPointsOnLevel, bool isModLinear,
+                       sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize,
+                       std::vector<SubspaceNode> &allSubspaceNodes, sgpp::base::DataVector &alpha,
+                       sgpp::base::DataVector &result, const size_t start_index_data,
+                       const size_t end_index_data) {
+  // size_t tid = omp_get_thread_num();
+  // if (tid == 0) {
+  //   setCoefficients(result);
+  // }
+  // #pragma omp barrier
 
-/**
- * Internal eval operator, should not be called directly.
- *
- * @see OperationMultipleEval
- *
- * @param alpha surplusses of the grid
- * @param result will contain the evaluation results for the given range.
- * @param start_index_data beginning of the range to evaluate
- * @param end_index_data end of the range to evaluate
- */
-void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::DataVector &alpha,
-                                                                 sgpp::base::DataVector &result,
-                                                                 const size_t start_index_data,
-                                                                 const size_t end_index_data) {
-  size_t tid = omp_get_thread_num();
-
-  if (tid == 0) {
-    this->setCoefficients(result);
-  }
-
-#pragma omp barrier
-
-  size_t dim = this->paddedDataset.getNcols();
-  // const double *const datasetPtr = this->paddedDataset.getPointer();
+  size_t dim = paddedDataset.getNcols();
 
   size_t totalThreadNumber =
       SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING;
@@ -61,9 +45,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::Dat
   // size_t nextIterationToRecalcReferences[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
   // SUBSPACEAUTOTUNETMP_VEC_PADDING];
 
-  double *listSubspace = new double[this->maxGridPointsOnLevel];
+  double *listSubspace = new double[maxGridPointsOnLevel];
 
-  for (size_t i = 0; i < this->maxGridPointsOnLevel; i++) {
+  for (size_t i = 0; i < maxGridPointsOnLevel; i++) {
     listSubspace[i] = std::numeric_limits<double>::quiet_NaN();
   }
 
@@ -80,11 +64,11 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::Dat
       // nextIterationToRecalcReferences[i] = 0;
     }
 
-    for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount; subspaceIndex++) {
-      SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+    for (size_t subspaceIndex = 0; subspaceIndex < allSubspaceNodes.size() - 1; subspaceIndex++) {
+      SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
 
       // prepare the subspace array for a list type subspace
-      if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+      if (subspace.type == SubspaceNode::SubspaceType::LIST) {
         // std::cout << "subspace type is LIST" << std::endl;
         // fill with surplusses
         for (std::pair<uint32_t, double> tuple : subspace.indexFlatSurplusPairs) {
@@ -128,7 +112,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::Dat
         }
       }
 
-      if (subspace.type == SubspaceNodeCombined::SubspaceType::ARRAY) {
+      if (subspace.type == SubspaceNode::SubspaceType::ARRAY) {
         // lock the current subspace, so that no atomic writes are necessary
         subspace.lockSubspace();
 
@@ -139,13 +123,13 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::Dat
         // unlocks the subspace lock for ARRAY and BLUEPRINT type subspaces
         subspace.unlockSubspace();
 
-      } else if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+      } else if (subspace.type == SubspaceNode::SubspaceType::LIST) {
         listMultInner(isModLinear, paddedDataset, paddedDatasetSize, dim, alpha, dataIndexBase,
                       end_index_data, subspace, listSubspace, validIndicesCount, validIndices,
                       levelIndices, evalIndexValuesAll, intermediatesAll);
 
         // write results into the global surplus array
-        if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+        if (subspace.type == SubspaceNode::SubspaceType::LIST) {
           for (std::pair<uint32_t, double> &tuple : subspace.indexFlatSurplusPairs) {
             if (listSubspace[tuple.first] != 0.0) {
 #pragma omp atomic
@@ -163,10 +147,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTransposeImpl(sgpp::base::Dat
   delete[] intermediatesAll;
   delete[] listSubspace;
 
-#pragma omp barrier
-
-  if (tid == 0) {
-    this->unflatten(result);
-  }
+  // #pragma omp barrier
+  //   if (tid == 0) {
+  //     this->unflatten(result);
+  //   }
 }
-}
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

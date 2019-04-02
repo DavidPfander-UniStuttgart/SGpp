@@ -7,7 +7,7 @@
 
 // #include <sgpp/globaldef.hpp>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 /**
  * Internal eval operator, should not be called directly.
@@ -174,4 +174,4 @@ void OperationMultipleEvalSubspaceCombined::multTransposeImpl(
   }
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

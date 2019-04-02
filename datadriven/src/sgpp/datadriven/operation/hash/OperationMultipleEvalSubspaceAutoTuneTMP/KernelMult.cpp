@@ -3,26 +3,15 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "KernelMult.hpp"
 #include <algorithm>
 #include <iomanip>
 #include <limits>
 #include <utility>
 #include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
+#include "SubspaceAutoTuneTMPParameters.hpp"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
-
-void uncachedMultTransposeInner(
-    bool isModLinear, sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize, size_t dim,
-    size_t curDataStart, SubspaceNodeCombined &subspace, double *curSubspaceSurpluses,
-    size_t validIndicesCount,
-    std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
-        &validIndices,
-    std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
-        &nextSubspaceIndex,
-    std::array<double, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
-        &componentResults,
-    std::vector<double> &partialPhiEvalsSchedule,
-    std::vector<uint32_t> &partialIndicesFlatSchedule);
 
 /**
  * Internal mult operator, should not be called directly.
@@ -34,35 +23,32 @@ void uncachedMultTransposeInner(
  * @param start_index_data beginning of the range to process
  * @param end_index_data end of the range to process
  */
-void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &source,
-                                                        sgpp::base::DataVector &result,
-                                                        const size_t start_index_data,
-                                                        const size_t end_index_data) {
-  size_t tid = omp_get_thread_num();
-
-  if (tid == 0) {
-    this->setCoefficients(source);
-  }
-
-#pragma omp barrier
+void multImpl(size_t maxGridPointsOnLevel, bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
+              size_t paddedDatasetSize, std::vector<SubspaceNode> &allSubspaceNodes,
+              sgpp::base::DataVector &source, sgpp::base::DataVector &result,
+              const size_t start_index_data, const size_t end_index_data) {
+  //   size_t tid = omp_get_thread_num();
+  //   if (tid == 0) {
+  //     setCoefficients(source);
+  //   }
+  // #pragma omp barrier
+  size_t dim = paddedDataset.getNcols();
 
   // partial phi computations, useful if it is assumed that the level only
   // partially changes
   std::vector<double> partialPhiEvalsSchedule(
-      (this->dim + 1) *
-      (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING));
-  for (size_t i = 0; i < (this->dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
-                                            SUBSPACEAUTOTUNETMP_VEC_PADDING);
+      (dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING));
+  for (size_t i = 0;
+       i < (dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING);
        i++) {
     partialPhiEvalsSchedule[i] = 1.0;
   }
 
   // for faster index flattening, last element is for padding
   std::vector<uint32_t> partialIndicesFlatSchedule(
-      (this->dim + 1) *
-      (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING));
-  for (size_t i = 0; i < (this->dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
-                                            SUBSPACEAUTOTUNETMP_VEC_PADDING);
+      (dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING));
+  for (size_t i = 0;
+       i < (dim + 1) * (SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING);
        i++) {
     partialIndicesFlatSchedule[i] = 0;
   }
@@ -81,9 +67,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &
   std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
       nextSubspaceIndex;
 
-  std::vector<double> listSubspace(this->maxGridPointsOnLevel);
+  std::vector<double> listSubspace(maxGridPointsOnLevel);
 
-  for (size_t i = 0; i < this->maxGridPointsOnLevel; i += 1) {
+  for (size_t i = 0; i < maxGridPointsOnLevel; i += 1) {
     listSubspace[i] = std::numeric_limits<double>::quiet_NaN();
   }
 
@@ -96,12 +82,14 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &
       componentResults[i] = 0.0;
     }
 
-    for (size_t subspaceIndex = 0; subspaceIndex < subspaceCount; subspaceIndex += 1) {
-      SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+    for (size_t subspaceIndex = 0; subspaceIndex < allSubspaceNodes.size() - 1;
+         subspaceIndex += 1) {
+      std::cout << subspaceIndex << std::endl;
+      SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
       double *curSubspaceSurpluses = nullptr;
 
       // prepare the subspace array for a list type subspace
-      if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+      if (subspace.type == SubspaceNode::SubspaceType::LIST) {
         // fill with surplusses
         for (std::pair<uint32_t, double> tuple : subspace.indexFlatSurplusPairs) {
           // actual values are utilized, but only read
@@ -136,9 +124,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &
         componentResults[threadId] = 0.0;
         nextSubspaceIndex[threadId] = 0;
 
-        for (size_t j = 0; j < this->dim; j += 1) {
-          partialPhiEvalsSchedule[(this->dim + 1) * threadId + j] = 1.0;
-          partialIndicesFlatSchedule[(this->dim + 1) * threadId + j] = 0.0;
+        for (size_t j = 0; j < dim; j += 1) {
+          partialPhiEvalsSchedule[(dim + 1) * threadId + j] = 1.0;
+          partialIndicesFlatSchedule[(dim + 1) * threadId + j] = 0.0;
         }
       }
 
@@ -149,7 +137,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &
 
       // in case of list subspace, reset used subspace indices to NaN (so that
       // next subspaces have it initialized properly)
-      if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+      if (subspace.type == SubspaceNode::SubspaceType::LIST) {
         for (std::pair<uint32_t, double> &tuple : subspace.indexFlatSurplusPairs) {
           listSubspace[tuple.first] = std::numeric_limits<double>::quiet_NaN();
         }
@@ -162,4 +150,4 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multImpl(sgpp::base::DataVector &
     }
   }  // end iterate data chunks
 }
-}
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

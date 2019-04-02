@@ -11,7 +11,7 @@ namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
 void uncachedMultTransposeInner(
     bool isModLinear, sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize, size_t dim,
-    size_t curDataStart, SubspaceNodeCombined &subspace, double *curSubspaceSurpluses,
+    size_t curDataStart, SubspaceNode &subspace, double *curSubspaceSurpluses,
     size_t validIndicesCount,
     std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
         &validIndices,

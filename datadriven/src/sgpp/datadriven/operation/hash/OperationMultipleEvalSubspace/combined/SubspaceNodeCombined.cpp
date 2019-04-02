@@ -11,7 +11,7 @@
 #include "OperationMultipleEvalSubspaceCombinedParameters.hpp"
 #include "SubspaceNodeCombined.hpp"
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level,
                                            uint32_t flatLevel,
@@ -174,4 +174,4 @@ bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left,
   return 1;
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

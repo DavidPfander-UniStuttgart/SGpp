@@ -8,14 +8,14 @@
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include "SubspaceAutoTuneTMPParameters.hpp"
-#include "SubspaceNodeCombined.hpp"
+#include "SubspaceNode.hpp"
 #include "calculateIndex.hpp"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
 void listMultInner(bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
                    size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &alpha,
-                   size_t dataIndexBase, size_t end_index_data, SubspaceNodeCombined &subspace,
+                   size_t dataIndexBase, size_t end_index_data, SubspaceNode &subspace,
                    double *levelArrayContinuous, size_t validIndicesCount, size_t *validIndices,
                    size_t *levelIndices, double *evalIndexValuesAll, uint32_t *intermediatesAll) {
   for (size_t validIndex = 0; validIndex < validIndicesCount;

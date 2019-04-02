@@ -14,7 +14,7 @@
 namespace sgpp {
 namespace datadriven {
 
-enum class OperationMultipleEvalType { DEFAULT, STREAMING, SUBSPACELINEAR, ADAPTIVE, MORTONORDER };
+enum class OperationMultipleEvalType { DEFAULT, STREAMING, SUBSPACE, ADAPTIVE, MORTONORDER };
 
 enum class OperationMultipleEvalSubType {
   DEFAULT,
@@ -26,7 +26,8 @@ enum class OperationMultipleEvalSubType {
   OCLMASKMP,
   OCLOPT,
   OCLUNIFIED,
-  CUDA
+  CUDA,
+  AUTOTUNETMP
 };
 
 enum class OperationMultipleEvalMPIType { NONE, MASTERSLAVE, HPX };
@@ -60,6 +61,7 @@ class OperationMultipleEvalConfiguration {
                                      std::string name = "unnamed") {
     this->type = type;
     this->subType = subType;
+    this->mpiType = OperationMultipleEvalMPIType::NONE;
     this->name = name;
     this->parameters = std::shared_ptr<base::OperationConfiguration>(parameters.clone());
   }
@@ -82,8 +84,7 @@ class OperationMultipleEvalConfiguration {
 
   OperationMultipleEvalSubType getSubType() { return this->subType; }
 
-  void setParameters(
-      std::shared_ptr<base::OperationConfiguration> parameters) {
+  void setParameters(std::shared_ptr<base::OperationConfiguration> parameters) {
     this->parameters = parameters;
   }
 

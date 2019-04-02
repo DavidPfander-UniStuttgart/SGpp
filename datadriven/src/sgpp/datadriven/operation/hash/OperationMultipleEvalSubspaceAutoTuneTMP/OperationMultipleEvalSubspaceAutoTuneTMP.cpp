@@ -3,9 +3,9 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 #include <string>
 #include <vector>
-#include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 
 using sgpp::base::DataMatrix;
 using sgpp::base::DataVector;
@@ -113,7 +113,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::setSurplus(std::vector<uint32_t> 
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
-  SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+  SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
   subspace.setSurplus(indexFlat, value);
 }
 
@@ -124,7 +124,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::getSurplus(std::vector<uint32_t> 
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
-  SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+  SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
   value = subspace.getSurplus(indexFlat);
 
   if (std::isnan(value)) {

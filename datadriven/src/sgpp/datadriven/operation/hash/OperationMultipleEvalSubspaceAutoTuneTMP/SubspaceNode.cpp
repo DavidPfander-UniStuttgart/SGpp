@@ -3,16 +3,15 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "SubspaceNodeCombined.hpp"
+#include "SubspaceNode.hpp"
 #include <iostream>
 #include <limits>
 #include "SubspaceAutoTuneTMPParameters.hpp"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_t flatLevel,
-                                           std::vector<uint32_t> &hInverse,
-                                           std::vector<uint32_t> &index) {
+SubspaceNode::SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel,
+                           std::vector<uint32_t> &hInverse, std::vector<uint32_t> &index) {
   size_t dim = level.size();
   this->level = level;
   this->hInverse = hInverse;
@@ -39,7 +38,7 @@ SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_
   omp_init_lock(&this->subspaceLock);
 }
 
-SubspaceNodeCombined::SubspaceNodeCombined(size_t dim, uint32_t index) {
+SubspaceNode::SubspaceNode(size_t dim, uint32_t index) {
   for (size_t i = 0; i < dim; i++) {
     this->level.push_back(1);
     this->hInverse.push_back(2);
@@ -55,12 +54,12 @@ SubspaceNodeCombined::SubspaceNodeCombined(size_t dim, uint32_t index) {
   this->arriveDiff = 9999;
 }
 
-void SubspaceNodeCombined::lockSubspace() { omp_set_lock(&this->subspaceLock); }
+void SubspaceNode::lockSubspace() { omp_set_lock(&this->subspaceLock); }
 
-void SubspaceNodeCombined::unlockSubspace() { omp_unset_lock(&this->subspaceLock); }
+void SubspaceNode::unlockSubspace() { omp_unset_lock(&this->subspaceLock); }
 
 // increases number of grid points on the subspace
-void SubspaceNodeCombined::addGridPoint(std::vector<uint32_t> &index) {
+void SubspaceNode::addGridPoint(std::vector<uint32_t> &index) {
   size_t dim = index.size();
 
   for (size_t i = 0; i < dim; i++) {
@@ -70,7 +69,7 @@ void SubspaceNodeCombined::addGridPoint(std::vector<uint32_t> &index) {
   this->existingGridPointsOnLevel += 1;
 }
 
-void SubspaceNodeCombined::printLevel() {
+void SubspaceNode::printLevel() {
   for (size_t i = 0; i < level.size(); i++) {
     if (i > 0) {
       std::cout << ", ";
@@ -85,7 +84,7 @@ void SubspaceNodeCombined::printLevel() {
 // unpack has to be called when the subspace is set up (except for surplus
 // valus) this method will decide how to best represent the subspace (list or
 // array type) and prepare the subspace for its representation
-void SubspaceNodeCombined::unpack() {
+void SubspaceNode::unpack() {
   double usageRatio = (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
 
   if (usageRatio < SUBSPACEAUTOTUNETMP_LIST_RATIO &&
@@ -104,7 +103,7 @@ void SubspaceNodeCombined::unpack() {
 
 // the first call initializes the array for ARRAY type subspaces
 //
-void SubspaceNodeCombined::setSurplus(size_t indexFlat, double surplus) {
+void SubspaceNode::setSurplus(size_t indexFlat, double surplus) {
   if (this->type == ARRAY) {
     this->subspaceArray[indexFlat] = surplus;
   } else if (this->type == LIST) {
@@ -125,7 +124,7 @@ void SubspaceNodeCombined::setSurplus(size_t indexFlat, double surplus) {
 }
 
 // the first call initializes the array for ARRAY type subspaces
-double SubspaceNodeCombined::getSurplus(size_t indexFlat) {
+double SubspaceNode::getSurplus(size_t indexFlat) {
   if (this->type == ARRAY) {
     return this->subspaceArray[indexFlat];
   } else if (this->type == LIST) {
@@ -139,8 +138,7 @@ double SubspaceNodeCombined::getSurplus(size_t indexFlat) {
   throw;
 }
 
-uint32_t SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &current,
-                                                        SubspaceNodeCombined &last) {
+uint32_t SubspaceNode::compareLexicographically(SubspaceNode &current, SubspaceNode &last) {
   for (uint32_t i = 0; i < current.level.size(); i++) {
     if (current.level[i] != last.level[i]) {
       return i;
@@ -150,7 +148,7 @@ uint32_t SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &cu
   throw "illegal input";
 }
 
-bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right) {
+bool SubspaceNode::subspaceCompare(SubspaceNode &left, SubspaceNode &right) {
   for (size_t i = 0; i < left.level.size(); i++) {
     if (left.level[i] >= right.level[i]) {
       if (left.level[i] > right.level[i]) {

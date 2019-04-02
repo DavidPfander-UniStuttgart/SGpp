@@ -7,7 +7,7 @@
 
 // #include <sgpp/globaldef.hpp>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
     size_t curDataStart, SubspaceNodeCombined &subspace,
@@ -165,4 +165,4 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
   } // end X86COMBINED_PARALLEL_DATA_POINTS
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

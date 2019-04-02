@@ -15,7 +15,7 @@ using sgpp::base::Grid;
 #include <map>
 #include <vector>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 /*
  levels needs to have size of the number of subspaces, stores a level tuple for
@@ -254,4 +254,4 @@ void OperationMultipleEvalSubspaceCombined::prepareSubspaceIterator() {
   firstNode.arriveDiff = 0; // recompute all dimensions at the first subspace
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

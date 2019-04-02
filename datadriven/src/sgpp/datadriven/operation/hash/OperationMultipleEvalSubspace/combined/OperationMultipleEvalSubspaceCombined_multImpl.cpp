@@ -11,7 +11,7 @@
 
 // #include "sgpp/globaldef.hpp"
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 /**
  * Internal mult operator, should not be called directly.
@@ -155,4 +155,4 @@ void OperationMultipleEvalSubspaceCombined::multImpl(
   } // end iterate data chunks
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

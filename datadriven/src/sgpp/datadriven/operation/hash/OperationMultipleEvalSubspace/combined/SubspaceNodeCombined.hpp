@@ -11,7 +11,7 @@
 
 // #include <sgpp/globaldef.hpp>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 class SubspaceNodeCombined {
 public:
@@ -68,4 +68,4 @@ public:
                               SubspaceNodeCombined right);
 };
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

@@ -92,6 +92,7 @@
 #ifdef __AVX__
 #include <sgpp/datadriven/operation/hash/OperationMultipleEvalSubspace/combined/OperationMultipleEvalSubspaceCombined.hpp>
 #include <sgpp/datadriven/operation/hash/OperationMultipleEvalSubspace/simple/OperationMultipleEvalSubspaceSimple.hpp>
+#include <sgpp/datadriven/operation/hash/OperationMultipleEvalSubspaceAutoTuneTMP/OperationMultipleEvalSubspaceAutoTuneTMP.hpp>
 #endif
 
 #ifdef USE_OCL
@@ -136,16 +137,16 @@ datadriven::OperationTest *createOperationTest(base::Grid &grid) {
              grid.getType() == base::GridType::LinearBoundary) {
     return new datadriven::OperationTestLinearBoundary(&grid.getStorage());
   } else if (grid.getType() == base::GridType::ModBspline) {
-    return new datadriven::OperationTestModBspline(
-        &grid.getStorage(), ((base::ModBsplineGrid *)&grid)->getDegree());
+    return new datadriven::OperationTestModBspline(&grid.getStorage(),
+                                                   ((base::ModBsplineGrid *)&grid)->getDegree());
   } else if (grid.getType() == base::GridType::ModLinear) {
     return new datadriven::OperationTestModLinear(&grid.getStorage());
   } else if (grid.getType() == base::GridType::Poly) {
-    return new datadriven::OperationTestPoly(
-        &grid.getStorage(), ((base::PolyGrid *)&grid)->getDegree());
+    return new datadriven::OperationTestPoly(&grid.getStorage(),
+                                             ((base::PolyGrid *)&grid)->getDegree());
   } else if (grid.getType() == base::GridType::ModPoly) {
-    return new datadriven::OperationTestModPoly(
-        &grid.getStorage(), ((base::ModPolyGrid *)&grid)->getDegree());
+    return new datadriven::OperationTestModPoly(&grid.getStorage(),
+                                                ((base::ModPolyGrid *)&grid)->getDegree());
   } else if (grid.getType() == base::GridType::ModWavelet) {
     return new datadriven::OperationTestModWavelet(&grid.getStorage());
   } else if (grid.getType() == base::GridType::Prewavelet) {
@@ -153,35 +154,31 @@ datadriven::OperationTest *createOperationTest(base::Grid &grid) {
   } else if (grid.getType() == base::GridType::LinearStretched) {
     return new datadriven::OperationTestLinearStretched(&grid.getStorage());
   } else if (grid.getType() == base::GridType::LinearStretchedBoundary) {
-    return new datadriven::OperationTestLinearStretchedBoundary(
-        &grid.getStorage());
+    return new datadriven::OperationTestLinearStretchedBoundary(&grid.getStorage());
   } else {
-    throw base::factory_exception(
-        "OperationTest is not implemented for this grid type.");
+    throw base::factory_exception("OperationTest is not implemented for this grid type.");
   }
 }
 
-base::OperationMatrix *
-createOperationRegularizationDiagonal(base::Grid &grid, int mode, double k) {
+base::OperationMatrix *createOperationRegularizationDiagonal(base::Grid &grid, int mode, double k) {
   if (grid.getType() == base::GridType::Linear ||
       grid.getType() == base::GridType::LinearL0Boundary ||
       grid.getType() == base::GridType::LinearBoundary ||
       grid.getType() == base::GridType::ModLinear) {
-    return new datadriven::OperationRegularizationDiagonalLinearBoundary(
-        &grid.getStorage(), mode, k);
+    return new datadriven::OperationRegularizationDiagonalLinearBoundary(&grid.getStorage(), mode,
+                                                                         k);
   } else {
-    throw base::factory_exception("OperationRegularizationDiagonal is not "
-                                  "implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationRegularizationDiagonal is not "
+        "implemented for this grid type.");
   }
 }
 
-datadriven::OperationDensityMarginalize *
-createOperationDensityMarginalize(base::Grid &grid) {
+datadriven::OperationDensityMarginalize *createOperationDensityMarginalize(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationDensityMarginalizeLinear(&grid);
   else if (grid.getType() == base::GridType::LinearBoundary ||
-           grid.getType() == base::GridType::ModLinear ||
-           grid.getType() == base::GridType::Poly ||
+           grid.getType() == base::GridType::ModLinear || grid.getType() == base::GridType::Poly ||
            grid.getType() == base::GridType::ModPoly ||
            grid.getType() == base::GridType::PolyBoundary ||
            grid.getType() == base::GridType::PolyClenshawCurtis ||
@@ -198,19 +195,15 @@ createOperationDensityMarginalize(base::Grid &grid) {
         "OperationDensityMarginalize is not implemented for this grid type.");
 }
 
-datadriven::OperationDensityMargTo1D *
-createOperationDensityMargTo1D(base::Grid &grid) {
+datadriven::OperationDensityMargTo1D *createOperationDensityMargTo1D(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear ||
       grid.getType() == base::GridType::LinearBoundary ||
-      grid.getType() == base::GridType::ModLinear ||
-      grid.getType() == base::GridType::Poly ||
-      grid.getType() == base::GridType::ModPoly ||
-      grid.getType() == base::GridType::PolyBoundary ||
+      grid.getType() == base::GridType::ModLinear || grid.getType() == base::GridType::Poly ||
+      grid.getType() == base::GridType::ModPoly || grid.getType() == base::GridType::PolyBoundary ||
       grid.getType() == base::GridType::PolyClenshawCurtis ||
       grid.getType() == base::GridType::PolyClenshawCurtisBoundary ||
       grid.getType() == base::GridType::ModPolyClenshawCurtis ||
-      grid.getType() == base::GridType::Bspline ||
-      grid.getType() == base::GridType::ModBspline ||
+      grid.getType() == base::GridType::Bspline || grid.getType() == base::GridType::ModBspline ||
       grid.getType() == base::GridType::BsplineBoundary ||
       grid.getType() == base::GridType::BsplineClenshawCurtis ||
       grid.getType() == base::GridType::ModBsplineClenshawCurtis)
@@ -220,8 +213,7 @@ createOperationDensityMargTo1D(base::Grid &grid) {
         "OperationDensityMargTo1D is not implemented for this grid type.");
 }
 
-datadriven::OperationDensitySampling1D *
-createOperationDensitySampling1D(base::Grid &grid) {
+datadriven::OperationDensitySampling1D *createOperationDensitySampling1D(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationDensitySampling1DLinear(&grid);
   else
@@ -229,8 +221,7 @@ createOperationDensitySampling1D(base::Grid &grid) {
         "OperationDensitySampling1D is not implemented for this grid type.");
 }
 
-datadriven::OperationDensitySampling *
-createOperationDensitySampling(base::Grid &grid) {
+datadriven::OperationDensitySampling *createOperationDensitySampling(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationDensitySamplingLinear(&grid);
   else
@@ -238,22 +229,21 @@ createOperationDensitySampling(base::Grid &grid) {
         "OperationDensitySampling is not implemented for this grid type.");
 }
 
-datadriven::OperationDensityRejectionSampling *
-createOperationDensityRejectionSampling(base::Grid &grid) {
+datadriven::OperationDensityRejectionSampling *createOperationDensityRejectionSampling(
+    base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationDensityRejectionSamplingLinear(&grid);
   else
-    throw base::factory_exception("OperationDensityRejectionSampling is not "
-                                  "implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationDensityRejectionSampling is not "
+        "implemented for this grid type.");
 }
 
-datadriven::OperationDensityConditional *
-createOperationDensityConditional(base::Grid &grid) {
+datadriven::OperationDensityConditional *createOperationDensityConditional(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationDensityConditionalLinear(&grid);
   else if (grid.getType() == base::GridType::LinearBoundary ||
-           grid.getType() == base::GridType::Poly ||
-           grid.getType() == base::GridType::ModPoly ||
+           grid.getType() == base::GridType::Poly || grid.getType() == base::GridType::ModPoly ||
            grid.getType() == base::GridType::PolyBoundary ||
            grid.getType() == base::GridType::PolyClenshawCurtis ||
            grid.getType() == base::GridType::PolyClenshawCurtisBoundary ||
@@ -269,8 +259,8 @@ createOperationDensityConditional(base::Grid &grid) {
         "OperationDensityConditional is not implemented for this grid type.");
 }
 
-datadriven::OperationRosenblattTransformation *
-createOperationRosenblattTransformation(base::Grid &grid) {
+datadriven::OperationRosenblattTransformation *createOperationRosenblattTransformation(
+    base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationRosenblattTransformationLinear(&grid);
   else if (grid.getType() == base::GridType::Poly)
@@ -280,34 +270,28 @@ createOperationRosenblattTransformation(base::Grid &grid) {
   else if (grid.getType() == base::GridType::PolyBoundary)
     return new datadriven::OperationRosenblattTransformationPolyBoundary(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtis)
-    return new datadriven::OperationRosenblattTransformationPolyClenshawCurtis(
-        &grid);
+    return new datadriven::OperationRosenblattTransformationPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModPolyClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformationModPolyClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformationModPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtisBoundary)
-    return new datadriven::
-        OperationRosenblattTransformationPolyClenshawCurtisBoundary(&grid);
+    return new datadriven::OperationRosenblattTransformationPolyClenshawCurtisBoundary(&grid);
   else if (grid.getType() == base::GridType::Bspline)
     return new datadriven::OperationRosenblattTransformationBspline(&grid);
   else if (grid.getType() == base::GridType::ModBspline)
     return new datadriven::OperationRosenblattTransformationModBspline(&grid);
   else if (grid.getType() == base::GridType::BsplineBoundary)
-    return new datadriven::OperationRosenblattTransformationBsplineBoundary(
-        &grid);
+    return new datadriven::OperationRosenblattTransformationBsplineBoundary(&grid);
   else if (grid.getType() == base::GridType::BsplineClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformationBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformationBsplineClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModBsplineClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformationModBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformationModBsplineClenshawCurtis(&grid);
   else
-    throw base::factory_exception("OperationRosenblattTransformation is not "
-                                  "implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationRosenblattTransformation is not "
+        "implemented for this grid type.");
 }
 
-datadriven::OperationTransformation1D *
-createOperationRosenblattTransformation1D(base::Grid &grid) {
+datadriven::OperationTransformation1D *createOperationRosenblattTransformation1D(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
     return new datadriven::OperationRosenblattTransformation1DLinear(&grid);
   else if (grid.getType() == base::GridType::Poly)
@@ -315,151 +299,120 @@ createOperationRosenblattTransformation1D(base::Grid &grid) {
   else if (grid.getType() == base::GridType::ModPoly)
     return new datadriven::OperationRosenblattTransformation1DModPoly(&grid);
   else if (grid.getType() == base::GridType::PolyBoundary)
-    return new datadriven::OperationRosenblattTransformation1DPolyBoundary(
-        &grid);
+    return new datadriven::OperationRosenblattTransformation1DPolyBoundary(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformation1DPolyClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformation1DPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModPolyClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformation1DModPolyClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformation1DModPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtisBoundary)
-    return new datadriven::
-        OperationRosenblattTransformation1DPolyClenshawCurtisBoundary(&grid);
+    return new datadriven::OperationRosenblattTransformation1DPolyClenshawCurtisBoundary(&grid);
   else if (grid.getType() == base::GridType::Bspline)
     return new datadriven::OperationRosenblattTransformation1DBspline(&grid);
   else if (grid.getType() == base::GridType::ModBspline)
     return new datadriven::OperationRosenblattTransformation1DModBspline(&grid);
   else if (grid.getType() == base::GridType::BsplineBoundary)
-    return new datadriven::OperationRosenblattTransformation1DBsplineBoundary(
-        &grid);
+    return new datadriven::OperationRosenblattTransformation1DBsplineBoundary(&grid);
   else if (grid.getType() == base::GridType::BsplineClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformation1DBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformation1DBsplineClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModBsplineClenshawCurtis)
-    return new datadriven::
-        OperationRosenblattTransformation1DModBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationRosenblattTransformation1DModBsplineClenshawCurtis(&grid);
   else
-    throw base::factory_exception("OperationRosenblattTransformation1D is not "
-                                  "implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationRosenblattTransformation1D is not "
+        "implemented for this grid type.");
 }
 
 datadriven::OperationInverseRosenblattTransformation *
 createOperationInverseRosenblattTransformation(base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
-    return new datadriven::OperationInverseRosenblattTransformationLinear(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformationLinear(&grid);
   else if (grid.getType() == base::GridType::Poly)
     return new datadriven::OperationInverseRosenblattTransformationPoly(&grid);
   else if (grid.getType() == base::GridType::ModPoly)
-    return new datadriven::OperationInverseRosenblattTransformationModPoly(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformationModPoly(&grid);
   else if (grid.getType() == base::GridType::PolyBoundary)
-    return new datadriven::OperationInverseRosenblattTransformationPolyBoundary(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformationPolyBoundary(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformationPolyClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformationPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModPolyClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformationModPolyClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformationModPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtisBoundary)
-    return new datadriven::
-        OperationInverseRosenblattTransformationPolyClenshawCurtisBoundary(
-            &grid);
+    return new datadriven::OperationInverseRosenblattTransformationPolyClenshawCurtisBoundary(
+        &grid);
   else if (grid.getType() == base::GridType::Bspline)
-    return new datadriven::OperationInverseRosenblattTransformationBspline(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformationBspline(&grid);
   else if (grid.getType() == base::GridType::ModBspline)
-    return new datadriven::OperationInverseRosenblattTransformationModBspline(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformationModBspline(&grid);
   else if (grid.getType() == base::GridType::BsplineBoundary)
-    return new datadriven::
-        OperationInverseRosenblattTransformationBsplineBoundary(&grid);
+    return new datadriven::OperationInverseRosenblattTransformationBsplineBoundary(&grid);
   else if (grid.getType() == base::GridType::BsplineClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformationBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformationBsplineClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModBsplineClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformationModBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformationModBsplineClenshawCurtis(&grid);
   else
-    throw base::factory_exception("OperationInverseRosenblattTransformation is "
-                                  "not implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationInverseRosenblattTransformation is "
+        "not implemented for this grid type.");
 }
 
-datadriven::OperationTransformation1D *
-createOperationInverseRosenblattTransformation1D(base::Grid &grid) {
+datadriven::OperationTransformation1D *createOperationInverseRosenblattTransformation1D(
+    base::Grid &grid) {
   if (grid.getType() == base::GridType::Linear)
-    return new datadriven::OperationInverseRosenblattTransformation1DLinear(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DLinear(&grid);
   else if (grid.getType() == base::GridType::Poly)
-    return new datadriven::OperationInverseRosenblattTransformation1DPoly(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DPoly(&grid);
   else if (grid.getType() == base::GridType::ModPoly)
-    return new datadriven::OperationInverseRosenblattTransformation1DModPoly(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DModPoly(&grid);
   else if (grid.getType() == base::GridType::PolyBoundary)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DPolyBoundary(&grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DPolyBoundary(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DPolyClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModPolyClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DModPolyClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DModPolyClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::PolyClenshawCurtisBoundary)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DPolyClenshawCurtisBoundary(
-            &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DPolyClenshawCurtisBoundary(
+        &grid);
   else if (grid.getType() == base::GridType::Bspline)
-    return new datadriven::OperationInverseRosenblattTransformation1DBspline(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DBspline(&grid);
   else if (grid.getType() == base::GridType::ModBspline)
-    return new datadriven::OperationInverseRosenblattTransformation1DModBspline(
-        &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DModBspline(&grid);
   else if (grid.getType() == base::GridType::BsplineBoundary)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DBsplineBoundary(&grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DBsplineBoundary(&grid);
   else if (grid.getType() == base::GridType::BsplineClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DBsplineClenshawCurtis(&grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DBsplineClenshawCurtis(&grid);
   else if (grid.getType() == base::GridType::ModBsplineClenshawCurtis)
-    return new datadriven::
-        OperationInverseRosenblattTransformation1DModBsplineClenshawCurtis(
-            &grid);
+    return new datadriven::OperationInverseRosenblattTransformation1DModBsplineClenshawCurtis(
+        &grid);
   else
-    throw base::factory_exception("OperationInverseRosenblattTransformation1D "
-                                  "is not implemented for this grid type.");
+    throw base::factory_exception(
+        "OperationInverseRosenblattTransformation1D "
+        "is not implemented for this grid type.");
 }
 
 datadriven::OperationInverseRosenblattTransformationKDE *
-createOperationInverseRosenblattTransformationKDE(
-    datadriven::KernelDensityEstimator &kde) {
+createOperationInverseRosenblattTransformationKDE(datadriven::KernelDensityEstimator &kde) {
   return new datadriven::OperationInverseRosenblattTransformationKDE(kde);
 }
 
-datadriven::OperationRosenblattTransformationKDE *
-createOperationRosenblattTransformationKDE(
+datadriven::OperationRosenblattTransformationKDE *createOperationRosenblattTransformationKDE(
     datadriven::KernelDensityEstimator &kde) {
   return new datadriven::OperationRosenblattTransformationKDE(kde);
 }
 
-datadriven::OperationDensityMarginalizeKDE *
-createOperationDensityMarginalizeKDE(datadriven::KernelDensityEstimator &kde) {
+datadriven::OperationDensityMarginalizeKDE *createOperationDensityMarginalizeKDE(
+    datadriven::KernelDensityEstimator &kde) {
   return new datadriven::OperationDensityMarginalizeKDE(kde);
 }
 
-datadriven::OperationDensityConditionalKDE *
-createOperationDensityConditionalKDE(datadriven::KernelDensityEstimator &kde) {
+datadriven::OperationDensityConditionalKDE *createOperationDensityConditionalKDE(
+    datadriven::KernelDensityEstimator &kde) {
   return new datadriven::OperationDensityConditionalKDE(kde);
 }
 
 base::OperationMultipleEval *createOperationMultipleEval(
     base::Grid &grid, base::DataMatrix &dataset,
-    sgpp::datadriven::OperationMultipleEvalConfiguration &configuration,
-    bool verbose) {
-  if (configuration.getMPIType() ==
-      sgpp::datadriven::OperationMultipleEvalMPIType::MASTERSLAVE) {
+    sgpp::datadriven::OperationMultipleEvalConfiguration &configuration, bool verbose) {
+  if (configuration.getMPIType() == sgpp::datadriven::OperationMultipleEvalMPIType::MASTERSLAVE) {
 #ifdef USE_MPI
     if (grid.getType() == base::GridType::Linear) {
       if (verbose) {
@@ -472,30 +425,27 @@ base::OperationMultipleEval *createOperationMultipleEval(
           sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT);
     }
 #else
-    throw base::factory_exception("Error creating function: the library wasn't "
-                                  "compiled with MPI support");
+    throw base::factory_exception(
+        "Error creating function: the library wasn't "
+        "compiled with MPI support");
 #endif
-  } else if (configuration.getMPIType() ==
-             sgpp::datadriven::OperationMultipleEvalMPIType::HPX) {
+  } else if (configuration.getMPIType() == sgpp::datadriven::OperationMultipleEvalMPIType::HPX) {
 #ifdef USE_HPX
     if (grid.getType() == base::GridType::Linear) {
       if (verbose) {
-        std::cout
-            << "creating createOperationMultipleEval type: HPX subType: Linear"
-            << std::endl;
+        std::cout << "creating createOperationMultipleEval type: HPX subType: Linear" << std::endl;
       }
-      return new datadriven::OperationMultiEvalHPX(grid, dataset,
-                                                   configuration);
+      return new datadriven::OperationMultiEvalHPX(grid, dataset, configuration);
     }
 #else
-    throw base::factory_exception("Error creating function: the library wasn't "
-                                  "compiled with HPX support");
+    throw base::factory_exception(
+        "Error creating function: the library wasn't "
+        "compiled with HPX support");
 #endif
   }
 
   // can now assume that MPI type is NONE
-  if (configuration.getType() ==
-      sgpp::datadriven::OperationMultipleEvalType::DEFAULT) {
+  if (configuration.getType() == sgpp::datadriven::OperationMultipleEvalType::DEFAULT) {
     if (verbose) {
       std::cout << "creating createOperationMultipleEval type: DEFAULT, using "
                    "base operator factory"
@@ -505,12 +455,9 @@ base::OperationMultipleEval *createOperationMultipleEval(
   }
 
   if (grid.getType() == base::GridType::Linear) {
-    if (configuration.getType() ==
-            datadriven::OperationMultipleEvalType::DEFAULT ||
-        configuration.getType() ==
-            datadriven::OperationMultipleEvalType::STREAMING) {
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
+    if (configuration.getType() == datadriven::OperationMultipleEvalType::DEFAULT ||
+        configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Linear "
                        "type: STREAMING==DEFAULT "
@@ -519,8 +466,7 @@ base::OperationMultipleEval *createOperationMultipleEval(
         }
         return new datadriven::OperationMultiEvalStreaming(grid, dataset);
       }
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::OCLMP) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCLMP) {
 #ifdef USE_OCL
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Linear "
@@ -528,11 +474,11 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLMP"
                     << std::endl;
         }
-        return datadriven::createStreamingOCLMultiPlatformConfigured(
-            grid, dataset, configuration);
+        return datadriven::createStreamingOCLMultiPlatformConfigured(grid, dataset, configuration);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       }
       if (configuration.getSubType() ==
@@ -544,28 +490,26 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLUNIFIED"
                     << std::endl;
         }
-        return datadriven::createStreamingModOCLUnifiedConfigured(
-            grid, dataset, configuration, false);
+        return datadriven::createStreamingModOCLUnifiedConfigured(grid, dataset, configuration,
+                                                                  false);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       }
-    } else if (configuration.getType() ==
-               datadriven::OperationMultipleEvalType::SUBSPACELINEAR) {
-      if (configuration.getSubType() ==
-              sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
-          configuration.getSubType() ==
-              sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
+    } else if (configuration.getType() == datadriven::OperationMultipleEvalType::SUBSPACE) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
+          configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
 #ifdef __AVX__
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Linear "
-                       "type: SUBSPACELINEAR "
+                       "type: SUBSPACE "
                        "subType: DEFAULT==COMBINED"
                     << std::endl;
         }
-        return new datadriven::SubspaceLinearCombined::
-            OperationMultipleEvalSubspaceCombined(grid, dataset, false);
+        return new datadriven::SubspaceCombined::OperationMultipleEvalSubspaceCombined(
+            grid, dataset, false);
 #else
         throw base::factory_exception(
             "Error creating function: the library wasn't compiled with AVX");
@@ -575,12 +519,25 @@ base::OperationMultipleEval *createOperationMultipleEval(
 #ifdef __AVX__
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Linear "
-                       "type: SUBSPACELINEAR "
+                       "type: SUBSPACE "
                        "subType: SIMPLE"
                     << std::endl;
         }
-        return new datadriven::OperationMultipleEvalSubspaceSimple(grid,
-                                                                   dataset);
+        return new datadriven::OperationMultipleEvalSubspaceSimple(grid, dataset);
+#else
+        throw base::factory_exception(
+            "Error creating function: the library wasn't compiled with AVX");
+#endif
+      } else if (configuration.getSubType() ==
+                 sgpp::datadriven::OperationMultipleEvalSubType::AUTOTUNETMP) {
+#ifdef __AVX__
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: Linear "
+                       "type: SUBSPACE subType: AutoTuneTMP"
+                    << std::endl;
+        }
+        return new datadriven::SubspaceAutoTuneTMP::OperationMultipleEvalSubspaceAutoTuneTMP(
+            grid, dataset, false);
 #else
         throw base::factory_exception(
             "Error creating function: the library wasn't compiled with AVX");
@@ -588,21 +545,17 @@ base::OperationMultipleEval *createOperationMultipleEval(
       }
     }
   } else if (grid.getType() == base::GridType::ModLinear) {
-    if (configuration.getType() ==
-        datadriven::OperationMultipleEvalType::STREAMING) {
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
+    if (configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT) {
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: ModLinear "
                        "type: STREAMING "
                        "subType: DEFAULT"
                     << std::endl;
         }
-        return new datadriven::OperationMultiEvalModMaskStreaming(grid,
-                                                                  dataset);
+        return new datadriven::OperationMultiEvalModMaskStreaming(grid, dataset);
       }
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::OCLFASTMP) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCLFASTMP) {
 #ifdef USE_OCL
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: ModLinear "
@@ -610,11 +563,12 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLFASTMP"
                     << std::endl;
         }
-        return datadriven::createStreamingModOCLFastMultiPlatformConfigured(
-            grid, dataset, configuration);
+        return datadriven::createStreamingModOCLFastMultiPlatformConfigured(grid, dataset,
+                                                                            configuration);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       } else if (configuration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLMASKMP) {
@@ -625,11 +579,12 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLMASKMP"
                     << std::endl;
         }
-        return datadriven::createStreamingModOCLMaskMultiPlatformConfigured(
-            grid, dataset, configuration);
+        return datadriven::createStreamingModOCLMaskMultiPlatformConfigured(grid, dataset,
+                                                                            configuration);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       } else if (configuration.getSubType() ==
                  sgpp::datadriven::OperationMultipleEvalSubType::OCLOPT) {
@@ -640,11 +595,11 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLOPT"
                     << std::endl;
         }
-        return datadriven::createStreamingModOCLOptConfigured(grid, dataset,
-                                                              configuration);
+        return datadriven::createStreamingModOCLOptConfigured(grid, dataset, configuration);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       }
       if (configuration.getSubType() ==
@@ -656,28 +611,40 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCLUNIFIED"
                     << std::endl;
         }
-        return datadriven::createStreamingModOCLUnifiedConfigured(
-            grid, dataset, configuration, true);
+        return datadriven::createStreamingModOCLUnifiedConfigured(grid, dataset, configuration,
+                                                                  true);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       }
-    } else if (configuration.getType() ==
-               datadriven::OperationMultipleEvalType::SUBSPACELINEAR) {
-      if (configuration.getSubType() ==
-              sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
-          configuration.getSubType() ==
-              sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
+    } else if (configuration.getType() == datadriven::OperationMultipleEvalType::SUBSPACE) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::DEFAULT ||
+          configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::COMBINED) {
 #ifdef __AVX__
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: ModLinear "
-                       "type: SUBSPACELINEAR "
+                       "type: SUBSPACE "
                        "subType: DEFAULT==COMBINED"
                     << std::endl;
         }
-        return new datadriven::SubspaceLinearCombined::
-            OperationMultipleEvalSubspaceCombined(grid, dataset, true);
+        return new datadriven::SubspaceCombined::OperationMultipleEvalSubspaceCombined(
+            grid, dataset, true);
+#else
+        throw base::factory_exception(
+            "Error creating function: the library wasn't compiled with AVX");
+#endif
+      } else if (configuration.getSubType() ==
+                 sgpp::datadriven::OperationMultipleEvalSubType::AUTOTUNETMP) {
+#ifdef __AVX__
+        if (verbose) {
+          std::cout << "creating createOperationMultipleEval grid: ModLinear "
+                       "type: SUBSPACE subType: AutoTuneTMP"
+                    << std::endl;
+        }
+        return new datadriven::SubspaceAutoTuneTMP::OperationMultipleEvalSubspaceAutoTuneTMP(
+            grid, dataset, true);
 #else
         throw base::factory_exception(
             "Error creating function: the library wasn't compiled with AVX");
@@ -685,10 +652,8 @@ base::OperationMultipleEval *createOperationMultipleEval(
       }
     }
   } else if (grid.getType() == base::GridType::Bspline) {
-    if (configuration.getType() ==
-        datadriven::OperationMultipleEvalType::STREAMING) {
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::OCL) {
+    if (configuration.getType() == datadriven::OperationMultipleEvalType::STREAMING) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::OCL) {
 #ifdef USE_OCL
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Bspline "
@@ -696,19 +661,17 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: OCL"
                     << std::endl;
         }
-        return datadriven::createStreamingBSplineOCLConfigured(grid, dataset,
-                                                               configuration);
+        return datadriven::createStreamingBSplineOCLConfigured(grid, dataset, configuration);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with OpenCL support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with OpenCL support");
 #endif
       }
     }
   } else if (grid.getType() == base::GridType::Poly) {
-    if (configuration.getType() ==
-        datadriven::OperationMultipleEvalType::DEFAULT) {
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
+    if (configuration.getType() == datadriven::OperationMultipleEvalType::DEFAULT) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
 #ifdef USE_CUDA
         // type should probably be DEFAULT||STREAMING
         if (verbose) {
@@ -717,17 +680,15 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: CUDA"
                     << std::endl;
         }
-        return new datadriven::OperationMultiEvalCuda(grid, dataset,
-                                                      grid.getDegree(), false);
+        return new datadriven::OperationMultiEvalCuda(grid, dataset, grid.getDegree(), false);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with CUDA support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with CUDA support");
 #endif
       }
-    } else if (configuration.getType() ==
-               datadriven::OperationMultipleEvalType::MORTONORDER) {
-      if (configuration.getSubType() ==
-          sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
+    } else if (configuration.getType() == datadriven::OperationMultipleEvalType::MORTONORDER) {
+      if (configuration.getSubType() == sgpp::datadriven::OperationMultipleEvalSubType::CUDA) {
 #ifdef USE_CUDA
         if (verbose) {
           std::cout << "creating createOperationMultipleEval grid: Poly type: "
@@ -735,42 +696,38 @@ base::OperationMultipleEval *createOperationMultipleEval(
                        "subType: CUDA"
                     << std::endl;
         }
-        return new datadriven::OperationMultiEvalCuda(grid, dataset,
-                                                      grid.getDegree(), true);
+        return new datadriven::OperationMultiEvalCuda(grid, dataset, grid.getDegree(), true);
 #else
-        throw base::factory_exception("Error creating function: the library "
-                                      "wasn't compiled with CUDA support");
+        throw base::factory_exception(
+            "Error creating function: the library "
+            "wasn't compiled with CUDA support");
 #endif
       }
     }
   }
 
-  throw base::factory_exception(
-      "OperationMultiEval is not implemented for this grid type.");
+  throw base::factory_exception("OperationMultiEval is not implemented for this grid type.");
 }
 
 datadriven::OperationMakePositive *createOperationMakePositive(
     datadriven::MakePositiveCandidateSearchAlgorithm candidateSearchAlgorithm,
     datadriven::MakePositiveInterpolationAlgorithm interpolationAlgorithm,
-    bool generateConsistentGrid, bool verbose,
-    sgpp::optimization::ScalarFunction *f) {
-  return new datadriven::OperationMakePositive(
-      candidateSearchAlgorithm, interpolationAlgorithm, generateConsistentGrid,
-      verbose, f);
+    bool generateConsistentGrid, bool verbose, sgpp::optimization::ScalarFunction *f) {
+  return new datadriven::OperationMakePositive(candidateSearchAlgorithm, interpolationAlgorithm,
+                                               generateConsistentGrid, verbose, f);
 }
 
-datadriven::OperationLimitFunctionValueRange *
-createOperationLimitFunctionValueRange(
+datadriven::OperationLimitFunctionValueRange *createOperationLimitFunctionValueRange(
     datadriven::MakePositiveCandidateSearchAlgorithm candidateSearchAlgorithm,
-    datadriven::MakePositiveInterpolationAlgorithm interpolationAlgorithm,
-    bool verbose, sgpp::optimization::ScalarFunction *f) {
-  return new datadriven::OperationLimitFunctionValueRange(
-      candidateSearchAlgorithm, interpolationAlgorithm, verbose, f);
+    datadriven::MakePositiveInterpolationAlgorithm interpolationAlgorithm, bool verbose,
+    sgpp::optimization::ScalarFunction *f) {
+  return new datadriven::OperationLimitFunctionValueRange(candidateSearchAlgorithm,
+                                                          interpolationAlgorithm, verbose, f);
 }
 
 datadriven::OperationCovariance *createOperationCovariance(base::Grid &grid) {
   return new datadriven::OperationCovariance(grid);
 }
 
-} // namespace op_factory
-} // namespace sgpp
+}  // namespace op_factory
+}  // namespace sgpp

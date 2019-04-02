@@ -20,7 +20,7 @@
 
 // #include <sgpp/globaldef.hpp>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 /**
  * Multiple evaluation operation that uses the subspace structure to save work
@@ -200,6 +200,6 @@ public:
   size_t getPaddedDatasetSize() override;
 };
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined
 
 #endif

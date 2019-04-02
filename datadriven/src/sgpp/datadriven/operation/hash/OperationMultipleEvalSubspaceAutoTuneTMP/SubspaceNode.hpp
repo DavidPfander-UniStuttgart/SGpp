@@ -6,12 +6,12 @@
 #pragma once
 
 #include <omp.h>
-#include <vector>
 #include <cinttypes>
+#include <vector>
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-class SubspaceNodeCombined {
+class SubspaceNode {
  public:
   enum SubspaceType { NOT_SET, ARRAY, LIST };
 
@@ -32,10 +32,10 @@ class SubspaceNodeCombined {
   // every node that reaches this subspace has to calculate this diff
   uint32_t arriveDiff;
 
-  SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_t flatLevel,
-                       std::vector<uint32_t> &hInverse, std::vector<uint32_t> &index);
+  SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel, std::vector<uint32_t> &hInverse,
+               std::vector<uint32_t> &index);
 
-  SubspaceNodeCombined(size_t dim, uint32_t index);
+  SubspaceNode(size_t dim, uint32_t index);
 
   void lockSubspace();
 
@@ -58,10 +58,9 @@ class SubspaceNodeCombined {
   // the first call initializes the array for ARRAY type subspaces
   double getSurplus(size_t indexFlat);
 
-  static uint32_t compareLexicographically(SubspaceNodeCombined &current,
-                                           SubspaceNodeCombined &last);
+  static uint32_t compareLexicographically(SubspaceNode &current, SubspaceNode &last);
 
-  static bool subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right);
+  static bool subspaceCompare(SubspaceNode &left, SubspaceNode &right);
 };
 
 }  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

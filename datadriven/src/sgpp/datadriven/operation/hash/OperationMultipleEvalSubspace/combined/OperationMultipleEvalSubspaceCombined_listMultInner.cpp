@@ -7,7 +7,7 @@
 
 // #include <sgpp/globaldef.hpp>
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceCombined {
 
 void OperationMultipleEvalSubspaceCombined::listMultInner(
     size_t dim, sgpp::base::DataVector &alpha, size_t dataIndexBase,
@@ -225,4 +225,4 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
   } // end parallel
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+} // namespace sgpp::datadriven::SubspaceCombined

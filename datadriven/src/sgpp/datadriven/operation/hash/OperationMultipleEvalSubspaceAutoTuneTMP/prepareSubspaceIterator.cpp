@@ -80,7 +80,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
 
       this->allSubspaceNodes.emplace_back(level, flatLevel, maxIndex, index);
 
-      SubspaceNodeCombined &subspace = this->allSubspaceNodes[this->subspaceCount];
+      SubspaceNode &subspace = this->allSubspaceNodes[this->subspaceCount];
 
       if (subspace.gridPointsOnLevel > this->maxGridPointsOnLevel) {
         this->maxGridPointsOnLevel = subspace.gridPointsOnLevel;
@@ -90,7 +90,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
     } else {
       // add the current grid point to its subspace
       uint32_t subspaceIndex = it->second;
-      SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+      SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
       subspace.addGridPoint(index);
     }
   }
@@ -98,7 +98,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   // sort the subspaces lexicographically to get efficient curve though the
   // subspaces
   std::sort(this->allSubspaceNodes.begin(), this->allSubspaceNodes.end(),
-            SubspaceNodeCombined::subspaceCompare);
+            SubspaceNode::subspaceCompare);
 
   // - after sorting the allLevelsIndexMap indices have to be recomputed
   // - the grid points are "unpacked", they choose their representation
@@ -114,7 +114,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   //    vector<size_t> preferedDimBuckets(this->dim, 0);
 
   for (size_t subspaceIndex = 0; subspaceIndex < this->subspaceCount; subspaceIndex++) {
-    SubspaceNodeCombined &subspace = this->allSubspaceNodes[subspaceIndex];
+    SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
     // select representation
     subspace.unpack();
 
@@ -124,7 +124,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
     totalRegularGridPoints += subspace.gridPointsOnLevel;
     nonVirtualGridPoints += subspace.existingGridPointsOnLevel;
 
-    if (subspace.type == SubspaceNodeCombined::SubspaceType::LIST) {
+    if (subspace.type == SubspaceNode::SubspaceType::LIST) {
       actualGridPoints += subspace.existingGridPointsOnLevel;
       numberOfListSubspaces += 1;
 
@@ -147,14 +147,14 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
     //        }
   }
 
-//    cout << "prefered dims: " << endl;
-//    for (size_t i = 0; i < this->dim; i++) {
-//        cout << "dim " << i << " -> " << preferedDimBuckets[i] << endl;
-//    }
+  //    cout << "prefered dims: " << endl;
+  //    for (size_t i = 0; i < this->dim; i++) {
+  //        cout << "dim " << i << " -> " << preferedDimBuckets[i] << endl;
+  //    }
 
-// cout << "maxGridPointsOnLevel: " << this->maxGridPointsOnLevel << endl;
-// cout << "no. of subspaces: " << subspaceCount << endl;
-// cout << "maxLevel: " << maxLevel << endl;
+  // cout << "maxGridPointsOnLevel: " << this->maxGridPointsOnLevel << endl;
+  // cout << "no. of subspaces: " << subspaceCount << endl;
+  // cout << "maxLevel: " << maxLevel << endl;
 
 #ifdef SUBSPACEAUTOTUNETMP_WRITE_STATS
   // cout << "nonVirtualGridPoints: " << nonVirtualGridPoints << endl;
@@ -211,12 +211,12 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   }
 
   for (size_t i = subspaceCount - 1; i > 0; i--) {
-    SubspaceNodeCombined &currentNode = this->allSubspaceNodes[i];
-    SubspaceNodeCombined &previousNode = this->allSubspaceNodes[i - 1];
+    SubspaceNode &currentNode = this->allSubspaceNodes[i];
+    SubspaceNode &previousNode = this->allSubspaceNodes[i - 1];
 
     // number of dimension for which this subspace is responsible
     uint32_t recomputeComponentPreviousNode =
-        SubspaceNodeCombined::compareLexicographically(currentNode, previousNode);
+        SubspaceNode::compareLexicographically(currentNode, previousNode);
 
     // which dimension have to be precomputed at the next subspace?
     currentNode.arriveDiff = recomputeComponentPreviousNode;
@@ -238,7 +238,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
 
   // make sure that the tensor products are calculated entirely at the first
   // subspace
-  SubspaceNodeCombined &firstNode = this->allSubspaceNodes[0];
+  SubspaceNode &firstNode = this->allSubspaceNodes[0];
   firstNode.jumpTargetIndex = computationFinishedMarker;
   firstNode.arriveDiff = 0;  // recompute all dimensions at the first subspace
 }

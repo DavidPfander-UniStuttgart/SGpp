@@ -17,8 +17,10 @@
 #include <sgpp/base/tools/SGppStopwatch.hpp>
 #include <sgpp/datadriven/tools/PartitioningTool.hpp>
 #include <vector>
+#include "KernelMult.hpp"
+#include "KernelMultTranspose.hpp"
 #include "SubspaceAutoTuneTMPParameters.hpp"
-#include "SubspaceNodeCombined.hpp"
+#include "SubspaceNode.hpp"
 #include "omp.h"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
@@ -30,30 +32,19 @@ namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleEval {
  private:
   base::GridStorage &storage;
-
   base::SGppStopwatch timer;
   double duration;
-
   sgpp::base::DataMatrix paddedDataset;
   // includes padding, but excludes additional rows for SUBSPACEAUTOTUNETMP_VEC_PADDING
   size_t paddedDatasetSize;
-
-  // size_t subspaceSize = -1;
-
   size_t maxGridPointsOnLevel;
-
   std::map<uint32_t, uint32_t> allLevelsIndexMap;
-
-  size_t dim;       // = -1;
-  size_t maxLevel;  // = 0;
-
-  std::vector<SubspaceNodeCombined> allSubspaceNodes;
-  uint32_t subspaceCount;  // = -1;
-
-  uint32_t totalRegularGridPoints;  // = -1;
-
+  size_t dim;
+  size_t maxLevel;
+  std::vector<SubspaceNode> allSubspaceNodes;
+  uint32_t subspaceCount;
+  uint32_t totalRegularGridPoints;
   bool isModLinear;
-
 #ifdef SUBSPACEAUTOTUNETMP_WRITE_STATS
   size_t refinementStep = 0;
   ofstream statsFile;
@@ -64,8 +55,6 @@ class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleE
    * Creates the data structure used by the operation.
    */
   void prepareSubspaceIterator();
-
-  void setCoefficients(sgpp::base::DataVector &surplusVector);
 
   void unflatten(sgpp::base::DataVector &result);
 
@@ -96,6 +85,8 @@ class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleE
                   std::vector<uint32_t> &index, double &value, bool &isVirtual);
 
   uint32_t flattenLevel(size_t dim, size_t maxLevel, std::vector<uint32_t> &level);
+
+  void setCoefficients(base::DataVector &surplusVector);
 
  public:
   /**
@@ -128,14 +119,19 @@ class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleE
     this->timer.start();
     result.setAll(0.0);
 
+    this->setCoefficients(result);
+
 #pragma omp parallel
     {
       size_t start;
       size_t end;
       PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
                                                   this->getAlignment());
-      this->multTransposeImpl(alpha, result, start, end);
+      multTransposeImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize,
+                        allSubspaceNodes, alpha, result, start, end);
     }
+
+    this->unflatten(result);
 
     alpha.resize(originalAlphaSize);
     this->duration = this->timer.stop();
@@ -155,14 +151,19 @@ class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleE
     this->timer.start();
     result.setAll(0.0);
 
+    this->setCoefficients(source);
+
 #pragma omp parallel
     {
       size_t start;
       size_t end;
       PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
                                                   this->getAlignment());
-      this->multImpl(source, result, start, end);
+      multImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize,
+               allSubspaceNodes, source, result, start, end);
     }
+
+    // this->unflatten(result);
 
     result.resize(originalResultSize);
 
@@ -175,32 +176,6 @@ class OperationMultipleEvalSubspaceAutoTuneTMP : public base::OperationMultipleE
    *
    */
   void prepare() override;
-
-  /**
-   * Internal eval operator, should not be called directly.
-   *
-   * @see OperationMultipleEval
-   *
-   * @param alpha surplusses of the grid
-   * @param result will contain the evaluation results for the given range.
-   * @param start_index_data beginning of the range to evaluate
-   * @param end_index_data end of the range to evaluate
-   */
-  void multTransposeImpl(sgpp::base::DataVector &alpha, sgpp::base::DataVector &result,
-                         const size_t start_index_data, const size_t end_index_data);
-
-  /**
-   * Internal mult operator, should not be called directly.
-   *
-   * @see OperationMultipleEval
-   *
-   * @param source source operand for the operator
-   * @param result stores the result
-   * @param start_index_data beginning of the range to process
-   * @param end_index_data end of the range to process
-   */
-  void multImpl(sgpp::base::DataVector &source, sgpp::base::DataVector &result,
-                const size_t start_index_data, const size_t end_index_data);
 
   /**
    * Pads the dataset.
