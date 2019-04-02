@@ -6,12 +6,69 @@
 #include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 #include <string>
 #include <vector>
+#include "autotune/autotune.hpp"
 
 using sgpp::base::DataMatrix;
 using sgpp::base::DataVector;
 using sgpp::base::Grid;
 
+// void multImplSubspace(
+//     size_t maxGridPointsOnLevel, bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
+//     size_t paddedDatasetSize,
+//     std::vector<sgpp::datadriven::SubspaceAutoTuneTMP::SubspaceNode> &allSubspaceNodes,
+//     sgpp::base::DataVector &source, sgpp::base::DataVector &result, const size_t
+//     start_index_data,
+//     const size_t end_index_data);
+
+AUTOTUNE_KERNEL(void(size_t, bool, sgpp::base::DataMatrix &, size_t,
+                     std::vector<sgpp::datadriven::SubspaceAutoTuneTMP::SubspaceNode> &,
+                     sgpp::base::DataVector &, sgpp::base::DataVector &, size_t, size_t),
+                KernelMultSubspace, "SubspaceAutoTuneTMPKernels/Mult")
+
+// void multTransposeImplSubspace(
+//     size_t maxGridPointsOnLevel, bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
+//     size_t paddedDatasetSize,
+//     std::vector<sgpp::datadriven::SubspaceAutoTuneTMP::SubspaceNode> &allSubspaceNodes,
+//     sgpp::base::DataVector &alpha, sgpp::base::DataVector &result, const size_t start_index_data,
+//     const size_t end_index_data);
+
+AUTOTUNE_KERNEL(void(size_t, bool, sgpp::base::DataMatrix &, size_t,
+                     std::vector<sgpp::datadriven::SubspaceAutoTuneTMP::SubspaceNode> &,
+                     sgpp::base::DataVector &, sgpp::base::DataVector &, size_t, size_t),
+                KernelMultTransposeSubspace, "SubspaceAutoTuneTMPKernels/MultTranspose")
+
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
+
+namespace detail {
+void get_includes_from_env(std::string &sgpp_base_include, std::string &boost_include,
+                           std::string &autotunetmp_include, std::string &vc_include) {
+  const char *sgpp_base_include_env = std::getenv("SGPP_BASE_INCLUDE_DIR");
+  if (sgpp_base_include_env) {
+    sgpp_base_include = std::string("-I") + std::string(sgpp_base_include_env) + std::string(" ");
+  } else {
+    throw;
+  }
+  const char *boost_include_env = std::getenv("BOOST_INCLUDE_DIR");
+  if (boost_include_env) {
+    boost_include = std::string("-I") + std::string(boost_include_env) + std::string(" ");
+  } else {
+    throw;
+  }
+  const char *autotunetmp_include_env = std::getenv("AUTOTUNETMP_INCLUDE_DIR");
+  if (autotunetmp_include_env) {
+    autotunetmp_include =
+        std::string("-I") + std::string(autotunetmp_include_env) + std::string(" ");
+  } else {
+    throw;
+  }
+  const char *vc_include_env = std::getenv("VC_INCLUDE_DIR");
+  if (vc_include_env) {
+    vc_include = std::string("-I") + std::string(vc_include_env) + std::string(" ");
+  } else {
+    throw;
+  }
+}
+}
 
 OperationMultipleEvalSubspaceAutoTuneTMP::OperationMultipleEvalSubspaceAutoTuneTMP(
     Grid &grid, DataMatrix &dataset, bool isModLinear)
@@ -243,14 +300,51 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(sgpp::base::DataVec
 
   this->setCoefficients(result);
 
+  if (!autotune::KernelMultTransposeSubspace.is_compiled()) {
+    std::string sgpp_base_include;
+    std::string boost_include;
+    std::string autotunetmp_include;
+    std::string vc_include;
+    detail::get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include,
+                                  vc_include);
+    autotune::KernelMultTransposeSubspace.set_verbose(true);
+    auto &builder = autotune::KernelMultTransposeSubspace.get_builder<cppjit::builder::gcc>();
+    builder.set_include_paths(sgpp_base_include + boost_include + autotunetmp_include + vc_include);
+
+    builder.set_cpp_flags(
+        "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
+        "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique -fopenmp");
+    builder.set_link_flags("-shared -fno-gnu-unique -fopenmp");
+    // autotune::KernelMultTransposeSubspace.set_source_dir("AutoTuneTMP_kernels/");
+
+    // autotune::countable_set parameters;
+    // autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {data_blocking});
+    // parameters.add_parameter(p1);
+
+    // size_t openmp_threads = omp_get_max_threads();
+    // autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", {openmp_threads});
+    // parameters.add_parameter(p2);
+
+    // autotune::fixed_set_parameter<size_t> p3("DIMS", {dims});
+    // parameters.add_parameter(p3);
+
+    // autotune::fixed_set_parameter<size_t> p4("ENTRIES", {dataset.getNrows()});
+    // parameters.add_parameter(p4);
+
+    // compile beforehand so that compilation is not part of the measured duration
+    // autotune::KernelMultTransposeSubspace.set_parameter_values(parameters);
+    autotune::KernelMultTransposeSubspace.compile();
+  }
+
 #pragma omp parallel
   {
     size_t start;
     size_t end;
     PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
                                                 this->getAlignment());
-    multTransposeImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize,
-                      allSubspaceNodes, alpha, result, start, end);
+    autotune::KernelMultTransposeSubspace(maxGridPointsOnLevel, isModLinear, paddedDataset,
+                                          paddedDatasetSize, allSubspaceNodes, alpha, result, start,
+                                          end);
   }
 
   this->unflatten(result);
@@ -276,14 +370,50 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(sgpp::base::DataVector &sour
 
   this->setCoefficients(source);
 
+  if (!autotune::KernelMultSubspace.is_compiled()) {
+    std::string sgpp_base_include;
+    std::string boost_include;
+    std::string autotunetmp_include;
+    std::string vc_include;
+    detail::get_includes_from_env(sgpp_base_include, boost_include, autotunetmp_include,
+                                  vc_include);
+    autotune::KernelMultSubspace.set_verbose(true);
+    auto &builder = autotune::KernelMultSubspace.get_builder<cppjit::builder::gcc>();
+    builder.set_include_paths(sgpp_base_include + boost_include + autotunetmp_include + vc_include);
+
+    builder.set_cpp_flags(
+        "-Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native "
+        "-O3 -g -ffast-math -fopenmp -fPIC -fno-gnu-unique -fopenmp");
+    builder.set_link_flags("-shared -fno-gnu-unique -fopenmp");
+    // autotune::KernelMultSubspace.set_source_dir("AutoTuneTMP_kernels/");
+
+    // autotune::countable_set parameters;
+    // autotune::fixed_set_parameter<size_t> p1("DATA_BLOCKING", {data_blocking});
+    // parameters.add_parameter(p1);
+
+    // size_t openmp_threads = omp_get_max_threads();
+    // autotune::fixed_set_parameter<size_t> p2("KERNEL_OMP_THREADS", {openmp_threads});
+    // parameters.add_parameter(p2);
+
+    // autotune::fixed_set_parameter<size_t> p3("DIMS", {dims});
+    // parameters.add_parameter(p3);
+
+    // autotune::fixed_set_parameter<size_t> p4("ENTRIES", {dataset.getNrows()});
+    // parameters.add_parameter(p4);
+
+    // compile beforehand so that compilation is not part of the measured duration
+    // autotune::KernelMultSubspace.set_parameter_values(parameters);
+    autotune::KernelMultSubspace.compile();
+  }
+
 #pragma omp parallel
   {
     size_t start;
     size_t end;
     PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
                                                 this->getAlignment());
-    multImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize, allSubspaceNodes,
-             source, result, start, end);
+    autotune::KernelMultSubspace(maxGridPointsOnLevel, isModLinear, paddedDataset,
+                                 paddedDatasetSize, allSubspaceNodes, source, result, start, end);
   }
 
   // this->unflatten(result);

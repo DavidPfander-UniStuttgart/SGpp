@@ -3,12 +3,17 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "KernelMultTranspose.hpp"
+#include <array>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
-#include "SubspaceAutoTuneTMPParameters.hpp"
-#include "SubspaceNode.hpp"
-#include "calculateIndex.hpp"
+#include "../../datadriven/src/sgpp/datadriven/operation/hash/OperationMultipleEvalSubspaceAutoTuneTMP/SubspaceNode.hpp"
+#include "../SubspaceAutoTuneTMPParameters.hpp"
+#include "../calculateIndex.hpp"
+
+#include "autotune_kernel.hpp"
+
+
+using namespace sgpp::datadriven::SubspaceAutoTuneTMP;
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
@@ -224,11 +229,13 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
   }  // end parallel
 }
 
-void multTransposeImpl(size_t maxGridPointsOnLevel, bool isModLinear,
-                       sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize,
-                       std::vector<SubspaceNode> &allSubspaceNodes, sgpp::base::DataVector &alpha,
-                       sgpp::base::DataVector &result, const size_t start_index_data,
-                       const size_t end_index_data) {
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
+
+AUTOTUNE_EXPORT void KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
+                                 sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize,
+                                 std::vector<SubspaceNode> &allSubspaceNodes,
+                                 sgpp::base::DataVector &alpha, sgpp::base::DataVector &result,
+                                 size_t start_index_data, size_t end_index_data) {
   // size_t tid = omp_get_thread_num();
   // if (tid == 0) {
   //   setCoefficients(result);
@@ -369,4 +376,3 @@ void multTransposeImpl(size_t maxGridPointsOnLevel, bool isModLinear,
   //     this->unflatten(result);
   //   }
 }
-}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

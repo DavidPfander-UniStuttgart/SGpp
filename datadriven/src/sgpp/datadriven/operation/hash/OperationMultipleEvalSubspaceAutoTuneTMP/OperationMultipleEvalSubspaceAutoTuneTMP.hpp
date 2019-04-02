@@ -17,8 +17,6 @@
 #include <sgpp/base/tools/SGppStopwatch.hpp>
 #include <sgpp/datadriven/tools/PartitioningTool.hpp>
 #include <vector>
-#include "KernelMult.hpp"
-#include "KernelMultTranspose.hpp"
 #include "SubspaceAutoTuneTMPParameters.hpp"
 #include "SubspaceNode.hpp"
 #include "omp.h"
