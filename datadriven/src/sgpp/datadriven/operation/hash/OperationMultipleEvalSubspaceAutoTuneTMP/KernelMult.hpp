@@ -6,12 +6,6 @@
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-void listMultInner(bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
-                   size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &alpha,
-                   size_t dataIndexBase, size_t end_index_data, SubspaceNode &subspace,
-                   double *levelArrayContinuous, size_t validIndicesCount, size_t *validIndices,
-                   size_t *levelIndices, double *evalIndexValuesAll, uint32_t *intermediatesAll);
-
 void multImpl(size_t maxGridPointsOnLevel, bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
               size_t paddedDatasetSize, std::vector<SubspaceNode> &allSubspaceNodes,
               sgpp::base::DataVector &source, sgpp::base::DataVector &result,

@@ -224,4 +224,73 @@ std::string OperationMultipleEvalSubspaceAutoTuneTMP::getImplementationName() {
   return "SUBSPACEAUTOTUNETMP";
 }
 
+void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(sgpp::base::DataVector &alpha,
+                                                             sgpp::base::DataVector &result) {
+  if (!this->isPrepared) {
+    this->prepare();
+  }
+
+  size_t originalAlphaSize = alpha.getSize();
+
+  const size_t start_index_data = 0;
+  const size_t end_index_data = this->getPaddedDatasetSize();
+
+  // pad the alpha vector to the padded size of the dataset
+  alpha.resizeZero(this->getPaddedDatasetSize());
+
+  this->timer.start();
+  result.setAll(0.0);
+
+  this->setCoefficients(result);
+
+#pragma omp parallel
+  {
+    size_t start;
+    size_t end;
+    PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
+                                                this->getAlignment());
+    multTransposeImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize,
+                      allSubspaceNodes, alpha, result, start, end);
+  }
+
+  this->unflatten(result);
+
+  alpha.resize(originalAlphaSize);
+  this->duration = this->timer.stop();
+}
+
+void OperationMultipleEvalSubspaceAutoTuneTMP::mult(sgpp::base::DataVector &source,
+                                                    sgpp::base::DataVector &result) {
+  if (!this->isPrepared) {
+    this->prepare();
+  }
+
+  size_t originalResultSize = result.getSize();
+  result.resizeZero(this->getPaddedDatasetSize());
+
+  const size_t start_index_data = 0;
+  const size_t end_index_data = this->getPaddedDatasetSize();
+
+  this->timer.start();
+  result.setAll(0.0);
+
+  this->setCoefficients(source);
+
+#pragma omp parallel
+  {
+    size_t start;
+    size_t end;
+    PartitioningTool::getOpenMPPartitionSegment(start_index_data, end_index_data, &start, &end,
+                                                this->getAlignment());
+    multImpl(maxGridPointsOnLevel, isModLinear, paddedDataset, paddedDatasetSize, allSubspaceNodes,
+             source, result, start, end);
+  }
+
+  // this->unflatten(result);
+
+  result.resize(originalResultSize);
+
+  this->duration = this->timer.stop();
+}
+
 }  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
