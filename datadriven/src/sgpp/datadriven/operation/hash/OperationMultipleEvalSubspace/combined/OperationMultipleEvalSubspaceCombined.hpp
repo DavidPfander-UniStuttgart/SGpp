@@ -16,9 +16,9 @@
 
 #include "OperationMultipleEvalSubspaceCombinedParameters.hpp"
 #include "SubspaceNodeCombined.hpp"
-#include <sgpp/datadriven/operation/hash/OperationMultipleEvalSubspace/AbstractOperationMultipleEvalSubspace.hpp>
+#include "../AbstractOperationMultipleEvalSubspace.hpp"
 
-#include <sgpp/globaldef.hpp>
+// #include <sgpp/globaldef.hpp>
 
 namespace sgpp::datadriven::SubspaceLinearCombined {
 

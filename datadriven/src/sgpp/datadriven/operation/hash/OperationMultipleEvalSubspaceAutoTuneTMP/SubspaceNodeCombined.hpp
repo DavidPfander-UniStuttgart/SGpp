@@ -5,16 +5,14 @@
 
 #pragma once
 
-#include <vector>
-
 #include <omp.h>
+#include <vector>
+#include <cinttypes>
 
-// #include <sgpp/globaldef.hpp>
-
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
 class SubspaceNodeCombined {
-public:
+ public:
   enum SubspaceType { NOT_SET, ARRAY, LIST };
 
   std::vector<uint32_t> level;
@@ -35,8 +33,7 @@ public:
   uint32_t arriveDiff;
 
   SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_t flatLevel,
-                       std::vector<uint32_t> &hInverse,
-                       std::vector<uint32_t> &index);
+                       std::vector<uint32_t> &hInverse, std::vector<uint32_t> &index);
 
   SubspaceNodeCombined(size_t dim, uint32_t index);
 
@@ -64,8 +61,7 @@ public:
   static uint32_t compareLexicographically(SubspaceNodeCombined &current,
                                            SubspaceNodeCombined &last);
 
-  static bool subspaceCompare(SubspaceNodeCombined left,
-                              SubspaceNodeCombined right);
+  static bool subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right);
 };
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

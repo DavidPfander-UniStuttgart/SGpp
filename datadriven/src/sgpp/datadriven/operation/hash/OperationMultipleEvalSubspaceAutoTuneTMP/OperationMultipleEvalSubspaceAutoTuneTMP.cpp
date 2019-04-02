@@ -3,24 +3,21 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "OperationMultipleEvalSubspaceCombined.hpp"
-#include "../AbstractOperationMultipleEvalSubspace.hpp"
-
-// #include <sgpp/globaldef.hpp>
-
 #include <string>
 #include <vector>
+#include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 
 using sgpp::base::DataMatrix;
 using sgpp::base::DataVector;
 using sgpp::base::Grid;
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Grid &grid,
-                                                                             DataMatrix &dataset,
-                                                                             bool isModLinear)
-    : AbstractOperationMultipleEvalSubspace(grid, dataset),
+OperationMultipleEvalSubspaceAutoTuneTMP::OperationMultipleEvalSubspaceAutoTuneTMP(
+    Grid &grid, DataMatrix &dataset, bool isModLinear)
+    : base::OperationMultipleEval(grid, dataset),
+      storage(grid.getStorage()),
+      duration(-1.0),
       paddedDatasetSize(0),
       maxGridPointsOnLevel(0),
       dim(dataset.getNcols()),
@@ -30,12 +27,12 @@ OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Gri
       isModLinear(isModLinear) {
   this->padDataset(dataset);
 
-#ifdef X86COMBINED_WRITE_STATS
+#ifdef SUBSPACEAUTOTUNETMP_WRITE_STATS
   string prefix("results/data/stats_");
-  string fileName(X86COMBINED_WRITE_STATS);
+  string fileName(SUBSPACEAUTOTUNETMP_WRITE_STATS);
   this->statsFile.open(prefix + fileName, ios::out);
 
-  this->statsFile << "# name: " << X86COMBINED_WRITE_STATS_NAME << endl;
+  this->statsFile << "# name: " << SUBSPACEAUTOTUNETMP_WRITE_STATS_NAME << endl;
   this->statsFile << "refinementStep & ";
   this->statsFile << "nonVirtualGridPoints & ";
   this->statsFile << "totalRegularGridPoints & ";
@@ -52,15 +49,15 @@ OperationMultipleEvalSubspaceCombined::OperationMultipleEvalSubspaceCombined(Gri
 #endif
 }
 
-OperationMultipleEvalSubspaceCombined::~OperationMultipleEvalSubspaceCombined() {
-#ifdef X86COMBINED_WRITE_STATS
+OperationMultipleEvalSubspaceAutoTuneTMP::~OperationMultipleEvalSubspaceAutoTuneTMP() {
+#ifdef SUBSPACEAUTOTUNETMP_WRITE_STATS
   this->statsFile.close();
 #endif
 }
 
-void OperationMultipleEvalSubspaceCombined::prepare() { this->prepareSubspaceIterator(); }
+void OperationMultipleEvalSubspaceAutoTuneTMP::prepare() { this->prepareSubspaceIterator(); }
 
-void OperationMultipleEvalSubspaceCombined::setCoefficients(DataVector &surplusVector) {
+void OperationMultipleEvalSubspaceAutoTuneTMP::setCoefficients(DataVector &surplusVector) {
   std::vector<uint32_t> level(dim);
   std::vector<uint32_t> maxIndex(dim);
   std::vector<uint32_t> index(dim);
@@ -83,7 +80,7 @@ void OperationMultipleEvalSubspaceCombined::setCoefficients(DataVector &surplusV
 }
 
 // writes a result vector in the order of the points in the grid storage
-void OperationMultipleEvalSubspaceCombined::unflatten(DataVector &result) {
+void OperationMultipleEvalSubspaceAutoTuneTMP::unflatten(DataVector &result) {
   std::vector<uint32_t> level(dim);
   std::vector<uint32_t> maxIndex(dim);
   std::vector<uint32_t> index(dim);
@@ -109,9 +106,10 @@ void OperationMultipleEvalSubspaceCombined::unflatten(DataVector &result) {
   }
 }
 
-void OperationMultipleEvalSubspaceCombined::setSurplus(std::vector<uint32_t> &level,
-                                                       std::vector<uint32_t> &maxIndices,
-                                                       std::vector<uint32_t> &index, double value) {
+void OperationMultipleEvalSubspaceAutoTuneTMP::setSurplus(std::vector<uint32_t> &level,
+                                                          std::vector<uint32_t> &maxIndices,
+                                                          std::vector<uint32_t> &index,
+                                                          double value) {
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
@@ -119,10 +117,10 @@ void OperationMultipleEvalSubspaceCombined::setSurplus(std::vector<uint32_t> &le
   subspace.setSurplus(indexFlat, value);
 }
 
-void OperationMultipleEvalSubspaceCombined::getSurplus(std::vector<uint32_t> &level,
-                                                       std::vector<uint32_t> &maxIndices,
-                                                       std::vector<uint32_t> &index, double &value,
-                                                       bool &isVirtual) {
+void OperationMultipleEvalSubspaceAutoTuneTMP::getSurplus(std::vector<uint32_t> &level,
+                                                          std::vector<uint32_t> &maxIndices,
+                                                          std::vector<uint32_t> &index,
+                                                          double &value, bool &isVirtual) {
   uint32_t levelFlat = this->flattenLevel(this->dim, this->maxLevel, level);
   uint32_t indexFlat = this->flattenIndex(this->dim, maxIndices, index);
   uint32_t subspaceIndex = this->allLevelsIndexMap.find(levelFlat)->second;
@@ -136,8 +134,8 @@ void OperationMultipleEvalSubspaceCombined::getSurplus(std::vector<uint32_t> &le
   }
 }
 
-uint32_t OperationMultipleEvalSubspaceCombined::flattenLevel(size_t dim, size_t maxLevel,
-                                                             std::vector<uint32_t> &level) {
+uint32_t OperationMultipleEvalSubspaceAutoTuneTMP::flattenLevel(size_t dim, size_t maxLevel,
+                                                                std::vector<uint32_t> &level) {
   uint32_t levelFlat = 0;
   levelFlat += level[dim - 1];
 
@@ -150,8 +148,8 @@ uint32_t OperationMultipleEvalSubspaceCombined::flattenLevel(size_t dim, size_t 
   return levelFlat;
 }
 
-void OperationMultipleEvalSubspaceCombined::padDataset(sgpp::base::DataMatrix &dataset) {
-  size_t chunkSize = X86COMBINED_PARALLEL_DATA_POINTS;
+void OperationMultipleEvalSubspaceAutoTuneTMP::padDataset(sgpp::base::DataMatrix &dataset) {
+  size_t chunkSize = SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS;
 
   // Assure that data has a even number of instances -> padding might be needed
   size_t remainder = dataset.getNrows() % chunkSize;
@@ -179,7 +177,7 @@ void OperationMultipleEvalSubspaceCombined::padDataset(sgpp::base::DataMatrix &d
   // std::cout.precision(17);
   // std::cout << "one: " << one << " replace: " << replace_value << std::endl;
 
-  // pad to make: dataset % X86COMBINED_PARALLEL_DATA_POINTS == 0
+  // pad to make: dataset % SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS == 0
   if (loopCount != chunkSize) {
     sgpp::base::DataVector lastRow(dataset.getNcols());
     size_t oldSize = dataset.getNrows();
@@ -194,18 +192,18 @@ void OperationMultipleEvalSubspaceCombined::padDataset(sgpp::base::DataMatrix &d
 
   // TODO: in the process of changing this, as the old approach is bullshit
   // (accessing reserved parts of a vector...) additional padding for subspace
-  // skipping if validIndices contain X86COMBINED_PARALLEL_DATA_POINTS - 1 it is
+  // skipping if validIndices contain SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS - 1 it is
   // possible for a vector iteration to contain indices larger than
   // size(dataset) (even though the dataset is divided by
-  // X86COMBINED_PARALLEL_DATA_POINTS) add X86COMBINED_VEC_PADDING dummy data
-  // points to avoid that problem add X86COMBINED_VEC_PADDING * 2 to also enable
+  // SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) add SUBSPACEAUTOTUNETMP_VEC_PADDING dummy data
+  // points to avoid that problem add SUBSPACEAUTOTUNETMP_VEC_PADDING * 2 to also enable
   // the calculateIndexCombined2() method this works due to special semantics of
   // "reserveAdditionalRows()", this function adds additional unused (and
   // uncounted) rows
-  // paddedDataset->reserveAdditionalRows(X86COMBINED_VEC_PADDING * 2);
+  // paddedDataset->reserveAdditionalRows(SUBSPACEAUTOTUNETMP_VEC_PADDING * 2);
 
   paddedDataset.resize(paddedDataset.size() +
-                       X86COMBINED_VEC_PADDING * 2 * paddedDataset.getNcols());
+                       SUBSPACEAUTOTUNETMP_VEC_PADDING * 2 * paddedDataset.getNcols());
 
   for (size_t i = paddedDatasetSize; i < paddedDataset.getNrows(); i += 1) {
     for (size_t j = 0; j < paddedDataset.getNcols(); j += 1) {
@@ -214,12 +212,16 @@ void OperationMultipleEvalSubspaceCombined::padDataset(sgpp::base::DataMatrix &d
   }
 }
 
-size_t OperationMultipleEvalSubspaceCombined::getPaddedDatasetSize() { return paddedDatasetSize; }
-
-size_t OperationMultipleEvalSubspaceCombined::getAlignment() {
-  return X86COMBINED_PARALLEL_DATA_POINTS;
+size_t OperationMultipleEvalSubspaceAutoTuneTMP::getPaddedDatasetSize() {
+  return paddedDatasetSize;
 }
 
-std::string OperationMultipleEvalSubspaceCombined::getImplementationName() { return "COMBINED"; }
+size_t OperationMultipleEvalSubspaceAutoTuneTMP::getAlignment() {
+  return SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS;
+}
 
-}  // namespace sgpp::datadriven::SubspaceLinearCombined
+std::string OperationMultipleEvalSubspaceAutoTuneTMP::getImplementationName() {
+  return "SUBSPACEAUTOTUNETMP";
+}
+
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

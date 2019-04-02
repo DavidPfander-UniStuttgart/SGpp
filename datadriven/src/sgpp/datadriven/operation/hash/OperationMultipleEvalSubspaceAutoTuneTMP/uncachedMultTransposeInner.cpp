@@ -3,33 +3,34 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "OperationMultipleEvalSubspaceCombined.hpp"
+#include <sgpp/base/datatypes/DataMatrix.hpp>
+#include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
+#include "calculateIndex.hpp"
 
-// #include <sgpp/globaldef.hpp>
+namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
-
-void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
-    size_t curDataStart, SubspaceNodeCombined &subspace,
-    double *curSubspaceSurpluses, size_t validIndicesCount,
-    std::array<size_t, X86COMBINED_PARALLEL_DATA_POINTS +
-                           X86COMBINED_VEC_PADDING> &validIndices,
-    std::array<size_t, X86COMBINED_PARALLEL_DATA_POINTS +
-                           X86COMBINED_VEC_PADDING> &nextSubspaceIndex,
-    std::array<double, X86COMBINED_PARALLEL_DATA_POINTS +
-                           X86COMBINED_VEC_PADDING> &componentResults,
+void uncachedMultTransposeInner(
+    bool isModLinear, sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize, size_t dim,
+    size_t curDataStart, SubspaceNodeCombined &subspace, double *curSubspaceSurpluses,
+    size_t validIndicesCount,
+    std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
+        &validIndices,
+    std::array<size_t, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
+        &nextSubspaceIndex,
+    std::array<double, SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING>
+        &componentResults,
     std::vector<double> &partialPhiEvalsSchedule,
     std::vector<uint32_t> &partialIndicesFlatSchedule) {
   // iterate the indices of the datapoints that evaluate on this subspace
   for (size_t validIndex = 0; validIndex < validIndicesCount;
-       validIndex += X86COMBINED_VEC_PADDING) {
+       validIndex += SUBSPACEAUTOTUNETMP_VEC_PADDING) {
     size_t parallelIndices[4];
     parallelIndices[0] = validIndices[validIndex];
     parallelIndices[1] = validIndices[validIndex + 1];
     parallelIndices[2] = validIndices[validIndex + 2];
     parallelIndices[3] = validIndices[validIndex + 3];
 
-#if X86COMBINED_ENABLE_PARTIAL_RESULT_REUSAGE == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE == 1
     size_t nextIterationToRecalc = subspace.arriveDiff;
 #else
     size_t nextIterationToRecalc = 0;
@@ -43,30 +44,22 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
         paddedDataset.data() + (curDataStart + parallelIndices[3]) * dim};
 
     double *evalIndexValues[4];
-    evalIndexValues[0] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[0];
-    evalIndexValues[1] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[1];
-    evalIndexValues[2] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[2];
-    evalIndexValues[3] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[3];
+    evalIndexValues[0] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[0];
+    evalIndexValues[1] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[1];
+    evalIndexValues[2] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[2];
+    evalIndexValues[3] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices[3];
 
     // for faster index flattening, last element is for padding
     uint32_t *partialIndicesFlat[4];
-    partialIndicesFlat[0] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[0];
-    partialIndicesFlat[1] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[1];
-    partialIndicesFlat[2] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[2];
-    partialIndicesFlat[3] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[3];
+    partialIndicesFlat[0] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[0];
+    partialIndicesFlat[1] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[1];
+    partialIndicesFlat[2] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[2];
+    partialIndicesFlat[3] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices[3];
 
     uint32_t indexFlat[4];
     double phiEval[4];
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
     size_t parallelIndices2[4];
     parallelIndices2[0] = validIndices[validIndex + 4];
     parallelIndices2[1] = validIndices[validIndex + 5];
@@ -80,38 +73,26 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
         paddedDataset.data() + (curDataStart + parallelIndices2[3]) * dim};
 
     double *evalIndexValues2[4];
-    evalIndexValues2[0] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[0];
-    evalIndexValues2[1] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[1];
-    evalIndexValues2[2] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[2];
-    evalIndexValues2[3] =
-        partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[3];
+    evalIndexValues2[0] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[0];
+    evalIndexValues2[1] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[1];
+    evalIndexValues2[2] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[2];
+    evalIndexValues2[3] = partialPhiEvalsSchedule.data() + (dim + 1) * parallelIndices2[3];
 
     uint32_t *partialIndicesFlat2[4];
-    partialIndicesFlat2[0] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[0];
-    partialIndicesFlat2[1] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[1];
-    partialIndicesFlat2[2] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[2];
-    partialIndicesFlat2[3] =
-        partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[3];
+    partialIndicesFlat2[0] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[0];
+    partialIndicesFlat2[1] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[1];
+    partialIndicesFlat2[2] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[2];
+    partialIndicesFlat2[3] = partialIndicesFlatSchedule.data() + (dim + 1) * parallelIndices2[3];
 
     uint32_t indexFlat2[4];
     double phiEval2[4];
 
-    OperationMultipleEvalSubspaceCombined::calculateIndexCombined2(
-        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
-        subspace.hInverse, partialIndicesFlat, partialIndicesFlat2,
-        evalIndexValues, evalIndexValues2, indexFlat, indexFlat2, phiEval,
-        phiEval2);
+    calculateIndex2(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
+                    subspace.hInverse, partialIndicesFlat, partialIndicesFlat2, evalIndexValues,
+                    evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
 #else
-    OperationMultipleEvalSubspaceCombined::calculateIndexCombined(
-        isModLinear, dim, nextIterationToRecalc, dataTuplePtr,
-        subspace.hInverse, partialIndicesFlat, evalIndexValues, indexFlat,
-        phiEval);
+    calculateIndex(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
+                   partialIndicesFlat, evalIndexValues, indexFlat, phiEval);
 #endif
 
     double surplus[4];
@@ -120,7 +101,7 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
     surplus[2] = curSubspaceSurpluses[indexFlat[2]];
     surplus[3] = curSubspaceSurpluses[indexFlat[3]];
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
     double surplus2[4];
     surplus2[0] = curSubspaceSurpluses[indexFlat2[0]];
     surplus2[1] = curSubspaceSurpluses[indexFlat2[1]];
@@ -134,27 +115,25 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
             phiEval[innerIndex] * surplus[innerIndex];
         nextSubspaceIndex[validIndices[validIndex + innerIndex]] += 1;
       } else {
-#if X86COMBINED_ENABLE_SUBSPACE_SKIPPING == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING == 1
         // skip to next relevant subspace
-        nextSubspaceIndex[validIndices[validIndex + innerIndex]] =
-            subspace.jumpTargetIndex;
+        nextSubspaceIndex[validIndices[validIndex + innerIndex]] = subspace.jumpTargetIndex;
 #else
         nextSubspaceIndex[validIndices[validIndex + innerIndex]] += 1;
 #endif
       }
     }
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
     for (size_t innerIndex = 0; innerIndex < 4; innerIndex++) {
       if (!std::isnan(surplus2[innerIndex])) {
         componentResults[validIndices[validIndex + innerIndex + 4]] +=
             phiEval2[innerIndex] * surplus2[innerIndex];
         nextSubspaceIndex[validIndices[validIndex + innerIndex + 4]] += 1;
       } else {
-#if X86COMBINED_ENABLE_SUBSPACE_SKIPPING == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING == 1
         // skip to next relevant subspace
-        nextSubspaceIndex[validIndices[validIndex + innerIndex + 4]] =
-            subspace.jumpTargetIndex;
+        nextSubspaceIndex[validIndices[validIndex + innerIndex + 4]] = subspace.jumpTargetIndex;
 #else
         nextSubspaceIndex[validIndices[validIndex + innerIndex + 4]] += 1;
 #endif
@@ -162,7 +141,7 @@ void OperationMultipleEvalSubspaceCombined::uncachedMultTransposeInner(
     }
 
 #endif
-  } // end X86COMBINED_PARALLEL_DATA_POINTS
+  }  // end SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

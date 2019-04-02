@@ -3,18 +3,14 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "SubspaceNodeCombined.hpp"
 #include <iostream>
 #include <limits>
+#include "SubspaceAutoTuneTMPParameters.hpp"
 
-// #include <sgpp/globaldef.hpp>
+namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-#include "OperationMultipleEvalSubspaceCombinedParameters.hpp"
-#include "SubspaceNodeCombined.hpp"
-
-namespace sgpp::datadriven::SubspaceLinearCombined {
-
-SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level,
-                                           uint32_t flatLevel,
+SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level, uint32_t flatLevel,
                                            std::vector<uint32_t> &hInverse,
                                            std::vector<uint32_t> &index) {
   size_t dim = level.size();
@@ -31,7 +27,7 @@ SubspaceNodeCombined::SubspaceNodeCombined(std::vector<uint32_t> &level,
 
   for (size_t j = 0; j < dim; j++) {
     uint32_t dimTemp = hInverse[j];
-    dimTemp >>= 1; // skip even indices
+    dimTemp >>= 1;  // skip even indices
     this->gridPointsOnLevel *= dimTemp;
   }
 
@@ -61,9 +57,7 @@ SubspaceNodeCombined::SubspaceNodeCombined(size_t dim, uint32_t index) {
 
 void SubspaceNodeCombined::lockSubspace() { omp_set_lock(&this->subspaceLock); }
 
-void SubspaceNodeCombined::unlockSubspace() {
-  omp_unset_lock(&this->subspaceLock);
-}
+void SubspaceNodeCombined::unlockSubspace() { omp_unset_lock(&this->subspaceLock); }
 
 // increases number of grid points on the subspace
 void SubspaceNodeCombined::addGridPoint(std::vector<uint32_t> &index) {
@@ -92,11 +86,10 @@ void SubspaceNodeCombined::printLevel() {
 // valus) this method will decide how to best represent the subspace (list or
 // array type) and prepare the subspace for its representation
 void SubspaceNodeCombined::unpack() {
-  double usageRatio =
-      (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
+  double usageRatio = (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
 
-  if (usageRatio < X86COMBINED_LIST_RATIO &&
-      this->existingGridPointsOnLevel < X86COMBINED_STREAMING_THRESHOLD) {
+  if (usageRatio < SUBSPACEAUTOTUNETMP_LIST_RATIO &&
+      this->existingGridPointsOnLevel < SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD) {
     this->type = LIST;
   } else {
     this->type = ARRAY;
@@ -126,8 +119,7 @@ void SubspaceNodeCombined::setSurplus(size_t indexFlat, double surplus) {
     }
 
     if (!found) {
-      this->indexFlatSurplusPairs.emplace_back(
-          std::make_pair(indexFlat, surplus));
+      this->indexFlatSurplusPairs.emplace_back(std::make_pair(indexFlat, surplus));
     }
   }
 }
@@ -147,9 +139,8 @@ double SubspaceNodeCombined::getSurplus(size_t indexFlat) {
   throw;
 }
 
-uint32_t
-SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &current,
-                                               SubspaceNodeCombined &last) {
+uint32_t SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &current,
+                                                        SubspaceNodeCombined &last) {
   for (uint32_t i = 0; i < current.level.size(); i++) {
     if (current.level[i] != last.level[i]) {
       return i;
@@ -159,8 +150,7 @@ SubspaceNodeCombined::compareLexicographically(SubspaceNodeCombined &current,
   throw "illegal input";
 }
 
-bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left,
-                                           SubspaceNodeCombined right) {
+bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left, SubspaceNodeCombined right) {
   for (size_t i = 0; i < left.level.size(); i++) {
     if (left.level[i] >= right.level[i]) {
       if (left.level[i] > right.level[i]) {
@@ -174,4 +164,4 @@ bool SubspaceNodeCombined::subspaceCompare(SubspaceNodeCombined left,
   return 1;
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP

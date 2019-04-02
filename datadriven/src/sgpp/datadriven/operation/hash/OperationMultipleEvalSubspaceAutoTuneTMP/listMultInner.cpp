@@ -3,27 +3,30 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
-#include "OperationMultipleEvalSubspaceCombined.hpp"
+// #include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 
-// #include <sgpp/globaldef.hpp>
+#include <sgpp/base/datatypes/DataMatrix.hpp>
+#include <sgpp/base/datatypes/DataVector.hpp>
+#include "SubspaceAutoTuneTMPParameters.hpp"
+#include "SubspaceNodeCombined.hpp"
+#include "calculateIndex.hpp"
 
-namespace sgpp::datadriven::SubspaceLinearCombined {
+namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
-void OperationMultipleEvalSubspaceCombined::listMultInner(
-    size_t dim, sgpp::base::DataVector &alpha, size_t dataIndexBase,
-    size_t end_index_data, SubspaceNodeCombined &subspace,
-    double *levelArrayContinuous, size_t validIndicesCount,
-    size_t *validIndices, size_t *levelIndices, double *evalIndexValuesAll,
-    uint32_t *intermediatesAll) {
+void listMultInner(bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
+                   size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &alpha,
+                   size_t dataIndexBase, size_t end_index_data, SubspaceNodeCombined &subspace,
+                   double *levelArrayContinuous, size_t validIndicesCount, size_t *validIndices,
+                   size_t *levelIndices, double *evalIndexValuesAll, uint32_t *intermediatesAll) {
   for (size_t validIndex = 0; validIndex < validIndicesCount;
-       validIndex += X86COMBINED_VEC_PADDING) {
+       validIndex += SUBSPACEAUTOTUNETMP_VEC_PADDING) {
     size_t parallelIndices[4];
     parallelIndices[0] = validIndices[validIndex];
     parallelIndices[1] = validIndices[validIndex + 1];
     parallelIndices[2] = validIndices[validIndex + 2];
     parallelIndices[3] = validIndices[validIndex + 3];
 
-#if X86COMBINED_ENABLE_PARTIAL_RESULT_REUSAGE == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE == 1
     size_t nextIterationToRecalc = subspace.arriveDiff;
 #else
     size_t nextIterationToRecalc = 0;
@@ -51,7 +54,7 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     uint32_t indexFlat[4];
     double phiEval[4];
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
     size_t parallelIndices2[4];
     parallelIndices2[0] = validIndices[validIndex + 4];
     parallelIndices2[1] = validIndices[validIndex + 5];
@@ -79,14 +82,12 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     uint32_t indexFlat2[4];
     double phiEval2[4];
 
-    OperationMultipleEvalSubspaceCombined::calculateIndexCombined2(
-        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
-        subspace.hInverse, intermediates, intermediates2, evalIndexValues,
-        evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
+    calculateIndex2(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
+                    subspace.hInverse, intermediates, intermediates2, evalIndexValues,
+                    evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
 #else
-    OperationMultipleEvalSubspaceCombined::calculateIndexCombined(
-        isModLinear, dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
-        intermediates, evalIndexValues, indexFlat, phiEval);
+    calculateIndex(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
+                   intermediates, evalIndexValues, indexFlat, phiEval);
 #endif
 
     double surplus[4];
@@ -146,7 +147,7 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
     surplus[2] = levelArrayContinuous[indexFlat[2]];
     surplus[3] = levelArrayContinuous[indexFlat[3]];
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
     double surplus2[4];
     surplus2[0] = levelArrayContinuous[indexFlat2[0]];
     surplus2[1] = levelArrayContinuous[indexFlat2[1]];
@@ -161,9 +162,8 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         double partialSurplus = 0.0;
 
         if (dataIndexBase + parallelIndex < end_index_data &&
-            parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS) {
-          partialSurplus =
-              phiEval[innerIndex] * alpha[dataIndexBase + parallelIndex];
+            parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
+          partialSurplus = phiEval[innerIndex] * alpha[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat[innerIndex];
 
@@ -175,7 +175,7 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         // nextIterationToRecalcReferences[parallelIndex] = subspace.nextDiff;
         levelIndices[parallelIndex] += 1;
       } else {
-#if X86COMBINED_ENABLE_SUBSPACE_SKIPPING == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING == 1
         // skip to next relevant subspace
         // nextIterationToRecalcReferences[parallelIndex] = subspace.jumpDiff;
         levelIndices[parallelIndex] = subspace.jumpTargetIndex;
@@ -184,9 +184,9 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    } // end innerIndex
+    }  // end innerIndex
 
-#if X86COMBINED_UNROLL == 1
+#if SUBSPACEAUTOTUNETMP_UNROLL == 1
 
     // for second vector
     for (size_t innerIndex = 0; innerIndex < 4; innerIndex++) {
@@ -196,9 +196,8 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         double partialSurplus = 0.0;
 
         if (dataIndexBase + parallelIndex < end_index_data &&
-            parallelIndex < X86COMBINED_PARALLEL_DATA_POINTS) {
-          partialSurplus =
-              phiEval2[innerIndex] * alpha[dataIndexBase + parallelIndex];
+            parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
+          partialSurplus = phiEval2[innerIndex] * alpha[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat2[innerIndex];
 
@@ -210,7 +209,7 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         // nextIterationToRecalcReferences[parallelIndex] = subspace.nextDiff;
         levelIndices[parallelIndex] += 1;
       } else {
-#if X86COMBINED_ENABLE_SUBSPACE_SKIPPING == 1
+#if SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING == 1
         // skip to next relevant subspace
         // nextIterationToRecalcReferences[parallelIndex] = subspace.jumpDiff;
         levelIndices[parallelIndex] = subspace.jumpTargetIndex;
@@ -219,10 +218,10 @@ void OperationMultipleEvalSubspaceCombined::listMultInner(
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    } // end innerIndex
+    }  // end innerIndex
 
 #endif
-  } // end parallel
+  }  // end parallel
 }
 
-} // namespace sgpp::datadriven::SubspaceLinearCombined
+}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
