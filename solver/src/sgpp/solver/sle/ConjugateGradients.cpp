@@ -47,12 +47,12 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix &SystemMatrix,
   double a = 0.0;
   size_t counted_mult_calls = 0;
 
-  if (verbose == true) {
+  if (verbose) {
     std::cout << "All temp variables used in CG have been initialized"
               << std::endl;
   }
 
-  if (reuse == true) {
+  if (reuse) {
     q.setAll(0.0);
     SystemMatrix.mult(q, temp);
     counted_mult_calls += 1;
@@ -83,7 +83,7 @@ void ConjugateGradients::solve(sgpp::base::OperationMatrix &SystemMatrix,
   // this->residuum = delta_0;
   this->calcStarting();
 
-  if (verbose == true) {
+  if (verbose) {
     std::cout << "Starting norm of residuum: " << (delta_0 / epsilonSquared)
               << std::endl;
     std::cout << "Target norm:               " << (delta_0) << std::endl;

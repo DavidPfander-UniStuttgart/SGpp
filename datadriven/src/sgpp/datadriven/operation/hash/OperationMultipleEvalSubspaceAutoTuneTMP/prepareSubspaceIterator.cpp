@@ -60,7 +60,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   // find out how many grid points the largest subspace contains
   this->maxGridPointsOnLevel = 0;
 
-  for (size_t gridPoint = 0; gridPoint < this->storage.getSize(); gridPoint += 1) {
+  for (size_t gridPoint = 0; gridPoint < this->storage.getSize();
+       gridPoint += 1) {
     sgpp::base::GridPoint &point = this->storage.getPoint(gridPoint);
 
     for (size_t d = 0; d < this->dim; d++) {
@@ -70,13 +71,15 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
       maxIndex[d] = 1 << curLevel;
     }
 
-    uint32_t flatLevel =
-        OperationMultipleEvalSubspaceAutoTuneTMP::flattenLevel(this->dim, maxLevel, level);
+    uint32_t flatLevel = OperationMultipleEvalSubspaceAutoTuneTMP::flattenLevel(
+        this->dim, maxLevel, level);
 
-    std::map<uint32_t, uint32_t>::iterator it = this->allLevelsIndexMap.find(flatLevel);
+    std::map<uint32_t, uint32_t>::iterator it =
+        this->allLevelsIndexMap.find(flatLevel);
 
     if (it == this->allLevelsIndexMap.end()) {
-      this->allLevelsIndexMap.insert(std::make_pair(flatLevel, this->subspaceCount));
+      this->allLevelsIndexMap.insert(
+          std::make_pair(flatLevel, this->subspaceCount));
 
       this->allSubspaceNodes.emplace_back(level, flatLevel, maxIndex, index);
 
@@ -113,12 +116,14 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   size_t nonVirtualGridPoints = 0;
   //    vector<size_t> preferedDimBuckets(this->dim, 0);
 
-  for (size_t subspaceIndex = 0; subspaceIndex < this->subspaceCount; subspaceIndex++) {
+  for (size_t subspaceIndex = 0; subspaceIndex < this->subspaceCount;
+       subspaceIndex++) {
     SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
     // select representation
-    subspace.unpack();
+    subspace.unpack(listRatio, streamingThreshold);
 
-    this->allLevelsIndexMap.insert(std::make_pair(subspace.flatLevel, subspaceIndex));
+    this->allLevelsIndexMap.insert(
+        std::make_pair(subspace.flatLevel, subspaceIndex));
 
     // collect statistics
     totalRegularGridPoints += subspace.gridPointsOnLevel;
@@ -156,40 +161,42 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   // cout << "no. of subspaces: " << subspaceCount << endl;
   // cout << "maxLevel: " << maxLevel << endl;
 
-#ifdef SUBSPACEAUTOTUNETMP_WRITE_STATS
-  // cout << "nonVirtualGridPoints: " << nonVirtualGridPoints << endl;
-  // cout << "totalRegularGridPoints: " << totalRegularGridPoints << endl;
-  // cout << "actualGridPoints: " << actualGridPoints << endl;
-  // cout << "largestArraySubspace: " << largestArraySubspace << endl;
-  // cout << "largestListSubspace: " << largestListSubspace << endl;
-  // cout << "numberOfListSubspaces: " << numberOfListSubspaces << endl;
-  // cout << "subspaceCount: " << subspaceCount << endl;
-  // cout << "avr. points per subspace: " << ((double) nonVirtualGridPoints /
-  // (double) subspaceCount) << endl;
+  if (write_stats) {
+    // cout << "nonVirtualGridPoints: " << nonVirtualGridPoints << endl;
+    // cout << "totalRegularGridPoints: " << totalRegularGridPoints << endl;
+    // cout << "actualGridPoints: " << actualGridPoints << endl;
+    // cout << "largestArraySubspace: " << largestArraySubspace << endl;
+    // cout << "largestListSubspace: " << largestListSubspace << endl;
+    // cout << "numberOfListSubspaces: " << numberOfListSubspaces << endl;
+    // cout << "subspaceCount: " << subspaceCount << endl;
+    // cout << "avr. points per subspace: " << ((double) nonVirtualGridPoints /
+    // (double) subspaceCount) << endl;
 
-  this->statsFile << this->refinementStep << this->csvSep;
-  this->statsFile << nonVirtualGridPoints << this->csvSep;
-  this->statsFile << totalRegularGridPoints << this->csvSep;
-  this->statsFile << actualGridPoints << this->csvSep;
-  this->statsFile << largestArraySubspace << this->csvSep;
-  this->statsFile << largestListSubspace << this->csvSep;
-  this->statsFile << numberOfListSubspaces << this->csvSep;
-  this->statsFile << subspaceCount << this->csvSep;
-  this->statsFile << (static_cast<double>(nonVirtualGridPoints) /
-                      static_cast<double>(subspaceCount))
-                  << this->csvSep;
-  size_t numberOfThreads = omp_get_max_threads();
-  this->statsFile << (static_cast<double>(this->maxGridPointsOnLevel * numberOfThreads +
-                                          actualGridPoints) *
-                      8.0) /
-                         (1024.0 * 1024.0)
-                  << this->csvSep;
-  this->statsFile << static_cast<double>(this->maxGridPointsOnLevel * numberOfThreads +
-                                         actualGridPoints) /
-                         nonVirtualGridPoints
-                  << endl;
-  this->refinementStep += 1;
-#endif
+    this->statsFile << this->refinementStep << this->csvSep;
+    this->statsFile << nonVirtualGridPoints << this->csvSep;
+    this->statsFile << totalRegularGridPoints << this->csvSep;
+    this->statsFile << actualGridPoints << this->csvSep;
+    this->statsFile << largestArraySubspace << this->csvSep;
+    this->statsFile << largestListSubspace << this->csvSep;
+    this->statsFile << numberOfListSubspaces << this->csvSep;
+    this->statsFile << subspaceCount << this->csvSep;
+    this->statsFile << (static_cast<double>(nonVirtualGridPoints) /
+                        static_cast<double>(subspaceCount))
+                    << this->csvSep;
+    size_t numberOfThreads = omp_get_max_threads();
+    this->statsFile << (static_cast<double>(this->maxGridPointsOnLevel *
+                                                numberOfThreads +
+                                            actualGridPoints) *
+                        8.0) /
+                           (1024.0 * 1024.0)
+                    << this->csvSep;
+    this->statsFile << static_cast<double>(this->maxGridPointsOnLevel *
+                                               numberOfThreads +
+                                           actualGridPoints) /
+                           nonVirtualGridPoints
+                    << std::endl;
+    this->refinementStep += 1;
+  }
 
   // add padding subspace at the end
   this->allSubspaceNodes.emplace_back(this->dim, this->subspaceCount);
@@ -198,8 +205,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   // now the jump links can be created
   //////////////////////////////////////
 
-  // marker for the padding subspace - traversal is finished when this subspace
-  // is reached
+  // marker for the padding subspace - traversal is finished when this
+  // subspace is reached
   uint32_t computationFinishedMarker = this->subspaceCount;
 
   // tracks at which position the next subspace can be found that has a higher
@@ -225,10 +232,10 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
     currentNode.jumpTargetIndex = jumpIndexMap[recomputeComponentPreviousNode];
 
     // update jump map
-    // current node is a valid jump target for all predeccessors that change in
-    // one of the higher dims sssssssssss <change> uuuuuuuu (s = same component,
-    // u = different component) for predecessors that changed in the "u" array,
-    // jump to the current node they also update the jump map
+    // current node is a valid jump target for all predeccessors that change
+    // in one of the higher dims sssssssssss <change> uuuuuuuu (s = same
+    // component, u = different component) for predecessors that changed in
+    // the "u" array, jump to the current node they also update the jump map
     for (size_t j = recomputeComponentPreviousNode + 1; j < dim; j++) {
       jumpIndexMap[j] = static_cast<uint32_t>(i);
     }
@@ -240,7 +247,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
   // subspace
   SubspaceNode &firstNode = this->allSubspaceNodes[0];
   firstNode.jumpTargetIndex = computationFinishedMarker;
-  firstNode.arriveDiff = 0;  // recompute all dimensions at the first subspace
+  firstNode.arriveDiff = 0; // recompute all dimensions at the first subspace
 }
 
-}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
+} // namespace sgpp::datadriven::SubspaceAutoTuneTMP

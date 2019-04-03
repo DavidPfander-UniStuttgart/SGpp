@@ -7,7 +7,7 @@
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
 #include "../../datadriven/src/sgpp/datadriven/operation/hash/OperationMultipleEvalSubspaceAutoTuneTMP/SubspaceNode.hpp"
-#include "../SubspaceAutoTuneTMPParameters.hpp"
+// #include "../SubspaceAutoTuneTMPParameters.hpp"
 #include "../calculateIndex.hpp"
 
 #include "autotune_kernel.hpp"

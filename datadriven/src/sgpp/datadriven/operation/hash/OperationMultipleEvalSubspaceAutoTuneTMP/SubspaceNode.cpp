@@ -6,12 +6,12 @@
 #include "SubspaceNode.hpp"
 #include <iostream>
 #include <limits>
-#include "SubspaceAutoTuneTMPParameters.hpp"
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
 SubspaceNode::SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel,
-                           std::vector<uint32_t> &hInverse, std::vector<uint32_t> &index) {
+                           std::vector<uint32_t> &hInverse,
+                           std::vector<uint32_t> &index) {
   size_t dim = level.size();
   this->level = level;
   this->hInverse = hInverse;
@@ -26,7 +26,7 @@ SubspaceNode::SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel,
 
   for (size_t j = 0; j < dim; j++) {
     uint32_t dimTemp = hInverse[j];
-    dimTemp >>= 1;  // skip even indices
+    dimTemp >>= 1; // skip even indices
     this->gridPointsOnLevel *= dimTemp;
   }
 
@@ -84,11 +84,12 @@ void SubspaceNode::printLevel() {
 // unpack has to be called when the subspace is set up (except for surplus
 // valus) this method will decide how to best represent the subspace (list or
 // array type) and prepare the subspace for its representation
-void SubspaceNode::unpack() {
-  double usageRatio = (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
+void SubspaceNode::unpack(double listRatio, int64_t streamingThreshold) {
+  double usageRatio =
+      (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
 
-  if (usageRatio < SUBSPACEAUTOTUNETMP_LIST_RATIO &&
-      this->existingGridPointsOnLevel < SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD) {
+  if (usageRatio < listRatio &&
+      this->existingGridPointsOnLevel < streamingThreshold) {
     this->type = LIST;
   } else {
     this->type = ARRAY;
@@ -118,7 +119,8 @@ void SubspaceNode::setSurplus(size_t indexFlat, double surplus) {
     }
 
     if (!found) {
-      this->indexFlatSurplusPairs.emplace_back(std::make_pair(indexFlat, surplus));
+      this->indexFlatSurplusPairs.emplace_back(
+          std::make_pair(indexFlat, surplus));
     }
   }
 }
@@ -138,7 +140,8 @@ double SubspaceNode::getSurplus(size_t indexFlat) {
   throw;
 }
 
-uint32_t SubspaceNode::compareLexicographically(SubspaceNode &current, SubspaceNode &last) {
+uint32_t SubspaceNode::compareLexicographically(SubspaceNode &current,
+                                                SubspaceNode &last) {
   for (uint32_t i = 0; i < current.level.size(); i++) {
     if (current.level[i] != last.level[i]) {
       return i;
@@ -162,4 +165,4 @@ bool SubspaceNode::subspaceCompare(SubspaceNode &left, SubspaceNode &right) {
   return 1;
 }
 
-}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
+} // namespace sgpp::datadriven::SubspaceAutoTuneTMP

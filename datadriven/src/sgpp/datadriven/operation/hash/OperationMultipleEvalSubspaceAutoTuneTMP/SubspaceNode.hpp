@@ -5,14 +5,14 @@
 
 #pragma once
 
-#include <omp.h>
 #include <cinttypes>
+#include <omp.h>
 #include <vector>
 
 namespace sgpp::datadriven::SubspaceAutoTuneTMP {
 
 class SubspaceNode {
- public:
+public:
   enum SubspaceType { NOT_SET, ARRAY, LIST };
 
   std::vector<uint32_t> level;
@@ -32,8 +32,8 @@ class SubspaceNode {
   // every node that reaches this subspace has to calculate this diff
   uint32_t arriveDiff;
 
-  SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel, std::vector<uint32_t> &hInverse,
-               std::vector<uint32_t> &index);
+  SubspaceNode(std::vector<uint32_t> &level, uint32_t flatLevel,
+               std::vector<uint32_t> &hInverse, std::vector<uint32_t> &index);
 
   SubspaceNode(size_t dim, uint32_t index);
 
@@ -49,7 +49,7 @@ class SubspaceNode {
   // unpack has to be called when the subspace is set up (except for surplus
   // valus) this method will decide how to best represent the subspace (list or
   // array type) and prepare the subspace for its representation
-  void unpack();
+  void unpack(double listRatio, int64_t streamingThreshold);
 
   // the first call initializes the array for ARRAY type subspaces
   //
@@ -58,9 +58,10 @@ class SubspaceNode {
   // the first call initializes the array for ARRAY type subspaces
   double getSurplus(size_t indexFlat);
 
-  static uint32_t compareLexicographically(SubspaceNode &current, SubspaceNode &last);
+  static uint32_t compareLexicographically(SubspaceNode &current,
+                                           SubspaceNode &last);
 
   static bool subspaceCompare(SubspaceNode &left, SubspaceNode &right);
 };
 
-}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
+} // namespace sgpp::datadriven::SubspaceAutoTuneTMP
