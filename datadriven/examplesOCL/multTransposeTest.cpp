@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
   //  std::string fileName = "DR5_train.arff";
   // std::string fileName = "debugging_small.arff";
 
-  uint32_t level = 5;
+  uint32_t level = 3;
 
   sgpp::base::AdaptivityConfiguration adaptConfig;
   adaptConfig.maxLevelType_ = false;

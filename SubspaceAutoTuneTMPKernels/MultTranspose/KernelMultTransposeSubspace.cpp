@@ -3,26 +3,95 @@
 // use, please see the copyright notice provided with SG++ or at
 // sgpp.sparsegrids.org
 
+#include "../../datadriven/src/sgpp/datadriven/operation/hash/OperationMultipleEvalSubspaceAutoTuneTMP/SubspaceNode.hpp"
 #include <array>
 #include <sgpp/base/datatypes/DataMatrix.hpp>
 #include <sgpp/base/datatypes/DataVector.hpp>
-#include "../../datadriven/src/sgpp/datadriven/operation/hash/OperationMultipleEvalSubspaceAutoTuneTMP/SubspaceNode.hpp"
 // #include "../SubspaceAutoTuneTMPParameters.hpp"
+#include "../../datadriven/src/sgpp/datadriven/tools/PartitioningTool.hpp"
 #include "../calculateIndex.hpp"
+#include <cmath>
+#include <sgpp/base/grid/GridStorage.hpp>
 
 #include "autotune_kernel.hpp"
 
-
 using namespace sgpp::datadriven::SubspaceAutoTuneTMP;
 
-namespace sgpp::datadriven::SubspaceAutoTuneTMP {
+namespace sgpp::datadriven::SubspaceAutoTuneTMP::detail {
 
-void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
-                            size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &alpha,
-                            size_t dataIndexBase, size_t end_index_data, SubspaceNode &subspace,
-                            double *levelArrayContinuous, size_t validIndicesCount,
-                            size_t *validIndices, size_t *levelIndices, double *evalIndexValuesAll,
-                            uint32_t *intermediatesAll) {
+static inline uint32_t flattenIndex(const size_t dim,
+                                    const std::vector<uint32_t> &maxIndices,
+                                    const std::vector<uint32_t> &index) {
+  uint32_t indexFlat = index[0];
+  indexFlat >>= 1;
+
+  for (size_t i = 1; i < dim; i++) {
+    uint32_t actualDirectionGridPoints = maxIndices[i];
+    actualDirectionGridPoints >>= 1;
+    indexFlat *= actualDirectionGridPoints;
+    uint32_t actualIndex = index[i];
+    actualIndex >>= 1; // divide index by 2, skip even indices
+    indexFlat += actualIndex;
+  }
+
+  return indexFlat;
+}
+
+static inline uint32_t flattenLevel(size_t dim, size_t maxLevel,
+                                    std::vector<uint32_t> &level) {
+  uint32_t levelFlat = 0;
+  levelFlat += level[dim - 1];
+
+  // loop terminates at -1
+  for (int i = static_cast<int>(dim - 2); i >= 0; i--) {
+    levelFlat *= static_cast<uint32_t>(maxLevel);
+    levelFlat += level[i];
+  }
+
+  return levelFlat;
+}
+
+// writes a result vector in the order of the points in the grid storage
+void unflatten(size_t dim, std::vector<SubspaceNode> &allSubspaceNodes,
+               std::map<uint32_t, uint32_t> &allLevelsIndexMap,
+               sgpp::base::GridStorage &storage, size_t maxLevel,
+               sgpp::base::DataVector &result) {
+  std::vector<uint32_t> level(dim);
+  std::vector<uint32_t> maxIndices(dim);
+  std::vector<uint32_t> index(dim);
+
+  base::level_t curLevel;
+  base::index_t curIndex;
+
+  for (size_t gridIndex = 0; gridIndex < storage.getSize(); gridIndex++) {
+    sgpp::base::GridPoint &point = storage.getPoint(gridIndex);
+
+    for (size_t d = 0; d < dim; d++) {
+      point.get(d, curLevel, curIndex);
+      level[d] = curLevel;
+      index[d] = curIndex;
+      maxIndices[d] = 1 << curLevel;
+    }
+
+    uint32_t levelFlat = flattenLevel(dim, maxLevel, level);
+    uint32_t subspaceIndex = allLevelsIndexMap.find(levelFlat)->second;
+    SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
+
+    uint32_t indexFlat = flattenIndex(dim, maxIndices, index);
+    double surplus = subspace.getSurplus(indexFlat);
+    if (!std::isnan(surplus)) {
+      result.set(gridIndex, surplus);
+    }
+  }
+}
+
+void listMultTransposeInner(
+    bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
+    size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &source,
+    size_t dataIndexBase, size_t end_index_data, SubspaceNode &subspace,
+    double *levelArrayContinuous, size_t validIndicesCount,
+    size_t *validIndices, size_t *levelIndices, double *evalIndexValuesAll,
+    uint32_t *intermediatesAll) {
   for (size_t validIndex = 0; validIndex < validIndicesCount;
        validIndex += SUBSPACEAUTOTUNETMP_VEC_PADDING) {
     size_t parallelIndices[4];
@@ -87,12 +156,14 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
     uint32_t indexFlat2[4];
     double phiEval2[4];
 
-    calculateIndex2(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, dataTuplePtr2,
-                    subspace.hInverse, intermediates, intermediates2, evalIndexValues,
-                    evalIndexValues2, indexFlat, indexFlat2, phiEval, phiEval2);
+    calculateIndex2(isModLinear, dim, nextIterationToRecalc, dataTuplePtr,
+                    dataTuplePtr2, subspace.hInverse, intermediates,
+                    intermediates2, evalIndexValues, evalIndexValues2,
+                    indexFlat, indexFlat2, phiEval, phiEval2);
 #else
-    calculateIndex(isModLinear, dim, nextIterationToRecalc, dataTuplePtr, subspace.hInverse,
-                   intermediates, evalIndexValues, indexFlat, phiEval);
+    calculateIndex(isModLinear, dim, nextIterationToRecalc, dataTuplePtr,
+                   subspace.hInverse, intermediates, evalIndexValues, indexFlat,
+                   phiEval);
 #endif
 
     double surplus[4];
@@ -168,7 +239,8 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
 
         if (dataIndexBase + parallelIndex < end_index_data &&
             parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
-          partialSurplus = phiEval[innerIndex] * alpha[dataIndexBase + parallelIndex];
+          partialSurplus =
+              phiEval[innerIndex] * source[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat[innerIndex];
 
@@ -189,7 +261,7 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    }  // end innerIndex
+    } // end innerIndex
 
 #if SUBSPACEAUTOTUNETMP_UNROLL == 1
 
@@ -202,7 +274,8 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
 
         if (dataIndexBase + parallelIndex < end_index_data &&
             parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
-          partialSurplus = phiEval2[innerIndex] * alpha[dataIndexBase + parallelIndex];
+          partialSurplus =
+              phiEval2[innerIndex] * source[dataIndexBase + parallelIndex];
 
           size_t localIndexFlat = indexFlat2[innerIndex];
 
@@ -223,156 +296,187 @@ void listMultTransposeInner(bool isModLinear, sgpp::base::DataMatrix &paddedData
         levelIndices[parallelIndex] += 1;
 #endif
       }
-    }  // end innerIndex
+    } // end innerIndex
 
 #endif
-  }  // end parallel
+  } // end parallel
 }
 
-}  // namespace sgpp::datadriven::SubspaceAutoTuneTMP
+} // namespace sgpp::datadriven::SubspaceAutoTuneTMP::detail
 
-AUTOTUNE_EXPORT void KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
-                                 sgpp::base::DataMatrix &paddedDataset, size_t paddedDatasetSize,
-                                 std::vector<SubspaceNode> &allSubspaceNodes,
-                                 sgpp::base::DataVector &alpha, sgpp::base::DataVector &result,
-                                 size_t start_index_data, size_t end_index_data) {
-  // size_t tid = omp_get_thread_num();
-  // if (tid == 0) {
-  //   setCoefficients(result);
-  // }
-  // #pragma omp barrier
+AUTOTUNE_EXPORT sgpp::base::DataVector
+KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
+                            sgpp::base::DataMatrix &paddedDataset,
+                            size_t paddedDatasetSize,
+                            sgpp::base::GridStorage &storage,
+                            std::vector<SubspaceNode> &allSubspaceNodes,
+                            std::map<uint32_t, uint32_t> &allLevelsIndexMap,
+                            size_t maxLevel, sgpp::base::DataVector &source) {
 
   size_t dim = paddedDataset.getNcols();
 
-  size_t totalThreadNumber =
-      SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING;
+#pragma omp parallel
+  {
+    size_t chunk_data_start;
+    size_t chunk_data_end;
+    sgpp::datadriven::PartitioningTool::getOpenMPPartitionSegment(
+        0, paddedDatasetSize, &chunk_data_start, &chunk_data_end,
+        SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS);
 
-  double *evalIndexValuesAll = new double[(dim + 1) * totalThreadNumber];
+    // size_t tid = omp_get_thread_num();
+    // if (tid == 0) {
+    //   setCoefficients(result);
+    // }
+    // #pragma omp barrier
 
-  for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
-    evalIndexValuesAll[i] = 1.0;
-  }
+    size_t totalThreadNumber = SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
+                               SUBSPACEAUTOTUNETMP_VEC_PADDING;
 
-  // for faster index flattening
-  uint32_t *intermediatesAll = new uint32_t[(dim + 1) * totalThreadNumber];
+    double *evalIndexValuesAll = new double[(dim + 1) * totalThreadNumber];
 
-  for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
-    intermediatesAll[i] = 0.0;
-  }
-
-  size_t validIndices[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING];
-  size_t validIndicesCount;
-
-  size_t levelIndices[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING];
-  // size_t nextIterationToRecalcReferences[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
-  // SUBSPACEAUTOTUNETMP_VEC_PADDING];
-
-  double *listSubspace = new double[maxGridPointsOnLevel];
-
-  for (size_t i = 0; i < maxGridPointsOnLevel; i++) {
-    listSubspace[i] = std::numeric_limits<double>::quiet_NaN();
-  }
-
-  /*uint64_t jumpCount = 0;
-  uint64_t jumpDistance = 0;
-  uint64_t evaluationCounter = 0;
-  uint64_t recomputeDimsTotal = 0;
-  vector<uint64_t> dimRecalc(dim, 0);*/
-
-  for (size_t dataIndexBase = start_index_data; dataIndexBase < end_index_data;
-       dataIndexBase += SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
-    for (size_t i = 0; i < totalThreadNumber; i++) {
-      levelIndices[i] = 0.0;
-      // nextIterationToRecalcReferences[i] = 0;
+    for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
+      evalIndexValuesAll[i] = 1.0;
     }
 
-    for (size_t subspaceIndex = 0; subspaceIndex < allSubspaceNodes.size() - 1; subspaceIndex++) {
-      SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
+    // for faster index flattening
+    uint32_t *intermediatesAll = new uint32_t[(dim + 1) * totalThreadNumber];
 
-      // prepare the subspace array for a list type subspace
-      if (subspace.type == SubspaceNode::SubspaceType::LIST) {
-        // std::cout << "subspace type is LIST" << std::endl;
-        // fill with surplusses
-        for (std::pair<uint32_t, double> tuple : subspace.indexFlatSurplusPairs) {
-          // accumulator that are later added to the global surplusses
-          listSubspace[tuple.first] = 0.0;
-        }
+    for (size_t i = 0; i < (dim + 1) * totalThreadNumber; i++) {
+      intermediatesAll[i] = 0.0;
+    }
+
+    size_t validIndices[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
+                        SUBSPACEAUTOTUNETMP_VEC_PADDING];
+    size_t validIndicesCount;
+
+    size_t levelIndices[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
+                        SUBSPACEAUTOTUNETMP_VEC_PADDING];
+    // size_t
+    // nextIterationToRecalcReferences[SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS
+    // + SUBSPACEAUTOTUNETMP_VEC_PADDING];
+
+    double *listSubspace = new double[maxGridPointsOnLevel];
+
+    for (size_t i = 0; i < maxGridPointsOnLevel; i++) {
+      listSubspace[i] = std::numeric_limits<double>::quiet_NaN();
+    }
+
+    /*uint64_t jumpCount = 0;
+    uint64_t jumpDistance = 0;
+    uint64_t evaluationCounter = 0;
+    uint64_t recomputeDimsTotal = 0;
+    vector<uint64_t> dimRecalc(dim, 0);*/
+
+    for (size_t dataIndexBase = chunk_data_start;
+         dataIndexBase < chunk_data_end;
+         dataIndexBase += SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS) {
+      for (size_t i = 0; i < totalThreadNumber; i++) {
+        levelIndices[i] = 0.0;
+        // nextIterationToRecalcReferences[i] = 0;
       }
 
-      validIndicesCount = 0;
+      for (size_t subspaceIndex = 0;
+           subspaceIndex < allSubspaceNodes.size() - 1; subspaceIndex++) {
+        SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
 
-      for (size_t parallelIndex = 0; parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS;
-           parallelIndex++) {
-        size_t parallelLevelIndex = levelIndices[parallelIndex];
-
-        if (parallelLevelIndex == subspaceIndex) {
-          validIndices[validIndicesCount] = parallelIndex;
-          validIndicesCount += 1;
-        }
-      }
-
-      // padding for up to vector size, no padding required if all data tuples
-      // participate as the number of data points is a multiple of the vector
-      // width
-      size_t paddingSize =
-          std::min((int)(validIndicesCount + SUBSPACEAUTOTUNETMP_VEC_PADDING),
-                   SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + SUBSPACEAUTOTUNETMP_VEC_PADDING);
-
-      for (size_t i = validIndicesCount; i < paddingSize; i++) {
-        size_t threadId = SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS + (i - validIndicesCount);
-        validIndices[i] = threadId;
-        levelIndices[threadId] = 0;
-        // nextIterationToRecalcReferences[threadId] = 0;
-        double *evalIndexValues = evalIndexValuesAll + (dim + 1) * threadId;
-
-        // for faster index flattening, last element is for padding
-        uint32_t *intermediates = intermediatesAll + (dim + 1) * threadId;
-
-        for (size_t j = 0; j < dim; j++) {
-          evalIndexValues[j] = 1.0;
-          intermediates[j] = 0;
-        }
-      }
-
-      if (subspace.type == SubspaceNode::SubspaceType::ARRAY) {
-        // lock the current subspace, so that no atomic writes are necessary
-        subspace.lockSubspace();
-
-        listMultTransposeInner(isModLinear, paddedDataset, paddedDatasetSize, dim, alpha,
-                               dataIndexBase, end_index_data, subspace,
-                               subspace.subspaceArray.data(), validIndicesCount, validIndices,
-                               levelIndices, evalIndexValuesAll, intermediatesAll);
-
-        // unlocks the subspace lock for ARRAY and BLUEPRINT type subspaces
-        subspace.unlockSubspace();
-
-      } else if (subspace.type == SubspaceNode::SubspaceType::LIST) {
-        listMultTransposeInner(isModLinear, paddedDataset, paddedDatasetSize, dim, alpha,
-                               dataIndexBase, end_index_data, subspace, listSubspace,
-                               validIndicesCount, validIndices, levelIndices, evalIndexValuesAll,
-                               intermediatesAll);
-
-        // write results into the global surplus array
+        // prepare the subspace array for a list type subspace
         if (subspace.type == SubspaceNode::SubspaceType::LIST) {
-          for (std::pair<uint32_t, double> &tuple : subspace.indexFlatSurplusPairs) {
-            if (listSubspace[tuple.first] != 0.0) {
-#pragma omp atomic
-              tuple.second += listSubspace[tuple.first];
-            }
-
-            listSubspace[tuple.first] = std::numeric_limits<double>::quiet_NaN();
+          // std::cout << "subspace type is LIST" << std::endl;
+          // fill with surplusses
+          for (std::pair<uint32_t, double> tuple :
+               subspace.indexFlatSurplusPairs) {
+            // accumulator that are later added to the global surplusses
+            listSubspace[tuple.first] = 0.0;
           }
         }
-      }
-    }  // end iterate subspaces
-  }    // end iterate chunks
 
-  delete[] evalIndexValuesAll;
-  delete[] intermediatesAll;
-  delete[] listSubspace;
+        validIndicesCount = 0;
 
-  // #pragma omp barrier
-  //   if (tid == 0) {
-  //     this->unflatten(result);
-  //   }
+        for (size_t parallelIndex = 0;
+             parallelIndex < SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS;
+             parallelIndex++) {
+          size_t parallelLevelIndex = levelIndices[parallelIndex];
+
+          if (parallelLevelIndex == subspaceIndex) {
+            validIndices[validIndicesCount] = parallelIndex;
+            validIndicesCount += 1;
+          }
+        }
+
+        // padding for up to vector size, no padding required if all data tuples
+        // participate as the number of data points is a multiple of the vector
+        // width
+        size_t paddingSize =
+            std::min((int)(validIndicesCount + SUBSPACEAUTOTUNETMP_VEC_PADDING),
+                     SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
+                         SUBSPACEAUTOTUNETMP_VEC_PADDING);
+
+        for (size_t i = validIndicesCount; i < paddingSize; i++) {
+          size_t threadId = SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
+                            (i - validIndicesCount);
+          validIndices[i] = threadId;
+          levelIndices[threadId] = 0;
+          // nextIterationToRecalcReferences[threadId] = 0;
+          double *evalIndexValues = evalIndexValuesAll + (dim + 1) * threadId;
+
+          // for faster index flattening, last element is for padding
+          uint32_t *intermediates = intermediatesAll + (dim + 1) * threadId;
+
+          for (size_t j = 0; j < dim; j++) {
+            evalIndexValues[j] = 1.0;
+            intermediates[j] = 0;
+          }
+        }
+
+        if (subspace.type == SubspaceNode::SubspaceType::ARRAY) {
+          // lock the current subspace, so that no atomic writes are necessary
+          subspace.lockSubspace();
+
+          detail::listMultTransposeInner(
+              isModLinear, paddedDataset, paddedDatasetSize, dim, source,
+              dataIndexBase, chunk_data_end, subspace,
+              subspace.subspaceArray.data(), validIndicesCount, validIndices,
+              levelIndices, evalIndexValuesAll, intermediatesAll);
+
+          // unlocks the subspace lock for ARRAY and BLUEPRINT type subspaces
+          subspace.unlockSubspace();
+
+        } else if (subspace.type == SubspaceNode::SubspaceType::LIST) {
+          detail::listMultTransposeInner(
+              isModLinear, paddedDataset, paddedDatasetSize, dim, source,
+              dataIndexBase, chunk_data_end, subspace, listSubspace,
+              validIndicesCount, validIndices, levelIndices, evalIndexValuesAll,
+              intermediatesAll);
+
+          // write results into the global surplus array
+          if (subspace.type == SubspaceNode::SubspaceType::LIST) {
+            for (std::pair<uint32_t, double> &tuple :
+                 subspace.indexFlatSurplusPairs) {
+              if (listSubspace[tuple.first] != 0.0) {
+#pragma omp atomic
+                tuple.second += listSubspace[tuple.first];
+              }
+
+              listSubspace[tuple.first] =
+                  std::numeric_limits<double>::quiet_NaN();
+            }
+          }
+        }
+      } // end iterate subspaces
+    }   // end iterate chunks
+
+    delete[] evalIndexValuesAll;
+    delete[] intermediatesAll;
+    delete[] listSubspace;
+
+    // #pragma omp barrier
+    //   if (tid == 0) {
+    //     this->unflatten(result);
+    //   }
+  }
+
+  sgpp::base::DataVector result(storage.getSize());
+  sgpp::datadriven::SubspaceAutoTuneTMP::detail::unflatten(
+      dim, allSubspaceNodes, allLevelsIndexMap, storage, maxLevel, result);
+  return result;
 }

@@ -59,6 +59,8 @@ private:
   // type, unroll requires 2*vector-size
   int64_t vectorPadding;
 
+  const uint64_t AVX_vector_width = 4;
+
   /**
    * Creates the data structure used by the operation.
    */
@@ -162,9 +164,14 @@ public:
   void set_write_stats(const std::string &stats_file_name,
                        const std::string &name = "");
 
-  // void tune_mult(sgpp::base::DataVector &alpha, sgpp::base::DataVector &result,
-  //                const std::string &scenario_name,
-  //                const std::string &tuner_name);
+  void tune_mult(sgpp::base::DataVector &alpha, sgpp::base::DataVector &result,
+                 const std::string &scenario_name,
+                 const std::string &tuner_name, uint32_t repetitions);
+
+  void tune_multTranspose(sgpp::base::DataVector &source,
+                          sgpp::base::DataVector &result,
+                          const std::string &scenario_name,
+                          const std::string &tuner_name, uint32_t repetitions);
 };
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP
