@@ -27,6 +27,6 @@ echo "${cmd}" > results_diss/friedman1_subspace_${hn}_${device_name}.log
 
 # DR5
 echo "DR5, host: ${hn}, device: ${device_name}"
-cmd="./datadriven/examplesOCL/regression_cmd --trainingFileName ../../DissertationCodeGTX/datasets/DR5/DR5_nowarnings_less05_train.arff --testFileName ../../DissertationCodeGTX/datasets/DR5/DR5_nowarnings_less05_test.arff --learnerMode LEARNTEST --grid.level 10 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 300 --solverFinal.eps 0 --isRegression true --adaptConfig.support_refinement_min_support 500 --adaptConfig.use_support_refinement"
+cmd="./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --testFileName ../../DissertationCodeGTX/datasets/DR5/DR5_nowarnings_less05_test.arff --learnerMode LEARNTEST --grid.level 10 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 300 --solverFinal.eps 0 --isRegression true --adaptConfig.support_refinement_min_support 500 --adaptConfig.use_support_refinement"
 echo "${cmd}" > results_diss/DR5_subspace_${hn}_${device_name}.log
 ./${cmd} >> results_diss/DR5_subspace_${hn}_${device_name}.log
