@@ -85,6 +85,35 @@ void unflatten(size_t dim, std::vector<SubspaceNode> &allSubspaceNodes,
   }
 }
 
+void zeroCoefficients(size_t dim, sgpp::base::GridStorage &storage,
+                      std::vector<SubspaceNode> &allSubspaceNodes,
+                      std::map<uint32_t, uint32_t> &allLevelsIndexMap,
+                      size_t &maxLevel) {
+  std::vector<uint32_t> level(dim);
+  std::vector<uint32_t> maxIndices(dim);
+  std::vector<uint32_t> index(dim);
+
+  base::level_t curLevel;
+  base::index_t curIndex;
+
+  for (size_t gridPoint = 0; gridPoint < storage.getSize(); gridPoint += 1) {
+    sgpp::base::GridPoint &point = storage.getPoint(gridPoint);
+
+    for (size_t d = 0; d < dim; d += 1) {
+      point.get(d, curLevel, curIndex);
+      level[d] = curLevel;
+      index[d] = curIndex;
+      maxIndices[d] = 1 << curLevel;
+    }
+
+    uint32_t levelFlat = flattenLevel(dim, maxLevel, level);
+    uint32_t indexFlat = flattenIndex(dim, maxIndices, index);
+    uint32_t subspaceIndex = allLevelsIndexMap.find(levelFlat)->second;
+    SubspaceNode &subspace = allSubspaceNodes[subspaceIndex];
+    subspace.setSurplus(indexFlat, 0.0);
+  }
+}
+
 void listMultTransposeInner(
     bool isModLinear, sgpp::base::DataMatrix &paddedDataset,
     size_t paddedDatasetSize, size_t dim, sgpp::base::DataVector &source,
@@ -167,57 +196,6 @@ void listMultTransposeInner(
 #endif
 
     double surplus[4];
-    // for (size_t i = 0; i < 4; i += 1) {
-    //   if (indexFlat[i] >= subspace.gridPointsOnLevel) {
-    //     std::cout << "l: ";
-    //     for (size_t j = 0; j < dim; j += 1) {
-    //       if (j > 0) {
-    //         std::cout << ", ";
-    //       }
-    //       std::cout << subspace.level[j];
-    //     }
-    //     std::cout << std::endl;
-    //     std::cout << "hInverse: ";
-    //     for (size_t j = 0; j < dim; j += 1) {
-    //       if (j > 0) {
-    //         std::cout << ", ";
-    //       }
-    //       std::cout << subspace.hInverse[j];
-    //     }
-    //     std::cout << std::endl;
-    //     std::cout << "dataTuplePtr: ";
-    //     for (size_t j = 0; j < dim; j += 1) {
-    //       if (j > 0) {
-    //         std::cout << ", ";
-    //       }
-    //       std::cout << dataTuplePtr[i][j];
-    //     }
-    //     std::cout << std::endl;
-    //     std::cout << "intermediates: "
-    //               << intermediates[i][nextIterationToRecalc] << std::endl;
-    //     std::cout << "evalIndexValues: "
-    //               << evalIndexValues[i][nextIterationToRecalc] << std::endl;
-    //     std::cout << "phiEval: " << phiEval[i] << std::endl;
-    //     std::cout << "existingGridPointsOnLevel: "
-    //               << subspace.existingGridPointsOnLevel << std::endl;
-    //     std::cout << "nextIterationToRecalc: " << nextIterationToRecalc
-    //               << std::endl;
-    //     std::cout << "parallelIndices[" << i << "] = " << parallelIndices[i]
-    //               << std::endl;
-    //     std::cout << "indexFlat[" << i << "]: " << indexFlat[i] << std::endl;
-    //     // throw;
-    //   }
-    // }
-    // for (size_t i = 0; i < 4; i += 1) {
-    //   if (indexFlat[i] >= subspace.gridPointsOnLevel) {
-    //     throw;
-    //   }
-    // }
-
-    // std::cout << "indexFlat 0: " << indexFlat[0]
-    //           << "indexFlat 1: " << indexFlat[1]
-    //           << "indexFlat 2: " << indexFlat[2]
-    //           << "indexFlat 3: " << indexFlat[3] << std::endl;
     surplus[0] = levelArrayContinuous[indexFlat[0]];
     surplus[1] = levelArrayContinuous[indexFlat[1]];
     surplus[2] = levelArrayContinuous[indexFlat[2]];
@@ -305,15 +283,62 @@ void listMultTransposeInner(
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP::detail
 
 AUTOTUNE_EXPORT sgpp::base::DataVector
-KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
+KernelMultTransposeSubspace(size_t &maxGridPointsOnLevel, bool &isModLinear,
                             sgpp::base::DataMatrix &paddedDataset,
-                            size_t paddedDatasetSize,
+                            size_t &paddedDatasetSize,
                             sgpp::base::GridStorage &storage,
                             std::vector<SubspaceNode> &allSubspaceNodes,
                             std::map<uint32_t, uint32_t> &allLevelsIndexMap,
-                            size_t maxLevel, sgpp::base::DataVector &source) {
+                            size_t &maxLevel, sgpp::base::DataVector &source) {
 
   size_t dim = paddedDataset.getNcols();
+
+  // initialize surpluses to zero in subspace data structure
+  sgpp::datadriven::SubspaceAutoTuneTMP::detail::zeroCoefficients(
+      dim, storage, allSubspaceNodes, allLevelsIndexMap, maxLevel);
+
+  // std::cout << "source.size(): " << source.size() << std::endl;
+  // std::cout << "maxGridPointsOnLevel: " << maxGridPointsOnLevel << std::endl;
+  // std::cout << "isModLinear: " << isModLinear << std::endl;
+  // std::cout << "maxLevel: " << maxLevel << std::endl;
+  // std::cout << "source (first 20): ";
+  // for (size_t i = 0; i < 20; i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << source[i];
+  // }
+  // std::cout << std::endl;
+  // std::cout << "source (last 20): ";
+  // for (size_t i = source.size() - 20; i < source.size(); i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << source[i];
+  // }
+  // std::cout << std::endl;
+
+  // sgpp::base::DataVector temp(storage.getSize());
+  // sgpp::datadriven::SubspaceAutoTuneTMP::detail::unflatten(
+  //     dim, allSubspaceNodes, allLevelsIndexMap, storage, maxLevel, temp);
+
+  // std::cout << "temp.size(): " << temp.size() << std::endl;
+  // std::cout << "temp (first 20): ";
+  // for (size_t i = 0; i < 20; i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << temp[i];
+  // }
+  // std::cout << std::endl;
+  // std::cout << "temp (last 20): ";
+  // for (size_t i = temp.size() - 20; i < temp.size(); i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << temp[i];
+  // }
+  // std::cout << std::endl;
 
 #pragma omp parallel
   {
@@ -322,12 +347,6 @@ KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
     sgpp::datadriven::PartitioningTool::getOpenMPPartitionSegment(
         0, paddedDatasetSize, &chunk_data_start, &chunk_data_end,
         SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS);
-
-    // size_t tid = omp_get_thread_num();
-    // if (tid == 0) {
-    //   setCoefficients(result);
-    // }
-    // #pragma omp barrier
 
     size_t totalThreadNumber = SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS +
                                SUBSPACEAUTOTUNETMP_VEC_PADDING;
@@ -449,17 +468,17 @@ KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
               intermediatesAll);
 
           // write results into the global surplus array
-          if (subspace.type == SubspaceNode::SubspaceType::LIST) {
-            for (std::pair<uint32_t, double> &tuple :
-                 subspace.indexFlatSurplusPairs) {
-              if (listSubspace[tuple.first] != 0.0) {
+          // if (subspace.type == SubspaceNode::SubspaceType::LIST) {
+          for (std::pair<uint32_t, double> &tuple :
+               subspace.indexFlatSurplusPairs) {
+            if (listSubspace[tuple.first] != 0.0) {
 #pragma omp atomic
-                tuple.second += listSubspace[tuple.first];
-              }
-
-              listSubspace[tuple.first] =
-                  std::numeric_limits<double>::quiet_NaN();
+              tuple.second += listSubspace[tuple.first];
             }
+
+            listSubspace[tuple.first] =
+                std::numeric_limits<double>::quiet_NaN();
+            // }
           }
         }
       } // end iterate subspaces
@@ -468,15 +487,29 @@ KernelMultTransposeSubspace(size_t maxGridPointsOnLevel, bool isModLinear,
     delete[] evalIndexValuesAll;
     delete[] intermediatesAll;
     delete[] listSubspace;
-
-    // #pragma omp barrier
-    //   if (tid == 0) {
-    //     this->unflatten(result);
-    //   }
   }
 
   sgpp::base::DataVector result(storage.getSize());
   sgpp::datadriven::SubspaceAutoTuneTMP::detail::unflatten(
       dim, allSubspaceNodes, allLevelsIndexMap, storage, maxLevel, result);
+
+  // std::cout << "result.size(): " << result.size() << std::endl;
+  // std::cout << "result (first 20): ";
+  // for (size_t i = 0; i < 20; i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << result[i];
+  // }
+  // std::cout << std::endl;
+  // std::cout << "result (last 20): ";
+  // for (size_t i = result.size() - 20; i < result.size(); i += 1) {
+  //   if (i > 0) {
+  //     std::cout << ", ";
+  //   }
+  //   std::cout << result[i];
+  // }
+  // std::cout << std::endl;
+
   return result;
 }

@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
   bool do_warmup_eval;
   bool useSupportRefinement;
   int64_t supportRefinementMinSupport;
+  std::string file_prefix; // path and prefix of file name
 
   boost::program_options::options_description description("Allowed options");
 
@@ -64,7 +65,9 @@ int main(int argc, char **argv) {
       boost::program_options::value<int64_t>(&supportRefinementMinSupport)
           ->default_value(1),
       "for support refinement, minimal number of data points "
-      "on support for accepting data point");
+      "on support for accepting data point")(
+      "file_prefix", boost::program_options::value<std::string>(&file_prefix),
+      "name for the current run, used when files are written");
 
   boost::program_options::variables_map variables_map;
 
@@ -199,8 +202,8 @@ int main(int argc, char **argv) {
   }
 
   std::string full_scenario_prefix(
-      scenarioName + +"_Subspace_" + algorithm_to_tune + "_host_" + hostname +
-      "_tuner_" + tunerName + "_t_" +
+      file_prefix + scenarioName + +"_Subspace_" + algorithm_to_tune +
+      "_host_" + hostname + "_tuner_" + tunerName + "_t_" +
       std::to_string(dataset.getNumberInstances()) + "s_" +
       std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
       "l_" + std::to_string(dim) + "d");
