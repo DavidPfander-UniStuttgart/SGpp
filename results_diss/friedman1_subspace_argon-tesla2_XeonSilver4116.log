@@ -1,0 +1,148 @@
+./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+instances: 200000
+regular grid size: 397825
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: AutoTuneTMP
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 397825
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_831836/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_831836/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_831836/KernelMultTransposeSubspace_compile.log 2>&1
+compile log:
+compile duration: 2.17249
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_831836/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_831836/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_831836/KernelMultTransposeSubspace_link.log 2>&1
+link log:
+link duration: 0.157674
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_668748/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_668748/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_668748/KernelMultSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.44005
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_668748/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_668748/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_668748/KernelMultSubspace_link.log 2>&1
+link log:
+link duration: 0.140178
+Starting norm of residuum: -nan
+Target norm:               0
+.delta: 6.48417e+13
+.delta: 5.03406e+13
+.delta: 2.15341e+12
+.delta: 2.93576e+12
+.delta: 2.20097e+12
+.delta: 7.77042e+11
+.delta: 1.30202e+12
+.delta: 1.16094e+12
+.delta: 3.47423e+11
+.delta: 8.23794e+11
+.delta: 2.3831e+11
+.delta: 9.96893e+10
+.delta: 4.18952e+11
+.delta: 8.14285e+10
+.delta: 2.94866e+11
+.delta: 8.0473e+10
+.delta: 9.7365e+10
+.delta: 6.15885e+10
+.delta: 7.93578e+10
+.delta: 5.6194e+10
+.delta: 4.0039e+10
+.delta: 7.05875e+10
+.delta: 5.08605e+10
+.delta: 5.67623e+10
+.delta: 1.1417e+10
+.delta: 3.14393e+10
+.delta: 6.6901e+10
+.delta: 1.59308e+10
+.delta: 3.84205e+10
+.delta: 4.68161e+10
+.delta: 2.74097e+10
+.delta: 3.55641e+10
+.delta: 2.20467e+10
+.delta: 1.00465e+10
+.delta: 1.23195e+10
+.delta: 1.6878e+10
+.delta: 9.50454e+09
+.delta: 1.99085e+10
+.delta: 6.20442e+09
+.delta: 1.00456e+10
+.delta: 1.44521e+10
+.delta: 1.32664e+10
+.delta: 8.19908e+09
+.delta: 4.49735e+09
+.delta: 2.55214e+10
+.delta: 5.30696e+09
+.delta: 6.39091e+09
+.delta: 3.70453e+09
+.delta: 2.04222e+10
+.delta: 8.35316e+09
+.delta: 3.13504e+09
+.delta: 9.28946e+09
+.delta: 4.90991e+09
+.delta: 5.01737e+09
+.delta: 2.38775e+10
+.delta: 9.14518e+09
+.delta: 3.05417e+09
+.delta: 7.22134e+09
+.delta: 3.85597e+09
+.delta: 1.14006e+10
+.delta: 3.79141e+09
+.delta: 3.34591e+09
+.delta: 1.09448e+10
+.delta: 5.75049e+09
+.delta: 3.76353e+09
+.delta: 7.34016e+09
+.delta: 4.01358e+09
+.delta: 5.35043e+09
+.delta: 1.14805e+10
+.delta: 2.12497e+09
+.delta: 6.29541e+09
+.delta: 3.47263e+09
+.delta: 4.17934e+09
+.delta: 4.01994e+09
+.delta: 9.27793e+09
+.delta: 4.31357e+09
+.delta: 1.50531e+09
+.delta: 5.21547e+09
+.delta: 5.73915e+09
+.delta: 3.76782e+09
+.delta: 2.41854e+09
+.delta: 8.23929e+09
+.delta: 4.63738e+09
+.delta: 1.47151e+09
+.delta: 2.63437e+09
+.delta: 2.18636e+09
+.delta: 4.41684e+09
+.delta: 4.2148e+09
+.delta: 1.78222e+09
+.delta: 2.72261e+09
+.delta: 2.54916e+09
+.delta: 5.8832e+09
+.delta: 1.41081e+09
+.delta: 1.73034e+10
+.delta: 3.75427e+09
+.delta: 1.55039e+09
+.delta: 7.80034e+09
+.delta: 1.93851e+09
+.delta: 2.86731e+09
+.delta: 1.88833e+09
+
+Number of iterations: 100 (max. 100)
+Final norm of residuum: 1.88833e+09
+counted_mult_calls: 102
+
+Needed Iterations: 100
+Final residuum: 1.88833e+09
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 103.5
+note: performance calculation: additional iteration for residual recalculation : 2
+warning: cannot calculate GFLOPS for operation type
+
+Current Duration:: 294.71
+Current GFlop/s: 0
+
+Finished Training!
+
+Training took: 294.71 seconds
+
+total_duration: 297.185

@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
   std::string scenarioName;
   std::string tunerName;
   uint32_t level;
+  uint32_t repetitions_averaged;
   uint32_t repetitions;
   bool trans;
   bool isModLinear;
@@ -44,7 +45,12 @@ int main(int argc, char **argv) {
       "level of the sparse grid")(
       "tuner_name", boost::program_options::value<std::string>(&tunerName),
       "name of the auto tuning algorithm to be used")(
-      "repetitions", boost::program_options::value<uint32_t>(&repetitions),
+      "repetitions_averaged",
+      boost::program_options::value<uint32_t>(&repetitions_averaged)
+          ->default_value(1),
+      "how many kernel calls for averaging")(
+      "repetitions",
+      boost::program_options::value<uint32_t>(&repetitions)->default_value(1),
       "how often the tuning is to be repeated")(
       "trans",
       boost::program_options::value<bool>(&trans)->default_value(false),
@@ -104,6 +110,11 @@ int main(int argc, char **argv) {
   }
   if (variables_map.count("repetitions") == 0) {
     std::cerr << "error: option \"repetitions\" not specified" << std::endl;
+    return 1;
+  }
+  if (variables_map.count("repetitions_averaged") == 0) {
+    std::cerr << "error: option \"repetitions_averaged\" not specified"
+              << std::endl;
     return 1;
   }
 
@@ -201,39 +212,43 @@ int main(int argc, char **argv) {
     algorithm_to_tune = "multTrans";
   }
 
-  std::string full_scenario_prefix(
-      file_prefix + scenarioName + +"_Subspace_" + algorithm_to_tune +
-      "_host_" + hostname + "_tuner_" + tunerName + "_t_" +
-      std::to_string(dataset.getNumberInstances()) + "s_" +
-      std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
-      "l_" + std::to_string(dim) + "d");
-  if (!trans) {
-    sgpp::base::DataVector alpha(gridStorage.getSize());
-    for (size_t i = 0; i < alpha.getSize(); i++) {
-      alpha[i] = static_cast<double>(i) + 1.0;
-    }
-    sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
-    dataSizeVectorResult.setAll(0);
+  for (size_t rep = 0; rep < repetitions; rep += 1) {
+    std::string full_scenario_prefix(
+        file_prefix + scenarioName + +"_Subspace_" + algorithm_to_tune +
+        "_tuner_" + tunerName + "_t_" +
+        std::to_string(dataset.getNumberInstances()) + "s_" +
+        std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
+        "l_" + std::to_string(dim) + "d_" +
+        std::to_string(repetitions_averaged) + "av_" + std::to_string(rep) +
+        "r");
+    if (!trans) {
+      sgpp::base::DataVector alpha(gridStorage.getSize());
+      for (size_t i = 0; i < alpha.getSize(); i++) {
+        alpha[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+      dataSizeVectorResult.setAll(0);
 
-    auto &derived_eval =
-        dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
-                         OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
-    // derived_eval.set_write_stats("subspaceMultTransposeStats.csv");
-    derived_eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
-                           tunerName, repetitions);
-  } else {
-    sgpp::base::DataVector source(dataset.getNumberInstances());
-    for (size_t i = 0; i < source.getSize(); i++) {
-      source[i] = static_cast<double>(i) + 1.0;
-    }
-    sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
-    gridSizeVectorResult.setAll(0);
+      auto &derived_eval =
+          dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
+                           OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
+      // derived_eval.set_write_stats("subspaceMultTransposeStats.csv");
+      derived_eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
+                             tunerName, repetitions_averaged);
+    } else {
+      sgpp::base::DataVector source(dataset.getNumberInstances());
+      for (size_t i = 0; i < source.getSize(); i++) {
+        source[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
+      gridSizeVectorResult.setAll(0);
 
-    auto &derived_eval =
-        dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
-                         OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
-    derived_eval.tune_multTranspose(source, gridSizeVectorResult,
-                                    full_scenario_prefix, tunerName,
-                                    repetitions);
+      auto &derived_eval =
+          dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
+                           OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
+      derived_eval.tune_multTranspose(source, gridSizeVectorResult,
+                                      full_scenario_prefix, tunerName,
+                                      repetitions_averaged);
+    }
   }
 }
