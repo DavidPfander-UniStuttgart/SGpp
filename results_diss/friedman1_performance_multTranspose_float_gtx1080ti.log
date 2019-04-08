@@ -1,2 +1,35 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::unknown_option> >'
-  what():  unrecognised option '--OpenCLConfigFile'
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+OpenCLConfigFile: results_diss/friedman1_gtx1080ti_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+hostname: argon-gtx
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+num_ops: 47739
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: multTrans
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.584711
+info: first multTranspose not considered
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526106
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526092
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526206
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526639
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526224
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.52588
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.526777
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.529675
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.533772
+device: GeForce GTX 1080 Ti (0x19bd970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x19bd970 duration: 0.533161
+duration multTranspose: 5.33096, repetitions: 10
+GFLOPS: 8955.05
