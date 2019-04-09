@@ -1,0 +1,4 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+terminate called after throwing an instance of 'json::json_exception'
+  what():  error: json error: could not open file: results_diss/DR5_Gold5120_weakscaling_parameters_combined_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+
