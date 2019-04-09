@@ -34,7 +34,8 @@ manager_t::manager_t() : parameters(), verbose(false) {
 manager_t::manager_t(const std::string &configuration_file_name)
     : manager_t(configuration_t(configuration_file_name)) {}
 
-manager_t::manager_t(const configuration_t &parameters_) : parameters(parameters_) {
+manager_t::manager_t(const configuration_t &parameters_)
+    : parameters(parameters_) {
   if (!parameters.contains("VERBOSE")) {
     parameters.addIDAttr("VERBOSE", false);
   }
@@ -69,9 +70,10 @@ manager_t::manager_t(const configuration_t &parameters_) : parameters(parameters
 
 manager_t::~manager_t() {}
 
-std::vector<cl_kernel> manager_t::build_kernel(const std::string &program_src,
-                                               const std::string &kernel_name,
-                                               const std::string additional_options) {
+std::vector<cl_kernel>
+manager_t::build_kernel(const std::string &program_src,
+                        const std::string &kernel_name,
+                        const std::string additional_options) {
   cl_int err;
   if (verbose) {
     std::cout << "building kernel: " << kernel_name << std::endl;
@@ -82,32 +84,40 @@ std::vector<cl_kernel> manager_t::build_kernel(const std::string &program_src,
   for (device_t &device : this->devices) {
     // setting the program
     const char *kernel_src = program_src.c_str();
-    cl_program program = clCreateProgramWithSource(device.context, 1, &kernel_src, NULL, &err);
+    cl_program program =
+        clCreateProgramWithSource(device.context, 1, &kernel_src, NULL, &err);
 
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to create program! Error Code: " << err << std::endl;
+      errorString << "OCL Error: Failed to create program! Error Code: " << err
+                  << std::endl;
       throw manager_error(errorString.str());
     }
 
-    auto &device_kernel_config = parameters["PLATFORMS"][device.platformName]["DEVICES"]
-                                           [device.deviceName]["KERNELS"][kernel_name];
-
     std::string build_opts;
-    if (!device_kernel_config.contains("ENABLE_OPTIMIZATIONS") ||
-        device_kernel_config["ENABLE_OPTIMIZATIONS"].getBool()) {
-      std::string optimizationFlags = "";
-      if (device_kernel_config.contains("OPTIMIZATION_FLAGS")) {
-        optimizationFlags = device_kernel_config["OPTIMIZATION_FLAGS"].get();
+    if (parameters["PLATFORMS"][device.platformName]["DEVICES"]
+                  [device.deviceName]["KERNELS"]
+                      .contains(kernel_name)) {
+      auto &device_kernel_config =
+          parameters["PLATFORMS"][device.platformName]["DEVICES"]
+                    [device.deviceName]["KERNELS"][kernel_name];
+      if (!device_kernel_config.contains("ENABLE_OPTIMIZATIONS") ||
+          device_kernel_config["ENABLE_OPTIMIZATIONS"].getBool()) {
+        std::string optimizationFlags = "";
+        if (device_kernel_config.contains("OPTIMIZATION_FLAGS")) {
+          optimizationFlags = device_kernel_config["OPTIMIZATION_FLAGS"].get();
+        }
+        if (verbose) {
+          std::cout << "building with optimization flags: " << optimizationFlags
+                    << std::endl;
+        }
+        build_opts =
+            optimizationFlags; // -O5  -cl-mad-enable -cl-denorms-are-zero
+        // -cl-no-signed-zeros -cl-unsafe-math-optimizations
+        // -cl-finite-math-only -cl-fast-relaxed-math
+      } else {
+        build_opts = "-cl-opt-disable"; // -g
       }
-      if (verbose) {
-        std::cout << "building with optimization flags: " << optimizationFlags << std::endl;
-      }
-      build_opts = optimizationFlags;  // -O5  -cl-mad-enable -cl-denorms-are-zero
-      // -cl-no-signed-zeros -cl-unsafe-math-optimizations
-      // -cl-finite-math-only -cl-fast-relaxed-math
-    } else {
-      build_opts = "-cl-opt-disable";  // -g
     }
     build_opts += std::string(" ") + additional_options;
 
@@ -117,14 +127,17 @@ std::vector<cl_kernel> manager_t::build_kernel(const std::string &program_src,
     if (verbose) {
       // get the build log
       size_t len;
-      cl_int err_buildlog =
-          clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
-      check(err_buildlog, "OCL Error: build error, could not retrieve size of build log");
+      cl_int err_buildlog = clGetProgramBuildInfo(
+          program, device.deviceId, CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
+      check(err_buildlog,
+            "OCL Error: build error, could not retrieve size of build log");
       if (err_buildlog == CL_SUCCESS) {
         std::string buffer(len, '\0');
-        err_buildlog = clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, len,
-                                             &buffer[0], NULL);
-        check(err_buildlog, "OCL Error: build error, could not retrieve build log");
+        err_buildlog =
+            clGetProgramBuildInfo(program, device.deviceId,
+                                  CL_PROGRAM_BUILD_LOG, len, &buffer[0], NULL);
+        check(err_buildlog,
+              "OCL Error: build error, could not retrieve build log");
         buffer = buffer.substr(0, buffer.find('\0'));
         std::cout << "--- Build Log ---" << std::endl << buffer << std::endl;
       }
@@ -136,7 +149,8 @@ std::vector<cl_kernel> manager_t::build_kernel(const std::string &program_src,
     cl_kernel kernel = clCreateKernel(program, kernel_name.c_str(), &err);
     if (err != CL_SUCCESS) {
       std::stringstream errorString;
-      errorString << "OCL Error: Failed to create kernel! Error code: " << err << std::endl;
+      errorString << "OCL Error: Failed to create kernel! Error code: " << err
+                  << std::endl;
       throw manager_error(errorString.str());
     }
     kernels.push_back(kernel);
@@ -149,7 +163,8 @@ std::vector<cl_kernel> manager_t::build_kernel(const std::string &program_src,
 }
 
 cl_kernel manager_t::build_kernel(const std::string &source, device_t &device,
-                                  json::node &kernel_configuration, const std::string &kernel_name,
+                                  json::node &kernel_configuration,
+                                  const std::string &kernel_name,
                                   const std::string additional_options) {
   cl_int err;
   if (verbose) {
@@ -158,11 +173,13 @@ cl_kernel manager_t::build_kernel(const std::string &source, device_t &device,
 
   // setting the program
   const char *kernelSourcePtr = source.c_str();
-  cl_program program = clCreateProgramWithSource(device.context, 1, &kernelSourcePtr, NULL, &err);
+  cl_program program = clCreateProgramWithSource(device.context, 1,
+                                                 &kernelSourcePtr, NULL, &err);
 
   if (err != CL_SUCCESS) {
     std::stringstream errorString;
-    errorString << "OCL Error: Failed to create program! Error Code: " << err << std::endl;
+    errorString << "OCL Error: Failed to create program! Error Code: " << err
+                << std::endl;
     throw manager_error(errorString.str());
   }
 
@@ -174,13 +191,14 @@ cl_kernel manager_t::build_kernel(const std::string &source, device_t &device,
       optimizationFlags = kernel_configuration["OPTIMIZATION_FLAGS"].get();
     }
     if (verbose) {
-      std::cout << "building with optimization flags: " << optimizationFlags << std::endl;
+      std::cout << "building with optimization flags: " << optimizationFlags
+                << std::endl;
     }
-    build_opts = optimizationFlags;  // -O5  -cl-mad-enable -cl-denorms-are-zero
+    build_opts = optimizationFlags; // -O5  -cl-mad-enable -cl-denorms-are-zero
     // -cl-no-signed-zeros -cl-unsafe-math-optimizations
     // -cl-finite-math-only -cl-fast-relaxed-math
   } else {
-    build_opts = "-cl-opt-disable";  // -g
+    build_opts = "-cl-opt-disable"; // -g
   }
   build_opts += std::string(" ") + additional_options;
 
@@ -191,9 +209,11 @@ cl_kernel manager_t::build_kernel(const std::string &source, device_t &device,
 
   // get the build log
   size_t len;
-  clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, 0, NULL, &len);
+  clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, 0, NULL,
+                        &len);
   std::string buffer(len, '\0');
-  clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, len, &buffer[0], NULL);
+  clGetProgramBuildInfo(program, device.deviceId, CL_PROGRAM_BUILD_LOG, len,
+                        &buffer[0], NULL);
   buffer = buffer.substr(0, buffer.find('\0'));
 
   if (verbose) {
@@ -226,7 +246,8 @@ void manager_t::configure(bool useConfiguration) {
   check(err, "OCL Error: Unable to get number of OpenCL platforms");
 
   if (verbose) {
-    std::cout << "OCL Info: " << platformCount << " OpenCL platforms have been found" << std::endl;
+    std::cout << "OCL Info: " << platformCount
+              << " OpenCL platforms have been found" << std::endl;
   }
 
   // get available platforms
@@ -240,47 +261,55 @@ void manager_t::configure(bool useConfiguration) {
   }
 }
 
-void manager_t::configure_platform(cl_platform_id platformId, configuration_t &configuration,
+void manager_t::configure_platform(cl_platform_id platformId,
+                                   configuration_t &configuration,
                                    bool useConfiguration) {
   cl_int err;
 
   char platformName[128] = {0};
-  err = clGetPlatformInfo(platformId, CL_PLATFORM_NAME, 128 * sizeof(char), platformName, nullptr);
+  err = clGetPlatformInfo(platformId, CL_PLATFORM_NAME, 128 * sizeof(char),
+                          platformName, nullptr);
 
   check(err, "OCL Error: can't get platform name");
 
   if (verbose) {
-    std::cout << "OCL Info: detected platform, name: \"" << platformName << "\"" << std::endl;
+    std::cout << "OCL Info: detected platform, name: \"" << platformName << "\""
+              << std::endl;
   }
 
   if (verbose) {
     char vendor_name[128] = {0};
-    err =
-        clGetPlatformInfo(platformId, CL_PLATFORM_VENDOR, 128 * sizeof(char), vendor_name, nullptr);
+    err = clGetPlatformInfo(platformId, CL_PLATFORM_VENDOR, 128 * sizeof(char),
+                            vendor_name, nullptr);
 
     check(err, "OCL Error: Can't get platform vendor");
-    std::cout << "OCL Info: detected platform vendor name: \"" << vendor_name << "\"" << std::endl;
+    std::cout << "OCL Info: detected platform vendor name: \"" << vendor_name
+              << "\"" << std::endl;
   }
 
   if (useConfiguration) {
     if (!parameters["PLATFORMS"].contains(platformName)) {
       if (verbose) {
-        std::cout << "OCL Info: platform not configured, skipping..." << std::endl;
+        std::cout << "OCL Info: platform not configured, skipping..."
+                  << std::endl;
       }
       return;
     }
   } else {
     // creating new configuration
-    json::node &platformNode = parameters["PLATFORMS"].addDictAttr(platformName);
+    json::node &platformNode =
+        parameters["PLATFORMS"].addDictAttr(platformName);
     platformNode.addDictAttr("DEVICES");
   }
 
   if (verbose) {
-    std::cout << "OCL Info: using platform, name: \"" << platformName << "\"" << std::endl;
+    std::cout << "OCL Info: using platform, name: \"" << platformName << "\""
+              << std::endl;
   }
 
   if (std::string(platformName).compare("Clover") == 0) {
-    std::cout << "OCL Info: platform skipped due to buggy behavior" << std::endl;
+    std::cout << "OCL Info: platform skipped due to buggy behavior"
+              << std::endl;
     return;
   }
 
@@ -288,19 +317,23 @@ void manager_t::configure_platform(cl_platform_id platformId, configuration_t &c
 
   uint32_t currentPlatformDevices;
   // get the number of devices
-  err = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_ALL, 0, nullptr, &currentPlatformDevices);
+  err = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_ALL, 0, nullptr,
+                       &currentPlatformDevices);
 
   check(err, "OCL Error: Unable to get device count");
 
   if (verbose) {
-    std::cout << "OCL Info: platform device count: " << currentPlatformDevices << std::endl;
+    std::cout << "OCL Info: platform device count: " << currentPlatformDevices
+              << std::endl;
   }
 
   std::vector<cl_device_id> deviceIds(currentPlatformDevices);
-  err = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_ALL, (cl_uint)currentPlatformDevices,
-                       deviceIds.data(), nullptr);
+  err = clGetDeviceIDs(platformId, CL_DEVICE_TYPE_ALL,
+                       (cl_uint)currentPlatformDevices, deviceIds.data(),
+                       nullptr);
 
-  check(err, std::string("OCL Error: Unable to get device id for platform ") + platformName);
+  check(err, std::string("OCL Error: Unable to get device id for platform ") +
+                 platformName);
 
   std::vector<cl_device_id> filteredDeviceIds;
 
@@ -310,19 +343,23 @@ void manager_t::configure_platform(cl_platform_id platformId, configuration_t &c
 
   for (cl_device_id deviceId : deviceIds) {
     // filter device ids
-    this->configure_device(deviceId, devicesNode, filteredDeviceIds, filteredDeviceNames,
-                           countLimitMap, useConfiguration);
+    this->configure_device(deviceId, devicesNode, filteredDeviceIds,
+                           filteredDeviceNames, countLimitMap,
+                           useConfiguration);
   }
 
   if (filteredDeviceIds.size() > 0) {
-    platforms.emplace_back(platformId, platformName, filteredDeviceIds, filteredDeviceNames);
+    platforms.emplace_back(platformId, platformName, filteredDeviceIds,
+                           filteredDeviceNames);
     platform_wrapper_t &platformWrapper = platforms[platforms.size() - 1];
 
     // create linear device list
-    for (size_t deviceIndex = 0; deviceIndex < filteredDeviceIds.size(); deviceIndex++) {
-      devices.emplace_back(platformWrapper.platformId, platformWrapper.deviceIds[deviceIndex],
-                           platformName, platformWrapper.deviceNames[deviceIndex],
-                           platformWrapper.context, platformWrapper.commandQueues[deviceIndex]);
+    for (size_t deviceIndex = 0; deviceIndex < filteredDeviceIds.size();
+         deviceIndex++) {
+      devices.emplace_back(
+          platformWrapper.platformId, platformWrapper.deviceIds[deviceIndex],
+          platformName, platformWrapper.deviceNames[deviceIndex],
+          platformWrapper.context, platformWrapper.commandQueues[deviceIndex]);
     }
   }
 }
@@ -335,12 +372,14 @@ void manager_t::configure_device(cl_device_id deviceId, json::node &devicesNode,
   cl_int err;
 
   char deviceName[128] = {0};
-  err = clGetDeviceInfo(deviceId, CL_DEVICE_NAME, 128 * sizeof(char), &deviceName, nullptr);
+  err = clGetDeviceInfo(deviceId, CL_DEVICE_NAME, 128 * sizeof(char),
+                        &deviceName, nullptr);
 
   check(err, "OCL Error: Failed to read the device name");
 
   if (verbose) {
-    std::cout << "OCL Info: detected device, name: \"" << deviceName << "\"" << std::endl;
+    std::cout << "OCL Info: detected device, name: \"" << deviceName << "\""
+              << std::endl;
   }
 
   // either the device has to be in the configuration or a new configuration is
@@ -374,14 +413,16 @@ void manager_t::configure_device(cl_device_id deviceId, json::node &devicesNode,
 
   // limit the number of identical devices used, excludes a device selection
   if (devicesNode[deviceName].contains("COUNT")) {
-    if (countLimitMap[deviceName] > devicesNode[deviceName]["COUNT"].getUInt()) {
+    if (countLimitMap[deviceName] >
+        devicesNode[deviceName]["COUNT"].getUInt()) {
       return;
     }
   }
 
   // check whether a specific device is to be selected
   if (devicesNode[deviceName].contains("SELECT")) {
-    if (countLimitMap[deviceName] - 1 != devicesNode[deviceName]["SELECT"].getUInt()) {
+    if (countLimitMap[deviceName] - 1 !=
+        devicesNode[deviceName]["SELECT"].getUInt()) {
       return;
     }
   }
@@ -389,7 +430,8 @@ void manager_t::configure_device(cl_device_id deviceId, json::node &devicesNode,
   if (verbose) {
     std::cout << "OCL Info: using device, name: \"" << deviceName << "\"";
     if (devicesNode[deviceName].contains("SELECT")) {
-      std::cout << " (selected device no.: " << devicesNode[deviceName]["SELECT"].getUInt() << ")";
+      std::cout << " (selected device no.: "
+                << devicesNode[deviceName]["SELECT"].getUInt() << ")";
     }
     std::cout << std::endl;
   }
@@ -403,7 +445,8 @@ std::vector<device_t> &manager_t::get_devices() { return this->devices; }
 
 void manager_t::set_verbose(bool verbose) { this->verbose = verbose; }
 
-std::string manager_t::read_src_file(const std::string &kernel_src_file_name) const {
+std::string
+manager_t::read_src_file(const std::string &kernel_src_file_name) const {
   std::string kernel_src_string;
   std::ifstream f(kernel_src_file_name);
   if (f.is_open()) {
@@ -411,12 +454,14 @@ std::string manager_t::read_src_file(const std::string &kernel_src_file_name) co
     kernel_src_string.reserve(f.tellg());
     f.seekg(0, std::ios::beg);
 
-    kernel_src_string.assign((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+    kernel_src_string.assign((std::istreambuf_iterator<char>(f)),
+                             std::istreambuf_iterator<char>());
 
     f.close();
     return kernel_src_string;
   } else {
-    throw manager_error(std::string("could not open kernel src file: ") + kernel_src_file_name);
+    throw manager_error(std::string("could not open kernel src file: ") +
+                        kernel_src_file_name);
   }
 }
 
@@ -428,4 +473,4 @@ void manager_t::release_kernels(std::vector<cl_kernel> kernels) {
   }
 }
 
-}  // namespace opencl
+} // namespace opencl
