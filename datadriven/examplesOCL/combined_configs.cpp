@@ -71,8 +71,6 @@ int main(int argc, char **argv) {
           base["PLATFORMS"][platform_name]["DEVICES"][device_name];
       if (device_node["KERNELS"].contains(kernel_name)) {
         auto &kernel_node_base = device_node["KERNELS"][kernel_name];
-        std::cout << "platform_name: \"" << platform_name
-                  << "\" device_name: \"" << device_name << "\"" << std::endl;
         if (!combine["PLATFORMS"].contains(platform_name)) {
           continue;
         }
@@ -87,15 +85,17 @@ int main(int argc, char **argv) {
                         .contains(kernel_name)) {
           continue;
         }
-        std::cout << "kernel found!" << std::endl;
+        std::cout << "platform_name: \"" << platform_name
+                  << "\" device_name: \"" << device_name << "\""
+                  << " kernel found!" << std::endl;
         auto &device_node_combine =
             combine["PLATFORMS"][platform_name]["DEVICES"][device_name];
         auto &kernel_node_combine = device_node_combine["KERNELS"][kernel_name];
         for (std::string &parameter_name : kernel_node_combine.keys()) {
-          std::cout << "p: " << parameter_name << std::endl;
           for (std::string &combine_prefix : combine_prefixes) {
             if (boost::starts_with(parameter_name, combine_prefix)) {
-              std::cout << "update value!" << std::endl;
+              std::cout << "parameter: " << parameter_name << " updated!"
+                        << std::endl;
               kernel_node_base.replaceTextAttr(
                   parameter_name, kernel_node_combine[parameter_name].get());
             }

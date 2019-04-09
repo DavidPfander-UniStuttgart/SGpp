@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.49397
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.48183
 info: first mult not considered
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.437989
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.437862
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.438032
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.438665
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.438005
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.437958
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.437912
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.437904
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.43787
-device: 0x81d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x81d970 duration: 0.438054
-duration mult: 4.41443, repetitions: 10
-GFLOPS: 4213.73
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.426186
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.425765
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.425845
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.426013
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.425954
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.426016
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.427249
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.426384
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.425836
+device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x1af4970 duration: 0.426409
+duration mult: 4.29622, repetitions: 10
+GFLOPS: 4329.67

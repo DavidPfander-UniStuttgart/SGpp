@@ -1,2 +1,36 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::unknown_option> >'
-  what():  unrecognised option '--OpenCLConfigFile'
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+OpenCLConfigFile: results_diss/friedman1_Gold5120_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
+hostname: argon-gtx
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+grid points with level > 1: 1550100
+num_ops: 18601.2
+creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: mult
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.75305
+info: first mult not considered
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.74399
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.74927
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.73638
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.74367
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.743
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.76066
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.75075
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.75676
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.73723
+device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x12680c48 duration: 2.76122
+duration mult: 27.5715, repetitions: 10
+GFLOPS: 674.653

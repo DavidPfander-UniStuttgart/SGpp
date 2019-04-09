@@ -1,5 +1,5 @@
 training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-ocl dummy initalization duration: 6.51387
+ocl dummy initalization duration: 6.59672
 instances: 200000
 regular grid size: 397825
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -8,519 +8,519 @@ Starting Learning....
 
 Doing refinement: 0
 Grid Size: 397825
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.602729
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.589713
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
-device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432249
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.52777
+device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.427715
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523298
 Starting norm of residuum: -nan
 Target norm:               0
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432358
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527916
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.428478
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.524153
 delta: 6.48417e+13
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432277
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.528064
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.428794
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523293
 delta: 5.03406e+13
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432262
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527991
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.428706
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523564
 delta: 2.15342e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432385
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.528146
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429623
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523756
 delta: 2.93576e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432361
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.528105
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429651
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523788
 delta: 2.20097e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432388
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.528077
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429148
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.524319
 delta: 7.77044e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.433056
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527768
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429177
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523566
 delta: 1.30205e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432387
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527735
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429445
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.523976
 delta: 1.16146e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432279
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527638
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.429051
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.525769
 delta: 4.25963e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432302
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.527784
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.433941
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.528669
 delta: 1.11378e+12
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432386
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.52811
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.433854
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.529154
 delta: 6.09125e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.432562
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.531188
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.433202
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.528778
 delta: 2.24844e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438186
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535411
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432951
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.52883
 delta: 1.03475e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438029
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535391
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.433143
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.528738
 delta: 2.86648e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438715
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535499
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432872
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.528399
 delta: 7.8308e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43825
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535569
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432942
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.528834
 delta: 7.38527e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438183
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535539
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.433165
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.529561
 delta: 9.75012e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438388
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535468
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432255
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.52742
 delta: 6.32415e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438239
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535481
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432024
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527813
 delta: 3.68219e+11
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438132
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535358
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.431864
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.52752
 delta: 8.12421e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438185
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535535
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432632
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527818
 delta: 3.87546e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438277
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535545
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432049
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527975
 delta: 5.9751e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438388
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535661
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.431888
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527957
 delta: 6.75173e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438332
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535097
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432969
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527511
 delta: 4.04877e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438242
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535156
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432627
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527897
 delta: 7.22113e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438311
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535649
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432136
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527656
 delta: 1.10911e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438107
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536367
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.432087
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.527687
 delta: 6.4784e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438292
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535216
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.431952
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.530182
 delta: 4.87994e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438335
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535565
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436115
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532349
 delta: 4.76715e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43838
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535512
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436059
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.5331
 delta: 1.7897e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438121
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535072
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436265
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532583
 delta: 2.33396e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438282
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535651
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.437062
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.53262
 delta: 2.25865e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438225
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535515
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436293
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532481
 delta: 5.21535e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438251
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535124
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.43623
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533156
 delta: 1.99214e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438329
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535377
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436336
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533059
 delta: 1.1163e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438357
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535608
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436396
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532576
 delta: 8.71101e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438321
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535645
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436059
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532995
 delta: 1.13177e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438388
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535632
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436605
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533026
 delta: 1.92091e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438308
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535128
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436088
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533092
 delta: 1.0344e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439103
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535168
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436118
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533086
 delta: 4.15917e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438418
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535688
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436053
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.53248
 delta: 1.28001e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438364
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536397
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.435951
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.532993
 delta: 7.13852e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.438455
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.535927
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.43678
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.53308
 delta: 4.55807e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43916
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536863
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436131
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533054
 delta: 2.09532e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439211
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536748
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436035
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533249
 delta: 1.04932e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439123
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537026
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436111
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533043
 delta: 8.75817e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439884
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536751
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.436306
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.533481
 delta: 4.35809e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439378
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536778
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438266
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535208
 delta: 9.44207e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439177
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536361
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438201
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535167
 delta: 2.39063e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439357
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537166
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438202
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535292
 delta: 5.2007e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43924
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536708
-device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439265
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536653
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438187
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535271
+device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438166
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534981
 delta: 1.47222e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439336
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536719
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438182
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534894
 delta: 5.18502e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439484
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536651
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438197
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535421
 delta: 9.54518e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439557
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536721
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438062
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535284
 delta: 9.07408e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439627
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536685
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438366
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534869
 delta: 3.54566e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439447
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536775
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438199
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535182
 delta: 5.98553e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439384
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536934
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438036
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535252
 delta: 6.0338e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439232
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.53704
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438534
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535257
 delta: 2.21239e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439326
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536669
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438021
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535377
 delta: 4.23591e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439375
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536935
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438257
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535391
 delta: 6.76008e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439239
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536666
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438191
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535345
 delta: 8.42815e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439319
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536372
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438325
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534796
 delta: 3.02117e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.4393
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536982
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438247
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535321
 delta: 7.48154e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439322
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536497
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438643
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535484
 delta: 7.73874e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439446
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536757
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438316
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535359
 delta: 6.19018e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439328
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.5368
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438381
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535483
 delta: 1.12567e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439672
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537427
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438105
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535149
 delta: 2.62171e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439133
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.53703
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438481
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535469
 delta: 8.87985e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439246
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536744
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438375
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535114
 delta: 8.85262e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439388
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536935
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438554
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535442
 delta: 3.28013e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439289
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536705
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438175
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535324
 delta: 7.03315e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439491
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536772
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438162
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534784
 delta: 1.18866e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439312
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536689
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438181
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.53519
 delta: 9.32126e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439323
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537095
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438192
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535373
 delta: 3.21726e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439475
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536905
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438082
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535837
 delta: 2.676e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439382
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537028
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438239
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535364
 delta: 6.232e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439171
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536813
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438636
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535518
 delta: 5.93809e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439286
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536755
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438492
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535249
 delta: 2.59339e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43943
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536838
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438261
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535314
 delta: 8.14067e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439399
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.53685
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.43819
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535285
 delta: 7.18558e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439256
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536682
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438249
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535353
 delta: 6.98705e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439467
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536317
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438171
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535208
 delta: 4.66256e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439344
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536914
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438404
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534836
 delta: 4.87544e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439353
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536906
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438194
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.534973
 delta: 2.5582e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439403
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536765
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438218
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535464
 delta: 2.87612e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439889
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536904
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438238
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535384
 delta: 3.81097e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439442
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536892
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438375
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535469
 delta: 1.30282e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43935
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536715
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438295
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535609
 delta: 3.8868e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439091
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537014
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438224
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535339
 delta: 3.80687e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439428
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536678
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438303
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535312
 delta: 3.95637e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439006
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537133
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438115
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535365
 delta: 2.21841e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.43925
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537107
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438267
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535323
 delta: 2.4689e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439672
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.53752
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438314
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535453
 delta: 1.95962e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439377
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537036
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438184
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535462
 delta: 6.18895e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439201
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.537131
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438197
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535449
 delta: 1.65463e+10
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.4395
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536699
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.43825
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535632
 delta: 2.10829e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439361
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536518
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438264
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535485
 delta: 2.90844e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439302
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536817
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438326
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535551
 delta: 2.1246e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439206
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.536704
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438382
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.535584
 delta: 5.01163e+09
-.device: 0x19c25b0 kernel from: 0 to: 200704 -> range: 200704
-device: 0x19c25b0 duration: 0.439393
-device: GeForce GTX 1080 Ti (0x19c25b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x19c25b0 duration: 0.5368
+.device: 0x260c5b0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x260c5b0 duration: 0.438371
+device: GeForce GTX 1080 Ti (0x260c5b0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x260c5b0 duration: 0.53579
 delta: 3.1647e+09
 
 Number of iterations: 100 (max. 100)
@@ -533,11 +533,11 @@ note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 
-Current Duration:: 101.209
-Current GFlop/s: 6798.62
+Current Duration:: 100.809
+Current GFlop/s: 6825.59
 
 Finished Training!
 
-Training took: 101.209 seconds
+Training took: 100.809 seconds
 
-total_duration: 103.819
+total_duration: 103.403
