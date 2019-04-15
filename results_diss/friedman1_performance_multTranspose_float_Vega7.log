@@ -10,28 +10,28 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: multTrans
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.49414
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488917
 info: first multTranspose not considered
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.494122
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493285
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493422
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493563
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493562
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.49355
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.49354
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493604
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.493532
-device: gfx906 (0x12aee780)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x12aee780 duration: 0.49345
-duration multTranspose: 4.99205, repetitions: 10
-GFLOPS: 9563.01
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.489204
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488641
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488561
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488549
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488595
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488535
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488738
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488605
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.488689
+device: gfx906 (0x12da05e0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
+device: 0x12da05e0 duration: 0.48877
+duration multTranspose: 4.94358, repetitions: 10
+GFLOPS: 9656.78

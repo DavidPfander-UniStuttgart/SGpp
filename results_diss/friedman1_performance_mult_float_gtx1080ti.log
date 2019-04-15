@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.48183
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.50543
 info: first mult not considered
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.426186
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.425765
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.425845
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.426013
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.425954
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.426016
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.427249
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.426384
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.425836
-device: 0x1af4970 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1af4970 duration: 0.426409
-duration mult: 4.29622, repetitions: 10
-GFLOPS: 4329.67
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.427297
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425965
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.426498
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425827
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425999
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425824
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.426
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.426326
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425878
+device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xe8d970 duration: 0.425813
+duration mult: 4.29826, repetitions: 10
+GFLOPS: 4327.61
