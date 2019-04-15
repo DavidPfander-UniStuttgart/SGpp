@@ -1,0 +1,9 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+pci id for fd 5: 1002:66af, driver (null)
+pci id for fd 5: 1002:66af, driver (null)
+ocl dummy initalization duration: 0.429219
+instances: 371908
+support_refinement_min_support: 500
+terminate called after throwing an instance of 'json::json_exception'
+  what():  error: json error: could not open file: results_diss/DR5__weakscaling_parameters_combined_host_argon-epyc_tuner_line_search_t_float_10r_optimal.cfg
+
