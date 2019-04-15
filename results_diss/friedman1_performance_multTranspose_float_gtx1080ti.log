@@ -8,28 +8,28 @@ num_ops: 47739
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.582532
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.582515
 info: first multTranspose not considered
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.522164
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.521795
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.521785
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.521749
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.521882
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.521895
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.522072
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.522043
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.522054
-device: GeForce GTX 1080 Ti (0x198f970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x198f970 duration: 0.522131
-duration multTranspose: 5.25659, repetitions: 10
-GFLOPS: 9081.74
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.522128
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.522145
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.522351
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521775
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521798
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521859
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521482
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521873
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.522507
+device: GeForce GTX 1080 Ti (0x25da970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x25da970 duration: 0.521683
+duration multTranspose: 5.25887, repetitions: 10
+GFLOPS: 9077.81

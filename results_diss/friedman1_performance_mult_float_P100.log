@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.454992
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.455622
 info: first mult not considered
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432596
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432493
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432488
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.43248
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432468
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432482
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432471
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432446
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.432482
-device: 0x1cdfb30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x1cdfb30 duration: 0.43248
-duration mult: 4.3596, repetitions: 10
-GFLOPS: 4266.72
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.433033
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432878
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432884
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.43289
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432879
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.43287
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432875
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432809
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.432867
+device: 0xba9970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xba9970 duration: 0.4329
+duration mult: 4.36749, repetitions: 10
+GFLOPS: 4259.01

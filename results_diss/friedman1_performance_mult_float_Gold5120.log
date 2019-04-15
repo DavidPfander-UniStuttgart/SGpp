@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.75305
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.76938
 info: first mult not considered
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.74399
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.74927
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.73638
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.74367
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.743
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.76066
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.75075
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.75676
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.73723
-device: 0x12680c48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12680c48 duration: 2.76122
-duration mult: 27.5715, repetitions: 10
-GFLOPS: 674.653
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.76121
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.75658
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.75812
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.74856
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.7613
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.74936
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.75331
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.74516
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.74675
+device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1173ec48 duration: 2.75543
+duration mult: 27.6054, repetitions: 10
+GFLOPS: 673.825
