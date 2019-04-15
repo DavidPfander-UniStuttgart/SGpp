@@ -1,0 +1,7 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+ocl dummy initalization duration: 2.52895
+instances: 371908
+support_refinement_min_support: 500
+terminate called after throwing an instance of 'json::json_exception'
+  what():  error: json error: could not open file: results_diss/DR5__weakscaling_parameters_combined_host_argon-tesla1_tuner_line_search_t_float_10r_optimal.cfg
+

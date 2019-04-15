@@ -9,28 +9,28 @@ num_ops: 18601.2
 creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.924363
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.912964
 info: first mult not considered
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899235
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899206
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899308
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899249
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899224
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899324
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.89918
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899279
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899225
-device: 0x25b7b30 kernel from: 0 to: 200704 -> range: 200704
-device: 0x25b7b30 duration: 0.899287
-duration mult: 9.055, repetitions: 10
-GFLOPS: 2054.25
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899201
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899258
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.8993
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899299
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899303
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899363
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899223
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899341
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.899296
+device: 0xbd1970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xbd1970 duration: 0.89929
+duration mult: 9.05019, repetitions: 10
+GFLOPS: 2055.34
