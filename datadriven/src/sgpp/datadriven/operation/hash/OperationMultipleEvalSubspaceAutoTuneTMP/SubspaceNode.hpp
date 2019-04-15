@@ -49,7 +49,7 @@ public:
   // unpack has to be called when the subspace is set up (except for surplus
   // valus) this method will decide how to best represent the subspace (list or
   // array type) and prepare the subspace for its representation
-  void unpack(double listRatio, int64_t streamingThreshold);
+  void unpack(double listRatio);
 
   // the first call initializes the array for ARRAY type subspaces
   //

@@ -83,7 +83,7 @@ OperationMultipleEvalSubspaceAutoTuneTMP::
       duration(-1.0), paddedDatasetSize(0), maxGridPointsOnLevel(0),
       dim(dataset.getNcols()), maxLevel(0), subspaceCount(-1),
       totalRegularGridPoints(-1), isModLinear(isModLinear), refinementStep(0),
-      csvSep(","), write_stats(false), listRatio(0.2), streamingThreshold(128),
+      csvSep(","), write_stats(false), listRatio(0.2), 
       parallelDataPoints(256), vectorPadding(4) {
   this->padDataset(dataset);
 }
@@ -253,8 +253,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
                                               {0});
     autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                               std::vector<int64_t>{4});
-    autotune::fixed_set_parameter<int64_t> p4(
-        "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
+    // autotune::fixed_set_parameter<int64_t> p4(
+    //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
     autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                              std::vector<double>{0.2});
     autotune::fixed_set_parameter<int64_t> p6(
@@ -265,7 +265,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
     parameters.add_parameter(p1);
     parameters.add_parameter(p2);
     parameters.add_parameter(p3);
-    parameters.add_parameter(p4);
+    // parameters.add_parameter(p4);
     parameters.add_parameter(p5);
     parameters.add_parameter(p6);
 
@@ -326,8 +326,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(
                                               {0});
     autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                               std::vector<int64_t>{4});
-    autotune::fixed_set_parameter<int64_t> p4(
-        "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
+    // autotune::fixed_set_parameter<int64_t> p4(
+    //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
     autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                              std::vector<double>{0.2});
     autotune::fixed_set_parameter<int64_t> p6(
@@ -338,7 +338,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(
     parameters.add_parameter(p1);
     parameters.add_parameter(p2);
     parameters.add_parameter(p3);
-    parameters.add_parameter(p4);
+    // parameters.add_parameter(p4);
     parameters.add_parameter(p5);
     parameters.add_parameter(p6);
 
@@ -425,9 +425,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                                             {0, 1});
   autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
-  autotune::fixed_set_parameter<int64_t> p4(
-      "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
-      std::vector<int64_t>{16, 64, 256});
+  // autotune::fixed_set_parameter<int64_t> p4(
+  //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
+      // std::vector<int64_t>{16, 64, 256});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
   autotune::fixed_set_parameter<int64_t> p6(
@@ -438,7 +438,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
-  parameters.add_parameter(p4);
+  // parameters.add_parameter(p4);
   parameters.add_parameter(p5);
   parameters.add_parameter(p6);
 
@@ -447,7 +447,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
-  parameters_randomizable.add_parameter(p4);
+  // parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
   parameters_randomizable.add_parameter(p6);
 
@@ -509,8 +509,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
         listRatio = std::stoll(parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"]);
         // if below this threshold (in number of grid points), subspace is
         // streamed
-        streamingThreshold =
-            std::stoll(parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
+        // streamingThreshold =
+        //     std::stoll(parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
         // chunk of data points processed by a single thread, needs to devide
         // vector-variable size (i.e. 4 for AVX)
         parallelDataPoints =
@@ -695,9 +695,9 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
                                             {0, 1});
   autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
-  autotune::fixed_set_parameter<int64_t> p4(
-      "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
-      std::vector<int64_t>{16, 64, 256});
+  // autotune::fixed_set_parameter<int64_t> p4(
+  //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
+  //     std::vector<int64_t>{16, 64, 256});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
   autotune::fixed_set_parameter<int64_t> p6(
@@ -708,7 +708,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
-  parameters.add_parameter(p4);
+  // parameters.add_parameter(p4);
   parameters.add_parameter(p5);
   parameters.add_parameter(p6);
 
@@ -717,7 +717,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
-  parameters_randomizable.add_parameter(p4);
+  // parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
   parameters_randomizable.add_parameter(p6);
 
@@ -783,8 +783,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
                 std::stoll(parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"]);
             // if below this threshold (in number of grid points), subspace is
             // streamed
-            streamingThreshold = std::stoll(
-                parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
+            // streamingThreshold = std::stoll(
+            //     parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
             // chunk of data points processed by a single thread, needs to
             // devide vector-variable size (i.e. 4 for AVX)
             parallelDataPoints = std::stoll(

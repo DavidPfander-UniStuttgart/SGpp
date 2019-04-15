@@ -11,28 +11,28 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: mult
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.411893
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.40999
 info: first mult not considered
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.41178
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.410973
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.41109
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.410859
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.411287
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.41123
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.411138
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.410982
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.411092
-device: 0x12435910 kernel from: 0 to: 200704 -> range: 200704
-device: 0x12435910 duration: 0.411009
-duration mult: 4.16279, repetitions: 10
-GFLOPS: 4468.45
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.409661
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.409031
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.409057
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408999
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.40913
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408962
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408997
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408984
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408998
+device: 0x13b8c0e0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x13b8c0e0 duration: 0.408887
+duration mult: 4.14232, repetitions: 10
+GFLOPS: 4490.53

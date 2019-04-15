@@ -120,7 +120,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::prepareSubspaceIterator() {
        subspaceIndex++) {
     SubspaceNode &subspace = this->allSubspaceNodes[subspaceIndex];
     // select representation
-    subspace.unpack(listRatio, streamingThreshold);
+    subspace.unpack(listRatio);
 
     this->allLevelsIndexMap.insert(
         std::make_pair(subspace.flatLevel, subspaceIndex));
