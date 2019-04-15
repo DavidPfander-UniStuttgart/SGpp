@@ -11,28 +11,28 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: mult
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.28019
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27896
 info: first mult not considered
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27983
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.2784
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27865
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27914
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27917
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27876
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27922
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27908
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27896
-device: 0x13cef910 kernel from: 0 to: 200192 -> range: 200192
-device: 0x13cef910 duration: 1.27911
-duration mult: 12.8542, repetitions: 10
-GFLOPS: 1447.09
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27979
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27835
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27858
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.2788
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27853
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27862
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27875
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.2785
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27852
+device: 0x11e860e0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11e860e0 duration: 1.27853
+duration mult: 12.8553, repetitions: 10
+GFLOPS: 1446.97

@@ -84,12 +84,11 @@ void SubspaceNode::printLevel() {
 // unpack has to be called when the subspace is set up (except for surplus
 // valus) this method will decide how to best represent the subspace (list or
 // array type) and prepare the subspace for its representation
-void SubspaceNode::unpack(double listRatio, int64_t streamingThreshold) {
+void SubspaceNode::unpack(double listRatio) {
   double usageRatio =
       (double)this->existingGridPointsOnLevel / (double)this->gridPointsOnLevel;
 
-  if (usageRatio < listRatio &&
-      this->existingGridPointsOnLevel < streamingThreshold) {
+  if (usageRatio < listRatio) {
     this->type = LIST;
   } else {
     this->type = ARRAY;

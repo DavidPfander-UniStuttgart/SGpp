@@ -49,9 +49,8 @@ private:
   std::string csvSep;
   bool write_stats;
 
+  // if below this ratio, subspace is stored as vector of indices
   double listRatio;
-  // if below this threshold (in number of grid points), subspace is streamed
-  int64_t streamingThreshold;
   // chunk of data points processed by a single thread, needs to devide
   // vector-variable size (i.e. 4 for AVX)
   int64_t parallelDataPoints;
