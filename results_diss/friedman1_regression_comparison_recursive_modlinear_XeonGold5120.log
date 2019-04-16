@@ -1,0 +1,133 @@
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+instances: 200000
+regular grid size: 397825
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 397825
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: -nan
+Target norm:               0
+.delta: 6.48417e+13
+.delta: 5.03406e+13
+.delta: 2.15341e+12
+.delta: 2.93576e+12
+.delta: 2.20097e+12
+.delta: 7.77042e+11
+.delta: 1.30202e+12
+.delta: 1.16094e+12
+.delta: 3.47423e+11
+.delta: 8.23794e+11
+.delta: 2.3831e+11
+.delta: 9.96894e+10
+.delta: 4.1899e+11
+.delta: 8.17544e+10
+.delta: 2.98817e+11
+.delta: 7.98728e+10
+.delta: 9.73596e+10
+.delta: 6.15882e+10
+.delta: 7.93578e+10
+.delta: 5.6194e+10
+.delta: 4.0039e+10
+.delta: 7.05875e+10
+.delta: 5.08605e+10
+.delta: 5.67623e+10
+.delta: 1.1417e+10
+.delta: 3.14393e+10
+.delta: 6.69018e+10
+.delta: 1.59545e+10
+.delta: 4.94431e+10
+.delta: 3.68311e+10
+.delta: 2.73356e+10
+.delta: 3.5556e+10
+.delta: 2.20467e+10
+.delta: 1.00465e+10
+.delta: 1.23195e+10
+.delta: 1.6878e+10
+.delta: 9.50454e+09
+.delta: 1.99085e+10
+.delta: 6.20445e+09
+.delta: 1.00743e+10
+.delta: 2.09881e+10
+.delta: 1.02954e+10
+.delta: 8.21023e+09
+.delta: 4.67384e+09
+.delta: 2.17878e+10
+.delta: 5.25616e+09
+.delta: 6.46131e+09
+.delta: 5.6592e+09
+.delta: 7.22682e+09
+.delta: 8.00073e+09
+.delta: 3.00261e+09
+.delta: 7.71391e+09
+.delta: 5.87129e+09
+.delta: 4.50286e+09
+.delta: 1.43998e+10
+.delta: 5.95897e+09
+.delta: 4.56647e+09
+.delta: 7.36156e+09
+.delta: 3.79626e+09
+.delta: 1.14071e+10
+.delta: 3.84304e+09
+.delta: 3.31682e+09
+.delta: 7.6276e+09
+.delta: 7.27089e+09
+.delta: 3.83897e+09
+.delta: 3.56102e+09
+.delta: 7.35467e+09
+.delta: 4.8904e+09
+.delta: 2.13894e+09
+.delta: 2.28931e+10
+.delta: 5.45061e+09
+.delta: 3.822e+09
+.delta: 4.20852e+09
+.delta: 3.5754e+09
+.delta: 9.12166e+09
+.delta: 4.97826e+09
+.delta: 1.52144e+09
+.delta: 7.07692e+09
+.delta: 7.30424e+09
+.delta: 2.80046e+09
+.delta: 2.04777e+09
+.delta: 4.09912e+09
+.delta: 2.48167e+09
+.delta: 3.36971e+09
+.delta: 2.65058e+09
+.delta: 2.37845e+09
+.delta: 9.21917e+09
+.delta: 2.73125e+09
+.delta: 1.70101e+09
+.delta: 2.98934e+09
+.delta: 4.14736e+09
+.delta: 2.91532e+09
+.delta: 1.36856e+09
+.delta: 3.76011e+09
+.delta: 1.47265e+09
+.delta: 1.40277e+10
+.delta: 3.39023e+09
+.delta: 3.30785e+09
+.delta: 2.94695e+09
+.delta: 1.54039e+09
+
+Number of iterations: 100 (max. 100)
+Final norm of residuum: 1.54039e+09
+counted_mult_calls: 102
+
+Needed Iterations: 100
+Final residuum: 1.54039e+09
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 103.5
+note: performance calculation: additional iteration for residual recalculation : 2
+warning: cannot calculate GFLOPS for operation subtype
+
+Current Duration:: 6120.15
+Current GFlop/s: 0
+
+Finished Training!
+
+Training took: 6120.15 seconds
+
+total_duration: 6122.15
