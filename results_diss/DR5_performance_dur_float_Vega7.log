@@ -1,9 +1,2619 @@
 training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 pci id for fd 5: 1002:66af, driver (null)
 pci id for fd 5: 1002:66af, driver (null)
-ocl dummy initalization duration: 0.421116
+ocl dummy initalization duration: 0.439763
 instances: 371908
 support_refinement_min_support: 500
-terminate called after throwing an instance of 'json::json_exception'
-  what():  error: json error: could not open file: results_diss/DR5__weakscaling_parameters_combined_host_argon-epyc_tuner_line_search_t_float_10r_optimal.cfg
+ocl_init_duration: 0.00440618
+num_candidates: 1
+num_candidates: 1 block_size: 128 num_candidates_per_device: 1
+device: 0 range_padded: 128 range_start: 0 range_end: 1
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 block_size: 128 num_candidates_per_device: 10
+device: 0 range_padded: 128 range_start: 0 range_end: 10
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 block_size: 128 num_candidates_per_device: 60
+device: 0 range_padded: 128 range_start: 0 range_end: 60
+candidates with support: 52
+num_candidates: 236
+num_candidates: 236 block_size: 128 num_candidates_per_device: 236
+device: 0 range_padded: 256 range_start: 0 range_end: 236
+candidates with support: 181
+num_candidates: 706
+num_candidates: 706 block_size: 128 num_candidates_per_device: 706
+device: 0 range_padded: 768 range_start: 0 range_end: 706
+candidates with support: 503
+num_candidates: 1786
+num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
+device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+candidates with support: 1241
+num_candidates: 4140
+num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
+device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+candidates with support: 2886
+num_candidates: 9216
+num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
+device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+candidates with support: 6397
+num_candidates: 19682
+num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
+device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+candidates with support: 13464
+num_candidates: 40066
+num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
+device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
 
+Doing refinement: 0
+Grid Size: 51293
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0650439
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0516481
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0649639
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507891
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640372
+delta: 2.48388e+09
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640449
+delta: 2.08737e+08
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507691
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641202
+delta: 2.56821e+08
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507356
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641396
+delta: 1.26016e+08
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507919
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640426
+delta: 5.29537e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507487
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641346
+delta: 5.00878e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507409
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641334
+delta: 1.85502e+08
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507375
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640495
+delta: 2.72858e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507964
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064023
+delta: 1.86649e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507675
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641503
+delta: 9.53457e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507417
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640895
+delta: 5.84457e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508019
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640388
+delta: 1.93654e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507694
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641284
+delta: 9.296e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507332
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640794
+delta: 1.87357e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507675
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641566
+delta: 4.32147e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507219
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640913
+delta: 5.32214e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507995
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640602
+delta: 6.36569e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507791
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640428
+delta: 3.46229e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050754
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640866
+delta: 2.45893e+07
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507399
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641492
+delta: 1.58378e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050739
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641559
+delta: 1.10935e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507907
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640615
+delta: 3.28579e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507732
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642116
+delta: 1.51217e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050807
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640351
+delta: 7.65975e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507511
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641412
+delta: 5.61889e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508348
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640766
+delta: 687977
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507843
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064063
+delta: 573265
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507681
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064169
+delta: 1.91532e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508228
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640668
+delta: 1.12282e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507745
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641966
+delta: 6.28828e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507257
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640866
+delta: 588042
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507967
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640559
+delta: 1.24315e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507638
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642113
+delta: 513034
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507945
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064019
+delta: 2.49855e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642049
+delta: 698790
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050798
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640906
+delta: 547761
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641335
+delta: 991732
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507631
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641084
+delta: 343723
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050818
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064075
+delta: 1.59165e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050791
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641662
+delta: 413813
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507417
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641303
+delta: 925263
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508078
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640831
+delta: 854201
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507793
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642585
+delta: 352091
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507918
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640724
+delta: 452502
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641839
+delta: 1.33152e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507956
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064061
+delta: 391248
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507663
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641439
+delta: 839416
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508278
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641122
+delta: 417365
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507827
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642057
+delta: 150030
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507433
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641334
+delta: 298756
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507972
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640798
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050735
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064173
+delta: 3.18669e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508003
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640714
+delta: 339229
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507735
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642199
+delta: 991639
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507955
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640994
+delta: 444068
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507639
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642263
+delta: 470456
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507991
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640831
+delta: 913748
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507678
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642711
+delta: 517031
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507799
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641618
+delta: 233590
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507353
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641233
+delta: 210296
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508001
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064081
+delta: 4.16827e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641913
+delta: 207347
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508028
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640852
+delta: 125766
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507884
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640839
+delta: 3.51775e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507671
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642358
+delta: 453467
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507894
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640927
+delta: 286463
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507287
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641482
+delta: 466373
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507382
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641316
+delta: 388380
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507926
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640526
+delta: 2.03233e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050771
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641998
+delta: 365659
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.05079
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640822
+delta: 157120
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507553
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642438
+delta: 492658
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507243
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641132
+delta: 608621
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507903
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640921
+delta: 126223
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050763
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641606
+delta: 497738
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508111
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640814
+delta: 487748
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050759
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064213
+delta: 702755
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507913
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640849
+delta: 298368
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507636
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641874
+delta: 322565
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508007
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641012
+delta: 248175
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507647
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064273
+delta: 602721
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507996
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641396
+delta: 465470
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050774
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641937
+delta: 170091
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508158
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064117
+delta: 220348
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507833
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641967
+delta: 597246
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508159
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642279
+delta: 129322
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507628
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641145
+delta: 150153
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507838
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640788
+delta: 541099
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507591
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064133
+delta: 463302
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508041
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641364
+delta: 174783
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507828
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641788
+delta: 474772
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508049
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641031
+delta: 148569
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507761
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641772
+delta: 221133
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508051
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641098
+delta: 86920.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507694
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641756
+delta: 66865.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507807
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641055
+delta: 405864
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507473
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641577
+delta: 359753
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507711
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642321
+delta: 255133
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050806
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064113
+delta: 317036
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507753
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064185
+delta: 169548
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508132
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641023
+delta: 244138
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507729
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641145
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507947
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640929
+delta: 303323
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508028
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641111
+delta: 177940
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507649
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064194
+delta: 79456.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508031
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641119
+delta: 368264
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507844
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641978
+delta: 464953
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508124
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641234
+delta: 126515
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507881
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641734
+delta: 66809
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508137
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640702
+delta: 2.25591e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507929
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641833
+delta: 123159
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508001
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0640847
+delta: 76416
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050766
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641754
+delta: 309903
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508158
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641546
+delta: 215421
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507681
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642358
+delta: 454877
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508001
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641316
+delta: 98340.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507804
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642716
+delta: 108393
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508081
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641311
+delta: 321863
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507841
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642873
+delta: 192593
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507959
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641134
+delta: 87464.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507521
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641714
+delta: 68223.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508065
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064115
+delta: 992627
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507731
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642158
+delta: 622644
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508055
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641455
+delta: 176061
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507603
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642302
+delta: 117469
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508119
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641388
+delta: 101233
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507801
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642382
+delta: 684802
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508179
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641554
+delta: 94698.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507595
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642206
+delta: 92638.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508126
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641521
+delta: 289398
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507897
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642356
+delta: 84248.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508166
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641348
+delta: 226302
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507787
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642719
+delta: 73651.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508214
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.06413
+delta: 831743
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507827
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642996
+delta: 165016
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508067
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641257
+delta: 92769.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642118
+delta: 248878
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050811
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641562
+delta: 52493.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507751
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642361
+delta: 274702
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507999
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641374
+delta: 72840.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507747
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642273
+delta: 83501.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508135
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641369
+delta: 939909
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507643
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642399
+delta: 114608
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507993
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641359
+delta: 69641.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507851
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642834
+delta: 104582
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508006
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641295
+delta: 196452
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507647
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642417
+delta: 280084
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508017
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641298
+delta: 192582
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507665
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642934
+delta: 83018.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507967
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641378
+delta: 123275
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507457
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642257
+delta: 701847
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507897
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.06413
+delta: 62849.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507615
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643014
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507502
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642001
+delta: 84283.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507534
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064283
+delta: 110233
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507796
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641543
+delta: 1.0416e+06
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507691
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642198
+delta: 27874
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.05081
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641495
+delta: 530755
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507876
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064222
+delta: 102365
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508065
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641796
+delta: 88368.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507521
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643079
+delta: 69253.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507835
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641319
+delta: 62706.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507356
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641921
+delta: 241938
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507852
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641658
+delta: 682002
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507574
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643034
+delta: 37086
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507956
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641487
+delta: 89795
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507729
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642231
+delta: 166193
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508017
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641726
+delta: 98324.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507878
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064293
+delta: 73403
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508006
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641354
+delta: 93608.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507567
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642839
+delta: 77078.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507855
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641617
+delta: 538764
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.05075
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064198
+delta: 84871.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507825
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641588
+delta: 52088.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507495
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642894
+delta: 121999
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507999
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641596
+delta: 726260
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507543
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641978
+delta: 40454
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507999
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641442
+delta: 97918.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507803
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641556
+delta: 112706
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507903
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641606
+delta: 365043
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507527
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641463
+delta: 30721.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507734
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641225
+delta: 205986
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507479
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641743
+delta: 95756
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507894
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641655
+delta: 695040
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507542
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641746
+delta: 24851.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507756
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641306
+delta: 83509.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507571
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642039
+delta: 45823.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507919
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641436
+delta: 411705
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507803
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642777
+delta: 71015.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507827
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642505
+delta: 28760
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508115
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641532
+delta: 151914
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507723
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643041
+delta: 152103
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507886
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641503
+delta: 94948.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507524
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641794
+delta: 83456.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507812
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641361
+delta: 71656.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507817
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642938
+delta: 153932
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507806
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641406
+delta: 47918.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642999
+delta: 29186.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507812
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064145
+delta: 201775
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507918
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643122
+delta: 303805
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507847
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641591
+delta: 33230.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507625
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641738
+delta: 31776.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507875
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641471
+delta: 134476
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507793
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643231
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507606
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642802
+delta: 74987
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507407
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641951
+delta: 141843
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507817
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641873
+delta: 31847.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507529
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641906
+delta: 52812.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507788
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641753
+delta: 264475
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050762
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064234
+delta: 110475
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507982
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641732
+delta: 48130.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507587
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643154
+delta: 56218.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507881
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064159
+delta: 154298
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507665
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642929
+delta: 76622.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508089
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641786
+delta: 42662.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507703
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643089
+delta: 94115.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507809
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641761
+delta: 72397
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507815
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642818
+delta: 121297
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507775
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641386
+delta: 70830.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507414
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642346
+delta: 21040
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507563
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641623
+delta: 288581
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507518
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642986
+delta: 55897.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507798
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641674
+delta: 30453.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507457
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642002
+delta: 131773
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507721
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641753
+delta: 274154
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507511
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643169
+delta: 45229.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641881
+delta: 39028.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507542
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642494
+delta: 134331
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508046
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641642
+delta: 71302.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507769
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642929
+delta: 23619.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0508033
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641722
+delta: 44145.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507531
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.06429
+delta: 47666.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507763
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641646
+delta: 268016
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507662
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642999
+delta: 31588.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507763
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641586
+delta: 115336
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507951
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642814
+delta: 27452.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507887
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641647
+delta: 217787
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507883
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643105
+delta: 65129.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050775
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641618
+delta: 90445.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507427
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642727
+delta: 15875.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507633
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064165
+delta: 258853
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507831
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643282
+delta: 49402.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507689
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641706
+delta: 37549.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507983
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642286
+delta: 68195.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507908
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641782
+delta: 88076.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507633
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643071
+delta: 90309.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050774
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641791
+delta: 18489.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507854
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642545
+delta: 26801.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507876
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641726
+delta: 165112
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507427
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643095
+delta: 54709.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507799
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641633
+delta: 79969.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507787
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643191
+delta: 31650.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507772
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641738
+delta: 164428
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507483
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642198
+delta: 38655.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507827
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641706
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507686
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642118
+delta: 166843
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507838
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641745
+delta: 27076.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507966
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643124
+delta: 235351
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507771
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641825
+delta: 52915.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507887
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643426
+delta: 51674.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507627
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641479
+delta: 33892
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050763
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643078
+delta: 131789
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507711
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641607
+delta: 21476.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507646
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0651799
+delta: 133390
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507937
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641537
+delta: 22027.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507671
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642993
+delta: 105829
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507822
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641254
+delta: 82842.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507828
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643047
+delta: 95127.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641729
+delta: 18763
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507718
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643054
+delta: 197035
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507724
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641626
+delta: 15922.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507865
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064317
+delta: 46392.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507851
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641697
+delta: 60179.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507812
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643198
+delta: 144514
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507758
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064151
+delta: 121781
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507739
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064273
+delta: 25804.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507577
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641769
+delta: 35237.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050754
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643185
+delta: 126239
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507619
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641918
+delta: 18447.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507897
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643266
+delta: 50134
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507809
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641903
+delta: 35473.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507723
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643034
+delta: 182268
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507815
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641718
+delta: 120605
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507835
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643143
+delta: 23725.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507665
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641727
+delta: 34710.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507404
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643174
+delta: 84652.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507886
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642583
+delta: 49037.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507862
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642137
+delta: 17098.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507524
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064329
+delta: 26620.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507659
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641769
+delta: 113834
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507683
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643135
+delta: 149374
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507935
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642638
+delta: 140454
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507947
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641631
+delta: 15961.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507643
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642646
+delta: 23076.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641556
+delta: 265985
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507513
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643092
+delta: 75730.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641802
+delta: 19447.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507697
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643201
+delta: 35928.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507646
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641932
+delta: 75212.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641705
+delta: 42583.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507961
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643358
+delta: 19346.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641938
+delta: 47597.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507875
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642425
+delta: 35478.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507875
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064177
+delta: 18940.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507601
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.06429
+delta: 54756.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507732
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641623
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507289
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642111
+delta: 119916
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050718
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064233
+delta: 55020.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507764
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641679
+delta: 23524.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507559
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643207
+delta: 100289
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507919
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643412
+delta: 37850.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507755
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641716
+delta: 213659
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507844
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643486
+delta: 21964.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507844
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641641
+delta: 16581.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507815
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642439
+delta: 37702.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507793
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641326
+delta: 32624.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507875
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643202
+delta: 44973.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507681
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641815
+delta: 43873.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507771
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643246
+delta: 14295.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507731
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641558
+delta: 68945.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507657
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643241
+delta: 68802.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507769
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641714
+delta: 36703
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507835
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643198
+delta: 25868.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507695
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641743
+delta: 106728
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507383
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643239
+delta: 21471
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507889
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642674
+delta: 22904.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507854
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641994
+delta: 45891
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507903
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643121
+delta: 42956.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507734
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642076
+delta: 27714.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507783
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064261
+delta: 37360
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507886
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641927
+delta: 23424.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050786
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643298
+delta: 43204.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507953
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641926
+delta: 26048.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507806
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064307
+delta: 15051.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507843
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641774
+delta: 63587.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507803
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642761
+delta: 96020.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507788
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064171
+delta: 44686.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507855
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642906
+delta: 17981.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507787
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641807
+delta: 18719.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507735
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643228
+delta: 139965
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050771
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641791
+delta: 46961.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507764
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643279
+delta: 45669.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507707
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641652
+delta: 18837.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050791
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064307
+delta: 70086.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641842
+delta: 48905.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507867
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643311
+delta: 9975.48
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642039
+delta: 111729
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507417
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643407
+delta: 29595.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507847
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642215
+delta: 47750.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507833
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642486
+delta: 12408.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507886
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641561
+delta: 10219.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507646
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641548
+delta: 165024
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507359
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643238
+delta: 45037.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507694
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641622
+delta: 19027
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507358
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643218
+delta: 23070.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507838
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642689
+delta: 67055.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507902
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064211
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507499
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642015
+delta: 53190.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050726
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642175
+delta: 28439.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050782
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642898
+delta: 17038.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507809
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641767
+delta: 61727.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507692
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641906
+delta: 60089.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507391
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643042
+delta: 17464.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507703
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641815
+delta: 41091.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507529
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643481
+delta: 51689.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507783
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642838
+delta: 56920
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507803
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641746
+delta: 8732.08
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642846
+delta: 25550.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507894
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641854
+delta: 76071.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507751
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642905
+delta: 50471
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507889
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641959
+delta: 32246.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507715
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642585
+delta: 17571.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507828
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641774
+delta: 27409.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507798
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643529
+delta: 20808.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507659
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641791
+delta: 47512.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507604
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643065
+delta: 14059.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507646
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641807
+delta: 45090.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507889
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643402
+delta: 14944.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507934
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641796
+delta: 10001.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507569
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643066
+delta: 26920.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507852
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064151
+delta: 98301.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507694
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643396
+delta: 48034.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641638
+delta: 41142.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050746
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643062
+delta: 36951.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507753
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064223
+delta: 19234.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507679
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643022
+delta: 29190.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507684
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641906
+delta: 33811.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643241
+delta: 10062.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507697
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064189
+delta: 93874.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507276
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643466
+delta: 24471.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507606
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641766
+delta: 18845.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507428
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643374
+delta: 16389
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507703
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642353
+delta: 35001.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507742
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642383
+delta: 37407.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507643
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641937
+delta: 26770.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050718
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642428
+delta: 17272.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507612
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641721
+delta: 17838.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507323
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643577
+delta: 13532.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507785
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643377
+delta: 17688.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507668
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642114
+delta: 15943.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050771
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643398
+delta: 34862.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507635
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642327
+delta: 45852.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507401
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643542
+delta: 24363
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507793
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642121
+delta: 9832.18
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507468
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643018
+delta: 71073.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507719
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641791
+delta: 19556.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507326
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643356
+delta: 24412.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507723
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643543
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507271
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0644575
+delta: 37709.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050734
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643143
+delta: 31111.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507649
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642822
+delta: 18335.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507745
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641769
+delta: 40538.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507623
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641622
+delta: 8395.56
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507342
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643223
+delta: 87151.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507631
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641681
+delta: 12539.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507495
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643289
+delta: 34982.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507751
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641838
+delta: 17661.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507399
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643252
+delta: 49245.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507799
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641857
+delta: 12473.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507511
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643217
+delta: 13868.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050774
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641746
+delta: 20776.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507369
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643414
+delta: 17937.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507863
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642942
+delta: 127528
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507782
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064171
+delta: 15900.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507846
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642878
+delta: 9087.86
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507798
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641871
+delta: 58896.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507903
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064277
+delta: 18369.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507847
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641953
+delta: 27568.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507751
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642822
+delta: 20520.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507881
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064203
+delta: 18534.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507841
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642978
+delta: 44026.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507865
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064169
+delta: 31949.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507836
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642929
+delta: 10884.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507892
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064199
+delta: 36102.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507895
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642905
+delta: 131027
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507926
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641937
+delta: 4789.49
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507756
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643145
+delta: 47157.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507702
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642228
+delta: 20594
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507767
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643329
+delta: 56528.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507766
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641919
+delta: 14800.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507756
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642807
+delta: 8672.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507844
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064173
+delta: 97626.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507799
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642718
+delta: 30860.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507695
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641898
+delta: 9555.36
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507713
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642761
+delta: 15068
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507695
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642073
+delta: 66055.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507835
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643185
+delta: 50529.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507799
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641876
+delta: 22934.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507775
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643404
+delta: 30662.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507827
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641966
+delta: 13522.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507716
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642836
+delta: 52545.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507884
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642228
+delta: 14288.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050762
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642892
+delta: 8673.63
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507718
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642262
+delta: 42619.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507388
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642825
+delta: 22597.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050779
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641855
+delta: 13150.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507716
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642852
+delta: 66424.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507729
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642036
+delta: 8814.76
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050766
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643033
+device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507639
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642577
+delta: 56625.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507396
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643119
+delta: 9092.63
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507795
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641863
+delta: 14198
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507769
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642657
+delta: 20813.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507755
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642471
+delta: 24294.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507764
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642786
+delta: 13751.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050774
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642047
+delta: 29776.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507716
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643282
+delta: 12209.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507763
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642438
+delta: 38266
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507574
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643006
+delta: 40924.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507609
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642308
+delta: 17360.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507436
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064267
+delta: 7962.73
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507764
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642273
+delta: 77592.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050766
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642617
+delta: 9818.34
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507724
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641985
+delta: 15507.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507582
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643129
+delta: 20817.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507614
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642214
+delta: 74399.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507535
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642918
+delta: 10623.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507713
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064202
+delta: 11199.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507735
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642678
+delta: 8254.52
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507937
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642497
+delta: 38021.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507614
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642948
+delta: 28517.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.050783
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641738
+delta: 19676.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507662
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642817
+delta: 6861.89
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507839
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642129
+delta: 43895.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507617
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064278
+delta: 50967.2
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507748
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641921
+delta: 4907.15
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507625
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642767
+delta: 26194.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507716
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642214
+delta: 44719
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507598
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642665
+delta: 5611.02
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507591
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641774
+delta: 10647.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507651
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642623
+delta: 19874.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507766
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064197
+delta: 57395
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507582
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642663
+delta: 14357.5
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507852
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642145
+delta: 31396.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507607
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064289
+delta: 14615.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507878
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641975
+delta: 24253.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507539
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064285
+delta: 8380.23
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507902
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642092
+delta: 8222.91
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507758
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642921
+delta: 12469.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507931
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642334
+delta: 24309.1
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507265
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0643495
+delta: 20311.4
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507574
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641858
+delta: 19933.8
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507423
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064271
+delta: 10331.7
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507807
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0641908
+delta: 46673.6
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507481
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642689
+delta: 36343.3
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507751
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642194
+delta: 8037.66
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507569
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.064303
+delta: 5294.54
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507887
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642231
+delta: 29826.9
+.device: 0x13f7980 kernel from: 0 to: 372736 -> range: 372736
+device: 0x13f7980 duration: 0.0507537
+device: gfx906 (0x13f7980)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x13f7980 duration: 0.0642706
+delta: 25886.9
+
+Number of iterations: 500 (max. 500)
+Final norm of residuum: 25886.9
+counted_mult_calls: 510
+
+Needed Iterations: 500
+Final residuum: 25886.9
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 511.5
+note: performance calculation: additional iteration for residual recalculation : 10
+
+Current Duration:: 63.9462
+Current GFlop/s: 7349.92
+
+Finished Training!
+
+Training took: 63.9462 seconds
+
+total_duration: 69.4281
