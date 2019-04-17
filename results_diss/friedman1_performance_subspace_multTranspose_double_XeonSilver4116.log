@@ -11,12 +11,12 @@ creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: Aut
 starting performance test...
 algorithm: multTrans
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_120324/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_120324/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_120324/KernelMultTransposeSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_736097/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_736097/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_736097/KernelMultTransposeSubspace_compile.log 2>&1
 compile log:
-compile duration: 2.20563
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_120324/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_120324/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_120324/KernelMultTransposeSubspace_link.log 2>&1
+compile duration: 2.29966
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_736097/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_736097/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_736097/KernelMultTransposeSubspace_link.log 2>&1
 link log:
-link duration: 0.142411
+link duration: 0.146149
 info: first multTranspose not considered
-duration multTranspose: 16.8295, repetitions: 10
+duration multTranspose: 16.8324, repetitions: 10
 GFLOPS: 0
