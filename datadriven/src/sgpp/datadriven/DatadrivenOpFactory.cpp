@@ -606,7 +606,7 @@ base::OperationMultipleEval *createOperationMultipleEval(
           sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED) {
 #ifdef USE_OCL
         if (verbose) {
-          std::cout << "creating createOperationMultipleEval grid: Linear "
+          std::cout << "creating createOperationMultipleEval grid: ModLinear "
                        "type: STREAMING==DEFAULT "
                        "subType: OCLUNIFIED"
                     << std::endl;

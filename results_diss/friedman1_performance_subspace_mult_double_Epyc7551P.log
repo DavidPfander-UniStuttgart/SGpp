@@ -1,0 +1,22 @@
+./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans true --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-epyc
+without OpenCL configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering full evaluation count
+num_ops: 47739
+creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: AutoTuneTMP
+starting performance test...
+algorithm: multTrans
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_542592/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_542592/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_542592/KernelMultTransposeSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.9811
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_542592/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_542592/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_542592/KernelMultTransposeSubspace_link.log 2>&1
+link log:
+link duration: 0.118135
+info: first multTranspose not considered
+duration multTranspose: 13.0707, repetitions: 10
+GFLOPS: 0
