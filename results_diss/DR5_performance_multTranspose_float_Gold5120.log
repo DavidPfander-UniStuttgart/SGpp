@@ -1,2 +1,79 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::invalid_option_value> >'
-  what():  the argument ('10--use_support_refinement') for option '--level' is invalid
+datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+hostname: argon-gtx
+using OpenCL configuration
+ocl_init_duration: 6.49827
+num_candidates: 1
+num_candidates: 1 block_size: 128 num_candidates_per_device: 1
+device: 0 range_padded: 128 range_start: 0 range_end: 1
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 block_size: 128 num_candidates_per_device: 10
+device: 0 range_padded: 128 range_start: 0 range_end: 10
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 block_size: 128 num_candidates_per_device: 60
+device: 0 range_padded: 128 range_start: 0 range_end: 60
+candidates with support: 52
+num_candidates: 236
+num_candidates: 236 block_size: 128 num_candidates_per_device: 236
+device: 0 range_padded: 256 range_start: 0 range_end: 236
+candidates with support: 181
+num_candidates: 706
+num_candidates: 706 block_size: 128 num_candidates_per_device: 706
+device: 0 range_padded: 768 range_start: 0 range_end: 706
+candidates with support: 503
+num_candidates: 1786
+num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
+device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+candidates with support: 1241
+num_candidates: 4140
+num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
+device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+candidates with support: 2886
+num_candidates: 9216
+num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
+device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+candidates with support: 6397
+num_candidates: 19682
+num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
+device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+candidates with support: 13464
+num_candidates: 40066
+num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
+device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+candidates with support: 26558
+support refinement done, grid size: 51293
+dimensionality: 5
+number of grid points: 51293
+number of data points: 371908
+considering full evaluation count
+num_ops: 5722.88
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+ctor done!!!!!!!!!!!!!!!!
+starting performance test...
+algorithm: multTrans
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.676156
+info: first multTranspose not considered
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.672337
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.676968
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.670439
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.670824
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.669242
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.669599
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.668247
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.670156
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.672355
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0xb5f3c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0xb5f3c8 duration: 0.672378
+duration multTranspose: 6.75371, repetitions: 10
+GFLOPS: 847.369
