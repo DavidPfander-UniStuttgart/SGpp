@@ -49,7 +49,7 @@ echo ${cmd}
 echo "${cmd}" > results_diss/DR5_performance_subspace_mult_double_${device_name}.log 2>&1
 ./${cmd} >> results_diss/DR5_performance_subspace_mult_double_${device_name}.log 2>&1
 
-cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans true --use_support_refinement --support_refinement_min_support 500 --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP"
+cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans true --level 10 --use_support_refinement --support_refinement_min_support 500 --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP"
 echo ${cmd}
 echo "${cmd}" > results_diss/DR5_performance_subspace_multTranspose_double_${device_name}.log 2>&1
 ./${cmd} >> results_diss/DR5_performance_subspace_multTranspose_double_${device_name}.log 2>&1
