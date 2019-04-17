@@ -1,4 +1,4 @@
-./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_400000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig results_diss/friedman1_ocl_float_gtx1080ti_4.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --do_dummy_ocl_init
+./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_400000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig results_diss/friedman1_ocl_float_gtx1080ti_2.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --do_dummy_ocl_init
 training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_400000.arff
 OCL Info: 2 OpenCL platforms have been found
 OCL Info: detected platform, name: "Intel(R) OpenCL"
@@ -13,14 +13,12 @@ OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
-OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-ocl dummy initalization duration: 7.508
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+ocl dummy initalization duration: 6.79364
 instances: 400000
 regular grid size: 397825
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -36,21 +34,19 @@ OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
-OCL Info: detected device, name: "GeForce GTX 1080 Ti"
-OCL Info: using device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
 OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+ctor done!!!!!!!!!!!!!!!!
+ctor done!!!!!!!!!!!!!!!!
 Starting Learning....
 
 Doing refinement: 0
 Grid Size: 397825
-building with optimization flags: building with optimization flags: 
-building with optimization flags: building with optimization flags: 
-
-
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
 --- Begin Build Log ---
 
 
@@ -59,6 +55,15 @@ building with optimization flags: building with optimization flags:
 
 
 --- End Build Log ---
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.589644
+device: 0xaad970 duration: 0.596701
+duration multTranspose ocl mod: 0.68818
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
 --- Begin Build Log ---
 
 
@@ -67,243 +72,1144 @@ building with optimization flags: building with optimization flags:
 
 
 --- End Build Log ---
-duration multTranspose ocl mod: 0.575413
-building with optimization flags: 
-building with optimization flags: building with optimization flags: 
+device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.435286
+device: 0xaad970 duration: 0.437748
+duration mult ocl mod: 0.522096
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531541
+device: 0xaad970 duration: 0.53615
+duration multTranspose ocl mod: 0.542957
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.43509
+device: 0xaad970 duration: 0.437943
+duration mult ocl mod: 0.440028
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531511
+device: 0xaad970 duration: 0.536051
+duration multTranspose ocl mod: 0.538587
+delta: 2.57958e+14
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.4353
+device: 0xaad970 duration: 0.438059
+duration mult ocl mod: 0.440002
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53172
+device: 0xaad970 duration: 0.53611
+duration multTranspose ocl mod: 0.538042
+delta: 2.08301e+14
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.435198
+device: 0xaad970 duration: 0.437946
+duration mult ocl mod: 0.440037
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531608
+device: 0xaad970 duration: 0.536032
+duration multTranspose ocl mod: 0.537808
+delta: 7.7945e+12
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434922
+device: 0xaad970 duration: 0.438625
+duration mult ocl mod: 0.443158
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531821
+device: 0xaad970 duration: 0.536043
+duration multTranspose ocl mod: 0.53907
+delta: 8.31577e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434904
+device: 0xaad970 duration: 0.438051
+duration mult ocl mod: 0.44025
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531951
+device: 0xaad970 duration: 0.536298
+duration multTranspose ocl mod: 0.538792
+delta: 1.23718e+13
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434624
+device: 0xaad970 duration: 0.438137
+duration mult ocl mod: 0.440997
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531663
+device: 0xaad970 duration: 0.536011
+duration multTranspose ocl mod: 0.538252
+delta: 3.01058e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434745
+device: 0xaad970 duration: 0.438035
+duration mult ocl mod: 0.440086
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531676
+device: 0xaad970 duration: 0.536267
+duration multTranspose ocl mod: 0.538431
+delta: 4.06763e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434695
+device: 0xaad970 duration: 0.437971
+duration mult ocl mod: 0.439888
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531965
+device: 0xaad970 duration: 0.536217
+duration multTranspose ocl mod: 0.538088
+delta: 7.91441e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434695
+device: 0xaad970 duration: 0.438092
+duration mult ocl mod: 0.440513
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531856
+device: 0xaad970 duration: 0.53613
+duration multTranspose ocl mod: 0.538132
+delta: 1.73887e+12
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.434643
+device: 0xaad970 duration: 0.438324
+duration mult ocl mod: 0.441374
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.531991
+device: 0xaad970 duration: 0.536193
+duration multTranspose ocl mod: 0.538382
+delta: 3.56827e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.435331
+device: 0xaad970 duration: 0.438039
+duration mult ocl mod: 0.44016
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.533959
+device: 0xaad970 duration: 0.536582
+duration multTranspose ocl mod: 0.538865
+delta: 1.07942e+12
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437983
+device: 0xaad970 duration: 0.438202
+duration mult ocl mod: 0.440121
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535337
+device: 0xaad970 duration: 0.536506
+duration multTranspose ocl mod: 0.538449
+delta: 7.13308e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.438055
+device: 0xaaefb0 duration: 0.438205
+duration mult ocl mod: 0.440684
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535384
+device: 0xaad970 duration: 0.536248
+duration multTranspose ocl mod: 0.539012
+delta: 5.39351e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.438018
+device: 0xaaefb0 duration: 0.438296
+duration mult ocl mod: 0.440516
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535602
+device: 0xaad970 duration: 0.536164
+duration multTranspose ocl mod: 0.538016
+delta: 3.3166e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.438057
+device: 0xaaefb0 duration: 0.43836
+duration mult ocl mod: 0.440404
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535599
+device: 0xaad970 duration: 0.536437
+duration multTranspose ocl mod: 0.538946
+delta: 4.84926e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.438019
+device: 0xaaefb0 duration: 0.438082
+duration mult ocl mod: 0.440257
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535352
+device: 0xaad970 duration: 0.536982
+duration multTranspose ocl mod: 0.538871
+delta: 2.68962e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438193
+device: 0xaad970 duration: 0.438996
+duration mult ocl mod: 0.441417
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53561
+device: 0xaad970 duration: 0.537856
+duration multTranspose ocl mod: 0.540145
+delta: 2.44366e+11
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437921
+device: 0xaad970 duration: 0.439607
+duration mult ocl mod: 0.442335
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535564
+device: 0xaad970 duration: 0.53793
+duration multTranspose ocl mod: 0.539766
+delta: 5.83625e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438386
+device: 0xaad970 duration: 0.438994
+duration mult ocl mod: 0.440908
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53546
+device: 0xaad970 duration: 0.537795
+duration multTranspose ocl mod: 0.539546
+delta: 5.62996e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.438892
+device: 0xaaefb0 duration: 0.438758
+duration mult ocl mod: 0.44168
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535423
+device: 0xaad970 duration: 0.53759
+duration multTranspose ocl mod: 0.539488
+delta: 3.24849e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438124
+device: 0xaad970 duration: 0.439064
+duration mult ocl mod: 0.441084
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535438
+device: 0xaad970 duration: 0.538093
+duration multTranspose ocl mod: 0.540508
+delta: 1.03653e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438302
+device: 0xaad970 duration: 0.439146
+duration mult ocl mod: 0.441092
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535868
+device: 0xaad970 duration: 0.538046
+duration multTranspose ocl mod: 0.540454
+delta: 3.72728e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437774
+device: 0xaad970 duration: 0.43895
+duration mult ocl mod: 0.440739
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.5356
+device: 0xaad970 duration: 0.537554
+duration multTranspose ocl mod: 0.539724
+delta: 2.41381e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437764
+device: 0xaad970 duration: 0.439338
+duration mult ocl mod: 0.441275
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535633
+device: 0xaad970 duration: 0.537888
+duration multTranspose ocl mod: 0.539651
+delta: 1.20404e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437807
+device: 0xaad970 duration: 0.439166
+duration mult ocl mod: 0.440984
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53555
+device: 0xaad970 duration: 0.53806
+duration multTranspose ocl mod: 0.540342
+delta: 5.16457e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437863
+device: 0xaad970 duration: 0.439396
+duration mult ocl mod: 0.441186
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53588
+device: 0xaad970 duration: 0.5378
+duration multTranspose ocl mod: 0.539703
+delta: 9.18298e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437738
+device: 0xaad970 duration: 0.439014
+duration mult ocl mod: 0.440813
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535512
+device: 0xaad970 duration: 0.53799
+duration multTranspose ocl mod: 0.539908
+delta: 1.83206e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437796
+device: 0xaad970 duration: 0.439366
+duration mult ocl mod: 0.441603
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535933
+device: 0xaad970 duration: 0.537789
+duration multTranspose ocl mod: 0.539643
+delta: 1.45743e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437753
+device: 0xaad970 duration: 0.438955
+duration mult ocl mod: 0.440893
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535874
+device: 0xaad970 duration: 0.537971
+duration multTranspose ocl mod: 0.53987
+delta: 5.97417e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437755
+device: 0xaad970 duration: 0.439244
+duration mult ocl mod: 0.441175
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535898
+device: 0xaad970 duration: 0.538177
+duration multTranspose ocl mod: 0.539926
+delta: 8.18465e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437716
+device: 0xaad970 duration: 0.438962
+duration mult ocl mod: 0.441165
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535644
+device: 0xaad970 duration: 0.537864
+duration multTranspose ocl mod: 0.539769
+delta: 1.88256e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437705
+device: 0xaad970 duration: 0.439047
+duration mult ocl mod: 0.441279
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535725
+device: 0xaad970 duration: 0.537722
+duration multTranspose ocl mod: 0.53947
+delta: 1.1744e+11
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437894
+device: 0xaad970 duration: 0.438936
+duration mult ocl mod: 0.441288
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536043
+device: 0xaad970 duration: 0.537904
+duration multTranspose ocl mod: 0.539712
+delta: 6.85368e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437665
+device: 0xaad970 duration: 0.439439
+duration mult ocl mod: 0.441831
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535902
+device: 0xaad970 duration: 0.538186
+duration multTranspose ocl mod: 0.540041
+delta: 8.13522e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437851
+device: 0xaad970 duration: 0.439257
+duration mult ocl mod: 0.441296
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535767
+device: 0xaad970 duration: 0.538105
+duration multTranspose ocl mod: 0.539948
+delta: 6.78955e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437885
+device: 0xaad970 duration: 0.439286
+duration mult ocl mod: 0.441234
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535886
+device: 0xaad970 duration: 0.537498
+duration multTranspose ocl mod: 0.539264
+delta: 5.84055e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437924
+device: 0xaad970 duration: 0.438996
+duration mult ocl mod: 0.440874
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536042
+device: 0xaad970 duration: 0.53795
+duration multTranspose ocl mod: 0.539715
+delta: 7.34669e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437894
+device: 0xaad970 duration: 0.439247
+duration mult ocl mod: 0.44138
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536009
+device: 0xaad970 duration: 0.537896
+duration multTranspose ocl mod: 0.539767
+delta: 4.86612e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437951
+device: 0xaad970 duration: 0.43913
+duration mult ocl mod: 0.440959
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535768
+device: 0xaad970 duration: 0.53796
+duration multTranspose ocl mod: 0.539844
+delta: 5.22867e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.43784
+device: 0xaad970 duration: 0.439552
+duration mult ocl mod: 0.441647
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535742
+device: 0xaad970 duration: 0.537978
+duration multTranspose ocl mod: 0.539737
+delta: 4.52995e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437714
+device: 0xaad970 duration: 0.439825
+duration mult ocl mod: 0.441947
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535815
+device: 0xaad970 duration: 0.537975
+duration multTranspose ocl mod: 0.539863
+delta: 4.15677e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437844
+device: 0xaad970 duration: 0.439168
+duration mult ocl mod: 0.441052
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535865
+device: 0xaad970 duration: 0.537957
+duration multTranspose ocl mod: 0.540292
+delta: 6.58961e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438299
+device: 0xaad970 duration: 0.439142
+duration mult ocl mod: 0.441429
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535778
+device: 0xaad970 duration: 0.538172
+duration multTranspose ocl mod: 0.540217
+delta: 5.00953e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437888
+device: 0xaad970 duration: 0.439257
+duration mult ocl mod: 0.441262
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535748
+device: 0xaad970 duration: 0.538254
+duration multTranspose ocl mod: 0.540139
+delta: 2.48153e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.43787
+device: 0xaad970 duration: 0.439236
+duration mult ocl mod: 0.440999
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535942
+device: 0xaad970 duration: 0.538012
+duration multTranspose ocl mod: 0.53977
+delta: 2.53055e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437837
+device: 0xaad970 duration: 0.439246
+duration mult ocl mod: 0.44104
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535702
+device: 0xaad970 duration: 0.538052
+duration multTranspose ocl mod: 0.539958
+delta: 3.02528e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437937
+device: 0xaad970 duration: 0.439245
+duration mult ocl mod: 0.441147
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535954
+device: 0xaad970 duration: 0.538329
+duration multTranspose ocl mod: 0.540098
+delta: 2.19204e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438303
+device: 0xaad970 duration: 0.439287
+duration mult ocl mod: 0.441191
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535925
+device: 0xaad970 duration: 0.538285
+duration multTranspose ocl mod: 0.540165
+delta: 2.16851e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437837
+device: 0xaad970 duration: 0.439409
+duration mult ocl mod: 0.441204
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535933
+device: 0xaad970 duration: 0.538066
+duration multTranspose ocl mod: 0.540015
+delta: 4.58916e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437764
+device: 0xaad970 duration: 0.439439
+duration mult ocl mod: 0.4413
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535865
+device: 0xaad970 duration: 0.538436
+duration multTranspose ocl mod: 0.54042
+delta: 2.09417e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437889
+device: 0xaad970 duration: 0.439318
+duration mult ocl mod: 0.441239
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536005
+device: 0xaad970 duration: 0.538226
+duration multTranspose ocl mod: 0.539991
+device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437788
+device: 0xaad970 duration: 0.439329
+duration mult ocl mod: 0.441221
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535771
+device: 0xaad970 duration: 0.538536
+duration multTranspose ocl mod: 0.540601
+delta: 5.42984e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438332
+device: 0xaad970 duration: 0.439336
+duration mult ocl mod: 0.441239
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535858
+device: 0xaad970 duration: 0.538085
+duration multTranspose ocl mod: 0.539995
+delta: 1.5519e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437983
+device: 0xaad970 duration: 0.439455
+duration mult ocl mod: 0.441533
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536041
+device: 0xaad970 duration: 0.538153
+duration multTranspose ocl mod: 0.539914
+delta: 1.33619e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437927
+device: 0xaad970 duration: 0.43944
+duration mult ocl mod: 0.441305
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53599
+device: 0xaad970 duration: 0.538146
+duration multTranspose ocl mod: 0.539918
+delta: 9.87885e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437941
+device: 0xaad970 duration: 0.439355
+duration mult ocl mod: 0.441195
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535793
+device: 0xaad970 duration: 0.538339
+duration multTranspose ocl mod: 0.540098
+delta: 3.19125e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437932
+device: 0xaad970 duration: 0.43947
+duration mult ocl mod: 0.441384
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535774
+device: 0xaad970 duration: 0.538036
+duration multTranspose ocl mod: 0.540499
+delta: 6.68888e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437903
+device: 0xaad970 duration: 0.439656
+duration mult ocl mod: 0.441496
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536063
+device: 0xaad970 duration: 0.538054
+duration multTranspose ocl mod: 0.53999
+delta: 1.06541e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437861
+device: 0xaad970 duration: 0.439385
+duration mult ocl mod: 0.44125
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535801
+device: 0xaad970 duration: 0.538101
+duration multTranspose ocl mod: 0.539862
+delta: 1.63417e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438216
+device: 0xaad970 duration: 0.439266
+duration mult ocl mod: 0.441062
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535633
+device: 0xaad970 duration: 0.538317
+duration multTranspose ocl mod: 0.540302
+delta: 2.48566e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438103
+device: 0xaad970 duration: 0.439315
+duration mult ocl mod: 0.441145
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536039
+device: 0xaad970 duration: 0.538069
+duration multTranspose ocl mod: 0.54013
+delta: 1.7302e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437901
+device: 0xaad970 duration: 0.439287
+duration mult ocl mod: 0.441211
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535711
+device: 0xaad970 duration: 0.538156
+duration multTranspose ocl mod: 0.540061
+delta: 1.99518e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438173
+device: 0xaad970 duration: 0.439237
+duration mult ocl mod: 0.441102
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535785
+device: 0xaad970 duration: 0.538096
+duration multTranspose ocl mod: 0.539972
+delta: 1.40576e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438139
+device: 0xaad970 duration: 0.439217
+duration mult ocl mod: 0.441125
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53585
+device: 0xaad970 duration: 0.538335
+duration multTranspose ocl mod: 0.540292
+delta: 2.71431e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437719
+device: 0xaad970 duration: 0.439605
+duration mult ocl mod: 0.441998
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53596
+device: 0xaad970 duration: 0.538113
+duration multTranspose ocl mod: 0.540333
+delta: 4.43474e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437926
+device: 0xaad970 duration: 0.439307
+duration mult ocl mod: 0.441279
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535713
+device: 0xaad970 duration: 0.537967
+duration multTranspose ocl mod: 0.539794
+delta: 9.75807e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438658
+device: 0xaad970 duration: 0.439458
+duration mult ocl mod: 0.441402
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535713
+device: 0xaad970 duration: 0.537891
+duration multTranspose ocl mod: 0.539769
+delta: 2.11915e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437891
+device: 0xaad970 duration: 0.439269
+duration mult ocl mod: 0.441056
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.53599
+device: 0xaad970 duration: 0.537976
+duration multTranspose ocl mod: 0.539837
+delta: 2.73811e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438436
+device: 0xaad970 duration: 0.43943
+duration mult ocl mod: 0.441225
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536155
+device: 0xaad970 duration: 0.538263
+duration multTranspose ocl mod: 0.540495
+delta: 1.57128e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437918
+device: 0xaad970 duration: 0.439235
+duration mult ocl mod: 0.441136
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535816
+device: 0xaad970 duration: 0.538099
+duration multTranspose ocl mod: 0.539844
+delta: 1.32576e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437883
+device: 0xaad970 duration: 0.439764
+duration mult ocl mod: 0.442384
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535837
+device: 0xaad970 duration: 0.538084
+duration multTranspose ocl mod: 0.540165
+delta: 3.51562e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438277
+device: 0xaad970 duration: 0.439554
+duration mult ocl mod: 0.441564
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535949
+device: 0xaad970 duration: 0.538499
+duration multTranspose ocl mod: 0.540854
+delta: 3.66734e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437903
+device: 0xaad970 duration: 0.439416
+duration mult ocl mod: 0.441334
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535845
+device: 0xaad970 duration: 0.538125
+duration multTranspose ocl mod: 0.539893
+delta: 7.64237e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437834
+device: 0xaad970 duration: 0.439132
+duration mult ocl mod: 0.440902
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536158
+device: 0xaad970 duration: 0.53797
+duration multTranspose ocl mod: 0.539725
+delta: 9.64502e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438031
+device: 0xaad970 duration: 0.439059
+duration mult ocl mod: 0.440842
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535879
+device: 0xaad970 duration: 0.53797
+duration multTranspose ocl mod: 0.539883
+delta: 1.44649e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437886
+device: 0xaad970 duration: 0.439068
+duration mult ocl mod: 0.440872
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535825
+device: 0xaad970 duration: 0.537899
+duration multTranspose ocl mod: 0.539649
+delta: 1.95797e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.438178
+device: 0xaad970 duration: 0.439431
+duration mult ocl mod: 0.441343
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.535834
+device: 0xaad970 duration: 0.537888
+duration multTranspose ocl mod: 0.539647
+delta: 1.07571e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaaefb0 duration: 0.437839
+device: 0xaad970 duration: 0.439141
+duration mult ocl mod: 0.441045
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaaefb0 duration: 0.536021
+device: 0xaad970 duration: 0.537709
+duration multTranspose ocl mod: 0.539463
+delta: 1.14363e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439005
+device: 0xaaefb0 duration: 0.441249
+duration mult ocl mod: 0.443402
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537804
+device: 0xaaefb0 duration: 0.53926
+duration multTranspose ocl mod: 0.541064
+delta: 4.13693e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439495
+device: 0xaaefb0 duration: 0.440921
+duration mult ocl mod: 0.443621
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538124
+device: 0xaaefb0 duration: 0.539288
+duration multTranspose ocl mod: 0.542008
+delta: 2.59127e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439156
+device: 0xaaefb0 duration: 0.44138
+duration mult ocl mod: 0.443527
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.53803
+device: 0xaaefb0 duration: 0.53937
+duration multTranspose ocl mod: 0.541404
+delta: 2.1217e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439424
+device: 0xaaefb0 duration: 0.441725
+duration mult ocl mod: 0.443523
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.5379
+device: 0xaaefb0 duration: 0.539606
+duration multTranspose ocl mod: 0.541391
+delta: 4.03349e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439415
+device: 0xaaefb0 duration: 0.441164
+duration mult ocl mod: 0.442957
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537923
+device: 0xaaefb0 duration: 0.539299
+duration multTranspose ocl mod: 0.541398
+delta: 1.34829e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439411
+device: 0xaaefb0 duration: 0.441228
+duration mult ocl mod: 0.443034
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538226
+device: 0xaaefb0 duration: 0.53941
+duration multTranspose ocl mod: 0.541221
+delta: 1.89341e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.43928
+device: 0xaaefb0 duration: 0.441781
+duration mult ocl mod: 0.443995
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538253
+device: 0xaaefb0 duration: 0.539952
+duration multTranspose ocl mod: 0.542013
+delta: 1.56299e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439293
+device: 0xaaefb0 duration: 0.441227
+duration mult ocl mod: 0.44325
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538227
+device: 0xaaefb0 duration: 0.539378
+duration multTranspose ocl mod: 0.541586
+delta: 4.04034e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439389
+device: 0xaaefb0 duration: 0.441443
+duration mult ocl mod: 0.443551
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538089
+device: 0xaaefb0 duration: 0.539687
+duration multTranspose ocl mod: 0.541574
+delta: 6.1221e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439331
+device: 0xaaefb0 duration: 0.441283
+duration mult ocl mod: 0.443531
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538306
+device: 0xaaefb0 duration: 0.539389
+duration multTranspose ocl mod: 0.541478
+delta: 3.7418e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.43928
+device: 0xaaefb0 duration: 0.441094
+duration mult ocl mod: 0.442906
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538064
+device: 0xaaefb0 duration: 0.539668
+duration multTranspose ocl mod: 0.542103
+delta: 7.92765e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439372
+device: 0xaaefb0 duration: 0.441173
+duration mult ocl mod: 0.44299
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537724
+device: 0xaaefb0 duration: 0.539763
+duration multTranspose ocl mod: 0.542492
+delta: 6.53815e+09
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439835
+device: 0xaaefb0 duration: 0.440836
+duration mult ocl mod: 0.443107
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538238
+device: 0xaaefb0 duration: 0.539416
+duration multTranspose ocl mod: 0.541536
+delta: 6.78585e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439439
+device: 0xaaefb0 duration: 0.441364
+duration mult ocl mod: 0.444109
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538056
+device: 0xaaefb0 duration: 0.539726
+duration multTranspose ocl mod: 0.541801
+delta: 1.3665e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439427
+device: 0xaaefb0 duration: 0.441984
+duration mult ocl mod: 0.44431
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537989
+device: 0xaaefb0 duration: 0.539734
+duration multTranspose ocl mod: 0.541502
+delta: 2.13876e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439439
+device: 0xaaefb0 duration: 0.441276
+duration mult ocl mod: 0.443107
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538018
+device: 0xaaefb0 duration: 0.539501
+duration multTranspose ocl mod: 0.54147
+delta: 2.54074e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439193
+device: 0xaaefb0 duration: 0.441206
+duration mult ocl mod: 0.443968
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538357
+device: 0xaaefb0 duration: 0.539475
+duration multTranspose ocl mod: 0.542696
+delta: 4.28162e+09
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439578
+device: 0xaaefb0 duration: 0.441034
+duration mult ocl mod: 0.444238
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538271
+device: 0xaaefb0 duration: 0.539735
+duration multTranspose ocl mod: 0.542713
+delta: 1.47038e+10
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439441
+device: 0xaaefb0 duration: 0.441021
+duration mult ocl mod: 0.443909
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537977
+device: 0xaaefb0 duration: 0.53934
+duration multTranspose ocl mod: 0.541893
+delta: 1.66428e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439306
+device: 0xaaefb0 duration: 0.441172
+duration mult ocl mod: 0.444129
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537969
+device: 0xaaefb0 duration: 0.539368
+duration multTranspose ocl mod: 0.54159
+delta: 6.97502e+09
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439196
+device: 0xaaefb0 duration: 0.441341
+duration mult ocl mod: 0.444487
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.537849
+device: 0xaaefb0 duration: 0.539404
+duration multTranspose ocl mod: 0.542568
+delta: 5.35517e+09
+.device: 0xaad970 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaaefb0 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439559
+device: 0xaaefb0 duration: 0.440999
+duration mult ocl mod: 0.443828
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538162
+device: 0xaaefb0 duration: 0.539423
+duration multTranspose ocl mod: 0.542224
+delta: 1.53469e+10
+.device: 0xaaefb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0xaad970 kernel from: 200704 to: 400384 -> range: 199680
+device: 0xaad970 duration: 0.439358
+device: 0xaaefb0 duration: 0.441233
+duration mult ocl mod: 0.443359
+device: GeForce GTX 1080 Ti (0xaad970)  kernel from: 0 to: 199168 -> range: 199168 (with blocking: 199168)
+device: GeForce GTX 1080 Ti (0xaaefb0)  kernel from: 199168 to: 398080 -> range: 198912 (with blocking: 198912)
+device: 0xaad970 duration: 0.538309
+device: 0xaaefb0 duration: 0.539404
+duration multTranspose ocl mod: 0.541653
+delta: 1.01305e+10
 
-building with optimization flags: 
---- Begin Build Log ---
-
-
---- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
---- Begin Build Log ---
-
-
---- End Build Log ---
-duration mult ocl mod: 0.424277
-duration multTranspose ocl mod: 0.369081
-duration mult ocl mod: 0.268602
-duration multTranspose ocl mod: 0.370381
-duration mult ocl mod: 0.273773
-duration multTranspose ocl mod: 0.371833
-duration mult ocl mod: 0.271189
-duration multTranspose ocl mod: 0.369473
-duration mult ocl mod: 0.271801
-duration multTranspose ocl mod: 0.36798
-duration mult ocl mod: 0.267988
-duration multTranspose ocl mod: 0.368694
-duration mult ocl mod: 0.268536
-duration multTranspose ocl mod: 0.373542
-duration mult ocl mod: 0.271569
-duration multTranspose ocl mod: 0.370797
-duration mult ocl mod: 0.270512
-duration multTranspose ocl mod: 0.367808
-duration mult ocl mod: 0.26744
-duration multTranspose ocl mod: 0.368285
-duration mult ocl mod: 0.270931
-duration multTranspose ocl mod: 0.369813
-duration mult ocl mod: 0.271986
-duration multTranspose ocl mod: 0.369984
-duration mult ocl mod: 0.270928
-duration multTranspose ocl mod: 0.368555
-duration mult ocl mod: 0.273371
-duration multTranspose ocl mod: 0.369503
-duration mult ocl mod: 0.272335
-duration multTranspose ocl mod: 0.372809
-duration mult ocl mod: 0.266863
-duration multTranspose ocl mod: 0.373412
-duration mult ocl mod: 0.268244
-duration multTranspose ocl mod: 0.371087
-duration mult ocl mod: 0.26629
-duration multTranspose ocl mod: 0.372137
-duration mult ocl mod: 0.268156
-duration multTranspose ocl mod: 0.372957
-duration mult ocl mod: 0.268
-duration multTranspose ocl mod: 0.371877
-duration mult ocl mod: 0.2725
-duration multTranspose ocl mod: 0.372093
-duration mult ocl mod: 0.275132
-duration multTranspose ocl mod: 0.372837
-duration mult ocl mod: 0.271872
-duration multTranspose ocl mod: 0.3731
-duration mult ocl mod: 0.280272
-duration multTranspose ocl mod: 0.372604
-duration mult ocl mod: 0.274482
-duration multTranspose ocl mod: 0.371448
-duration mult ocl mod: 0.272056
-duration multTranspose ocl mod: 0.371959
-duration mult ocl mod: 0.276966
-duration multTranspose ocl mod: 0.374933
-duration mult ocl mod: 0.277423
-duration multTranspose ocl mod: 0.373043
-duration mult ocl mod: 0.274998
-duration multTranspose ocl mod: 0.373005
-duration mult ocl mod: 0.273393
-duration multTranspose ocl mod: 0.370979
-duration mult ocl mod: 0.267232
-duration multTranspose ocl mod: 0.371928
-duration mult ocl mod: 0.270094
-duration multTranspose ocl mod: 0.371483
-duration mult ocl mod: 0.272186
-duration multTranspose ocl mod: 0.373378
-duration mult ocl mod: 0.274473
-duration multTranspose ocl mod: 0.375084
-duration mult ocl mod: 0.27206
-duration multTranspose ocl mod: 0.377322
-duration mult ocl mod: 0.274589
-duration multTranspose ocl mod: 0.371236
-duration mult ocl mod: 0.270746
-duration multTranspose ocl mod: 0.372679
-duration mult ocl mod: 0.270297
-duration multTranspose ocl mod: 0.370722
-duration mult ocl mod: 0.274378
-duration multTranspose ocl mod: 0.372447
-duration mult ocl mod: 0.272234
-duration multTranspose ocl mod: 0.373484
-duration mult ocl mod: 0.268571
-duration multTranspose ocl mod: 0.372269
-duration mult ocl mod: 0.268252
-duration multTranspose ocl mod: 0.372505
-duration mult ocl mod: 0.272119
-duration multTranspose ocl mod: 0.37472
-duration mult ocl mod: 0.270999
-duration multTranspose ocl mod: 0.374165
-duration mult ocl mod: 0.26953
-duration multTranspose ocl mod: 0.371275
-duration mult ocl mod: 0.271836
-duration multTranspose ocl mod: 0.372445
-duration mult ocl mod: 0.268545
-duration multTranspose ocl mod: 0.374853
-duration mult ocl mod: 0.269321
-duration multTranspose ocl mod: 0.375283
-duration mult ocl mod: 0.27057
-duration multTranspose ocl mod: 0.371985
-duration mult ocl mod: 0.267904
-duration multTranspose ocl mod: 0.373825
-duration mult ocl mod: 0.2721
-duration multTranspose ocl mod: 0.371799
-duration mult ocl mod: 0.277624
-duration multTranspose ocl mod: 0.373799
-duration mult ocl mod: 0.270673
-duration multTranspose ocl mod: 0.373198
-duration mult ocl mod: 0.269307
-duration multTranspose ocl mod: 0.371139
-duration mult ocl mod: 0.271706
-duration multTranspose ocl mod: 0.373215
-duration mult ocl mod: 0.268813
-duration multTranspose ocl mod: 0.374422
-duration mult ocl mod: 0.273757
-duration multTranspose ocl mod: 0.372838
-duration mult ocl mod: 0.269628
-duration multTranspose ocl mod: 0.373305
-duration mult ocl mod: 0.276216
-duration multTranspose ocl mod: 0.372665
-duration mult ocl mod: 0.271859
-duration multTranspose ocl mod: 0.371962
-duration mult ocl mod: 0.268739
-duration multTranspose ocl mod: 0.373009
-duration mult ocl mod: 0.273244
-duration multTranspose ocl mod: 0.374178
-duration mult ocl mod: 0.269459
-duration multTranspose ocl mod: 0.371307
-duration mult ocl mod: 0.273194
-duration multTranspose ocl mod: 0.373147
-duration mult ocl mod: 0.27285
-duration multTranspose ocl mod: 0.372187
-duration mult ocl mod: 0.26752
-duration multTranspose ocl mod: 0.371508
-duration mult ocl mod: 0.270654
-duration multTranspose ocl mod: 0.371822
-duration mult ocl mod: 0.273695
-duration multTranspose ocl mod: 0.371846
-duration mult ocl mod: 0.271995
-duration multTranspose ocl mod: 0.373082
-duration mult ocl mod: 0.271426
-duration multTranspose ocl mod: 0.37275
-duration mult ocl mod: 0.268574
-duration multTranspose ocl mod: 0.373705
-duration mult ocl mod: 0.273057
-duration multTranspose ocl mod: 0.37269
-duration mult ocl mod: 0.275456
-duration multTranspose ocl mod: 0.375127
-duration mult ocl mod: 0.271279
-duration multTranspose ocl mod: 0.373558
-duration mult ocl mod: 0.269577
-duration multTranspose ocl mod: 0.373159
-duration mult ocl mod: 0.270471
-duration multTranspose ocl mod: 0.37161
-duration mult ocl mod: 0.268552
-duration multTranspose ocl mod: 0.37341
-duration mult ocl mod: 0.273651
-duration multTranspose ocl mod: 0.373755
-duration mult ocl mod: 0.268219
-duration multTranspose ocl mod: 0.374616
-duration mult ocl mod: 0.283157
-duration multTranspose ocl mod: 0.373364
-duration mult ocl mod: 0.271683
-duration multTranspose ocl mod: 0.373511
-duration mult ocl mod: 0.27324
-duration multTranspose ocl mod: 0.37584
-duration mult ocl mod: 0.268955
-duration multTranspose ocl mod: 0.374126
-duration mult ocl mod: 0.268047
-duration multTranspose ocl mod: 0.377454
-duration mult ocl mod: 0.268704
-duration multTranspose ocl mod: 0.374164
-duration mult ocl mod: 0.272582
-duration multTranspose ocl mod: 0.375368
-duration mult ocl mod: 0.272126
-duration multTranspose ocl mod: 0.372535
-duration mult ocl mod: 0.269138
-duration multTranspose ocl mod: 0.373461
-duration mult ocl mod: 0.268462
-duration multTranspose ocl mod: 0.372556
-duration mult ocl mod: 0.268336
-duration multTranspose ocl mod: 0.372927
-duration mult ocl mod: 0.270998
-duration multTranspose ocl mod: 0.373479
-duration mult ocl mod: 0.268324
-duration multTranspose ocl mod: 0.373569
-duration mult ocl mod: 0.268635
-duration multTranspose ocl mod: 0.37355
-duration mult ocl mod: 0.269996
-duration multTranspose ocl mod: 0.374413
-duration mult ocl mod: 0.268358
-duration multTranspose ocl mod: 0.372678
-duration mult ocl mod: 0.269135
-duration multTranspose ocl mod: 0.375766
-duration mult ocl mod: 0.272695
-duration multTranspose ocl mod: 0.375075
-duration mult ocl mod: 0.269036
-duration multTranspose ocl mod: 0.371947
-duration mult ocl mod: 0.273713
-duration multTranspose ocl mod: 0.373516
-duration mult ocl mod: 0.271484
-duration multTranspose ocl mod: 0.374189
-duration mult ocl mod: 0.272838
-duration multTranspose ocl mod: 0.374636
-duration mult ocl mod: 0.273257
-duration multTranspose ocl mod: 0.372654
+Number of iterations: 100 (max. 100)
+Final norm of residuum: 1.01305e+10
+counted_mult_calls: 102
 
 Needed Iterations: 100
-Final residuum: 1.76358e+10
+Final residuum: 1.01305e+10
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 
-Current Duration:: 67.8674
-Current GFlop/s: 20332
+Current Duration:: 102.023
+Current GFlop/s: 13488.7
 
 Finished Training!
 
-Training took: 67.8674 seconds
+Training took: 102.023 seconds
 
-total_duration: 72.4807
+total_duration: 105.882

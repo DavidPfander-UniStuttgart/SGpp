@@ -87,6 +87,13 @@ public:
     if (kernelConfiguration["KERNEL_STORE_DATA"].get().compare("register") ==
             0 &&
         dims > kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()) {
+      std::cerr << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
+                   "requires value of "
+                   "\"KERNEL_MAX_DIM_UNROLL\" to be greater than the "
+                   "dimension of the data "
+                   "set, was set to "
+                << kernelConfiguration["KERNEL_MAX_DIM_UNROLL"].getUInt()
+                << std::endl;
       std::stringstream errorString;
       errorString << "OCL Error: setting \"KERNEL_DATA_STORE\" to \"register\" "
                      "requires value of "
@@ -105,6 +112,9 @@ public:
 
     localSize = kernelConfiguration["LOCAL_SIZE"].getUInt();
     if (localSize < kernelConfiguration["KERNEL_PREFETCH_SIZE"].getUInt()) {
+      std::cerr
+          << "OCL Error: cannot set \"LOCAL_SIZE\" < \"KERNEL_PREFETCH_SIZE\""
+          << std::endl;
       std::stringstream errorString;
       errorString
           << "OCL Error: cannot set \"LOCAL_SIZE\" < \"KERNEL_PREFETCH_SIZE\""
@@ -117,6 +127,7 @@ public:
     gridSplit = kernelConfiguration["KERNEL_GRID_SPLIT"].getUInt();
     transferWholeDataset =
         kernelConfiguration["KERNEL_TRANSFER_WHOLE_DATASET"].getBool();
+    std::cout << "ctor done!!!!!!!!!!!!!!!!" << std::endl;
   }
 
   ~KernelMult() {
