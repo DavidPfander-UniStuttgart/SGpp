@@ -1,0 +1,372 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+instances: 371908
+support_refinement_min_support: 500
+num_candidates: 1
+candidates with support: 1
+num_candidates: 10
+candidates with support: 10
+num_candidates: 60
+candidates with support: 52
+num_candidates: 236
+candidates with support: 181
+num_candidates: 706
+candidates with support: 503
+num_candidates: 1786
+candidates with support: 1241
+num_candidates: 4140
+candidates with support: 2886
+num_candidates: 9216
+candidates with support: 6397
+num_candidates: 19682
+candidates with support: 13464
+num_candidates: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: Linear type: SUBSPACE subType: AutoTuneTMP
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 51293
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_737758/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/winter/git/DissertationCode/SGpp/base/src -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_737758/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_737758/KernelMultTransposeSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.73358
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_737758/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_737758/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_737758/KernelMultTransposeSubspace_link.log 2>&1
+link log:
+link duration: 0.0847571
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_204887/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/winter/git/DissertationCode/SGpp/base/src -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_204887/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_204887/KernelMultSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.37958
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_204887/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_204887/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_204887/KernelMultSubspace_link.log 2>&1
+link log:
+link duration: 0.0821506
+Starting norm of residuum: -nan
+Target norm:               0
+.delta: 2.57808e+08
+.delta: 1.0887e+08
+.delta: 1.22866e+08
+.delta: 3.58211e+07
+.delta: 2.7514e+07
+.delta: 1.78054e+07
+.delta: 9.65269e+06
+.delta: 3.83548e+06
+.delta: 3.59447e+06
+.delta: 3.79182e+06
+.delta: 2.14621e+06
+.delta: 3.33089e+06
+.delta: 3.37347e+06
+.delta: 1.13441e+06
+.delta: 1.10873e+06
+.delta: 916824
+.delta: 611984
+.delta: 2.66674e+06
+.delta: 610502
+.delta: 329246
+.delta: 356697
+.delta: 328519
+.delta: 1.08821e+06
+.delta: 149560
+.delta: 445981
+.delta: 260010
+.delta: 181853
+.delta: 235281
+.delta: 260989
+.delta: 144181
+.delta: 125154
+.delta: 277996
+.delta: 95680.4
+.delta: 1.32325e+06
+.delta: 80608
+.delta: 75476
+.delta: 211394
+.delta: 65960.2
+.delta: 56790.3
+.delta: 61148.1
+.delta: 201527
+.delta: 50800.2
+.delta: 1.46254e+06
+.delta: 45564.1
+.delta: 412742
+.delta: 83789
+.delta: 53629.2
+.delta: 40077.2
+.delta: 131742
+.delta: 134166
+.delta: 32735
+.delta: 63225.7
+.delta: 40607.1
+.delta: 415724
+.delta: 23968.2
+.delta: 19731.2
+.delta: 66885.4
+.delta: 194156
+.delta: 30181.1
+.delta: 18446.2
+.delta: 20155
+.delta: 54796.2
+.delta: 92752.7
+.delta: 30577.3
+.delta: 94485
+.delta: 49249.4
+.delta: 17058.2
+.delta: 68133.1
+.delta: 14475.4
+.delta: 84193.2
+.delta: 16449.8
+.delta: 61124.9
+.delta: 25397.8
+.delta: 174422
+.delta: 17434.5
+.delta: 10623.2
+.delta: 27156.5
+.delta: 12448.8
+.delta: 13832.2
+.delta: 27766.9
+.delta: 22790.4
+.delta: 15037.6
+.delta: 189452
+.delta: 118773
+.delta: 44852.7
+.delta: 10139.5
+.delta: 36148.3
+.delta: 14486.6
+.delta: 24485.4
+.delta: 9353.88
+.delta: 21754.7
+.delta: 15173.2
+.delta: 11201
+.delta: 110943
+.delta: 8255.72
+.delta: 7976.23
+.delta: 64407.6
+.delta: 49730.8
+.delta: 14974.3
+.delta: 6879.01
+.delta: 26914.1
+.delta: 7961.97
+.delta: 34653.5
+.delta: 48484.3
+.delta: 15105
+.delta: 4988.4
+.delta: 63504.1
+.delta: 5784.16
+.delta: 10532.9
+.delta: 12524.1
+.delta: 9147.41
+.delta: 15274.5
+.delta: 6633.06
+.delta: 50236.6
+.delta: 11993.8
+.delta: 9609.98
+.delta: 4243.67
+.delta: 33401.8
+.delta: 3780.47
+.delta: 14139.3
+.delta: 10857.8
+.delta: 6950.55
+.delta: 35591.4
+.delta: 10621.5
+.delta: 13169.5
+.delta: 3978.55
+.delta: 24985.4
+.delta: 18442.7
+.delta: 3648.28
+.delta: 9796.41
+.delta: 3159.51
+.delta: 6099.53
+.delta: 9522.59
+.delta: 12176.1
+.delta: 4420.82
+.delta: 3249.09
+.delta: 18883.5
+.delta: 9745.47
+.delta: 2916.4
+.delta: 13903.9
+.delta: 5394.39
+.delta: 7013.28
+.delta: 2761.34
+.delta: 23154.5
+.delta: 22061.5
+.delta: 3415.16
+.delta: 4756.93
+.delta: 5564.14
+.delta: 2228.35
+.delta: 23601.5
+.delta: 2561.01
+.delta: 2940.22
+.delta: 7194.36
+.delta: 15163.1
+.delta: 1648.33
+.delta: 6194.53
+.delta: 2475.67
+.delta: 2840.38
+.delta: 13878.6
+.delta: 9030.21
+.delta: 1608.86
+.delta: 21293.2
+.delta: 2718.9
+.delta: 74122.5
+.delta: 2570.64
+.delta: 3215.63
+.delta: 4087.88
+.delta: 1244.67
+.delta: 1565.92
+.delta: 3115.87
+.delta: 7604.5
+.delta: 1487.7
+.delta: 26477.3
+.delta: 5392.05
+.delta: 2400.42
+.delta: 968.308
+.delta: 12630.6
+.delta: 2941.79
+.delta: 1512.2
+.delta: 4413.44
+.delta: 3956.88
+.delta: 2496.04
+.delta: 17840.8
+.delta: 3846.03
+.delta: 4062.82
+.delta: 1654.61
+.delta: 2852.3
+.delta: 4674.24
+.delta: 986.083
+.delta: 3430.74
+.delta: 780.872
+.delta: 1516.98
+.delta: 10548.6
+.delta: 3360.14
+.delta: 1273.46
+.delta: 1016.03
+.delta: 10862.9
+.delta: 708.425
+.delta: 5559.37
+.delta: 3519.89
+.delta: 2127.09
+.delta: 526.388
+.delta: 12747.6
+.delta: 12370.8
+.delta: 830.734
+.delta: 1883.72
+.delta: 1167.06
+.delta: 792.623
+.delta: 2503.28
+.delta: 1294.62
+.delta: 13219
+.delta: 431.703
+.delta: 2347.14
+.delta: 1568.47
+.delta: 1652.21
+.delta: 599.041
+.delta: 2754.02
+.delta: 596.534
+.delta: 610.176
+.delta: 2524.43
+.delta: 2689.01
+.delta: 742.218
+.delta: 2669.48
+.delta: 3314.26
+.delta: 5922.76
+.delta: 1692.12
+.delta: 681.055
+.delta: 488.087
+.delta: 2388.13
+.delta: 402.42
+.delta: 881.007
+.delta: 548.98
+.delta: 6348.03
+.delta: 575.358
+.delta: 4429.79
+.delta: 2081.54
+.delta: 1173.82
+.delta: 1581.81
+.delta: 827.99
+.delta: 401.294
+.delta: 361.362
+.delta: 842.477
+.delta: 848.79
+.delta: 11418.8
+.delta: 649.883
+.delta: 635.345
+.delta: 351.453
+.delta: 1513.88
+.delta: 2959.39
+.delta: 833.504
+.delta: 312.201
+.delta: 1172.88
+.delta: 517.212
+.delta: 4168.23
+.delta: 532.619
+.delta: 418.445
+.delta: 1168.38
+.delta: 416.37
+.delta: 221.437
+.delta: 5843.94
+.delta: 250.98
+.delta: 510.39
+.delta: 750.039
+.delta: 5793.43
+.delta: 808.416
+.delta: 324.663
+.delta: 703.78
+.delta: 246.027
+.delta: 1014.36
+.delta: 145.265
+.delta: 516.556
+.delta: 2728.61
+.delta: 766.16
+.delta: 304.457
+.delta: 306.521
+.delta: 530.232
+.delta: 186.913
+.delta: 289.172
+.delta: 164.117
+.delta: 764.346
+.delta: 374.006
+.delta: 786.616
+.delta: 3212.4
+.delta: 113.707
+.delta: 2577.94
+.delta: 338.977
+.delta: 158.267
+.delta: 368.062
+.delta: 356.254
+.delta: 249.667
+.delta: 524.419
+.delta: 2281.9
+.delta: 320.381
+.delta: 190.397
+.delta: 938.102
+.delta: 427.847
+.delta: 165.639
+.delta: 1278.98
+.delta: 206.735
+.delta: 390.228
+
+Number of iterations: 300 (max. 300)
+Final norm of residuum: 390.228
+counted_mult_calls: 306
+
+Needed Iterations: 300
+Final residuum: 390.228
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 307.5
+note: performance calculation: additional iteration for residual recalculation : 6
+warning: cannot calculate GFLOPS for operation type
+
+Current Duration:: 290.896
+Current GFlop/s: 0
+
+Finished Training!
+
+Training took: 290.896 seconds
+
+computing MSE of test dataset
+creating createOperationMultipleEval grid: Linear type: SUBSPACE subType: AutoTuneTMP
+classes computed/predicted
+mse: 0.000582213
+total_duration: 302.019

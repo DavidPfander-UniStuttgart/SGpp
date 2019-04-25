@@ -15,6 +15,9 @@ elif [ ${hn} = "argon-epyc" ]; then
 
 elif [ ${hn} = "argon-gtx" ]; then
     device_name='XeonGold5120'
+
+elif [ ${hn} = "large" ]; then
+    device_name='Xeon2670'
 fi
 
 ##################
