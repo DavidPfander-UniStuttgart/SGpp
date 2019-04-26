@@ -215,12 +215,8 @@ int main(int argc, char **argv) {
   for (size_t rep = 0; rep < repetitions; rep += 1) {
     std::string full_scenario_prefix(
         file_prefix + scenarioName + +"_Subspace_" + algorithm_to_tune +
-        "_tuner_" + tunerName + "_t_" +
-        std::to_string(dataset.getNumberInstances()) + "s_" +
-        std::to_string(gridStorage.getSize()) + "g_" + std::to_string(level) +
-        "l_" + std::to_string(dim) + "d_" +
-        std::to_string(repetitions_averaged) + "av_" + std::to_string(rep) +
-        "r");
+        "_tuner_" + tunerName + "_t_" + std::to_string(repetitions_averaged) +
+        "av_" + std::to_string(rep) + "r");
     if (!trans) {
       sgpp::base::DataVector alpha(gridStorage.getSize());
       for (size_t i = 0; i < alpha.getSize(); i++) {

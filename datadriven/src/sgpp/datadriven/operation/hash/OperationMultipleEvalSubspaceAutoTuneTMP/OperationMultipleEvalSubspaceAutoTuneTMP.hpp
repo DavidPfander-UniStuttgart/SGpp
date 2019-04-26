@@ -9,6 +9,7 @@
 
 #include "SubspaceNode.hpp"
 #include "omp.h"
+#include "sgpp/base/tools/json/json.hpp"
 #include <assert.h>
 #include <immintrin.h>
 #include <iostream>
@@ -17,6 +18,7 @@
 #include <sgpp/base/grid/GridStorage.hpp>
 #include <sgpp/base/operation/hash/OperationMultipleEval.hpp>
 #include <sgpp/base/tools/SGppStopwatch.hpp>
+#include <sgpp/datadriven/operation/hash/DatadrivenOperationCommon.hpp>
 #include <sgpp/datadriven/tools/PartitioningTool.hpp>
 #include <vector>
 
@@ -53,12 +55,19 @@ private:
   double listRatio;
   // chunk of data points processed by a single thread, needs to devide
   // vector-variable size (i.e. 4 for AVX)
-  int64_t parallelDataPoints;
+  int64_t parallelDataPointsMult;
+  int64_t parallelDataPointsMultTrans;
   // padding for chunk ("parallelDataPoints"), should be set to size of vector
   // type, unroll requires 2*vector-size
-  int64_t vectorPadding;
+  int64_t vectorPaddingMult;
+  int64_t vectorPaddingMultTrans;
 
   const uint64_t AVX_vector_width = 4;
+
+  json::json configuration;
+
+  bool configuration_changed_mult;
+  bool configuration_changed_multTrans;
 
   /**
    * Creates the data structure used by the operation.
@@ -109,9 +118,9 @@ public:
    * @param grid grid to be evaluated
    * @param dataset set of evaluation points
    */
-  OperationMultipleEvalSubspaceAutoTuneTMP(sgpp::base::Grid &grid,
-                                           sgpp::base::DataMatrix &dataset,
-                                           bool isModLinear);
+  OperationMultipleEvalSubspaceAutoTuneTMP(
+      sgpp::base::Grid &grid, sgpp::base::DataMatrix &dataset, bool isModLinear,
+      sgpp::datadriven::OperationMultipleEvalConfiguration &configuration);
 
   /**
    * Destructor
@@ -171,6 +180,8 @@ public:
                           sgpp::base::DataVector &result,
                           const std::string &scenario_name,
                           const std::string &tuner_name, uint32_t repetitions);
+
+  void set_configuration(std::string &configuration_file_name);
 };
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP

@@ -6,6 +6,7 @@
 #include "OperationMultipleEvalSubspaceAutoTuneTMP.hpp"
 #include "autotune/autotune.hpp"
 #include "autotune/fixed_set_parameter.hpp"
+#include "autotune/parameter_value_set.hpp"
 #include "autotune/tuners/bruteforce.hpp"
 #include "autotune/tuners/countable_set.hpp"
 #include "autotune/tuners/line_search.hpp"
@@ -14,6 +15,7 @@
 #include "autotune/tuners/randomizable_set.hpp"
 // #include <sgpp/datadriven/DatadrivenOpFactory.hpp>
 #include "sgpp/base/operation/BaseOpFactory.hpp"
+#include "sgpp/base/tools/json/json.hpp"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -77,14 +79,21 @@ void get_includes_from_env(std::string &sgpp_base_include,
 } // namespace detail
 
 OperationMultipleEvalSubspaceAutoTuneTMP::
-    OperationMultipleEvalSubspaceAutoTuneTMP(Grid &grid, DataMatrix &dataset,
-                                             bool isModLinear)
+    OperationMultipleEvalSubspaceAutoTuneTMP(
+        Grid &grid, DataMatrix &dataset, bool isModLinear,
+        sgpp::datadriven::OperationMultipleEvalConfiguration &configuration)
     : base::OperationMultipleEval(grid, dataset), storage(grid.getStorage()),
       duration(-1.0), paddedDatasetSize(0), maxGridPointsOnLevel(0),
       dim(dataset.getNcols()), maxLevel(0), subspaceCount(-1),
       totalRegularGridPoints(-1), isModLinear(isModLinear), refinementStep(0),
-      csvSep(","), write_stats(false), listRatio(0.2), 
-      parallelDataPoints(256), vectorPadding(4) {
+      csvSep(","), write_stats(false), listRatio(0.2),
+      parallelDataPointsMult(256), parallelDataPointsMultTrans(256),
+      vectorPaddingMult(4), vectorPaddingMultTrans(4),
+      configuration_changed_mult(false),
+      configuration_changed_multTrans(false) {
+  if (configuration.getParameters()) {
+    this->configuration = *configuration.getParameters();
+  }
   this->padDataset(dataset);
 }
 
@@ -161,7 +170,8 @@ uint32_t OperationMultipleEvalSubspaceAutoTuneTMP::flattenLevel(
 
 void OperationMultipleEvalSubspaceAutoTuneTMP::padDataset(
     sgpp::base::DataMatrix &dataset) {
-  size_t chunkSize = parallelDataPoints;
+  size_t chunkSize =
+      std::max(parallelDataPointsMult, parallelDataPointsMultTrans);
 
   // Assure that data has a even number of instances -> padding might be needed
   size_t remainder = dataset.getNrows() % chunkSize;
@@ -203,7 +213,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::padDataset(
   paddedDatasetSize = paddedDataset.getNrows();
 
   paddedDataset.resize(paddedDataset.size() +
-                       vectorPadding * 2 * paddedDataset.getNcols());
+                       std::max(vectorPaddingMult, vectorPaddingMultTrans) * 2 *
+                           paddedDataset.getNcols());
 
   for (size_t i = paddedDatasetSize; i < paddedDataset.getNrows(); i += 1) {
     for (size_t j = 0; j < paddedDataset.getNcols(); j += 1) {
@@ -223,7 +234,8 @@ std::string OperationMultipleEvalSubspaceAutoTuneTMP::getImplementationName() {
 void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
     sgpp::base::DataVector &alpha, sgpp::base::DataVector &result) {
 
-  if (!autotune::KernelMultSubspace.is_compiled()) {
+  if (!autotune::KernelMultSubspace.is_compiled() ||
+      configuration_changed_mult) {
     std::string sgpp_base_include;
     std::string boost_include;
     std::string autotunetmp_include;
@@ -244,31 +256,46 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
     builder.set_link_flags("-shared -fno-gnu-unique -fopenmp");
     builder.set_do_cleanup(false);
 
-    autotune::countable_set parameters;
-    autotune::fixed_set_parameter<int64_t> p0(
-        "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {256});
-    autotune::fixed_set_parameter<int64_t> p1(
-        "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {1});
-    autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_UNROLL",
-                                              {0});
-    autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
-                                              std::vector<int64_t>{4});
-    // autotune::fixed_set_parameter<int64_t> p4(
-    //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
-    autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
-                                             std::vector<double>{0.2});
-    autotune::fixed_set_parameter<int64_t> p6(
-        "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-        std::vector<int64_t>{1});
+    using namespace std::literals::string_literals;
 
-    parameters.add_parameter(p0);
-    parameters.add_parameter(p1);
-    parameters.add_parameter(p2);
-    parameters.add_parameter(p3);
-    // parameters.add_parameter(p4);
-    parameters.add_parameter(p5);
-    parameters.add_parameter(p6);
+    autotune::parameter_value_set parameters;
+    if (configuration.contains("SubspaceMult")) {
+      auto &kernel = configuration["SubspaceMult"];
+      for (std::string &key : kernel.keys()) {
+        parameters[key] = kernel[key].get();
+      }
 
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_UNROLL"]) == 1 &&
+          std::stoull(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]) !=
+              2 * this->AVX_vector_width) {
+        throw;
+      }
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_UNROLL"]) == 0 &&
+          std::stoull(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]) ==
+              2 * this->AVX_vector_width) {
+        throw;
+      }
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]) %
+              this->AVX_vector_width !=
+          0) {
+        throw;
+      }
+      listRatio = std::stoll(parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"]);
+      parallelDataPointsMult =
+          std::stoll(parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]);
+      vectorPaddingMult =
+          std::stoll(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]);
+      this->padDataset(dataset);
+    } else {
+      parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"s] =
+          std::to_string(parallelDataPointsMult);
+      parameters["SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING"s] = "1"s;
+      parameters["SUBSPACEAUTOTUNETMP_UNROLL"s] = "0"s;
+      parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"s] =
+          std::to_string(vectorPaddingMult);
+      parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"s] = std::to_string(listRatio);
+      parameters["SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE"s] = "1"s;
+    }
     autotune::KernelMultSubspace.set_parameter_values(parameters);
     autotune::KernelMultSubspace.compile();
   }
@@ -280,8 +307,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
   this->timer.start();
 
   size_t originalResultSize = result.getSize();
-  // result.resizeZero(this->getPaddedDatasetSize());
-  // result.setAll(0.0);
 
   this->setCoefficients(alpha);
 
@@ -296,7 +321,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::mult(
 void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(
     sgpp::base::DataVector &source, sgpp::base::DataVector &result) {
 
-  if (!autotune::KernelMultTransposeSubspace.is_compiled()) {
+  if (!autotune::KernelMultTransposeSubspace.is_compiled() ||
+      configuration_changed_multTrans) {
     std::string sgpp_base_include;
     std::string boost_include;
     std::string autotunetmp_include;
@@ -317,31 +343,48 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::multTranspose(
     builder.set_link_flags("-shared -fno-gnu-unique -fopenmp");
     builder.set_do_cleanup(false);
 
-    autotune::countable_set parameters;
-    autotune::fixed_set_parameter<int64_t> p0(
-        "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {256});
-    autotune::fixed_set_parameter<int64_t> p1(
-        "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {1});
-    autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_UNROLL",
-                                              {0});
-    autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
-                                              std::vector<int64_t>{4});
-    // autotune::fixed_set_parameter<int64_t> p4(
-    //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD", std::vector<int64_t>{128});
-    autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
-                                             std::vector<double>{0.2});
-    autotune::fixed_set_parameter<int64_t> p6(
-        "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-        std::vector<int64_t>{1});
+    using namespace std::literals::string_literals;
 
-    parameters.add_parameter(p0);
-    parameters.add_parameter(p1);
-    parameters.add_parameter(p2);
-    parameters.add_parameter(p3);
-    // parameters.add_parameter(p4);
-    parameters.add_parameter(p5);
-    parameters.add_parameter(p6);
+    autotune::parameter_value_set parameters;
+    if (configuration.contains("SubspaceMultTrans")) {
+      auto &kernel = configuration["SubspaceMultTrans"];
+      for (std::string &key : kernel.keys()) {
+        parameters[key] = kernel[key].get();
+      }
 
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_UNROLL"]) == 1 &&
+          std::stoull(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]) !=
+              2 * this->AVX_vector_width) {
+        throw;
+      }
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_UNROLL"]) == 0 &&
+          std::stoull(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]) ==
+              2 * this->AVX_vector_width) {
+        throw;
+      }
+      if (std::stoll(parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]) %
+              this->AVX_vector_width !=
+          0) {
+        throw;
+      }
+      listRatio = std::stoll(parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"]);
+      parallelDataPointsMultTrans =
+          std::stoll(parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]);
+      vectorPaddingMultTrans =
+          std::stoll(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]);
+      std::cout << "padding for: " << parallelDataPointsMultTrans << std::endl;
+      this->padDataset(dataset);
+
+    } else {
+      parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"s] =
+          std::to_string(parallelDataPointsMultTrans);
+      parameters["SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING"s] = "1"s;
+      parameters["SUBSPACEAUTOTUNETMP_UNROLL"s] = "0"s;
+      parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"s] =
+          std::to_string(vectorPaddingMultTrans);
+      parameters["SUBSPACEAUTOTUNETMP_LIST_RATIO"s] = std::to_string(listRatio);
+      parameters["SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE"s] = "1"s;
+    }
     autotune::KernelMultTransposeSubspace.set_parameter_values(parameters);
     autotune::KernelMultTransposeSubspace.compile();
   }
@@ -425,9 +468,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                                             {0, 1});
   autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
-  // autotune::fixed_set_parameter<int64_t> p4(
-  //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
-      // std::vector<int64_t>{16, 64, 256});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
   autotune::fixed_set_parameter<int64_t> p6(
@@ -438,7 +478,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
-  // parameters.add_parameter(p4);
   parameters.add_parameter(p5);
   parameters.add_parameter(p6);
 
@@ -447,7 +486,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
-  // parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
   parameters_randomizable.add_parameter(p6);
 
@@ -513,11 +551,11 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
         //     std::stoll(parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
         // chunk of data points processed by a single thread, needs to devide
         // vector-variable size (i.e. 4 for AVX)
-        parallelDataPoints =
+        parallelDataPointsMult =
             std::stoll(parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]);
         // padding for chunk ("parallelDataPoints"), should be set to size of
         // vector type, unroll requires 2*vector-size
-        vectorPadding =
+        vectorPaddingMult =
             std::stoll(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]);
         this->padDataset(dataset);
         this->prepare();
@@ -655,6 +693,17 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
     autotune::KernelMultSubspace.set_parameter_values(optimal_parameters);
     autotune::KernelMultSubspace.create_parameter_file();
     autotune::KernelMultSubspace.compile();
+
+    json::json opt_parameters_cfg;
+    auto &kernel = opt_parameters_cfg.addDictAttr("SubspaceMult");
+    for (size_t i = 0; i < optimal_parameters.size(); i += 1) {
+      auto &p = optimal_parameters[i];
+      kernel.addTextAttr(p->get_name(), p->get_value());
+    }
+    std::stringstream ss;
+    opt_parameters_cfg.serialize(ss, 0);
+    std::ofstream opt_config_file(scenario_name + "_optimal.cfg");
+    opt_config_file << ss.str();
   }
 }
 
@@ -695,9 +744,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
                                             {0, 1});
   autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
-  // autotune::fixed_set_parameter<int64_t> p4(
-  //     "SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD",
-  //     std::vector<int64_t>{16, 64, 256});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
   autotune::fixed_set_parameter<int64_t> p6(
@@ -708,7 +754,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
-  // parameters.add_parameter(p4);
   parameters.add_parameter(p5);
   parameters.add_parameter(p6);
 
@@ -717,7 +762,6 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
-  // parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
   parameters_randomizable.add_parameter(p6);
 
@@ -787,11 +831,11 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
             //     parameters["SUBSPACEAUTOTUNETMP_STREAMING_THRESHOLD"]);
             // chunk of data points processed by a single thread, needs to
             // devide vector-variable size (i.e. 4 for AVX)
-            parallelDataPoints = std::stoll(
+            parallelDataPointsMultTrans = std::stoll(
                 parameters["SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS"]);
             // padding for chunk ("parallelDataPoints"), should be set to size
             // of vector type, unroll requires 2*vector-size
-            vectorPadding =
+            vectorPaddingMultTrans =
                 std::stoll(parameters["SUBSPACEAUTOTUNETMP_VEC_PADDING"]);
             this->padDataset(dataset);
             // pad the source vector to the padded size of the dataset
@@ -931,9 +975,27 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
         optimal_parameters);
     autotune::KernelMultTransposeSubspace.create_parameter_file();
     autotune::KernelMultTransposeSubspace.compile();
+
+    json::json opt_parameters_cfg;
+    auto &kernel = opt_parameters_cfg.addDictAttr("SubspaceMultTrans");
+    for (size_t i = 0; i < optimal_parameters.size(); i += 1) {
+      auto &p = optimal_parameters[i];
+      kernel.addTextAttr(p->get_name(), p->get_value());
+    }
+    std::stringstream ss;
+    opt_parameters_cfg.serialize(ss, 0);
+    std::ofstream opt_config_file(scenario_name + "_optimal.cfg");
+    opt_config_file << ss.str();
   }
 
   source.resize(originalSourceSize);
+}
+
+void OperationMultipleEvalSubspaceAutoTuneTMP::set_configuration(
+    std::string &configuration_file_name) {
+  configuration = json::json(configuration_file_name);
+  configuration_changed_mult = true;
+  configuration_changed_multTrans = true;
 }
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP
