@@ -209,10 +209,10 @@ int main(int argc, char **argv) {
 
   sgpp::base::OCLOperationConfiguration parameters;
   if (OpenCLConfigFile.compare("") != 0) {
-    std::cout << "using OpenCL configuration" << std::endl;
+    std::cout << "using configuration" << std::endl;
     parameters = sgpp::base::OCLOperationConfiguration(OpenCLConfigFile);
   } else {
-    std::cout << "without OpenCL configuration" << std::endl;
+    std::cout << "without configuration" << std::endl;
   }
 
   sgpp::datadriven::ARFFTools arffTools;
@@ -234,7 +234,7 @@ int main(int argc, char **argv) {
   if (useSupportRefinement) {
     sgpp::datadriven::support_refinement_iterative ref(
         dim, level, supportRefinementMinSupport, trainingData);
-    if (OpenCLConfigFile.compare("") != 0) {
+    if (OpenCLConfigFile.compare("") != 0 && type != sgpp::datadriven::OperationMultipleEvalType::SUBSPACE) {
       ref.enable_OCL(OpenCLConfigFile);
     }
     ref.refine();
