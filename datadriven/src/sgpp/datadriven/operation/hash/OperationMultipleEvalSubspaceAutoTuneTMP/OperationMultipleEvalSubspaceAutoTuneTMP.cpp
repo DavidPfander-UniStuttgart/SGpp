@@ -95,6 +95,12 @@ OperationMultipleEvalSubspaceAutoTuneTMP::
     this->configuration = *configuration.getParameters();
   }
   this->padDataset(dataset);
+  // TODO: improve, if the operation is instantiated multiple times, the kernel
+  // objects are shared. This leads to inconsistencies as the binaries can be
+  // invalid (e.g. incorrect blocking). Only a single instance of this class
+  // should be created at a time
+  autotune::KernelMultSubspace.clear();
+  autotune::KernelMultTransposeSubspace.clear();
 }
 
 OperationMultipleEvalSubspaceAutoTuneTMP::
@@ -684,6 +690,17 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
         optimal_parameters_randomizable);
     autotune::KernelMultSubspace.create_parameter_file();
     autotune::KernelMultSubspace.compile();
+
+    json::json opt_parameters_cfg;
+    auto &kernel = opt_parameters_cfg.addDictAttr("SubspaceMult");
+    for (size_t i = 0; i < optimal_parameters_randomizable.size(); i += 1) {
+      auto &p = optimal_parameters_randomizable[i];
+      kernel.addTextAttr(p->get_name(), p->get_value());
+    }
+    std::stringstream ss;
+    opt_parameters_cfg.serialize(ss, 0);
+    std::ofstream opt_config_file(scenario_name + "_optimal.cfg");
+    opt_config_file << ss.str();
   } else {
     throw "error: tuner not implemented!";
   }

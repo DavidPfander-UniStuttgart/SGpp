@@ -53,7 +53,7 @@ source source_autotunetmp_generic.sh
 # friedman1 single it duration
 cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans true --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_multTrans_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
 echo ${cmd}
-echo "${cmd}" > results_diss/subspace/friedman1_singleit_subspace_singleit_mult_double_${device_name}.log 2>&1
+echo "${cmd}" > results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
 ./${cmd} >> results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
 
 cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans false --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_mult_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
