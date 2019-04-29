@@ -14,4 +14,4 @@ srun echo `hostname`
 
 cd /data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp
 source source_autotunetmp_generic.sh
-./diss_experiments/tune_for_scaling_experiments_DR5_f1.sh
+./diss_experiments/regression_unified_AutoTuneTMP.sh

@@ -127,7 +127,6 @@ public:
     gridSplit = kernelConfiguration["KERNEL_GRID_SPLIT"].getUInt();
     transferWholeDataset =
         kernelConfiguration["KERNEL_TRANSFER_WHOLE_DATASET"].getBool();
-    std::cout << "ctor done!!!!!!!!!!!!!!!!" << std::endl;
   }
 
   ~KernelMult() {
