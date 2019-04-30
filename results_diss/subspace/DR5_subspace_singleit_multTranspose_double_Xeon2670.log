@@ -33,12 +33,12 @@ creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: Aut
 starting performance test...
 algorithm: mult
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_659714/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/winter/git/DissertationCode/SGpp/base/src -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_659714/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_659714/KernelMultSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_831200/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/winter/git/DissertationCode/SGpp/base/src -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/winter/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_831200/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_831200/KernelMultSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.3723
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_659714/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_659714/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_659714/KernelMultSubspace_link.log 2>&1
+compile duration: 1.37456
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_831200/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_831200/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_831200/KernelMultSubspace_link.log 2>&1
 link log:
-link duration: 0.0776579
+link duration: 0.0660854
 info: first mult not considered
-duration mult: 5.05965, repetitions: 10
+duration mult: 5.14605, repetitions: 10
 GFLOPS: 0
