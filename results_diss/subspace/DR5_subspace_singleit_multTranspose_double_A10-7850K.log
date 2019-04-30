@@ -1,0 +1,44 @@
+./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans false --level 10 --use_support_refinement --support_refinement_min_support 500 --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_A10-7850K_Subspace_mult_tuner_line_search_t_5av_0r_optimal.cfg
+datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+hostname: pcsgs07
+using configuration
+num_candidates: 1
+candidates with support: 1
+num_candidates: 10
+candidates with support: 10
+num_candidates: 60
+candidates with support: 52
+num_candidates: 236
+candidates with support: 181
+num_candidates: 706
+candidates with support: 503
+num_candidates: 1786
+candidates with support: 1241
+num_candidates: 4140
+candidates with support: 2886
+num_candidates: 9216
+candidates with support: 6397
+num_candidates: 19682
+candidates with support: 13464
+num_candidates: 40066
+candidates with support: 26558
+support refinement done, grid size: 51293
+dimensionality: 5
+number of grid points: 51293
+number of data points: 371908
+considering reduced evaluations for l=1 grid points
+grid points with level > 1: 155216
+num_ops: 3463.56
+creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: AutoTuneTMP
+starting performance test...
+algorithm: mult
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_976930/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/pfandedd/git/DissertationCode/SGpp/base/src -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_976930/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_976930/KernelMultSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.35232
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_976930/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_976930/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_976930/KernelMultSubspace_link.log 2>&1
+link log:
+link duration: 0.0972463
+info: first mult not considered
+duration mult: 30.1445, repetitions: 10
+GFLOPS: 0
