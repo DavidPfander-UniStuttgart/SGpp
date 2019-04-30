@@ -226,7 +226,7 @@ int main(int argc, char **argv) {
     std::string full_scenario_prefix(file_prefix + scenarioName + +"_" +
                                      algorithm_to_tune + "_host_" + hostname +
                                      "_tuner_" + tunerName + "_t_" +
-                                     (*parameters)["INTERNAL_PRECISION"].get() +
+                                     (*parameters)["INTERNAL_PRECISION"].get() + "_" +
                                      std::to_string(repetitions_averaged) +
                                      "av_" + std::to_string(rep) + "r");
     if (!trans) {
