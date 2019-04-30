@@ -451,20 +451,20 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(sgpp::base::DataVector 
   autotune::fixed_set_parameter<int64_t> p0("SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS",
                                             {16, 32, 64, 128, 256, 512});
   autotune::fixed_set_parameter<int64_t> p1("SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_UNROLL", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
+  autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
+                                            std::vector<int64_t>{0, 1});
+  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL", {0, 1});
+  autotune::fixed_set_parameter<int64_t> p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
-  autotune::fixed_set_parameter<int64_t> p6("SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-                                            std::vector<int64_t>{0, 1});
 
   parameters.add_parameter(p0);
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
+  parameters.add_parameter(p4);
   parameters.add_parameter(p5);
-  parameters.add_parameter(p6);
 
   for (size_t i = 0; i < parameters.size(); i += 1) {
     parameters[i]->set_random_value();
@@ -475,8 +475,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(sgpp::base::DataVector 
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
+  parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
-  parameters_randomizable.add_parameter(p6);
 
   for (size_t i = 0; i < parameters_randomizable.size(); i += 1) {
     parameters_randomizable[i]->set_random_value();
@@ -721,20 +721,20 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(sgpp::base::Da
   autotune::fixed_set_parameter<int64_t> p0("SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS",
                                             {16, 32, 64, 128, 256, 512});
   autotune::fixed_set_parameter<int64_t> p1("SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_UNROLL", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_VEC_PADDING",
+  autotune::fixed_set_parameter<int64_t> p2("SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
+                                            std::vector<int64_t>{0, 1});
+  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL", {0, 1});
+  autotune::fixed_set_parameter<int64_t> p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
                                             std::vector<int64_t>{4, 8});
   autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
                                            std::vector<double>{0.1, 0.2, 0.3});
-  autotune::fixed_set_parameter<int64_t> p6("SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-                                            std::vector<int64_t>{0, 1});
 
   parameters.add_parameter(p0);
   parameters.add_parameter(p1);
   parameters.add_parameter(p2);
   parameters.add_parameter(p3);
+  parameters.add_parameter(p4);
   parameters.add_parameter(p5);
-  parameters.add_parameter(p6);
 
   for (size_t i = 0; i < parameters.size(); i += 1) {
     parameters[i]->set_random_value();
@@ -745,8 +745,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(sgpp::base::Da
   parameters_randomizable.add_parameter(p1);
   parameters_randomizable.add_parameter(p2);
   parameters_randomizable.add_parameter(p3);
+  parameters_randomizable.add_parameter(p4);
   parameters_randomizable.add_parameter(p5);
-  parameters_randomizable.add_parameter(p6);
 
   for (size_t i = 0; i < parameters_randomizable.size(); i += 1) {
     parameters_randomizable[i]->set_random_value();
