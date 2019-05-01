@@ -1,0 +1,229 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+ocl dummy initalization duration: 0.156206
+instances: 371908
+support_refinement_min_support: 500
+ocl_init_duration: 0.00682457
+num_candidates: 1
+num_candidates: 1 block_size: 128 num_candidates_per_device: 1
+device: 0 range_padded: 128 range_start: 0 range_end: 1
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 block_size: 128 num_candidates_per_device: 10
+device: 0 range_padded: 128 range_start: 0 range_end: 10
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 block_size: 128 num_candidates_per_device: 60
+device: 0 range_padded: 128 range_start: 0 range_end: 60
+candidates with support: 52
+num_candidates: 236
+num_candidates: 236 block_size: 128 num_candidates_per_device: 236
+device: 0 range_padded: 256 range_start: 0 range_end: 236
+candidates with support: 181
+num_candidates: 706
+num_candidates: 706 block_size: 128 num_candidates_per_device: 706
+device: 0 range_padded: 768 range_start: 0 range_end: 706
+candidates with support: 503
+num_candidates: 1786
+num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
+device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+candidates with support: 1241
+num_candidates: 4140
+num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
+device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+candidates with support: 2886
+num_candidates: 9216
+num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
+device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+candidates with support: 6397
+num_candidates: 19682
+num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
+device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+candidates with support: 13464
+num_candidates: 40066
+num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
+device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 51293
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407081
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413384
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407297
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413861
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406976
+delta: 2.48387e+09
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414089
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407548
+delta: 2.08737e+08
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413852
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406983
+delta: 2.5682e+08
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413508
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407351
+delta: 1.26015e+08
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413719
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406803
+delta: 5.29509e+07
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414161
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407476
+delta: 4.9246e+07
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413764
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407086
+delta: 2.58437e+07
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414146
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406411
+delta: 1.90104e+07
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414025
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406799
+delta: 9.75989e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413643
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407077
+delta: 5.87e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413588
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407003
+delta: 3.17081e+07
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413713
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.40706
+delta: 7.57352e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414626
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406764
+delta: 4.0308e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413572
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.40726
+delta: 4.36691e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414168
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407625
+delta: 3.19895e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413754
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407208
+delta: 1.53341e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414264
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407322
+delta: 1.14864e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414121
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406651
+delta: 1.27819e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414469
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407175
+delta: 6.08457e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.41423
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406623
+delta: 1.04609e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413842
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407372
+delta: 1.91194e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414127
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407224
+delta: 2.57849e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414488
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407447
+delta: 765618
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414502
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406884
+delta: 742841
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414649
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.40692
+delta: 482877
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414289
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407545
+delta: 454359
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413935
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.40741
+delta: 310470
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413767
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407939
+delta: 1.62528e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414107
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407092
+delta: 409214
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413823
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406802
+delta: 1.28571e+06
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413969
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407158
+delta: 275539
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413916
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.406828
+delta: 207138
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.414047
+device: Hawaii (0x21bd940)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x21bd940 duration: 0.407883
+delta: 431828
+.device: 0x21bd940 kernel from: 0 to: 371968 -> range: 371968
+device: 0x21bd940 duration: 0.413665

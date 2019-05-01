@@ -1,0 +1,17 @@
+KERNEL_TRANS_DATA_SPLIT,KERNEL_TRANS_GRID_BLOCK_SIZE,KERNEL_TRANS_MAX_DIM_UNROLL,KERNEL_TRANS_PREFETCH_SIZE,KERNEL_TRANS_STORE_DATA,KERNEL_TRANS_TRANSFER_WHOLE_GRID,KERNEL_TRANS_USE_LOCAL_MEMORY,OPTIMIZATION_FLAGS,TRANS_LOCAL_SIZE,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.0491,4.0491,0.000223914,0,0
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,4.11032,4.11032,0.000224247,0,0
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.39786,4.39786,0.000253076,0,0
+8,1,4,32,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,8.02739,8.02739,0.000253283,0,0
+8,1,1,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.18392,4.18392,0.000246268,0,0
+8,1,2,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.18517,4.18517,0.000233693,0,0
+8,1,10,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,8.06385,8.06385,0.000225783,0,0
+8,2,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,6.02319,6.02319,0.000222688,0,0
+8,4,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,11.413,11.413,0.000226451,0,0
+8,8,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,27.9034,27.9034,0.000226471,0,0
+1,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.31158,4.31158,0.000224933,0,0
+2,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.29194,4.29194,0.000246032,0,0
+4,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.15706,4.15706,0.000226947,0,0
+8,1,4,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.21172,4.21172,0.000229179,0,0
+8,1,4,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.27152,4.27152,0.000228641,0,0
+8,1,4,32,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.07269,4.07269,0.000194476,0,0

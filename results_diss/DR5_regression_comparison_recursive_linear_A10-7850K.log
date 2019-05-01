@@ -1,0 +1,357 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+instances: 371908
+support_refinement_min_support: 500
+num_candidates: 1
+candidates with support: 1
+num_candidates: 10
+candidates with support: 10
+num_candidates: 60
+candidates with support: 52
+num_candidates: 236
+candidates with support: 181
+num_candidates: 706
+candidates with support: 503
+num_candidates: 1786
+candidates with support: 1241
+num_candidates: 4140
+candidates with support: 2886
+num_candidates: 9216
+candidates with support: 6397
+num_candidates: 19682
+candidates with support: 13464
+num_candidates: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 51293
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+Starting norm of residuum: -nan
+Target norm:               0
+.delta: 2.57808e+08
+.delta: 1.0887e+08
+.delta: 1.22866e+08
+.delta: 3.58211e+07
+.delta: 2.7514e+07
+.delta: 1.78054e+07
+.delta: 9.65269e+06
+.delta: 3.83548e+06
+.delta: 3.59447e+06
+.delta: 3.79182e+06
+.delta: 2.14618e+06
+.delta: 3.26334e+06
+.delta: 3.44558e+06
+.delta: 1.13443e+06
+.delta: 1.10873e+06
+.delta: 916825
+.delta: 612252
+.delta: 2.67584e+06
+.delta: 609762
+.delta: 329246
+.delta: 356679
+.delta: 258409
+.delta: 294603
+.delta: 293304
+.delta: 297373
+.delta: 367726
+.delta: 181474
+.delta: 162841
+.delta: 500695
+.delta: 146036
+.delta: 162296
+.delta: 184503
+.delta: 91779.4
+.delta: 85187.2
+.delta: 1.00887e+06
+.delta: 87542.5
+.delta: 169836
+.delta: 63634.3
+.delta: 99415.3
+.delta: 91438.7
+.delta: 59779.7
+.delta: 47122.2
+.delta: 126760
+.delta: 66777
+.delta: 553410
+.delta: 215333
+.delta: 38336.1
+.delta: 40344.4
+.delta: 150892
+.delta: 105090
+.delta: 32795.9
+.delta: 53348.1
+.delta: 43949.4
+.delta: 42173.4
+.delta: 54051.4
+.delta: 19103.7
+.delta: 34904.9
+.delta: 92625.8
+.delta: 60637
+.delta: 20079
+.delta: 29247.1
+.delta: 47211.4
+.delta: 35152.3
+.delta: 144369
+.delta: 58395.6
+.delta: 37936.6
+.delta: 15928.7
+.delta: 95723.8
+.delta: 59051.5
+.delta: 14840.3
+.delta: 14755.8
+.delta: 91512.8
+.delta: 35977.3
+.delta: 41858.5
+.delta: 18635.5
+.delta: 10195.3
+.delta: 25942.9
+.delta: 13304.4
+.delta: 12018.9
+.delta: 24475.2
+.delta: 14968.8
+.delta: 53678.3
+.delta: 186239
+.delta: 42554
+.delta: 17879.8
+.delta: 16494.2
+.delta: 15589.4
+.delta: 24962.5
+.delta: 30330.2
+.delta: 8577.98
+.delta: 55144.2
+.delta: 20748.5
+.delta: 61830.4
+.delta: 8561.02
+.delta: 8822.06
+.delta: 44631.9
+.delta: 7435.58
+.delta: 88110.8
+.delta: 13738.9
+.delta: 6541.49
+.delta: 8121.35
+.delta: 36465.5
+.delta: 67290.4
+.delta: 16832.8
+.delta: 11196.9
+.delta: 6535.86
+.delta: 46816.4
+.delta: 6015.35
+.delta: 10696
+.delta: 4883.16
+.delta: 50211.3
+.delta: 91196.6
+.delta: 9999.65
+.delta: 6182.38
+.delta: 7344.39
+.delta: 10054.1
+.delta: 8788.68
+.delta: 24403.4
+.delta: 3855.45
+.delta: 15169.9
+.delta: 6355.24
+.delta: 16492.1
+.delta: 18010.1
+.delta: 4048.02
+.delta: 36563.7
+.delta: 9202.43
+.delta: 9301.19
+.delta: 17174.2
+.delta: 6994.52
+.delta: 5482.69
+.delta: 2984.15
+.delta: 140186
+.delta: 5929.2
+.delta: 4067.32
+.delta: 6766.46
+.delta: 2580.19
+.delta: 79985.9
+.delta: 3305.66
+.delta: 4728.97
+.delta: 33425.5
+.delta: 16351.6
+.delta: 5075.21
+.delta: 2804.35
+.delta: 17351.4
+.delta: 2927.91
+.delta: 9796.58
+.delta: 9041.33
+.delta: 3291.04
+.delta: 2348.22
+.delta: 14198.7
+.delta: 45680
+.delta: 19881.2
+.delta: 3823.07
+.delta: 3635.72
+.delta: 1246.45
+.delta: 1698.5
+.delta: 3425.6
+.delta: 6163.01
+.delta: 7284.65
+.delta: 2530.81
+.delta: 5774.44
+.delta: 2595.82
+.delta: 4168.27
+.delta: 10057.8
+.delta: 2897.66
+.delta: 18750
+.delta: 2504.64
+.delta: 1608.73
+.delta: 1151.93
+.delta: 67294.8
+.delta: 10849.6
+.delta: 1313.53
+.delta: 1954.12
+.delta: 2077.74
+.delta: 2697.03
+.delta: 7204.22
+.delta: 4373.76
+.delta: 3538.1
+.delta: 4277.07
+.delta: 1771.79
+.delta: 4789.9
+.delta: 2146.89
+.delta: 2673.36
+.delta: 1871.26
+.delta: 6873.12
+.delta: 2017.56
+.delta: 1055.68
+.delta: 1929.07
+.delta: 4715.92
+.delta: 2351.56
+.delta: 3804.48
+.delta: 1533.44
+.delta: 1244.28
+.delta: 705.769
+.delta: 2312.14
+.delta: 2640.27
+.delta: 1008.81
+.delta: 1133.96
+.delta: 17162.2
+.delta: 9620.61
+.delta: 1235.26
+.delta: 1735.36
+.delta: 3871.4
+.delta: 1050.36
+.delta: 9802.36
+.delta: 733.262
+.delta: 2517.11
+.delta: 805.111
+.delta: 1590.8
+.delta: 15729.2
+.delta: 988.691
+.delta: 406.037
+.delta: 738.769
+.delta: 1576.62
+.delta: 1280.07
+.delta: 1869.34
+.delta: 1033.99
+.delta: 3364.91
+.delta: 8841.23
+.delta: 479.957
+.delta: 731.501
+.delta: 1664.85
+.delta: 925.366
+.delta: 3261.3
+.delta: 1167.51
+.delta: 372.16
+.delta: 2663.85
+.delta: 1374.79
+.delta: 6294.51
+.delta: 1220.43
+.delta: 569.235
+.delta: 1456.96
+.delta: 694.752
+.delta: 409.911
+.delta: 1315.68
+.delta: 541.893
+.delta: 652.709
+.delta: 6693.64
+.delta: 1089.95
+.delta: 954.1
+.delta: 1752.78
+.delta: 676.761
+.delta: 471.129
+.delta: 2169.26
+.delta: 954.436
+.delta: 210.009
+.delta: 1034.76
+.delta: 516.488
+.delta: 760.433
+.delta: 737.626
+.delta: 696.843
+.delta: 408.536
+.delta: 766.223
+.delta: 2155.98
+.delta: 1506.1
+.delta: 664.578
+.delta: 539.621
+.delta: 5113.89
+.delta: 463.311
+.delta: 359.495
+.delta: 1718.12
+.delta: 231.829
+.delta: 371.834
+.delta: 3083.12
+.delta: 176.95
+.delta: 363.813
+.delta: 896.043
+.delta: 5414.14
+.delta: 139.931
+.delta: 462.308
+.delta: 238.689
+.delta: 306.605
+.delta: 611.142
+.delta: 164.405
+.delta: 756.735
+.delta: 10372.5
+.delta: 502.695
+.delta: 190.631
+.delta: 315.334
+.delta: 4842.76
+.delta: 202.498
+.delta: 1007.96
+.delta: 690.73
+.delta: 209.851
+.delta: 553.814
+.delta: 6966.27
+.delta: 169.258
+.delta: 219.36
+.delta: 113.791
+.delta: 1293.92
+.delta: 427.313
+.delta: 178.531
+.delta: 554.04
+.delta: 551.989
+.delta: 198.7
+.delta: 260.847
+.delta: 199.609
+.delta: 182.579
+.delta: 154.25
+.delta: 303.179
+
+Number of iterations: 300 (max. 300)
+Final norm of residuum: 303.179
+counted_mult_calls: 306
+
+Needed Iterations: 300
+Final residuum: 303.179
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 307.5
+note: performance calculation: additional iteration for residual recalculation : 6
+
+Current Duration:: 57289.6
+Current GFlop/s: 6.14348
+
+Finished Training!
+
+Training took: 57289.6 seconds
+
+computing MSE of test dataset
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+classes computed/predicted
+mse: 0.000582003
+total_duration: 57470.7
