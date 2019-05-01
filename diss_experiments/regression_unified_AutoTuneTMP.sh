@@ -37,32 +37,32 @@ eval_repetitions=5
 
 ############################################################################################# friedman1 node-level #########################################################################
 
-# ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-# # tune for 1 device as there is enough work guaranteed
-# ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+# tune for 1 device as there is enough work guaranteed
+./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
 
-# ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
 
-# # this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
-# if [ ${hn} != "argon-gtx" ]; then
-#     ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+# this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
+if [ ${hn} != "argon-gtx" ]; then
+    ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-#     # tune for 1 device as there is enough work guaranteed
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+    # tune for 1 device as there is enough work guaranteed
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
 
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
-# fi
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+fi
 
-# if [ ${hn} = "argon-gtx" ]; then
-#     # use argon-gtx as cpu platform
-#     AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
-#     ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-#     AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
+if [ ${hn} = "argon-gtx" ]; then
+    # use argon-gtx as cpu platform
+    AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
+    ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+    AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
 
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
-# fi
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_weakscaling_parameters --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+fi
 
 # friedman1 - compute performance of final parameters ---------------------- GFLOPS
 ./datadriven/examplesOCL/regressionGFlops --OpenCLConfigFile results_diss/unified/friedman1_${device_name_f1}_weakscaling_parameters_mult_host_${hn}_tuner_line_search_t_float_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans false --level 7 --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --operation.type STREAMING --operation.subType OCLUNIFIED > results_diss/unified/friedman1_performance_mult_float_${device_name_f1}.log 2>&1
@@ -103,32 +103,32 @@ fi
 ############################################################################################# DR5 node-level #########################################################################
 # DR5 - tune for single device
 
-# ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-# # tune for 1 device as there is enough work guaranteed
-# ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+# tune for 1 device as there is enough work guaranteed
+./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
 
-# ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
 
-# # this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
-# if [ ${hn} != "argon-gtx" ]; then
-#     ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+# this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
+if [ ${hn} != "argon-gtx" ]; then
+    ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-#     # tune for 1 device as there is enough work guaranteed
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+    # tune for 1 device as there is enough work guaranteed
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
 
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
-# fi
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+fi
 
-# if [ ${hn} = "argon-gtx" ]; then
-#     # use argon-gtx as cpu platform
-#     AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
-#     ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-#     AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
+if [ ${hn} = "argon-gtx" ]; then
+    # use argon-gtx as cpu platform
+    AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
+    ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+    AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
 
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
-# fi
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_weakscaling_parameters --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true
+fi
 
 # DR5 - compute performance of final parameters ---------------------- GFLOPS
 ./datadriven/examplesOCL/regressionGFlops --OpenCLConfigFile results_diss/unified/DR5_${device_name_f1}_weakscaling_parameters_mult_host_${hn}_tuner_line_search_t_float_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans false --level 10 --use_support_refinement --support_refinement_min_support 500  --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --operation.type STREAMING --operation.subType OCLUNIFIED > results_diss/unified/DR5_performance_mult_float_${device_name_f1}.log 2>&1

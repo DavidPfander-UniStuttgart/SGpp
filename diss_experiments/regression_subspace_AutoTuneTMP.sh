@@ -29,49 +29,49 @@ echo "device_name_f1: ${device_name}"
 
 source source_autotunetmp_generic.sh
 
-# ###### tune all cases with multiple tuners for the autotunetmp evaluation ######
+###### tune all cases with multiple tuners for the autotunetmp evaluation ######
 
-# # DR5
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
+# DR5
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans true --repetitions_averaged ${eval_repetitions}
 
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --file_prefix results_diss/subspace/ --scenarioName DR5_${device_name} --level 10 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --use_support_refinement --support_refinement_min_support 500 --trans false --repetitions_averaged ${eval_repetitions}
 
-# # friedman1
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
+# friedman1
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --trans true --repetitions_averaged ${eval_repetitions}
 
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
-# ./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name neighborhood_search --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
+./datadriven/examplesAutoTuneTMP/tune_Subspace --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --file_prefix results_diss/subspace/ --scenarioName friedman1_${device_name} --level 7 --tuner_name monte_carlo --repetitions ${tuner_repetitions} --trans false --repetitions_averaged ${eval_repetitions}
 
-# ############## tuned single iteration ###############
+############## tuned single iteration ###############
 
-# # friedman1 single it duration
-# cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans true --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_multTrans_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
-# echo ${cmd}
-# echo "${cmd}" > results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
-# ./${cmd} >> results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
+# friedman1 single it duration
+cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans true --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_multTrans_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
+echo ${cmd}
+echo "${cmd}" > results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
+./${cmd} >> results_diss/subspace/friedman1_subspace_singleit_mult_double_${device_name}.log 2>&1
 
-# cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans false --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_mult_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
-# echo ${cmd}
-# echo "${cmd}" > results_diss/subspace/friedman1_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
-# ./${cmd} >> results_diss/subspace/friedman1_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
+cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans false --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_${device_name}_Subspace_mult_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
+echo ${cmd}
+echo "${cmd}" > results_diss/subspace/friedman1_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
+./${cmd} >> results_diss/subspace/friedman1_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
 
-# # DR5 single it duration
-# cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans true --level 10 --use_support_refinement --support_refinement_min_support 500  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_${device_name}_Subspace_multTrans_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
-# echo ${cmd}
-# echo "${cmd}" > results_diss/subspace/DR5_subspace_singleit_mult_double_${device_name}.log 2>&1
-# ./${cmd} >> results_diss/subspace/DR5_subspace_singleit_mult_double_${device_name}.log 2>&1
+# DR5 single it duration
+cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans true --level 10 --use_support_refinement --support_refinement_min_support 500  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_${device_name}_Subspace_multTrans_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
+echo ${cmd}
+echo "${cmd}" > results_diss/subspace/DR5_subspace_singleit_mult_double_${device_name}.log 2>&1
+./${cmd} >> results_diss/subspace/DR5_subspace_singleit_mult_double_${device_name}.log 2>&1
 
-# cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans false --level 10 --use_support_refinement --support_refinement_min_support 500 --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_${device_name}_Subspace_mult_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
-# echo ${cmd}
-# echo "${cmd}" > results_diss/subspace/DR5_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
-# ./${cmd} >> results_diss/subspace/DR5_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
+cmd="./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans false --level 10 --use_support_refinement --support_refinement_min_support 500 --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_${device_name}_Subspace_mult_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg"
+echo ${cmd}
+echo "${cmd}" > results_diss/subspace/DR5_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
+./${cmd} >> results_diss/subspace/DR5_subspace_singleit_multTranspose_double_${device_name}.log 2>&1
 
 ############### tuned whole scenario ###############
 
