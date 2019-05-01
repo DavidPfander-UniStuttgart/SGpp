@@ -1,0 +1,545 @@
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+pci id for fd 5: 1002:66af, driver (null)
+pci id for fd 5: 1002:66af, driver (null)
+ocl dummy initalization duration: 0.439505
+instances: 200000
+regular grid size: 397825
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 397825
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67486
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27084
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66768
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27291
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67279
+delta: 6.48417e+13
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27164
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67224
+delta: 5.03406e+13
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27236
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67115
+delta: 2.15341e+12
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27217
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67133
+delta: 2.93576e+12
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27225
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67122
+delta: 2.20097e+12
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27168
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67147
+delta: 7.77042e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27247
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67118
+delta: 1.30202e+12
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27241
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66989
+delta: 1.16094e+12
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27241
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67127
+delta: 3.47423e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2707
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66997
+delta: 8.23794e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27153
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.67011
+delta: 2.3831e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27243
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66951
+delta: 9.96894e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27177
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66899
+delta: 4.18977e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27208
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66844
+delta: 8.1647e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27168
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6682
+delta: 2.97657e+11
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2723
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6685
+delta: 8.00583e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27154
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66761
+delta: 9.73613e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27029
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6677
+delta: 6.15883e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27193
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66842
+delta: 7.93578e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27122
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66791
+delta: 5.6194e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27171
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66786
+delta: 4.0039e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27105
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66666
+delta: 7.05875e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27178
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66702
+delta: 5.08605e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27067
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66622
+delta: 5.67623e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27028
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66719
+delta: 1.1417e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27147
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66746
+delta: 3.14393e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27127
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66755
+delta: 6.69015e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27122
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66661
+delta: 1.5945e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27125
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66608
+delta: 4.52334e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2714
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66618
+delta: 3.95904e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27082
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66585
+delta: 2.73549e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27069
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66564
+delta: 3.55581e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27079
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66567
+delta: 2.20467e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26968
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66524
+delta: 1.00465e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2708
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66565
+delta: 1.23195e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66566
+delta: 1.6878e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27095
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66546
+delta: 9.50454e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2698
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66479
+delta: 1.99085e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27088
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66474
+delta: 6.20441e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27056
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6652
+delta: 1.00384e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27044
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66449
+delta: 1.25607e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27087
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66481
+delta: 1.53981e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27042
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6648
+delta: 8.21517e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27012
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66444
+delta: 4.63056e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27031
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66395
+delta: 2.26479e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26969
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66408
+delta: 5.26725e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26955
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6641
+delta: 6.56901e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2704
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66433
+delta: 7.63591e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27016
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66375
+delta: 5.36485e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27081
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66375
+delta: 7.98971e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27035
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66362
+device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26991
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66337
+delta: 3.1425e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27013
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66363
+delta: 9.29093e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2705
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66276
+delta: 4.88168e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27032
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66304
+delta: 4.59776e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27034
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66388
+delta: 1.89295e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27027
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66378
+delta: 1.13823e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27062
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66322
+delta: 3.12671e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27028
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66319
+delta: 7.23953e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26945
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66354
+delta: 4.99767e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26962
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66334
+delta: 7.47746e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2695
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66294
+delta: 3.61825e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27009
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66231
+delta: 3.51522e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27016
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66271
+delta: 1.38646e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27056
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66229
+delta: 4.85899e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2701
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66213
+delta: 3.75721e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26946
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66249
+delta: 1.13778e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27036
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66258
+delta: 3.34663e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27046
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66269
+delta: 4.24819e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26964
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66261
+delta: 2.28407e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.2709
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66244
+delta: 1.00133e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26962
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66257
+delta: 1.1864e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27002
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66154
+delta: 3.02291e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26974
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66294
+delta: 4.15734e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27012
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.6624
+delta: 6.77423e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27035
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66188
+delta: 4.94143e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26985
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66223
+delta: 4.14813e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27064
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66208
+delta: 1.54305e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27009
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66174
+delta: 8.51883e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27067
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66129
+delta: 5.96509e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26971
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66164
+delta: 2.76245e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27011
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66211
+delta: 2.04764e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26977
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66145
+delta: 4.09772e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26979
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66146
+delta: 1.56797e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26905
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66204
+delta: 1.13404e+10
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27052
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66162
+delta: 2.83919e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27008
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66162
+delta: 2.2054e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26962
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66106
+delta: 6.99164e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27064
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66131
+delta: 3.29921e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27066
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66155
+delta: 1.71675e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27061
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66108
+delta: 2.69992e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27003
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66176
+delta: 2.15737e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26995
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66076
+delta: 3.59588e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26927
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66168
+delta: 1.85909e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27014
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66101
+delta: 3.79297e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27008
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66107
+delta: 1.73077e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27099
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.661
+delta: 5.3585e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26962
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66119
+delta: 2.24131e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26968
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66155
+delta: 7.53747e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.26941
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66121
+delta: 2.91052e+09
+.device: 0xc9c520 kernel from: 0 to: 200704 -> range: 200704
+device: 0xc9c520 duration: 1.27081
+device: gfx906+sram-ecc (0xc9c520)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc9c520 duration: 1.66141
+delta: 1.90509e+09
+
+Number of iterations: 100 (max. 100)
+Final norm of residuum: 1.90509e+09
+counted_mult_calls: 102
+
+Needed Iterations: 100
+Final residuum: 1.90509e+09
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 103.5
+note: performance calculation: additional iteration for residual recalculation : 2
+
+Current Duration:: 304.283
+Current GFlop/s: 2261.31
+
+Finished Training!
+
+Training took: 304.283 seconds
+
+total_duration: 306.482
