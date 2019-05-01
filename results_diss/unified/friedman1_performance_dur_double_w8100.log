@@ -1,0 +1,543 @@
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+ocl dummy initalization duration: 0.156644
+instances: 200000
+regular grid size: 397825
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 397825
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05351
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09636
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05728
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15934
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05637
+delta: 6.48417e+13
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19231
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05294
+delta: 5.03406e+13
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.0966
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05502
+delta: 2.15341e+12
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.18802
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05789
+delta: 2.93576e+12
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19087
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05347
+delta: 2.20097e+12
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.05619
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05736
+delta: 7.77042e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12432
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05212
+delta: 1.30202e+12
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12364
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05507
+delta: 1.16094e+12
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13182
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05592
+delta: 3.47423e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12476
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05662
+delta: 8.23794e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12534
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05488
+delta: 2.3831e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11316
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05492
+delta: 9.96893e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10199
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0575
+delta: 4.18971e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11632
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05759
+delta: 8.15899e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.16065
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05498
+delta: 2.96985e+11
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19008
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05692
+delta: 8.01616e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12637
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05781
+delta: 9.73622e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.16038
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05726
+delta: 6.15884e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13239
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05778
+delta: 7.93578e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.16042
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05885
+delta: 5.6194e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10769
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05617
+delta: 4.0039e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12555
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05512
+delta: 7.05875e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.18947
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05646
+delta: 5.08605e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15692
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05372
+delta: 5.67623e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10485
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05884
+delta: 1.1417e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19067
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05348
+delta: 3.14393e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12867
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05134
+delta: 6.69036e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15634
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05681
+delta: 1.60028e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12368
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05725
+delta: 6.71353e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12549
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05451
+delta: 3.06627e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11651
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.056
+delta: 2.72953e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12234
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05677
+delta: 3.55516e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13174
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05696
+delta: 2.20467e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.02523
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05719
+delta: 1.00465e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12225
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05568
+delta: 1.23195e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15674
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05621
+delta: 1.6878e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15171
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05712
+delta: 9.50454e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12966
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05649
+delta: 1.99085e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.07754
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0574
+delta: 6.20509e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12006
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05657
+delta: 1.06272e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13328
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05873
+delta: 4.74668e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09911
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05902
+delta: 7.76184e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10828
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05543
+delta: 8.16964e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15657
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05867
+delta: 4.26732e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11393
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05461
+delta: 2.11142e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10446
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05497
+delta: 5.93455e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15728
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05873
+delta: 6.45706e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12107
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05643
+delta: 4.90484e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13403
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05538
+delta: 9.02425e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09571
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.057
+delta: 8.02039e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12578
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05639
+device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.04032
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.055
+delta: 2.9633e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13556
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05862
+delta: 5.98284e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10857
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05451
+delta: 8.08367e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12485
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05617
+delta: 1.54433e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12646
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05586
+delta: 5.59577e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.18847
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05641
+delta: 3.08672e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09949
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05602
+delta: 7.47322e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19627
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05737
+delta: 8.45356e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19182
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05256
+delta: 3.83055e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10977
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05566
+delta: 1.15099e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11562
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0598
+delta: 3.80859e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11377
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0574
+delta: 3.33872e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.1347
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05847
+delta: 1.00615e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12071
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05695
+delta: 6.01015e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.1922
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05299
+delta: 3.78126e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12114
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05768
+delta: 7.0702e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15462
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05706
+delta: 4.34668e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12349
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05371
+delta: 1.73366e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19047
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05902
+delta: 4.42794e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19207
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05453
+delta: 2.20953e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12979
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05679
+delta: 1.34945e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09351
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05671
+delta: 2.56225e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.09245
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05603
+delta: 4.18823e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12656
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05628
+delta: 8.10103e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13756
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05408
+delta: 4.39156e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19397
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05635
+delta: 4.13796e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12563
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05701
+delta: 1.51017e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12105
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05719
+delta: 6.29778e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.07505
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0571
+delta: 8.09238e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10138
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0572
+delta: 2.87096e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.1152
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05805
+delta: 1.42885e+10
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11821
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05872
+delta: 2.15612e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12481
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05941
+delta: 4.54554e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11077
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05121
+delta: 1.47149e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.0653
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05622
+delta: 2.63444e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.1602
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05737
+delta: 2.18815e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.11635
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05617
+delta: 4.73922e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10314
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05447
+delta: 4.06023e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12864
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05645
+delta: 1.76102e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13309
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05617
+delta: 2.69965e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19358
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05325
+delta: 2.14401e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.15619
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05485
+delta: 2.6038e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13769
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0578
+delta: 3.46795e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.1554
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05528
+delta: 5.67228e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.19284
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05655
+delta: 3.60182e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13023
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05578
+delta: 1.50037e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.0496
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05465
+delta: 2.46229e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.13142
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05585
+delta: 4.11676e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.12582
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.05483
+delta: 3.0893e+09
+.device: 0xc3c260 kernel from: 0 to: 200192 -> range: 200192
+device: 0xc3c260 duration: 3.10844
+device: Hawaii (0xc3c260)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0xc3c260 duration: 4.0568
+delta: 1.51885e+09
+
+Number of iterations: 100 (max. 100)
+Final norm of residuum: 1.51885e+09
+counted_mult_calls: 102
+
+Needed Iterations: 100
+Final residuum: 1.51885e+09
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 103.5
+note: performance calculation: additional iteration for residual recalculation : 2
+
+Current Duration:: 740.486
+Current GFlop/s: 929.225
+
+Finished Training!
+
+Training took: 740.486 seconds
+
+total_duration: 743.406

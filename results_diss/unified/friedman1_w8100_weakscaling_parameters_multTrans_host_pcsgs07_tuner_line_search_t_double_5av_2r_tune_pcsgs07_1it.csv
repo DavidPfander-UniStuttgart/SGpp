@@ -1,0 +1,17 @@
+KERNEL_TRANS_DATA_SPLIT,KERNEL_TRANS_GRID_BLOCK_SIZE,KERNEL_TRANS_MAX_DIM_UNROLL,KERNEL_TRANS_PREFETCH_SIZE,KERNEL_TRANS_STORE_DATA,KERNEL_TRANS_TRANSFER_WHOLE_GRID,KERNEL_TRANS_USE_LOCAL_MEMORY,OPTIMIZATION_FLAGS,TRANS_LOCAL_SIZE,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.03885,4.03885,0.000219456,0,0
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,4.12003,4.12003,0.000222533,0,0
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.39819,4.39819,0.000225926,0,0
+8,1,4,32,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,8.02528,8.02528,0.000225666,0,0
+8,1,1,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.18586,4.18586,0.000224714,0,0
+8,1,2,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.18585,4.18585,0.000236436,0,0
+8,1,10,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,8.06295,8.06295,0.000230296,0,0
+8,2,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,6.02056,6.02056,0.000233654,0,0
+8,4,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,11.4146,11.4146,0.000233092,0,0
+8,8,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,27.8602,27.8602,0.000228349,0,0
+1,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.32494,4.32494,0.000231061,0,0
+2,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.26473,4.26473,0.000222884,0,0
+4,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.20814,4.20814,0.000229786,0,0
+8,1,4,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.21054,4.21054,0.000230671,0,0
+8,1,4,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.27077,4.27077,0.000230108,0,0
+8,1,4,32,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,64,4.07178,4.07178,0.000139076,0,0
