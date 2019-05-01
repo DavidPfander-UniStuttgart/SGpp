@@ -122,23 +122,21 @@ public:
         {"-cl-unsafe-math-optimizations -cl-denorms-are-zero"}, false);
 
     // mult/multi-eval parameters
-    autotune::fixed_set_parameter<uint64_t> p1("LOCAL_SIZE", {64, 128, 256});
-    autotune::fixed_set_parameter<bool> p2("KERNEL_USE_LOCAL_MEMORY",
+    autotune::fixed_set_parameter<bool> p6("KERNEL_USE_LOCAL_MEMORY",
                                            {true, false});
-    autotune::fixed_set_parameter<std::string> p3("KERNEL_STORE_DATA",
-                                                  {"array"}, false);
-    autotune::fixed_set_parameter<uint64_t> p4("KERNEL_MAX_DIM_UNROLL",
+    autotune::fixed_set_parameter<uint64_t> p7("LOCAL_SIZE", {64, 128, 256});
+    autotune::fixed_set_parameter<uint64_t> p1("KERNEL_DATA_BLOCK_SIZE",
+                                               {1, 2, 4, 8});
+    autotune::fixed_set_parameter<uint64_t> p2("KERNEL_GRID_SPLIT",
+                                               {1, 2, 4, 8});
+    autotune::fixed_set_parameter<uint64_t> p3("KERNEL_MAX_DIM_UNROLL",
                                                {1, 2, 4, 10});
-    autotune::fixed_set_parameter<uint64_t> p5("KERNEL_DATA_BLOCK_SIZE",
-                                               {1, 2, 4, 8});
-    autotune::fixed_set_parameter<uint64_t> p6("KERNEL_GRID_SPLIT",
-                                               {1, 2, 4, 8});
-    // autotune::fixed_set_parameter<uint64_t> p7("KERNEL_SCHEDULE_SIZE",
-    //                                            {1024000});
-    autotune::fixed_set_parameter<uint64_t> p8("KERNEL_PREFETCH_SIZE",
+    autotune::fixed_set_parameter<uint64_t> p4("KERNEL_PREFETCH_SIZE",
                                                {16, 32, 64, 128});
-    autotune::fixed_set_parameter<bool> p9("KERNEL_TRANSFER_WHOLE_DATASET",
+    autotune::fixed_set_parameter<bool> p5("KERNEL_TRANSFER_WHOLE_DATASET",
                                            {true, false});
+    autotune::fixed_set_parameter<std::string> p8("KERNEL_STORE_DATA",
+                                                  {"array"}, false);
 
     autotune_parameters_mult.add_parameter(p0);
     autotune_parameters_mult.add_parameter(p1);
@@ -147,40 +145,36 @@ public:
     autotune_parameters_mult.add_parameter(p4);
     autotune_parameters_mult.add_parameter(p5);
     autotune_parameters_mult.add_parameter(p6);
-    // autotune_parameters_mult.add_parameter(p7);
+    autotune_parameters_mult.add_parameter(p7);
     autotune_parameters_mult.add_parameter(p8);
-    autotune_parameters_mult.add_parameter(p9);
 
     // trans parameters
+    autotune::fixed_set_parameter<bool> p9("KERNEL_TRANS_USE_LOCAL_MEMORY",
+                                           {true, false});
     autotune::fixed_set_parameter<uint64_t> p10("TRANS_LOCAL_SIZE",
                                                 {64, 128, 256});
-    autotune::fixed_set_parameter<bool> p11("KERNEL_TRANS_USE_LOCAL_MEMORY",
-                                            {true, false});
-    autotune::fixed_set_parameter<std::string> p12("KERNEL_TRANS_STORE_DATA",
-                                                   {"array"}, false);
+    autotune::fixed_set_parameter<uint64_t> p11("KERNEL_TRANS_GRID_BLOCK_SIZE",
+                                                {1, 2, 4, 8});
+    autotune::fixed_set_parameter<uint64_t> p12("KERNEL_TRANS_DATA_SPLIT",
+                                                {1, 2, 4, 8});
     autotune::fixed_set_parameter<uint64_t> p13("KERNEL_TRANS_MAX_DIM_UNROLL",
                                                 {1, 2, 4, 10});
-    autotune::fixed_set_parameter<uint64_t> p14("KERNEL_TRANS_GRID_BLOCK_SIZE",
-                                                {1, 2, 4, 8});
-    autotune::fixed_set_parameter<uint64_t> p15("KERNEL_TRANS_DATA_SPLIT",
-                                                {1, 2, 4, 8});
-    // autotune::fixed_set_parameter<uint64_t> p16("KERNEL_TRANS_SCHEDULE_SIZE",
-    //                                             {1024000});
-    autotune::fixed_set_parameter<uint64_t> p17("KERNEL_TRANS_PREFETCH_SIZE",
+    autotune::fixed_set_parameter<uint64_t> p14("KERNEL_TRANS_PREFETCH_SIZE",
                                                 {16, 32, 64, 128});
-    autotune::fixed_set_parameter<bool> p18("KERNEL_TRANS_TRANSFER_WHOLE_GRID",
+    autotune::fixed_set_parameter<bool> p15("KERNEL_TRANS_TRANSFER_WHOLE_GRID",
                                             {true, false});
+    autotune::fixed_set_parameter<std::string> p16("KERNEL_TRANS_STORE_DATA",
+                                                   {"array"}, false);
 
     autotune_parameters_multTranspose.add_parameter(p0);
+    autotune_parameters_multTranspose.add_parameter(p9);
     autotune_parameters_multTranspose.add_parameter(p10);
     autotune_parameters_multTranspose.add_parameter(p11);
     autotune_parameters_multTranspose.add_parameter(p12);
     autotune_parameters_multTranspose.add_parameter(p13);
     autotune_parameters_multTranspose.add_parameter(p14);
     autotune_parameters_multTranspose.add_parameter(p15);
-    // autotune_parameters_multTranspose.add_parameter(p16);
-    autotune_parameters_multTranspose.add_parameter(p17);
-    autotune_parameters_multTranspose.add_parameter(p18);
+    autotune_parameters_multTranspose.add_parameter(p16);
 
     autotune::mult_unified_with_tuning.set_kernel_functor(
         [this](base::DataVector &alpha, base::DataVector &result) {
@@ -333,6 +327,10 @@ public:
     // autotune_parameters_mult); tuner.set_write_measurement(scenario_name);
     // tuner.set_verbose(true);
 
+    for (size_t i = 0; i < autotune_parameters_mult.size(); i += 1) {
+      autotune_parameters_mult[i]->set_random_value();
+    }
+
     autotune::countable_set optimal_parameters;
     if (tuner_name.compare("bruteforce") == 0) {
       autotune::tuners::bruteforce tuner(autotune::mult_unified_with_tuning,
@@ -373,6 +371,11 @@ public:
   void tune_multTranspose(base::DataVector &source, base::DataVector &result,
                           const std::string &scenario_name,
                           const std::string &tuner_name) {
+
+    for (size_t i = 0; i < autotune_parameters_multTranspose.size(); i += 1) {
+      autotune_parameters_multTranspose[i]->set_random_value();
+    }
+
     autotune::countable_set optimal_parameters;
     if (tuner_name.compare("bruteforce") == 0) {
       autotune::tuners::bruteforce tuner(
