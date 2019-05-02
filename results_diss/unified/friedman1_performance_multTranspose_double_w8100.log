@@ -1,2 +1,26 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::unknown_option> >'
-  what():  unrecognised option '--repetitions_averaged'
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: pcsgs07
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering full evaluation count
+num_ops: 23869.5
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: multTrans
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.93609
+info: first multTranspose not considered
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.93571
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.93629
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.936
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.93646
+device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x13326490 duration: 3.93576
+duration multTranspose: 19.7355, repetitions_averaged: 5
+GFLOPS: 1209.47
