@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
   std::string scenarioName;
   std::string tunerName;
   uint32_t level;
-  uint32_t repetitions;
+  uint32_t repetitions_averaged;
   bool trans;
   bool isModLinear;
   bool useSupportRefinement;
@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
                      po::value<std::string>(&datasetFileName),
                      "training data set as an arff or binary-arff file")(
       "level", po::value<uint32_t>(&level), "level of the sparse grid")(
-      "repetitions", po::value<uint32_t>(&repetitions),
+      "repetitions_averaged", po::value<uint32_t>(&repetitions_averaged),
       "how often the performance test is repeated")(
       "trans", po::value<bool>(&trans)->default_value(false),
       "test transposed multi-eval kernel")(
@@ -192,8 +192,8 @@ int main(int argc, char **argv) {
     std::cerr << "error: option \"level\" not specified" << std::endl;
     return 1;
   }
-  if (variables_map.count("repetitions") == 0) {
-    std::cerr << "error: option \"repetitions\" not specified" << std::endl;
+  if (variables_map.count("repetitions_averaged") == 0) {
+    std::cerr << "error: option \"repetitions_averaged\" not specified" << std::endl;
     return 1;
   }
 
@@ -274,7 +274,7 @@ int main(int argc, char **argv) {
     num_ops += 1.0 * 1e-9 * static_cast<double>(gridStorage.getSize()) *
                static_cast<double>(dataset.getNumberInstances()) *
                static_cast<double>(dim) * 6.0 *
-               static_cast<double>(repetitions);
+               static_cast<double>(repetitions_averaged);
 
   } else {
     std::cout << "considering reduced evaluations for l=1 grid points"
@@ -297,7 +297,7 @@ int main(int argc, char **argv) {
         }
       }
     }
-    num_ops *= static_cast<double>(repetitions);
+    num_ops *= static_cast<double>(repetitions_averaged);
     std::cout << "grid points with level > 1: " << no_greater_one << std::endl;
   }
   std::cout << "num_ops: " << num_ops << std::endl;
@@ -331,13 +331,13 @@ int main(int argc, char **argv) {
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
-    for (size_t i = 0; i < repetitions; i += 1) {
+    for (size_t i = 0; i < repetitions_averaged; i += 1) {
       eval->mult(alpha, dataSizeVectorResult);
     }
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
     std::cout << "duration mult: " << elapsed_seconds.count()
-              << ", repetitions: " << repetitions << std::endl;
+              << ", repetitions_averaged: " << repetitions_averaged << std::endl;
     if (type == sgpp::datadriven::OperationMultipleEvalType::STREAMING) {
       std::cout << "GFLOPS: " << (num_ops / elapsed_seconds.count())
                 << std::endl;
@@ -359,13 +359,13 @@ int main(int argc, char **argv) {
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
-    for (size_t i = 0; i < repetitions; i += 1) {
+    for (size_t i = 0; i < repetitions_averaged; i += 1) {
       eval->multTranspose(source, gridSizeVectorResult);
     }
     end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
     std::cout << "duration multTranspose: " << elapsed_seconds.count()
-              << ", repetitions: " << repetitions << std::endl;
+              << ", repetitions_averaged: " << repetitions_averaged << std::endl;
     if (type == sgpp::datadriven::OperationMultipleEvalType::STREAMING) {
       std::cout << "GFLOPS: " << (num_ops / elapsed_seconds.count())
                 << std::endl;
