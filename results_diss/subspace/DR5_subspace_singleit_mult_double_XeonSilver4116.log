@@ -1,6 +1,6 @@
 ./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --isModLinear true --trans true --level 10 --use_support_refinement --support_refinement_min_support 500  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/DR5_XeonSilver4116_Subspace_multTrans_tuner_line_search_t_5av_0r_optimal.cfg
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
-hostname: argon-tesla2
+hostname: argon-tesla1
 using configuration
 num_candidates: 1
 candidates with support: 1
@@ -33,12 +33,12 @@ starting performance test...
 algorithm: multTrans
 padding for: 512
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_705019/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_705019/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_705019/KernelMultTransposeSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_509128/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_509128/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_509128/KernelMultTransposeSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.97873
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_705019/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_705019/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_705019/KernelMultTransposeSubspace_link.log 2>&1
+compile duration: 2.01235
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_509128/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_509128/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_509128/KernelMultTransposeSubspace_link.log 2>&1
 link log:
-link duration: 0.122134
+link duration: 0.116021
 info: first multTranspose not considered
-duration multTranspose: 5.51195, repetitions: 10
+duration multTranspose: 5.31408, repetitions_averaged: 10
 GFLOPS: 0

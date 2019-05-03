@@ -1,0 +1,19 @@
+KERNEL_DATA_BLOCK_SIZE,KERNEL_GRID_SPLIT,KERNEL_MAX_DIM_UNROLL,KERNEL_PREFETCH_SIZE,KERNEL_STORE_DATA,KERNEL_TRANSFER_WHOLE_DATASET,KERNEL_USE_LOCAL_MEMORY,LOCAL_SIZE,OPTIMIZATION_FLAGS,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+8,8,4,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.905416,0.905416,0.000161731,0,0
+8,8,4,128,array,true,true,256,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.914769,0.914769,5.2428e-05,0,0
+8,8,4,128,array,true,false,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,2.11691,2.11691,7.8916e-05,0,0
+8,8,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.904518,0.904518,9.5324e-05,0,0
+8,8,2,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.904586,0.904586,7.6967e-05,0,0
+8,8,10,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.904913,0.904913,7.9631e-05,0,0
+1,8,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,2.45038,2.45038,8.7164e-05,0,0
+2,8,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,1.54515,1.54515,9.1019e-05,0,0
+4,8,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,1.00486,1.00486,0.000108013,0,0
+8,1,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,1.02795,1.02795,7.8773e-05,0,0
+8,2,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,1.02706,1.02706,7.9728e-05,0,0
+8,4,1,128,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.910274,0.910274,8.217e-05,0,0
+8,8,1,16,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.937153,0.937153,8.4745e-05,0,0
+8,8,1,32,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.92069,0.92069,8.3283e-05,0,0
+8,8,1,64,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.910194,0.910194,8.3943e-05,0,0
+8,8,1,128,array,false,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.911335,0.911335,9.0024e-05,0,0
+8,8,1,128,array,true,true,256,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.915501,0.915501,5.2556e-05,0,0
+8,8,1,128,array,true,false,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,2.1156,2.1156,9.5297e-05,0,0

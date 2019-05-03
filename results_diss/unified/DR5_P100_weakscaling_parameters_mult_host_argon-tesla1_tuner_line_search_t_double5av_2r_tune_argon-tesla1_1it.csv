@@ -1,0 +1,17 @@
+KERNEL_DATA_BLOCK_SIZE,KERNEL_GRID_SPLIT,KERNEL_MAX_DIM_UNROLL,KERNEL_PREFETCH_SIZE,KERNEL_STORE_DATA,KERNEL_TRANSFER_WHOLE_DATASET,KERNEL_USE_LOCAL_MEMORY,LOCAL_SIZE,OPTIMIZATION_FLAGS,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+8,8,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.151911,0.151911,9.2033e-05,0,0
+8,8,2,64,array,true,true,128,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.15494,0.15494,8.5116e-05,0,0
+8,8,2,64,array,true,true,256,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.162274,0.162274,0.000125139,0,0
+8,8,2,64,array,true,false,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.185048,0.185048,8.2503e-05,0,0
+8,8,1,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.152036,0.152036,8.3211e-05,0,0
+8,8,4,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.153186,0.153186,8.1552e-05,0,0
+8,8,10,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.152303,0.152303,0.000108186,0,0
+1,8,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.313777,0.313777,8.4186e-05,0,0
+2,8,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.194575,0.194575,0.000138501,0,0
+4,8,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.162851,0.162851,8.4452e-05,0,0
+8,1,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.175942,0.175942,0.000103364,0,0
+8,2,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.169399,0.169399,7.9756e-05,0,0
+8,4,2,64,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.154185,0.154185,9.7816e-05,0,0
+8,8,2,16,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.15502,0.15502,8.5123e-05,0,0
+8,8,2,32,array,true,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.151929,0.151929,0.000196962,0,0
+8,8,2,64,array,false,true,64,-cl-unsafe-math-optimizations -cl-denorms-are-zero,0.161657,0.161657,5.9753e-05,0,0

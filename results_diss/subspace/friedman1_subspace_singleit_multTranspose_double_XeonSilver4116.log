@@ -1,6 +1,6 @@
 ./datadriven/examplesOCL/regressionGFlops --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --isModLinear true --trans false --level 7  --repetitions 10 --operation.type SUBSPACE --operation.subType AUTOTUNETMP --OpenCLConfigFile results_diss/subspace/friedman1_XeonSilver4116_Subspace_mult_tuner_line_search_t_5av_0r_optimal.cfg
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-hostname: argon-tesla2
+hostname: argon-tesla1
 using configuration
 dimensionality: 10
 number of grid points: 397825
@@ -12,12 +12,12 @@ creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: Aut
 starting performance test...
 algorithm: mult
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_501073/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla2/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_501073/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_501073/KernelMultSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_327175/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_327175/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_327175/KernelMultSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.80276
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_501073/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_501073/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_501073/KernelMultSubspace_link.log 2>&1
+compile duration: 1.78264
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_327175/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_327175/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_327175/KernelMultSubspace_link.log 2>&1
 link log:
-link duration: 0.15389
+link duration: 0.142088
 info: first mult not considered
-duration mult: 11.1626, repetitions: 10
+duration mult: 11.5517, repetitions_averaged: 10
 GFLOPS: 0
