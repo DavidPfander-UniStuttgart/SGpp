@@ -33,12 +33,12 @@ creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: Aut
 starting performance test...
 algorithm: mult
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_66200/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_66200/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_66200/KernelMultSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_22870/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_22870/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_22870/KernelMultSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.60449
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_66200/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_66200/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_66200/KernelMultSubspace_link.log 2>&1
+compile duration: 1.53945
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_22870/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_22870/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_22870/KernelMultSubspace_link.log 2>&1
 link log:
-link duration: 0.0991936
+link duration: 0.0923336
 info: first mult not considered
-duration mult: 2.79057, repetitions: 10
+duration mult: 2.9758, repetitions_averaged: 10
 GFLOPS: 0

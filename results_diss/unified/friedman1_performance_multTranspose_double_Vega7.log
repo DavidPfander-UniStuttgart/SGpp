@@ -1,2 +1,28 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::unknown_option> >'
-  what():  unrecognised option '--repetitions_averaged'
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-epyc
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering full evaluation count
+num_ops: 23869.5
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+starting performance test...
+algorithm: multTrans
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.6531
+info: first multTranspose not considered
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.65338
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.65323
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.65333
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.65309
+device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x11ee8900 duration: 1.65313
+duration multTranspose: 8.30368, repetitions_averaged: 5
+GFLOPS: 2874.57

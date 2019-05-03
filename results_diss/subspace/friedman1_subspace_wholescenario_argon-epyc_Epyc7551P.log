@@ -10,21 +10,21 @@ Doing refinement: 0
 Grid Size: 397825
 padding for: 512
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_835593/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_835593/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_835593/KernelMultTransposeSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_82952/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_82952/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_82952/KernelMultTransposeSubspace_compile.log 2>&1
 compile log:
-compile duration: 2.0205
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_835593/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_835593/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_835593/KernelMultTransposeSubspace_link.log 2>&1
+compile duration: 1.99245
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_82952/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_82952/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_82952/KernelMultTransposeSubspace_link.log 2>&1
 link log:
-link duration: 0.113282
+link duration: 0.116497
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_269674/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_269674/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_269674/KernelMultSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_345017/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeEpyc/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_345017/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_345017/KernelMultSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.52559
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_269674/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_269674/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_269674/KernelMultSubspace_link.log 2>&1
+compile duration: 1.54835
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_345017/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_345017/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_345017/KernelMultSubspace_link.log 2>&1
 link log:
-link duration: 0.113869
+link duration: 0.119559
 Starting norm of residuum: -nan
 Target norm:               0
 .delta: 6.48417e+13
@@ -38,13 +38,13 @@ Target norm:               0
 .delta: 3.47423e+11
 .delta: 8.23794e+11
 .delta: 2.3831e+11
-.delta: 9.96893e+10
-.delta: 4.18956e+11
-.delta: 8.14585e+10
-.delta: 2.95285e+11
-.delta: 8.04128e+10
-.delta: 9.73645e+10
-.delta: 6.15885e+10
+.delta: 9.96894e+10
+.delta: 4.18986e+11
+.delta: 8.1722e+10
+.delta: 2.98481e+11
+.delta: 7.99276e+10
+.delta: 9.73601e+10
+.delta: 6.15883e+10
 .delta: 7.93578e+10
 .delta: 5.6194e+10
 .delta: 4.0039e+10
@@ -53,97 +53,97 @@ Target norm:               0
 .delta: 5.67623e+10
 .delta: 1.1417e+10
 .delta: 3.14393e+10
-.delta: 6.69013e+10
-.delta: 1.59411e+10
-.delta: 4.3445e+10
-.delta: 4.10702e+10
-.delta: 2.73656e+10
-.delta: 3.55592e+10
+.delta: 6.6902e+10
+.delta: 1.59585e+10
+.delta: 5.1113e+10
+.delta: 3.59469e+10
+.delta: 2.73296e+10
+.delta: 3.55553e+10
 .delta: 2.20467e+10
 .delta: 1.00465e+10
 .delta: 1.23195e+10
 .delta: 1.6878e+10
 .delta: 9.50454e+09
 .delta: 1.99085e+10
-.delta: 6.20442e+09
-.delta: 1.00432e+10
-.delta: 1.38307e+10
-.delta: 1.38383e+10
-.delta: 8.18626e+09
-.delta: 4.34196e+09
-.delta: 2.70309e+10
-.delta: 5.47614e+09
-.delta: 6.39769e+09
-.delta: 3.72318e+09
-.delta: 2.0081e+10
-.delta: 8.31584e+09
-.delta: 2.95098e+09
-.delta: 4.96769e+09
-.delta: 8.78255e+09
-.delta: 5.18503e+09
-.delta: 3.44039e+10
-.delta: 3.32741e+09
-.delta: 6.87946e+09
-.delta: 7.9939e+09
-.delta: 3.70038e+09
-.delta: 1.07639e+10
-.delta: 4.02898e+09
-.delta: 3.3198e+09
-.delta: 7.38566e+09
-.delta: 7.39345e+09
-.delta: 3.87006e+09
-.delta: 4.63591e+09
-.delta: 5.72099e+09
-.delta: 4.37623e+09
-.delta: 4.56844e+09
-.delta: 3.49232e+09
-.delta: 1.17468e+10
-.delta: 2.75717e+09
-.delta: 4.12761e+09
-.delta: 4.55044e+09
-.delta: 7.57559e+09
-.delta: 4.21681e+09
-.delta: 1.51227e+09
-.delta: 6.5466e+09
-.delta: 7.85072e+09
-.delta: 2.82898e+09
-.delta: 2.04813e+09
-.delta: 4.20043e+09
-.delta: 2.61156e+10
-.delta: 1.50085e+09
-.delta: 2.63428e+09
-.delta: 2.18152e+09
-.delta: 3.44135e+09
-.delta: 2.88051e+09
-.delta: 2.58249e+09
-.delta: 2.70807e+09
-.delta: 2.14023e+09
-.delta: 1.79759e+09
-.delta: 3.83417e+09
-.delta: 3.84264e+09
-.delta: 1.73968e+09
-.delta: 7.06112e+09
-.delta: 2.09855e+09
-.delta: 3.39071e+09
-.delta: 4.80366e+09
-.delta: 1.54668e+09
+.delta: 6.20447e+09
+.delta: 1.00947e+10
+.delta: 2.48708e+10
+.delta: 9.54665e+09
+.delta: 8.22479e+09
+.delta: 4.839e+09
+.delta: 1.90057e+10
+.delta: 5.23296e+09
+.delta: 6.40836e+09
+.delta: 4.31468e+09
+.delta: 1.20327e+10
+.delta: 8.06387e+09
+.delta: 2.94859e+09
+.delta: 4.95318e+09
+.delta: 8.84376e+09
+.delta: 5.61256e+09
+.delta: 2.46679e+10
+.delta: 3.22808e+09
+.delta: 7.04287e+09
+.delta: 8.1434e+09
+.delta: 3.58517e+09
+.delta: 6.62125e+09
+.delta: 5.34392e+09
+.delta: 3.38807e+09
+.delta: 7.28051e+09
+.delta: 7.51943e+09
+.delta: 3.86663e+09
+.delta: 4.11407e+09
+.delta: 6.5748e+09
+.delta: 4.52376e+09
+.delta: 9.40558e+09
+.delta: 2.47514e+09
+.delta: 9.61587e+09
+.delta: 2.92275e+09
+.delta: 4.12844e+09
+.delta: 3.97186e+09
+.delta: 9.41476e+09
+.delta: 4.3327e+09
+.delta: 1.51715e+09
+.delta: 7.07235e+09
+.delta: 7.29823e+09
+.delta: 2.80059e+09
+.delta: 2.04864e+09
+.delta: 4.4407e+09
+.delta: 2.38099e+10
+.delta: 1.48017e+09
+.delta: 2.63463e+09
+.delta: 2.19189e+09
+.delta: 5.35733e+09
+.delta: 3.78366e+09
+.delta: 1.73925e+09
+.delta: 2.70313e+09
+.delta: 2.21562e+09
+.delta: 6.22535e+09
+.delta: 1.49866e+09
+.delta: 3.76991e+09
+.delta: 2.30218e+09
+.delta: 3.54858e+09
+.delta: 2.14149e+09
+.delta: 3.99996e+09
+.delta: 3.89012e+09
+.delta: 1.58164e+09
 
 Number of iterations: 100 (max. 100)
-Final norm of residuum: 1.54668e+09
+Final norm of residuum: 1.58164e+09
 counted_mult_calls: 102
 
 Needed Iterations: 100
-Final residuum: 1.54668e+09
+Final residuum: 1.58164e+09
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 warning: cannot calculate GFLOPS for operation type
 
-Current Duration:: 227.92
+Current Duration:: 205.932
 Current GFlop/s: 0
 
 Finished Training!
 
-Training took: 227.92 seconds
+Training took: 205.932 seconds
 
-total_duration: 230.023
+total_duration: 208.027

@@ -1,2 +1,29 @@
-terminate called after throwing an instance of 'boost::exception_detail::clone_impl<boost::exception_detail::error_info_injector<boost::program_options::unknown_option> >'
-  what():  unrecognised option '--repetitions_averaged'
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-epyc
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering reduced evaluations for l=1 grid points
+grid points with level > 1: 1550100
+num_ops: 9300.6
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+pci id for fd 4: 1002:66af, driver (null)
+pci id for fd 4: 1002:66af, driver (null)
+starting performance test...
+algorithm: mult
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.40707
+info: first mult not considered
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.406489
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.406006
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.405613
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.405876
+device: 0x128a37a0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x128a37a0 duration: 0.405588
+duration mult: 2.05673, repetitions_averaged: 5
+GFLOPS: 4522.03
