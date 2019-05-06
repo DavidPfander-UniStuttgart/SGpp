@@ -1,36 +1,38 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-OpenCLConfigFile: results_diss/friedman1_gtx1080ti_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
 hostname: argon-gtx
+using OpenCL configuration
 dimensionality: 10
 number of grid points: 397825
 number of data points: 200000
+considering reduced evaluations for l=1 grid points
 grid points with level > 1: 1550100
 num_ops: 18601.2
-creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+ctor done!!!!!!!!!!!!!!!!
 starting performance test...
 algorithm: mult
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.50543
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.49444
 info: first mult not considered
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.427297
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425965
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.426498
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425827
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425999
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425824
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.426
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.426326
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425878
-device: 0xe8d970 kernel from: 0 to: 200704 -> range: 200704
-device: 0xe8d970 duration: 0.425813
-duration mult: 4.29826, repetitions: 10
-GFLOPS: 4327.61
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425733
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425855
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425924
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425787
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.42595
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425853
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.426026
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425942
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.425971
+device: 0x18de970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x18de970 duration: 0.427521
+duration mult: 4.29391, repetitions: 10
+GFLOPS: 4332

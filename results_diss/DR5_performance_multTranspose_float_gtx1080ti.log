@@ -1,7 +1,7 @@
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 hostname: argon-gtx
 using OpenCL configuration
-ocl_init_duration: 6.55602
+ocl_init_duration: 6.63395
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
@@ -52,28 +52,28 @@ creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT su
 ctor done!!!!!!!!!!!!!!!!
 starting performance test...
 algorithm: multTrans
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.676285
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0664145
 info: first multTranspose not considered
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.672195
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.671419
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.673011
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.67446
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.672844
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.669061
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.671285
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.671526
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.670582
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1d003c8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x1d003c8 duration: 0.671423
-duration multTranspose: 6.77299, repetitions: 10
-GFLOPS: 844.956
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0668467
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0664106
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0667955
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.066901
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0668692
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.066903
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0668867
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0668959
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0669297
+device: GeForce GTX 1080 Ti (0x1d4d070)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
+device: 0x1d4d070 duration: 0.0669317
+duration multTranspose: 0.688902, repetitions: 10
+GFLOPS: 8307.25

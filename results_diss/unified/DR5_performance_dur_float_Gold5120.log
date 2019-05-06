@@ -1,0 +1,2616 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+instances: 371908
+support_refinement_min_support: 500
+ocl_init_duration: 6.42659
+num_candidates: 1
+num_candidates: 1 block_size: 128 num_candidates_per_device: 1
+device: 0 range_padded: 128 range_start: 0 range_end: 1
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 block_size: 128 num_candidates_per_device: 10
+device: 0 range_padded: 128 range_start: 0 range_end: 10
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 block_size: 128 num_candidates_per_device: 60
+device: 0 range_padded: 128 range_start: 0 range_end: 60
+candidates with support: 52
+num_candidates: 236
+num_candidates: 236 block_size: 128 num_candidates_per_device: 236
+device: 0 range_padded: 256 range_start: 0 range_end: 236
+candidates with support: 181
+num_candidates: 706
+num_candidates: 706 block_size: 128 num_candidates_per_device: 706
+device: 0 range_padded: 768 range_start: 0 range_end: 706
+candidates with support: 503
+num_candidates: 1786
+num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
+device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+candidates with support: 1241
+num_candidates: 4140
+num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
+device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+candidates with support: 2886
+num_candidates: 9216
+num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
+device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+candidates with support: 6397
+num_candidates: 19682
+num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
+device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+candidates with support: 13464
+num_candidates: 40066
+num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
+device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 51293
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648995
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456023
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.6444
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452956
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.65097
+delta: 2.48388e+09
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45826
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.649333
+delta: 2.08737e+08
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452486
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640777
+delta: 2.56821e+08
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452234
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646292
+delta: 1.26016e+08
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451634
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64129
+delta: 5.29537e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45073
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64344
+delta: 5.00914e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453574
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643737
+delta: 1.85844e+08
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454484
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643829
+delta: 2.72773e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451855
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646443
+delta: 1.86649e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455561
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641128
+delta: 9.53457e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452104
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641075
+delta: 5.84461e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450485
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645416
+delta: 1.95141e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453444
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646489
+delta: 9.25191e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45263
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642243
+delta: 1.85456e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45324
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643437
+delta: 4.3338e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453212
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644548
+delta: 5.31756e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45399
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643192
+delta: 6.37091e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454718
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644298
+delta: 3.4045e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451705
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641954
+delta: 2.59998e+07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451898
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640928
+delta: 1.59054e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643504
+delta: 1.09546e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453927
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64371
+delta: 2.56782e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452402
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64081
+delta: 1.71361e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450989
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639822
+delta: 6.58875e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451192
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644531
+delta: 6.37247e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451546
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644696
+delta: 697063
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452966
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639687
+delta: 574729
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45419
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639533
+delta: 2.08412e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451715
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643061
+delta: 999787
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452647
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643789
+delta: 9.5944e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451925
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642759
+delta: 638100
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453525
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643079
+delta: 1.10786e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454227
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646025
+delta: 507353
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450218
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639808
+delta: 2.46379e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453777
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640201
+delta: 299579
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452045
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644387
+delta: 8.05848e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451966
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640005
+delta: 469927
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454155
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639553
+delta: 591604
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455542
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646197
+delta: 680549
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452378
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645206
+delta: 365996
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451277
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640511
+delta: 1.10023e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.458322
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641553
+delta: 3.69383e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452862
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646804
+delta: 410574
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451197
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642704
+delta: 419191
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452784
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638846
+delta: 1.27702e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451152
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639201
+delta: 297678
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453517
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.649918
+delta: 385768
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452273
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643435
+delta: 5.22697e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453976
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643014
+delta: 148611
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45309
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643348
+delta: 260117
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453389
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644298
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454311
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643596
+delta: 621593
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45374
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647216
+delta: 504984
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454724
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646356
+delta: 2.41975e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455255
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643217
+delta: 349379
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451434
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640841
+delta: 411841
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453446
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645018
+delta: 526164
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453164
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.650186
+delta: 125004
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451788
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639313
+delta: 457669
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449773
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643608
+delta: 663929
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451279
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640579
+delta: 447742
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453815
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641976
+delta: 219230
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451243
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646516
+delta: 255933
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453872
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641982
+delta: 247481
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454575
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644803
+delta: 419492
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453271
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642549
+delta: 1.05423e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449808
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64368
+delta: 238018
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453192
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647618
+delta: 462141
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452582
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639205
+delta: 163169
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449614
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639851
+delta: 550292
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451785
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643923
+delta: 389375
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.458482
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648538
+delta: 627580
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452398
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645374
+delta: 161636
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456147
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640267
+delta: 403480
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453132
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644743
+delta: 336512
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452057
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643947
+delta: 227883
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456747
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641461
+delta: 314634
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453161
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643451
+delta: 1.2767e+06
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453038
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639009
+delta: 165069
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453905
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645596
+delta: 237234
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453124
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639965
+delta: 218406
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.4522
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647648
+delta: 417229
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453989
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642749
+delta: 141901
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450534
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643292
+delta: 548270
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450993
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639776
+delta: 171565
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454184
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644151
+delta: 788520
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452292
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643745
+delta: 79183.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454294
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64682
+delta: 110970
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45494
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643539
+delta: 762575
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451755
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643907
+delta: 314561
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452647
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644829
+delta: 129178
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452386
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643105
+delta: 120926
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454442
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642366
+delta: 128070
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450643
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640403
+delta: 315709
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453016
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643607
+delta: 376814
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453595
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641051
+delta: 282898
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451487
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639402
+delta: 72713.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453021
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642453
+delta: 204262
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449836
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644036
+delta: 337178
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455105
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643976
+delta: 86574.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45404
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641229
+delta: 493857
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453445
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644157
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453697
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647503
+delta: 421707
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453247
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643414
+delta: 60037
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451358
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639947
+delta: 169250
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453382
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63978
+delta: 607240
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45031
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639022
+delta: 764128
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451755
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643856
+delta: 62689
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451942
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642924
+delta: 126604
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452791
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.654942
+delta: 304276
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45518
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643753
+delta: 151155
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454455
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641368
+delta: 611276
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452213
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644923
+delta: 138392
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451364
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642531
+delta: 98988.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449545
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642905
+delta: 71763
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452237
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640091
+delta: 523696
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450831
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640035
+delta: 73811.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450156
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640128
+delta: 459871
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449875
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641942
+delta: 223834
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452899
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64331
+delta: 87243.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455365
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644266
+delta: 126025
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454391
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64469
+delta: 524033
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451143
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643147
+delta: 67912.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449323
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642293
+delta: 60558.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453231
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644337
+delta: 205656
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451995
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642159
+delta: 95781.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451261
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644495
+delta: 229603
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450956
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640582
+delta: 180328
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.448478
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639585
+delta: 88403.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449713
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644038
+delta: 160499
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453317
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648094
+delta: 647635
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452381
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640915
+delta: 320558
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452712
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645922
+delta: 37925.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452058
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640424
+delta: 93418.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.44966
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.664435
+delta: 282635
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452595
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639082
+delta: 167587
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451949
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644516
+delta: 75544.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451892
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640837
+delta: 194652
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452851
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639409
+delta: 64216.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451247
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641378
+delta: 279087
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451261
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645546
+delta: 112842
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451867
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645008
+delta: 163510
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451361
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639509
+delta: 221680
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450407
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.653061
+delta: 48887.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455039
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642018
+delta: 197047
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452864
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643453
+delta: 69124.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455934
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.655425
+delta: 166905
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453969
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646943
+delta: 117981
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451999
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645091
+delta: 130622
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454571
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643548
+delta: 176590
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452243
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644627
+delta: 65234
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451263
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643932
+delta: 51185.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451992
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647316
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453318
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647835
+delta: 223826
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452079
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644261
+delta: 30948.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451333
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64367
+delta: 266314
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451553
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643447
+delta: 72391.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45189
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64369
+delta: 80933
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453606
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640838
+delta: 94122.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451197
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645516
+delta: 123888
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454539
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640766
+delta: 128921
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454372
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647565
+delta: 112481
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457942
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642551
+delta: 43124
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45032
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648245
+delta: 102371
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45335
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64412
+delta: 203969
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454803
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64418
+delta: 152029
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452588
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644479
+delta: 77542.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454226
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642977
+delta: 74049.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452734
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646566
+delta: 87909.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454358
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643772
+delta: 67909.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452276
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644133
+delta: 266675
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452049
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644493
+delta: 59015.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454433
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643381
+delta: 40319.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451153
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640577
+delta: 148057
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45558
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644808
+delta: 146231
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452833
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644457
+delta: 56765.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452445
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642631
+delta: 66878.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452766
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643558
+delta: 73563.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450959
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643885
+delta: 28344.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452685
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645648
+delta: 736649
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451918
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644637
+delta: 102093
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454681
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644751
+delta: 28037.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452003
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645819
+delta: 173208
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453224
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642867
+delta: 99745.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452706
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644441
+delta: 175209
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452246
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639703
+delta: 44175.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452949
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64539
+delta: 38544.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45381
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644243
+delta: 62646
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455212
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643197
+delta: 53847.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454634
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643811
+delta: 240574
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452202
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640833
+delta: 72785.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451359
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648714
+delta: 41780.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455147
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643753
+delta: 177485
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452095
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645038
+delta: 33260.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453668
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641886
+delta: 135139
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453514
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643743
+delta: 65909.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453589
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646425
+delta: 44387.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454959
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644098
+delta: 81489.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452912
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642687
+delta: 65934.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455439
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641912
+delta: 65430.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456432
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644814
+delta: 112414
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453682
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645255
+delta: 33491.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452919
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640838
+delta: 168866
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450365
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644726
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452308
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640383
+delta: 96542.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453808
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642306
+delta: 166812
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452953
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63964
+delta: 26612.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452473
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644024
+delta: 38524
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450732
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642618
+delta: 52339.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452458
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643828
+delta: 82174.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456742
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639558
+delta: 38661.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451956
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644359
+delta: 49329.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454451
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640713
+delta: 111412
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453294
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645614
+delta: 38160.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454069
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646523
+delta: 539386
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453373
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639383
+delta: 28203.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453505
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640547
+delta: 71557.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451055
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647878
+delta: 28211.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453519
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644325
+delta: 304437
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451406
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643736
+delta: 67911.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45318
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639402
+delta: 31460
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452504
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643805
+delta: 66525.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452769
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643734
+delta: 187020
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45264
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639314
+delta: 27276.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450002
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641959
+delta: 71245.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453069
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639634
+delta: 74457.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451812
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645483
+delta: 26516.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452831
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639319
+delta: 33932.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452404
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646485
+delta: 439658
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450881
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64236
+delta: 45710.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453102
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643255
+delta: 18652.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453603
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639741
+delta: 71535.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45097
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642354
+delta: 58384.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452374
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641296
+delta: 148040
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453464
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644
+delta: 129225
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451615
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645901
+delta: 26141.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452538
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642967
+delta: 16354.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455233
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642131
+delta: 106831
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451902
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641907
+delta: 28548.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451894
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645509
+delta: 123996
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450314
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646748
+delta: 29261
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457388
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646387
+delta: 63611.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452746
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64352
+delta: 50270.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454035
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639855
+delta: 167339
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451144
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641125
+delta: 46632.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453665
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644895
+delta: 39577.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453523
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639229
+delta: 48232.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449991
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642603
+delta: 97679.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453896
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642261
+delta: 51997.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452529
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639559
+delta: 20436.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453905
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640115
+delta: 101524
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452142
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644422
+delta: 40630.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451536
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638823
+delta: 38552.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450546
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646801
+delta: 157247
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452182
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641942
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451908
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643842
+delta: 42553.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452403
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639903
+delta: 22141.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45026
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639292
+delta: 36338.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450895
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646222
+delta: 71881.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451987
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643247
+delta: 17144.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451542
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648445
+delta: 170550
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455746
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64524
+delta: 32950
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450973
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640508
+delta: 73966.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454334
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644026
+delta: 224158
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45406
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641084
+delta: 39534.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452445
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646632
+delta: 30079.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452912
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64108
+delta: 22575.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456073
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644082
+delta: 217169
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451264
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645127
+delta: 34007.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454088
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643771
+delta: 34699.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457529
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641277
+delta: 121511
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45169
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641869
+delta: 28606.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451845
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639945
+delta: 347028
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451406
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643949
+delta: 33152.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452692
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639123
+delta: 54911.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452354
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643166
+delta: 10019.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454803
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.652163
+delta: 280699
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454135
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639449
+delta: 73083.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450434
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640358
+delta: 46229.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450688
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63924
+delta: 58146.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451198
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646395
+delta: 52597.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454863
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645171
+delta: 36134.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456125
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644059
+delta: 23126.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451355
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639253
+delta: 45935
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45214
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644323
+delta: 119764
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452722
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642931
+delta: 23757.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451658
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641433
+delta: 184703
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450651
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639955
+delta: 15517.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451608
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643828
+delta: 36530.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450482
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643256
+delta: 84451.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45168
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643664
+delta: 29423.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450192
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639811
+delta: 67506.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453639
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645124
+delta: 17928.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453709
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643387
+delta: 42318.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45649
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641066
+delta: 23902
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452022
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644001
+delta: 185915
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45457
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638841
+delta: 109455
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455314
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644776
+delta: 16810.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456389
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644892
+delta: 49317.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.4527
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642075
+delta: 23406.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452744
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639582
+delta: 193333
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449269
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642242
+delta: 12040.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455128
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639912
+delta: 21373.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450142
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639344
+delta: 40895.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449988
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646392
+delta: 32987.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452193
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644604
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451036
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643439
+delta: 55155.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453106
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643018
+delta: 25903.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.4547
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646386
+delta: 156596
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453888
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643336
+delta: 18153.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453768
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64241
+delta: 28825.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451304
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642971
+delta: 91316.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453413
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642327
+delta: 18384
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453574
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642544
+delta: 56455.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451468
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641948
+delta: 21595.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449348
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642182
+delta: 17775.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45153
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640101
+delta: 61856.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451366
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643214
+delta: 52118.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.458607
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644183
+delta: 71741.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457035
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641653
+delta: 15103.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451153
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640648
+delta: 15232.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45158
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641257
+delta: 138371
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450755
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644233
+delta: 21665.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452662
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643124
+delta: 14515.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451004
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643309
+delta: 65286.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45247
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643054
+delta: 61400.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453393
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.650322
+delta: 43492
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454366
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641896
+delta: 49472.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449399
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638728
+delta: 49128.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454059
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64545
+delta: 13960.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450441
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643632
+delta: 17105.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453804
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641444
+delta: 27388.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455383
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640818
+delta: 79051.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449898
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643901
+delta: 18733.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451194
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642997
+delta: 40943.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45223
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646771
+delta: 14812.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453237
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.6437
+delta: 22207.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451222
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643888
+delta: 202357
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453762
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642719
+delta: 49182.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453943
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646073
+delta: 15249.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45347
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642718
+delta: 17005.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457729
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643827
+delta: 15252.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452568
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644235
+delta: 94012.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449997
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640369
+delta: 32198.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450485
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643417
+delta: 70253.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454397
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640202
+delta: 18857.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453545
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647046
+delta: 10976.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45322
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642478
+delta: 151101
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449606
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639678
+delta: 49813.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451379
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646893
+delta: 11238.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452307
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63998
+delta: 21208.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450002
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647491
+delta: 30416.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451961
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64488
+delta: 95222.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451295
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643068
+delta: 198326
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452807
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639095
+delta: 11073.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451125
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64334
+delta: 26489.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45071
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64001
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451894
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640892
+delta: 13441.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451978
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643461
+delta: 28053
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454632
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643496
+delta: 68992
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454228
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643751
+delta: 33798
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.457273
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640419
+delta: 35919.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450954
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643779
+delta: 13032.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452928
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648266
+delta: 25829.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452089
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640703
+delta: 26653.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453579
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.650528
+delta: 52310.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453708
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640538
+delta: 12391.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450696
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641102
+delta: 19000.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449292
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644928
+delta: 18171.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453503
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639472
+delta: 58800.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452272
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644116
+delta: 35283.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452768
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64359
+delta: 36497.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451115
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639213
+delta: 36451.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450374
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643294
+delta: 20450.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452792
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639709
+delta: 7264.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449924
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63857
+delta: 369132
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450862
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639184
+delta: 12658.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450979
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644019
+delta: 13944.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450467
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639158
+delta: 9571.74
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450817
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643522
+delta: 66397
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451771
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640322
+delta: 196347
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450906
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644418
+delta: 23499
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453002
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642307
+delta: 24112.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45221
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643237
+delta: 24769.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451897
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645193
+delta: 7814.34
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451669
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648057
+delta: 55678.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451654
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648087
+delta: 69104.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45209
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645961
+delta: 6615.34
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450925
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643981
+delta: 49852.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453175
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643764
+delta: 12461.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45087
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63975
+delta: 35335.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454476
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647842
+delta: 15613.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45226
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642957
+delta: 34826.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451745
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64305
+delta: 19008.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454535
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646606
+delta: 18084.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454385
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644929
+delta: 22748.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455113
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.63976
+delta: 20624.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454694
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.649133
+delta: 11533.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456345
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645558
+delta: 20317.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451437
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639795
+delta: 15422.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452274
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64784
+delta: 22121.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453052
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64473
+delta: 70731.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454781
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643426
+delta: 8503.09
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449197
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647748
+delta: 50652.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451712
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644111
+delta: 12460.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455042
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642853
+delta: 10076.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451795
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644664
+delta: 56040.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451907
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643759
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451459
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64349
+delta: 34806.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452607
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640931
+delta: 40091.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451285
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639634
+delta: 11834.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45192
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638773
+delta: 17201.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453157
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644128
+delta: 39912.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452147
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644203
+delta: 23625.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454362
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640707
+delta: 8740.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451166
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644374
+delta: 42038.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453255
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643224
+delta: 64404
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450874
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64417
+delta: 9977.71
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451935
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640722
+delta: 28291.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452646
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641991
+delta: 6965.93
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451129
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640303
+delta: 77803.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451854
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643781
+delta: 15613.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452717
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644187
+delta: 8904.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452029
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643585
+delta: 49090.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452468
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643092
+delta: 62641
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449541
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643376
+delta: 14629
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452134
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644017
+delta: 34302.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45111
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640213
+delta: 23399.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453075
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640404
+delta: 34059.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451119
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640666
+delta: 22287.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452392
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64052
+delta: 17778
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454794
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642378
+delta: 15149.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455101
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645733
+delta: 22265.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452284
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64465
+delta: 24160.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450206
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646295
+delta: 34567
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451321
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.649029
+delta: 7904.43
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453352
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645118
+delta: 17382.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452956
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643102
+delta: 49242.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.455925
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644049
+delta: 6239.42
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450274
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640778
+delta: 19387.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45339
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64097
+delta: 44942.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454106
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639398
+delta: 30294
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450896
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640269
+delta: 10532.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449425
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640548
+delta: 24328.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452684
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644777
+delta: 22691.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450511
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646442
+delta: 127983
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45363
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.649286
+delta: 6211.79
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452875
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643454
+delta: 18075.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.458197
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645322
+delta: 31511.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454347
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646865
+delta: 33342.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452663
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643171
+delta: 10788.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452419
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645413
+delta: 11004.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.456781
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64599
+delta: 25245.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450002
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640453
+delta: 43698.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454723
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640986
+delta: 31464.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.458606
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.650798
+delta: 6845.97
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452677
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645879
+delta: 11052.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453649
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643017
+delta: 27216
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45265
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640136
+device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452361
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639701
+delta: 47573.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451301
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645221
+delta: 26235.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454746
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642705
+delta: 5915.03
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451611
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.638794
+delta: 14963.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451184
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641532
+delta: 62921.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451613
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643228
+delta: 7128.96
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452985
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643319
+delta: 34368.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453486
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642572
+delta: 29457.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453808
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641768
+delta: 6068.33
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452769
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643531
+delta: 14063.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449761
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643355
+delta: 9820.07
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.4509
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.647028
+delta: 10210.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451708
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642514
+delta: 15582.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449341
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643249
+delta: 27416.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449257
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639121
+delta: 27567.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449776
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644034
+delta: 15660
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451694
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.648627
+delta: 9720.52
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453876
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644481
+delta: 51831.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451623
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64994
+delta: 16240.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.454147
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646062
+delta: 13453.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45284
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643545
+delta: 10314.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.449949
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643744
+delta: 9867.32
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453523
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640457
+delta: 86850.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.450427
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643744
+delta: 77276.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453017
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643258
+delta: 6713.98
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452637
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639538
+delta: 5811.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451576
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641072
+delta: 114073
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453302
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641121
+delta: 13125.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453039
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644745
+delta: 7715.68
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452605
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643312
+delta: 33779.7
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453501
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64428
+delta: 9231.73
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453526
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646614
+delta: 49286.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453848
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641134
+delta: 36196.2
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452575
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.650129
+delta: 8242.27
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453655
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639884
+delta: 9272.58
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451105
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.639456
+delta: 31182.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453889
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641133
+delta: 6554.05
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45266
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643847
+delta: 38214.1
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45202
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644592
+delta: 9403.56
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452374
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.641867
+delta: 13994
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452178
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64531
+delta: 66502.5
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.452086
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.644026
+delta: 8049.78
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453384
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64006
+delta: 13739.9
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45352
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642489
+delta: 13658.8
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.453891
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.640273
+delta: 13095.3
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451979
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.646231
+delta: 36368
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45176
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.645784
+delta: 27514.4
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451188
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.64435
+delta: 17165.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.45457
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.642608
+delta: 6609.6
+.device: 0x1817cc8 kernel from: 0 to: 372736 -> range: 372736
+device: 0x1817cc8 duration: 0.451248
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x1817cc8)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 25664)
+device: 0x1817cc8 duration: 0.643121
+delta: 54925
+
+Number of iterations: 500 (max. 500)
+Final norm of residuum: 54925
+counted_mult_calls: 510
+
+Needed Iterations: 500
+Final residuum: 54925
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 511.5
+note: performance calculation: additional iteration for residual recalculation : 10
+
+Current Duration:: 565.885
+Current GFlop/s: 830.557
+
+Finished Training!
+
+Training took: 565.885 seconds
+
+total_duration: 579.313

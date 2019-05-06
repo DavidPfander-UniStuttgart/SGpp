@@ -1,0 +1,2901 @@
+./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_1200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --additionalConfig results_diss/friedman1_ocl_float_gtx1080ti_6.cfg --operation.type STREAMING --operation.subType OCLUNIFIED --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --do_dummy_ocl_init
+training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_1200000.arff
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: platform not configured, skipping...
+OCL Info: detected platform, name: "NVIDIA CUDA"
+OCL Info: detected platform vendor name: "NVIDIA Corporation"
+OCL Info: using platform, name: "NVIDIA CUDA"
+OCL Info: platform device count: 8
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+ocl dummy initalization duration: 8.4675
+instances: 1200000
+regular grid size: 397825
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+OCL Info: 2 OpenCL platforms have been found
+OCL Info: detected platform, name: "Intel(R) OpenCL"
+OCL Info: detected platform vendor name: "Intel(R) Corporation"
+OCL Info: detected platform, name: "NVIDIA CUDA"
+OCL Info: detected platform vendor name: "NVIDIA Corporation"
+OCL Info: using platform, name: "NVIDIA CUDA"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: using device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+OCL Info: detected device, name: "GeForce GTX 1080 Ti"
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 397825
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9f14f0 duration: 0.586693
+device: 0x9f24f0 duration: 0.612068
+device: 0x9f3870 duration: 0.610797
+device: 0x9ec970 duration: 0.611403
+device: 0x9edfb0 duration: 0.612478
+device: 0x9ed830 duration: 0.611554
+duration multTranspose ocl mod: 0.944268
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+-cl-unsafe-math-optimizations -cl-denorms-are-zero
+building with optimization flags: -cl-unsafe-math-optimizations -cl-denorms-are-zero
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+--- Begin Build Log ---
+
+
+--- End Build Log ---
+device: 0x9f14f0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9f24f0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9edfb0 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9ed830 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9ec970 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9f3870 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ec970 duration: 0.432073
+device: 0x9ed830 duration: 0.433729
+device: 0x9f3870 duration: 0.436533
+device: 0x9edfb0 duration: device: 0x9f24f0 duration: 0.437615
+0.438204
+device: 0x9f14f0 duration: 0.439921
+duration mult ocl mod: 0.740487
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ec970 duration: 0.537326
+device: 0x9ed830 duration: 0.539261
+device: 0x9f24f0 duration: 0.545071
+device: 0x9edfb0 duration: 0.544583
+device: 0x9f3870 duration: 0.545563
+device: 0x9f14f0 duration: 0.546772
+duration multTranspose ocl mod: 0.556688
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0x9f14f0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9f24f0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9f3870 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9ec970 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9ed830 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9edfb0 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ec970 duration: 0.432198
+device: 0x9ed830 duration: 0.433541
+device: 0x9edfb0 duration: 0.435723
+device: 0x9f3870 duration: 0.438076
+device: 0x9f24f0 duration: 0.438659
+device: 0x9f14f0 duration: 0.440113
+duration mult ocl mod: 0.443887
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539409
+device: 0x9ec970 duration: 0.538696
+device: 0x9edfb0 duration: 0.543887
+device: 0x9f3870 duration: 0.545649
+device: 0x9f24f0 duration: 0.545078
+device: 0x9f14f0 duration: 0.548735
+duration multTranspose ocl mod: 0.557231
+delta: 2.31732e+15
+.device: 0x9ec970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9f14f0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9ed830 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f24f0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f3870 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9edfb0 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.434029
+device: 0x9edfb0 duration: device: 0x9ec970 duration: 0.435881
+0.436062
+device: 0x9f24f0 duration: 0.438065
+device: 0x9f3870 duration: 0.438157
+device: 0x9f14f0 duration: 0.439909
+duration mult ocl mod: 0.443013
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539677
+device: 0x9ec970 duration: 0.542513
+device: 0x9edfb0 duration: 0.54479
+device: 0x9f24f0 duration: 0.544982
+device: 0x9f3870 duration: 0.545664
+device: 0x9f14f0 duration: 0.54696
+duration multTranspose ocl mod: 0.556151
+delta: 1.86154e+15
+.device: 0x9ec970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9edfb0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9f3870 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9ed830 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f14f0 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9f24f0 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433426
+device: 0x9ec970 duration: 0.43613
+device: 0x9edfb0 duration: device: 0x9f24f0 duration: 0.4359220.437798
+
+device: 0x9f3870 duration: 0.438084
+device: 0x9f14f0 duration: 0.439991
+duration mult ocl mod: 0.444764
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.537222
+device: 0x9ec970 duration: 0.542777
+device: 0x9edfb0 duration: 0.544922
+device: 0x9f24f0 duration: 0.545193
+device: 0x9f3870 duration: 0.545779
+device: 0x9f14f0 duration: 0.54768
+duration multTranspose ocl mod: 0.562636
+delta: 6.4608e+13
+.device: 0x9ed830 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9f14f0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9f3870 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f24f0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9edfb0 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9ec970 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433546
+device: 0x9ec970 duration: 0.434916
+device: 0x9f24f0 duration: 0.438047
+device: 0x9edfb0 duration: 0.438168
+device: 0x9f3870 duration: 0.438295
+device: 0x9f14f0 duration: 0.440332
+duration mult ocl mod: 0.443391
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539375
+device: 0x9ec970 duration: 0.54285
+device: 0x9f24f0 duration: 0.544619
+device: 0x9edfb0 duration: 0.544851
+device: 0x9f3870 duration: 0.545864
+device: 0x9f14f0 duration: 0.547084
+duration multTranspose ocl mod: 0.55525
+delta: 6.45449e+13
+.device: 0x9f24f0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9ec970 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9edfb0 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f14f0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f3870 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9ed830 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.432267
+device: 0x9ec970 duration: 0.436237
+device: 0x9f24f0 duration: 0.437922
+device: 0x9edfb0 duration: 0.437862
+device: 0x9f3870 duration: 0.438511
+device: 0x9f14f0 duration: 0.440234
+duration mult ocl mod: 0.443673
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539928
+device: 0x9ec970 duration: 0.542769
+device: 0x9f3870 duration: 0.544871
+device: 0x9f24f0 duration: 0.545304
+device: 0x9edfb0 duration: 0.54499
+device: 0x9f14f0 duration: 0.547957
+duration multTranspose ocl mod: 0.557998
+delta: 1.35748e+14
+.device: 0x9f24f0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9edfb0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9f3870 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9ed830 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f14f0 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9ec970 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433741
+device: 0x9ec970 duration: 0.434576
+device: 0x9f24f0 duration: 0.438127
+device: 0x9edfb0 duration: 0.437748
+device: 0x9f3870 duration: 0.438329
+device: 0x9f14f0 duration: 0.440113
+duration mult ocl mod: 0.443922
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539637
+device: 0x9ec970 duration: 0.542904
+device: 0x9edfb0 duration: 0.544731
+device: 0x9f3870 duration: 0.544894
+device: 0x9f24f0 duration: 0.545188
+device: 0x9f14f0 duration: 0.548347
+duration multTranspose ocl mod: 0.555086
+delta: 2.08276e+13
+.device: 0x9edfb0 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9f14f0 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9ed830 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f24f0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f3870 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9ec970 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433896
+device: 0x9ec970 duration: 0.435088
+device: 0x9f3870 duration: 0.438204
+device: 0x9edfb0 duration: device: 0x9f24f0 duration: 0.438249
+0.438159
+device: 0x9f14f0 duration: 0.443228
+duration mult ocl mod: 0.44626
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539676
+device: 0x9ec970 duration: 0.541938
+device: 0x9edfb0 duration: 0.544945
+device: 0x9f24f0 duration: 0.545098
+device: 0x9f3870 duration: 0.545883
+device: 0x9f14f0 duration: 0.551839
+duration multTranspose ocl mod: 0.559877
+delta: 4.03749e+13
+.device: 0x9f3870 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9ec970 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9edfb0 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f14f0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f24f0 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9ed830 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.431477
+device: 0x9ec970 duration: 0.436174
+device: 0x9edfb0 duration: 0.437887
+device: 0x9f3870 duration: 0.438357
+device: 0x9f24f0 duration: 0.437734
+device: 0x9f14f0 duration: 0.443417
+duration mult ocl mod: 0.448556
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.539032
+device: 0x9ec970 duration: 0.542913
+device: 0x9f24f0 duration: 0.542988
+device: 0x9edfb0 duration: 0.545057
+device: 0x9f3870 duration: 0.545965
+device: 0x9f14f0 duration: 0.551631
+duration multTranspose ocl mod: 0.562795
+delta: 8.9455e+13
+.device: 0x9ec970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9ed830 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9edfb0 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9f3870 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9f14f0 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9f24f0 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433069
+device: 0x9ec970 duration: 0.436345
+device: 0x9f24f0 duration: 0.436679
+device: 0x9f3870 duration: 0.43826device: 
+0x9edfb0 duration: 0.438602
+device: 0x9f14f0 duration: 0.44319
+duration mult ocl mod: 0.44822
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 199680 to: 266240 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 266240 to: 332800 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 332800 to: 398080 -> range: 65280 (with blocking: 65280)
+device: 0x9ed830 duration: 0.53881
+device: 0x9ec970 duration: 0.542801
+device: 0x9edfb0 duration: 0.545074
+device: 0x9f3870 duration: 0.545893
+device: 0x9f24f0 duration: 0.54319
+device: 0x9f14f0 duration: 0.551696
+duration multTranspose ocl mod: 0.560487
+delta: 3.28133e+13
+.device: 0x9f3870 kernel from: 0 to: 200704 -> range: 200704
+device: 0x9ec970 kernel from: 200704 to: 401408 -> range: 200704
+device: 0x9f14f0 kernel from: 401408 to: 602112 -> range: 200704
+device: 0x9edfb0 kernel from: 602112 to: 802816 -> range: 200704
+device: 0x9ed830 kernel from: 802816 to: 1003520 -> range: 200704
+device: 0x9f24f0 kernel from: 1003520 to: 1200128 -> range: 196608
+device: 0x9ed830 duration: 0.433075
+device: 0x9ec970 duration: 0.4371
+device: 0x9f24f0 duration: 0.436605
+device: 0x9edfb0 duration: 0.437796
+device: 0x9f3870 duration: 0.438805
+device: 0x9f14f0 duration: 0.443278
+duration mult ocl mod: 0.447184
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 66560 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 66560 to: 133120 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 133120 to: 199680 -> range: 66560 (with blocking: 66560)
+device: GeForce GTX 1080 Tidevice: GeForce GTX 1080 Ti ( (0x9f24f010410032) )  kernel from:  kernel from: 0x30c00 to: 0x410000x41000 -> range: 0x10400 (with blocking: 0x10400 to: )
+0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538912
+device: 0x9ec970 duration: 0.54288
+device: 0x9edfb0 duration: 0.544848
+device: 0x9f3870 duration: 0.546098
+device: 0x9f24f0 duration: 0.545016
+device: 0x9f14f0 duration: 0.550953
+duration multTranspose ocl mod: 0.562917
+delta: 1.21052e+13
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431298
+device: 0x9ec970 duration: 0.436245
+device: 0x9edfb0 duration: 0.437947
+device: 0x9f3870 duration: 0.438724
+device: 0x9f24f0 duration: 0.438424
+device: 0x9f14f0 duration: 0.443803
+duration mult ocl mod: 0.447594
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53883
+device: 0x9ec970 duration: 0.543109
+device: 0x9edfb0 duration: device: 0.5451530x9f24f0
+ duration: 0.54518
+device: 0x9f3870 duration: 0.546258
+device: 0x9f14f0 duration: 0.551151
+duration multTranspose ocl mod: 0.55846
+delta: 3.20207e+12
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.432926
+device: 0x9ec970 duration: 0.434807
+device: 0x9f24f0 duration: 0.437963
+device: 0x9edfb0 duration: 0.437954
+device: 0x9f3870 duration: 0.438821
+device: 0x9f14f0 duration: 0.443301
+duration mult ocl mod: 0.446583
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53694
+device: 0x9ec970 duration: 0.543283
+device: 0x9edfb0 duration: 0.545114
+device: 0x9f24f0 duration: 0.544933
+device: 0x9f3870 duration: 0.54642
+device: 0x9f14f0 duration: 0.551844
+duration multTranspose ocl mod: 0.562131
+delta: 9.35973e+12
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433017
+device: 0x9ec970 duration: device: 0x9f24f0 duration: 0.435956
+0.4362
+device: 0x9edfb0 duration: 0.437915
+device: 0x9f3870 duration: 0.438719
+device: 0x9f14f0 duration: 0.443463
+duration mult ocl mod: 0.4468
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538881
+device: 0x9f24f0 duration: 0.544859
+device: 0x9ec970 duration: device: 0x9edfb0 duration: 0.543233
+0.54493
+device: 0x9f3870 duration: 0.546406
+device: 0x9f14f0 duration: 0.551131
+duration multTranspose ocl mod: 0.559841
+delta: 8.43757e+12
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433092
+device: 0x9ec970 duration: 0.435171
+device: 0x9edfb0 duration: 0.437994
+device: 0x9f24f0 duration: 0.437959
+device: 0x9f3870 duration: 0.439242
+device: 0x9f14f0 duration: 0.443518
+duration mult ocl mod: 0.447576
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538943
+device: 0x9ec970 duration: 0.543079
+device: 0x9edfb0 duration: 0.545192
+device: 0x9f24f0 duration: 0.545293
+device: 0x9f3870 duration: 0.545256
+device: 0x9f14f0 duration: 0.552126
+duration multTranspose ocl mod: 0.562762
+delta: 1.54932e+12
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43308
+device: 0x9edfb0 duration: 0.435987
+device: 0x9ec970 duration: 0.436272
+device: 0x9f24f0 duration: 0.438096
+device: 0x9f3870 duration: 0.438666
+device: 0x9f14f0 duration: 0.443944
+duration mult ocl mod: 0.448346
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538992
+device: 0x9ec970 duration: 0.542303
+device: 0x9f24f0 duration: 0.544958
+device: 0x9edfb0 duration: 0.545234
+device: 0x9f3870 duration: 0.546263
+device: 0x9f14f0 duration: 0.552256
+duration multTranspose ocl mod: 0.56213
+delta: 3.47982e+12
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433611
+device: 0x9ec970 duration: 0.436415
+device: 0x9f24f0 duration: 0.436836
+device: 0x9edfb0 duration: 0.437951
+device: 0x9f3870 duration: 0.438683
+device: 0x9f14f0 duration: 0.443409
+duration mult ocl mod: 0.447431
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)device: 
+GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538903
+device: 0x9ec970 duration: 0.543183
+device: 0x9edfb0 duration: 0.545115
+device: 0x9f3870 duration: 0.546085
+device: 0x9f24f0 duration: 0.543327
+device: 0x9f14f0 duration: 0.55231
+duration multTranspose ocl mod: 0.564355
+delta: 3.62992e+12
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433019
+device: 0x9f24f0 duration: 0.436073
+device: 0x9ec970 duration: 0.436415
+device: 0x9edfb0 duration: 0.438682
+device: 0x9f3870 duration: 0.438754
+device: 0x9f14f0 duration: 0.443957
+duration mult ocl mod: 0.448118
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9edfb0 duration: 0.544939
+device: 0x9f3870 duration: 0.546164
+device: 0x9ed830 duration: 0.538918
+device: 0x9ec970 duration: 0.544466
+device: 0x9f24f0 duration: 0.545209
+device: 0x9f14f0 duration: 0.551358
+duration multTranspose ocl mod: 0.570207
+delta: 8.66616e+12
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433357
+device: 0x9edfb0 duration: 0.435833
+device: 0x9f24f0 duration: 0.437997
+device: 0x9f3870 duration: 0.438699
+device: 0x9ec970 duration: 0.439169
+device: 0x9f14f0 duration: 0.443483
+duration mult ocl mod: 0.448147
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538757
+device: 0x9edfb0 duration: 0.544189
+device: 0x9ec970 duration: device: 0x9f24f0 duration: 0.546851
+0.545175
+device: 0x9f3870 duration: 0.54622
+device: 0x9f14f0 duration: 0.552238
+duration multTranspose ocl mod: 0.562097
+delta: 1.8538e+12
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433452
+device: 0x9f24f0 duration: 0.436884
+device: 0x9edfb0 duration: 0.437852
+device: 0x9f3870 duration: 0.438676
+device: 0x9ec970 duration: 0.439115
+device: 0x9f14f0 duration: 0.443514
+duration mult ocl mod: 0.447206
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539099
+device: 0x9edfb0 duration: 0.544249
+device: 0x9f24f0 duration: 0.54533
+device: 0x9f3870 duration: 0.54587
+device: 0x9ec970 duration: 0.547011
+device: 0x9f14f0 duration: 0.551874
+duration multTranspose ocl mod: 0.557852
+delta: 1.30583e+12
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433162
+device: 0x9edfb0 duration: 0.437953
+device: 0x9f24f0 duration: 0.43878
+device: 0x9f3870 duration: 0.438729
+device: 0x9ec970 duration: 0.439098
+device: 0x9f14f0 duration: 0.441489
+duration mult ocl mod: 0.445285
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537221
+device: 0x9f3870 duration: 0.546091
+device: 0x9edfb0 duration: 0.545274
+device: 0x9f24f0 duration: 0.54541
+device: 0x9ec970 duration: 0.547094
+device: 0x9f14f0 duration: 0.552283
+duration multTranspose ocl mod: 0.562205
+delta: 2.24232e+12
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433564
+device: 0x9edfb0 duration: 0.438106
+device: 0x9f24f0 duration: 0.43848
+device: 0x9f3870 duration: 0.438609
+device: 0x9ec970 duration: 0.439344
+device: 0x9f14f0 duration: 0.44258
+duration mult ocl mod: 0.446889
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538627
+device: 0x9f24f0 duration: 0.543897
+device: 0x9edfb0 duration: 0.545191
+device: 0x9f3870 duration: 0.546142
+device: 0x9ec970 duration: 0.546855
+device: 0x9f14f0 duration: 0.55232
+duration multTranspose ocl mod: 0.561782
+delta: 2.94623e+12
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433142
+device: 0x9edfb0 duration: 0.436169
+device: 0x9f3870 duration: device: 0x9ec970 duration: 0.438685
+0.439079
+device: 0x9f24f0 duration: 0.438745
+device: 0x9f14f0 duration: 0.443596
+duration mult ocl mod: 0.448204
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538951
+device: 0x9f24f0 duration: 0.543749
+device: 0x9edfb0 duration: 0.545023
+device: device: 0x9f3870 duration: 0x9ec970 duration: 0.546133
+0.546881
+device: 0x9f14f0 duration: 0.552123
+duration multTranspose ocl mod: 0.560054
+delta: 4.93295e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433065
+device: 0x9f3870 duration: 0.436377
+device: 0x9edfb0 duration: 0.438049
+device: 0x9f24f0 duration: 0.438521
+device: 0x9ec970 duration: 0.439078
+device: 0x9f14f0 duration: 0.443429
+duration mult ocl mod: 0.447568
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538722
+device: 0x9f24f0 duration: 0.545139
+device: 0x9f3870 duration: 0.545308
+device: 0x9edfb0 duration: 0.545236
+device: 0x9ec970 duration: 0.547075
+device: 0x9f14f0 duration: 0.552276
+duration multTranspose ocl mod: 0.56173
+delta: 1.3143e+12
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433034
+device: 0x9edfb0 duration: 0.437957
+device: 0x9ec970 duration: 0.437949
+device: 0x9f24f0 duration: 0.438281
+device: 0x9f3870 duration: 0.438837
+device: 0x9f14f0 duration: 0.443748
+duration mult ocl mod: 0.448028
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538782
+device: 0x9f24f0 duration: 0.544978
+device: 0x9edfb0 duration: 0.545177
+device: 0x9f3870 duration: 0.546374
+device: 0x9ec970 duration: 0.547238
+device: 0x9f14f0 duration: 0.551483
+duration multTranspose ocl mod: 0.561735
+delta: 1.20482e+12
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433081
+device: 0x9edfb0 duration: 0.437991
+device: 0x9f24f0 duration: 0.438329
+device: 0x9f3870 duration: 0.43781
+device: 0x9ec970 duration: 0.439298
+device: 0x9f14f0 duration: 0.444271
+duration mult ocl mod: 0.44841
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538827
+device: 0x9edfb0 duration: 0.545288
+device: 0x9f24f0 duration: device: 0x9ec970 duration: 0.545268
+0.547066
+device: 0x9f3870 duration: 0.545364
+device: 0x9f14f0 duration: 0.552383
+duration multTranspose ocl mod: 0.562436
+delta: 7.79609e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433143
+device: 0x9f3870 duration: 0.437759
+device: 0x9edfb0 duration: device: 0x9ec970 duration: 0.438106
+0.439212
+device: 0x9f24f0 duration: 0.438362
+device: 0x9f14f0 duration: 0.443876
+duration mult ocl mod: 0.448272
+device: GeForce GTX 1080 Ti (device: 0x9ec970GeForce GTX 1080 Ti)  ( kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x104000x9edfb0)
+)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9edfb0 duration: 0.545358
+device: 0x9f24f0 duration: 0.545197
+device: 0x9f3870 duration: 0.546308
+device: 0x9ec970 duration: 0.546894
+device: 0x9ed830 duration: 0.538996
+device: 0x9f14f0 duration: 0.551477
+duration multTranspose ocl mod: 0.570473
+delta: 6.03853e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43319
+device: 0x9edfb0 duration: 0.43793
+device: 0x9f3870 duration: 0.437848
+device: 0x9ec970 duration: 0.438943
+device: 0x9f24f0 duration: 0.43897
+device: 0x9f14f0 duration: 0.444131
+duration mult ocl mod: 0.447686
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537081
+device: 0x9edfb0 duration: 0.545262
+device: 0x9f24f0 duration: 0.545056
+device: 0x9f3870 duration: 0.546355
+device: 0x9ec970 duration: 0.546943
+device: 0x9f14f0 duration: 0.552548
+duration multTranspose ocl mod: 0.559595
+delta: 8.26115e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433188
+device: 0x9f3870 duration: 0.436457
+device: 0x9f24f0 duration: device: 0x9ec970 duration: device: 0.4383880x9edfb0 duration: 
+0.439143
+0.437969
+device: 0x9f14f0 duration: 0.443873
+duration mult ocl mod: 0.449418
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.536993
+device: 0x9f24f0 duration: 0.545059
+device: 0x9edfb0 duration: 0.54537
+device: 0x9f3870 duration: 0.546395
+device: 0x9ec970 duration: 0.547277
+device: 0x9f14f0 duration: 0.552474
+duration multTranspose ocl mod: 0.561753
+delta: 8.35783e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.432006
+device: 0x9edfb0 duration: 0.438029
+device: 0x9f24f0 duration: 0.438341
+device: 0x9f3870 duration: 0.4388
+device: 0x9ec970 duration: 0.439067
+device: 0x9f14f0 duration: 0.44386
+duration mult ocl mod: 0.447795
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537025
+device: 0x9f24f0 duration: 0.545206
+device: 0x9edfb0 duration: 0.544952
+device: 0x9f3870 duration: 0.54636
+device: 0x9ec970 duration: 0.546868
+device: 0x9f14f0 duration: 0.552448
+duration multTranspose ocl mod: 0.56018
+delta: 6.71297e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43211
+device: 0x9edfb0 duration: 0.438002
+device: 0x9f3870 duration: 0.439219
+device: 0x9f24f0 duration: 0.438442
+device: 0x9ec970 duration: 0.439125
+device: 0x9f14f0 duration: 0.44377
+duration mult ocl mod: 0.447714
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538806
+device: 0x9edfb0 duration: 0.545126
+device: 0x9f24f0 duration: 0.545202
+device: 0x9ec970 duration: 0.545947
+device: 0x9f3870 duration: 0.546398
+device: 0x9f14f0 duration: 0.552525
+duration multTranspose ocl mod: 0.56233
+delta: 6.42578e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431313
+device: 0x9edfb0 duration: 0.437981
+device: 0x9f24f0 duration: 0.438804
+device: 0x9ec970 duration: 0.439016
+device: 0x9f3870 duration: 0.438671
+device: 0x9f14f0 duration: 0.443807
+duration mult ocl mod: 0.448634
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538967
+device: 0x9edfb0 duration: 0.544193
+device: 0x9f24f0 duration: 0.545219
+device: 0x9f3870 duration: 0.5465
+device: 0x9ec970 duration: 0.546938
+device: 0x9f14f0 duration: 0.552249
+duration multTranspose ocl mod: 0.561607
+delta: 2.96413e+12
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433268
+device: 0x9ec970 duration: 0.436839
+device: 0x9edfb0 duration: 0.437939
+device: 0x9f24f0 duration: 0.438347
+device: 0x9f3870 duration: 0.439088
+device: 0x9f14f0 duration: 0.443848
+duration mult ocl mod: 0.451576
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539064
+device: 0x9f24f0 duration: 0.545167
+device: 0x9ec970 duration: 0.547015
+device: 0x9edfb0 duration: 0.54511
+device: 0x9f3870 duration: 0.546398
+device: 0x9f14f0 duration: 0.551674
+duration multTranspose ocl mod: 0.56224
+delta: 1.37228e+12
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43154
+device: 0x9edfb0 duration: 0.438227
+device: 0x9f3870 duration: 0.438788
+device: 0x9f24f0 duration: 0.438476
+device: 0x9ec970 duration: 0.439705
+device: 0x9f14f0 duration: 0.444008
+duration mult ocl mod: 0.447272
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538908
+device: 0x9edfb0 duration: 0.545338
+device: 0x9f24f0 duration: 0.543816
+device: 0x9ec970 duration: 0.546832
+device: 0x9f3870 duration: 0.546373
+device: 0x9f14f0 duration: 0.55246
+duration multTranspose ocl mod: 0.5618
+delta: 1.17372e+12
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433207
+device: 0x9edfb0 duration: 0.436812
+device: 0x9f24f0 duration: 0.438347
+device: 0x9f3870 duration: 0.438703
+device: 0x9ec970 duration: 0.439149
+device: 0x9f14f0 duration: 0.443971
+duration mult ocl mod: 0.448125
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (device: 0x9ed830GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: ) 0x10400 kernel from: 0x20800 (with blocking: 0x10400)
+ to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538811
+device: 0x9f24f0device:  duration: 0x9edfb0 duration: 0.5452
+0.545277
+device: 0x9f3870 duration: device: 0.5464970x9ec970
+ duration: 0.546792
+device: 0x9f14f0 duration: 0.551935
+duration multTranspose ocl mod: 0.560535
+delta: 2.64286e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433188
+device: 0x9f24f0 duration: 0.43669
+device: 0x9edfb0 duration: 0.438075
+device: 0x9f3870 duration: 0.438597
+device: 0x9ec970 duration: 0.439191
+device: 0x9f14f0 duration: 0.443945
+duration mult ocl mod: 0.447909
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538826
+device: 0x9edfb0 duration: 0.545124
+device: 0x9f24f0 duration: 0.543968
+device: 0x9ec970 duration: 0.54681
+device: 0x9f3870 duration: 0.547566
+device: 0x9f14f0 duration: 0.55264
+duration multTranspose ocl mod: 0.563287
+delta: 4.84893e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433338
+device: 0x9ec970 duration: 0.439251
+device: 0x9f24f0 duration: 0.436616
+device: 0x9edfb0 duration: 0.441281
+device: 0x9f3870 duration: 0.441533
+device: 0x9f14f0 duration: 0.443938
+duration mult ocl mod: 0.448723
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539123
+device: 0x9f24f0 duration: 0.545443
+device: 0x9ec970 duration: 0.547194
+device: 0x9edfb0 duration: 0.548056
+device: 0x9f3870 duration: 0.549996
+device: 0x9f14f0 duration: 0.553459
+duration multTranspose ocl mod: 0.561416
+delta: 5.79023e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433276
+device: 0x9f24f0 duration: 0.436734
+device: 0x9ec970 duration: 0.439147
+device: 0x9edfb0 duration: 0.441156
+device: 0x9f3870 duration: 0.441434
+device: 0x9f14f0 duration: 0.44688
+duration mult ocl mod: 0.452507
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539087
+device: 0x9f24f0 duration: 0.545405
+device: 0x9ec970 duration: 0.545929
+device: 0x9edfb0 duration: 0.548694
+device: 0x9f3870 duration: 0.550302
+device: 0x9f14f0 duration: 0.556461
+duration multTranspose ocl mod: 0.567157
+delta: 6.10098e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433779
+device: 0x9f24f0 duration: 0.438282
+device: 0x9ec970 duration: 0.439662
+device: 0x9edfb0 duration: 0.441292
+device: 0x9f3870 duration: 0.441377
+device: 0x9f14f0 duration: 0.445609
+duration mult ocl mod: 0.449836
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0device: GeForce GTX 1080 Ti () 0x9edfb0 kernel from: )  kernel from: 0x30c000x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400) to: 
+0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53918
+device: 0x9f24f0 duration: 0.543689
+device: 0x9ec970 duration: 0.546981
+device: 0x9edfb0 duration: 0.548602
+device: 0x9f3870 duration: 0.549953
+device: 0x9f14f0 duration: 0.556481
+duration multTranspose ocl mod: 0.5665
+delta: 5.33188e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433464
+device: 0x9f24f0 duration: 0.438224
+device: 0x9ec970 duration: 0.43964
+device: 0x9f3870 duration: 0.44021
+device: 0x9edfb0 duration: 0.441701
+device: 0x9f14f0 duration: 0.446828
+duration mult ocl mod: 0.450475
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538875
+device: 0x9f24f0 duration: 0.545241
+device: 0x9ec970 duration: 0.547183
+device: 0x9edfb0 duration: 0.548655
+device: 0x9f3870 duration: 0.549064
+device: 0x9f14f0 duration: 0.55652
+duration multTranspose ocl mod: 0.566949
+delta: 3.69075e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433146
+device: 0x9f24f0 duration: 0.438388
+device: 0x9ec970 duration: 0.439255
+device: 0x9edfb0 duration: 0.440371
+device: 0x9f3870 duration: 0.441388
+device: 0x9f14f0 duration: 0.446909
+duration mult ocl mod: 0.45165
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538886
+device: 0x9f24f0 duration: 0.544965
+device: 0x9ec970 duration: 0.546835
+device: 0x9edfb0 duration: 0.549018
+device: 0x9f3870 duration: 0.550162
+device: 0x9f14f0 duration: 0.555657
+duration multTranspose ocl mod: 0.564908
+delta: 2.24252e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433366
+device: 0x9f24f0 duration: 0.438285
+device: 0x9ec970 duration: 0.439206
+device: 0x9f3870 duration: 0.439277
+device: 0x9edfb0 duration: 0.441442
+device: 0x9f14f0 duration: 0.447085
+duration mult ocl mod: 0.451435
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539099
+device: 0x9f24f0 duration: 0.545049
+device: 0x9ec970 duration: 0.547284
+device: 0x9edfb0 duration: 0.548644
+device: 0x9f3870 duration: 0.550144
+device: 0x9f14f0 duration: 0.55562
+duration multTranspose ocl mod: 0.564106
+delta: 2.74236e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433078
+device: 0x9f24f0 duration: 0.436492
+device: 0x9ec970 duration: 0.439213
+device: 0x9edfb0 duration: 0.441232device: 
+0x9f3870 duration: 0.441542
+device: 0x9f14f0 duration: 0.446844
+duration mult ocl mod: 0.452464
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538678
+device: 0x9f24f0 duration: 0.545291
+device: 0x9ec970 duration: 0.546073
+device: 0x9f3870 duration: 0.550089
+device: 0x9edfb0 duration: 0.54871
+device: 0x9f14f0 duration: 0.557134
+duration multTranspose ocl mod: 0.566651
+delta: 2.81631e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433202
+device: 0x9ec970 duration: 0.43923
+device: 0x9f24f0 duration: 0.43686
+device: 0x9edfb0 duration: 0.441121
+device: 0x9f3870 duration: 0.441403
+device: 0x9f14f0 duration: 0.446815
+duration mult ocl mod: 0.451497
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539051
+device: 0x9f24f0 duration: 0.543904
+device: 0x9ec970 duration: 0.547199
+device: 0x9edfb0 duration: 0.548654
+device: 0x9f3870 duration: 0.550077
+device: 0x9f14f0 duration: 0.556291
+duration multTranspose ocl mod: 0.567324
+delta: 1.18152e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433833
+device: 0x9f24f0 duration: 0.436677
+device: 0x9ec970 duration: 0.439735
+device: 0x9edfb0 duration: 0.441371
+device: 0x9f3870 duration: 0.441594
+device: 0x9f14f0 duration: 0.446766
+duration mult ocl mod: 0.451138
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537273
+device: 0x9f24f0 duration: 0.545205
+device: 0x9ec970 duration: 0.547277
+device: 0x9edfb0 duration: 0.548564
+device: 0x9f3870 duration: 0.550219
+device: 0x9f14f0 duration: 0.556301
+duration multTranspose ocl mod: 0.567872
+delta: 9.78105e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433264
+device: 0x9f24f0 duration: 0.438122
+device: 0x9ec970 duration: 0.439373
+device: 0x9edfb0 duration: 0.440091
+device: 0x9f3870 duration: 0.44141
+device: 0x9f14f0 duration: 0.44684
+duration mult ocl mod: 0.449853
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538715
+device: 0x9f24f0 duration: 0.545198
+device: 0x9ec970 duration: 0.546103
+device: 0x9edfb0 duration: 0.548705
+device: 0x9f3870 duration: 0.550236
+device: 0x9f14f0 duration: 0.556449
+duration multTranspose ocl mod: 0.567027
+delta: 2.11787e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433164
+device: 0x9f24f0 duration: 0.438326
+device: 0x9ec970 duration: 0.439833
+device: 0x9edfb0 duration: 0.441165
+device: 0x9f3870 duration: 0.441488
+device: 0x9f14f0 duration: 0.44488
+duration mult ocl mod: 0.449288
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53879
+device: 0x9f24f0 duration: 0.545356
+device: 0x9ec970 duration: 0.546109
+device: 0x9edfb0 duration: 0.548538
+device: 0x9f3870 duration: 0.550177
+device: 0x9f14f0 duration: 0.55628
+duration multTranspose ocl mod: 0.563474
+delta: 1.64604e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433238
+device: 0x9ec970 duration: 0.438229
+device: 0x9f24f0 duration: 0.438378
+device: 0x9edfb0 duration: 0.441125
+device: 0x9f3870 duration: 0.441498
+device: 0x9f14f0 duration: 0.446839
+duration mult ocl mod: 0.45106
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00device:  to: 0x41000 -> range: GeForce GTX 1080 Ti0x10400 ( (with blocking: 0x10400)0x9ec970
+)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53888
+device: 0x9ec970 duration: 0.547251
+device: 0x9f24f0 duration: 0.54529
+device: 0x9edfb0 duration: 0.548693
+device: 0x9f3870 duration: 0.551011
+device: 0x9f14f0 duration: 0.555604
+duration multTranspose ocl mod: 0.566383
+delta: 1.58968e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433116
+device: 0x9f24f0 duration: 0.438351
+device: 0x9ec970 duration: 0.438266
+device: 0x9edfb0 duration: device: 0x9f3870 duration: 0.44139
+0.441443
+device: 0x9f14f0 duration: 0.446858
+duration mult ocl mod: 0.450375
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53893
+device: 0x9f24f0 duration: 0.545349
+device: 0x9ec970 duration: 0.546152
+device: 0x9edfb0 duration: 0.548745
+device: 0x9f3870 duration: 0.550167
+device: 0x9f14f0 duration: 0.556356
+duration multTranspose ocl mod: 0.567468
+delta: 1.12572e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433109
+device: 0x9ec970 duration: 0.438437
+device: 0x9f24f0 duration: 0.43824
+device: 0x9edfb0 duration: 0.441281
+device: 0x9f3870 duration: 0.441382
+device: 0x9f14f0 duration: 0.446833
+duration mult ocl mod: 0.451653
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538776
+device: 0x9f24f0 duration: 0.544898
+device: 0x9ec970 duration: 0.547235
+device: 0x9f3870 duration: 0.549893
+device: 0x9edfb0 duration: 0.548755
+device: 0x9f14f0 duration: 0.55594
+duration multTranspose ocl mod: 0.564228
+delta: 3.43248e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43323
+device: 0x9ec970 duration: 0.437162
+device: 0x9f24f0 duration: 0.43876
+device: 0x9edfb0 duration: 0.441298
+device: 0x9f3870 duration: 0.441475
+device: 0x9f14f0 duration: 0.447036
+duration mult ocl mod: 0.451676
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53884
+device: 0x9f24f0 duration: 0.545161
+device: 0x9ec970 duration: 0.547229
+device: 0x9edfb0 duration: 0.548756
+device: 0x9f3870 duration: 0.550097
+device: 0x9f14f0 duration: 0.555731
+duration multTranspose ocl mod: 0.563349
+delta: 1.01976e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.434136
+device: 0x9ec970 duration: 0.437161
+device: 0x9f24f0 duration: 0.43819
+device: 0x9edfb0 duration: 0.441244
+device: 0x9f3870 duration: 0.441483
+device: 0x9f14f0 duration: 0.446979
+duration mult ocl mod: 0.450375
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x410000x10400 -> range: )
+0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538678
+device: 0x9f24f0 duration: 0.545322
+device: 0x9ec970 duration: 0.547038
+device: 0x9edfb0 duration: 0.548744
+device: 0x9f3870 duration: 0.549251
+device: 0x9f14f0 duration: 0.55649
+duration multTranspose ocl mod: 0.567397
+device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433211
+device: 0x9f24f0 duration: 0.438206
+device: 0x9ec970 duration: 0.439475
+device: 0x9edfb0 duration: 0.440071
+device: 0x9f3870 duration: 0.441569
+device: 0x9f14f0 duration: 0.446913
+duration mult ocl mod: 0.451539
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (device: 0x9f24f0)  kernel from: GeForce GTX 1080 Ti (0x104000x9ec970 to: ) 0x20800 kernel from: 0x20800 -> range:  to: 0x10400 (with blocking: 0x30c000x10400 -> range: 0x10400 (with blocking: )0x10400
+)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537449
+device: 0x9f24f0 duration: 0.545285
+device: 0x9ec970 duration: 0.547123
+device: 0x9edfb0 duration: 0.548862
+device: 0x9f3870 duration: 0.550125
+device: 0x9f14f0 duration: 0.556713
+duration multTranspose ocl mod: 0.567179
+delta: 4.054e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43128
+device: 0x9f24f0 duration: 0.438492
+device: 0x9ec970 duration: 0.439675
+device: 0x9f3870 duration: 0.441506
+device: 0x9edfb0 duration: 0.44119
+device: 0x9f14f0 duration: 0.447598
+duration mult ocl mod: 0.450705
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538806
+device: 0x9f24f0 duration: 0.545483
+device: 0x9ec970 duration: 0.546213
+device: 0x9f3870 duration: 0.550002
+device: 0x9edfb0 duration: 0.548933
+device: 0x9f14f0 duration: 0.55657
+duration multTranspose ocl mod: 0.566523
+delta: 8.04077e+10
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433089
+device: 0x9ec970 duration: 0.439352
+device: 0x9edfb0 duration: 0.44001
+device: 0x9f3870 duration: 0.441397
+device: 0x9f24f0 duration: 0.445039
+device: 0x9f14f0 duration: 0.447145
+duration mult ocl mod: 0.450569
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539027
+device: 0x9ec970 duration: 0.547036
+device: 0x9edfb0 duration: 0.547886
+device: 0x9f3870 duration: 0.550209
+device: 0x9f24f0 duration: 0.551735
+device: 0x9f14f0 duration: 0.55644
+duration multTranspose ocl mod: 0.565694
+delta: 1.19607e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433722
+device: 0x9ec970 duration: 0.438187
+device: 0x9edfb0 duration: 0.441327
+device: 0x9f3870 duration: 0.44158
+device: 0x9f24f0 duration: 0.444081
+device: 0x9f14f0 duration: 0.446907
+duration mult ocl mod: 0.450835
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ec970 duration: 0.54711
+device: 0x9edfb0 duration: 0.548699
+device: 0x9f3870 duration: 0.550225
+device: 0x9ed830 duration: 0.538875
+device: 0x9f24f0 duration: 0.551799
+device: 0x9f14f0 duration: 0.555485
+duration multTranspose ocl mod: 0.580397
+delta: 8.37682e+10
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433101
+device: 0x9ec970 duration: 0.439557
+device: 0x9edfb0 duration: device: 0x9f3870 duration: 0.441541
+0.441748
+device: 0x9f24f0 duration: 0.442467
+device: 0x9f14f0 duration: 0.446938
+duration mult ocl mod: 0.451741
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538752
+device: 0x9ec970 duration: 0.547393
+device: 0x9edfb0 duration: 0.548792
+device: 0x9f3870 duration: 0.550151
+device: 0x9f24f0 duration: 0.550602
+device: 0x9f14f0 duration: 0.556827
+duration multTranspose ocl mod: 0.56727
+delta: 1.60393e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431705
+device: 0x9ec970 duration: 0.439786
+device: 0x9f3870 duration: device: 0x9edfb0 duration: 0.441402
+0.441245
+device: 0x9f24f0 duration: 0.444217
+device: 0x9f14f0 duration: 0.446929
+duration mult ocl mod: 0.451449
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400device: )
+GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538972
+device: 0x9ec970 duration: 0.546265
+device: 0x9f3870 duration: 0.550117
+device: 0x9edfb0 duration: 0.548883
+device: 0x9f24f0 duration: 0.551719
+device: 0x9f14f0 duration: 0.556825
+duration multTranspose ocl mod: 0.565723
+delta: 2.47708e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431455
+device: 0x9ec970 duration: 0.439438
+device: 0x9edfb0 duration: 0.441259
+device: 0x9f3870 duration: 0.441474
+device: 0x9f24f0 duration: 0.44413
+device: 0x9f14f0 duration: 0.446974
+duration mult ocl mod: 0.452315
+device: GeForce GTX 1080 Ti (device: 0x9ec970)  kernel from: GeForce GTX 1080 Ti (0 to: 0x9f38700x10400 -> range: )  kernel from: 0x10400 to: 0x104000x20800 (with blocking: 0x10400 -> range: 0x10400) (with blocking: 
+0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537003
+device: 0x9ec970 duration: 0.547242
+device: 0x9f3870 duration: 0.550117
+device: 0x9edfb0 duration: 0.548738
+device: 0x9f24f0 duration: 0.551763
+device: 0x9f14f0 duration: 0.556924
+duration multTranspose ocl mod: 0.570058
+delta: 8.79152e+10
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433147
+device: 0x9ec970 duration: 0.439496
+device: 0x9edfb0 duration: 0.439117
+device: 0x9f3870 duration: 0.441673
+device: 0x9f24f0 duration: 0.444837
+device: 0x9f14f0 duration: 0.446989
+duration mult ocl mod: 0.450771
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: device: GeForce GTX 1080 TiGeForce GTX 1080 Ti ( (0x9f14f0)  kernel from: 0x410000x9edfb0 to: )  kernel from: 0x514000x51400 -> range:  to: 0x10400 (with blocking: 0x104000x61300)
+ -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538628
+device: 0x9ec970 duration: 0.547335
+device: 0x9edfb0 duration: 0.548011
+device: 0x9f3870 duration: 0.550101
+device: 0x9f24f0 duration: 0.55199
+device: 0x9f14f0 duration: 0.556615
+duration multTranspose ocl mod: 0.565809
+delta: 2.66794e+11
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433236
+device: 0x9ec970 duration: 0.439584
+device: 0x9f3870 duration: 0.440405
+device: 0x9edfb0 duration: 0.441314
+device: 0x9f24f0 duration: 0.44396
+device: 0x9f14f0 duration: 0.446891
+duration mult ocl mod: 0.451375
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53878
+device: 0x9ec970 duration: 0.547418
+device: 0x9edfb0 duration: 0.548016
+device: 0x9f3870 duration: 0.550212
+device: 0x9f24f0 duration: 0.551837
+device: 0x9f14f0 duration: 0.556668
+duration multTranspose ocl mod: 0.563271
+delta: 1.16203e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433225
+device: 0x9edfb0 duration: 0.440173
+device: 0x9ec970 duration: 0.440138
+device: 0x9f3870 duration: 0.441628
+device: 0x9f24f0 duration: 0.444067
+device: 0x9f14f0 duration: 0.446942
+duration mult ocl mod: 0.450432
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537149
+device: 0x9ec970 duration: 0.547225
+device: 0x9f3870 duration: 0.550255
+device: 0x9edfb0 duration: 0.548677
+device: 0x9f24f0 duration: 0.551541
+device: 0x9f14f0 duration: 0.556881
+duration multTranspose ocl mod: 0.56565
+delta: 1.29664e+11
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433268
+device: 0x9ec970 duration: 0.439467
+device: 0x9edfb0 duration: 0.441391
+device: 0x9f3870 duration: 0.441719
+device: 0x9f24f0 duration: 0.442416
+device: 0x9f14f0 duration: 0.446998
+duration mult ocl mod: 0.450067
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538792
+device: 0x9ec970 duration: 0.54725
+device: 0x9edfb0 duration: 0.549107
+device: 0x9f3870 duration: 0.549151
+device: 0x9f24f0 duration: 0.551841
+device: 0x9f14f0 duration: 0.556639
+duration multTranspose ocl mod: 0.564053
+delta: 1.41632e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433201
+device: 0x9ec970 duration: 0.43956
+device: 0x9edfb0 duration: 0.441156
+device: 0x9f3870 duration: 0.441498
+device: 0x9f24f0 duration: 0.442544
+device: 0x9f14f0 duration: 0.447049
+duration mult ocl mod: 0.45125
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538775
+device: 0x9ec970 duration: 0.547375
+device: 0x9edfb0 duration: 0.549054
+device: 0x9f3870 duration: 0.55014
+device: 0x9f24f0 duration: 0.551593
+device: 0x9f14f0 duration: 0.555924
+duration multTranspose ocl mod: 0.567173
+delta: 1.2121e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433672
+device: 0x9edfb0device:  duration: 0x9ec970 duration: 0.4411280.43962
+
+device: 0x9f3870 duration: 0.441409
+device: 0x9f24f0 duration: 0.442436
+device: 0x9f14f0 duration: 0.446907
+duration mult ocl mod: 0.451797
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538573
+device: 0x9ec970 duration: 0.546329
+device: 0x9f3870 duration: 0.549986
+device: 0x9edfb0 duration: 0.548664
+device: 0x9f24f0 duration: 0.551614
+device: 0x9f14f0 duration: 0.556639
+duration multTranspose ocl mod: 0.563561
+delta: 1.42284e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431341
+device: 0x9ec970 duration: 0.4402
+device: 0x9edfb0 duration: 0.441338
+device: 0x9f3870 duration: 0.442076
+device: 0x9f24f0 duration: 0.444217
+device: 0x9f14f0 duration: 0.447019
+duration mult ocl mod: 0.450037
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538802
+device: 0x9ec970 duration: 0.547348
+device: 0x9edfb0 duration: device: 0x9f3870 duration: 0.548719
+0.550105
+device: 0x9f24f0 duration: 0.55088
+device: 0x9f14f0 duration: 0.556734
+duration multTranspose ocl mod: 0.562991
+delta: 7.76298e+10
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x9f14f00x31000
+ kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433376
+device: 0x9ec970 duration: 0.439607
+device: 0x9edfb0 duration: 0.441285
+device: 0x9f3870 duration: 0.441498
+device: 0x9f24f0 duration: 0.442534
+device: 0x9f14f0 duration: 0.447138
+duration mult ocl mod: 0.451153
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53863
+device: 0x9ec970 duration: 0.547313
+device: 0x9edfb0 duration: 0.548832
+device: 0x9f3870 duration: 0.55025
+device: 0x9f24f0 duration: 0.551692
+device: 0x9f14f0 duration: 0.555974
+duration multTranspose ocl mod: 0.567056
+delta: 1.51264e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431454
+device: 0x9ec970 duration: 0.440185
+device: 0x9edfb0 duration: 0.441282
+device: 0x9f3870 duration: 0.441443
+device: 0x9f24f0 duration: 0.444134
+device: 0x9f14f0 duration: 0.447089
+duration mult ocl mod: 0.451271
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538967
+device: 0x9ec970 duration: 0.547321
+device: 0x9edfb0 duration: 0.548809
+device: 0x9f3870 duration: 0.549234
+device: 0x9f24f0 duration: 0.551588
+device: 0x9f14f0 duration: 0.556739
+duration multTranspose ocl mod: 0.567609
+delta: 1.83773e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433153
+device: 0x9ec970 duration: 0.438314
+device: 0x9edfb0 duration: 0.441187
+device: 0x9f3870 duration: 0.4418
+device: 0x9f24f0 duration: 0.44421
+device: 0x9f14f0 duration: 0.447118
+duration mult ocl mod: 0.451477
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538885
+device: 0x9ec970 duration: 0.547241
+device: 0x9edfb0 duration: 0.548707
+device: 0x9f3870 duration: 0.549262
+device: 0x9f24f0 duration: 0.551583
+device: 0x9f14f0 duration: 0.557037
+duration multTranspose ocl mod: 0.563793
+delta: 1.63887e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433271
+device: 0x9ec970 duration: 0.439552
+device: 0x9edfb0 duration: 0.440008
+device: 0x9f3870 duration: 0.441924
+device: 0x9f24f0 duration: 0.444031
+device: 0x9f14f0 duration: 0.447149
+duration mult ocl mod: 0.450696
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538824
+device: 0x9ec970 duration: 0.547451
+device: 0x9edfb0 duration: 0.548657
+device: 0x9f3870 duration: 0.550383
+device: 0x9f24f0 duration: 0.552131
+device: 0x9f14f0 duration: 0.556133
+duration multTranspose ocl mod: 0.567154
+delta: 9.51557e+10
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433327
+device: 0x9ec970 duration: 0.439522
+device: 0x9edfb0 duration: 0.44123
+device: 0x9f3870 duration: 0.441765
+device: 0x9f24f0 duration: 0.444025
+device: 0x9f14f0 duration: 0.445128
+duration mult ocl mod: 0.452738
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53893
+device: 0x9ec970 duration: 0.547105
+device: 0x9edfb0 duration: 0.548601
+device: 0x9f3870 duration: 0.55022
+device: 0x9f24f0 duration: 0.55185
+device: 0x9f14f0 duration: 0.556034
+duration multTranspose ocl mod: 0.56399
+delta: 6.45636e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433445
+device: 0x9ec970 duration: 0.439753
+device: 0x9edfb0 duration: 0.441414
+device: 0x9f3870 duration: 0.441414
+device: 0x9f24f0 duration: 0.444005
+device: 0x9f14f0 duration: 0.445176
+duration mult ocl mod: 0.450329
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538974
+device: 0x9ec970 duration: 0.547457
+device: 0x9edfb0 duration: 0.548734
+device: 0x9f3870 duration: 0.550229
+device: 0x9f24f0 duration: 0.551581
+device: 0x9f14f0 duration: 0.556086
+duration multTranspose ocl mod: 0.564046
+delta: 5.29323e+10
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433181
+device: 0x9ec970 duration: 0.439615
+device: 0x9f3870 duration: 0.441511
+device: 0x9edfb0 duration: 0.441289
+device: 0x9f24f0 duration: 0.444113
+device: 0x9f14f0 duration: 0.444974
+duration mult ocl mod: 0.450015
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539036
+device: 0x9ec970 duration: 0.5474
+device: 0x9edfb0 duration: 0.548797
+device: 0x9f3870 duration: 0.550346
+device: 0x9f24f0 duration: 0.551748
+device: 0x9f14f0 duration: 0.555926
+duration multTranspose ocl mod: 0.563611
+delta: 1.36745e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433348
+device: 0x9ec970 duration: 0.439509
+device: 0x9f3870 duration: 0.439246
+device: 0x9edfb0 duration: 0.441312
+device: 0x9f24f0 duration: 0.44405
+device: 0x9f14f0 duration: 0.446844
+duration mult ocl mod: 0.451082
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538864
+device: 0x9ec970 duration: 0.547326
+device: 0x9f24f0 duration: 0.551507
+device: 0x9edfb0 duration: 0.548704
+device: 0x9f3870 duration: 0.549322
+device: 0x9f14f0 duration: 0.55692
+duration multTranspose ocl mod: 0.564872
+delta: 2.64134e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433262
+device: 0x9ec970 duration: 0.439682
+device: 0x9edfb0 duration: 0.44132
+device: 0x9f3870 duration: 0.441437
+device: 0x9f24f0 duration: 0.44399
+device: 0x9f14f0 duration: 0.444997
+duration mult ocl mod: 0.449574
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53878
+device: 0x9ec970 duration: 0.546357
+device: 0x9edfb0 duration: 0.548746
+device: 0x9f24f0 duration: 0.551794
+device: 0x9f3870 duration: 0.55028
+device: 0x9f14f0 duration: 0.556793
+duration multTranspose ocl mod: 0.565935
+delta: 6.58417e+10
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433272
+device: 0x9ec970 duration: 0.439576
+device: 0x9edfb0 duration: 0.441185
+device: 0x9f3870 duration: 0.441432
+device: 0x9f24f0 duration: 0.442402
+device: 0x9f14f0 duration: 0.447538
+duration mult ocl mod: 0.451992
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538762
+device: 0x9ec970 duration: 0.547391
+device: 0x9edfb0 duration: 0.548894
+device: 0x9f3870 duration: 0.54932
+device: 0x9f24f0 duration: 0.551823
+device: 0x9f14f0 duration: 0.557036
+duration multTranspose ocl mod: 0.568315
+delta: 1.08883e+11
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433247
+device: 0x9ec970 duration: 0.438558
+device: 0x9edfb0 duration: 0.441141
+device: 0x9f3870 duration: 0.441511
+device: 0x9f24f0 duration: 0.443957
+device: 0x9f14f0 duration: 0.447136
+duration mult ocl mod: 0.451401
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537307
+device: 0x9ec970 duration: 0.547173
+device: 0x9f3870 duration: 0.550259
+device: 0x9edfb0 duration: 0.548917
+device: 0x9f24f0 duration: 0.551803
+device: 0x9f14f0 duration: 0.556981
+duration multTranspose ocl mod: 0.566767
+delta: 7.60806e+10
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433169
+device: 0x9edfb0 duration: 0.441244
+device: 0x9ec970 duration: 0.439722
+device: 0x9f3870 duration: 0.441944
+device: 0x9f24f0 duration: 0.444054
+device: 0x9f14f0 duration: 0.445813
+duration mult ocl mod: 0.451129
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53872
+device: 0x9ec970 duration: 0.547225
+device: 0x9edfb0 duration: 0.548875
+device: 0x9f3870 duration: 0.54934
+device: 0x9f24f0 duration: 0.552021
+device: 0x9f14f0 duration: 0.556942
+duration multTranspose ocl mod: 0.566147
+delta: 1.00394e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000device:  to: 0xc4000 -> range: 0x31000
+0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431263
+device: 0x9ec970 duration: 0.439702
+device: 0x9f3870 duration: device: 0x9edfb0 duration: 0.441435
+0.441424
+device: 0x9f24f0 duration: 0.444051
+device: 0x9f14f0 duration: 0.44821
+duration mult ocl mod: 0.451477
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53884
+device: 0x9edfb0 duration: 0.548753
+device: 0x9ec970 duration: 0.546127
+device: 0x9f3870 duration: 0.550285
+device: 0x9f24f0 duration: 0.551682
+device: 0x9f14f0 duration: 0.556978
+duration multTranspose ocl mod: 0.564383
+delta: 4.2029e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433401
+device: 0x9ec970 duration: 0.43961
+device: 0x9edfb0 duration: device: 0x9f3870 duration: 0.441304
+0.441502
+device: 0x9f24f0 duration: 0.443902
+device: 0x9f14f0 duration: 0.445067
+duration mult ocl mod: 0.449725
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400device:  (with blocking: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0x104000xff00) (with blocking: 0xff00)
+
+device: 0x9ed830 duration: 0.538779
+device: 0x9edfb0 duration: 0.548827
+device: 0x9ec970 duration: 0.547534
+device: 0x9f3870 duration: 0.549284
+device: 0x9f24f0 duration: 0.551754
+device: 0x9f14f0 duration: 0.556752
+duration multTranspose ocl mod: 0.566121
+delta: 3.40339e+10
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431404
+device: 0x9ec970 duration: 0.439574
+device: 0x9f3870 duration: device: 0x9edfb0 duration: 0.441542
+0.441179
+device: 0x9f24f0 duration: 0.443908
+device: 0x9f14f0 duration: 0.44707
+duration mult ocl mod: 0.45049
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53712
+device: 0x9ec970 duration: 0.547109
+device: 0x9edfb0 duration: 0.54891
+device: 0x9f3870 duration: 0.54989
+device: 0x9f24f0 duration: 0.551606
+device: 0x9f14f0 duration: 0.556903
+duration multTranspose ocl mod: 0.565261
+delta: 8.98238e+10
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433208
+device: 0x9f3870 duration: 0.439164
+device: 0x9ec970 duration: 0.440148
+device: 0x9edfb0 duration: 0.441215
+device: 0x9f24f0 duration: 0.444217
+device: 0x9f14f0 duration: 0.447058
+duration mult ocl mod: 0.450954
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.5388
+device: 0x9ec970 duration: 0.547438
+device: 0x9edfb0 duration: 0.548812
+device: 0x9f3870 duration: 0.549966
+device: 0x9f24f0 duration: 0.550682
+device: 0x9f14f0 duration: 0.556917
+duration multTranspose ocl mod: 0.567648
+delta: 8.26975e+10
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433202
+device: 0x9f3870 duration: 0.439299
+device: 0x9ec970 duration: 0.439648
+device: 0x9edfb0 duration: 0.441285
+device: 0x9f24f0 duration: 0.444027
+device: 0x9f14f0 duration: 0.446982
+duration mult ocl mod: 0.451096
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538739
+device: 0x9ec970 duration: 0.547102
+device: 0x9edfb0 duration: 0.548033
+device: 0x9f3870 duration: 0.550181
+device: 0x9f24f0 duration: 0.551551
+device: 0x9f14f0 duration: 0.556895
+duration multTranspose ocl mod: 0.567301
+delta: 5.38044e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433256
+device: 0x9ec970 duration: 0.439752
+device: 0x9edfb0 duration: 0.441435
+device: 0x9f3870 duration: 0.441671
+device: 0x9f24f0 duration: 0.444656
+device: 0x9f14f0 duration: 0.445033
+duration mult ocl mod: 0.450247
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538853
+device: 0x9ec970 duration: 0.547389
+device: 0x9edfb0 duration: 0.547763
+device: 0x9f3870 duration: 0.550144
+device: 0x9f24f0 duration: 0.551946
+device: 0x9f14f0 duration: 0.556666
+duration multTranspose ocl mod: 0.564287
+delta: 2.97649e+11
+.device: 0x9ed830 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433123
+device: 0x9ec970 duration: 0.439599
+device: 0x9edfb0 duration: 0.441368
+device: 0x9f3870 duration: 0.441362
+device: 0x9f24f0 duration: 0.442444
+device: 0x9f14f0 duration: 0.447313
+duration mult ocl mod: 0.451362
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (device: 0x9f3870)  kernel from: GeForce GTX 1080 Ti0x10400 ( to: 0x9f24f00x20800)  kernel from: 0x20800 to:  -> range: 0x30c00 -> range: 0x10400 (with blocking: 0x104000x10400) (with blocking: 0x10400)
+
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539025
+device: 0x9ec970 duration: 0.54644
+device: 0x9f3870 duration: 0.550291
+device: 0x9f24f0 duration: 0.551817
+device: 0x9edfb0 duration: 0.548863
+device: 0x9f14f0 duration: 0.556688
+duration multTranspose ocl mod: 0.567895
+delta: 4.81451e+10
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433268
+device: 0x9ec970 duration: 0.440226
+device: 0x9edfb0 duration: 0.441118
+device: 0x9f3870 duration: 0.441387
+device: 0x9f24f0 duration: 0.443835
+device: 0x9f14f0 duration: 0.445058
+duration mult ocl mod: 0.449957
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538828
+device: 0x9ec970 duration: 0.547313
+device: 0x9edfb0 duration: 0.547961
+device: 0x9f3870 duration: 0.550154
+device: 0x9f24f0 duration: 0.55151
+device: 0x9f14f0 duration: 0.557443
+duration multTranspose ocl mod: 0.566043
+delta: 8.99013e+10
+.device: 0x9f3870 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433235
+device: 0x9ec970 duration: 0.439618
+device: 0x9edfb0 duration: 0.441152
+device: 0x9f3870 duration: 0.441561
+device: 0x9f24f0 duration: 0.443917
+device: 0x9f14f0 duration: 0.446273
+duration mult ocl mod: 0.449701
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538654
+device: 0x9ec970 duration: 0.547458
+device: 0x9f24f0 duration: 0.551561
+device: 0x9f3870 duration: device: 0x9edfb0 duration: 0.549199
+0.549283
+device: 0x9f14f0 duration: 0.55703
+duration multTranspose ocl mod: 0.564619
+delta: 1.21151e+11
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433543
+device: 0x9ec970 duration: 0.437463
+device: 0x9f3870 duration: device: 0x9edfb0 duration: 0.441403
+0.441337
+device: 0x9f24f0 duration: 0.443943
+device: 0x9f14f0 duration: 0.447175
+duration mult ocl mod: 0.452024
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538612
+device: 0x9edfb0 duration: 0.548109
+device: 0x9ec970 duration: 0.54751
+device: 0x9f3870 duration: 0.550115
+device: 0x9f24f0 duration: 0.551562
+device: 0x9f14f0 duration: 0.55711
+duration multTranspose ocl mod: 0.565968
+delta: 4.71227e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.431332
+device: 0x9ec970 duration: 0.440181
+device: 0x9edfb0 duration: 0.4412
+device: 0x9f3870 duration: 0.441728
+device: 0x9f24f0 duration: 0.443905
+device: 0x9f14f0 duration: 0.447049
+duration mult ocl mod: 0.451671
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538834
+device: 0x9ec970 duration: 0.547219
+device: 0x9f3870 duration: 0.55005
+device: 0x9edfb0 duration: 0.548864
+device: 0x9f24f0 duration: 0.551811
+device: 0x9f14f0 duration: 0.556149
+duration multTranspose ocl mod: 0.565429
+delta: 1.80702e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433292
+device: 0x9ec970 duration: 0.439695
+device: 0x9edfb0 duration: 0.44136
+device: 0x9f3870 duration: 0.44138
+device: 0x9f24f0 duration: 0.442393
+device: 0x9f14f0 duration: 0.447305
+duration mult ocl mod: 0.451474
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53906
+device: 0x9ec970 duration: 0.547227
+device: 0x9edfb0 duration: 0.548724
+device: 0x9f3870 duration: 0.550265
+device: 0x9f24f0 duration: 0.551681
+device: 0x9f14f0 duration: 0.555974
+duration multTranspose ocl mod: 0.563151
+delta: 7.94488e+10
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433367
+device: 0x9edfb0 duration: 0.438924
+device: 0x9ec970 duration: 0.439614
+device: 0x9f3870 duration: 0.441337
+device: 0x9f24f0 duration: 0.443869
+device: 0x9f14f0 duration: 0.447441
+duration mult ocl mod: 0.45123
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538797
+device: 0x9edfb0 duration: 0.548575
+device: 0x9ec970 duration: 0.54678
+device: 0x9f3870 duration: 0.5499
+device: 0x9f24f0 duration: 0.551523
+device: 0x9f14f0 duration: 0.557304
+duration multTranspose ocl mod: 0.566818
+delta: 5.80756e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433317
+device: 0x9ec970 duration: 0.439665
+device: 0x9edfb0 duration: 0.441174
+device: 0x9f3870 duration: 0.441416
+device: 0x9f24f0 duration: 0.442531
+device: 0x9f14f0 duration: 0.447065
+duration mult ocl mod: 0.450991
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538701
+device: 0x9ec970 duration: 0.547496
+device: 0x9edfb0 duration: 0.547928
+device: 0x9f24f0 duration: 0.551538
+device: 0x9f3870 duration: 0.55044
+device: 0x9f14f0 duration: 0.556958
+duration multTranspose ocl mod: 0.564832
+delta: 4.48432e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433549
+device: 0x9ec970 duration: 0.440296
+device: 0x9edfb0 duration: 0.441697
+device: 0x9f3870 duration: 0.441527
+device: 0x9f24f0 duration: 0.444018
+device: 0x9f14f0 duration: 0.445046
+duration mult ocl mod: 0.449911
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538638
+device: 0x9ec970 duration: 0.547661
+device: 0x9f3870 duration: 0.550426
+device: 0x9edfb0 duration: 0.54929
+device: 0x9f24f0 duration: 0.55061
+device: 0x9f14f0 duration: 0.557001
+duration multTranspose ocl mod: 0.567293
+delta: 2.43787e+10
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433207
+device: 0x9edfb0 duration: 0.439112
+device: 0x9ec970 duration: 0.439863
+device: 0x9f3870 duration: 0.441405
+device: 0x9f24f0 duration: 0.443905
+device: 0x9f14f0 duration: 0.447644
+duration mult ocl mod: 0.45154
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.53912
+device: 0x9ec970 duration: 0.546471
+device: 0x9edfb0 duration: 0.548792
+device: 0x9f3870 duration: 0.550194
+device: 0x9f24f0 duration: 0.551696
+device: 0x9f14f0 duration: 0.557072
+duration multTranspose ocl mod: 0.567345
+delta: 1.48985e+11
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000device: 
+0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43325
+device: 0x9ec970 duration: 0.438608
+device: 0x9edfb0 duration: 0.441268
+device: 0x9f3870 duration: 0.441354
+device: 0x9f24f0 duration: 0.444052
+device: 0x9f14f0 duration: 0.447416
+duration mult ocl mod: 0.451615
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (device: 0x9f14f0GeForce GTX 1080 Ti () 0x9ed830)  kernel from:  kernel from: 0x41000 to: 0x51400 -> range: 0x30c000x10400 to:  (with blocking: 0x41000 -> range: 0x10400 (with blocking: 0x104000x10400))
+
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538737
+device: 0x9ec970 duration: 0.547508
+device: 0x9edfb0 duration: 0.548054
+device: 0x9f3870 duration: 0.550072
+device: 0x9f24f0 duration: 0.551819
+device: 0x9f14f0 duration: 0.557132
+duration multTranspose ocl mod: 0.565973
+delta: 6.31371e+10
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433768
+device: 0x9ec970 duration: 0.439817
+device: 0x9f3870 duration: 0.441441
+device: 0x9edfb0 duration: 0.441719
+device: 0x9f24f0 duration: 0.442491
+device: 0x9f14f0 duration: 0.447118
+duration mult ocl mod: 0.451769
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537128
+device: 0x9ec970 duration: 0.547527
+device: 0x9edfb0 duration: 0.548837
+device: 0x9f3870 duration: 0.55014
+device: 0x9f24f0 duration: 0.551522
+device: 0x9f14f0 duration: 0.557058
+duration multTranspose ocl mod: 0.567022
+delta: 4.67552e+10
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433272
+device: 0x9edfb0 duration: 0.438967
+device: 0x9ec970 duration: 0.439804
+device: 0x9f3870 duration: 0.441469
+device: 0x9f24f0 duration: 0.443992
+device: 0x9f14f0 duration: 0.447019
+duration mult ocl mod: 0.451233
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539019
+device: 0x9ec970 duration: 0.546564
+device: 0x9edfb0 duration: 0.548893
+device: 0x9f3870 duration: 0.550166
+device: 0x9f24f0 duration: 0.551798
+device: 0x9f14f0 duration: 0.556861
+duration multTranspose ocl mod: 0.566405
+delta: 6.88267e+10
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: device: 0x9ec9700x9f14f0 kernel from:  kernel from: 0x930000xc4000 to: 0xf5000 -> range: 0x31000 to: 
+0xc4000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433293
+device: 0x9edfb0 duration: 0.439105
+device: 0x9ec970 duration: 0.440077
+device: 0x9f3870 duration: 0.441476
+device: 0x9f24f0 duration: 0.444132
+device: 0x9f14f0 duration: 0.447179
+duration mult ocl mod: 0.451944
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0 to: 0x10400 -> range: device: GeForce GTX 1080 Ti (0x9f38700x10400)  kernel from:  (with blocking: 0x104000x10400 to: )0x20800 -> range: 0x10400 (with blocking: 0x10400
+)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.537055
+device: 0x9edfb0 duration: 0.548904
+device: 0x9ec970 duration: 0.547644
+device: 0x9f3870 duration: 0.549935
+device: 0x9f24f0 duration: 0.551626
+device: 0x9f14f0 duration: 0.556855
+duration multTranspose ocl mod: 0.564801
+delta: 5.6475e+10
+.device: 0x9f14f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.43318
+device: 0x9ec970 duration: 0.439625
+device: 0x9edfb0 duration: 0.441243
+device: 0x9f3870 duration: 0.441473
+device: 0x9f24f0 duration: 0.44237
+device: 0x9f14f0 duration: 0.44711
+duration mult ocl mod: 0.451221
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538851
+device: 0x9ec970 duration: 0.547357
+device: 0x9f3870 duration: 0.550244
+device: 0x9edfb0 duration: 0.548819
+device: 0x9f24f0 duration: 0.550596
+device: 0x9f14f0 duration: 0.556663
+duration multTranspose ocl mod: 0.566622
+delta: 7.8214e+10
+.device: 0x9ec970 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9edfb0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433227
+device: 0x9ec970 duration: 0.440126
+device: 0x9edfb0 duration: 0.441185
+device: 0x9f3870 duration: 0.441503
+device: 0x9f24f0 duration: 0.443892
+device: 0x9f14f0 duration: 0.445194
+duration mult ocl mod: 0.449173
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.538756
+device: 0x9ec970 duration: 0.547522
+device: 0x9edfb0 duration: 0.548827
+device: 0x9f3870 duration: 0.550165
+device: 0x9f24f0 duration: 0.55156
+device: 0x9f14f0 duration: 0.556093
+duration multTranspose ocl mod: 0.565293
+delta: 3.85996e+10
+.device: 0x9f24f0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000device: 
+0x9edfb0 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433121
+device: 0x9ec970 duration: 0.439618
+device: 0x9edfb0 duration: 0.439962
+device: 0x9f3870 duration: 0.441543
+device: 0x9f24f0 duration: 0.444114
+device: 0x9f14f0 duration: 0.447153
+duration mult ocl mod: 0.451486
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x20800 to: 0x30c00 -> range: device: 0x10400 (with blocking: GeForce GTX 1080 Ti0x10400) (
+0x9f3870)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x41000device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+ to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: 0x9ed830 duration: 0.537305
+device: 0x9ec970 duration: 0.547589
+device: 0x9edfb0 duration: 0.548649
+device: 0x9f24f0 duration: 0.551706
+device: 0x9f3870 duration: 0.550217
+device: 0x9f14f0 duration: 0.556969
+duration multTranspose ocl mod: 0.564822
+delta: 4.32306e+10
+.device: 0x9edfb0 kernel from: 0 to: 0x31000 -> range: 0x31000
+device: 0x9f24f0 kernel from: 0x31000 to: 0x62000 -> range: 0x31000
+device: 0x9ed830 kernel from: 0x62000 to: 0x93000 -> range: 0x31000
+device: 0x9f14f0 kernel from: 0x93000 to: 0xc4000 -> range: 0x31000
+device: 0x9ec970 kernel from: 0xc4000 to: 0xf5000 -> range: 0x31000
+device: 0x9f3870 kernel from: 0xf5000 to: 0x125000 -> range: 0x30000
+device: 0x9ed830 duration: 0.433245
+device: 0x9f3870 duration: 0.439228
+device: 0x9ec970 duration: 0.440289
+device: 0x9edfb0 duration: 0.441309
+device: 0x9f24f0 duration: 0.444021
+device: 0x9f14f0 duration: 0.447069
+duration mult ocl mod: 0.451173
+device: GeForce GTX 1080 Ti (0x9f24f0)  kernel from: 0 to: 0x10400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ed830)  kernel from: 0x10400 to: 0x20800 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f14f0)  kernel from: 0x20800 to: 0x30c00 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9edfb0)  kernel from: 0x30c00 to: 0x41000 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9f3870)  kernel from: 0x41000 to: 0x51400 -> range: 0x10400 (with blocking: 0x10400)
+device: GeForce GTX 1080 Ti (0x9ec970)  kernel from: 0x51400 to: 0x61300 -> range: 0xff00 (with blocking: 0xff00)
+device: 0x9ed830 duration: 0.539054
+device: 0x9ec970 duration: 0.546559
+device: 0x9edfb0 duration: 0.548688
+device: 0x9f3870 duration: 0.550235
+device: 0x9f24f0 duration: 0.551552
+device: 0x9f14f0 duration: 0.55714
+duration multTranspose ocl mod: 0.566512
+delta: 8.34774e+10
+
+Number of iterations: 0x64 (max. 0x64)
+Final norm of residuum: 8.34774e+10
+counted_mult_calls: 0x66
+
+Needed Iterations: 0x64
+Final residuum: 8.34774e+10
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 103.5
+note: performance calculation: additional iteration for residual recalculation : 0x2
+
+Current Duration:: 106.836
+Current GFlop/s: 38643.1
+
+Finished Training!
+
+Training took: 106.836 seconds
+
+total_duration: 116.038

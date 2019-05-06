@@ -1,0 +1,2617 @@
+training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
+ocl dummy initalization duration: 6.60139
+instances: 371908
+support_refinement_min_support: 500
+ocl_init_duration: 0.301076
+num_candidates: 1
+num_candidates: 1 block_size: 128 num_candidates_per_device: 1
+device: 0 range_padded: 128 range_start: 0 range_end: 1
+candidates with support: 1
+num_candidates: 10
+num_candidates: 10 block_size: 128 num_candidates_per_device: 10
+device: 0 range_padded: 128 range_start: 0 range_end: 10
+candidates with support: 10
+num_candidates: 60
+num_candidates: 60 block_size: 128 num_candidates_per_device: 60
+device: 0 range_padded: 128 range_start: 0 range_end: 60
+candidates with support: 52
+num_candidates: 236
+num_candidates: 236 block_size: 128 num_candidates_per_device: 236
+device: 0 range_padded: 256 range_start: 0 range_end: 236
+candidates with support: 181
+num_candidates: 706
+num_candidates: 706 block_size: 128 num_candidates_per_device: 706
+device: 0 range_padded: 768 range_start: 0 range_end: 706
+candidates with support: 503
+num_candidates: 1786
+num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
+device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+candidates with support: 1241
+num_candidates: 4140
+num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
+device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+candidates with support: 2886
+num_candidates: 9216
+num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
+device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+candidates with support: 6397
+num_candidates: 19682
+num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
+device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+candidates with support: 13464
+num_candidates: 40066
+num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
+device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+Starting Learning....
+
+Doing refinement: 0
+Grid Size: 51293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0663173
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592916
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662845
+Starting norm of residuum: -nan
+Target norm:               0
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0595865
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066432
+delta: 2.48388e+09
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592404
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662047
+delta: 2.08737e+08
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594154
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661504
+delta: 2.56821e+08
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0593981
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661719
+delta: 1.26016e+08
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0593388
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661801
+delta: 5.29537e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592067
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661832
+delta: 5.00935e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594299
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662098
+delta: 1.86041e+08
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592108
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066178
+delta: 2.72725e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591544
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662323
+delta: 1.86649e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591933
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661944
+delta: 9.53457e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591954
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066218
+delta: 5.84741e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591841
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662016
+delta: 2.4163e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592148
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661934
+delta: 8.50817e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591985
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662477
+delta: 1.92365e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592118
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662088
+delta: 4.28996e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591697
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662006
+delta: 5.41313e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594227
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662374
+delta: 6.2625e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594309
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662118
+delta: 3.66204e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592076
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662087
+delta: 1.85148e+07
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594268
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662272
+delta: 1.57614e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592282
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662323
+delta: 1.10458e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0591964
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662405
+delta: 3.10272e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594401
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661883
+delta: 1.5974e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594616
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662088
+delta: 6.78898e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592015
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662016
+delta: 5.9411e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592056
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0661924
+delta: 684996
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594115
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066219
+delta: 573307
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.05918
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662231
+delta: 1.9475e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592415
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662344
+delta: 1.05745e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592538
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662455
+delta: 8.23555e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059265
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662538
+delta: 531787
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594852
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673249
+delta: 1.34742e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592548
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066261
+delta: 526940
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592783
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662569
+delta: 2.90574e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594821
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662211
+delta: 441466
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594801
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.06626
+delta: 1.02786e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592527
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662456
+delta: 992142
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594452
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662221
+delta: 341272
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594678
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066261
+delta: 1.48562e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592568
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662456
+delta: 349773
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592599
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662497
+delta: 1.07462e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592558
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.06622
+delta: 1.2879e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059264
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662455
+delta: 442633
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059267
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662252
+delta: 331529
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059262
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662538
+delta: 1.92121e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592476
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662415
+delta: 348518
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592507
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662609
+delta: 339374
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592415
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662426
+delta: 3.07468e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594523
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662569
+delta: 148267
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592456
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662098
+delta: 274227
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592497
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662497
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.05927
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662221
+delta: 522970
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592456
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662671
+delta: 542451
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592497
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662487
+delta: 2.20223e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592701
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662548
+delta: 223049
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592835
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662815
+delta: 659826
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059265
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662282
+delta: 665811
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592783
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662262
+delta: 144631
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592466
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662405
+delta: 472466
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592783
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662845
+delta: 377802
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592742
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0664084
+delta: 510651
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592589
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662262
+delta: 165252
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059264
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0663726
+delta: 397743
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592548
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662405
+delta: 171802
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592456
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066263
+delta: 379962
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592701
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662641
+delta: 609393
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0594964
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662353
+delta: 2.29494e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592599
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662374
+delta: 337220
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059262
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662415
+delta: 167327
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059266
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662179
+delta: 356906
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0595026
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662599
+delta: 470131
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592711
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662395
+delta: 181122
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0592609
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662415
+delta: 774228
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059262
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0662753
+delta: 572502
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597606
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066859
+delta: 176364
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597381
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666796
+delta: 176979
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596204
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666788
+delta: 169492
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596224
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666675
+delta: 410229
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596193
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066692
+delta: 343478
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596357
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666849
+delta: 260397
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596233
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666706
+delta: 337270
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596214
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666747
+delta: 130036
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0598712
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666685
+delta: 165850
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596419
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666982
+delta: 297686
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596429
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667054
+delta: 463703
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596541
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666818
+delta: 109916
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596388
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666757
+delta: 192019
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0598794
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667105
+delta: 277542
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059647
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667013
+delta: 118108
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059647
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666737
+delta: 234052
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596572
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668764
+delta: 705209
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596684
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666644
+delta: 1.00582e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596255
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666716
+delta: 76060.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596521
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667197
+delta: 121657
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596439
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666952
+delta: 62121.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596347
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667227
+delta: 233856
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596449
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666685
+delta: 1.12757e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059653
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667116
+delta: 298545
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059652
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666706
+delta: 80729.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596316
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667105
+delta: 232728
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0598374
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666778
+delta: 193234
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596541
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666828
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600791
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668385
+delta: 70174.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596593
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666665
+delta: 319313
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596183
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666716
+delta: 198366
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600708
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671918
+delta: 76985.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600136
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667002
+delta: 134918
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596265
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666685
+delta: 324546
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596419
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666849
+delta: 88355.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596357
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667013
+delta: 166556
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596644
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666798
+delta: 1.02738e+06
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596285
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667146
+delta: 78275.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059649
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666767
+delta: 510079
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596408
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667126
+delta: 69099.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596224
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666808
+delta: 108892
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596571
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666706
+delta: 274505
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600575
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667064
+delta: 120692
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059647
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666993
+delta: 90984.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059647
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666829
+delta: 82199.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603126
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671928
+delta: 89981.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0598426
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667116
+delta: 168342
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596623
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667228
+delta: 226376
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596623
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667761
+delta: 364293
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600832
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671887
+delta: 159646
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596726
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667238
+delta: 93428
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596582
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667412
+delta: 72030.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596511
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667392
+delta: 207988
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600914
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669512
+delta: 203119
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596736
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667361
+delta: 251263
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596644
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667689
+delta: 44624.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0598999
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667269
+delta: 95626.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596623
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066814
+delta: 212546
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0601025
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669582
+delta: 149576
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596859
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0666972
+delta: 130147
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600842
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671928
+delta: 194553
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600914
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667177
+delta: 62425.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602429
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667535
+delta: 68351.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059905
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667801
+delta: 144567
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602388
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673781
+delta: 43369.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597002
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667412
+delta: 453630
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596756
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668098
+delta: 167002
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602224
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668416
+delta: 63716.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602286
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671488
+delta: 150872
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596849
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667924
+delta: 48762.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602563
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673884
+delta: 125040
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600238
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667331
+delta: 187118
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597012
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066818
+delta: 103167
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602429
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671437
+delta: 93272.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596838
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668558
+delta: 44148.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602522
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674569
+delta: 54643.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600535
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667904
+delta: 339550
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060245
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670249
+delta: 104955
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602419
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671703
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596808
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667207
+delta: 55450.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602225
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673864
+delta: 115652
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060033
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668293
+delta: 107901
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602378
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668058
+delta: 89734.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602522
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671887
+delta: 171082
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596654
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667843
+delta: 326442
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603331
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673935
+delta: 76678.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600218
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668467
+delta: 39117.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602481
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669286
+delta: 134456
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602337
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671826
+delta: 41247.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602388
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674007
+delta: 176192
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059947
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668078
+delta: 48717
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600238
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667904
+delta: 219272
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602358
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066859
+delta: 45405.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602348
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671642
+delta: 111547
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596951
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667596
+delta: 85490.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0601979
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674345
+delta: 36444.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600709
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668436
+delta: 294975
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602624
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066901
+delta: 25846.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602614
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067244
+delta: 267781
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0604539
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673679
+delta: 115124
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597688
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667483
+delta: 115754
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600667
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669604
+delta: 59624
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602583
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669952
+delta: 48094.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602337
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671611
+delta: 79305
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0599122
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0667269
+delta: 103252
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0604969
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674171
+delta: 85328.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600719
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668835
+delta: 38653.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602552
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670351
+delta: 128920
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602563
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067159
+delta: 44643
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596992
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668365
+delta: 107732
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602746
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674202
+delta: 43613
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.05999
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669327
+delta: 123988
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602675
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669184
+delta: 51413
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602552
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0672
+delta: 81745.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060461
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673761
+delta: 56804.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.059693
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668886
+delta: 36216.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0599992
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668662
+delta: 193668
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602655
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670064
+delta: 57903.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602716
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671601
+delta: 75670.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0596951
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668365
+delta: 170064
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602725
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674242
+delta: 28014.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600474
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669061
+delta: 195493
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602685
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668652
+delta: 26991.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602726
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671744
+delta: 126753
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602644
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673956
+delta: 123533
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597043
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668426
+delta: 24279.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602429
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669583
+delta: 140992
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602644
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067201
+delta: 108236
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602685
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671334
+delta: 29403.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0597125
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669778
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602798
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674027
+delta: 56910.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600136
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668611
+delta: 56182.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602655
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066817
+delta: 107702
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602696
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671611
+delta: 60965.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602532
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674355
+delta: 529178
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0599552
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670157
+delta: 24086.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600054
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669194
+delta: 98128.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0604826
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669235
+delta: 31687.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602501
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0671631
+delta: 151210
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603884
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674058
+delta: 134297
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602972
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673915
+delta: 18245.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600218
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670054
+delta: 73625.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602378
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0670054
+delta: 204753
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602429
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0672695
+delta: 86476.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602706
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673782
+delta: 25737.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602685
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673925
+delta: 42720.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0600689
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0668764
+delta: 138608
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0604652
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067073
+delta: 180195
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602532
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674509
+delta: 91561.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602685
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673864
+delta: 15801.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602307
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674253
+delta: 55030.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602491
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0673986
+delta: 67946
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602235
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674243
+delta: 34672.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602746
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674345
+delta: 46182.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603023
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674386
+delta: 51235.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602675
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674038
+delta: 558259
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602696
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674314
+delta: 25518.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602634
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674702
+delta: 28789.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602633
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674181
+delta: 72013.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602819
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674242
+delta: 51996.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602747
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674611
+delta: 48647.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060501
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674406
+delta: 34099
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602655
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0664259
+delta: 26253.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602675
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674294
+delta: 186231
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602716
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674417
+delta: 167391
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060375
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674652
+delta: 24818.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060289
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674959
+delta: 79244.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602818
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674662
+delta: 51367.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674714
+delta: 340245
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603095
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674365
+delta: 19640.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602808
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674243
+delta: 41624.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602921
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674652
+delta: 18001.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060289
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674345
+delta: 73315.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602797
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674221
+delta: 82422.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602552
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674048
+delta: 44440.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605297
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674898
+delta: 63776.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603054
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674662
+delta: 125120
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603075
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674775
+delta: 48671.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602911
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674591
+delta: 57155.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602941
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674284
+delta: 27172.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605512
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674427
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605481
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067498
+delta: 29622
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.06029
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674488
+delta: 191906
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602849
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674293
+delta: 35546.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603003
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675246
+delta: 19667.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674386
+delta: 118610
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605225
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674446
+delta: 215146
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603105
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674723
+delta: 21808.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602716
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674805
+delta: 70615.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060287
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674621
+delta: 22290
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603013
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674652
+delta: 266652
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603218
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674867
+delta: 40977.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603136
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0664986
+delta: 33084.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603146
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674509
+delta: 52099.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602644
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674447
+delta: 99500.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602921
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674263
+delta: 46928.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603003
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674529
+delta: 35260.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603095
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674826
+delta: 56514.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602982
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067414
+delta: 15083.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602941
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674263
+delta: 136505
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602982
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674355
+delta: 172741
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602798
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674355
+delta: 48252.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603156
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067454
+delta: 11978.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602931
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674826
+delta: 204184
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602982
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674734
+delta: 48100.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603238
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675204
+delta: 24392.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060502
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674785
+delta: 99751
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603034
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674488
+delta: 117230
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060292
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674324
+delta: 15189
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674724
+delta: 29945.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603013
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674253
+delta: 186187
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.06029
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674806
+delta: 21161.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060289
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674652
+delta: 85794.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603054
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675123
+delta: 20550.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602757
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674396
+delta: 18484.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605409
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674436
+delta: 61929.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602839
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674478
+delta: 65565.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602982
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674734
+delta: 49306.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603228
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674427
+delta: 41784.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605348
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674304
+delta: 21255.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603197
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674631
+delta: 38230.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060286
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674488
+delta: 44956.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602696
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674734
+delta: 25587
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603075
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674765
+delta: 19014.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603064
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674417
+delta: 74469.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602962
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674386
+delta: 43523.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603085
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067457
+delta: 14437.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603013
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0664658
+delta: 37917.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602829
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674509
+delta: 124186
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605082
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674662
+delta: 89906.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603126
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0665139
+delta: 39668.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602756
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.06746
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603064
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674499
+delta: 51452.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060287
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674365
+delta: 11939.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603003
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067417
+delta: 334711
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603167
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674405
+delta: 22678.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603105
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674457
+delta: 12756.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603146
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674632
+delta: 59260.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603177
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675163
+delta: 106420
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602819
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674427
+delta: 27531.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603125
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067457
+delta: 30496.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603279
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674867
+delta: 38945.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603085
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674662
+delta: 49532.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060287
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674744
+delta: 160944
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603249
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675103
+delta: 54032.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603146
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674509
+delta: 12193.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603156
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674908
+delta: 18881.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603064
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675011
+delta: 123731
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603095
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674928
+delta: 30111.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603279
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674396
+delta: 54130.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603013
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674714
+delta: 31013
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603208
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674611
+delta: 67951.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603279
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674877
+delta: 21944.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603064
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674662
+delta: 29245.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603269
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674959
+delta: 13821.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060543
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066604
+delta: 36519.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603085
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674959
+delta: 35514.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603259
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675195
+delta: 55386.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603053
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674733
+delta: 8861.28
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060375
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0665068
+delta: 31233.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603218
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675523
+delta: 219663
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603248
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674785
+delta: 38393.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603136
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674673
+delta: 12280.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603628
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674181
+delta: 64619
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.06029
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674591
+delta: 65775.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602972
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067456
+delta: 15288.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603044
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674335
+delta: 19210.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602931
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067454
+delta: 17343.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602685
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674386
+delta: 58320
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605368
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674857
+delta: 145968
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603064
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674365
+delta: 19477.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603034
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674642
+delta: 20262.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602962
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674867
+delta: 19361
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603126
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674468
+delta: 49967.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675011
+delta: 19771.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603003
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674703
+delta: 45312.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602829
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674826
+delta: 26207.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067455
+delta: 286144
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602982
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674734
+delta: 21007.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602737
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674601
+delta: 7910.37
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674478
+delta: 23833.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603032
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674632
+delta: 67664.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.06029
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674734
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603167
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067456
+delta: 13464.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603228
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0675031
+delta: 19297
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602716
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674683
+delta: 17186.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602808
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674478
+delta: 18296
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0602993
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674181
+delta: 56008.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0603054
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067455
+delta: 88271.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605256
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0674816
+delta: 45322
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606249
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679076
+delta: 23238.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607212
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679085
+delta: 18218.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607222
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679137
+delta: 16835.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060673
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679004
+delta: 163470
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679311
+delta: 19823.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679443
+delta: 10051.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607497
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669932
+delta: 26631.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609444
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679844
+delta: 39095.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060714
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679086
+delta: 27398.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0678902
+delta: 37099.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605245
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679352
+delta: 21165.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606853
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679506
+delta: 6449.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607242
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067927
+delta: 22346.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609587
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 89479.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607375
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679301
+delta: 30860.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607242
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679096
+delta: 30565.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060716
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679148
+delta: 10936.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679003
+delta: 32588.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607498
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 10054.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609699
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679127
+delta: 45701.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606802
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0678963
+delta: 17807.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607078
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679178
+delta: 15379.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609546
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679393
+delta: 21295.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607396
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679281
+delta: 70006.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067927
+delta: 65340.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607212
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679444
+delta: 9344.91
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607171
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669788
+delta: 12693.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607406
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066946
+delta: 37648.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607446
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 37274.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060757
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679322
+delta: 132047
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606955
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679578
+delta: 9461.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607212
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679178
+delta: 13579.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607365
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679658
+delta: 12608.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607375
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679342
+delta: 18795.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607334
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679547
+delta: 21641
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609393
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679168
+delta: 32814.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607436
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679383
+delta: 15624.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679075
+delta: 10507.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606853
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679086
+delta: 36767.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607232
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679772
+delta: 14383.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060972
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0680397
+delta: 18116.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679444
+delta: 20612
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607314
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679454
+delta: 23298.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679126
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607099
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067927
+delta: 15816.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606853
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679322
+delta: 8268.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060713
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679485
+delta: 66547.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060714
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679475
+delta: 27107.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679475
+delta: 6693.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607212
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679506
+delta: 44675.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607386
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679281
+delta: 21598.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607416
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679229
+delta: 60387.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607109
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679239
+delta: 59269.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607252
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0680069
+delta: 15301.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607406
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679414
+delta: 7734.83
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607386
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669276
+delta: 9483.76
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607345
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679864
+delta: 54828.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607304
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 10809.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607519
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 46683.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607048
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679567
+delta: 14210.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607263
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679404
+delta: 53469.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607099
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679516
+delta: 6805.02
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609741
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679107
+delta: 63316
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607365
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669942
+delta: 30688.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607304
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679537
+delta: 10694.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060972
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679219
+delta: 12999
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607037
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669921
+delta: 28130.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607191
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679393
+delta: 49050.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060714
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679424
+delta: 29628.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607252
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0678953
+delta: 7875.47
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607345
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679547
+delta: 10915.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607263
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679342
+delta: 30415
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607171
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679496
+delta: 16699.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607017
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669644
+delta: 29809.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607119
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679669
+delta: 8172.68
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609823
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679873
+delta: 19899.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607457
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679393
+delta: 32072.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607304
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679332
+delta: 13990.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607365
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679332
+delta: 107593
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607304
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679188
+delta: 6310.41
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607416
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679455
+delta: 21426.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607068
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679598
+delta: 13133.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607365
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679373
+delta: 14371.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607498
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679516
+delta: 53726.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679629
+delta: 19531.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679178
+delta: 47861.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060974
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679096
+delta: 5695.78
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669368
+delta: 17315
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607386
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679004
+delta: 10626.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607416
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679178
+delta: 10615.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607068
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679455
+delta: 11445.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679516
+delta: 26081.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679936
+delta: 8257.27
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679741
+delta: 17197.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605256
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679229
+device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060764
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679178
+delta: 204824
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607519
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679291
+delta: 9535.12
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607406
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067926
+delta: 4402.67
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679127
+delta: 31239.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607242
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679168
+delta: 56980.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607191
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679639
+delta: 7562.01
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607406
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679393
+delta: 14182.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607406
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.068011
+delta: 26872.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607324
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067925
+delta: 20481.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607078
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679219
+delta: 13356.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0605553
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067924
+delta: 21370.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607252
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679598
+delta: 5872.65
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607314
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679199
+delta: 18390.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607478
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067966
+delta: 100936
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607416
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679209
+delta: 11148.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607262
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679864
+delta: 20082.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607437
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679854
+delta: 14543.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607447
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679373
+delta: 27307.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607222
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679424
+delta: 6036.67
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0611092
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0683387
+delta: 13392.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609464
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679424
+delta: 22006.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607386
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679209
+delta: 14293.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607007
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679475
+delta: 10027.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.060971
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679444
+delta: 12429.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607232
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679547
+delta: 13945.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.06097
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066987
+delta: 29067.7
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607365
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067924
+delta: 62602.2
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0613202
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0681421
+delta: 9532.13
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607293
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679373
+delta: 9262.63
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607181
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067198
+delta: 4455.23
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607212
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679526
+delta: 73979.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607171
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679424
+delta: 50414.4
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607283
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0678902
+delta: 8018.74
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607273
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.067925
+delta: 7939.81
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606853
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669655
+delta: 12195.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0610785
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0683233
+delta: 104760
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.061014
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0669225
+delta: 7671.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609659
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679342
+delta: 15189
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0610662
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0682701
+delta: 7140.46
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609546
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679803
+delta: 14446.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607478
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679291
+delta: 9784.94
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607201
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679527
+delta: 11532
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607314
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.066946
+delta: 25061.3
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.061317
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0681851
+delta: 26772.9
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607427
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679598
+delta: 20465.1
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607273
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679506
+delta: 13581.5
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609454
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679475
+delta: 7719.49
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0606956
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679301
+delta: 12603.6
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0609761
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679199
+delta: 40486.8
+.device: 0x984370 kernel from: 0 to: 372736 -> range: 372736
+device: 0x984370 duration: 0.0607222
+device: GeForce GTX 1080 Ti (0x984370)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x984370 duration: 0.0679496
+delta: 6917.72
+
+Number of iterations: 500 (max. 500)
+Final norm of residuum: 6917.72
+counted_mult_calls: 510
+
+Needed Iterations: 500
+Final residuum: 6917.72
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 511.5
+note: performance calculation: additional iteration for residual recalculation : 10
+
+Current Duration:: 68.4202
+Current GFlop/s: 6869.31
+
+Finished Training!
+
+Training took: 68.4202 seconds
+
+total_duration: 73.7312

@@ -1,36 +1,38 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-OpenCLConfigFile: results_diss/friedman1_Gold5120_weakscaling_parameters_mult_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
 hostname: argon-gtx
+using OpenCL configuration
 dimensionality: 10
 number of grid points: 397825
 number of data points: 200000
+considering reduced evaluations for l=1 grid points
 grid points with level > 1: 1550100
 num_ops: 18601.2
-creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+ctor done!!!!!!!!!!!!!!!!
 starting performance test...
 algorithm: mult
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.76938
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.75761
 info: first mult not considered
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.76121
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.75658
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.75812
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.74856
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.7613
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.74936
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.75331
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.74516
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.74675
-device: 0x1173ec48 kernel from: 0 to: 200192 -> range: 200192
-device: 0x1173ec48 duration: 2.75543
-duration mult: 27.6054, repetitions: 10
-GFLOPS: 673.825
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.75468
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.74849
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.74946
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.75254
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.75676
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.75128
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.74176
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.77438
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.74263
+device: 0x1ed2c08 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1ed2c08 duration: 2.73491
+duration mult: 27.5751, repetitions: 10
+GFLOPS: 674.564

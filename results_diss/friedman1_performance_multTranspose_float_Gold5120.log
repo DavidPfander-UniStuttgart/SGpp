@@ -1,35 +1,37 @@
 datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-OpenCLConfigFile: results_diss/friedman1_Gold5120_weakscaling_parameters_multTrans_host_argon-gtx_tuner_line_search_t_float_10r_optimal.cfg
 hostname: argon-gtx
+using OpenCL configuration
 dimensionality: 10
 number of grid points: 397825
 number of data points: 200000
+considering full evaluation count
 num_ops: 47739
-creating createOperationMultipleEval grid: Linear type: STREAMING==DEFAULT subType: OCLUNIFIED
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+ctor done!!!!!!!!!!!!!!!!
 starting performance test...
 algorithm: multTrans
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.22795
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22992
 info: first multTranspose not considered
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.23168
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.22851
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.22571
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.2195
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.22127
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.22168
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.21968
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.21837
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.23459
-device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x71f92c8)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
-device: 0x71f92c8 duration: 5.21886
-duration multTranspose: 52.3214, repetitions: 10
-GFLOPS: 912.418
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.23356
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22889
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22303
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.21907
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.21589
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.25228
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22677
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22165
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.22198
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x11a7fb48)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x11a7fb48 duration: 5.21981
+duration multTranspose: 52.3474, repetitions: 10
+GFLOPS: 911.965

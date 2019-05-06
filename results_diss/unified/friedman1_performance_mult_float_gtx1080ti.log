@@ -1,0 +1,27 @@
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-gtx
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering reduced evaluations for l=1 grid points
+grid points with level > 1: 1550100
+num_ops: 9300.6
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: mult
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.493815
+info: first mult not considered
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.426976
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.427156
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.428495
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.42712
+device: 0x104f970 kernel from: 0 to: 200704 -> range: 200704
+device: 0x104f970 duration: 0.427232
+duration mult: 2.15755, repetitions_averaged: 5
+GFLOPS: 4310.72

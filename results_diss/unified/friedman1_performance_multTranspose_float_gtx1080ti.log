@@ -1,0 +1,26 @@
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-gtx
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering full evaluation count
+num_ops: 23869.5
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: multTrans
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.573091
+info: first multTranspose not considered
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.523259
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.523181
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.522821
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.523221
+device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1bb5970 duration: 0.523428
+duration multTranspose: 2.63882, repetitions_averaged: 5
+GFLOPS: 9045.51

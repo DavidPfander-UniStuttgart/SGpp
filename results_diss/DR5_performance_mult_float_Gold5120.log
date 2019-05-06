@@ -1,7 +1,7 @@
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 hostname: argon-gtx
 using OpenCL configuration
-ocl_init_duration: 6.44157
+ocl_init_duration: 6.38224
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
@@ -53,28 +53,28 @@ creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT su
 ctor done!!!!!!!!!!!!!!!!
 starting performance test...
 algorithm: mult
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.4579
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.454995
 info: first mult not considered
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.450388
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.452296
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.453226
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.450542
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.451807
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.455127
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.45155
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.449098
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.448828
-device: 0xca2e48 kernel from: 0 to: 372736 -> range: 372736
-device: 0xca2e48 duration: 0.449096
-duration mult: 4.55724, repetitions: 10
-GFLOPS: 760.014
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.450845
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.452177
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.452794
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.449722
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.450904
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.450261
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.450326
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.452018
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.453853
+device: 0xe0ae48 kernel from: 0 to: 372736 -> range: 372736
+device: 0xe0ae48 duration: 0.452524
+duration mult: 4.5616, repetitions: 10
+GFLOPS: 759.287

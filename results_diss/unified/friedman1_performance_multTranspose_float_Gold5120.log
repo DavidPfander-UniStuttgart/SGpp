@@ -1,0 +1,26 @@
+datasetFileName: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+hostname: argon-gtx
+using configuration
+dimensionality: 10
+number of grid points: 397825
+number of data points: 200000
+considering full evaluation count
+num_ops: 23869.5
+creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
+starting performance test...
+algorithm: multTrans
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.23005
+info: first multTranspose not considered
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.22829
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.22316
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.22725
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.21859
+device: Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz (0x396c948)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 199040)
+device: 0x396c948 duration: 5.23155
+duration multTranspose: 26.1662, repetitions_averaged: 5
+GFLOPS: 912.226
