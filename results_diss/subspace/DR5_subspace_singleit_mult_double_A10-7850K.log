@@ -33,12 +33,12 @@ starting performance test...
 algorithm: multTrans
 padding for: 512
 creating per-kernel header
-compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_419397/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/pfandedd/git/DissertationCode/SGpp/base/src -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_419397/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_419397/KernelMultTransposeSubspace_compile.log 2>&1
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_661463/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/home/pfandedd/git/DissertationCode/SGpp/base/src -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/home/pfandedd/git/DissertationCode/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_661463/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_661463/KernelMultTransposeSubspace_compile.log 2>&1
 compile log:
-compile duration: 1.71201
-link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_419397/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_419397/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_419397/KernelMultTransposeSubspace_link.log 2>&1
+compile duration: 1.70181
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_661463/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_661463/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_661463/KernelMultTransposeSubspace_link.log 2>&1
 link log:
-link duration: 0.100634
+link duration: 0.0999199
 info: first multTranspose not considered
-duration multTranspose: 34.2187, repetitions: 10
+duration multTranspose: 34.1529, repetitions_averaged: 10
 GFLOPS: 0
