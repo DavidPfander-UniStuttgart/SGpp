@@ -5,29 +5,34 @@
 
 namespace sgpp::datadriven {
 
-void support_refinement_iterative::neighbor_pos_dir_blocked(std::vector<int64_t> &schedule_level,
-                                                            std::vector<int64_t> &schedule_index,
-                                                            std::vector<double> &neighbors,
-                                                            direction dir) {
+void support_refinement_iterative::neighbor_pos_dir_blocked(
+    std::vector<int64_t> &schedule_level, std::vector<int64_t> &schedule_index,
+    std::vector<double> &neighbors, direction dir) {
   int64_t num_candidates = static_cast<int64_t>(schedule_level.size() / dim);
   if (dir == direction::left) {
-    for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+    for (int64_t candidate_index = 0; candidate_index < num_candidates;
+         candidate_index += 1) {
       for (int64_t d = 0; d < dim; d += 1) {
         neighbors[candidate_index * dim + d] =
-            std::pow(2.0, static_cast<double>(-schedule_level[candidate_index * dim + d])) *
-            static_cast<double>(schedule_index[candidate_index * dim + d] - 1ll);
+            std::pow(2.0, static_cast<double>(
+                              -schedule_level[candidate_index * dim + d])) *
+            static_cast<double>(schedule_index[candidate_index * dim + d] -
+                                1ll);
       }
     }
   } else if (dir == direction::right) {
-    for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+    for (int64_t candidate_index = 0; candidate_index < num_candidates;
+         candidate_index += 1) {
       for (int64_t d = 0; d < dim; d += 1) {
         neighbors[candidate_index * dim + d] =
-            std::pow(2.0, static_cast<double>(-schedule_level[candidate_index * dim + d])) *
-            static_cast<double>(schedule_index[candidate_index * dim + d] + 1ll);
+            std::pow(2.0, static_cast<double>(
+                              -schedule_level[candidate_index * dim + d])) *
+            static_cast<double>(schedule_index[candidate_index * dim + d] +
+                                1ll);
       }
     }
   } else {
-    throw;  // never
+    throw; // never
   }
 }
 
@@ -36,24 +41,30 @@ void support_refinement_iterative::verify_support_blocked() {
   std::vector<double> bound_left(schedule_level.size());
   std::vector<double> bound_right(schedule_level.size());
 
-  neighbor_pos_dir_blocked(schedule_level, schedule_index, bound_left, direction::left);
-  neighbor_pos_dir_blocked(schedule_level, schedule_index, bound_right, direction::right);
+  neighbor_pos_dir_blocked(schedule_level, schedule_index, bound_left,
+                           direction::left);
+  neighbor_pos_dir_blocked(schedule_level, schedule_index, bound_right,
+                           direction::right);
 
-  for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+  for (int64_t candidate_index = 0; candidate_index < num_candidates;
+       candidate_index += 1) {
     schedule_support[candidate_index] = false;
   }
 
   std::vector<int64_t> num_support(num_candidates, 0);
 #pragma omp parallel for
   for (int64_t data_index = 0; data_index < entries; data_index += 1) {
-    for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+    for (int64_t candidate_index = 0; candidate_index < num_candidates;
+         candidate_index += 1) {
       if (num_support[candidate_index] > min_support) {
         continue;
       }
       bool has_support = true;
       for (int64_t d = 0; d < dim; d += 1) {
-        if (data[d * entries + data_index] <= bound_left[candidate_index * dim + d] ||
-            data[d * entries + data_index] >= bound_right[candidate_index * dim + d]) {
+        if (data[d * entries + data_index] <=
+                bound_left[candidate_index * dim + d] ||
+            data[d * entries + data_index] >=
+                bound_right[candidate_index * dim + d]) {
           has_support = false;
           break;
         }
@@ -65,7 +76,8 @@ void support_refinement_iterative::verify_support_blocked() {
     }
   }
 
-  for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+  for (int64_t candidate_index = 0; candidate_index < num_candidates;
+       candidate_index += 1) {
     if (num_support[candidate_index] >= min_support) {
       schedule_support[candidate_index] = true;
     }
@@ -89,33 +101,35 @@ void support_refinement_iterative::refine_impl() {
     num_visited += num_candidates;
     std::cout << "num_candidates: " << num_candidates << std::endl;
     schedule_support.resize(num_candidates);
-// for (int64_t candidate_index = 0; candidate_index < num_candidates;
-// candidate_index += 1) { std::vector<int64_t> cur_l(dim); for (int64_t d =
-// 0; d < dim; d += 1) {
-//   cur_l[d] = schedule_level[candidate_index * dim + d];
-// }
-// std::vector<int64_t> cur_i(dim);
-// for (int64_t d = 0; d < dim; d += 1) {
-//   cur_i[d] = schedule_index[candidate_index * dim + d];
-// }
-// /////////////////////////////////
-// std::cout << "l: ";
-// for (int64_t d = 0; d < dim; d += 1) {
-//   if (d > 0) {
-//     std::cout << ", ";
-//   }
-//   std::cout << schedule_level[candidate_index * dim + d];
-// }
-// std::cout << " i: ";
-// for (int64_t d = 0; d < dim; d += 1) {
-//   if (d > 0) {
-//     std::cout << ", ";
-//   }
-//   std::cout << schedule_index[candidate_index * dim + d];
-// }
-// std::cout << std::endl;
-// /////////////////////////////////
+    // for (int64_t candidate_index = 0; candidate_index < num_candidates;
+    // candidate_index += 1) { std::vector<int64_t> cur_l(dim); for (int64_t d =
+    // 0; d < dim; d += 1) {
+    //   cur_l[d] = schedule_level[candidate_index * dim + d];
+    // }
+    // std::vector<int64_t> cur_i(dim);
+    // for (int64_t d = 0; d < dim; d += 1) {
+    //   cur_i[d] = schedule_index[candidate_index * dim + d];
+    // }
+    // /////////////////////////////////
+    // std::cout << "l: ";
+    // for (int64_t d = 0; d < dim; d += 1) {
+    //   if (d > 0) {
+    //     std::cout << ", ";
+    //   }
+    //   std::cout << schedule_level[candidate_index * dim + d];
+    // }
+    // std::cout << " i: ";
+    // for (int64_t d = 0; d < dim; d += 1) {
+    //   if (d > 0) {
+    //     std::cout << ", ";
+    //   }
+    //   std::cout << schedule_index[candidate_index * dim + d];
+    // }
+    // std::cout << std::endl;
+    // /////////////////////////////////
 
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
 #if USE_OCL == 1
     if (use_ocl) {
       verify_support_blocked_OCL();
@@ -125,6 +139,10 @@ void support_refinement_iterative::refine_impl() {
 #else
     verify_support_blocked();
 #endif
+    end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::cout << "support refinement took: " << elapsed_seconds.count()
+              << std::endl;
     // // std::cout << "num_support: " << num_support << std::endl;
     // if (num_support > min_support) {
     //   // std::cout << "ok? true" << std::endl;
@@ -135,7 +153,9 @@ void support_refinement_iterative::refine_impl() {
     // }
     // }
     std::cout << "candidates with support: "
-              << std::count(schedule_support.begin(), schedule_support.end(), true) << std::endl;
+              << std::count(schedule_support.begin(), schedule_support.end(),
+                            true)
+              << std::endl;
 
     // for (bool b : schedule_support) {
     //   std::cout << b;
@@ -143,15 +163,18 @@ void support_refinement_iterative::refine_impl() {
     // std::cout << std::endl;
 
     // create next schedule
-    for (int64_t candidate_index = 0; candidate_index < num_candidates; candidate_index += 1) {
+    for (int64_t candidate_index = 0; candidate_index < num_candidates;
+         candidate_index += 1) {
       if (!schedule_support[candidate_index]) {
         // std::cout << "skip!" << std::endl;
         continue;
       }
 
-      levels.insert(levels.end(), schedule_level.begin() + (candidate_index * dim),
+      levels.insert(levels.end(),
+                    schedule_level.begin() + (candidate_index * dim),
                     schedule_level.begin() + (candidate_index + 1) * dim);
-      indices.insert(indices.end(), schedule_index.begin() + (candidate_index * dim),
+      indices.insert(indices.end(),
+                     schedule_index.begin() + (candidate_index * dim),
                      schedule_index.begin() + (candidate_index + 1) * dim);
 
       std::vector<int64_t> cur_l(dim);
@@ -182,27 +205,31 @@ void support_refinement_iterative::refine_impl() {
           std::vector<int64_t> child_l;
           std::vector<int64_t> child_i;
           child_d_dir(cur_l, cur_i, child_l, child_i, d, direction::left);
-          schedule_next_level.insert(schedule_next_level.end(), child_l.begin(), child_l.end());
-          schedule_next_index.insert(schedule_next_index.end(), child_i.begin(), child_i.end());
+          schedule_next_level.insert(schedule_next_level.end(), child_l.begin(),
+                                     child_l.end());
+          schedule_next_index.insert(schedule_next_index.end(), child_i.begin(),
+                                     child_i.end());
           child_d_dir(cur_l, cur_i, child_l, child_i, d, direction::right);
-          schedule_next_level.insert(schedule_next_level.end(), child_l.begin(), child_l.end());
-          schedule_next_index.insert(schedule_next_index.end(), child_i.begin(), child_i.end());
+          schedule_next_level.insert(schedule_next_level.end(), child_l.begin(),
+                                     child_l.end());
+          schedule_next_index.insert(schedule_next_index.end(), child_i.begin(),
+                                     child_i.end());
           if (cur_l[d] != 1) {
             break;
           }
         }
       }
-    }  // end candidates
+    } // end candidates
     swap(schedule_level, schedule_next_level);
     schedule_next_level.clear();
     swap(schedule_index, schedule_next_index);
     schedule_next_index.clear();
-  }  // end while
+  } // end while
 }
 
-support_refinement_iterative::support_refinement_iterative(int64_t dim, int64_t max_level,
-                                                           int64_t min_support,
-                                                           const std::vector<double> &data)
+support_refinement_iterative::support_refinement_iterative(
+    int64_t dim, int64_t max_level, int64_t min_support,
+    const std::vector<double> &data)
     : dim(dim), max_level(max_level), min_support(min_support), num_visited(0) {
   entries = data.size() / dim;
   this->data.resize(data.size());
@@ -232,8 +259,12 @@ void support_refinement_iterative::refine() {
   refine_impl();
 }
 
-std::vector<int64_t> &support_refinement_iterative::get_levels() { return levels; }
-std::vector<int64_t> &support_refinement_iterative::get_indices() { return indices; }
+std::vector<int64_t> &support_refinement_iterative::get_levels() {
+  return levels;
+}
+std::vector<int64_t> &support_refinement_iterative::get_indices() {
+  return indices;
+}
 
 void support_refinement_iterative::print_level(std::vector<int64_t> l) {
   std::cout << "l: (";
@@ -266,11 +297,10 @@ void support_refinement_iterative::print_pos(std::vector<double> pos) {
   std::cout << ")" << std::endl;
 }
 
-void support_refinement_iterative::write_grid_positions(int64_t dim,
-                                                        const std::string &grid_file_name,
-                                                        const std::string &dataset_file_name,
-                                                        std::vector<int64_t> &ls,
-                                                        std::vector<int64_t> &is) {
+void support_refinement_iterative::write_grid_positions(
+    int64_t dim, const std::string &grid_file_name,
+    const std::string &dataset_file_name, std::vector<int64_t> &ls,
+    std::vector<int64_t> &is) {
   std::ofstream out_file(grid_file_name);
 
   for (int64_t d = 0; d < dim; d += 1) {
@@ -297,4 +327,4 @@ void support_refinement_iterative::write_grid_positions(int64_t dim,
   }
 }
 
-}  // namespace sgpp::datadriven
+} // namespace sgpp::datadriven
