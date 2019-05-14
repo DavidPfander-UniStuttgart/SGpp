@@ -61,8 +61,8 @@ eval_repetitions=5
 # # streaming intrinsics -> OCL not available on all platforms
 # ./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type STREAMING --operation.subType DEFAULT --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true > results_diss/friedman1_regression_comparison_streaming_modlinear_${device_name}.log 2>&1
 
-# subspace
-./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true > results_diss/friedman1_regression_comparison_subspace_modlinear_${device_name}.log --additionalConfig results_diss/subspace/friedman1_${device_name}_Subspace_combined_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg 2>&1
+# # subspace
+# ./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type ModLinear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true > results_diss/friedman1_regression_comparison_subspace_modlinear_${device_name}.log --additionalConfig results_diss/subspace/friedman1_${device_name}_Subspace_combined_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg 2>&1
 
 ###### linear ######
 
@@ -72,5 +72,5 @@ eval_repetitions=5
 # # streaming intrinsics -> OCL not available on all platforms
 # ./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type Linear --verbose true --operation.type STREAMING --operation.subType DEFAULT --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true > results_diss/friedman1_regression_comparison_streaming_linear_${device_name}.log 2>&1
 
-# subspace
-./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type Linear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --additionalConfig results_diss/subspace/friedman1_${device_name}_Subspace_combined_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg > results_diss/friedman1_regression_comparison_subspace_linear_${device_name}.log 2>&1
+# # subspace
+# ./datadriven/examplesOCL/regression_cmd --trainingFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --learnerMode LEARN --grid.level 7 --lambda 1E-5 --grid.type Linear --verbose true --operation.type SUBSPACE --operation.subType AUTOTUNETMP --solverFinal.maxIterations 100 --solverFinal.eps 0 --isRegression true --additionalConfig results_diss/subspace/friedman1_${device_name}_Subspace_combined_tuner_line_search_t_${eval_repetitions}av_0r_optimal.cfg > results_diss/friedman1_regression_comparison_subspace_linear_${device_name}.log 2>&1

@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
   bool useSupportRefinement;
   int64_t supportRefinementMinSupport;
   std::string file_prefix; // path and prefix of file name
+  bool randomization_enabled;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -71,7 +72,11 @@ int main(int argc, char **argv) {
       "for support refinement, minimal number of data points "
       "on support for accepting data point")(
       "file_prefix", boost::program_options::value<std::string>(&file_prefix),
-      "name for the current run, used when files are written");
+      "name for the current run, used when files are written")(
+      "randomization_enabled",
+      boost::program_options::value<bool>(&randomization_enabled)
+          ->default_value(true),
+      "randomize initial parameter values (default: true)");
 
   boost::program_options::variables_map variables_map;
 
@@ -223,12 +228,12 @@ int main(int argc, char **argv) {
   }
 
   for (size_t rep = 0; rep < repetitions; rep += 1) {
-    std::string full_scenario_prefix(file_prefix + scenarioName + +"_" +
-                                     algorithm_to_tune + "_host_" + hostname +
-                                     "_tuner_" + tunerName + "_t_" +
-                                     (*parameters)["INTERNAL_PRECISION"].get() + "_" +
-                                     std::to_string(repetitions_averaged) +
-                                     "av_" + std::to_string(rep) + "r");
+    std::string full_scenario_prefix(
+        file_prefix + scenarioName + +"_" + algorithm_to_tune + "_host_" +
+        hostname + "_tuner_" + tunerName + "_t_" +
+        (*parameters)["INTERNAL_PRECISION"].get() + "_" +
+        std::to_string(repetitions_averaged) + "av_" + std::to_string(rep) +
+        "r");
     if (!trans) {
       sgpp::base::DataVector alpha(gridStorage.getSize());
       for (size_t i = 0; i < alpha.getSize(); i++) {

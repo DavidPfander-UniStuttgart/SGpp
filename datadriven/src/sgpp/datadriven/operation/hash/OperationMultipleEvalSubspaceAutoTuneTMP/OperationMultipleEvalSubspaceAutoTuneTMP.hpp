@@ -69,6 +69,8 @@ private:
   bool configuration_changed_mult;
   bool configuration_changed_multTrans;
 
+  bool randomization_enabled;
+
   /**
    * Creates the data structure used by the operation.
    */
@@ -182,6 +184,8 @@ public:
                           const std::string &tuner_name, uint32_t repetitions);
 
   void set_configuration(std::string &configuration_file_name);
+
+  void set_randomize_parameter_values(bool randomization_enabled);
 };
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP

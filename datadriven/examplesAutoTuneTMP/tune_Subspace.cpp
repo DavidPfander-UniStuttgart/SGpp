@@ -32,6 +32,7 @@ int main(int argc, char **argv) {
   bool useSupportRefinement;
   int64_t supportRefinementMinSupport;
   std::string file_prefix; // path and prefix of file name
+  bool randomization_enabled;
 
   boost::program_options::options_description description("Allowed options");
 
@@ -73,7 +74,11 @@ int main(int argc, char **argv) {
       "for support refinement, minimal number of data points "
       "on support for accepting data point")(
       "file_prefix", boost::program_options::value<std::string>(&file_prefix),
-      "name for the current run, used when files are written");
+      "name for the current run, used when files are written")(
+      "randomization_enabled",
+      boost::program_options::value<bool>(&randomization_enabled)
+          ->default_value(true),
+      "randomize initial parameter values (default: true)");
 
   boost::program_options::variables_map variables_map;
 
@@ -200,6 +205,14 @@ int main(int argc, char **argv) {
       std::unique_ptr<sgpp::base::OperationMultipleEval>(
           sgpp::op_factory::createOperationMultipleEval(*grid, trainingData,
                                                         configuration));
+  if (!randomization_enabled) {
+    sgpp::datadriven::SubspaceAutoTuneTMP::
+        OperationMultipleEvalSubspaceAutoTuneTMP &eval_cast =
+            dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
+                             OperationMultipleEvalSubspaceAutoTuneTMP &>(
+                *eval.get());
+    eval_cast.set_randomize_parameter_values(false);
+  }
 
   std::cout << "number of grid points after refinement: "
             << gridStorage.getSize() << std::endl;
