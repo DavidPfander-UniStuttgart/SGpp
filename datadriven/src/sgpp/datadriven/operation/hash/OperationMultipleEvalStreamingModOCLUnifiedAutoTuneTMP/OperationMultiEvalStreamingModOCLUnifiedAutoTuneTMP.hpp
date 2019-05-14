@@ -85,6 +85,8 @@ protected:
   double duration_mult_acc;
   double duration_multTranspose_acc;
 
+  bool randomization_enabled;
+
 public:
   /**
    * Creates a new instance of the OperationMultiEvalStreamingOCLMultiPlatform
@@ -107,7 +109,7 @@ public:
       : OperationMultipleEval(grid, dataset), dims(dataset.getNcols()),
         duration(-1.0), always_recompile(true), isModLinear(isModLinear),
         tune_repetitions(tune_repetitions), duration_mult_acc(0.0),
-        duration_multTranspose_acc(0.0) {
+        duration_multTranspose_acc(0.0), randomization_enabled(true) {
     this->verbose = (*parameters)["VERBOSE"].getBool();
     this->ocl_parameters_mult =
         std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
@@ -123,7 +125,7 @@ public:
 
     // mult/multi-eval parameters
     autotune::fixed_set_parameter<bool> p6("KERNEL_USE_LOCAL_MEMORY",
-                                           {true, false});
+                                           {true, false}); //CONTINUE: set to plausible untuned parameter combination, verify for subspace as well
     autotune::fixed_set_parameter<uint64_t> p7("LOCAL_SIZE", {64, 128, 256});
     autotune::fixed_set_parameter<uint64_t> p1("KERNEL_DATA_BLOCK_SIZE",
                                                {1, 2, 4, 8});
@@ -327,8 +329,10 @@ public:
     // autotune_parameters_mult); tuner.set_write_measurement(scenario_name);
     // tuner.set_verbose(true);
 
-    for (size_t i = 0; i < autotune_parameters_mult.size(); i += 1) {
-      autotune_parameters_mult[i]->set_random_value();
+    if (randomization_enabled) {
+      for (size_t i = 0; i < autotune_parameters_mult.size(); i += 1) {
+        autotune_parameters_mult[i]->set_random_value();
+      }
     }
 
     autotune::countable_set optimal_parameters;
@@ -372,8 +376,10 @@ public:
                           const std::string &scenario_name,
                           const std::string &tuner_name) {
 
-    for (size_t i = 0; i < autotune_parameters_multTranspose.size(); i += 1) {
-      autotune_parameters_multTranspose[i]->set_random_value();
+    if (randomization_enabled) {
+      for (size_t i = 0; i < autotune_parameters_multTranspose.size(); i += 1) {
+        autotune_parameters_multTranspose[i]->set_random_value();
+      }
     }
 
     autotune::countable_set optimal_parameters;
@@ -442,6 +448,10 @@ public:
     // std::stringstream ss;
     // config.serialize(ss, 0);
     // std::cout << ss.str() << std::endl;
+  }
+
+  void set_randomize_parameter_values(bool randomization_enabled) {
+    this->randomization_enabled = randomization_enabled;
   }
 };
 
