@@ -15,7 +15,9 @@ srun echo `hostname`
 cd /data/argon-fs/sgs/pfandedd/DissertationCodeTesla1/SGpp
 
 git pull
-scons -j20
 
 source source_autotunetmp_generic.sh
+
+scons -j20
+
 ./diss_experiments/regression_unified_AutoTuneTMP_untuned_start.sh
