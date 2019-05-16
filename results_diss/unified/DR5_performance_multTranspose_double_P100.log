@@ -1,46 +1,56 @@
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 hostname: argon-tesla1
 using configuration
-ocl_init_duration: 2.56056
+ocl_init_duration: 2.58049
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
+support refinement took: 0.328582
 candidates with support: 1
 num_candidates: 10
 num_candidates: 10 block_size: 128 num_candidates_per_device: 10
 device: 0 range_padded: 128 range_start: 0 range_end: 10
+support refinement took: 0.295594
 candidates with support: 10
 num_candidates: 60
 num_candidates: 60 block_size: 128 num_candidates_per_device: 60
 device: 0 range_padded: 128 range_start: 0 range_end: 60
+support refinement took: 0.314502
 candidates with support: 52
 num_candidates: 236
 num_candidates: 236 block_size: 128 num_candidates_per_device: 236
 device: 0 range_padded: 256 range_start: 0 range_end: 236
+support refinement took: 0.298173
 candidates with support: 181
 num_candidates: 706
 num_candidates: 706 block_size: 128 num_candidates_per_device: 706
 device: 0 range_padded: 768 range_start: 0 range_end: 706
+support refinement took: 0.318748
 candidates with support: 503
 num_candidates: 1786
 num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
 device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+support refinement took: 0.302672
 candidates with support: 1241
 num_candidates: 4140
 num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
 device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+support refinement took: 0.300693
 candidates with support: 2886
 num_candidates: 9216
 num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
 device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+support refinement took: 0.320915
 candidates with support: 6397
 num_candidates: 19682
 num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
 device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+support refinement took: 0.343142
 candidates with support: 13464
 num_candidates: 40066
 num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
 device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+support refinement took: 0.539942
 candidates with support: 26558
 support refinement done, grid size: 51293
 dimensionality: 5
@@ -51,18 +61,18 @@ num_ops: 2861.44
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.216675
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212956
 info: first multTranspose not considered
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.216658
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.216665
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.216654
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.216676
-device: Tesla P100-PCIE-16GB (0x102ecf0)  kernel from: 0 to: 51328 -> range: 51328 (with blocking: 51328)
-device: 0x102ecf0 duration: 0.220361
-duration multTranspose: 1.10387, repetitions_averaged: 5
-GFLOPS: 2592.18
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212982
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212974
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212955
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212964
+device: Tesla P100-PCIE-16GB (0x23d1cf0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 25728)
+device: 0x23d1cf0 duration: 0.212966
+duration multTranspose: 1.08172, repetitions_averaged: 5
+GFLOPS: 2645.26
