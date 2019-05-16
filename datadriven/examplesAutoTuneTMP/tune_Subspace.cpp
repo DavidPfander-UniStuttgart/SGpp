@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   uint32_t repetitions;
   bool trans;
   bool isModLinear;
-  bool do_warmup_eval;
+  // bool do_warmup_eval;
   bool useSupportRefinement;
   int64_t supportRefinementMinSupport;
   std::string file_prefix; // path and prefix of file name
@@ -55,12 +55,14 @@ int main(int argc, char **argv) {
       "how often the tuning is to be repeated")(
       "trans",
       boost::program_options::value<bool>(&trans)->default_value(false),
-      "tune the transposed mult kernel instead of the standard one")(
-      "do_warmup_eval",
-      boost::program_options::value<bool>(&do_warmup_eval)
-          ->default_value(false),
-      "perform additional eval which is ignored for consideration of the "
-      "performance of the parameter combination")(
+      "tune the transposed mult kernel instead of the standard one")
+      // (
+      // "do_warmup_eval",
+      // boost::program_options::value<bool>(&do_warmup_eval)
+      //     ->default_value(false),
+      // "perform additional eval which is ignored for consideration of the "
+      // "performance of the parameter combination")
+      (
       "isModLinear",
       boost::program_options::value<bool>(&isModLinear)->default_value(true),
       "use linear or mod-linear grid")(
