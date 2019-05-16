@@ -18,6 +18,9 @@ elif [ ${hn} = "argon-gtx" ]; then
     device_name_f1='gtx1080ti'
     AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
     device_name_f1_cpu='Gold5120'
+elif [ ${hn} = "large" ]; then
+    device_name_f1='E52670'
+    AUTOTUNETMP_SELECT="Intel(R) CPU Runtime for OpenCL(TM) Applications/       Intel(R) Xeon(R) CPU E5-2670 0 @ 2.60GHz"
 fi
 echo "hostname: ${hn}"
 echo "device_name_f1: ${device_name_f1}"
