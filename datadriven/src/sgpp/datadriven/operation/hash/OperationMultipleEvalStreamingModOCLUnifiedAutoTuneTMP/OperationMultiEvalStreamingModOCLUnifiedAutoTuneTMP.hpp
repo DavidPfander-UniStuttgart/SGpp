@@ -27,7 +27,9 @@
 #include "autotune/tuners/bruteforce.hpp"
 #include "autotune/tuners/countable_set.hpp"
 #include "autotune/tuners/line_search.hpp"
+#include "autotune/tuners/monte_carlo.hpp"
 #include "autotune/tuners/neighborhood_search.hpp"
+#include "autotune/tuners/randomizable_set.hpp"
 
 AUTOTUNE_GENERALIZED_KERNEL(void(sgpp::base::DataVector &,
                                  sgpp::base::DataVector &),
@@ -73,6 +75,9 @@ protected:
 
   autotune::countable_set autotune_parameters_mult;
   autotune::countable_set autotune_parameters_multTranspose;
+
+  autotune::randomizable_set autotune_parameters_randomizable_mult;
+  autotune::randomizable_set autotune_parameters_randomizable_multTranspose;
 
   // has to be enabled during tuning (recompile needed to propagate changed
   // parameters)
@@ -124,8 +129,10 @@ public:
         {"-cl-unsafe-math-optimizations -cl-denorms-are-zero"}, false);
 
     // mult/multi-eval parameters
-    autotune::fixed_set_parameter<bool> p6("KERNEL_USE_LOCAL_MEMORY",
-                                           {true, false}); //CONTINUE: set to plausible untuned parameter combination, verify for subspace as well
+    autotune::fixed_set_parameter<bool> p6(
+        "KERNEL_USE_LOCAL_MEMORY",
+        {true, false}); // CONTINUE: set to plausible untuned parameter
+                        // combination, verify for subspace as well
     autotune::fixed_set_parameter<uint64_t> p7("LOCAL_SIZE", {64, 128, 256});
     autotune::fixed_set_parameter<uint64_t> p1("KERNEL_DATA_BLOCK_SIZE",
                                                {1, 2, 4, 8});
@@ -149,6 +156,16 @@ public:
     autotune_parameters_mult.add_parameter(p6);
     autotune_parameters_mult.add_parameter(p7);
     autotune_parameters_mult.add_parameter(p8);
+
+    autotune_parameters_randomizable_mult.add_parameter(p0);
+    autotune_parameters_randomizable_mult.add_parameter(p1);
+    autotune_parameters_randomizable_mult.add_parameter(p2);
+    autotune_parameters_randomizable_mult.add_parameter(p3);
+    autotune_parameters_randomizable_mult.add_parameter(p4);
+    autotune_parameters_randomizable_mult.add_parameter(p5);
+    autotune_parameters_randomizable_mult.add_parameter(p6);
+    autotune_parameters_randomizable_mult.add_parameter(p7);
+    autotune_parameters_randomizable_mult.add_parameter(p8);
 
     // trans parameters
     autotune::fixed_set_parameter<bool> p9("KERNEL_TRANS_USE_LOCAL_MEMORY",
@@ -177,6 +194,16 @@ public:
     autotune_parameters_multTranspose.add_parameter(p14);
     autotune_parameters_multTranspose.add_parameter(p15);
     autotune_parameters_multTranspose.add_parameter(p16);
+
+    autotune_parameters_randomizable_multTranspose.add_parameter(p0);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p9);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p10);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p11);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p12);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p13);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p14);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p15);
+    autotune_parameters_randomizable_multTranspose.add_parameter(p16);
 
     autotune::mult_unified_with_tuning.set_kernel_functor(
         [this](base::DataVector &alpha, base::DataVector &result) {
@@ -358,18 +385,42 @@ public:
       tuner.set_write_measurement(scenario_name);
       // tuner.setup_test(test_result);
       optimal_parameters = tuner.tune(alpha, result);
+    } else if (tuner_name.compare("monte_carlo") == 0) {
+      autotune::tuners::monte_carlo tuner(autotune::mult_unified_with_tuning,
+                                          autotune_parameters_randomizable_mult,
+                                          100);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      autotune::randomizable_set optimal_parameters_randomizable =
+          tuner.tune(alpha, result);
+      autotune::mult_unified_with_tuning.set_parameter_values(
+          optimal_parameters_randomizable);
+      autotune::parameter_value_set pv =
+          to_parameter_values(optimal_parameters_randomizable);
+      apply_parameter_values(*(this->ocl_parameters_mult), pv);
+      std::stringstream ss;
+      this->ocl_parameters_mult->serialize(ss, 0);
+      // std::cout << ss.str() << std::endl;
+      std::ofstream opt_config(scenario_name + "_optimal.cfg");
+      opt_config << ss.str();
+      opt_config.close();
     } else {
       throw "error: tuner not implemented!";
     }
-    autotune::mult_unified_with_tuning.set_parameter_values(optimal_parameters);
-    autotune::parameter_value_set pv = to_parameter_values(optimal_parameters);
-    apply_parameter_values(*(this->ocl_parameters_mult), pv);
-    std::stringstream ss;
-    this->ocl_parameters_mult->serialize(ss, 0);
-    // std::cout << ss.str() << std::endl;
-    std::ofstream opt_config(scenario_name + "_optimal.cfg");
-    opt_config << ss.str();
-    opt_config.close();
+
+    if (tuner_name.compare("neighborhood_search") != 0) {
+      autotune::mult_unified_with_tuning.set_parameter_values(
+          optimal_parameters);
+      autotune::parameter_value_set pv =
+          to_parameter_values(optimal_parameters);
+      apply_parameter_values(*(this->ocl_parameters_mult), pv);
+      std::stringstream ss;
+      this->ocl_parameters_mult->serialize(ss, 0);
+      // std::cout << ss.str() << std::endl;
+      std::ofstream opt_config(scenario_name + "_optimal.cfg");
+      opt_config << ss.str();
+      opt_config.close();
+    }
   }
 
   void tune_multTranspose(base::DataVector &source, base::DataVector &result,
@@ -389,7 +440,6 @@ public:
           autotune_parameters_multTranspose);
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
-      // tuner.setup_test(test_result);
       optimal_parameters = tuner.tune(source, result);
     } else if (tuner_name.compare("line_search") == 0) {
       autotune::tuners::line_search tuner(
@@ -398,7 +448,6 @@ public:
           10 * autotune_parameters_multTranspose.size());
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
-      // tuner.setup_test(test_result);
       optimal_parameters = tuner.tune(source, result);
     } else if (tuner_name.compare("neighborhood_search") == 0) {
       autotune::tuners::neighborhood_search tuner(
@@ -406,21 +455,42 @@ public:
           autotune_parameters_multTranspose, 100);
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
-      // tuner.setup_test(test_result);
       optimal_parameters = tuner.tune(source, result);
+    } else if (tuner_name.compare("monte_carlo") == 0) {
+      autotune::tuners::monte_carlo tuner(
+          autotune::mult_transpose_unified_with_tuning,
+          autotune_parameters_randomizable_multTranspose, 100);
+      tuner.set_verbose(true);
+      tuner.set_write_measurement(scenario_name);
+      autotune::randomizable_set optimal_parameters_randomizable =
+          tuner.tune(source, result);
+      autotune::mult_transpose_unified_with_tuning.set_parameter_values(
+          optimal_parameters_randomizable);
+      autotune::parameter_value_set pv =
+          to_parameter_values(optimal_parameters_randomizable);
+      apply_parameter_values(*(this->ocl_parameters_multTranspose), pv);
+      std::stringstream ss;
+      this->ocl_parameters_multTranspose->serialize(ss, 0);
+      std::ofstream opt_config(scenario_name + "_optimal.cfg");
+      opt_config << ss.str();
+      opt_config.close();
     } else {
       throw "error: tuner not implemented!";
     }
-    autotune::mult_transpose_unified_with_tuning.set_parameter_values(
-        optimal_parameters);
-    autotune::parameter_value_set pv = to_parameter_values(optimal_parameters);
-    apply_parameter_values(*(this->ocl_parameters_multTranspose), pv);
-    std::stringstream ss;
-    this->ocl_parameters_multTranspose->serialize(ss, 0);
-    // std::cout << ss.str() << std::endl;
-    std::ofstream opt_config(scenario_name + "_optimal.cfg");
-    opt_config << ss.str();
-    opt_config.close();
+
+    if (tuner_name.compare("monte_carlo") != 0) {
+      autotune::mult_transpose_unified_with_tuning.set_parameter_values(
+          optimal_parameters);
+      autotune::parameter_value_set pv =
+          to_parameter_values(optimal_parameters);
+      apply_parameter_values(*(this->ocl_parameters_multTranspose), pv);
+      std::stringstream ss;
+      this->ocl_parameters_multTranspose->serialize(ss, 0);
+      // std::cout << ss.str() << std::endl;
+      std::ofstream opt_config(scenario_name + "_optimal.cfg");
+      opt_config << ss.str();
+      opt_config.close();
+    }
   }
 
   void apply_parameter_values(base::OCLOperationConfiguration &config,

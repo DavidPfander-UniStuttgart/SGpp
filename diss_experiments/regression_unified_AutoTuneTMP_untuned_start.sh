@@ -30,58 +30,44 @@ eval_repetitions=5
 
 ############## friedman1 dataset ##############
 
-./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+# single
+./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 
-# GPU device
-./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-
-./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
-
-# this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
+# double
 if [ ${hn} != "argon-gtx" ]; then
-    ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-
-    # tune for 1 device as there is enough work guaranteed
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
+    ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
 fi
 
+# special case for Xeon on argon-gtx, single only
 if [ ${hn} = "argon-gtx" ]; then
     # use argon-gtx as cpu platform
     AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
-    ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
+    ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
     AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
-
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/friedman1_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff --scenarioName friedman1_${device_name_f1_cpu}_untuned --level 7 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
 fi
 
-./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-
-############## DR5 dataset ##############
-
-# tune for 1 device as there is enough work guaranteed
-./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-
-./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
-
-# this excludes gtx1080ti and the Gold5120 (the Intel OpenCL platform does not support 64bit atomics)
-if [ ${hn} != "argon-gtx" ]; then
-    ./datadriven/examplesOCL/detectPlatform --precision double --file_name results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-
-    # tune for 1 device as there is enough work guaranteed
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
-fi
-
-if [ ${hn} = "argon-gtx" ]; then
-    # use argon-gtx as cpu platform
-    AUTOTUNETMP_SELECT="Intel(R) OpenCL/Intel(R) Xeon(R) Gold 5120 CPU @ 2.20GHz"
-    ./datadriven/examplesOCL/detectPlatform --precision float --file_name results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --select="${AUTOTUNETMP_SELECT}" --remove_unselected
-    AUTOTUNETMP_SELECT="NVIDIA CUDA/GeForce GTX 1080 Ti"
-
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans false --randomization_enabled false
-    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/DR5_${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_f1_cpu}_untuned --level 10 --use_support_refinement --support_refinement_min_support 500 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans true --randomization_enabled false
-fi
+for dataset_name in DR5 friedman1
+do
+    if [ ${dataset_name} = "DR5" ]; then
+        dataset_path=../datasets/DR5/DR5_nowarnings_less05_train.arff
+    elif [ ${dataset_name} = "friedman1" ]; then
+        dataset_path=../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
+    fi
+    
+    for is_trans in false true
+    do
+        for search_strategy in line_search neighborhood_search monte_carlo
+        do
+            # single
+            ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/${hn}_${device_name_f1}_ocl_config_single.cfg --datasetFileName ${dataset_path} --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name ${search_strategy} --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans ${is_trans} --randomization_enabled false
+            # double
+            if [ ${hn} != "argon-gtx" ]; then
+                ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/${hn}_${device_name_f1}_ocl_config_double.cfg --datasetFileName ${dataset_path} --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name ${search_strategy} --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans ${is_trans} --randomization_enabled false
+            fi
+            # special case for Xeon Gold on argon-gtx
+            if [ ${hn} != "argon-gtx" ]; then
+                ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/unified/${hn}_${device_name_f1_cpu}_ocl_config_single.cfg --datasetFileName ${dataset_path} --scenarioName friedman1_${device_name_f1}_untuned --level 7 --tuner_name ${search_strategy} --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --file_prefix results_diss/unified/ --trans ${is_trans} --randomization_enabled false
+            fi
+        done
+    done
+done
