@@ -1,0 +1,11 @@
+KERNEL_TRANS_DATA_SPLIT,KERNEL_TRANS_GRID_BLOCK_SIZE,KERNEL_TRANS_MAX_DIM_UNROLL,KERNEL_TRANS_PREFETCH_SIZE,KERNEL_TRANS_STORE_DATA,KERNEL_TRANS_TRANSFER_WHOLE_GRID,KERNEL_TRANS_USE_LOCAL_MEMORY,OPTIMIZATION_FLAGS,TRANS_LOCAL_SIZE,kernel_s,kernel_s_raw,compile_s,par_compile_s,par_compile_count
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,3.9715,3.9715,0.000153136,0,0
+8,1,4,32,array,true,false,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,7.58539,7.58539,0.000249033,0,0
+8,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,128,4.00318,4.00318,0.000313495,0,0
+8,2,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,5.99337,5.99337,0.000252139,0,0
+4,1,4,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,3.97907,3.97907,0.000310694,0,0
+8,1,10,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,8.06957,8.06957,0.000252742,0,0
+8,1,2,32,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.11426,4.11426,0.000317294,0,0
+8,1,4,64,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.22625,4.22625,0.00024961,0,0
+8,1,4,16,array,true,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.14728,4.14728,0.00031938,0,0
+8,1,4,32,array,false,true,-cl-unsafe-math-optimizations -cl-denorms-are-zero,256,4.00387,4.00387,0.000265132,0,0
