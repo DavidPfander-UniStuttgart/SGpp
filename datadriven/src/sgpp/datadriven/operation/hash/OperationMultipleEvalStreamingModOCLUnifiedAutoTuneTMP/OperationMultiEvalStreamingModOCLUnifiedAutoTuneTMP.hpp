@@ -131,7 +131,7 @@ public:
     // mult/multi-eval parameters
     autotune::fixed_set_parameter<bool> p6(
         "KERNEL_USE_LOCAL_MEMORY",
-        {true, false}); // CONTINUE: set to plausible untuned parameter
+        {false, true}); // CONTINUE: set to plausible untuned parameter
                         // combination, verify for subspace as well
     autotune::fixed_set_parameter<uint64_t> p7("LOCAL_SIZE", {64, 128, 256});
     autotune::fixed_set_parameter<uint64_t> p1("KERNEL_DATA_BLOCK_SIZE",
@@ -169,7 +169,7 @@ public:
 
     // trans parameters
     autotune::fixed_set_parameter<bool> p9("KERNEL_TRANS_USE_LOCAL_MEMORY",
-                                           {true, false});
+                                           {false, true});
     autotune::fixed_set_parameter<uint64_t> p10("TRANS_LOCAL_SIZE",
                                                 {64, 128, 256});
     autotune::fixed_set_parameter<uint64_t> p11("KERNEL_TRANS_GRID_BLOCK_SIZE",
@@ -523,6 +523,12 @@ public:
   void set_randomize_parameter_values(bool randomization_enabled) {
     this->randomization_enabled = randomization_enabled;
   }
+
+  // parameter_value_set pvn_reset(config, size_t i) {
+
+  //     autotune::mult_unified_with_tuning.set_parameter_values(
+  //                                                             optimal_parameters_randomizable);
+  // }
 };
 
 } // namespace StreamingModOCLUnifiedAutoTuneTMP
