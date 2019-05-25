@@ -215,8 +215,9 @@ int main(int argc, char **argv) {
     }
   }
 
-  std::ofstream scenario_file(scenarioName + std::string("_pvn_compare_") +
-                              hostname + "_" + algorithm_to_tune + "_" +
+  std::ofstream scenario_file(file_prefix + scenarioName +
+                              std::string("_pvn_compare_") + hostname + "_" +
+                              algorithm_to_tune + "_" +
                               std::to_string(repetitions_averaged) + "av.csv");
   for (std::string &par_name : parameter_names) {
     scenario_file << par_name << ", ";

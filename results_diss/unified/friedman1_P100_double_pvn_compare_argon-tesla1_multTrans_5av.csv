@@ -1,0 +1,11 @@
+KERNEL_TRANS_DATA_SPLIT, KERNEL_TRANS_GRID_BLOCK_SIZE, KERNEL_TRANS_MAX_DIM_UNROLL, KERNEL_TRANS_PREFETCH_SIZE, KERNEL_TRANS_STORE_DATA, KERNEL_TRANS_TRANSFER_WHOLE_GRID, KERNEL_TRANS_USE_LOCAL_MEMORY, OPTIMIZATION_FLAGS, TRANS_LOCAL_SIZE, VERBOSE, duration
+8, 4, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.74015
+1, 4, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.79874
+8, 1, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.77713
+8, 4, 1, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73669
+8, 4, 10, 16, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73895
+8, 4, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73586
+8, 4, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73717
+8, 4, 10, 32, array, true, false, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.79435
+8, 4, 10, 32, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73572
+8, 4, 10, 16, array, true, true, -cl-unsafe-math-optimizations -cl-denorms-are-zero, 64, true, 1.73979
