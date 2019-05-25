@@ -211,6 +211,26 @@ public:
           // notice: of course, this is quite expensive
           // TODO: improve this for more precise tuner runs
 
+          for (std::string &platformName :
+               (*this->ocl_parameters_mult)["PLATFORMS"].keys()) {
+            json::node &platformNode =
+                (*this->ocl_parameters_mult)["PLATFORMS"][platformName];
+            for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+              json::node &deviceNode = platformNode["DEVICES"][deviceName];
+
+              const std::string &kernelName = sgpp::datadriven::
+                  StreamingModOCLUnified::Configuration::getKernelName();
+              json::node &kernelNode =
+                  deviceNode["KERNELS"].contains(kernelName)
+                      ? deviceNode["KERNELS"][kernelName]
+                      : deviceNode["KERNELS"].addDictAttr(kernelName);
+              for (std::string &par_name : kernelNode.keys()) {
+                std::cout << par_name << " -> " << kernelNode[par_name].get()
+                          << std::endl;
+              }
+            }
+          }
+
           sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
               sgpp::datadriven::OperationMultipleEvalType::STREAMING,
               sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED,
@@ -249,33 +269,29 @@ public:
           return true;
         });
 
-    autotune::mult_transpose_unified_with_tuning.set_kernel_functor(
-        [this](base::DataVector &source, base::DataVector &result) {
-          // apply parameters to kernel by re-instantiating
-          // notice: of course, this is quite expensive
-          // TODO: improve this for more precise tuner runs
-          sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-              sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-              sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED,
-              *(this->ocl_parameters_multTranspose));
+    autotune::mult_transpose_unified_with_tuning.set_kernel_functor([this](
+        base::DataVector &source, base::DataVector &result) {
+      // apply parameters to kernel by re-instantiating
+      // notice: of course, this is quite expensive
+      // TODO: improve this for more precise tuner runs
+      sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+          sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+          sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED,
+          *(this->ocl_parameters_multTranspose));
 
-          eval_multTranspose =
-              std::shared_ptr<sgpp::base::OperationMultipleEval>(
-                  datadriven::createStreamingModOCLUnifiedConfigured(
-                      this->grid, this->dataset, configuration,
-                      this->isModLinear));
-          duration_multTranspose_acc = 0.0;
-          for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
-            eval_multTranspose->multTranspose(source, result);
-            // always ignore first results
-            if (i > 0) {
-              duration_multTranspose_acc +=
-                  this->eval_multTranspose->getDuration();
-            }
-          }
-          duration_multTranspose_acc /=
-              static_cast<double>(this->tune_repetitions);
-        });
+      eval_multTranspose = std::shared_ptr<sgpp::base::OperationMultipleEval>(
+          datadriven::createStreamingModOCLUnifiedConfigured(
+              this->grid, this->dataset, configuration, this->isModLinear));
+      duration_multTranspose_acc = 0.0;
+      for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
+        eval_multTranspose->multTranspose(source, result);
+        // always ignore first results
+        if (i > 0) {
+          duration_multTranspose_acc += this->eval_multTranspose->getDuration();
+        }
+      }
+      duration_multTranspose_acc /= static_cast<double>(this->tune_repetitions);
+    });
 
     autotune::mult_transpose_unified_with_tuning.set_kernel_duration_functor(
         [this]() { return this->duration_multTranspose_acc; });
@@ -529,7 +545,143 @@ public:
   //     autotune::mult_unified_with_tuning.set_parameter_values(
   //                                                             optimal_parameters_randomizable);
   // }
-};
+
+  size_t mult_parameters_size() { return autotune_parameters_mult.size(); }
+
+  size_t multTranspose_parameters_size() {
+    return autotune_parameters_multTranspose.size();
+  }
+
+  bool set_pvn_parameter_mult(sgpp::base::OCLOperationConfiguration &ocl_config,
+                              std::string &reset_par_name,
+                              std::ofstream &scenario_file,
+                              std::vector<std::string> par_names) {
+
+    if (autotune_parameters_mult.find(reset_par_name) == -1) {
+      return false;
+    }
+
+    autotune::parameter_value_set pv;
+
+    for (std::string &platformName : ocl_config["PLATFORMS"].keys()) {
+      json::node &platformNode = ocl_config["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
+
+        const std::string &kernelName = sgpp::datadriven::
+            StreamingModOCLUnified::Configuration::getKernelName();
+        json::node &kernelNode =
+            deviceNode["KERNELS"].contains(kernelName)
+                ? deviceNode["KERNELS"][kernelName]
+                : deviceNode["KERNELS"].addDictAttr(kernelName);
+        // for (size_t i = 0; i < autotune_parameters_mult.size(); i += 1) {
+        for (std::string &par_name : kernelNode.keys()) {
+          // pv[autotune_parameters_mult[i]->get_name()] =
+          //     kernelNode[autotune_parameters_mult[i]->get_name()].get();
+          pv[par_name] = kernelNode[par_name].get();
+        }
+        // for (auto &p : parameter_values) {
+        //   std::cout << "parameter name: " << p.first << " value: " <<
+        //   p.second
+        //             << std::endl;
+        //   kernelNode.replaceTextAttr(p.first, p.second);
+        //   kernelNode.replaceTextAttr("VERBOSE", "true");
+        // }
+      }
+    }
+
+    // apply_parameter_values(ocl_config, pv);
+
+    std::cout << "parameter resetted: " << reset_par_name << std::endl;
+    auto p = autotune_parameters_mult.get_by_name(reset_par_name);
+    p->set_min();
+    pv[p->get_name()] = p->get_value();
+
+    // reset dependent parameter
+    if (reset_par_name.compare("LOCAL_SIZE") == 0) {
+      auto p_dep = autotune_parameters_mult.get_by_name("KERNEL_PREFETCH_SIZE");
+      p_dep->set_min();
+      pv[p_dep->get_name()] = p_dep->get_value();
+    }
+
+    // autotune::mult_unified_with_tuning.set_parameter_values(pv);
+    apply_parameter_values(*this->ocl_parameters_mult, pv);
+
+    std::cout << "-------------- after" << std::endl;
+    // const autotune::parameter_value_set &pv_ref =
+    //     autotune::mult_unified_with_tuning.get_parameter_values();
+    for (std::string par_name : par_names) {
+      std::cout << par_name << " -> " << pv[par_name] << std::endl;
+      scenario_file << pv.at(par_name) << ", ";
+    }
+    // for (auto &pair : pv_ref) {
+
+    //   std::cout << pair.first << " -> " << pair.second << std::endl;
+    // }
+    return true;
+  }
+
+  bool set_pvn_parameter_multTranspose(
+      sgpp::base::OCLOperationConfiguration &ocl_config,
+      std::string &reset_par_name, std::ofstream &scenario_file,
+      std::vector<std::string> par_names) {
+
+    if (autotune_parameters_multTranspose.find(reset_par_name) == -1) {
+      return false;
+    }
+
+    autotune::parameter_value_set pv;
+
+    for (std::string &platformName : ocl_config["PLATFORMS"].keys()) {
+      json::node &platformNode = ocl_config["PLATFORMS"][platformName];
+      for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+        json::node &deviceNode = platformNode["DEVICES"][deviceName];
+
+        const std::string &kernelName = sgpp::datadriven::
+            StreamingModOCLUnified::Configuration::getKernelName();
+        json::node &kernelNode =
+            deviceNode["KERNELS"].contains(kernelName)
+                ? deviceNode["KERNELS"][kernelName]
+                : deviceNode["KERNELS"].addDictAttr(kernelName);
+        for (std::string &par_name : kernelNode.keys()) {
+          pv[par_name] = kernelNode[par_name].get();
+        }
+      }
+    }
+
+    std::cout << "parameter resetted: " << reset_par_name << std::endl;
+    auto p = autotune_parameters_multTranspose.get_by_name(reset_par_name);
+    p->set_min();
+    pv[p->get_name()] = p->get_value();
+
+    // reset dependent parameter
+    if (reset_par_name.compare("TRANS_LOCAL_SIZE") == 0) {
+      auto p_dep = autotune_parameters_multTranspose.get_by_name(
+          "KERNEL_TRANS_PREFETCH_SIZE");
+      p_dep->set_min();
+      pv[p_dep->get_name()] = p_dep->get_value();
+    }
+
+    apply_parameter_values(*this->ocl_parameters_multTranspose, pv);
+    // autotune::mult_transpose_unified_with_tuning.set_parameter_values(pv);
+
+    std::cout << "-------------- after" << std::endl;
+    // const autotune::parameter_value_set &pv_ref =
+    //     autotune::mult_transpose_unified_with_tuning.get_parameter_values();
+    for (std::string par_name : par_names) {
+      std::cout << par_name << " -> " << pv.at(par_name) << std::endl;
+      scenario_file << pv.at(par_name) << ", ";
+    }
+    return true;
+  }
+
+  double get_last_duration_mult() { return duration_mult_acc; }
+
+  double get_last_duration_multTranspose() {
+    return duration_multTranspose_acc;
+  }
+
+}; // namespace StreamingModOCLUnifiedAutoTuneTMP
 
 } // namespace StreamingModOCLUnifiedAutoTuneTMP
 } // namespace datadriven
