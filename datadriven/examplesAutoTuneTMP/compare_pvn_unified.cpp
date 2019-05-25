@@ -191,28 +191,18 @@ int main(int argc, char **argv) {
 
   eval.prepare();
 
-  std::cout << "starting tuning..." << std::endl;
+  std::cout << "starting comparison..." << std::endl;
   std::string algorithm_to_tune("mult");
   if (trans) {
     algorithm_to_tune = "multTrans";
   }
 
-  // std::string full_scenario_prefix(
-  //     file_prefix + "parameter_contrib_" + scenarioName + "_" +
-  //     algorithm_to_tune + "_host_" + hostname + "_tuner_" + tunerName + "_t_"
-  //     +
-  //     (*parameters)["INTERNAL_PRECISION"].get() + "_" +
-  //     std::to_string(repetitions_averaged) + "av_" + std::to_string(rep) +
-  //     "r");
-
-  // open csv file
-
+  // assume there is only one device configured
   std::vector<std::string> parameter_names;
   for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
     json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
     for (std::string &deviceName : platformNode["DEVICES"].keys()) {
       json::node &deviceNode = platformNode["DEVICES"][deviceName];
-
       const std::string &kernelName = sgpp::datadriven::StreamingModOCLUnified::
           Configuration::getKernelName();
       json::node &kernelNode =
@@ -226,12 +216,49 @@ int main(int argc, char **argv) {
   }
 
   std::ofstream scenario_file(scenarioName + std::string("_pvn_compare_") +
-                              hostname + "_" +
+                              hostname + "_" + algorithm_to_tune + "_" +
                               std::to_string(repetitions_averaged) + "av.csv");
   for (std::string &par_name : parameter_names) {
     scenario_file << par_name << ", ";
   }
   scenario_file << "duration" << std::endl;
+
+  for (std::string &platformName : (*parameters)["PLATFORMS"].keys()) {
+    json::node &platformNode = (*parameters)["PLATFORMS"][platformName];
+    for (std::string &deviceName : platformNode["DEVICES"].keys()) {
+      json::node &deviceNode = platformNode["DEVICES"][deviceName];
+      const std::string &kernelName = sgpp::datadriven::StreamingModOCLUnified::
+          Configuration::getKernelName();
+      json::node &kernelNode =
+          deviceNode["KERNELS"].contains(kernelName)
+              ? deviceNode["KERNELS"][kernelName]
+              : deviceNode["KERNELS"].addDictAttr(kernelName);
+      for (const std::string &par_name : kernelNode.keys()) {
+        scenario_file << kernelNode[par_name].get() << ", ";
+      }
+    }
+  }
+  if (!trans) {
+    sgpp::base::DataVector alpha(gridStorage.getSize());
+    for (size_t i = 0; i < alpha.getSize(); i++) {
+      alpha[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+    dataSizeVectorResult.setAll(0);
+    // repetitions handled in kernel functor
+    eval.mult(alpha, dataSizeVectorResult);
+    scenario_file << eval.get_last_duration_mult() << std::endl;
+  } else {
+    sgpp::base::DataVector source(dataset.getNumberInstances());
+    for (size_t i = 0; i < source.getSize(); i++) {
+      source[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
+    gridSizeVectorResult.setAll(0);
+    // repetitions handled in kernel functor
+    eval.multTranspose(source, gridSizeVectorResult);
+    scenario_file << eval.get_last_duration_multTranspose() << std::endl;
+  }
 
   for (std::string &par_name : parameter_names) {
     std::cout << "par_name: " << par_name << std::endl;
@@ -251,15 +278,9 @@ int main(int argc, char **argv) {
         continue;
       }
 
-      // measure
-      auto start = std::chrono::high_resolution_clock::now();
-      for (size_t i = 0; i < repetitions_averaged; i += 1) {
-        eval.mult(alpha, dataSizeVectorResult);
-      }
-      auto end = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = end - start;
-      double duration = diff.count();
-      scenario_file << duration << std::endl;
+      // repetitions handled in kernel functor
+      eval.mult(alpha, dataSizeVectorResult);
+      scenario_file << eval.get_last_duration_mult() << std::endl;
     } else {
       sgpp::base::DataVector source(dataset.getNumberInstances());
       for (size_t i = 0; i < source.getSize(); i++) {
@@ -274,16 +295,9 @@ int main(int argc, char **argv) {
         std::cout << "no reset, skip" << std::endl;
         continue;
       }
-
-      // measure
-      auto start = std::chrono::high_resolution_clock::now();
-      for (size_t i = 0; i < repetitions_averaged; i += 1) {
-        eval.multTranspose(source, gridSizeVectorResult);
-      }
-      auto end = std::chrono::high_resolution_clock::now();
-      std::chrono::duration<double> diff = end - start;
-      double duration = diff.count();
-      scenario_file << duration << std::endl;
+      // repetitions handled in kernel functor
+      eval.multTranspose(source, gridSizeVectorResult);
+      scenario_file << eval.get_last_duration_multTranspose() << std::endl;
     }
   }
 }
