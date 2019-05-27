@@ -86,6 +86,7 @@ protected:
   bool isModLinear;
 
   int64_t tune_repetitions;
+  int64_t skip_repetitions;
 
   double duration_mult_acc;
   double duration_multTranspose_acc;
@@ -113,8 +114,9 @@ public:
       bool isModLinear, int64_t tune_repetitions = 1)
       : OperationMultipleEval(grid, dataset), dims(dataset.getNcols()),
         duration(-1.0), always_recompile(true), isModLinear(isModLinear),
-        tune_repetitions(tune_repetitions), duration_mult_acc(0.0),
-        duration_multTranspose_acc(0.0), randomization_enabled(true) {
+        tune_repetitions(tune_repetitions), skip_repetitions(skip_repetitions),
+        duration_mult_acc(0.0), duration_multTranspose_acc(0.0),
+        randomization_enabled(true) {
     this->verbose = (*parameters)["VERBOSE"].getBool();
     this->ocl_parameters_mult =
         std::dynamic_pointer_cast<base::OCLOperationConfiguration>(
@@ -239,13 +241,12 @@ public:
           eval_mult = std::shared_ptr<sgpp::base::OperationMultipleEval>(
               datadriven::createStreamingModOCLUnifiedConfigured(
                   this->grid, this->dataset, configuration, this->isModLinear));
-          duration_mult_acc = 0.0;
-          for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
+          for (int i = 0; i < this->skip_repetitions; i += 1) {
             eval_mult->mult(alpha, result);
-            // always ignore first results
-            if (i > 0) {
-              duration_mult_acc += this->eval_mult->getDuration();
-            }
+          }
+          duration_mult_acc = 0.0;
+          for (int i = 0; i < this->tune_repetitions; i += 1) {
+            duration_mult_acc += this->eval_mult->getDuration();
           }
           duration_mult_acc /= static_cast<double>(this->tune_repetitions);
         });
@@ -269,29 +270,32 @@ public:
           return true;
         });
 
-    autotune::mult_transpose_unified_with_tuning.set_kernel_functor([this](
-        base::DataVector &source, base::DataVector &result) {
-      // apply parameters to kernel by re-instantiating
-      // notice: of course, this is quite expensive
-      // TODO: improve this for more precise tuner runs
-      sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
-          sgpp::datadriven::OperationMultipleEvalType::STREAMING,
-          sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED,
-          *(this->ocl_parameters_multTranspose));
+    autotune::mult_transpose_unified_with_tuning.set_kernel_functor(
+        [this](base::DataVector &source, base::DataVector &result) {
+          // apply parameters to kernel by re-instantiating
+          // notice: of course, this is quite expensive
+          // TODO: improve this for more precise tuner runs
+          sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
+              sgpp::datadriven::OperationMultipleEvalType::STREAMING,
+              sgpp::datadriven::OperationMultipleEvalSubType::OCLUNIFIED,
+              *(this->ocl_parameters_multTranspose));
 
-      eval_multTranspose = std::shared_ptr<sgpp::base::OperationMultipleEval>(
-          datadriven::createStreamingModOCLUnifiedConfigured(
-              this->grid, this->dataset, configuration, this->isModLinear));
-      duration_multTranspose_acc = 0.0;
-      for (int i = 0; i < this->tune_repetitions + 1; i += 1) {
-        eval_multTranspose->multTranspose(source, result);
-        // always ignore first results
-        if (i > 0) {
-          duration_multTranspose_acc += this->eval_multTranspose->getDuration();
-        }
-      }
-      duration_multTranspose_acc /= static_cast<double>(this->tune_repetitions);
-    });
+          eval_multTranspose =
+              std::shared_ptr<sgpp::base::OperationMultipleEval>(
+                  datadriven::createStreamingModOCLUnifiedConfigured(
+                      this->grid, this->dataset, configuration,
+                      this->isModLinear));
+          for (int i = 0; i < this->skip_repetitions; i += 1) {
+            eval_multTranspose->multTranspose(source, result);
+          }
+          duration_multTranspose_acc = 0.0;
+          for (int i = 0; i < this->tune_repetitions; i += 1) {
+            duration_multTranspose_acc +=
+                this->eval_multTranspose->getDuration();
+          }
+          duration_multTranspose_acc /=
+              static_cast<double>(this->tune_repetitions);
+        });
 
     autotune::mult_transpose_unified_with_tuning.set_kernel_duration_functor(
         [this]() { return this->duration_multTranspose_acc; });
@@ -679,6 +683,10 @@ public:
 
   double get_last_duration_multTranspose() {
     return duration_multTranspose_acc;
+  }
+
+  size_t set_skip_repetitions(size_t skip_repetitions) {
+    this->skip_repetitions = skip_repetitions;
   }
 
 }; // namespace StreamingModOCLUnifiedAutoTuneTMP
