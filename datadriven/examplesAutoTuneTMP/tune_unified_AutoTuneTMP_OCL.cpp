@@ -216,6 +216,7 @@ int main(int argc, char **argv) {
           eval(*grid, trainingData, parameters, isModLinear,
                repetitions_averaged);
   eval.set_randomize_parameter_values(randomization_enabled);
+  eval.set_skip_repetitions(1);
 
   std::cout << "grid set up, grid size: " << grid->getSize() << std::endl;
 
