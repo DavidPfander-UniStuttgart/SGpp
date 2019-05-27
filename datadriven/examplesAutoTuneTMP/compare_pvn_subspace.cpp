@@ -27,7 +27,6 @@ int main(int argc, char **argv) {
   uint32_t repetitions_averaged;
   bool trans;
   bool isModLinear;
-  // bool do_warmup_eval;
   bool useSupportRefinement;
   int64_t supportRefinementMinSupport;
   std::string file_prefix; // path and prefix of file name
@@ -108,6 +107,11 @@ int main(int argc, char **argv) {
               << std::endl;
     return 1;
   }
+  if (variables_map.count("additionalConfigFileName") == 0) {
+    std::cerr << "error: option \"additionalConfigFileName\" not specified"
+              << std::endl;
+    return 1;
+  }
 
   std::string hostname;
   if (const char *hostname_ptr = std::getenv("HOSTNAME")) {
@@ -119,12 +123,12 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  sgpp::base::AdaptivityConfiguration adaptConfig;
-  adaptConfig.maxLevelType_ = false;
-  adaptConfig.noPoints_ = 80;
-  adaptConfig.numRefinements_ = 0;
-  adaptConfig.percent_ = 200.0;
-  adaptConfig.threshold_ = 0.0;
+  // sgpp::base::AdaptivityConfiguration adaptConfig;
+  // adaptConfig.maxLevelType_ = false;
+  // adaptConfig.noPoints_ = 80;
+  // adaptConfig.numRefinements_ = 0;
+  // adaptConfig.percent_ = 200.0;
+  // adaptConfig.threshold_ = 0.0;
 
   sgpp::datadriven::ARFFTools arffTools;
   sgpp::datadriven::Dataset dataset = arffTools.readARFF(datasetFileName);
@@ -182,11 +186,18 @@ int main(int argc, char **argv) {
   sgpp::datadriven::OperationMultipleEvalConfiguration configuration(
       sgpp::datadriven::OperationMultipleEvalType::SUBSPACE,
       sgpp::datadriven::OperationMultipleEvalSubType::AUTOTUNETMP);
+  // load (tuned) kernel configuration from file
+  auto parameters = std::make_shared<sgpp::base::OCLOperationConfiguration>(
+      additionalConfigFileName);
+  configuration.setParameters(parameters);
 
   std::unique_ptr<sgpp::base::OperationMultipleEval> eval =
       std::unique_ptr<sgpp::base::OperationMultipleEval>(
           sgpp::op_factory::createOperationMultipleEval(*grid, trainingData,
                                                         configuration));
+  auto &derived_eval =
+      dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
+                       OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
   // if (!randomization_enabled) {
   //   sgpp::datadriven::SubspaceAutoTuneTMP::
   //       OperationMultipleEvalSubspaceAutoTuneTMP &eval_cast =
@@ -207,39 +218,91 @@ int main(int argc, char **argv) {
     algorithm_to_tune = "multTrans";
   }
 
-  for (size_t rep = 0; rep < repetitions; rep += 1) {
-    std::string full_scenario_prefix(
-        file_prefix + scenarioName + +"_Subspace_" + algorithm_to_tune +
-        "_tuner_" + tunerName + "_t_" + std::to_string(repetitions_averaged) +
-        "av_" + std::to_string(rep) + "r");
-    if (!trans) {
-      sgpp::base::DataVector alpha(gridStorage.getSize());
-      for (size_t i = 0; i < alpha.getSize(); i++) {
-        alpha[i] = static_cast<double>(i) + 1.0;
-      }
-      sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
-      dataSizeVectorResult.setAll(0);
+  std::string full_scenario_prefix();
 
-      auto &derived_eval =
-          dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
-                           OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
-      // derived_eval.set_write_stats("subspaceMultTransposeStats.csv");
-      derived_eval.tune_mult(alpha, dataSizeVectorResult, full_scenario_prefix,
-                             tunerName, repetitions_averaged);
-    } else {
-      sgpp::base::DataVector source(dataset.getNumberInstances());
-      for (size_t i = 0; i < source.getSize(); i++) {
-        source[i] = static_cast<double>(i) + 1.0;
-      }
-      sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
-      gridSizeVectorResult.setAll(0);
+  std::ofstream scenario_file(file_prefix + scenarioName +
+                              +"_Subspace_pvn_compare_" + algorithm_to_tune +
+                              "_tuner_" + tunerName + "_t_" +
+                              std::to_string(repetitions_averaged) + "av.csv");
 
-      auto &derived_eval =
-          dynamic_cast<sgpp::datadriven::SubspaceAutoTuneTMP::
-                           OperationMultipleEvalSubspaceAutoTuneTMP &>(*eval);
-      derived_eval.tune_multTranspose(source, gridSizeVectorResult,
-                                      full_scenario_prefix, tunerName,
-                                      repetitions_averaged);
+  std::vector<std::string> parameter_names;
+  if (!trans) {
+    for (std::string &parameterName : (*parameters)["SubspaceMult"].keys()) {
+      parameter_names.push_back(parameterName);
+    }
+  } else {
+    for (std::string &parameterName :
+         (*parameters)["SubspaceMultTrans"].keys()) {
+      parameter_names.push_back(parameterName);
     }
   }
+  for (std::string &par_name : parameter_names) {
+    scenario_file << par_name << ", ";
+  }
+  scenario_file << "duration" << std::endl;
+
+  if (!trans) {
+    for (std::string &parameterName : (*parameters)["SubspaceMult"].keys()) {
+      scenario_file << (*parameters)["SubspaceMult"][parameterName].get()
+                    << ", ";
+    }
+    sgpp::base::DataVector alpha(gridStorage.getSize());
+    for (size_t i = 0; i < alpha.getSize(); i++) {
+      alpha[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+    dataSizeVectorResult.setAll(0);
+    derived_eval.mult(alpha, dataSizeVectorResult);
+    scenario_file << derived_eval.getDuration() << std::endl;
+  } else {
+    for (std::string &parameterName :
+         (*parameters)["SubspaceMultTrans"].keys()) {
+      scenario_file << (*parameters)["SubspaceMultTrans"][parameterName].get()
+                    << ", ";
+    }
+    sgpp::base::DataVector source(dataset.getNumberInstances());
+    for (size_t i = 0; i < source.getSize(); i++) {
+      source[i] = static_cast<double>(i) + 1.0;
+    }
+    sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
+    gridSizeVectorResult.setAll(0);
+    derived_eval.multTranspose(source, gridSizeVectorResult);
+    scenario_file << derived_eval.getDuration() << std::endl;
+  }
+
+  // for (std::string &par_name : parameter_names) {
+  //   std::cout << "par_name: " << par_name << std::endl;
+  //   if (!trans) {
+  //     sgpp::base::DataVector alpha(gridStorage.getSize());
+  //     for (size_t i = 0; i < alpha.getSize(); i++) {
+  //       alpha[i] = static_cast<double>(i) + 1.0;
+  //     }
+  //     sgpp::base::DataVector
+  //     dataSizeVectorResult(dataset.getNumberInstances());
+  //     dataSizeVectorResult.setAll(0);
+  //     bool ok = eval.set_pvn_parameter_mult(*parameters, par_name,
+  //                                           scenario_file, parameter_names);
+  //     if (!ok) {
+  //       std::cout << "no reset, skip" << std::endl;
+  //       continue;
+  //     }
+  //     derived_eval.mult(alpha, dataSizeVectorResult);
+  //     scenario_file << derived_eval.getDuration() << std::endl;
+  //   } else {
+  //     sgpp::base::DataVector source(dataset.getNumberInstances());
+  //     for (size_t i = 0; i < source.getSize(); i++) {
+  //       source[i] = static_cast<double>(i) + 1.0;
+  //     }
+  //     sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
+  //     gridSizeVectorResult.setAll(0);
+  //     bool ok = eval.set_pvn_parameter_multTranspose(
+  //         *parameters, par_name, scenario_file, parameter_names);
+  //     if (!ok) {
+  //       std::cout << "no reset, skip" << std::endl;
+  //       continue;
+  //     }
+  //     derived_eval.tune_multTranspose(source, gridSizeVectorResult);
+  //     scenario_file << derived_eval.getDuration() << std::endl;
+  //   }
+  // }
 }
