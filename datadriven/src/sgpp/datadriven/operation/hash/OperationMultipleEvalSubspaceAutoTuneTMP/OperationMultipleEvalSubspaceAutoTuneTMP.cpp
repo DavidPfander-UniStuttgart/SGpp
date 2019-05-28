@@ -101,6 +101,49 @@ OperationMultipleEvalSubspaceAutoTuneTMP::
   // should be created at a time
   autotune::KernelMultSubspace.clear();
   autotune::KernelMultTransposeSubspace.clear();
+
+  // mult parameter and sets
+  autotune::fixed_set_parameter<int64_t> p0(
+      "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {16, 32, 64, 128, 256, 512});
+  autotune::fixed_set_parameter<int64_t> p1(
+      "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
+  autotune::fixed_set_parameter<int64_t> p2(
+      "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
+      std::vector<int64_t>{0, 1});
+  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL",
+                                            {0, 1});
+  autotune::fixed_set_parameter<int64_t> p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
+                                            std::vector<int64_t>{4, 8});
+  autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
+                                           std::vector<double>{0.1, 0.2, 0.3});
+
+  parameters_mult.add_parameter(p0);
+  parameters_mult.add_parameter(p1);
+  parameters_mult.add_parameter(p2);
+  parameters_mult.add_parameter(p3);
+  parameters_mult.add_parameter(p4);
+  parameters_mult.add_parameter(p5);
+
+  parameters_randomizable_mult.add_parameter(p0);
+  parameters_randomizable_mult.add_parameter(p1);
+  parameters_randomizable_mult.add_parameter(p2);
+  parameters_randomizable_mult.add_parameter(p3);
+  parameters_randomizable_mult.add_parameter(p4);
+  parameters_randomizable_mult.add_parameter(p5);
+
+  parameters_multTrans.add_parameter(p0);
+  parameters_multTrans.add_parameter(p1);
+  parameters_multTrans.add_parameter(p2);
+  parameters_multTrans.add_parameter(p3);
+  parameters_multTrans.add_parameter(p4);
+  parameters_multTrans.add_parameter(p5);
+
+  parameters_randomizable_multTrans.add_parameter(p0);
+  parameters_randomizable_multTrans.add_parameter(p1);
+  parameters_randomizable_multTrans.add_parameter(p2);
+  parameters_randomizable_multTrans.add_parameter(p3);
+  parameters_randomizable_multTrans.add_parameter(p4);
+  parameters_randomizable_multTrans.add_parameter(p5);
 }
 
 OperationMultipleEvalSubspaceAutoTuneTMP::
@@ -463,46 +506,52 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
     builder.set_do_cleanup(false);
   }
 
-  autotune::countable_set parameters;
-  autotune::fixed_set_parameter<int64_t> p0(
-      "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {16, 32, 64, 128, 256, 512});
-  autotune::fixed_set_parameter<int64_t> p1(
-      "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p2(
-      "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-      std::vector<int64_t>{0, 1});
-  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL",
-                                            {0, 1});
-  autotune::fixed_set_parameter<int64_t> p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
-                                            std::vector<int64_t>{4, 8});
-  autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
-                                           std::vector<double>{0.1, 0.2, 0.3});
+  // autotune::countable_set parameters;
+  // autotune::fixed_set_parameter<int64_t> p0(
+  //     "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {16, 32, 64, 128, 256,
+  //     512});
+  // autotune::fixed_set_parameter<int64_t> p1(
+  //     "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
+  // autotune::fixed_set_parameter<int64_t> p2(
+  //     "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
+  //     std::vector<int64_t>{0, 1});
+  // autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL",
+  //                                           {0, 1});
+  // autotune::fixed_set_parameter<int64_t>
+  // p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
+  //                                           std::vector<int64_t>{4, 8});
+  // autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
+  //                                          std::vector<double>{0.1, 0.2,
+  //                                          0.3});
 
-  parameters.add_parameter(p0);
-  parameters.add_parameter(p1);
-  parameters.add_parameter(p2);
-  parameters.add_parameter(p3);
-  parameters.add_parameter(p4);
-  parameters.add_parameter(p5);
+  // parameters.add_parameter(p0);
+  // parameters.add_parameter(p1);
+  // parameters.add_parameter(p2);
+  // parameters.add_parameter(p3);
+  // parameters.add_parameter(p4);
+  // parameters.add_parameter(p5);
 
   if (randomization_enabled) {
-    for (size_t i = 0; i < parameters.size(); i += 1) {
-      parameters[i]->set_random_value();
+    for (size_t i = 0; i < parameters_mult.size(); i += 1) {
+      parameters_mult[i]->set_random_value();
+    }
+  } else {
+    for (size_t i = 0; i < parameters_mult.size(); i += 1) {
+      parameters_mult[i]->set_min();
     }
   }
 
-  autotune::randomizable_set parameters_randomizable;
-  parameters_randomizable.add_parameter(p0);
-  parameters_randomizable.add_parameter(p1);
-  parameters_randomizable.add_parameter(p2);
-  parameters_randomizable.add_parameter(p3);
-  parameters_randomizable.add_parameter(p4);
-  parameters_randomizable.add_parameter(p5);
+  // autotune::randomizable_set parameters_randomizable;
+  // parameters_randomizable.add_parameter(p0);
+  // parameters_randomizable.add_parameter(p1);
+  // parameters_randomizable.add_parameter(p2);
+  // parameters_randomizable.add_parameter(p3);
+  // parameters_randomizable.add_parameter(p4);
+  // parameters_randomizable.add_parameter(p5);
 
-  if (randomization_enabled) {
-    for (size_t i = 0; i < parameters_randomizable.size(); i += 1) {
-      parameters_randomizable[i]->set_random_value();
-    }
+  // always randomized
+  for (size_t i = 0; i < parameters_randomizable_mult.size(); i += 1) {
+    parameters_randomizable_mult[i]->set_random_value();
   }
 
   sgpp::base::DataVector result_compare(dataset.getNrows());
@@ -580,7 +629,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
 
   if (tuner_name.compare("bruteforce") == 0) {
     autotune::tuners::bruteforce tuner(autotune::KernelMultSubspace,
-                                       parameters);
+                                       parameters_mult);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -609,7 +658,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                    paddedDatasetSize, allSubspaceNodes, alpha);
   } else if (tuner_name.compare("line_search") == 0) {
     autotune::tuners::line_search tuner(autotune::KernelMultSubspace,
-                                        parameters, 10 * parameters.size());
+                                        parameters_mult,
+                                        10 * parameters_mult.size());
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -640,7 +690,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                    paddedDatasetSize, allSubspaceNodes, alpha);
   } else if (tuner_name.compare("neighborhood_search") == 0) {
     autotune::tuners::neighborhood_search tuner(autotune::KernelMultSubspace,
-                                                parameters, 100);
+                                                parameters_mult, 100);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -667,7 +717,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                    paddedDatasetSize, allSubspaceNodes, alpha);
   } else if (tuner_name.compare("monte_carlo") == 0) {
     autotune::tuners::monte_carlo tuner(autotune::KernelMultSubspace,
-                                        parameters_randomizable, 100);
+                                        parameters_randomizable_mult, 100);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -758,47 +808,59 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
     builder.set_do_cleanup(false);
   }
 
-  autotune::countable_set parameters;
-  autotune::fixed_set_parameter<int64_t> p0(
-      "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {16, 32, 64, 128, 256, 512});
-  autotune::fixed_set_parameter<int64_t> p1(
-      "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
-  autotune::fixed_set_parameter<int64_t> p2(
-      "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
-      std::vector<int64_t>{0, 1});
-  autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL",
-                                            {0, 1});
-  autotune::fixed_set_parameter<int64_t> p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
-                                            std::vector<int64_t>{4, 8});
-  autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
-                                           std::vector<double>{0.1, 0.2, 0.3});
+  // autotune::countable_set parameters;
+  // autotune::fixed_set_parameter<int64_t> p0(
+  //     "SUBSPACEAUTOTUNETMP_PARALLEL_DATA_POINTS", {16, 32, 64, 128, 256,
+  //     512});
+  // autotune::fixed_set_parameter<int64_t> p1(
+  //     "SUBSPACEAUTOTUNETMP_ENABLE_SUBSPACE_SKIPPING", {0, 1});
+  // autotune::fixed_set_parameter<int64_t> p2(
+  //     "SUBSPACEAUTOTUNETMP_ENABLE_PARTIAL_RESULT_REUSAGE",
+  //     std::vector<int64_t>{0, 1});
+  // autotune::fixed_set_parameter<int64_t> p3("SUBSPACEAUTOTUNETMP_UNROLL",
+  //                                           {0, 1});
+  // autotune::fixed_set_parameter<int64_t>
+  // p4("SUBSPACEAUTOTUNETMP_VEC_PADDING",
+  //                                           std::vector<int64_t>{4, 8});
+  // autotune::fixed_set_parameter<double> p5("SUBSPACEAUTOTUNETMP_LIST_RATIO",
+  //                                          std::vector<double>{0.1, 0.2,
+  //                                          0.3});
 
-  parameters.add_parameter(p0);
-  parameters.add_parameter(p1);
-  parameters.add_parameter(p2);
-  parameters.add_parameter(p3);
-  parameters.add_parameter(p4);
-  parameters.add_parameter(p5);
+  // parameters.add_parameter(p0);
+  // parameters.add_parameter(p1);
+  // parameters.add_parameter(p2);
+  // parameters.add_parameter(p3);
+  // parameters.add_parameter(p4);
+  // parameters.add_parameter(p5);
 
   if (randomization_enabled) {
-    for (size_t i = 0; i < parameters.size(); i += 1) {
-      parameters[i]->set_random_value();
+    for (size_t i = 0; i < parameters_multTrans.size(); i += 1) {
+      parameters_multTrans[i]->set_random_value();
+    }
+  } else {
+    for (size_t i = 0; i < parameters_multTrans.size(); i += 1) {
+      parameters_multTrans[i]->set_min();
     }
   }
 
-  autotune::randomizable_set parameters_randomizable;
-  parameters_randomizable.add_parameter(p0);
-  parameters_randomizable.add_parameter(p1);
-  parameters_randomizable.add_parameter(p2);
-  parameters_randomizable.add_parameter(p3);
-  parameters_randomizable.add_parameter(p4);
-  parameters_randomizable.add_parameter(p5);
+  // autotune::randomizable_set parameters_randomizable;
+  // parameters_randomizable.add_parameter(p0);
+  // parameters_randomizable.add_parameter(p1);
+  // parameters_randomizable.add_parameter(p2);
+  // parameters_randomizable.add_parameter(p3);
+  // parameters_randomizable.add_parameter(p4);
+  // parameters_randomizable.add_parameter(p5);
 
-  if (randomization_enabled) {
-    for (size_t i = 0; i < parameters_randomizable.size(); i += 1) {
-      parameters_randomizable[i]->set_random_value();
-    }
+  // if (randomization_enabled) {
+  for (size_t i = 0; i < parameters_randomizable_multTrans.size(); i += 1) {
+    parameters_randomizable_multTrans[i]->set_random_value();
   }
+  // } else {
+  //   for (size_t i = 0; i < parameters_randomizable_multTrans.size(); i += 1)
+  //   {
+  //     parameters_randomizable_multTrans[i]->set_min();
+  //   }
+  // }
 
   sgpp::base::DataVector result_compare(storage.getSize());
   {
@@ -886,7 +948,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
 
   if (tuner_name.compare("bruteforce") == 0) {
     autotune::tuners::bruteforce tuner(autotune::KernelMultTransposeSubspace,
-                                       parameters);
+                                       parameters_multTrans);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -913,7 +975,8 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
         storage, allSubspaceNodes, allLevelsIndexMap, maxLevel, source);
   } else if (tuner_name.compare("line_search") == 0) {
     autotune::tuners::line_search tuner(autotune::KernelMultTransposeSubspace,
-                                        parameters, 10 * parameters.size());
+                                        parameters_multTrans,
+                                        10 * parameters_multTrans.size());
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -940,7 +1003,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
         storage, allSubspaceNodes, allLevelsIndexMap, maxLevel, source);
   } else if (tuner_name.compare("neighborhood_search") == 0) {
     autotune::tuners::neighborhood_search tuner(
-        autotune::KernelMultTransposeSubspace, parameters, 100);
+        autotune::KernelMultTransposeSubspace, parameters_multTrans, 100);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -967,7 +1030,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
         storage, allSubspaceNodes, allLevelsIndexMap, maxLevel, source);
   } else if (tuner_name.compare("monte_carlo") == 0) {
     autotune::tuners::monte_carlo tuner(autotune::KernelMultTransposeSubspace,
-                                        parameters_randomizable, 100);
+                                        parameters_randomizable_multTrans, 100);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -1032,6 +1095,130 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::set_configuration(
 void OperationMultipleEvalSubspaceAutoTuneTMP::set_randomize_parameter_values(
     bool randomization_enabled) {
   this->randomization_enabled = randomization_enabled;
+}
+
+bool OperationMultipleEvalSubspaceAutoTuneTMP::set_pvn_parameter_mult(
+    sgpp::base::OCLOperationConfiguration &ocl_config,
+    std::string &reset_par_name, std::ofstream &scenario_file,
+    std::vector<std::string> par_names) {
+
+  // test whether parameter is an actual parameter of the kernel
+  auto pv_cur = autotune::KernelMultSubspace.get_parameter_values();
+  if (pv_cur.find(reset_par_name) == pv_cur.end()) {
+    return false;
+  }
+
+  // copy values from reference
+  autotune::parameter_value_set pv_new;
+  for (std::string &parameterName : ocl_config["SubspaceMult"].keys()) {
+    configuration["SubspaceMult"][parameterName].set(
+        ocl_config["SubspaceMult"][parameterName].get());
+  }
+
+  std::cout << "parameter resetted: " << reset_par_name << std::endl;
+  auto p = parameters_mult.get_by_name(reset_par_name);
+  p->set_min();
+  configuration["SubspaceMult"][p->get_name()].set(p->get_value());
+
+  if (reset_par_name.compare("SUBSPACEAUTOTUNETMP_UNROLL") == 0) {
+    if (configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_UNROLL"]
+            .get()
+            .compare("1") == 0) {
+      configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_VEC_PADDING"].set("8");
+    } else {
+      configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_VEC_PADDING"].set("4");
+    }
+  } else if (reset_par_name.compare("SUBSPACEAUTOTUNETMP_VEC_PADDING") == 0) {
+    if (configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_VEC_PADDING"]
+            .get()
+            .compare("4") == 0) {
+      configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_UNROLL"].set("0");
+    } else {
+      configuration["SubspaceMult"]["SUBSPACEAUTOTUNETMP_UNROLL"].set("1");
+    }
+  }
+
+  // reset dependent parameter
+  // if (reset_par_name.compare("LOCAL_SIZE") == 0) {
+  //   auto p_dep =
+  //   autotune_parameters_mult.get_by_name("KERNEL_PREFETCH_SIZE");
+  //   p_dep->set_min();
+  //   pv[p_dep->get_name()] = p_dep->get_value();
+  // }
+
+  // autotune::mult_unified_with_tuning.set_parameter_values(pv);
+  // apply_parameter_values(*this->ocl_parameters_mult, pv);
+  // autotune::KernelMultSubspace.set_parameter_values(pv_new);
+
+  // std::cout << "-------------- after" << std::endl;
+  // const autotune::parameter_value_set &pv_ref =
+  //     autotune::mult_unified_with_tuning.get_parameter_values();
+  for (std::string par_name : par_names) {
+    scenario_file << configuration["SubspaceMult"][par_name].get() << ", ";
+  }
+  configuration_changed_mult = true;
+
+  // const autotune::parameter_value_set &pv_ref =
+  //     autotune::KernelMultSubspace.get_parameter_values();
+  // for (std::string par_name : par_names) {
+  //   std::cout << par_name << " -> " << pv_ref.at(par_name) << std::endl;
+  // }
+  return true;
+}
+
+bool OperationMultipleEvalSubspaceAutoTuneTMP::set_pvn_parameter_multTranspose(
+    sgpp::base::OCLOperationConfiguration &ocl_config,
+    std::string &reset_par_name, std::ofstream &scenario_file,
+    std::vector<std::string> par_names) {
+
+  // test whether parameter is an actual parameter of the kernel
+  auto pv_cur = autotune::KernelMultTransposeSubspace.get_parameter_values();
+  if (pv_cur.find(reset_par_name) == pv_cur.end()) {
+    return false;
+  }
+
+  // copy values from reference
+  // autotune::parameter_value_set pv_new;
+  for (std::string &parameterName : ocl_config["SubspaceMultTrans"].keys()) {
+    configuration["SubspaceMultTrans"][parameterName].set(
+        ocl_config["SubspaceMultTrans"][parameterName].get());
+  }
+
+  std::cout << "parameter resetted: " << reset_par_name << std::endl;
+  auto p = parameters_multTrans.get_by_name(reset_par_name);
+  p->set_min();
+  configuration["SubspaceMultTrans"][p->get_name()].set(p->get_value());
+
+  if (reset_par_name.compare("SUBSPACEAUTOTUNETMP_UNROLL") == 0) {
+    if (configuration["SubspaceMultTrans"][reset_par_name].get().compare("1") ==
+        0) {
+      configuration["SubspaceMultTrans"]["SUBSPACEAUTOTUNETMP_VEC_PADDING"].set(
+          "8");
+    } else {
+      configuration["SubspaceMultTrans"]["SUBSPACEAUTOTUNETMP_VEC_PADDING"].set(
+          "4");
+    }
+  } else if (reset_par_name.compare("SUBSPACEAUTOTUNETMP_VEC_PADDING") == 0) {
+    if (configuration["SubspaceMultTrans"][reset_par_name].get().compare("4") ==
+        0) {
+      configuration["SubspaceMultTrans"]["SUBSPACEAUTOTUNETMP_UNROLL"].set("0");
+    } else {
+      configuration["SubspaceMultTrans"]["SUBSPACEAUTOTUNETMP_UNROLL"].set("1");
+    }
+  }
+
+  // autotune::KernelMultTransposeSubspace.set_parameter_values(pv_new);
+  for (std::string par_name : par_names) {
+    scenario_file << configuration["SubspaceMultTrans"][par_name].get() << ", ";
+  }
+  configuration_changed_multTrans = true;
+
+  // const autotune::parameter_value_set &pv_ref =
+  //     autotune::KernelMultTransposeSubspace.get_parameter_values();
+  // for (std::string par_name : par_names) {
+  //   std::cout << par_name << " -> " << pv_ref.at(par_name) << std::endl;
+  // }
+  return true;
 }
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP

@@ -107,8 +107,12 @@ int main(int argc, char **argv) {
               << std::endl;
     return 1;
   }
-  if (variables_map.count("additionalConfigFileName") == 0) {
-    std::cerr << "error: option \"additionalConfigFileName\" not specified"
+  if (variables_map.count("tuner_name") == 0) {
+    std::cerr << "error: option \"tuner_name\" not specified" << std::endl;
+    return 1;
+  }
+  if (variables_map.count("additionalConfig") == 0) {
+    std::cerr << "error: option \"additionalConfig\" not specified"
               << std::endl;
     return 1;
   }
@@ -252,8 +256,14 @@ int main(int argc, char **argv) {
     }
     sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
     dataSizeVectorResult.setAll(0);
-    derived_eval.mult(alpha, dataSizeVectorResult);
-    scenario_file << derived_eval.getDuration() << std::endl;
+    double duration_sum = 0.0;
+    for (size_t i = 0; i < repetitions_averaged + 1; i += 1) {
+      derived_eval.mult(alpha, dataSizeVectorResult);
+      if (i > 0) {
+        duration_sum += derived_eval.getDuration();
+      }
+    }
+    scenario_file << duration_sum / repetitions_averaged << std::endl;
   } else {
     for (std::string &parameterName :
          (*parameters)["SubspaceMultTrans"].keys()) {
@@ -266,43 +276,60 @@ int main(int argc, char **argv) {
     }
     sgpp::base::DataVector gridSizeVectorResult(grid->getSize());
     gridSizeVectorResult.setAll(0);
-    derived_eval.multTranspose(source, gridSizeVectorResult);
-    scenario_file << derived_eval.getDuration() << std::endl;
+    double duration_sum = 0.0;
+    for (size_t i = 0; i < repetitions_averaged + 1; i += 1) {
+      derived_eval.multTranspose(source, gridSizeVectorResult);
+      if (i > 0) {
+        duration_sum += derived_eval.getDuration();
+      }
+    }
+    scenario_file << duration_sum / repetitions_averaged << std::endl;
   }
 
-  // for (std::string &par_name : parameter_names) {
-  //   std::cout << "par_name: " << par_name << std::endl;
-  //   if (!trans) {
-  //     sgpp::base::DataVector alpha(gridStorage.getSize());
-  //     for (size_t i = 0; i < alpha.getSize(); i++) {
-  //       alpha[i] = static_cast<double>(i) + 1.0;
-  //     }
-  //     sgpp::base::DataVector
-  //     dataSizeVectorResult(dataset.getNumberInstances());
-  //     dataSizeVectorResult.setAll(0);
-  //     bool ok = eval.set_pvn_parameter_mult(*parameters, par_name,
-  //                                           scenario_file, parameter_names);
-  //     if (!ok) {
-  //       std::cout << "no reset, skip" << std::endl;
-  //       continue;
-  //     }
-  //     derived_eval.mult(alpha, dataSizeVectorResult);
-  //     scenario_file << derived_eval.getDuration() << std::endl;
-  //   } else {
-  //     sgpp::base::DataVector source(dataset.getNumberInstances());
-  //     for (size_t i = 0; i < source.getSize(); i++) {
-  //       source[i] = static_cast<double>(i) + 1.0;
-  //     }
-  //     sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
-  //     gridSizeVectorResult.setAll(0);
-  //     bool ok = eval.set_pvn_parameter_multTranspose(
-  //         *parameters, par_name, scenario_file, parameter_names);
-  //     if (!ok) {
-  //       std::cout << "no reset, skip" << std::endl;
-  //       continue;
-  //     }
-  //     derived_eval.tune_multTranspose(source, gridSizeVectorResult);
-  //     scenario_file << derived_eval.getDuration() << std::endl;
-  //   }
-  // }
+  for (std::string &par_name : parameter_names) {
+    std::cout << "par_name: " << par_name << std::endl;
+    if (!trans) {
+      sgpp::base::DataVector alpha(gridStorage.getSize());
+      for (size_t i = 0; i < alpha.getSize(); i++) {
+        alpha[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector dataSizeVectorResult(dataset.getNumberInstances());
+      dataSizeVectorResult.setAll(0);
+      bool ok = derived_eval.set_pvn_parameter_mult(
+          *parameters, par_name, scenario_file, parameter_names);
+      if (!ok) {
+        std::cout << "no reset, skip" << std::endl;
+        continue;
+      }
+      double duration_sum = 0.0;
+      for (size_t i = 0; i < repetitions_averaged + 1; i += 1) {
+        derived_eval.mult(alpha, dataSizeVectorResult);
+        if (i > 0) {
+          duration_sum += derived_eval.getDuration();
+        }
+      }
+      scenario_file << duration_sum / repetitions_averaged << std::endl;
+    } else {
+      sgpp::base::DataVector source(dataset.getNumberInstances());
+      for (size_t i = 0; i < source.getSize(); i++) {
+        source[i] = static_cast<double>(i) + 1.0;
+      }
+      sgpp::base::DataVector gridSizeVectorResult(gridStorage.getSize());
+      gridSizeVectorResult.setAll(0);
+      bool ok = derived_eval.set_pvn_parameter_multTranspose(
+          *parameters, par_name, scenario_file, parameter_names);
+      if (!ok) {
+        std::cout << "no reset, skip" << std::endl;
+        continue;
+      }
+      double duration_sum = 0.0;
+      for (size_t i = 0; i < repetitions_averaged + 1; i += 1) {
+        derived_eval.multTranspose(source, gridSizeVectorResult);
+        if (i > 0) {
+          duration_sum += derived_eval.getDuration();
+        }
+      }
+      scenario_file << duration_sum / repetitions_averaged << std::endl;
+    }
+  }
 }

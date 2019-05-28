@@ -8,7 +8,10 @@
 #pragma once
 
 #include "SubspaceNode.hpp"
+#include "autotune/tuners/countable_set.hpp"
+#include "autotune/tuners/randomizable_set.hpp"
 #include "omp.h"
+#include "sgpp/base/opencl/OCLOperationConfiguration.hpp"
 #include "sgpp/base/tools/json/json.hpp"
 #include <assert.h>
 #include <immintrin.h>
@@ -70,6 +73,11 @@ private:
   bool configuration_changed_multTrans;
 
   bool randomization_enabled;
+
+  autotune::countable_set parameters_mult;
+  autotune::randomizable_set parameters_randomizable_mult;
+  autotune::countable_set parameters_multTrans;
+  autotune::randomizable_set parameters_randomizable_multTrans;
 
   /**
    * Creates the data structure used by the operation.
@@ -186,6 +194,16 @@ public:
   void set_configuration(std::string &configuration_file_name);
 
   void set_randomize_parameter_values(bool randomization_enabled);
+
+  bool set_pvn_parameter_mult(sgpp::base::OCLOperationConfiguration &ocl_config,
+                              std::string &reset_par_name,
+                              std::ofstream &scenario_file,
+                              std::vector<std::string> par_names);
+
+  bool set_pvn_parameter_multTranspose(
+      sgpp::base::OCLOperationConfiguration &ocl_config,
+      std::string &reset_par_name, std::ofstream &scenario_file,
+      std::vector<std::string> par_names);
 };
 
 } // namespace sgpp::datadriven::SubspaceAutoTuneTMP
