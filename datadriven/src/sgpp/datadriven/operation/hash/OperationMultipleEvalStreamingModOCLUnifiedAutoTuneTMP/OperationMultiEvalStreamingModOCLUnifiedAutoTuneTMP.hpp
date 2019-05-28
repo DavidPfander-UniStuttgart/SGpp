@@ -685,7 +685,7 @@ public:
     return duration_multTranspose_acc;
   }
 
-  size_t set_skip_repetitions(size_t skip_repetitions) {
+  void set_skip_repetitions(size_t skip_repetitions) {
     this->skip_repetitions = skip_repetitions;
   }
 
