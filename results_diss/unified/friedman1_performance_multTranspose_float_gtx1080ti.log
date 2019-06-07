@@ -9,18 +9,18 @@ num_ops: 23869.5
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.573091
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.595143
 info: first multTranspose not considered
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.523259
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.523181
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.522821
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.523221
-device: GeForce GTX 1080 Ti (0x1bb5970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x1bb5970 duration: 0.523428
-duration multTranspose: 2.63882, repetitions_averaged: 5
-GFLOPS: 9045.51
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.534109
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.534467
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.535345
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.535494
+device: GeForce GTX 1080 Ti (0x2001970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
+device: 0x2001970 duration: 0.534541
+duration multTranspose: 2.69657, repetitions_averaged: 5
+GFLOPS: 8851.79
