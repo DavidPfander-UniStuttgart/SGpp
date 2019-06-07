@@ -11,18 +11,18 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: multTrans
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487715
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.506349
 info: first multTranspose not considered
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487823
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487391
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487385
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487493
-device: gfx906+sram-ecc (0x12b91900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0x12b91900 duration: 0.487557
-duration multTranspose: 2.46809, repetitions_averaged: 5
-GFLOPS: 9671.23
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.50725
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.511588
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.512762
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.50557
+device: gfx906+sram-ecc (0x123d7d20)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x123d7d20 duration: 0.508094
+duration multTranspose: 2.5751, repetitions_averaged: 5
+GFLOPS: 9269.36

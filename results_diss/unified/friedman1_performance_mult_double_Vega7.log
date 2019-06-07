@@ -12,18 +12,18 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: mult
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27912
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52961
 info: first mult not considered
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27909
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27869
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27852
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27884
-device: 0x12d357a0 kernel from: 0 to: 200192 -> range: 200192
-device: 0x12d357a0 duration: 1.27863
-duration mult: 6.42824, repetitions_averaged: 5
-GFLOPS: 1446.84
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52972
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52909
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52915
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52911
+device: 0x11ee6ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x11ee6ee0 duration: 1.52892
+duration mult: 7.67868, repetitions_averaged: 5
+GFLOPS: 1211.22

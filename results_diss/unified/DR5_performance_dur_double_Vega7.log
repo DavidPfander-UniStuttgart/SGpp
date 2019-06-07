@@ -1,49 +1,59 @@
 training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 pci id for fd 5: 1002:66af, driver (null)
 pci id for fd 5: 1002:66af, driver (null)
-ocl dummy initalization duration: 0.443005
+ocl dummy initalization duration: 0.428172
 instances: 371908
 support_refinement_min_support: 500
-ocl_init_duration: 0.00675223
+ocl_init_duration: 0.00516715
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
+support refinement took: 0.289636
 candidates with support: 1
 num_candidates: 10
 num_candidates: 10 block_size: 128 num_candidates_per_device: 10
 device: 0 range_padded: 128 range_start: 0 range_end: 10
+support refinement took: 0.32596
 candidates with support: 10
 num_candidates: 60
 num_candidates: 60 block_size: 128 num_candidates_per_device: 60
 device: 0 range_padded: 128 range_start: 0 range_end: 60
+support refinement took: 0.325338
 candidates with support: 52
 num_candidates: 236
 num_candidates: 236 block_size: 128 num_candidates_per_device: 236
 device: 0 range_padded: 256 range_start: 0 range_end: 236
+support refinement took: 0.320392
 candidates with support: 181
 num_candidates: 706
 num_candidates: 706 block_size: 128 num_candidates_per_device: 706
 device: 0 range_padded: 768 range_start: 0 range_end: 706
+support refinement took: 0.31964
 candidates with support: 503
 num_candidates: 1786
 num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
 device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+support refinement took: 0.31856
 candidates with support: 1241
 num_candidates: 4140
 num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
 device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+support refinement took: 0.318736
 candidates with support: 2886
 num_candidates: 9216
 num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
 device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+support refinement took: 0.32018
 candidates with support: 6397
 num_candidates: 19682
 num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
 device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+support refinement took: 0.619003
 candidates with support: 13464
 num_candidates: 40066
 num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
 device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+support refinement took: 0.921012
 candidates with support: 26558
 datadriven refinement done, grid size: 51293
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -52,1552 +62,1552 @@ Starting Learning....
 
 Doing refinement: 0
 Grid Size: 51293
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20497
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204958
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154812
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204355
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17214
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204086
 Starting norm of residuum: -nan
 Target norm:               0
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153956
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204081
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17162
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204811
 delta: 2.48387e+09
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153896
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204225
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171551
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204932
 delta: 2.08737e+08
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153816
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204099
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171484
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204966
 delta: 2.5682e+08
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153826
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204046
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17146
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205107
 delta: 1.26015e+08
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15388
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20417
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171432
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205026
 delta: 5.29509e+07
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153822
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204065
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171493
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205015
 delta: 4.9246e+07
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153842
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204045
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17147
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205002
 delta: 2.58437e+07
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153826
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204001
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171559
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204987
 delta: 1.90104e+07
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153815
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204135
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171455
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204935
 delta: 9.75989e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153911
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204169
-delta: 5.8703e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15391
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204437
-delta: 3.21392e+07
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154057
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204508
-delta: 7.54886e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154042
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204518
-delta: 4.03079e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154053
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204399
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171525
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204937
+delta: 5.86985e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171413
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204935
+delta: 3.14993e+07
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171532
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205035
+delta: 7.58576e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171451
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204959
+delta: 4.0308e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171461
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204995
 delta: 4.36691e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154016
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204634
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171436
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204932
 delta: 3.19895e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154003
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204297
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171502
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204996
 delta: 1.53341e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154006
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204364
-delta: 1.14859e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153906
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204306
-delta: 1.24968e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154008
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204055
-delta: 2.84583e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15384
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204425
-delta: 1.14305e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153992
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204394
-delta: 2.49461e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153982
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20441
-delta: 2.59286e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154076
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204439
-delta: 765349
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15401
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204424
-delta: 742832
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153995
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20438
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171484
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204986
+delta: 1.14862e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171475
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205019
+delta: 1.26608e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171472
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205017
+delta: 5.34632e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171469
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 936212
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171609
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205026
+delta: 2.6237e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171432
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205048
+delta: 2.5758e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171497
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20504
+delta: 766143
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171542
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20509
+delta: 742844
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17147
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205007
 delta: 482877
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154011
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20454
-delta: 454354
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153933
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 309128
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154079
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20442
-delta: 1.59653e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154033
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204363
-delta: 373217
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204446
-delta: 1.93262e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204392
-delta: 275565
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154119
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204454
-delta: 206237
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153983
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204309
-delta: 207584
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153996
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20436
-delta: 1.08853e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15401
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204366
-delta: 1.23961e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154019
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204428
-delta: 230288
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154088
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204362
-delta: 229745
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153997
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204433
-delta: 544936
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153956
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204303
-delta: 4.20451e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15404
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204342
-delta: 511307
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153974
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204319
-delta: 263358
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154079
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204359
-delta: 194501
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154025
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204519
-delta: 105020
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153984
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204327
-delta: 184101
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153983
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204328
-delta: 291611
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15407
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204394
-delta: 140373
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153983
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204458
-delta: 724618
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153961
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204335
-delta: 564779
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153971
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204387
-delta: 170272
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153981
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204458
-delta: 444631
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153998
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20441
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153935
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204407
-delta: 160396
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153897
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204421
-delta: 1.35504e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153984
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204411
-delta: 105297
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154007
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204465
-delta: 142618
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154289
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204435
-delta: 408252
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154083
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20446
-delta: 213020
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154087
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204465
-delta: 363804
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153989
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204392
-delta: 105324
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153966
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204383
-delta: 75973.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153972
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204371
-delta: 71511.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15399
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 122185
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204383
-delta: 143964
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154065
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20441
-delta: 82522.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154179
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204445
-delta: 91305.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154124
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204324
-delta: 1.74841e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154587
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204389
-delta: 1.34597e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154028
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204429
-delta: 77512.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154094
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204438
-delta: 152594
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154002
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204402
-delta: 71495.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153996
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204477
-delta: 213709
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15396
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204447
-delta: 161628
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154049
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204287
-delta: 98948.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154078
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20438
-delta: 157224
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154054
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204351
-delta: 55073.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154119
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204543
-delta: 1.21447e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153927
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204405
-delta: 56743.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154022
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204428
-delta: 134139
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154016
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 91004.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154028
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204489
-delta: 65096.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154033
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.2044
-delta: 142535
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15409
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204443
-delta: 65149.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154047
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204392
-delta: 86750.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154027
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204411
-delta: 86908.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154031
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20437
-delta: 1.05987e+06
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154091
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 109294
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153973
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204419
-delta: 30017.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153935
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204398
-delta: 55387.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15406
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204448
-delta: 67484.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154054
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204433
-delta: 494620
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154092
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204483
-delta: 38408.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154028
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204381
-delta: 145136
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15414
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204504
-delta: 36832.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153999
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204329
-delta: 675383
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154064
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204432
-delta: 43672
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154311
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204384
-delta: 166382
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154071
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204467
-delta: 73147.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154031
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20438
-delta: 31798.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154013
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204461
-delta: 142077
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15405
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204402
-delta: 44145.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154124
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204391
-delta: 49828.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154095
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204509
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153925
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20437
-delta: 175834
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153904
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204442
-delta: 27471.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154059
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20453
-delta: 41946.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154058
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204437
-delta: 32407.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154034
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204311
-delta: 218388
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154033
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204385
-delta: 56438.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154045
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 37991.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154049
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20419
-delta: 535914
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153816
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204372
-delta: 33121.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15391
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204546
-delta: 80599.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15402
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204403
-delta: 161316
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15401
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204458
-delta: 125676
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153992
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204476
-delta: 21622.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204367
-delta: 135307
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153913
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204402
-delta: 33280.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153977
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204381
-delta: 39449.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153995
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204363
-delta: 63101.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153998
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204371
-delta: 26452.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154089
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204319
-delta: 215554
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20432
-delta: 56817.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153992
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204422
-delta: 15463.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154024
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204384
-delta: 453515
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153875
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204388
-delta: 17355.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154044
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204334
-delta: 236110
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153947
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204362
-delta: 22724.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154078
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204384
-delta: 75127.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154135
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204302
-delta: 31630.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15406
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204421
-delta: 268915
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154084
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204327
-delta: 24674.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204339
-delta: 42250.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154051
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204367
-delta: 20134
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153994
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204506
-delta: 38452.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154043
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204336
-delta: 20909.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154084
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204644
-delta: 22552.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154058
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204445
-delta: 137876
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154026
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204429
-delta: 61017.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154147
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204404
-delta: 376878
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153944
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204352
-delta: 23596
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15404
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204388
-delta: 63506.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15395
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204357
-delta: 46683.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154093
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204376
-delta: 38809.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154012
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204347
-delta: 21105.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153982
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204431
-delta: 93209.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154046
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204432
-delta: 20157.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154048
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204371
-delta: 22604.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153885
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204309
-delta: 949102
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154067
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204335
-delta: 10210.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154046
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204311
-delta: 26050.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153948
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204422
-delta: 33163.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154007
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204332
-delta: 36420
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154032
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204372
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15385
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204395
-delta: 13747.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153904
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204284
-delta: 99055.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153993
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204357
-delta: 12385.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154109
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204446
-delta: 37966.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154056
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204413
-delta: 68845.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154125
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204386
-delta: 20268
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154016
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204354
-delta: 62969.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154032
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20439
-delta: 79000.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154018
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204346
-delta: 27364.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154033
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204367
-delta: 9589.54
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15411
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204369
-delta: 9295.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154012
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204347
-delta: 47732.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204322
-delta: 228699
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154021
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204349
-delta: 34746.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154034
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204392
-delta: 37340.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15409
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204343
-delta: 17261.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154108
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204337
-delta: 26289.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154031
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204338
-delta: 15668.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154049
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204352
-delta: 13640.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15407
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204323
-delta: 15064.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154114
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204391
-delta: 34143.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154045
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204454
-delta: 208086
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154031
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204496
-delta: 44325.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154075
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204439
-delta: 27365.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154141
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204378
-delta: 85033.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154104
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204357
-delta: 15578.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204416
-delta: 14760.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154032
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204449
-delta: 9346.81
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154059
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204451
-delta: 24122.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154117
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204427
-delta: 57468.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154125
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204367
-delta: 49325.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154039
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204455
-delta: 15598.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154067
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204549
-delta: 24773.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154027
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20444
-delta: 21695.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154079
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204429
-delta: 31009.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15407
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204416
-delta: 18706.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154041
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204415
-delta: 9874.16
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154111
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204394
-delta: 16821.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154055
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204357
-delta: 13876.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154002
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204325
-delta: 221428
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153964
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204317
-delta: 12574.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154061
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204316
-delta: 47842.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154072
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20442
-delta: 10587.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204407
-delta: 26483.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154131
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204396
-delta: 111169
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154084
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20436
-delta: 18396.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154044
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204327
-delta: 10618.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154075
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204501
-delta: 12705.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154061
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204372
-delta: 492255
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154129
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204455
-delta: 8049.87
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154068
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204377
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153878
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204382
-delta: 15760.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153855
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204375
-delta: 7140.21
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154051
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204384
-delta: 22472.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154022
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204391
-delta: 13805.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15404
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204311
-delta: 5929.75
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154024
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204319
-delta: 30774.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154077
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204412
-delta: 12822.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154005
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204341
-delta: 33497
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154157
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204337
-delta: 12814
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204329
-delta: 34890.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154008
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20433
-delta: 22243.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153998
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204617
-delta: 38422.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154148
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204337
-delta: 21478.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15404
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204339
-delta: 12424.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153958
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204272
-delta: 26098.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154033
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204341
-delta: 6778.46
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154022
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204364
-delta: 43117.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154187
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204337
-delta: 43401
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153942
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204299
-delta: 7962.61
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154041
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204403
-delta: 7223.99
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15394
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204351
-delta: 11486.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153879
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204391
-delta: 5821.04
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15395
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204365
-delta: 35172.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154014
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204381
-delta: 21576.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153952
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204266
-delta: 235387
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15393
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204395
-delta: 15538.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154002
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204305
-delta: 7417.23
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154116
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204373
-delta: 9166.17
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153973
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204291
-delta: 4754.58
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153995
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204412
-delta: 10630.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15408
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204397
-delta: 57987.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153931
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204447
-delta: 6453.81
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204538
-delta: 19171.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153989
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204317
-delta: 19828
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153989
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204394
-delta: 18659.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204368
-delta: 12029.2
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154126
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204335
-delta: 17062.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154067
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204294
-delta: 17834.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.155193
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204409
-delta: 36622.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154023
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204332
-delta: 6333.77
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154076
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204233
-delta: 5620.08
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153998
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204345
-delta: 8803.36
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15403
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204415
-delta: 36325.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154081
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204369
-delta: 27032.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154062
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204409
-delta: 51080.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153945
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204371
-delta: 6572.69
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153943
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204334
-delta: 7993.82
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154062
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204329
-delta: 10553.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153959
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204369
-delta: 8258.04
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153967
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204319
-delta: 4626.39
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153994
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204382
-device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153826
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204526
-delta: 31729.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153841
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204301
-delta: 16494.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154092
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204348
-delta: 41213.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153802
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204116
-delta: 7270.91
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15409
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204294
-delta: 20458.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153939
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20437
-delta: 6397.48
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153873
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204387
-delta: 5832.12
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153881
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20434
-delta: 3962.56
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153974
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204346
-delta: 20987.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154054
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204411
-delta: 209465
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153925
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204285
-delta: 33485.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15396
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204241
-delta: 3402.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154018
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204299
-delta: 42295.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153883
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204361
-delta: 5714.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204327
-delta: 4925.62
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154014
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204307
-delta: 13541
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154205
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204235
-delta: 9680.71
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153917
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204256
-delta: 46116.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154024
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204277
-delta: 81202.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154044
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204323
-delta: 25907.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15404
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204343
-delta: 2754.42
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154049
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204375
-delta: 5006.35
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153953
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204367
-delta: 6883.77
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153972
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204423
-delta: 10841.8
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.15395
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204337
-delta: 15149.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153991
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204504
-delta: 4836.59
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153932
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204446
-delta: 73563
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154136
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204481
-delta: 80301.1
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154063
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204356
-delta: 5670
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154067
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204368
-delta: 5410.42
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154035
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204411
-delta: 2763.09
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154049
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204398
-delta: 4751
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154034
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204269
-delta: 71041.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153909
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204379
-delta: 3120.5
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153901
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204421
-delta: 7967.43
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154058
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204431
-delta: 188813
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154013
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204336
-delta: 8024.63
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153992
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204377
-delta: 16897.6
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153994
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204303
-delta: 3434.52
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153892
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204531
-delta: 8027.26
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154061
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204624
-delta: 7843.47
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153973
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204343
-delta: 3771.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154057
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204438
-delta: 8161.54
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154124
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20434
-delta: 19619.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154029
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204387
-delta: 13025.4
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154027
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204243
-delta: 7038.9
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153898
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204398
-delta: 4976.04
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.153878
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204399
-delta: 16674.7
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154023
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.20444
-delta: 11409.3
-.device: 0x26943e0 kernel from: 0 to: 371968 -> range: 371968
-device: 0x26943e0 duration: 0.154034
-device: gfx906+sram-ecc (0x26943e0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x26943e0 duration: 0.204395
-delta: 6132.88
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171519
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 454495
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171486
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205051
+delta: 344753
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171531
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204995
+delta: 1.25327e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171535
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205003
+delta: 317472
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171504
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204984
+delta: 4.72272e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171595
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205082
+delta: 275690
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171656
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204978
+delta: 208924
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171579
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 668911
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171515
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205026
+delta: 247808
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171564
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205104
+delta: 2.23784e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171455
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205084
+delta: 201452
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171428
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205025
+delta: 265506
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17166
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205048
+delta: 404860
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.1716
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205117
+delta: 836936
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171573
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205067
+delta: 810101
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171596
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205014
+delta: 283156
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171599
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204962
+delta: 194964
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171573
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205014
+delta: 105292
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171599
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204916
+delta: 239904
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171609
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205059
+delta: 214625
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171657
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204725
+delta: 141905
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17132
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205062
+delta: 412815
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171391
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204997
+delta: 479572
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171501
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204923
+delta: 1.33516e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171558
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205014
+delta: 167253
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171538
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17136
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204998
+delta: 1.77765e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171463
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204972
+delta: 153877
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171568
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205029
+delta: 104277
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171541
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20496
+delta: 144951
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171779
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204984
+delta: 374572
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171567
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205015
+delta: 214899
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171392
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20499
+delta: 83078.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171485
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204997
+delta: 240716
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171549
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204957
+delta: 110734
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171601
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20504
+delta: 268876
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171577
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205061
+delta: 86593.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17162
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205007
+delta: 71256.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171578
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205017
+delta: 158965
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171541
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204946
+delta: 72509.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171562
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205016
+delta: 174584
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171462
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205021
+delta: 102006
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171622
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 150658
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171478
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204951
+delta: 1.18405e+06
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171533
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204906
+delta: 321044
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171474
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204953
+delta: 66813.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171577
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204978
+delta: 135258
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171514
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205036
+delta: 69032.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17155
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204954
+delta: 483820
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171507
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204969
+delta: 61623.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171642
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20504
+delta: 77445.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171508
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204957
+delta: 91662.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171471
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204984
+delta: 197919
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171604
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205003
+delta: 590584
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171581
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20505
+delta: 257536
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171464
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204972
+delta: 49725.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171505
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204942
+delta: 45687.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171528
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204915
+delta: 175949
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171514
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205032
+delta: 47346
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171593
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204998
+delta: 30283.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171562
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205088
+delta: 172923
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171534
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205067
+delta: 157539
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17164
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205019
+delta: 610847
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171464
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204998
+delta: 101152
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171634
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205023
+delta: 56097.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171393
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204973
+delta: 418362
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171494
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205039
+delta: 32764.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171496
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20508
+delta: 47344.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171404
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 125958
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171499
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204961
+delta: 63146.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17159
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 39065.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171591
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204985
+delta: 124914
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171572
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204957
+delta: 382013
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171472
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204963
+delta: 36128.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171371
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204853
+delta: 55712.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17159
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205036
+delta: 39164.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171536
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205074
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171467
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205039
+delta: 23344.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17139
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 35292.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171486
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20493
+delta: 50195.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17159
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 192242
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171584
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 267598
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171503
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204551
+delta: 375204
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171364
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204955
+delta: 122104
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171522
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204953
+delta: 32279.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171486
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204978
+delta: 140536
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171593
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204972
+delta: 21213.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17171
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204976
+delta: 56298.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171556
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205022
+delta: 29225.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171525
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204999
+delta: 118787
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171586
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205007
+delta: 55234.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171538
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205057
+delta: 118073
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171469
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 69613.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171498
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205017
+delta: 33441.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171606
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204956
+delta: 22221
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171495
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204975
+delta: 61847.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171506
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20505
+delta: 289891
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171502
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204969
+delta: 15947.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171489
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204956
+delta: 23317.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171558
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205017
+delta: 60473.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171454
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205049
+delta: 198738
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171607
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204971
+delta: 36682.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17153
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204952
+delta: 132849
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171468
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204879
+delta: 29302.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171518
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204947
+delta: 82608.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171628
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204956
+delta: 44351.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171599
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204918
+delta: 19857.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171547
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204968
+delta: 16491
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171513
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204885
+delta: 28215.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171461
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204909
+delta: 480268
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17151
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204932
+delta: 104025
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171554
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204904
+delta: 38218.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171461
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204962
+delta: 22120.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171518
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204938
+delta: 66221.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171565
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204938
+delta: 17034.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171561
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205093
+delta: 20737.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171542
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205006
+delta: 59069.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171605
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204955
+delta: 22269.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171491
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 195399
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17158
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204941
+delta: 151263
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171519
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204983
+delta: 16006.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17162
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204917
+delta: 18388
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171563
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204979
+delta: 45619.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171503
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204979
+delta: 34306.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171585
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204887
+delta: 25665.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171481
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204872
+delta: 301511
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171503
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204956
+delta: 12633.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171577
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204971
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17142
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20497
+delta: 16879.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171305
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 88114.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171506
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205012
+delta: 218922
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171578
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204999
+delta: 12585.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171521
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205005
+delta: 11284.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171614
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204947
+delta: 37741
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171496
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205003
+delta: 18097.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171585
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20497
+delta: 26071.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171635
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205051
+delta: 22362.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171629
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20495
+delta: 9549.71
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171617
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205044
+delta: 585112
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171602
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205056
+delta: 154706
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17155
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204949
+delta: 15966.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171691
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205008
+delta: 20429.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171592
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204966
+delta: 36722.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17158
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20506
+delta: 39404.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171562
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205023
+delta: 50033.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171597
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205023
+delta: 34988.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171496
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204955
+delta: 17189.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171568
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205011
+delta: 21106.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.1716
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204951
+delta: 813595
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171523
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204911
+delta: 8869.25
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171536
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204991
+delta: 28035.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171513
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204971
+delta: 18832.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17152
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204893
+delta: 35768.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171468
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204926
+delta: 28239.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171581
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204935
+delta: 81678.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171723
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20501
+delta: 26914.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17157
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204899
+delta: 16771.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171525
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204979
+delta: 18739.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171593
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205008
+delta: 37042.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171521
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204955
+delta: 43250.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171633
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 25148.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171519
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204931
+delta: 16618.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17159
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204955
+delta: 16282.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171526
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204881
+delta: 89512.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171456
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204931
+delta: 6660.54
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171518
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204938
+delta: 13212.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171495
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204939
+delta: 318648
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171313
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204961
+delta: 6997.14
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171529
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204936
+delta: 176162
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171637
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205033
+delta: 12374.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171554
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205008
+delta: 16299.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17163
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204976
+delta: 46795
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171541
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20499
+delta: 6576.47
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171367
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204993
+delta: 15739.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171604
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204892
+delta: 18611.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171603
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204877
+delta: 251117
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171497
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204974
+delta: 9106.52
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171537
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204951
+delta: 31660.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171597
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204911
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17147
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204959
+delta: 6347.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171471
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204896
+delta: 19120.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171507
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204973
+delta: 45839.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171513
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 18858.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171606
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205001
+delta: 17362.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17139
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204983
+delta: 19881.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.172675
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204602
+delta: 17676.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171246
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204893
+delta: 100862
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17151
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204919
+delta: 14999.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171592
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204931
+delta: 77815.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171523
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20499
+delta: 5895.92
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171433
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204923
+delta: 24787.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171434
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205022
+delta: 7414.15
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171365
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204958
+delta: 28223.3
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171434
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20495
+delta: 11603.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17132
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204936
+delta: 26789
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171507
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204933
+delta: 10831.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171578
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204924
+delta: 30795.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171576
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204942
+delta: 15864.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171464
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 8800.23
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171372
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204974
+delta: 18392
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171537
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 10351.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171574
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204982
+delta: 5959.97
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171437
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204951
+delta: 30265.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171345
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204988
+delta: 53848.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171405
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204936
+delta: 56897.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171587
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204957
+delta: 19778
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171547
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204962
+delta: 4269.94
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171462
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 53174.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171366
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204954
+delta: 4203.63
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171461
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205022
+delta: 15861.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171596
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205025
+delta: 14670.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171576
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205062
+delta: 9451.47
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171403
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205058
+delta: 18682.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171602
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204984
+delta: 52504.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171446
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 13871.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171468
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205074
+delta: 8462.61
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171433
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.2049
+delta: 5151.19
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171456
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205075
+delta: 12923.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171369
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204934
+delta: 22201.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171466
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205018
+delta: 4178.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171462
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20495
+delta: 36773.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171354
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204889
+delta: 22219.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171444
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204923
+delta: 108223
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171537
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204948
+delta: 13473.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171427
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204936
+delta: 8102.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171522
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204961
+delta: 13070.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171391
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204919
+delta: 59714.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17149
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204946
+delta: 22579.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171472
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204922
+delta: 6109.01
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17169
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204896
+device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171378
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204906
+delta: 4890.24
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171304
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204922
+delta: 7622.28
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171505
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204854
+delta: 104757
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171501
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204919
+delta: 4133.64
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171506
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204942
+delta: 12304
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171427
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205009
+delta: 3394.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171373
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204929
+delta: 47008.1
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171495
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204896
+delta: 10811.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171533
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 9064.07
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171416
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204982
+delta: 39180
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171403
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204876
+delta: 4320.41
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17149
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204947
+delta: 31474.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171384
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204945
+delta: 69432.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171475
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 16920.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171334
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204928
+delta: 20530.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171497
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204906
+delta: 3922.25
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171518
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204998
+delta: 6720.78
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171476
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204952
+delta: 5666.47
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171357
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204975
+delta: 10422.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171478
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204867
+delta: 6812.71
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.1715
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204969
+delta: 16643
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171468
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204833
+delta: 20702.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171494
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204865
+delta: 3510.95
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171489
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204882
+delta: 19340.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171511
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20498
+delta: 38420.4
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171472
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204946
+delta: 4782
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171398
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204995
+delta: 10794.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171503
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205044
+delta: 5315.33
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171356
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204979
+delta: 4741.83
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171476
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.20495
+delta: 8821.96
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171532
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204944
+delta: 4258.94
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171537
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205014
+delta: 10996.8
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171329
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204901
+delta: 19747.5
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.17149
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205023
+delta: 9507.83
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171545
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204936
+delta: 3349.96
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171478
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204918
+delta: 10819.2
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171439
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205004
+delta: 37583.7
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171446
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205009
+delta: 8021.59
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171506
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.205
+delta: 14612.9
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171354
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204967
+delta: 114299
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171421
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204852
+delta: 9997.63
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171479
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.2049
+delta: 5467.54
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171537
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204901
+delta: 6711.25
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171553
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.2049
+delta: 11963
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171528
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.2049
+delta: 3342.24
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171509
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204947
+delta: 6887.09
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171428
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204989
+delta: 17493.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171455
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204893
+delta: 3879.39
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171524
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204909
+delta: 76919.6
+.device: 0x1fcba20 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1fcba20 duration: 0.171401
+device: gfx906+sram-ecc (0x1fcba20)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1fcba20 duration: 0.204913
+delta: 2993.4
 
 Number of iterations: 300 (max. 300)
-Final norm of residuum: 6132.88
+Final norm of residuum: 2993.4
 counted_mult_calls: 306
 
 Needed Iterations: 300
-Final residuum: 6132.88
+Final residuum: 2993.4
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 307.5
 note: performance calculation: additional iteration for residual recalculation : 6
 
-Current Duration:: 113.777
-Current GFlop/s: 2483.78
+Current Duration:: 119.957
+Current GFlop/s: 2355.8
 
 Finished Training!
 
-Training took: 113.777 seconds
+Training took: 119.957 seconds
 
-total_duration: 119.293
+total_duration: 125.508

@@ -1,7 +1,7 @@
 training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
 pci id for fd 5: 1002:66af, driver (null)
 pci id for fd 5: 1002:66af, driver (null)
-ocl dummy initalization duration: 0.42698
+ocl dummy initalization duration: 0.418276
 instances: 200000
 regular grid size: 397825
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -10,536 +10,536 @@ Starting Learning....
 
 Doing refinement: 0
 Grid Size: 397825
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48796
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509523
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
-device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40734
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.485995
+device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.445504
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.503797
 Starting norm of residuum: -nan
 Target norm:               0
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407212
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487216
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446443
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506181
 delta: 6.48417e+13
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407493
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48725
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446276
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508536
 delta: 5.03406e+13
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407456
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487426
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446242
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507961
 delta: 2.15341e+12
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407391
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487452
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446295
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507955
 delta: 2.93576e+12
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40737
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487614
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446364
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508362
 delta: 2.20097e+12
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407389
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487561
-delta: 7.77043e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407375
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487489
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446463
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50774
+delta: 7.77044e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446475
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50725
 delta: 1.30207e+12
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407418
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487437
-delta: 1.16175e+12
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407489
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487511
-delta: 4.69271e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407347
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487418
-delta: 9.06337e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407357
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487386
-delta: 6.05487e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407536
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487494
-delta: 2.24768e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407547
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487569
-delta: 1.03474e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407509
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487263
-delta: 2.86647e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407272
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487479
-delta: 7.83076e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407392
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487503
-delta: 7.38514e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407315
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487581
-delta: 9.73379e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407411
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487521
-delta: 6.18562e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407298
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48745
-delta: 1.88166e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407304
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487493
-delta: 1.06703e+11
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407446
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487569
-delta: 3.88007e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407353
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487739
-delta: 5.9757e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407517
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487645
-delta: 6.75167e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407514
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487563
-delta: 4.04872e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407696
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487939
-delta: 7.22088e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407536
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487771
-delta: 1.10296e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407393
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487793
-delta: 3.24716e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40736
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487684
-delta: 6.43832e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407442
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487808
-delta: 1.83925e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407355
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487568
-delta: 8.21891e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407309
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487817
-delta: 2.36611e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407473
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48767
-delta: 2.25873e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407535
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487621
-delta: 5.21525e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407543
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487624
-delta: 1.99143e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407542
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487661
-delta: 1.04628e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407354
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487613
-delta: 1.18163e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407394
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487699
-delta: 4.33285e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407374
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487769
-delta: 2.61171e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407466
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487779
-delta: 9.55111e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407344
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487886
-delta: 3.08414e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407472
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487733
-delta: 1.60186e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407551
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487765
-delta: 6.96116e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407492
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487767
-delta: 2.45873e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407352
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487753
-delta: 9.40641e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407535
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487677
-delta: 2.30651e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407452
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487739
-delta: 1.18288e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407436
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487815
-delta: 4.34403e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407345
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48776
-delta: 8.85772e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407466
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487648
-delta: 1.67623e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407266
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487692
-delta: 4.58396e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407435
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487763
-device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407446
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487601
-delta: 5.62452e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407622
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487758
-delta: 9.03269e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407583
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48776
-delta: 1.27519e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407344
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487712
-delta: 1.73506e+10
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407321
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487863
-delta: 3.56541e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40747
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487732
-delta: 6.02672e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407394
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487792
-delta: 5.74312e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407532
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487961
-delta: 3.92655e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407654
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487984
-delta: 8.04629e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407555
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487977
-delta: 8.49914e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407313
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487889
-delta: 4.03632e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407448
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487793
-delta: 7.7528e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407387
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487842
-delta: 7.38601e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407499
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487883
-delta: 7.67786e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407561
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.4879
-delta: 4.45535e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407401
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487948
-delta: 2.6464e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407539
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48786
-delta: 9.44542e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407427
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487784
-delta: 8.1328e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407468
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487935
-delta: 5.24163e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407363
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487937
-delta: 7.22628e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407553
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487988
-delta: 6.51275e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407608
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488016
-delta: 6.4391e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407461
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487951
-delta: 3.19368e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407463
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487875
-delta: 2.45772e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407483
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48807
-delta: 5.07353e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407542
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487938
-delta: 9.80913e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40754
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487992
-delta: 4.23532e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407499
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48794
-delta: 4.09421e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407758
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488278
-delta: 6.87187e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407691
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487955
-delta: 6.04319e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407357
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487909
-delta: 4.6934e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407486
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487822
-delta: 5.1147e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407372
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487824
-delta: 2.51871e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40753
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488036
-delta: 2.86925e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407487
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488084
-delta: 6.3135e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407491
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487864
-delta: 7.30303e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407454
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487989
-delta: 2.613e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407214
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488025
-delta: 2.64697e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407455
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488142
-delta: 7.32059e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407632
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487929
-delta: 2.7689e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.40744
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488075
-delta: 2.92534e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407448
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487866
-delta: 2.89867e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407475
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.48806
-delta: 3.42358e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407429
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487929
-delta: 6.06208e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407515
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488054
-delta: 2.21761e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407291
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488012
-delta: 3.23584e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407577
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488081
-delta: 5.27018e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407598
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.488058
-delta: 1.90308e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407483
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487998
-delta: 3.22591e+09
-.device: 0xa51ae0 kernel from: 0 to: 200192 -> range: 200192
-device: 0xa51ae0 duration: 0.407598
-device: gfx906+sram-ecc (0xa51ae0)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 99520)
-device: 0xa51ae0 duration: 0.487956
-delta: 2.70673e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446379
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508057
+delta: 1.16172e+12
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446437
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506004
+delta: 4.63796e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446407
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507189
+delta: 9.26665e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446493
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509751
+delta: 6.058e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446491
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507214
+delta: 2.24775e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446569
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508334
+delta: 1.03475e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446493
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.505692
+delta: 2.86648e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446415
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506592
+delta: 7.83078e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446528
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508936
+delta: 7.38528e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446486
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508361
+delta: 9.75725e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446666
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506859
+delta: 6.3837e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446647
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510481
+delta: 3.77188e+11
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446598
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508799
+delta: 7.98276e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.4466
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506812
+delta: 3.8752e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446499
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508729
+delta: 5.97503e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446659
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.5088
+delta: 6.7517e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446602
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50626
+delta: 4.04879e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446526
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510711
+delta: 7.22254e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446661
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50908
+delta: 1.16212e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446721
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508887
+delta: 8.46258e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446608
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507436
+delta: 3.55278e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446679
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506959
+delta: 4.75132e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446495
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507424
+delta: 1.78935e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446666
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508682
+delta: 2.33394e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446669
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50818
+delta: 2.25867e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446619
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508771
+delta: 5.21655e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446751
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509353
+delta: 2.09278e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446665
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507621
+delta: 5.30802e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.4466
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509954
+delta: 1.19253e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446704
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509561
+delta: 1.12175e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446615
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506797
+delta: 1.91935e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446759
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.506899
+delta: 9.68628e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446688
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510119
+delta: 4.10927e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446729
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507635
+delta: 1.49122e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446783
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509565
+delta: 3.1695e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446789
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508669
+delta: 7.69914e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446821
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509229
+delta: 2.10285e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446818
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509234
+delta: 9.99283e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446697
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508801
+delta: 8.74617e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446609
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507852
+delta: 4.36227e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446593
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511401
+delta: 9.65025e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446612
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.50682
+delta: 3.02078e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446681
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507041
+delta: 2.71253e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446758
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507059
+device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446555
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509009
+delta: 4.2729e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44664
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508456
+delta: 4.67792e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446758
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.512318
+delta: 8.80184e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446803
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509479
+delta: 1.22238e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446762
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511842
+delta: 3.45537e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446721
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509498
+delta: 4.59348e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44675
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509289
+delta: 1.07117e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446823
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507843
+delta: 1.77648e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446656
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508312
+delta: 4.18104e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446516
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507859
+delta: 6.1117e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44671
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511961
+delta: 6.54103e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446413
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507787
+delta: 3.55981e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44654
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508844
+delta: 6.38557e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446666
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507036
+delta: 6.24511e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446549
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507956
+delta: 5.89995e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446625
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508757
+delta: 1.90931e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446609
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507104
+delta: 2.79982e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446661
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509584
+delta: 8.11833e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446478
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511931
+delta: 9.75224e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446535
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509903
+delta: 3.29737e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446522
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510215
+delta: 6.95823e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446397
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.507958
+delta: 9.78361e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446481
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.51022
+delta: 2.6559e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446604
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.51031
+delta: 3.55371e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446373
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510629
+delta: 6.78515e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446412
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.508856
+delta: 7.36098e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446444
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511774
+delta: 6.22509e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446524
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.513289
+delta: 2.42284e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446356
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509662
+delta: 9.00323e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446339
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.509174
+delta: 4.00771e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446399
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510679
+delta: 4.43153e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446415
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511857
+delta: 3.19993e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446494
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.512096
+delta: 4.25109e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446428
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511546
+delta: 9.49066e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446352
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.51221
+delta: 3.26732e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446288
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.512073
+delta: 3.71987e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446453
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511023
+delta: 3.24046e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44643
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.512557
+delta: 4.18222e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446356
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510785
+delta: 3.715e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446296
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.515101
+delta: 2.45631e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44627
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.51306
+delta: 1.46408e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446292
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.510992
+delta: 2.46604e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446421
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.514768
+delta: 1.54361e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446652
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511314
+delta: 9.14336e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446466
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511261
+delta: 2.51356e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446359
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.513844
+delta: 2.89492e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446468
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.51202
+delta: 2.86051e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446253
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.512783
+delta: 3.40096e+09
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.44636
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.511889
+delta: 1.37611e+10
+.device: 0x1111ee0 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1111ee0 duration: 0.446291
+device: gfx906+sram-ecc (0x1111ee0)  kernel from: 0 to: 397952 -> range: 397952 (with blocking: 397952)
+device: 0x1111ee0 duration: 0.514423
+delta: 3.2088e+09
 
 Number of iterations: 100 (max. 100)
-Final norm of residuum: 2.70673e+09
+Final norm of residuum: 3.2088e+09
 counted_mult_calls: 102
 
 Needed Iterations: 100
-Final residuum: 2.70673e+09
+Final residuum: 3.2088e+09
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 
-Current Duration:: 94.6839
-Current GFlop/s: 7267.11
+Current Duration:: 100.449
+Current GFlop/s: 6850.01
 
 Finished Training!
 
-Training took: 94.6839 seconds
+Training took: 100.449 seconds
 
-total_duration: 96.8941
+total_duration: 102.648

@@ -11,18 +11,18 @@ pci id for fd 4: 1002:66af, driver (null)
 pci id for fd 4: 1002:66af, driver (null)
 starting performance test...
 algorithm: multTrans
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.6531
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68138
 info: first multTranspose not considered
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.65338
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.65323
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.65333
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.65309
-device: gfx906+sram-ecc (0x11ee8900)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
-device: 0x11ee8900 duration: 1.65313
-duration multTranspose: 8.30368, repetitions_averaged: 5
-GFLOPS: 2874.57
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68225
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68202
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68227
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68171
+device: gfx906+sram-ecc (0x12ac9d20)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x12ac9d20 duration: 1.68211
+duration multTranspose: 8.44845, repetitions_averaged: 5
+GFLOPS: 2825.31
