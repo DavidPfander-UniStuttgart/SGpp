@@ -1,46 +1,56 @@
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 hostname: pcsgs07
 using configuration
-ocl_init_duration: 0.145408
+ocl_init_duration: 0.150155
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
+support refinement took: 0.215061
 candidates with support: 1
 num_candidates: 10
 num_candidates: 10 block_size: 128 num_candidates_per_device: 10
 device: 0 range_padded: 128 range_start: 0 range_end: 10
+support refinement took: 0.209961
 candidates with support: 10
 num_candidates: 60
 num_candidates: 60 block_size: 128 num_candidates_per_device: 60
 device: 0 range_padded: 128 range_start: 0 range_end: 60
+support refinement took: 0.212283
 candidates with support: 52
 num_candidates: 236
 num_candidates: 236 block_size: 128 num_candidates_per_device: 236
 device: 0 range_padded: 256 range_start: 0 range_end: 236
+support refinement took: 0.210226
 candidates with support: 181
 num_candidates: 706
 num_candidates: 706 block_size: 128 num_candidates_per_device: 706
 device: 0 range_padded: 768 range_start: 0 range_end: 706
+support refinement took: 0.209728
 candidates with support: 503
 num_candidates: 1786
 num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
 device: 0 range_padded: 1792 range_start: 0 range_end: 1786
+support refinement took: 0.210254
 candidates with support: 1241
 num_candidates: 4140
 num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
 device: 0 range_padded: 4224 range_start: 0 range_end: 4140
+support refinement took: 0.210177
 candidates with support: 2886
 num_candidates: 9216
 num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
 device: 0 range_padded: 9216 range_start: 0 range_end: 9216
+support refinement took: 0.211936
 candidates with support: 6397
 num_candidates: 19682
 num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
 device: 0 range_padded: 19712 range_start: 0 range_end: 19682
+support refinement took: 0.210416
 candidates with support: 13464
 num_candidates: 40066
 num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
 device: 0 range_padded: 40192 range_start: 0 range_end: 40066
+support refinement took: 0.41309
 candidates with support: 26558
 support refinement done, grid size: 51293
 dimensionality: 5
@@ -51,18 +61,18 @@ num_ops: 2861.44
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.195673
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.207558
 info: first multTranspose not considered
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.19468
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.194539
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.194527
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.19454
-device: Hawaii (0x1e8acb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
-device: 0x1e8acb0 duration: 0.194549
-duration multTranspose: 0.994972, repetitions_averaged: 5
-GFLOPS: 2875.9
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.206851
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.207217
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.206708
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.206935
+device: Hawaii (0x1189cb0)  kernel from: 0 to: 51456 -> range: 51456 (with blocking: 51456)
+device: 0x1189cb0 duration: 0.206707
+duration multTranspose: 1.06962, repetitions_averaged: 5
+GFLOPS: 2675.18

@@ -10,18 +10,18 @@ num_ops: 9300.6
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.91108
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91098
 info: first mult not considered
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.91048
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.91113
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.911
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.91054
-device: 0x13218a00 kernel from: 0 to: 200704 -> range: 200704
-device: 0x13218a00 duration: 2.91076
-duration mult: 14.6003, repetitions_averaged: 5
-GFLOPS: 637.012
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91072
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91096
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91074
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91062
+device: 0x12092a00 kernel from: 0 to: 200704 -> range: 200704
+device: 0x12092a00 duration: 2.91063
+duration mult: 14.6512, repetitions_averaged: 5
+GFLOPS: 634.801

@@ -9,18 +9,18 @@ num_ops: 23869.5
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.93609
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94122
 info: first multTranspose not considered
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.93571
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.93629
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.936
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.93646
-device: Hawaii (0x13326490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
-device: 0x13326490 duration: 3.93576
-duration multTranspose: 19.7355, repetitions_averaged: 5
-GFLOPS: 1209.47
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94158
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94128
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94104
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94124
+device: Hawaii (0x121ab490)  kernel from: 0 to: 397888 -> range: 397888 (with blocking: 397888)
+device: 0x121ab490 duration: 3.94131
+duration multTranspose: 19.9222, repetitions_averaged: 5
+GFLOPS: 1198.14
