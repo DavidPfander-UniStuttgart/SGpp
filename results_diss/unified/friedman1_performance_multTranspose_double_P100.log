@@ -9,18 +9,18 @@ num_ops: 23869.5
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: multTrans
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.75691
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.76373
 info: first multTranspose not considered
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.73568
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.73569
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.73568
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.73568
-device: Tesla P100-PCIE-16GB (0xcbf970)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0xcbf970 duration: 1.73567
-duration multTranspose: 8.71966, repetitions_averaged: 5
-GFLOPS: 2737.43
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.74805
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.74805
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.74808
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.74882
+device: Tesla P100-PCIE-16GB (0x2460970)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x2460970 duration: 1.74806
+duration multTranspose: 8.77624, repetitions_averaged: 5
+GFLOPS: 2719.79

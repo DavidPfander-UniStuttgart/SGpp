@@ -1,56 +1,56 @@
 datasetFileName: ../datasets/DR5/DR5_nowarnings_less05_train.arff
 hostname: argon-tesla1
 using configuration
-ocl_init_duration: 2.79239
+ocl_init_duration: 2.41874
 num_candidates: 1
 num_candidates: 1 block_size: 128 num_candidates_per_device: 1
 device: 0 range_padded: 128 range_start: 0 range_end: 1
-support refinement took: 0.341902
+support refinement took: 0.332084
 candidates with support: 1
 num_candidates: 10
 num_candidates: 10 block_size: 128 num_candidates_per_device: 10
 device: 0 range_padded: 128 range_start: 0 range_end: 10
-support refinement took: 0.279092
+support refinement took: 0.28947
 candidates with support: 10
 num_candidates: 60
 num_candidates: 60 block_size: 128 num_candidates_per_device: 60
 device: 0 range_padded: 128 range_start: 0 range_end: 60
-support refinement took: 0.29526
+support refinement took: 0.307263
 candidates with support: 52
 num_candidates: 236
 num_candidates: 236 block_size: 128 num_candidates_per_device: 236
 device: 0 range_padded: 256 range_start: 0 range_end: 236
-support refinement took: 0.298291
+support refinement took: 0.298165
 candidates with support: 181
 num_candidates: 706
 num_candidates: 706 block_size: 128 num_candidates_per_device: 706
 device: 0 range_padded: 768 range_start: 0 range_end: 706
-support refinement took: 0.317868
+support refinement took: 0.300096
 candidates with support: 503
 num_candidates: 1786
 num_candidates: 1786 block_size: 128 num_candidates_per_device: 1786
 device: 0 range_padded: 1792 range_start: 0 range_end: 1786
-support refinement took: 0.315347
+support refinement took: 0.309454
 candidates with support: 1241
 num_candidates: 4140
 num_candidates: 4140 block_size: 128 num_candidates_per_device: 4140
 device: 0 range_padded: 4224 range_start: 0 range_end: 4140
-support refinement took: 0.300001
+support refinement took: 0.308428
 candidates with support: 2886
 num_candidates: 9216
 num_candidates: 9216 block_size: 128 num_candidates_per_device: 9216
 device: 0 range_padded: 9216 range_start: 0 range_end: 9216
-support refinement took: 0.311524
+support refinement took: 0.315476
 candidates with support: 6397
 num_candidates: 19682
 num_candidates: 19682 block_size: 128 num_candidates_per_device: 19682
 device: 0 range_padded: 19712 range_start: 0 range_end: 19682
-support refinement took: 0.342465
+support refinement took: 0.331061
 candidates with support: 13464
 num_candidates: 40066
 num_candidates: 40066 block_size: 128 num_candidates_per_device: 40066
 device: 0 range_padded: 40192 range_start: 0 range_end: 40066
-support refinement took: 0.539474
+support refinement took: 0.536453
 candidates with support: 26558
 support refinement done, grid size: 51293
 dimensionality: 5
@@ -62,18 +62,18 @@ num_ops: 1731.78
 creating createOperationMultipleEval grid: ModLinear type: STREAMING==DEFAULT subType: OCLUNIFIED
 starting performance test...
 algorithm: mult
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.149573
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155705
 info: first mult not considered
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.149589
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.149587
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.149567
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.14957
-device: 0x785bf0 kernel from: 0 to: 372736 -> range: 372736
-device: 0x785bf0 duration: 0.149604
-duration mult: 0.769507, repetitions_averaged: 5
-GFLOPS: 2250.51
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155793
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155857
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155742
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155759
+device: 0x1106bf0 kernel from: 0 to: 372224 -> range: 372224
+device: 0x1106bf0 duration: 0.155789
+duration mult: 0.832153, repetitions_averaged: 5
+GFLOPS: 2081.09
