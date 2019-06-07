@@ -1,5 +1,5 @@
 training dataset: ../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-ocl dummy initalization duration: 2.66008
+ocl dummy initalization duration: 2.46969
 instances: 200000
 regular grid size: 397825
 creating createOperationMultipleEval type: DEFAULT, using base operator factory
@@ -8,536 +8,536 @@ Starting Learning....
 
 Doing refinement: 0
 Grid Size: 397825
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.75159
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.76744
 Starting Conjugated Gradients
 All temp variables used in CG have been initialized
-device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901342
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904909
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74923
 Starting norm of residuum: -nan
 Target norm:               0
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901359
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904947
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
 delta: 6.48417e+13
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90133
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904963
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
 delta: 5.03406e+13
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901311
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904984
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
 delta: 2.15341e+12
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901281
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905119
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
 delta: 2.93576e+12
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901337
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905079
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
 delta: 2.20097e+12
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901569
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905905
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
 delta: 7.77042e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90129
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904846
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
 delta: 1.30202e+12
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901277
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904592
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74922
 delta: 1.16094e+12
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901339
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90495
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
 delta: 3.47423e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901294
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.903395
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
 delta: 8.23794e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901354
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904788
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
 delta: 2.3831e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901308
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 9.96893e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901345
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 4.18971e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901271
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 8.15891e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901344
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 2.96975e+11
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901299
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 8.01631e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901414
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 9.73622e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901263
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 6.15884e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901372
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904684
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 9.96894e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904847
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74925
+delta: 4.18977e+11
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904804
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 8.16467e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905883
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 2.97654e+11
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904682
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 8.00588e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904802
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 9.73613e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905934
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 6.15883e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904764
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
 delta: 7.93578e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901339
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904919
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
 delta: 5.6194e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901287
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905909
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
 delta: 4.0039e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901435
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905942
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74922
 delta: 7.05875e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901315
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90592
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
 delta: 5.08605e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901303
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904914
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74913
 delta: 5.67623e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901391
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905911
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
 delta: 1.1417e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901381
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.9051
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
 delta: 3.14393e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901378
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 6.69028e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901331
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74134
-delta: 1.59811e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901385
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 5.98635e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901396
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 3.25358e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901229
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 2.73072e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901391
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 3.55529e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901378
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905076
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 6.69018e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904842
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 1.59528e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905007
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 4.86856e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905086
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 3.72667e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904811
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 2.73386e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904957
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74914
+delta: 3.55563e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904762
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74913
 delta: 2.20467e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901336
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905898
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
 delta: 1.00465e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901436
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904877
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
 delta: 1.23195e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901451
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905138
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
 delta: 1.6878e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901359
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904855
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
 delta: 9.50454e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901365
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905008
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
 delta: 1.99085e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901419
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 6.20444e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901386
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 1.00609e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901293
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 1.81149e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901512
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 1.11769e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901386
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 8.17325e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90136
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 4.24502e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901317
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 1.59554e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901444
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 6.55287e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901326
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 6.46473e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901462
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 4.3862e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901327
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 1.15192e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901376
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 8.0556e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901446
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90134
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 2.94671e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901369
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 4.78876e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901291
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 8.32514e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901336
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 5.92305e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901394
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 2.69634e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90136
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 3.11082e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901279
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 7.47742e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901432
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 8.46863e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901219
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 3.64918e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90135
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 9.67521e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901401
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 4.26622e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901264
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74129
-delta: 3.32183e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901321
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 6.42287e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901292
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 8.08038e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901382
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 4.01628e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90134
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 4.01248e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901289
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 6.75159e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901355
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 4.69571e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901413
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 1.41267e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901359
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 2.2373e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901435
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 8.03013e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901309
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 3.11501e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901324
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 4.15246e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901386
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 4.50855e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901313
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 7.6925e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901392
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 4.22271e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901263
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 1.51587e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.9013
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 6.99466e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.9013
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 7.36338e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901467
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 2.80386e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901392
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 2.08555e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90129
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 1.13732e+10
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901489
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 5.43455e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901339
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 1.47169e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901349
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 2.63415e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901403
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 2.18106e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901378
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 3.339e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901333
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 1.55313e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901376
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 6.00559e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90143
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 3.46422e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901321
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 2.24953e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901445
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 6.15708e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90138
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 1.5003e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901449
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 6.39856e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901368
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 6.23127e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901279
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 1.50357e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901344
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74131
-delta: 2.05836e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.90132
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.7413
-delta: 2.56839e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901296
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74133
-delta: 2.08755e+09
-.device: 0x156b430 kernel from: 0 to: 200704 -> range: 200704
-device: 0x156b430 duration: 0.901331
-device: Tesla P100-PCIE-16GB (0x156b430)  kernel from: 0 to: 398336 -> range: 398336 (with blocking: 99584)
-device: 0x156b430 duration: 1.74132
-delta: 3.54046e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.9059
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74914
+delta: 6.20457e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904854
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74914
+delta: 1.0179e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904897
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 3.60563e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905901
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 8.47284e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.903438
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 8.1957e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904997
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 4.54885e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904857
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 2.43906e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905056
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 5.28753e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904996
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 6.46311e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904961
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 5.67353e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90513
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 7.20297e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904853
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 7.99959e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905133
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905931
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 2.98835e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905097
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 7.19266e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.9051
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 6.25426e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905903
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 6.8892e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905071
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 1.06951e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904888
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 2.94758e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904656
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 7.62388e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905141
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74913
+delta: 9.45759e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90504
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 3.72115e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905098
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74922
+delta: 1.10683e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904931
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 3.9734e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905903
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 3.33166e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904867
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 8.68759e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90485
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 6.63209e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904879
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 3.79546e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904398
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 4.91341e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905886
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 5.38855e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904928
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 4.84656e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904641
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 1.44257e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904941
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 2.20647e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905066
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 1.37035e+10
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904977
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74913
+delta: 2.62858e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905098
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 4.11554e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905927
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 4.61799e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.903283
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 7.42323e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90501
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 4.21696e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.903426
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 1.55566e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904903
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 8.55489e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904926
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74927
+delta: 5.76715e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.903335
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74916
+delta: 2.75874e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904835
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 2.06566e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905083
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 9.05256e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904924
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 6.3699e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905122
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 1.47191e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904752
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 2.63492e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905908
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74915
+delta: 2.19964e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905869
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 6.42302e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905125
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 3.43495e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.90486
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 1.72198e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905105
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74922
+delta: 2.70897e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904939
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74919
+delta: 2.32735e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904963
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 6.84266e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905932
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74918
+delta: 1.42084e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904542
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74921
+delta: 4.85571e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905897
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 8.75679e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904927
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 1.51341e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905013
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 2.51516e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905156
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74913
+delta: 4.02405e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.905922
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.7492
+delta: 3.06178e+09
+.device: 0x1518d70 kernel from: 0 to: 200192 -> range: 200192
+device: 0x1518d70 duration: 0.904989
+device: Tesla P100-PCIE-16GB (0x1518d70)  kernel from: 0 to: 398080 -> range: 398080 (with blocking: 398080)
+device: 0x1518d70 duration: 1.74917
+delta: 1.51912e+09
 
 Number of iterations: 100 (max. 100)
-Final norm of residuum: 3.54046e+09
+Final norm of residuum: 1.51912e+09
 counted_mult_calls: 102
 
 Needed Iterations: 100
-Final residuum: 3.54046e+09
+Final residuum: 1.51912e+09
 note: performance calculation: coefficients are reused
 note: performance calculation: iterations for calculation : 103.5
 note: performance calculation: additional iteration for residual recalculation : 2
 
-Current Duration:: 273.355
-Current GFlop/s: 2517.15
+Current Duration:: 275.324
+Current GFlop/s: 2499.16
 
 Finished Training!
 
-Training took: 273.355 seconds
+Training took: 275.324 seconds
 
-total_duration: 276.254
+total_duration: 278.273
