@@ -34,29 +34,29 @@ do
     for search_strategy in line_search neighborhood_search monte_carlo
     do
 
-	if [ ${is_trans} = "true" ]; then
-	    algorithm_name=multTrans
-	else
-	    algorithm_name=mult
-	fi
-	
-        # single
-	precision="float"
-	./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	
-        # double
-	if [ ${hn} != "argon-gtx" ]; then
+        if [ ${is_trans} = "true" ]; then
+            algorithm_name=multTrans
+        else
+            algorithm_name=mult
+        fi
 
-	    precision="double"
-	    ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	    
+        # single
+        precision="float"
+        ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
+        # double
+        if [ ${hn} != "argon-gtx" ]; then
+
+            precision="double"
+            ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
         fi
         # special case for Xeon Gold on argon-gtx
         if [ ${hn} = "argon-gtx" ]; then
 
-	    precision="float"
-	    ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1_cpu}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1_cpu}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	    
+            precision="float"
+            ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1_cpu}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 10 --use_support_refinement --support_refinement_min_support 500 --scenarioName ${dataset_name}_${device_name_f1_cpu}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
         fi
     done
 done
@@ -68,30 +68,30 @@ do
     for search_strategy in line_search neighborhood_search monte_carlo
     do
 
-	if [ ${is_trans} = "true" ]; then
-	    algorithm_name=multTrans
-	else
-	    algorithm_name=mult
-	fi
-	
-        # single
-	precision="float"
-	./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	
-        # double
-	if [ ${hn} != "argon-gtx" ]; then
+        if [ ${is_trans} = "true" ]; then
+            algorithm_name=multTrans
+        else
+            algorithm_name=mult
+        fi
 
-	    precision="double"
-	    ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	    
+        # single
+        precision="float"
+        ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
+        # double
+        if [ ${hn} != "argon-gtx" ]; then
+
+            precision="double"
+            ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
         fi
         # special case for Xeon Gold on argon-gtx
         if [ ${hn} = "argon-gtx" ]; then
 
-	    precision="float"
-	    ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1_cpu}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1_cpu}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
-	    
+            precision="float"
+            ./datadriven/examplesAutoTuneTMP/compare_pvn_unified --OpenCLConfigFile results_diss/unified/${dataset_name}_${device_name_f1_cpu}_untuned_${algorithm_name}_host_${hn}_tuner_${search_strategy}_t_${precision}_${eval_repetitions}av_0r_optimal.cfg --datasetFileName ${dataset_path} --level 7 --scenarioName ${dataset_name}_${device_name_f1_cpu}_${precision} --repetitions_averaged ${eval_repetitions} --trans ${is_trans} --isModLinear true --file_prefix results_diss/unified/
+
         fi
-	
+
     done
 done

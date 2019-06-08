@@ -22,3 +22,4 @@ scons -j20
 ./diss_experiments/regression_unified_AutoTuneTMP.sh
 # experiments that depend on auto-tuning results
 ./diss_experiments/regression_unified_AutoTuneTMP_untuned_start.sh
+./diss_experiments/regression_unified_AutoTuneTMP_untuned_start_compare_PVN.sh
