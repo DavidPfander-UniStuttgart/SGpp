@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
   std::string OpenCLConfigFile;
   std::string scenarioName;
   uint32_t level;
+  uint32_t skip_repetitions;
   uint32_t repetitions_averaged;
   bool trans;
   bool isModLinear;
@@ -50,6 +51,10 @@ int main(int argc, char **argv) {
       boost::program_options::value<uint32_t>(&repetitions_averaged)
           ->default_value(1),
       "how many kernel calls for averaging")(
+      "skip_repetitions",
+      boost::program_options::value<uint32_t>(&skip_repetitions)
+          ->default_value(0),
+      "extra repetitions not counted for duration measurements")(
       "trans",
       boost::program_options::value<bool>(&trans)->default_value(false),
       "tune the transposed mult kernel instead of the standard one")(
@@ -185,6 +190,7 @@ int main(int argc, char **argv) {
       OperationMultiEvalStreamingModOCLUnifiedAutoTuneTMP<double>
           eval(*grid, trainingData, parameters, isModLinear,
                repetitions_averaged);
+  eval.set_skip_repetitions(skip_repetitions);
 
   std::cout << "grid set up, grid size: " << grid->getSize() << std::endl;
   std::cout << "preparing operation for refined grid" << std::endl;
@@ -249,6 +255,8 @@ int main(int argc, char **argv) {
     // repetitions handled in kernel functor
     eval.mult(alpha, dataSizeVectorResult);
     scenario_file << eval.get_last_duration_mult() << std::endl;
+    std::cout << "duration mult: " << eval.get_last_duration_mult()
+              << std::endl;
   } else {
     sgpp::base::DataVector source(dataset.getNumberInstances());
     for (size_t i = 0; i < source.getSize(); i++) {
@@ -282,6 +290,8 @@ int main(int argc, char **argv) {
       // repetitions handled in kernel functor
       eval.mult(alpha, dataSizeVectorResult);
       scenario_file << eval.get_last_duration_mult() << std::endl;
+      std::cout << "duration mult: " << eval.get_last_duration_mult()
+                << std::endl;
     } else {
       sgpp::base::DataVector source(dataset.getNumberInstances());
       for (size_t i = 0; i < source.getSize(); i++) {

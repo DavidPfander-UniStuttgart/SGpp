@@ -241,6 +241,7 @@ public:
           }
           duration_mult_acc = 0.0;
           for (int i = 0; i < this->tune_repetitions; i += 1) {
+            eval_mult->mult(alpha, result);
             duration_mult_acc += this->eval_mult->getDuration();
           }
           duration_mult_acc /= static_cast<double>(this->tune_repetitions);
@@ -285,6 +286,7 @@ public:
           }
           duration_multTranspose_acc = 0.0;
           for (int i = 0; i < this->tune_repetitions; i += 1) {
+            eval_multTranspose->multTranspose(source, result);
             duration_multTranspose_acc +=
                 this->eval_multTranspose->getDuration();
           }
