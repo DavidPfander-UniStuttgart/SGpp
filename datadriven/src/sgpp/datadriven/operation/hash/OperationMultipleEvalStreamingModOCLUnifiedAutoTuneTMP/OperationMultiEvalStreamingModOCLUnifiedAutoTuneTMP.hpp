@@ -425,7 +425,7 @@ public:
       throw "error: tuner not implemented!";
     }
 
-    if (tuner_name.compare("neighborhood_search") != 0) {
+    if (tuner_name.compare("monte_carlo") != 0) {
       autotune::mult_unified_with_tuning.set_parameter_values(
           optimal_parameters);
       autotune::parameter_value_set pv =
