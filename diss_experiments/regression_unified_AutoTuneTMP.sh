@@ -27,13 +27,13 @@ eval_repetitions=5
 
 ##################################################################################### DR5 strong scaling #########################################################################
 
-# if [ ${hn} = "argon-gtx" ]; then
-#     device_name_DR5='gtx1080ti_8'
-#     # tune for 8 devices at the same time, a weak scaling necessity
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/DR5_strongscaling_ocl_float_${device_name_DR5}_template.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_DR5}_strongscaling --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --use_support_refinement --support_refinement_min_support 500 --file_prefix results_diss/unified/ --trans false
+if [ ${hn} = "argon-gtx" ]; then
+    device_name_DR5='gtx1080ti_8'
+    # tune for 8 devices at the same time, a weak scaling necessity
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/DR5_strongscaling_ocl_float_${device_name_DR5}_template.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_DR5}_strongscaling --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --use_support_refinement --support_refinement_min_support 500 --file_prefix results_diss/unified/ --trans false
 
-#     ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/DR5_strongscaling_ocl_float_${device_name_DR5}_template.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_DR5}_strongscaling --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --use_support_refinement --support_refinement_min_support 500 --file_prefix results_diss/unified/ --trans true
-# fi
+    ./datadriven/examplesAutoTuneTMP/tune_unified_AutoTuneTMP_OCL --OpenCLConfigFile results_diss/DR5_strongscaling_ocl_float_${device_name_DR5}_template.cfg --datasetFileName ../datasets/DR5/DR5_nowarnings_less05_train.arff --scenarioName DR5_${device_name_DR5}_strongscaling --level 10 --tuner_name line_search --repetitions ${tuner_repetitions} --repetitions_averaged ${eval_repetitions} --isModLinear true --use_support_refinement --support_refinement_min_support 500 --file_prefix results_diss/unified/ --trans true
+fi
 
 ############################################################################################# friedman1 node-level #########################################################################
 
