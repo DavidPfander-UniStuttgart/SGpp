@@ -1,11 +1,11 @@
 KERNEL_DATA_BLOCK_SIZE, KERNEL_GRID_SPLIT, KERNEL_MAX_DIM_UNROLL, KERNEL_PREFETCH_SIZE, KERNEL_STORE_DATA, KERNEL_TRANSFER_WHOLE_DATASET, KERNEL_USE_LOCAL_MEMORY, LOCAL_SIZE, OPTIMIZATION_FLAGS, VERBOSE, duration
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.551259
-1, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.836027
-4, 1, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.562358
-4, 2, 1, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.548548
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.548969
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.547755
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.545179
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.551329
-4, 2, 2, 16, array, true, false, 64, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.542893
-4, 2, 2, 16, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.549387
+8, 4, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.461681
+1, 4, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.995525
+8, 1, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.4917
+8, 4, 1, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.463123
+8, 4, 2, 16, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.467471
+8, 4, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.459147
+8, 4, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.458317
+8, 4, 2, 128, array, true, false, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.502357
+8, 4, 2, 16, array, true, true, 64, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.46897
+8, 4, 2, 128, array, true, true, 128, -cl-unsafe-math-optimizations -cl-denorms-are-zero, true, 0.457563
