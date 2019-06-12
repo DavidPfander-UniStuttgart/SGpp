@@ -30,7 +30,7 @@ skip_repetitions=2
 
 dataset_name=DR5
 dataset_path=../datasets/DR5/DR5_nowarnings_less05_train.arff
-for is_trans in false # true
+for is_trans in false true
 do
     for search_strategy in line_search neighborhood_search monte_carlo
     do
@@ -64,7 +64,7 @@ done
 
 dataset_name=friedman1
 dataset_path=../datasets/friedman/weakscaling_regression/friedman1_10d_200000.arff
-for is_trans in false # true
+for is_trans in false true
 do
     for search_strategy in line_search neighborhood_search monte_carlo
     do
