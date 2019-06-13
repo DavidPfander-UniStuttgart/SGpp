@@ -1,4 +1,393 @@
 training dataset: ../datasets/DR5/DR5_nowarnings_less05_train.arff
-terminate called after throwing an instance of 'json::json_exception'
-  what():  error: json error: could not open file: results_diss/subspace/DR5_XeonGold5120_Subspace_combined_tuner_line_search_t_5av_0r_optimal.cfg
+instances: 371908
+support_refinement_min_support: 500
+num_candidates: 1
+support refinement took: 0.124727
+candidates with support: 1
+num_candidates: 10
+support refinement took: 0.0396575
+candidates with support: 10
+num_candidates: 60
+support refinement took: 0.0330448
+candidates with support: 52
+num_candidates: 236
+support refinement took: 0.159071
+candidates with support: 181
+num_candidates: 706
+support refinement took: 0.185273
+candidates with support: 503
+num_candidates: 1786
+support refinement took: 0.32126
+candidates with support: 1241
+num_candidates: 4140
+support refinement took: 0.559456
+candidates with support: 2886
+num_candidates: 9216
+support refinement took: 0.913283
+candidates with support: 6397
+num_candidates: 19682
+support refinement took: 1.47261
+candidates with support: 13464
+num_candidates: 40066
+support refinement took: 3.01148
+candidates with support: 26558
+datadriven refinement done, grid size: 51293
+creating createOperationMultipleEval type: DEFAULT, using base operator factory
+creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: AutoTuneTMP
+Starting Learning....
 
+Doing refinement: 0
+Grid Size: 51293
+padding for: 512
+CREATING PARAMETER FILE
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultTransposeSubspace_64207/KernelMultTransposeSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultTransposeSubspace_64207/ SubspaceAutoTuneTMPKernels/MultTranspose/KernelMultTransposeSubspace.cpp  > ./cppjit_tmp/KernelMultTransposeSubspace_64207/KernelMultTransposeSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.90222
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultTransposeSubspace_64207/libKernelMultTransposeSubspace.so ./cppjit_tmp/KernelMultTransposeSubspace_64207/KernelMultTransposeSubspace.o   > ./cppjit_tmp/KernelMultTransposeSubspace_64207/KernelMultTransposeSubspace_link.log 2>&1
+link log:
+link duration: 0.129184
+Starting Conjugated Gradients
+All temp variables used in CG have been initialized
+CREATING PARAMETER FILE
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_327144/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_327144/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_327144/KernelMultSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.37572
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_327144/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_327144/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_327144/KernelMultSubspace_link.log 2>&1
+link log:
+link duration: 0.108415
+Starting norm of residuum: -nan
+Target norm:               0
+.delta: 2.48387e+09
+.delta: 2.08737e+08
+.delta: 2.5682e+08
+.delta: 1.26015e+08
+.delta: 5.29509e+07
+.delta: 4.9246e+07
+.delta: 2.58437e+07
+.delta: 1.90104e+07
+.delta: 9.7599e+06
+.delta: 5.87364e+06
+.delta: 3.66815e+07
+.delta: 7.33043e+06
+.delta: 4.03075e+06
+.delta: 4.36691e+06
+.delta: 3.19895e+06
+.delta: 1.53341e+06
+.delta: 1.14858e+06
+.delta: 1.24314e+06
+.delta: 838441
+.delta: 4.4212e+06
+.delta: 3.96312e+06
+.delta: 1.61009e+06
+.delta: 976111
+.delta: 743711
+.delta: 482878
+.delta: 454403
+.delta: 321535
+.delta: 1.57422e+06
+.delta: 330236
+.delta: 3.50245e+06
+.delta: 275613
+.delta: 206282
+.delta: 219018
+.delta: 821724
+.delta: 276025
+.delta: 669889
+.delta: 263445
+.delta: 406840
+.delta: 2.18884e+06
+.delta: 385811
+.delta: 342293
+.delta: 196688
+.delta: 104853
+.delta: 142864
+.delta: 445721
+.delta: 141824
+.delta: 347550
+.delta: 2.37748e+06
+.delta: 162728
+.delta: 644420
+.delta: 222289
+.delta: 424796
+.delta: 104067
+.delta: 213343
+.delta: 152266
+.delta: 175486
+.delta: 107584
+.delta: 3.39122e+06
+.delta: 77102.7
+.delta: 94819.7
+.delta: 213715
+.delta: 71487.3
+.delta: 50698.2
+.delta: 621734
+.delta: 195896
+.delta: 83679.6
+.delta: 634112
+.delta: 232987
+.delta: 88210.5
+.delta: 129497
+.delta: 196223
+.delta: 155554
+.delta: 93489.7
+.delta: 59220.6
+.delta: 75232.8
+.delta: 669247
+.delta: 87698.2
+.delta: 43375.1
+.delta: 202064
+.delta: 69992.6
+.delta: 139395
+.delta: 108117
+.delta: 59532.9
+.delta: 74597.2
+.delta: 784807
+.delta: 41530.6
+.delta: 334430
+.delta: 356641
+.delta: 33700.5
+.delta: 282698
+.delta: 33204.8
+.delta: 35055.4
+.delta: 35482.9
+.delta: 362033
+.delta: 121749
+.delta: 226020
+.delta: 47217.8
+.delta: 89106.8
+.delta: 66287.2
+.delta: 30801.6
+.delta: 22951.1
+.delta: 245297
+.delta: 180031
+.delta: 28856.5
+.delta: 47438.2
+.delta: 32280.3
+.delta: 185188
+.delta: 37002.5
+.delta: 82808.1
+.delta: 87231.3
+.delta: 90574.9
+.delta: 62137.8
+.delta: 52356.2
+.delta: 89659
+.delta: 40371.8
+.delta: 46307
+.delta: 38160.1
+.delta: 18806.2
+.delta: 24544.5
+.delta: 47522.3
+.delta: 294116
+.delta: 46355.1
+.delta: 33384.2
+.delta: 60023.1
+.delta: 36997.3
+.delta: 79695.5
+.delta: 22785.4
+.delta: 66143.8
+.delta: 75618.6
+.delta: 22142.2
+.delta: 927899
+.delta: 29030
+.delta: 15904.7
+.delta: 16777.8
+.delta: 41527.9
+.delta: 41728.4
+.delta: 24192.6
+.delta: 146617
+.delta: 96543
+.delta: 62679.1
+.delta: 42223.9
+.delta: 17826.9
+.delta: 36245
+.delta: 16433.2
+.delta: 83992
+.delta: 10168.6
+.delta: 129910
+.delta: 32694.6
+.delta: 300629
+.delta: 35004.6
+.delta: 10217.3
+.delta: 11700
+.delta: 164964
+.delta: 57599.6
+.delta: 18272.3
+.delta: 32484
+.delta: 90989.7
+.delta: 34002.5
+.delta: 176633
+.delta: 9317.85
+.delta: 11439.6
+.delta: 45887.9
+.delta: 30394
+.delta: 15661.5
+.delta: 11946.8
+.delta: 175026
+.delta: 280662
+.delta: 16539.4
+.delta: 21563.1
+.delta: 18913.9
+.delta: 20867.9
+.delta: 13856.3
+.delta: 54456.1
+.delta: 72810.3
+.delta: 11199.3
+.delta: 76464.9
+.delta: 143705
+.delta: 25544
+.delta: 15462.9
+.delta: 17863
+.delta: 24696.1
+.delta: 30974.3
+.delta: 31172.3
+.delta: 22304.1
+.delta: 23874.7
+.delta: 551345
+.delta: 6922.88
+.delta: 68561.1
+.delta: 14652.5
+.delta: 60939.9
+.delta: 6803.39
+.delta: 42300.1
+.delta: 7790.69
+.delta: 11509.6
+.delta: 128705
+.delta: 11543.1
+.delta: 59680.2
+.delta: 26025.2
+.delta: 7534.9
+.delta: 17716
+.delta: 11900.6
+.delta: 7965.53
+.delta: 431029
+.delta: 11966.8
+.delta: 12891.8
+.delta: 31460.3
+.delta: 10803.4
+.delta: 109929
+.delta: 10518.8
+.delta: 9808.21
+.delta: 118962
+.delta: 22504
+.delta: 16951.5
+.delta: 34799.3
+.delta: 24075.1
+.delta: 18221.8
+.delta: 5619.45
+.delta: 29789
+.delta: 5660.94
+.delta: 10412
+.delta: 23821.7
+.delta: 32220.6
+.delta: 12402.5
+.delta: 21646
+.delta: 8815.15
+.delta: 163049
+.delta: 9513.11
+.delta: 7186.59
+.delta: 18771.3
+.delta: 9870.92
+.delta: 84995.6
+.delta: 6128.56
+.delta: 9280.68
+.delta: 9298.26
+.delta: 16515.2
+.delta: 8583.19
+.delta: 20925.8
+.delta: 5040.05
+.delta: 18211.5
+.delta: 318925
+.delta: 10402.6
+.delta: 25824.1
+.delta: 17868.3
+.delta: 12270.7
+.delta: 6563.06
+.delta: 26554.5
+.delta: 10156.7
+.delta: 30927
+.delta: 5594.39
+.delta: 137579
+.delta: 13286.5
+.delta: 3171.65
+.delta: 7704.67
+.delta: 42123.8
+.delta: 9737.29
+.delta: 4490.06
+.delta: 44359.8
+.delta: 28466.8
+.delta: 13423
+.delta: 4887.28
+.delta: 7924.62
+.delta: 29585.3
+.delta: 4840.5
+.delta: 5120.04
+.delta: 59890.2
+.delta: 9000.23
+.delta: 40800.7
+.delta: 5283.56
+.delta: 25105.1
+.delta: 2990.78
+.delta: 9431.13
+.delta: 7562.77
+.delta: 14933.8
+.delta: 10063.1
+.delta: 8510.64
+.delta: 51036.6
+.delta: 5255.55
+.delta: 17481.2
+.delta: 6756.83
+.delta: 3456.9
+.delta: 14189.5
+.delta: 57224.6
+.delta: 3306.34
+.delta: 10048.7
+.delta: 79257.9
+.delta: 14002.5
+.delta: 9956.49
+.delta: 5767.04
+.delta: 16909.5
+.delta: 3440.83
+.delta: 48276.7
+.delta: 5825.68
+.delta: 2770.49
+.delta: 98400.7
+.delta: 3667.56
+.delta: 20908
+.delta: 20708.5
+.delta: 3904.69
+.delta: 5575.14
+.delta: 9938.93
+
+Number of iterations: 300 (max. 300)
+Final norm of residuum: 9938.93
+counted_mult_calls: 306
+
+Needed Iterations: 300
+Final residuum: 9938.93
+note: performance calculation: coefficients are reused
+note: performance calculation: iterations for calculation : 307.5
+note: performance calculation: additional iteration for residual recalculation : 6
+warning: cannot calculate GFLOPS for operation type
+
+Current Duration:: 230.723
+Current GFlop/s: 0
+
+Finished Training!
+
+Training took: 230.723 seconds
+
+computing MSE of test dataset
+creating createOperationMultipleEval grid: ModLinear type: SUBSPACE subType: AutoTuneTMP
+CREATING PARAMETER FILE
+creating per-kernel header
+compile_cmd: g++ -o ./cppjit_tmp/KernelMultSubspace_221342/KernelMultSubspace.o -c -Wall -Wextra -Wno-unused-parameter -std=c++17 -march=native -mtune=native -O3 -g -fopenmp -fPIC -fno-gnu-unique -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/SGpp/base/src -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/boost_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/AutoTuneTMP_install/include -I/data/argon-fs/sgs/pfandedd/DissertationCodeGTX/MatrixMultiplicationHPX/AutoTuneTMP/Vc_install/include  -I./cppjit_tmp/KernelMultSubspace_221342/ SubspaceAutoTuneTMPKernels/Mult/KernelMultSubspace.cpp  > ./cppjit_tmp/KernelMultSubspace_221342/KernelMultSubspace_compile.log 2>&1
+compile log:
+compile duration: 1.38779
+link_cmd: g++ -shared -fno-gnu-unique -fopenmp -o ./cppjit_tmp/KernelMultSubspace_221342/libKernelMultSubspace.so ./cppjit_tmp/KernelMultSubspace_221342/KernelMultSubspace.o   > ./cppjit_tmp/KernelMultSubspace_221342/KernelMultSubspace_link.log 2>&1
+link log:
+link duration: 0.113978
+classes computed/predicted
+mse: 0.000489971
+total_duration: 241.2
