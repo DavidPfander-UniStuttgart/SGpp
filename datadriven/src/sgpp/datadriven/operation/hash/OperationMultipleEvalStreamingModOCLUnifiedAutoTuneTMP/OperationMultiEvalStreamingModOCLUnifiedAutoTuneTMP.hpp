@@ -405,7 +405,7 @@ public:
     } else if (tuner_name.compare("monte_carlo") == 0) {
       autotune::tuners::monte_carlo tuner(autotune::mult_unified_with_tuning,
                                           autotune_parameters_randomizable_mult,
-                                          100);
+                                          100, 1000000);
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
       autotune::randomizable_set optimal_parameters_randomizable =
@@ -475,7 +475,7 @@ public:
     } else if (tuner_name.compare("monte_carlo") == 0) {
       autotune::tuners::monte_carlo tuner(
           autotune::mult_transpose_unified_with_tuning,
-          autotune_parameters_randomizable_multTranspose, 100);
+          autotune_parameters_randomizable_multTranspose, 100, 1000000);
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
       autotune::randomizable_set optimal_parameters_randomizable =

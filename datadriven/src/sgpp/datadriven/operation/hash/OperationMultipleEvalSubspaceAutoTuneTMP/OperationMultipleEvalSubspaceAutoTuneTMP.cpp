@@ -717,7 +717,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_mult(
                    paddedDatasetSize, allSubspaceNodes, alpha);
   } else if (tuner_name.compare("monte_carlo") == 0) {
     autotune::tuners::monte_carlo tuner(autotune::KernelMultSubspace,
-                                        parameters_randomizable_mult, 100);
+                                        parameters_randomizable_mult, 100, 1000000);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters
@@ -1030,7 +1030,7 @@ void OperationMultipleEvalSubspaceAutoTuneTMP::tune_multTranspose(
         storage, allSubspaceNodes, allLevelsIndexMap, maxLevel, source);
   } else if (tuner_name.compare("monte_carlo") == 0) {
     autotune::tuners::monte_carlo tuner(autotune::KernelMultTransposeSubspace,
-                                        parameters_randomizable_multTrans, 100);
+                                        parameters_randomizable_multTrans, 100, 1000000);
     tuner.set_parameter_adjustment_functor([](auto &parameters) -> void {
       autotune::fixed_set_parameter<int64_t> &p_unroll =
           parameters

@@ -266,7 +266,7 @@ class OperationMultiEvalStreamingAutoTuneTMP : public base::OperationMultipleEva
       optimal_parameters = tuner.tune(grid, dataset, alpha, duration_compute);
     } else if (tuner_name.compare("monte_carlo") == 0) {
       autotune::tuners::monte_carlo tuner(autotune::streaming_mult_kernel, parameters_randomizable,
-                                          100);
+                                          100, 1000000);
       tuner.set_verbose(true);
       tuner.set_write_measurement(scenario_name);
       tuner.setup_test(test_result);
